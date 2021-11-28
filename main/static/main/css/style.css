@@ -1,0 +1,26 @@
+body{
+    /*color: #2F4F4F;*/
+    /*rgb(33, 36, 53);*/
+    /*background-color: hsl(85,67%,96%);*/
+    font-family: arial;
+    margin: auto 2rem;
+    }
+
+
+footer {
+        margin: auto -2rem;
+        padding: -5%;
+		position:absolute;
+		bottom:0;
+		width:100%;
+		height:50px;}
+
+.kontrahenci-title h4{
+    margin: 20px 0 ;
+    text-align: center;
+}
+
+.nowy-kontrahent-button{
+    float:right;
+}
+

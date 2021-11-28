@@ -1,29 +1,46 @@
 from django.contrib import admin
 from import_export import resources
 from import_export.admin import ExportMixin
-
+from import_export.fields import Field
 from .models import Powiat, Rodzaj, Jednostka
 
 
 # admin.site.register(Post, PostAdmin)
-class PostResource(resources.ModelResource):
+class PowiatResource(resources.ModelResource):
+    swop_id = Field(attribute='swop_id', column_name='ID SWOP')
+    powiat = Field(attribute='powiat', column_name='Powiat')
+
     class Meta:
-        model = Powiat,
+        model = Powiat
+        fields = ('swop_id', 'powiat')
+        export_order = ('swop_id', 'powiat')
+
+
+class JednostkaResource(resources.ModelResource):
+    powiat = Field(attribute='powiat', column_name='Powiat')
+    rodzaj = Field(attribute='rodzaj', column_name='Rodzaj jednostki')
+    kod_pocztowy = Field(attribute='kod_pocztowy', column_name='Kod pocztowy')
+    adres = Field(attribute='adres', column_name='Adres')
+    miasto = Field(attribute='miasto', column_name='Miasto')
+
+    class Meta:
         model = Jednostka
+        fields = ('id',)
+        export_order = ('id', 'powiat', 'rodzaj', 'adres', 'kod_pocztowy', 'miasto')
 
 
 @admin.register(Powiat)
-class PostAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['id', "powiat"]
-    resource_class = PostResource
+class PowiatAdmin(ExportMixin, admin.ModelAdmin):
+    list_display = ['id', 'swop_id', 'powiat']
+    resource_class = PowiatResource
 
 
 admin.site.register(Rodzaj)
 
 
 @admin.register(Jednostka)
-class PostAdmin(ExportMixin, admin.ModelAdmin):
+class JednotskaAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ['id', 'powiat', 'rodzaj', 'adres', 'kod_pocztowy', 'miasto', 'aktywna']
     search_fields = ['adres, miasto']
     list_filter = ['powiat']
-    resource_class = PostResource
+    resource_class = JednostkaResource

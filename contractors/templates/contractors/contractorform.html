@@ -1,0 +1,15 @@
+{%extends 'base.html'%}
+{%load static%}
+{%load bootstrap%}
+
+{%block title%}{%if new%}Nowy kontrahent{%else%}Edycja kontrahenta{%endif%}{%endblock%}
+
+
+{%block content%}
+
+<form method="post">
+    {{contractor_form}}
+</form>
+
+
+{%endblock%}

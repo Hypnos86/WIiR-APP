@@ -3,6 +3,7 @@ from django.db import models
 
 # Create your models here.
 class Powiat(models.Model):
+    swop_id = models.CharField(max_length=4)
     powiat = models.CharField(max_length=15, null=False)
 
     def __str__(self):

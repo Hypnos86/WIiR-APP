@@ -7,7 +7,7 @@ class Contractor(models.Model):
     kod_pocztowy = models.CharField(max_length=6, null=True)
     miasto = models.CharField(max_length=20, null=True)
     informacje = models.TextField(blank=True, default="")
-    utworzenie = models.DateTimeField(auto_now_add=True)
+    data_utworzenia = models.DateTimeField(auto_now_add=True)
     autor = models.ForeignKey("auth.User", on_delete=models.CASCADE)
 
     def __str__(self):

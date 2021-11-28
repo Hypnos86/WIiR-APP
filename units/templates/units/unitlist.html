@@ -1,45 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<table>
-  <thead>
+{%extends 'base.html'%}
+{%load static%}
+
+
+{%block title%} Jednostki Policji w Województwie Wielkopolskim {%endblock%}
+
+{%block content%}
+<table class="table table-hover">
+    <thead>
     <tr>
-      <th>L.p</th>
-      <th>Powiat</th>
-      <th>Rodzaj jednostki</th>
-      <th>Adres</th>
-      <th>Kod pocztowy</th>
-      <th>Miasto</th>
-      <th>Informacje</th>
-      <th>Aktywna</th>
+        <th scope="col">L.p</th>
+        <th scope="col">Powiat</th>
+        <th scope="col">Rodzaj jednostki</th>
+        <th scope="col">Adres</th>
+        <th scope="col">Kod pocztowy</th>
+        <th scope="col">Miasto</th>
+        <th scope="col">Informacje</th>
+        <th scope="col">Aktywna</th>
 
     </tr>
-  </thead>
-  <tbody>
+    </thead>
+    <tbody>
+    {%for unit in units %}
     <tr>
-        {%for unit in units %}
-        <th>{{unit.id}}</th>
+        <th scope="row">{{unit.id}}</th>
         <th>{{unit.powiat}}</th>
         <th>{{unit.rodzaj}}</th>
-        <th>{{unit.adres}} </th>
+        <th>{{unit.adres}}</th>
         <th>{{unit.kod_pocztowy}}</th>
-        <th>{{unit.miasto}} </th>
+        <th>{{unit.miasto}}</th>
         <th>{{unit.informacje}}</th>
-        <th>{{unit.aktywna}}</th>
-        {%endfor%}
-    </tr>
-    </tbody>
-  <tfoot>
-    <tr>
-      <td>Kamil</td>
+        <th>
+            {%if unit.aktywna == True%}
+            Tak
+            {%else%}
+            Nie
+            {%endif%}
+        </th>
 
     </tr>
-  </tfoot>
+    {%endfor%}
+    </tbody>
+    <tfoot>
+    <tr>
+        <th colspan="8">Wydział Inwestycji i Remontów KWP w Poznaniu</th>
+
+    </tr>
+    </tfoot>
 </table>
 
-</body>
-</html>
+{%endblock%}

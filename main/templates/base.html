@@ -1,0 +1,60 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="{%static 'main/bootstrap/css/bootstrap.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap.rtl.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap.rtl.min.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-grid.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-grid.min.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-grid.rtl.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-grid.rtl.min.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-reboot.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-reboot.min.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-reboot.rtl.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-reboot.rtl.min.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-utilities.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-utilities.min.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-utilities.rtl.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-utilities.rtl.min.css'%}" rel="stylesheet">
+    <link href="{%static 'main/css/style.css'%}" rel="stylesheet">
+    <link href="{%static 'contractors/css/style.css'%}" rel="stylesheet">
+    <link href="{%static 'units/css/style.css'%}" rel="stylesheet">
+    <link href="{%static 'contracts/css/style.css'%}" rel="stylesheet">
+    <!-- Bootstrap JS -->
+    <script src="{%static 'main/bootstrap//js/bootstrap.bundle.js'%}"></script>
+    <link rel="shortcut icon" href="{%static 'main/media/logo.ico'%}" type="x-icon">
+
+    <title>{%block title%} {%endblock%}</title>
+</head>
+<body>
+<header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+    <a href="" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none"><span class="fs-5">Zalogowany użytkownik ... </span></a>
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a href="#" class="nav-link active" aria-current="page"><span>Aplikacje</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="#"><span>Jednostki Policji</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="#"><span>Kontrahenci</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="#"><span>Umowy (czynsz/dzierżawa)</span></a></li>
+      </ul>
+    </header>
+    <div class="containter">
+    {%block content%}
+
+    {%endblock%}
+</div>
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+            <nav class="container">
+                <ul class="nav-pills">
+                    <li class="nav-item">
+                        <a href="">Wydział</a>
+                    </li>
+                </ul>
+            </nav>
+to jest footer
+</footer>
+</body>
+</html>
