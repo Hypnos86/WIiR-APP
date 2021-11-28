@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+  <thead>
+    <tr>
+      <th>L.p</th>
+      <th>Powiat</th>
+      <th>Rodzaj jednostki</th>
+      <th>Adres</th>
+      <th>Kod pocztowy</th>
+      <th>Miasto</th>
+      <th>Informacje</th>
+      <th>Aktywna</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+        {%for unit in units %}
+        <th>{{unit.id}}</th>
+        <th>{{unit.powiat}}</th>
+        <th>{{unit.rodzaj}}</th>
+        <th>{{unit.adres}} </th>
+        <th>{{unit.kod_pocztowy}}</th>
+        <th>{{unit.miasto}} </th>
+        <th>{{unit.informacje}}</th>
+        <th>{{unit.aktywna}}</th>
+        {%endfor%}
+    </tr>
+    </tbody>
+  <tfoot>
+    <tr>
+      <td>Kamil</td>
+
+    </tr>
+  </tfoot>
+</table>
+
+</body>
+</html>
