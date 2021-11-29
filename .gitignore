@@ -3,3 +3,12 @@ __pycache__/
 /__pycache__/
 **/.idea
 **/venv
+*.pyc
+**.pyc
+*.log
+*.pot
+local_settings.py
+__ pycache __
+local_conf.py
+ll_theme
+.build
