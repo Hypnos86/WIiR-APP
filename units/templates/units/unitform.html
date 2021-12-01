@@ -6,7 +6,10 @@
 {%block content%}
 <form method="post">
     {%csrf_token%}
-    {{unit_form|bootstrap}}
-    <a href=""><button type="submit">Zapisz</button></a>
+    <fieldset>
+        {{unit_form|bootstrap}}
+    </fieldset>
+    <button type="submit" class="btn btn-outline-primary">Zapisz</button>
 </form>
+<a href="{%url 'units:units_list'%}"><button class="btn btn-outline-primary">Cofni</button></a>
 {%endblock%}

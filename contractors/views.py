@@ -16,7 +16,7 @@ def contractor_list(request):
         return render(request, 'contractors/contractorslist.html', {'contractors': contractor, "search": search})
 
 
-def make_new_contractor(request):
+def new_contractor(request):
     contractor_form = ContractorForm(request.POST or None)
 
     if request.method == 'POST':
@@ -26,7 +26,7 @@ def make_new_contractor(request):
             instance.autor = request.user
             instance.save()
             contractor_form.save()
-            return redirect(contractor_list)
+            return redirect('contractors:contractor_list')
     return render(request, 'contractors/contractorform.html', {'contractor_form': contractor_form, "new": True})
 
 
@@ -36,6 +36,6 @@ def edit_contractor(request, id):
 
     if contractor_form.is_valid():
         contractor_form.save()
-        return redirect(contractor_list)
+        return redirect('contractors:contractor_list')
 
     return render(request, 'contractors/contractorform.html', {'contractor_form': contractor_form, "new": False})

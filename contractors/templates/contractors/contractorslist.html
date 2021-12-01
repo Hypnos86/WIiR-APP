@@ -14,7 +14,7 @@
         </form>
     </div>
 </section>
-<div class="nowy-kontrahent-button"><a href="{%url 'contractors:contractorform'%}"><button type="button" class="btn btn-outline-primary">Nowy kontrahent</button></a></div>
+<div class="nowy-kontrahent-button"><a href="{%url 'contractors:new_contractor'%}"><button type="button" class="btn btn-outline-primary">Nowy kontrahent</button></a></div>
 <div class="kontrahenci-title">
     <h4>Kontrahenci umów czynszowych WIiR</h4>
 </div>
@@ -42,7 +42,7 @@
         <th>{{contractor.informacje}}</th>
         <th>{{unit.informacje}}</th>
         <th>
-            <a href="{%url 'contractors:editcontractor' contractor.id%}"><button type="" class="btn btn-outline-primary">Edytuj</button></a>
+            <a href="{%url 'contractors:edit_contractor' contractor.id%}"><button type="" class="btn btn-outline-primary">Edytuj</button></a>
         </th>
     </tr>
     {%endfor%}
