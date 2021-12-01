@@ -23,6 +23,7 @@ urlpatterns = [
                   path('units/', include('units.urls')),
                   path('contracts/', include('contracts.urls')),
                   path('contractors/', include('contractors.urls')),
+                  path('invoices/', include('invoices.urls')),
                   path('', include('main.urls')),
-              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\
-                + static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) \
+              + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
