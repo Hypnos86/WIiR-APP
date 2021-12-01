@@ -1,4 +1,19 @@
 .units-title{
-    margin: 10px 0;
+    margin: 25px 0 10px;
+
     text-align: center;
+}
+
+.my-table {
+  counter-reset: rowNumber -1;
+}
+
+.my-table-tr {
+  counter-increment: rowNumber;
+}
+
+.my-table-tr td:first-child::before {
+  content: counter(rowNumber);
+  min-width: 1em;
+  margin-right: 0.5em;
 }

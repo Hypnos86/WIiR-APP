@@ -1,0 +1,21 @@
+.moj-button-left{
+    text-align:left;
+}
+
+.moj-button-right{
+    text-align:right;
+}
+
+
+.chose-contracts {
+    text-align: center;
+}
+
+.button-choise-contracts{
+    margin: 0 15px;
+}
+
+.umowy-title h4{
+    margin: 5px 0 ;
+    text-align: center;
+}

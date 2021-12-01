@@ -5,28 +5,26 @@
 {%block title%} Jednostki Policji w Województwie Wielkopolskim {%endblock%}
 
 {%block content%}
-<div class="containter">
-<div class="col-md-1">
-    <label for="" class="">Powiat</label>
-    <select class="form-select" aria-label="Default select example">
-        <option selected>--wybierz--</option>
-        <option value="1">Chodzież</option>
-
-    </select>
-</div>
-<div class="col-md-1">
-    <label for="" class="">Rodzaj jednostki</label>
-    <select class="form-select" aria-label="Default select example">
-        <option selected>--wybierz--</option>
-        <option value="1">KWP</option>
-
-    </select>
-</div>
+<div class="row">
+    <div class="d-inline-block col-md-2">
+        <label for="" class="">Powiat</label>
+        <select class="form-control" aria-label="Default select example">
+            <option selected>--wybierz--</option>
+            <option value="1">Chodzież</option>
+        </select>
+        </div>
+        <div class="d-inline-block col-md-2">
+            <label for="" class="">Rodzaj jednostki</label>
+            <select class="form-control" aria-label="Default select example">
+                <option selected>--wybierz--</option>
+                <option value="1">KWP</option>
+            </select>
+    </div>
 </div>
 <h4 class="units-title">Ewidencja jednostek Policji</h4>
-<table class="table table-hover">
+<table class="table table-hover my-table">
     <thead>
-    <tr>
+    <tr class="my-table-tr">
         <th width="80px" scope="col">L.p</th>
         <th width="180px" scope="col">Powiat</th>
         <th scope="col">Rodzaj jednostki</th>
@@ -40,21 +38,21 @@
     </thead>
     <tbody>
     {%for unit in units %}
-    <tr>
-        <th scope="row">{{unit.id}}</th>
-        <th>{{unit.powiat}}</th>
-        <th>{{unit.rodzaj}}</th>
-        <th>{{unit.adres}}</th>
-        <th>{{unit.kod_pocztowy}}</th>
-        <th>{{unit.miasto}}</th>
-        <th>{{unit.informacje}}</th>
-        <th>
+    <tr class="my-table-tr">
+        <td scope="row"></td>
+        <td>{{unit.powiat}}</td>
+        <td>{{unit.rodzaj}}</td>
+        <td>{{unit.adres}}</td>
+        <td>{{unit.kod_pocztowy}}</td>
+        <td>{{unit.miasto}}</td>
+        <td>{{unit.informacje}}</td>
+        <td>
             {%if unit.aktywna == True%}
             Tak
             {%else%}
             Nie
             {%endif%}
-        </th>
+        </td>
 
     </tr>
     {%endfor%}
