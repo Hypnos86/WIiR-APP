@@ -1,8 +1,8 @@
-from django import forms
-from .models import Jednostka
+from django.forms import ModelForm
+from units.models import Jednostka
 
 
-class JednotkskaForm(forms.Form):
+class JednotkskaForm(ModelForm):
     class Meta:
         model = Jednostka
         fields = ['powiat', 'rodzaj', 'adres', 'kod_pocztowy', 'miasto', 'informacje', 'aktywna']

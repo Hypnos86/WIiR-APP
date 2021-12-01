@@ -1,15 +1,13 @@
 {%extends 'base.html'%}
 {%load static%}
 {%load bootstrap%}
-
 {%block title%}{%if new%}Nowy kontrahent{%else%}Edycja kontrahenta{%endif%}{%endblock%}
 
-
 {%block content%}
-
 <form method="post">
-    {{contractor_form}}
+    {%csrf_token%}
+    {{contractor_form|bootstrap}}
+    <button type="submit" class="btn btn-outline-primary">Zapisz zmiany</button>
 </form>
-
-
+<a href="{%url 'contractors:contractorlist'%}"><button class="btn btn-outline-primary">Cofni</button></a>
 {%endblock%}

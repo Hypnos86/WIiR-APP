@@ -33,11 +33,12 @@
 </head>
 <body>
 <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-    <a href="" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none"><span class="fs-5">Zalogowany użytkownik ... </span></a>
+    <a href="" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none margin-left-0"><span class="fs-5">Zalogowany użytkownik ... </span></a>
         <ul class="nav nav-pills">
             <li class="nav-item"><a href="#" class="nav-link active" aria-current="page"><span>Aplikacje</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="#"><span>Jednostki Policji</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="#"><span>Kontrahenci</span></a></li>
+            <li class="nav-item"><a href="{%url 'units:unitlist'%}" class="nav-link" ><span>Jednostki Policji</span></a></li>
+            <li class="nav-item"><a href="{%url 'contractors:contractorlist'%}" class="nav-link" ><span>Kontrahenci</span></a></li>
+            <li class="nav-item"><a href="" class="nav-link" ><span>Faktury</span></a></li>
             <li class="nav-item"><a class="nav-link" href="#"><span>Umowy (czynsz/dzierżawa)</span></a></li>
       </ul>
     </header>
@@ -46,7 +47,7 @@
 
     {%endblock%}
 </div>
-        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top my-footer">
             <nav class="container">
                 <ul class="nav-pills">
                     <li class="nav-item">

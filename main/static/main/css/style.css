@@ -24,3 +24,20 @@ footer {
     float:right;
 }
 
+.margin-left-0{
+    margin-left: 0!important;
+}
+
+.my-footer {
+    position: fixed;
+    width: 100%;
+    height: 20px;
+    background-color: rgba(39, 78, 163, 0.836);
+    color: aliceblue;
+    bottom: 1px;
+    left: 5%;
+    right: 5%;
+
+    border-radius: 80px 80px 15px 15px;
+}
+

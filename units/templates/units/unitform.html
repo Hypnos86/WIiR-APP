@@ -1,0 +1,12 @@
+{%extends 'base.html'%}
+{%load static%}
+{%load bootstrap%}
+{%block title%}{%if new%}Dodanie nowej jednostki{%else%}Edycja jednostki{%endif%}{%endblock%}
+
+{%block content%}
+<form method="post">
+    {%csrf_token%}
+    {{unit_form|bootstrap}}
+    <a href=""><button type="submit">Zapisz</button></a>
+</form>
+{%endblock%}

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'units.apps.UnitsConfig',
     'contracts.apps.ContractsConfig',
     'contractors.apps.ContractorsConfig',
+    'invoices.apps.InvoicesConfig'
 ]
 
 # aby dzialaly PDFy i przegladanie
