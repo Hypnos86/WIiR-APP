@@ -5,21 +5,32 @@
 {%block title%} Jednostki Policji w Województwie Wielkopolskim {%endblock%}
 
 {%block content%}
-<div class="row">
-    <div class="d-inline-block col-md-2">
-        <label for="" class="">Powiat</label>
-        <select class="form-control" aria-label="Default select example">
-            <option selected>--wybierz--</option>
-            <option value="1">Chodzież</option>
-        </select>
-        </div>
-        <div class="d-inline-block col-md-2">
-            <label for="" class="">Rodzaj jednostki</label>
-            <select class="form-control" aria-label="Default select example">
-                <option selected>--wybierz--</option>
-                <option value="1">KWP</option>
-            </select>
-    </div>
+<div class="row text-right">
+    <form>
+
+            <div class="d-inline-block mx-4 md-3 text-center">
+                <label for="powiaty" class="">Powiat</label>
+                <select id="powiaty" name="powiaty" class="form-control" aria-label="Default select example">
+                    <option selected>--wybierz--</option>
+                    {%for powiat in powiaty%}
+                    <option value="id_powiat">{{powiat}}</option>
+                    {%endfor%}
+                </select>
+            </div>
+            <div class="d-inline-block mx-4 text-center">
+                <label for="rodzaj" class="">Rodzaj jednostki</label>
+                <select id="rodzaj" name="rodzaj" class="form-control" aria-label="Default select example">
+                    <option selected>--wybierz--</option>
+                    {%for r in rodzaj%}
+                    <option value="id_r">{{r}}</option>
+                    {%endfor%}
+                </select>
+            </div>
+            <div class="d-inline-block mx-4">
+                <button type="submit" class="btn btn-outline-primary">Szukaj</button>
+            </div>
+
+    </form>
 </div>
 <h4 class="units-title">Ewidencja jednostek Policji</h4>
 <table class="table table-hover my-table">

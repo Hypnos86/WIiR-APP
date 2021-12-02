@@ -1,13 +1,18 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template import loader
-from units.models import Jednostka
+from units.models import Jednostka, Powiat, Rodzaj
 from units.forms import JednotkskaForm
 
 
 def units_list(request):
     units_act = Jednostka.objects.filter(aktywna=1)
     units_deact = Jednostka.objects.filter(aktywna=0)
-    context = {"units": units_act}
+    powiaty = Powiat.objects.all()
+    rodzaj = Rodzaj.objects.all()
+
+    context = {"units": units_act,
+               "powiaty": powiaty,
+               "rodzaj":rodzaj}
     return render(request, "units/unitlist.html", context)
 
 

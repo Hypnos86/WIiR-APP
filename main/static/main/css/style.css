@@ -9,25 +9,10 @@
     }
 
 .footer {
-        margin-bottom: 50px;
+        margin-bottom: 120px;
 		}
-
-
 
 .margin-left-0{
     margin-left: 0!important;
-}
-
-.my-footer {
-    position: fixed;
-    padding-bottom: 10px!important;
-    width: 90%;
-    height: 10px;
-    color: aliceblue;
-    bottom: 1px;
-    left: 5%;
-    right: 5%;
-
-    border-radius: 80px 80px 15px 15px;
 }
 
