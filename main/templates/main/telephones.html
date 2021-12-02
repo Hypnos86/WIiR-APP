@@ -31,46 +31,18 @@
     <!-- icon -->
     <link rel="shortcut icon" href="{%static 'main/media/logo.ico'%}" type="x-icon">
 
-    <title>{%block title%} {%endblock%}</title>
+    <title>Telefony pracowników WIiR</title>
 </head>
 <body>
-<header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom body">
-    <a href="" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none margin-left-0"><span class="fs-5">Zalogowany użytkownik: {{user.first_name}} {{user.last_name}} (ID: {{user.username}}) </span></a>
-        <ul class="nav nav-pills">
-            <li class="nav-item"><a href="#" class="nav-link active" aria-current="page"><span>Aplikacje</span></a></li>
-            <li class="nav-item"><a href="{%url 'units:units_list'%}" class="nav-link" ><span>Jednostki Policji</span></a></li>
-            <li class="nav-item"><a href="{%url 'invoices:menu_invoices'%}" class="nav-link" ><span>Faktury</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="{%url 'contracts:menu_contracts'%}"><span>Umowy najmu</span></a></li>
-<!--            <li class="nav-item"><a class="nav-link" href="#"><span>Podatek od nieruchomości</span></a></li>-->
-<!--            <li class="nav-item"><a class="nav-link" href="#"><span>Trwały zarząd</span></a></li>-->
-<!--            <li class="nav-item"><a class="nav-link" href="#"><span>Przeglądy</span></a></li>-->
-      </ul>
-    </header>
-    <div class="containter footer body">
-    {%block content%}
 
-    {%endblock%}
+<h3 class="text-center mt-5"><span>Spis telefontów Wydziału Inwestycji i Remontów KWP w Poznaniu</span></h3>
+
+<div class="pl-5">
+    <div><span>Naczelnik Wydziału Inwestycji i Remontów:</span></div>
+    <div><span>Zastępca Naczelnika Wydziału Inwestycji i Remontów:</span></div>
+    <div><span>Sekretariat: 124-50</span></div>
+
 </div>
-<section class="">
-  <!-- Footer -->
-  <footer class="text-center text-white" style="background-color: #0a4275;">
-    <!-- Grid container -->
-    <div class="container p-4 pb-0">
-      <!-- Section: CTA -->
-      <section class="">
-       <p class="d-flex justify-content-center align-items-center"><a class="text-decoration-none link-light" href="{%url 'main:telephone_list'%}" target="_blank"><span>Spis telefonów</span></a></p>
-      </section>
-      <!-- Section: CTA -->
-    </div>
-    <!-- Grid container -->
 
-    <!-- Copyright -->
-    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-        <span>© 2021 Wydział inwestycji i Remontów KWP w Poznaniu</span>
-    </div>
-    <!-- Copyright -->
-  </footer>
-  <!-- Footer -->
-</section>
 </body>
 </html>

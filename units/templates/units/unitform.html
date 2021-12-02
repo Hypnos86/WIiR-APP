@@ -4,12 +4,31 @@
 {%block title%}{%if new%}Dodanie nowej jednostki{%else%}Edycja jednostki{%endif%}{%endblock%}
 
 {%block content%}
+
 <form method="post">
     {%csrf_token%}
+
     <fieldset>
-        {{unit_form|bootstrap}}
+
+        <div class="containter col-md-6">
+            <div class="m-1 mb-4">{{unit_form.powiat|bootstrap}}</div>
+            <div class="m-1 mb-4">{{unit_form.rodzaj|bootstrap}}</div>
+            <div class="m-1 mb-4">{{unit_form.adres|bootstrap}}</div>
+            <div class="m-1 mb-4">{{unit_form.kod_pocztowy|bootstrap}}</div>
+            <div class="m-1 mb-4">{{unit_form.miasto|bootstrap}}</div>
+            <div class="m-1 mb-4">{{unit_form.informacje|bootstrap}}</div>
+        </div>
     </fieldset>
-    <button type="submit" class="btn btn-outline-primary">Zapisz</button>
+    <div class="row m-0">
+        <div class="col-md-3 "><a href="{%url 'units:units_list'%}">
+            <button class="btn btn-outline-primary">Cofni</button>
+        </a></div>
+        <div class="col-md-3 moj-button-right">
+            <button type="submit" class="btn btn-outline-primary pr-3">Zapisz</button>
+        </div>
+    </div>
+
 </form>
-<a href="{%url 'units:units_list'%}"><button class="btn btn-outline-primary">Cofni</button></a>
+
 {%endblock%}
+
