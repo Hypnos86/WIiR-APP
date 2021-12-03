@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template import loader
-from units.models import Jednostka, Powiat, Rodzaj
-from units.forms import JednotkskaForm
+from units.models import Unit, Powiat, Rodzaj
+from units.forms import UnitForm
 
 
 def units_list(request):
-    units_act = Jednostka.objects.filter(aktywna=1)
-    units_deact = Jednostka.objects.filter(aktywna=0)
+    units_act = Unit.objects.filter(aktywna=1)
+    units_deact = Unit.objects.filter(aktywna=0)
     powiaty = Powiat.objects.all()
     rodzaj = Rodzaj.objects.all()
 
@@ -17,7 +17,7 @@ def units_list(request):
 
 
 def add_unit(request):
-    unit_form = JednotkskaForm(request.POST or None)
+    unit_form = UnitForm(request.POST or None)
 
     if request.method == 'POST':
         if unit_form.is_valid():

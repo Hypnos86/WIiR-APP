@@ -2,7 +2,7 @@ from django.contrib import admin
 from import_export import resources
 from import_export.admin import ExportMixin
 from import_export.fields import Field
-from .models import Powiat, Rodzaj, Jednostka
+from .models import Powiat, Rodzaj, Unit
 
 
 # admin.site.register(Post, PostAdmin)
@@ -16,7 +16,7 @@ class PowiatResource(resources.ModelResource):
         export_order = ('swop_id', 'powiat')
 
 
-class JednostkaResource(resources.ModelResource):
+class UnitResource(resources.ModelResource):
     powiat = Field(attribute='powiat', column_name='Powiat')
     rodzaj = Field(attribute='rodzaj', column_name='Rodzaj jednostki')
     kod_pocztowy = Field(attribute='kod_pocztowy', column_name='Kod pocztowy')
@@ -24,7 +24,7 @@ class JednostkaResource(resources.ModelResource):
     miasto = Field(attribute='miasto', column_name='Miasto')
 
     class Meta:
-        model = Jednostka
+        model = Unit
         fields = ('id',)
         export_order = ('id', 'powiat', 'rodzaj', 'adres', 'kod_pocztowy', 'miasto')
 
@@ -38,9 +38,9 @@ class PowiatAdmin(ExportMixin, admin.ModelAdmin):
 admin.site.register(Rodzaj)
 
 
-@admin.register(Jednostka)
+@admin.register(Unit)
 class JednotskaAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ['id', 'powiat', 'rodzaj', 'adres', 'kod_pocztowy', 'miasto', 'aktywna']
     search_fields = ['adres, miasto']
     list_filter = ['powiat']
-    resource_class = JednostkaResource
+    resource_class = UnitResource

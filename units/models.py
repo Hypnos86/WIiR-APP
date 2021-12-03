@@ -17,7 +17,7 @@ class Rodzaj(models.Model):
         return f'{self.rodzaj}'
 
 
-class Jednostka(models.Model):
+class Unit(models.Model):
     powiat = models.ForeignKey(Powiat, on_delete=models.CASCADE)
     rodzaj = models.ForeignKey(Rodzaj, on_delete=models.CASCADE)
     adres = models.CharField(max_length=30)

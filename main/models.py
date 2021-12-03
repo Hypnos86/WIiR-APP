@@ -3,6 +3,10 @@ from django.db import models
 
 # Create your models here.
 class Telephone(models.Model):
+    class Meta:
+        verbose_name = "Telefony"
+        verbose_name_plural = "Telefony"
+
     team = models.CharField("Zespół", max_length=50)
     position = models.CharField("Stanowisko", max_length=20)
     fname = models.CharField("Imię", max_length=15)

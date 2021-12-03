@@ -2,27 +2,53 @@ from django.contrib import admin
 from import_export import resources
 from import_export.admin import ExportMixin
 from import_export.fields import Field
-from .models import Contractor
+from .models import Contractorsell, Contractorbuy
 
 
 # admin.site.register(Post, PostAdmin)
-class ContractorResource(resources.ModelResource):
+class ContractorsellResource(resources.ModelResource):
     nazwa = Field(attribute='nazwa', column_name='Nazwa kontrahenta')
+    nip = Field(attribute='nip', column_name='NIP')
     adres = Field(attribute='adres', column_name='Adres')
     kod_pocztowy = Field(attribute='kod_pocztowy', column_name='Kod pocztowy')
     miasto = Field(attribute='miasto', column_name='Miasto')
     informacje = Field(attribute='informacje', column_name='Informacje')
+
     # data_utworzenia = Field(attribute='data_utworzenia', column_name='Data utworzenia', widget=DateWidget('%d/%m/%Y'))
     # autor = Field(attribute='autor', column_name='Autor')
 
     class Meta:
-        model = Contractor
+        model = Contractorsell
         fields = ('id',)
-        export_order = ('id', 'nazwa', 'adres', 'kod_pocztowy', 'miasto', 'informacje')
+        export_order = ('id', 'nazwa', 'nip', 'adres', 'kod_pocztowy', 'miasto', 'informacje')
 
 
-@admin.register(Contractor)
+@admin.register(Contractorsell)
 class ContractorAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['id', 'nazwa', 'adres', 'kod_pocztowy', 'miasto', 'informacje', 'data_utworzenia', 'autor']
-    search_fields = ['nazwa', 'adres', 'kod_pocztowy', 'miasto']
-    resource_class = ContractorResource
+    list_display = ['id', 'nazwa', 'nip', 'adres', 'kod_pocztowy', 'miasto', 'informacje', 'data_utworzenia', 'autor']
+    search_fields = ['nazwa', 'nip', 'adres', 'kod_pocztowy', 'miasto']
+    resource_class = ContractorsellResource
+
+
+class ContractorbuyResource(resources.ModelResource):
+    nazwa = Field(attribute='nazwa', column_name='Nazwa kontrahenta')
+    nip = Field(attribute='nip', column_name='NIP')
+    adres = Field(attribute='adres', column_name='Adres')
+    kod_pocztowy = Field(attribute='kod_pocztowy', column_name='Kod pocztowy')
+    miasto = Field(attribute='miasto', column_name='Miasto')
+    informacje = Field(attribute='informacje', column_name='Informacje')
+
+    # data_utworzenia = Field(attribute='data_utworzenia', column_name='Data utworzenia', widget=DateWidget('%d/%m/%Y'))
+    # autor = Field(attribute='autor', column_name='Autor')
+
+    class Meta:
+        model = Contractorbuy
+        fields = ('id',)
+        export_order = ('id', 'nazwa', 'nip', 'adres', 'kod_pocztowy', 'miasto', 'informacje')
+
+
+@admin.register(Contractorbuy)
+class ContractorAdmin(ExportMixin, admin.ModelAdmin):
+    list_display = ['id', 'nazwa', 'nip', 'adres', 'kod_pocztowy', 'miasto', 'informacje', 'data_utworzenia', 'autor']
+    search_fields = ['nazwa', 'nip', 'adres', 'kod_pocztowy', 'miasto']
+    resource_class = ContractorbuyResource

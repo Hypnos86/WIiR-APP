@@ -1,10 +1,9 @@
 from django.urls import path
-from .views import contractor_list, new_contractor, edit_contractor
+from .views import contractorsell_list, new_contractorsell, edit_contractorsell
 
 app_name = 'contractors'
 urlpatterns = [
-    path('newcontractor/', new_contractor, name="new_contractor"),
-    path('editcontractor/<int:id>', edit_contractor, name="edit_contractor"),
-    path('', contractor_list, name="contractor_list"),
-
+    path('newcontractorsell/', new_contractorsell, name="new_contractorsell"),
+    path('editcontractorsell/<int:id>', edit_contractorsell, name="edit_contractorsell"),
+    path('contractorsell/', contractorsell_list, name="contractorssell_list"),
 ]

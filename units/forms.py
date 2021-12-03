@@ -1,10 +1,10 @@
 from django.forms import ModelForm
-from units.models import Jednostka
+from units.models import Unit
 
 
-class JednotkskaForm(ModelForm):
+class UnitForm(ModelForm):
     class Meta:
-        model = Jednostka
+        model = Unit
         fields = ['powiat', 'rodzaj', 'adres', 'kod_pocztowy', 'miasto', 'informacje', 'aktywna']
         labels = {"powiat": "Powiat",
                   "rodzaj": "Rodzaj jednostki",
