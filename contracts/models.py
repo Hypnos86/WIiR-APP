@@ -42,6 +42,10 @@ class Podstawa(models.Model):
 
 
 class Contract(models.Model):
+    class Meta:
+        verbose_name = "Umowa"
+        verbose_name_plural = "Umowy"
+
     data_umowy = models.DateField("Data umowy")
     nrumowy = models.CharField(max_length=20, blank=True, default="BRAK")
     kontrahent = models.ForeignKey("contractors.Contractorsell", on_delete=models.CASCADE)
@@ -57,7 +61,7 @@ class Contract(models.Model):
     inf_woda = models.TextField(blank=True, default="")
     koszt_co = models.BooleanField()
     inf_co = models.TextField(blank=True, default="")
-    # unit = models.ForeignKey("units.Unit", on_delete=models.CASCADE)
+    unit = models.ForeignKey("units.Unit", on_delete=models.CASCADE, null=False)
     skan = models.FileField(upload_to='umowy_pdf', null=True, blank=True)
     stan = models.ForeignKey("contracts.Stan", on_delete=models.CASCADE, blank=False, default=1)
     comments = models.TextField("Uwagi", blank=True, default="")

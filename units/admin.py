@@ -2,7 +2,7 @@ from django.contrib import admin
 from import_export import resources
 from import_export.admin import ExportMixin
 from import_export.fields import Field
-from .models import Powiat, Rodzaj, Unit
+from units.models import Powiat, Rodzaj, Unit
 
 
 # admin.site.register(Post, PostAdmin)
