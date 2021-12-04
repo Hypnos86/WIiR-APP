@@ -2,10 +2,12 @@ from django.contrib import admin
 from import_export import resources
 from import_export.admin import ExportMixin
 from import_export.fields import Field
-from main.models import Telephone
-
+from main.models import Telephone, Team
 
 # Register your models here.
+admin.site.register(Team)
+
+
 class TelephoneResource(resources.ModelResource):
     team = Field(attribute='team', column_name='Komórka')
     position = Field(attribute='position', column_name='Stanowisko')
@@ -18,6 +20,7 @@ class TelephoneResource(resources.ModelResource):
         model = Telephone
         fields = ('id',)
         export_order = ('id', 'team', 'position', 'fname', 'lname', 'numbtelbus', 'numbtelpri')
+
 
 @admin.register(Telephone)
 class ContractorAdmin(ExportMixin, admin.ModelAdmin):

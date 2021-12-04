@@ -37,11 +37,31 @@
 
 <h3 class="text-center mt-5"><span>Spis telefontów Wydziału Inwestycji i Remontów KWP w Poznaniu</span></h3>
 
-<div class="pl-5">
-    <div><span>Naczelnik Wydziału Inwestycji i Remontów:</span></div>
-    <div><span>Zastępca Naczelnika Wydziału Inwestycji i Remontów:</span></div>
-    <div><span>Sekretariat: 124-50</span></div>
-
+<div class="">
+    {%for te in teams%}
+    <table>
+        <caption>{{te}}</caption>
+        <thead>
+        <tr>
+            <th scope="col">l.p</th>
+            <th scope="col">Stanowisko</th>
+            <th scope="col">Imię i Nazwisko</th>
+            <th scope="col">Nr telefonu</th>
+            <th scope="col">Nr komórkowy</th>
+            <th scope="col">Informacje</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for worker in te.telephone_set.all %}
+        <tr>
+            <td scope="row">1</td>
+            <td>{{worker.position|default_if_none:''}}</td>
+            <td>{{worker.fname|default_if_none:''}} {{team.lname|default_if_none:''}}</td>
+            <td>{{worker.numbtelbus|default_if_none:''}}</td>
+            <td>{{worker.numbtelpri|default_if_none:''}}</td>
+        </tr>
+        {% endfor %}
+        {% endfor %}
 </div>
 
 </body>

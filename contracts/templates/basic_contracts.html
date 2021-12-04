@@ -3,12 +3,16 @@
 {%block title%}Umowy najmu{%endblock%}
 {%block content%}
 <div class="chose-contracts">
-    {%if list = True%}
-    {%elif%}
-    <a href="{%url 'contractors:contractorssell_list'%}" class="btn btn-outline-primary button-choise-contracts" ><span>Kontrahenci</span></a>
-    {%endif%}
-    <a href="{%url 'contracts:new_contractsimmovables'%}"><button class="btn btn-outline-primary button-choise-contracts">Nowa umowa</button></a>
+    <a id="button-kontrahenci" href="{%url 'contractors:contractorssell_list'%}" class="btn btn-outline-primary button-choise-contracts" ><span>Kontrahenci</span></a>
+    <a id="button-nowa-umowa" href="{%url 'contracts:new_contractsimmovables'%}"><button class="btn btn-outline-primary button-choise-contracts">Nowa umowa</button></a>
 </div>
 {%block contracts%}
 {%endblock%}
 {%endblock%}
+
+<script>
+alert("czesc");
+ document.getElementById("button-kontrahenci").classList.remove("active");
+ document.getElementById("button-nowa-umowa").classList.remove("active");
+
+</script>

@@ -1,5 +1,12 @@
 from django.forms import ModelForm
-from main.models import Telephone
+from main.models import Team, Telephone
+
+
+class TeamForm(ModelForm):
+    class Meta:
+        name = Team
+        field = ['team']
+        labels = {'team': "Komrówka Wydziału"}
 
 
 class TelephoneForm(ModelForm):
