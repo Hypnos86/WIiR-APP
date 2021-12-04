@@ -2,7 +2,7 @@ from django.contrib import admin
 from import_export import resources
 from import_export.admin import ExportMixin
 from import_export.fields import Field
-from contracts.models import Contract, Stan, Rodzaj, Podstawa
+from contracts.models import Contractimmovables, Stan, Rodzaj, Podstawa
 
 
 # Register your models here.
@@ -12,40 +12,39 @@ class ContractResource(resources.ModelResource):
     kontrahent = Field(attribute='kontrahent', column_name='Kontrachent')
     podstawa = Field(attribute='podstawa', column_name='Podstawa prawna')
     okres_obowiazywania = Field(attribute='okres_obowiazywania', column_name='Okres obowiązywania')
-    rodzaj
-    pow_uzyczona
-    koszt_prad
-    inf_prad
-    koszt_gaz
-    inf_gaz
-    koszt_woda
-    inf_woda
-    koszt_co
-    inf_co
-    unit
-    stan
-    comments
-    archives
-    create
-    change
-    autor
+    rodzaj = Field(attribute='rodzaj', column_name='Rodzaj umowy')
+    pow_uzyczona = Field(attribute='pow_uzyczona', column_name='Powieżchnia użytkowa')
+    # koszt_prad = Field(attribute='pow_uzyczona', column_name='')
+    # inf_prad = Field(attribute='inf_prad', column_name='')
+    # koszt_gaz = Field(attribute='koszt_gaz', column_name='')
+    # inf_gaz = Field(attribute='inf_gaz', column_name='')
+    # koszt_woda = Field(attribute='koszt_woda', column_name='')
+    # inf_woda = Field(attribute='inf_woda', column_name='')
+    # koszt_co = Field(attribute='koszt_co', column_name='')
+    # inf_co = Field(attribute='inf_co', column_name='')
+    unit = Field(attribute='unit', column_name='Jednostka')
+    stan = Field(attribute='stan', column_name='stan')
+
+    # comments = Field(attribute='comments', column_name='')
+    # archives = Field(attribute='archives', column_name='')
 
     class Meta:
-        model = Contract
+        model = Contractimmovables
         fields = ('id',)
         export_order = ('id', 'data_umowy', 'nrumowy', 'kontrahent', 'podstawa', 'okres_obowiazywania', 'rodzaj',
-                        'pow_uzyczona',
-                        'koszt_prad', 'inf_prad', 'koszt_gaz', 'inf_gaz', 'koszt_woda', 'inf_woda', 'koszt_co',
-                        'inf_co',
-                        'unit', 'stan', 'comments', 'archives', 'create', 'change', 'autor')
+                        'pow_uzyczona', 'unit', 'stan')
 
 
-@admin.register(ContractResource)
+#
+
+@admin.register(Contractimmovables)
 class ContractAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ['id', 'data_umowy', 'nrumowy', 'kontrahent', 'podstawa', 'okres_obowiazywania', 'rodzaj',
                     'pow_uzyczona',
                     'koszt_prad', 'inf_prad', 'koszt_gaz', 'inf_gaz', 'koszt_woda', 'inf_woda', 'koszt_co', 'inf_co',
-                    'unit', 'skan', 'stan', 'comments', 'archives', 'create', 'change', 'autor']
+                    'unit', 'stan', 'archives', 'create', 'change', 'autor']
+    search_fields = ['nrumowy', 'kontrahent']
+    preserve_filters = True
     resource_class = ContractResource
 
 

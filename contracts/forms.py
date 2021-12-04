@@ -1,10 +1,10 @@
 from django.forms import ModelForm
-from contracts.models import Contract, Stan, Rodzaj, Podstawa
+from contracts.models import Contractimmovables, Stan, Rodzaj, Podstawa
 
 
-class ContractForm(ModelForm):
+class ContractimmovablesForm(ModelForm):
     class Meta:
-        name = Contract
+        name = Contractimmovables
         field = ['data_umowy', 'nrumowy', 'kontrahent', 'podstawa', 'okres_obowiazywania', 'rodzaj', 'pow_uzyczona',
                  'koszt_prad', 'inf_prad', 'koszt_gaz', 'inf_gaz', 'koszt_woda', 'inf_woda', 'koszt_co', 'inf_co',
                  'unit', 'skan', 'stan', 'comments', 'archives', 'create', 'change', 'autor']

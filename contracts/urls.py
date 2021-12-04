@@ -1,8 +1,9 @@
 from django.urls import path
-from contracts.views import menu_contracts, new_contracts
+from contracts.views import menu_contractsimmovables, new_contractsimmovables, edit_contractsimmovables
 
 app_name = 'contracts'
 urlpatterns = [
-    path('', menu_contracts, name='menu_contracts'),
-    path('newcontract/', new_contracts, name='new_contracts')
+    path('', menu_contractsimmovables, name='menu_contractsimmovables'),
+    path('newcontractimmovables/', new_contractsimmovables, name='new_contractsimmovables'),
+    path('editcontractimmovables/', edit_contractsimmovables, name='edit_contractsimmovables')
 ]

@@ -1,13 +1,6 @@
 from django.db import models
 
-# Create your models here.
-from django.db import models
 
-# Create your models here.
-from django.db import models
-
-
-# Create your models here.
 class Stan(models.Model):
     class Meta:
         verbose_name = "Stan umowy"
@@ -41,10 +34,10 @@ class Podstawa(models.Model):
         return f'{self.podstawa}'
 
 
-class Contract(models.Model):
+class Contractimmovables(models.Model):
     class Meta:
-        verbose_name = "Umowa"
-        verbose_name_plural = "Umowy"
+        verbose_name = "Umowa nieruchomosci"
+        verbose_name_plural = "Umowy nieruchomosci"
 
     data_umowy = models.DateField("Data umowy")
     nrumowy = models.CharField(max_length=20, blank=True, default="BRAK")

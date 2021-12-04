@@ -3,8 +3,11 @@
 {%block title%}Umowy najmu{%endblock%}
 {%block content%}
 <div class="chose-contracts">
+    {%if list = True%}
+    {%elif%}
     <a href="{%url 'contractors:contractorssell_list'%}" class="btn btn-outline-primary button-choise-contracts" ><span>Kontrahenci</span></a>
-    <a href="{%url 'contracts:new_contracts'%}"><button class="btn btn-outline-primary button-choise-contracts">Nowa umowa</button></a>
+    {%endif%}
+    <a href="{%url 'contracts:new_contractsimmovables'%}"><button class="btn btn-outline-primary button-choise-contracts">Nowa umowa</button></a>
 </div>
 {%block contracts%}
 {%endblock%}
