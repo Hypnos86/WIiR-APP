@@ -1,3 +1,4 @@
+/* MAIN */
 .body{
     /*color: #2F4F4F;*/
     /*rgb(33, 36, 53);*/
@@ -15,4 +16,73 @@
 .margin-left-0{
     margin-left: 0!important;
 }
+
+/* CONTRACTORS */
+.moj-button-left{
+    text-align:left;
+}
+
+.moj-button-right{
+    text-align: right;
+}
+
+.kontrahenci-title h4{
+    margin: 5px 0 0;
+    text-align: center;
+}
+/* CONTRACTS */
+.moj-button-left{
+    text-align:left;
+}
+
+.moj-button-right{
+    text-align:right;
+}
+
+
+.chose-contracts {
+    text-align: center;
+}
+
+.button-choise-contracts{
+    margin: 0 15px;
+}
+
+.umowy-title h4{
+    margin: 5px 0 ;
+    text-align: center;
+}
+
+/* INVOICES */
+.chose-invoices {
+    text-align: center;
+}
+
+.button-chose-invoices {
+    margin: 0 15px;
+}
+
+/* SOURCEFINANCING */
+
+/* UNITS */
+.units-title{
+    margin: 25px 0 10px;
+
+    text-align: center;
+}
+
+.my-table {
+  counter-reset: rowNumber -1;
+}
+
+.my-table-tr {
+  counter-increment: rowNumber;
+}
+
+.my-table-tr td:first-child::before {
+  content: counter(rowNumber);
+  min-width: 1em;
+  margin-right: 0.5em;
+}
+
 

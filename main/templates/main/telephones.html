@@ -22,10 +22,6 @@
     <link href="{%static 'main/bootstrap/css/bootstrap-utilities.rtl.css'%}" rel="stylesheet">
     <link href="{%static 'main/bootstrap/css/bootstrap-utilities.rtl.min.css'%}" rel="stylesheet">
     <link href="{%static 'main/css/style.css'%}" rel="stylesheet">
-    <link href="{%static 'contractors/css/style-contractors.css'%}" rel="stylesheet">
-    <link href="{%static 'units/css/style.css'%}" rel="stylesheet">
-    <link href="{%static 'contracts/css/style-contracts.css'%}" rel="stylesheet">
-    <link href="{%static 'invoices/css/style.css'%}" rel="stylesheet">
     <!-- Bootstrap JS -->
     <script src="{%static 'main/bootstrap//js/bootstrap.bundle.js'%}"></script>
     <!-- icon -->
@@ -37,11 +33,11 @@
 
 <h3 class="text-center mt-5"><span>Spis telefontów Wydziału Inwestycji i Remontów KWP w Poznaniu</span></h3>
 
-<div class="">
+<div class="md-6">
     {%for te in teams%}
-    <table>
-        <caption>{{te}}</caption>
-        <thead>
+    <table class="table table-sm">
+        <caption class="table-warning">{{te}}</caption>
+        <thead class="thead-dark">
         <tr>
             <th scope="col">l.p</th>
             <th scope="col">Stanowisko</th>
@@ -55,14 +51,20 @@
         {% for worker in te.telephone_set.all %}
         <tr>
             <td scope="row">1</td>
-            <td>{{worker.position|default_if_none:''}}</td>
-            <td>{{worker.fname|default_if_none:''}} {{team.lname|default_if_none:''}}</td>
+            <td class="table-active">{{worker.position|default_if_none:''}}</td>
+            <td>{{worker.fname|default_if_none:''}} {{worker.lname|default_if_none:''}}</td>
             <td>{{worker.numbtelbus|default_if_none:''}}</td>
             <td>{{worker.numbtelpri|default_if_none:''}}</td>
         </tr>
+
+
         {% endfor %}
-        {% endfor %}
+        </tbody>
+    </table>
+
+    {% endfor %}
 </div>
+
 
 </body>
 </html>
