@@ -16,6 +16,20 @@
 .margin-left-0{
     margin-left: 0!important;
 }
+/*telephone*/
+.tel-h{
+    margin-bottom:20px;
+}
+
+.tel-table{
+    caption-side:top;
+    margin-bottom:50px;
+}
+.tel-table-caption{
+    text-align:center;
+    color: #0a4275;
+    font-size:20px;
+}
 
 /* CONTRACTORS */
 .moj-button-left{

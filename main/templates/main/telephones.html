@@ -31,37 +31,40 @@
 </head>
 <body>
 
-<h3 class="text-center mt-5"><span>Spis telefontów Wydziału Inwestycji i Remontów KWP w Poznaniu</span></h3>
+<h3 class="text-center mt-5 mb-5"><span>Spis telefontów Wydziału Inwestycji i Remontów KWP w Poznaniu</span></h3>
 
-<div class="md-6">
+<div class="container">
     {%for te in teams%}
-    <table class="table table-sm">
-        <caption class="table-warning">{{te}}</caption>
+    <div>
+    <table class="table table-bordered tel-table my-table">
+        <caption class="tel-table-caption">{{te}}</caption>
         <thead class="thead-dark">
-        <tr>
-            <th scope="col">l.p</th>
-            <th scope="col">Stanowisko</th>
-            <th scope="col">Imię i Nazwisko</th>
-            <th scope="col">Nr telefonu</th>
-            <th scope="col">Nr komórkowy</th>
-            <th scope="col">Informacje</th>
+        <tr class="my-table-tr">
+            <th class="text-center" width="40px" scope="col">l.p</th>
+            <th class="text-center" width="100px" scope="col">Stanowisko</th>
+            <th class="text-center" width="120px" scope="col">Imię i Nazwisko</th>
+            <th class="text-center" width="80px" scope="col">Nr. pokoju</th>
+            <th class="text-center" width="80px" scope="col">Nr. telefonu</th>
+            <th class="text-center" width="80px" scope="col">Nr. komórkowy</th>
+            <th width="220px" scope="col">Informacje</th>
         </tr>
         </thead>
         <tbody>
         {% for worker in te.telephone_set.all %}
-        <tr>
-            <td scope="row">1</td>
-            <td class="table-active">{{worker.position|default_if_none:''}}</td>
-            <td>{{worker.fname|default_if_none:''}} {{worker.lname|default_if_none:''}}</td>
-            <td>{{worker.numbtelbus|default_if_none:''}}</td>
-            <td>{{worker.numbtelpri|default_if_none:''}}</td>
+        <tr class="my-table-tr">
+            <td class="text-center" scope="row"></td>
+            <td class="text-center table-warning">{{worker.position|default_if_none:''}}</td>
+            <td class="text-center" width="120px">{{worker.fname|default_if_none:''}} {{worker.lname|default_if_none:''}}</td>
+            <td class="text-center">{{worker.numbroom|default_if_none:''}}</td>
+            <td class="text-center">{{worker.numbtelbus|default_if_none:''}}</td>
+            <td class="text-center">{{worker.numbtelpri|default_if_none:''}}</td>
+            <td></td>
         </tr>
-
 
         {% endfor %}
         </tbody>
     </table>
-
+        </div>
     {% endfor %}
 </div>
 

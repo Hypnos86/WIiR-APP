@@ -22,6 +22,7 @@ class Telephone(models.Model):
     position = models.CharField("Stanowisko", max_length=20, blank=True, default="")
     fname = models.CharField("Imię", max_length=15, blank=True, default="")
     lname = models.CharField("Nazwisko", max_length=15, null=True, blank=True, default="")
+    numbroom = models.CharField("Nr. pokoju", max_length=2, blank=True, default="")
     numbtelbus = models.CharField("Nr. telefonu", max_length=6, blank=True, default="")
     numbtelpri = models.CharField("Nr. komórkowy", max_length=9, null=True, blank=True, default="")
 
