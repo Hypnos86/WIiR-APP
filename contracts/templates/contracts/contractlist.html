@@ -11,8 +11,12 @@
         </form>
     </div>
 </section>
-<div class="umowy-title">
-    <h4>Umowy czynszowe WIiR</h4>
+<div class="row">
+    <div class="col-md-12 moj-button-right"><a href="{%url 'contractors:new_contractorsell'%}"><button type="button" class="btn btn-outline-primary">Nowa umowa</button></a></div>
+</div>
+<div class="kontrahenci-title">
+    <h4>Umowy czynszowe</h4>
+    <p><span>Liczba umów: {{contrsum}}</span></p>
 </div>
 <table class="table table-hover my-table">
     <thead>

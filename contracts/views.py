@@ -13,10 +13,10 @@ def menu_contractsimmovables(request):
     if q:
         contracts = contracts.filter(nazwa__icontains=q)
         return render(request, 'contracts/contractlist.html',
-                      {'contracts': contracts, "consellsum": contrsum, "query": query})
+                      {'contracts': contracts, "contrsum": contrsum, "query": query})
     else:
         return render(request, 'contracts/contractlist.html',
-                      {'contracts': contracts, "consellsum": contrsum, "search": search})
+                      {'contracts': contracts, "contrsum": contrsum, "search": search})
 
 
 def new_contractsimmovables(request):
