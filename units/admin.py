@@ -16,6 +16,12 @@ class PowiatResource(resources.ModelResource):
         export_order = ('swop_id', 'powiat')
 
 
+@admin.register(Powiat)
+class PowiatAdmin(ExportMixin, admin.ModelAdmin):
+    list_display = ['id', 'swop_id', 'powiat']
+    resource_class = PowiatResource
+
+
 class UnitResource(resources.ModelResource):
     powiat = Field(attribute='powiat', column_name='Powiat')
     rodzaj = Field(attribute='rodzaj', column_name='Rodzaj jednostki')
@@ -29,18 +35,12 @@ class UnitResource(resources.ModelResource):
         export_order = ('id', 'powiat', 'rodzaj', 'adres', 'kod_pocztowy', 'miasto')
 
 
-@admin.register(Powiat)
-class PowiatAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['id', 'swop_id', 'powiat']
-    resource_class = PowiatResource
-
-
-admin.site.register(Rodzaj)
-
-
 @admin.register(Unit)
-class JednotskaAdmin(ExportMixin, admin.ModelAdmin):
+class UnitAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ['id', 'powiat', 'rodzaj', 'adres', 'kod_pocztowy', 'miasto', 'aktywna']
     search_fields = ['adres, miasto']
     list_filter = ['powiat']
     resource_class = UnitResource
+
+
+admin.site.register(Rodzaj)

@@ -15,13 +15,9 @@ class ContractResource(resources.ModelResource):
     rodzaj = Field(attribute='rodzaj', column_name='Rodzaj umowy')
     pow_uzyczona = Field(attribute='pow_uzyczona', column_name='Powieżchnia użytkowa')
     # koszt_prad = Field(attribute='pow_uzyczona', column_name='')
-    # inf_prad = Field(attribute='inf_prad', column_name='')
     # koszt_gaz = Field(attribute='koszt_gaz', column_name='')
-    # inf_gaz = Field(attribute='inf_gaz', column_name='')
     # koszt_woda = Field(attribute='koszt_woda', column_name='')
-    # inf_woda = Field(attribute='inf_woda', column_name='')
     # koszt_co = Field(attribute='koszt_co', column_name='')
-    # inf_co = Field(attribute='inf_co', column_name='')
     unit = Field(attribute='unit', column_name='Jednostka')
     stan = Field(attribute='stan', column_name='stan')
 
@@ -40,8 +36,7 @@ class ContractResource(resources.ModelResource):
 @admin.register(Contractimmovables)
 class ContractAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ['id', 'data_umowy', 'nrumowy', 'kontrahent', 'podstawa', 'okres_obowiazywania', 'rodzaj',
-                    'pow_uzyczona',
-                    'koszt_prad', 'inf_prad', 'koszt_gaz', 'inf_gaz', 'koszt_woda', 'inf_woda', 'koszt_co', 'inf_co',
+                    'pow_uzyczona', 'koszt_czynsz', 'koszt_prad', 'koszt_gaz', 'koszt_woda', 'koszt_co', 'koszt_smieci',
                     'unit', 'stan', 'archives', 'create', 'change', 'autor']
     search_fields = ['nrumowy', 'kontrahent']
     preserve_filters = True

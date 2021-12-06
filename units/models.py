@@ -18,6 +18,10 @@ class Rodzaj(models.Model):
 
 
 class Unit(models.Model):
+    class Meta:
+        verbose_name = "Jednostki"
+        verbose_name_plural = "Jednostka"
+
     powiat = models.ForeignKey(Powiat, on_delete=models.CASCADE)
     rodzaj = models.ForeignKey(Rodzaj, on_delete=models.CASCADE)
     adres = models.CharField(max_length=30)
@@ -27,4 +31,4 @@ class Unit(models.Model):
     aktywna = models.BooleanField(null=False, default=0)
 
     def __str__(self):
-        return f'{self.rodzaj} w {self.miasto} ({self.powiat})'
+        return f'{self.informacje} {self.miasto} ({self.powiat})'

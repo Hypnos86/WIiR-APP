@@ -22,10 +22,9 @@
     <h4>Kontrahenci umów czynszowych WIiR</h4>
     <p>Liczba kontrahentów: {{consellsum}}</p>
 </div>
-<table class="table table-hover">
+<table class="table table-hover my-table">
     <thead>
-
-    <tr>
+    <tr class="my-table-tr">
         <th scope="col">L.p</th>
         <th scope="col">Nazwa</th>
         <th scope="col">NIP</th>
@@ -38,18 +37,18 @@
     </thead>
     <tbody>
     {%for contractor in contractors %}
-    <tr>
-        <th scope="row">{{contractor.id}}</th>
-        <th>{{contractor.nazwa}}</th>
-        <th>{{contractor.nip}}</th>
-        <th>{{contractor.adres}}</th>
-        <th>{{contractor.kod_pocztowy}}</th>
-        <th>{{contractor.miasto}}</th>
-        <th>{{contractor.informacje}}</th>
-        <th>{{unit.informacje}}</th>
-        <th>
+    <tr class="my-table-tr">
+        <td scope="row"></td>
+        <td>{{contractor.nazwa}}</td>
+        <td>{{contractor.nip}}</td>
+        <td>{{contractor.adres}}</td>
+        <td>{{contractor.kod_pocztowy}}</td>
+        <td>{{contractor.miasto}}</td>
+        <td>{{contractor.informacje}}</td>
+        <td>{{unit.informacje}}</td>
+        <td>
             <a href="{%url 'contractors:edit_contractorsell' contractor.id%}"><button type="submit" class="btn btn-outline-primary">Edytuj</button></a>
-        </th>
+        </td>
     </tr>
     {%endfor%}
     </tbody>
@@ -61,7 +60,6 @@
     </tfoot>
 </table>
 {%endblock%}
-
 
 <script>
      document.getElementById("button-kontrahenci").classList.add("active");

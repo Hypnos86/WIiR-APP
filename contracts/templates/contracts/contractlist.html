@@ -14,4 +14,48 @@
 <div class="umowy-title">
     <h4>Umowy czynszowe WIiR</h4>
 </div>
+<table class="table table-hover my-table">
+    <thead>
+    <tr class="my-table-tr">
+        <th scope="col">L.p</th>
+        <th scope="col">Umowa</th>
+        <th scope="col">Kontrachent</th>
+        <th scope="col">NIP</th>
+        <th scope="col">Jednostka</th>
+        <th scope="col">Kod pocztowy</th>
+        <th scope="col">Rodzaj umowy</th>
+        <th scope="col">Stan umowy</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    {%for contractor in contractors %}
+    <tr class="my-table-tr">
+        <td scope="row"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+            <a href="{%url 'contractors:edit_contractorsell' contractor.id%}"><button type="submit" class="btn btn-outline-primary">Edytuj</button></a>
+        </td>
+    </tr>
+    {%endfor%}
+    </tbody>
+    <tfoot>
+    <tr>
+        <th colspan="7">Wydział Inwestycji i Remontów KWP w Poznaniu</th>
+
+    </tr>
+    </tfoot>
+</table>
 {%endblock%}
+
+<script>
+     document.getElementById("button-kontrahenci").classList.add("active");
+     document.getElementById("button-nowa-umowa").classList.remove("active");
+</script>
+
