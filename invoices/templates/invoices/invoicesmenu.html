@@ -3,7 +3,16 @@
 {%block title%}Faktury{%endblock%}
 {%block content%}
 <div class="chose-invoices">
-    <a href="{%url 'invoices:sell_invoices'%}"><button class="btn btn-outline-primary button-chose-invoices">Ewidencja faktur - sprzedaż</button></a>
-    <a href="{%url 'invoices:buy_invoices'%}"><button class="btn btn-outline-primary button-chose-invoices">Ewidencja faktur - gr.6</button></a>
+    <a href="{%url 'invoices:sell_invoices_list'%}"><button class="btn btn-outline-primary button-chose-invoices">Ewidencja faktur - sprzedaż</button></a>
+    <a href="{%url 'invoices:buy_invoices_list'%}"><button class="btn btn-outline-primary button-chose-invoices">Ewidencja faktur - gr.6</button></a>
+</div>
+<div class="row">
+    <div class="row-md-6">
+
+    </div>
+    <div class="row-md-6">
+
+    </div>
+
 </div>
 {%endblock%}

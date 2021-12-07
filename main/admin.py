@@ -19,12 +19,11 @@ class TelephoneResource(resources.ModelResource):
 
     class Meta:
         model = Telephone
-        fields = ('id',)
-        export_order = ('id', 'team', 'position', 'fname', 'lname', 'numbroom', 'numbtelbus', 'numbtelpri')
+        export_order = ('team', 'position', 'fname', 'lname', 'numbroom', 'numbtelbus', 'numbtelpri')
 
 
 @admin.register(Telephone)
 class ContractorAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['id', 'team', 'position', 'fname', 'lname', 'numbroom', 'numbtelbus', 'numbtelpri']
+    list_display = ['team', 'position', 'fname', 'lname', 'numbroom', 'numbtelbus', 'numbtelpri']
     search_fields = ['team', 'position', 'fname', 'lname', 'numbtelbus', 'numbtelpri']
     resource_class = TelephoneResource

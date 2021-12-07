@@ -5,7 +5,7 @@ from .forms import ContractorsellForm
 
 
 def contractorsell_list(request):
-    contractorsell = Contractorsell.objects.all()
+    contractorsell = Contractorsell.objects.all().order_by("nazwa")
     query = "Wyczyść"
     search = "Szukaj"
     consellsum = len(contractorsell)

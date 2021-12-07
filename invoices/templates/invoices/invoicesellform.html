@@ -1,11 +1,11 @@
 {%extends 'base.html'%}
 {%load static%}
 {%load bootstrap%}
-{%block title%}{%if new%}Nowy kontrahent{%else%}Edycja kontrahenta{%endif%}{%endblock%}
+{%block title%}{%if new%}Nowa faktura{%else%}Edycja faktury{%endif%}{%endblock%}
 
 {%block content%}
 
-<h4 class="text-center">{%if new%}Nowy kontrahent{%else%}Edycja kontrahenta{%endif%}</h4>
+<h4 class="text-center">{%if new%}Nowa faktura{%else%}Edycja faktury{%endif%}</h4>
 <div class="col-md-6 moj-button-left"><a href="{%url 'contractors:contractorssell_list'%}">
             <button class="btn btn-outline-primary">Cofni</button>
         </a></div>

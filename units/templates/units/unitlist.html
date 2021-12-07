@@ -36,26 +36,26 @@
 <table class="table table-hover my-table">
     <thead>
     <tr class="my-table-tr">
-        <th width="80px" scope="col">L.p</th>
-        <th width="180px" scope="col">Powiat</th>
-        <th scope="col">Rodzaj jednostki</th>
-        <th width="300px" scope="col">Adres</th>
-        <th scope="col">Kod pocztowy</th>
-        <th width="250px" scope="col">Miasto</th>
-        <th scope="col">Informacje</th>
-        <th scope="col">Aktywna</th>
+        <th class="text-center" width="80px" scope="col">L.p.</th>
+        <th class="text-center" width="120" scope="col">Powiat</th>
+        <th class="text-center" scope="col">Rodzaj jednostki</th>
+        <th class="text-center" width="300" scope="col">Adres</th>
+        <th class="text-center" scope="col">Kod pocztowy</th>
+        <th class="text-center"  scope="col">Miasto</th>
+        <th class="text-center" scope="col">Informacje</th>
+        <th class="text-center" scope="col">Aktywna</th>
 
     </tr>
     </thead>
     <tbody>
     {%for unit in units %}
     <tr class="my-table-tr">
-        <td scope="row"></td>
+        <td class="text-center" scope="row"></td>
         <td>{{unit.powiat}}</td>
-        <td>{{unit.rodzaj}}</td>
+        <td class="text-center">{{unit.rodzaj}}</td>
         <td>{{unit.adres}}</td>
-        <td>{{unit.kod_pocztowy}}</td>
-        <td>{{unit.miasto}}</td>
+        <td class="text-center">{{unit.kod_pocztowy}}</td>
+        <td width="180">{{unit.miasto}}</td>
         <td>{{unit.informacje}}</td>
         <td>
             {%if unit.aktywna == True%}

@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from contracts.models import Contractimmovables
+from contracts.forms import ContractimmovablesForm
 
 
 # Create your views here.
@@ -20,8 +21,14 @@ def menu_contractsimmovables(request):
 
 
 def new_contractsimmovables(request):
-    context = {}
-    return render(request, 'contracts/newcontract.html', context)
+    contract_form = ContractimmovablesForm(request.POST or None)
+    context = {'contract_form': contract_form}
+    if request.method != 'POST':
+        if contract_form.is_valid():
+            contract_form.save()
+            return redirect('contracts:menu_contractsimmovables')
+
+    return render(request, 'contracts/contractedit.html', context)
 
 
 def edit_contractsimmovables(request):

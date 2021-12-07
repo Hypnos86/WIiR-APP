@@ -7,7 +7,7 @@ class Contractorsell(models.Model):
         verbose_name_plural = "Kontrahenci - sprzedaż"
 
     nazwa = models.CharField(max_length=30, null=True)
-    nip = models.CharField("NIP", max_length=10, null=True)
+    nip = models.CharField("NIP", max_length=10, null=True, blank=True)
     adres = models.CharField(max_length=30, null=True)
     kod_pocztowy = models.CharField(max_length=6, null=True)
     miasto = models.CharField(max_length=20, null=True)

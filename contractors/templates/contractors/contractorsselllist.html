@@ -22,14 +22,15 @@
     <h4>Kontrahenci umów czynszowych WIiR</h4>
     <p>Liczba kontrahentów: {{consellsum}}</p>
 </div>
+<div class="containter">
 <table class="table table-hover my-table">
     <thead>
-    <tr class="my-table-tr">
-        <th scope="col">L.p</th>
-        <th scope="col">Nazwa</th>
-        <th scope="col">NIP</th>
-        <th scope="col">Adres</th>
-        <th scope="col">Kod pocztowy</th>
+    <tr class="my-table-tr text-center">
+        <th width="50" scope="col">L.p.</th>
+        <th width="300" scope="col">Nazwa</th>
+        <th width="200" scope="col">NIP</th>
+        <th width="300" scope="col">Adres</th>
+        <th width="150" scope="col">Kod pocztowy</th>
         <th scope="col">Miasto</th>
         <th scope="col">Informacje</th>
 
@@ -38,15 +39,14 @@
     <tbody>
     {%for contractor in contractors %}
     <tr class="my-table-tr">
-        <td scope="row"></td>
-        <td>{{contractor.nazwa}}</td>
-        <td>{{contractor.nip}}</td>
-        <td>{{contractor.adres}}</td>
-        <td>{{contractor.kod_pocztowy}}</td>
-        <td>{{contractor.miasto}}</td>
-        <td>{{contractor.informacje}}</td>
-        <td>{{unit.informacje}}</td>
-        <td>
+        <td class="text-center" scope="row"></td>
+        <td><span>{{contractor.nazwa}}</span></td>
+        <td class="text-center"><span>{{contractor.nip|default_if_none:''}}</span></td>
+        <td><span>{{contractor.adres}}</span></td>
+        <td class="text-center"><span>{{contractor.kod_pocztowy}}</span></td>
+        <td class="text-center"><span>{{contractor.miasto}}</span></td>
+        <td><span>{{contractor.informacje}}</span></td>
+        <td class="text-center">
             <a href="{%url 'contractors:edit_contractorsell' contractor.id%}"><button type="submit" class="btn btn-outline-primary">Edytuj</button></a>
         </td>
     </tr>
@@ -59,6 +59,7 @@
     </tr>
     </tfoot>
 </table>
+    </div>
 {%endblock%}
 
 <script>

@@ -1,0 +1,21 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block title%}Ewidencja faktur - zobowiązania{%endblock%}
+{%block content%}
+<section class="w-100 p-4 pb-4 d-flex justify-content-center align-items-center flex-column">
+    <div>
+        <form method="get">
+            <div class="input-group">
+                <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj faktury"
+                       aria-label="Search" aria-describedby="search-addon">
+                <button type="submit" class="btn btn-outline-primary">Szukaj/Wyczyśc</button>
+            </div>
+        </form>
+    </div>
+</section>
+<h4 class="text-center">Ewidencja faktur - zobowiązania</h4>
+<div class="row">
+    <div class="col-md-6 moj-button-left"><a href="{%url 'invoices:menu_invoices'%}"><button type="button" class="btn btn-outline-primary">Cofni</button></a></div>
+    <div class="col-md-6 moj-button-right"><a id="button-nowa-umowa" href=""><button class="btn btn-outline-primary button-choise-contracts">Nowa faktura</button></a></div>
+</div>
+{%endblock%}

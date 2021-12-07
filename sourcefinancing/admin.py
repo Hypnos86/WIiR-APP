@@ -6,7 +6,13 @@ from sourcefinancing.models import Section, Group, Paragraph, Source, Financesou
 
 # Register your models here.
 admin.site.register(Section)
-admin.site.register(Group)
+
+
+@admin.register(Group)
+class GroupAdmin(admin.ModelAdmin):
+    list_display = ['group', 'name']
+    
+
 admin.site.register(Paragraph)
 admin.site.register(Source)
 

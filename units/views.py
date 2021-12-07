@@ -5,9 +5,9 @@ from units.forms import UnitForm
 
 
 def units_list(request):
-    units_act = Unit.objects.filter(aktywna=1)
+    units_act = Unit.objects.filter(aktywna=1).order_by("powiat")
     units_deact = Unit.objects.filter(aktywna=0)
-    powiaty = Powiat.objects.all()
+    powiaty = Powiat.objects.all().order_by("powiat")
     rodzaj = Rodzaj.objects.all()
 
     context = {"units": units_act,

@@ -1,4 +1,4 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, Textarea
 from contractors.models import Contractorsell, Contractorbuy
 
 
@@ -15,6 +15,8 @@ class ContractorsellForm(ModelForm):
                   'informacje': 'Informacje',
                   'utworzenie': 'Utworzenie',
                   'autor': 'Autor'
+                  }
+        widgets = {'informacje': Textarea(attrs={'rows': 5})
                   }
 
 
