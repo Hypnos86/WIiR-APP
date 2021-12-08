@@ -7,6 +7,7 @@ from .models import Contractorsell, Contractorbuy
 
 # admin.site.register(Post, PostAdmin)
 class ContractorsellResource(resources.ModelResource):
+    nocuntractor = Field(attribute='nocuntractor', column_name='Nr. kontrahenta')
     nazwa = Field(attribute='nazwa', column_name='Nazwa kontrahenta')
     nip = Field(attribute='nip', column_name='NIP')
     adres = Field(attribute='adres', column_name='Adres')
@@ -19,14 +20,13 @@ class ContractorsellResource(resources.ModelResource):
 
     class Meta:
         model = Contractorsell
-        fields = ('id',)
-        export_order = ('id', 'nazwa', 'nip', 'adres', 'kod_pocztowy', 'miasto', 'informacje')
+        export_order = ( 'nocuntractor', 'nazwa', 'nip', 'adres', 'kod_pocztowy', 'miasto', 'informacje')
 
 
 @admin.register(Contractorsell)
 class ContractorAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['id', 'nazwa', 'nip', 'adres', 'kod_pocztowy', 'miasto', 'informacje', 'data_utworzenia', 'autor']
-    search_fields = ['nazwa', 'nip', 'adres', 'kod_pocztowy', 'miasto']
+    list_display = ['nocuntractor', 'nazwa', 'nip', 'adres', 'kod_pocztowy', 'miasto', 'informacje', 'data_utworzenia', 'autor']
+    search_fields = ['nocuntractor', 'nazwa', 'nip', 'adres', 'kod_pocztowy', 'miasto']
     resource_class = ContractorsellResource
 
 

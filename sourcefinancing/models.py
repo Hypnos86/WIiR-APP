@@ -4,8 +4,8 @@ from django.db import models
 # Create your models here.
 class Section(models.Model):
     class Meta:
-        verbose_name = "Rozdziały"
-        verbose_name_plural = "Rozdział"
+        verbose_name = "Rozdział"
+        verbose_name_plural = "Rozdziay"
 
     section = models.CharField("Rozdział", max_length=5)
     name = models.CharField("Nazwa", max_length=20)
@@ -16,8 +16,8 @@ class Section(models.Model):
 
 class Group(models.Model):
     class Meta:
-        verbose_name = "Grupy"
-        verbose_name_plural = "Grupa"
+        verbose_name = "Grupa"
+        verbose_name_plural = "Grupy"
 
     group = models.CharField("Grupa", max_length=2)
     name = models.CharField("Nazwa", max_length=50)
@@ -28,8 +28,8 @@ class Group(models.Model):
 
 class Paragraph(models.Model):
     class Meta:
-        verbose_name = "Paragrafy"
-        verbose_name_plural = "Paragraf"
+        verbose_name = "Paragraf i pozycja"
+        verbose_name_plural = "Paragrafy i pozycje"
 
     paragraph = models.CharField("Paragraf", max_length=6)
     name = models.CharField("Nazwa", max_length=50, null=True)
@@ -40,8 +40,8 @@ class Paragraph(models.Model):
 
 class Source(models.Model):
     class Meta:
-        verbose_name = "Źródła"
-        verbose_name_plural = "Źródło"
+        verbose_name = "Źródło"
+        verbose_name_plural = "Źródła"
 
     source = models.CharField("Źródło", max_length=80, null=True)
 
@@ -51,8 +51,8 @@ class Source(models.Model):
 
 class Financesource(models.Model):
     class Meta:
-        verbose_name = "Źródła finansowania"
-        verbose_name_plural = "Źródła finansowania"
+        verbose_name = "Konto"
+        verbose_name_plural = "Konta"
 
     section = models.ForeignKey(Section, on_delete=models.CASCADE, verbose_name="Rozdział")
     group = models.ForeignKey(Group, on_delete=models.CASCADE, verbose_name="Grupa")

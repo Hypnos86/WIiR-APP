@@ -2,22 +2,20 @@
 {%load bootstrap%}
 {%load static%}
 {%block content%}
-<h4 class="text-center">Nowa Umowa</h4>
+<h4 class="text-center">{%if new%}Nowa umowa{%else%}Edycja umowy{%endif%}</h4>
 <div class="col-md-6 moj-button-left"><a href="{%url 'contracts:menu_contractsimmovables'%}">
             <button class="btn btn-outline-primary">Cofni</button>
         </a></div>
 <div class="container">
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     {%csrf_token%}
 {{contract_form|bootstrap}}
-
-</form>
 <div class="row mt-4">
-        <div class="col-md-6 moj-button-right">
+        <div class="col-md-12 moj-button-right">
             <button type="submit" class="btn btn-outline-primary">Zapisz zmiany</button>
         </div>
     </div>
-
+</form>
 {%endblock%}
 </div>
 <script>

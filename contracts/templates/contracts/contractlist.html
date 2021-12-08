@@ -1,6 +1,7 @@
-{%extends 'basic_contracts.html'%}
-{%load static%}
-{%block contracts%}
+{% extends 'basic_contracts.html' %}
+{% load humanize %}
+{% load static %}
+{% block contracts %}
 <section class="w-100 p-4 pb-4 d-flex justify-content-center align-items-center flex-column">
     <div>
         <form method="get">
@@ -17,42 +18,52 @@
 </div>
 <div class="kontrahenci-title">
     <h4>Umowy czynszowe</h4>
-    <p><span>Liczba umów: {{contrsum}}</span></p>
+    <p class="m-0"><span>Liczba umów aktualnych: {{contrsum}}</span></p>
+    <p class="m-0"><span>Liczba umów zarchiwizowanych: </span></p>
 </div>
 <table class="table table-hover my-table">
     <thead>
     <tr class="my-table-tr">
-        <th scope="col">L.p.</th>
-        <th scope="col">Umowa</th>
-        <th scope="col">Kontrachent</th>
-        <th scope="col">NIP</th>
-        <th scope="col">Jednostka</th>
-        <th scope="col">Kod pocztowy</th>
-        <th scope="col">Rodzaj umowy</th>
-        <th scope="col">Stan umowy</th>
+        <th width="40" scope="col" class="text-center">L.p.</th>
+        <th width="150" scope="col" class="text-center">Data umowy</th>
+        <th width="150" scope="col" class="text-center">Nr. umowy</th>
+        <th width="250" scope="col" class="text-center" >Kontrahent</th>
+        <th width="150" scope="col" class="text-center">Okres obowiązywania</th>
+        <th scope="col" class="text-center">Powierzchnia użyczona [m<sup>2</sup>]</th>
+        <th scope="col" class="text-center">Rodzaj umowy</th>
+        <th width="120" scope="col" class="text-center">Koszty</th>
+        <th scope="col" class="text-center">Jednostka</th>
+        <th scope="col" class="text-center">Podstawa prawna</th>
+        <th scope="col" class="text-center">Stan umowy</th>
 
     </tr>
     </thead>
     <tbody>
-    {%for contractor in contractors %}
+    {%for contract in contracts %}
     <tr class="my-table-tr">
-        <td scope="row"></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td class="text-center" scope="row"></td>
+        <td class="text-center">{{contract.data_umowy|date:"d.m.Y"}}</td>
+        <td class="text-center">{{contract.nrumowy|default_if_none:'---'}}</td>
+        <td>{{contract.kontrahent}}</td>
+        <td class="text-center">{{contract.okres_obowiazywania|date:"d.m.Y"| default_if_none:'-'}}</td>
+        <td class="text-center">{{contract.pow_uzyczona|default_if_none:'-' |intcomma}}</td>
+        <td class="text-center">{{contract.rodzaj}}</td>
+        <td class="text-center">{%if contract.koszt_czynsz%} Czynsz {%endif%}</td>
+        <td>{{contract.unit}}</td>
+        <td class="text-center">{{contract.podstawa}}</td>
+        <td class="text-center">{{contract.stan}}</td>
         <td>
-            <a href="{%url 'contractors:edit_contractorsell' contractor.id%}"><button type="submit" class="btn btn-outline-primary">Edytuj</button></a>
+            <a href=""><button type="submit" class="btn btn-outline-primary">Podgląd</button></a>
+        </td>
+        <td>
+            <a href="{%url 'contracts:edit_contractsimmovables' contract.id %}"><button type="button" class="btn btn-outline-primary">Edytuj</button></a>
         </td>
     </tr>
     {%endfor%}
     </tbody>
     <tfoot>
     <tr>
-        <th colspan="7">Wydział Inwestycji i Remontów KWP w Poznaniu</th>
+        <th colspan="5">Wydział Inwestycji i Remontów KWP w Poznaniu</th>
 
     </tr>
     </tfoot>

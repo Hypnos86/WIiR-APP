@@ -9,11 +9,15 @@ class DateField(DateInput):
 class ContractimmovablesForm(ModelForm):
     class Meta:
         model = Contractimmovables
-        field = "__all__"
+        field = ['data_umowy', 'nrumowy', 'kontrahent', 'okres_obowiazywania', 'pow_uzyczona', 'podstawa',
+                 'rodzaj', 'koszt_czynsz', 'koszt_prad', 'koszt_gaz', 'koszt_woda', 'koszt_co', 'koszt_smieci',
+                 'koszt_podsmiec', 'koszt_podnier', 'unit', 'skan', 'stan', 'comments', 'archives', 'create',
+                 'change', 'autor']
+
         field_order = ['data_umowy', 'nrumowy', 'kontrahent', 'okres_obowiazywania', 'pow_uzyczona', 'podstawa',
-                       'rodzaj',
-                       'koszt_czynsz', 'koszt_prad', 'koszt_gaz', 'koszt_woda', 'koszt_co', 'koszt_smieci',
-                       'koszt_podsmiec', 'koszt_podnier', 'unit', 'skan', 'stan', 'comments']
+                       'rodzaj', 'koszt_czynsz', 'koszt_prad', 'koszt_gaz', 'koszt_woda', 'koszt_co', 'koszt_smieci',
+                       'koszt_podsmiec', 'koszt_podnier', 'unit', 'skan', 'stan', 'comments', 'archives', 'create',
+                       'change', 'autor']
 
         labels = {'data_umowy': 'Data umowy', 'nrumowy': 'Nr umowy', 'kontrahent': 'Kontrahent',
                   'podstawa': 'Podstawa prawda', 'okres_obowiazywania': 'Okres obowiązywania', 'rodzaj': 'Rodzaj umowy',
@@ -23,7 +27,8 @@ class ContractimmovablesForm(ModelForm):
                   'koszt_podsmiec': 'Zagospodarowanie odpadami komunalnymi',
                   'koszt_podnier': 'Podatek od nieruchomości',
                   'unit': 'Jednostka', 'skan': 'Skan umowy', 'stan': 'Stan umowy', 'comments': 'Informacje'}
-        exclude = ['archives', 'create', 'change']
+
+        exclude = ['archives', 'create', 'change', 'autor']
 
         widgets = {'data_umowy': DateField(),
                    'okres_obowiazywania': DateField(),

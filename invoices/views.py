@@ -13,8 +13,10 @@ def buy_invoiceslist(request):
 
 
 def sell_invoiceslist(request):
-    invoice = Invoicesell.objects.all().order_by("data")
-    context = {"invoice": InvoicesellForm,
+    invoicessell = Invoicesell.objects.all().order_by("data")
+    invoicessellsum = len(invoicessell)
+    context = {"invoices": invoicessell,
+               "invoicessellsum": invoicessellsum,
                "sell": True}
     return render(request, "invoices/invoicesselllist.html", context)
 

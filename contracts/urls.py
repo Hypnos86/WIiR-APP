@@ -5,5 +5,5 @@ app_name = 'contracts'
 urlpatterns = [
     path('', menu_contractsimmovables, name='menu_contractsimmovables'),
     path('newcontractimmovables/', new_contractsimmovables, name='new_contractsimmovables'),
-    path('editcontractimmovables/', edit_contractsimmovables, name='edit_contractsimmovables')
+    path('editcontractimmovables/<int:id>', edit_contractsimmovables, name='edit_contractsimmovables')
 ]

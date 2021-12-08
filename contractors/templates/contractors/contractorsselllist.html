@@ -27,6 +27,7 @@
     <thead>
     <tr class="my-table-tr text-center">
         <th width="50" scope="col">L.p.</th>
+        <th width="150" scope="col">Nr. kontrahenta</th>
         <th width="300" scope="col">Nazwa</th>
         <th width="200" scope="col">NIP</th>
         <th width="300" scope="col">Adres</th>
@@ -40,6 +41,7 @@
     {%for contractor in contractors %}
     <tr class="my-table-tr">
         <td class="text-center" scope="row"></td>
+        <td scope="row">{{contractor.nocuntractor}}</td>
         <td><span>{{contractor.nazwa}}</span></td>
         <td class="text-center"><span>{{contractor.nip|default_if_none:''}}</span></td>
         <td><span>{{contractor.adres}}</span></td>

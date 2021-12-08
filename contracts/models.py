@@ -49,7 +49,7 @@ class Contractimmovables(models.Model):
                                  verbose_name="Podstawa prawna")
     okres_obowiazywania = models.DateField("Okres obowiązywania", null=True, blank=True)
     rodzaj = models.ForeignKey("contracts.Rodzaj", on_delete=models.CASCADE, verbose_name="Rodzaj umowy")
-    pow_uzyczona = models.DecimalField("Powierzchnia użytkowa", max_digits=4, decimal_places=2, null=True, blank=True)
+    pow_uzyczona = models.DecimalField("Powierzchnia użytkowa", max_digits=8, decimal_places=2, null=True, blank=True)
     koszt_czynsz = models.BooleanField("Czynsz")
     koszt_prad = models.BooleanField("Prąd")
     koszt_gaz = models.BooleanField("Gaz")
@@ -62,13 +62,13 @@ class Contractimmovables(models.Model):
     skan = models.FileField(upload_to='umowy_pdf', null=True, blank=True, verbose_name="Skan umowy")
     stan = models.ForeignKey(Stan, on_delete=models.CASCADE, blank=False, default=1)
     comments = models.TextField("Informacje", blank=True, default="")
-    archives = models.BooleanField(null=False, default=1)
+    archives = models.BooleanField("Aktywna", null=False, default=1)
     create = models.DateTimeField("Data utworzenia", auto_now_add=True)
     change = models.DateTimeField("Zmiana", auto_now=True)
-    autor = models.ForeignKey("auth.User", editable=False, on_delete=models.CASCADE)
+    autor = models.ForeignKey("auth.User", on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'Umowa z dnia {self.data_umowy} zawarta z {self.kontrahent}'
+        return f'Umowa z dnia {self.data_umowy}'
 
 
 class Aneks(models.Model):

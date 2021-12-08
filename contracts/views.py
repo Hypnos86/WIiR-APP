@@ -1,11 +1,13 @@
-from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect, get_object_or_404
 from contracts.models import Contractimmovables
 from contracts.forms import ContractimmovablesForm
 
 
 # Create your views here.
+@login_required
 def menu_contractsimmovables(request):
-    contracts = Contractimmovables.objects.all()
+    contracts = Contractimmovables.objects.all().order_by("data_umowy")
     query = "Wyczyść"
     search = "Szukaj"
     contrsum = len(contracts)
@@ -20,17 +22,33 @@ def menu_contractsimmovables(request):
                       {'contracts': contracts, "contrsum": contrsum, "search": search})
 
 
+@login_required
 def new_contractsimmovables(request):
-    contract_form = ContractimmovablesForm(request.POST or None)
-    context = {'contract_form': contract_form}
-    if request.method != 'POST':
+    contract_form = ContractimmovablesForm(request.POST or None, request.FILES or None)
+    context = {'contract_form': contract_form,
+               'new': True}
+
+    if request.method == 'POST':
         if contract_form.is_valid():
-            contract_form.save()
+            instance = contract_form.save(commit=False)
+            instance.autor = request.user
+            instance.save()
             return redirect('contracts:menu_contractsimmovables')
 
-    return render(request, 'contracts/contractedit.html', context)
+    return render(request, 'contracts/contractform.html', context)
 
 
-def edit_contractsimmovables(request):
-    context = {}
-    return render(request, 'contracts/editcontract.html', context)
+@login_required
+def edit_contractsimmovables(request, id):
+    contractsimmovables_edit = get_object_or_404(Contractimmovables, pk=id)
+    contractsimmovables_form = ContractimmovablesForm(request.POST or None, request.FILES or None,
+                                                      instance=contractsimmovables_edit)
+
+    context = {'contract_form': contractsimmovables_form,
+               'new': False}
+
+    if contractsimmovables_form.is_valid():
+        contractsimmovables_form.save()
+        return redirect('contracts:menu_contractsimmovables')
+
+    return render(request, 'contracts/contractform.html', context)

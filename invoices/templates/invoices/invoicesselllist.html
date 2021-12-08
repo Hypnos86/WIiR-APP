@@ -1,7 +1,8 @@
-{%extends 'base.html'%}
-{%load static%}
-{%block title%}Ewidencja faktur - sprzedaż{%endblock%}
-{%block content%}
+{% extends 'base.html' %}
+{% load humanize %}
+{% load static %}
+{% block title %}Ewidencja faktur - sprzedaż{%endblock%}
+{% block content %}
 <section class="w-100 p-4 pb-4 d-flex justify-content-center align-items-center flex-column">
     <div>
         <form method="get">
@@ -13,15 +14,58 @@
         </form>
     </div>
 </section>
-<h4 class="text-center">Ewidencja faktur - sprzedaż</h4>
 <div class="row">
     <div class="col-md-6 moj-button-left"><a href="{%url 'invoices:menu_invoices'%}"><button type="button" class="btn btn-outline-primary">Cofni</button></a></div>
     <div class="col-md-6 moj-button-right"><a id="button-nowa-umowa" href=""><button class="btn btn-outline-primary button-choise-contracts">Nowa faktura</button></a></div>
 </div>
-<form method="post">
-    {%csrf_token%}
-    {{invoices.as_p}}
+<div class="kontrahenci-title">
+    <h4>Ewidencja faktur sprzedażowych</h4>
+    <p>Liczba wystawionych faktur: {{invoicessellsum}}</p>
+</div>
+<div class="containter">
+<table class="table table-hover my-table">
+    <thead>
+    <tr class="my-table-tr text-center">
+        <th width="50" scope="col">L.p.</th>
+        <th width="80" scope="col">Data wystawienia</th>
+        <th width="80" scope="col">Nr. faktury</th>
+        <th width="100" scope="col">Kwota</th>
+        <th width="" scope="col" >Okres</th>
+        <th width="50" scope="col">Nr. kontrahenta</th>
+        <th width="300" scope="col">Kontrahent</th>
+        <th width="220" scope="col">Umowa</th>
+        <th width="" scope="col">Powiat</th>
+        <th  scope="col">Pracownik wystawiający</th>
+        <th scope="col">Informacje</th>
 
+    </tr>
+    </thead>
+    <tbody>
+    {% for invoice in invoices %}
+    <tr class="my-table-tr">
+        <td class="text-center" scope="row"></td>
+        <td class="text-center"><span>{{invoice.data|date:"d.m.Y"}}</span></td>
+        <td class="text-center"><span>{{invoice.noinvoice|default_if_none:''}}</span></td>
+        <td class="text-center"><span>{{invoice.sum|intcomma}} zł</span></td>
+        <td class="text-center"><span>{{invoice.period_from|date:"m.Y"}} - {{invoice.period_to|date:"m.Y"}}</span></td>
+        <td class="text-center"><span>{{invoice.contractor.nocuntractor}}</span></td>
+        <td><span>{{invoice.contractor}}</span></td>
+        <td class="text-center"><span>{{invoice.contract|default_if_none:'---'}}</span></td>
+        <td class="text-center"><span>{{invoice.contract.unit.powiat}}</span></td>
+        <td class="text-center"><span>{{invoice.creator}}</span></td>
+        <td class="text-center"><span>{{invoice.comments}}</span></td>
+        <td class="text-center">
+            <a href=""><button type="submit" class="btn btn-outline-primary">Edytuj</button></a>
+        </td>
+    </tr>
+    {%endfor%}
+    </tbody>
+    <tfoot>
+    <tr>
+        <th colspan="5">Wydział Inwestycji i Remontów KWP w Poznaniu</th>
 
-</form>
+    </tr>
+    </tfoot>
+</table>
+    </div>
 {%endblock%}

@@ -4,6 +4,7 @@ from .models import Contractorsell, Contractorbuy
 from .forms import ContractorsellForm
 
 
+@login_required
 def contractorsell_list(request):
     contractorsell = Contractorsell.objects.all().order_by("nazwa")
     query = "Wyczyść"
@@ -19,6 +20,7 @@ def contractorsell_list(request):
                       {'contractors': contractorsell, "consellsum": consellsum, "search": search})
 
 
+@login_required
 def new_contractorsell(request):
     contractorsell_form = ContractorsellForm(request.POST or None)
 
@@ -33,13 +35,15 @@ def new_contractorsell(request):
     return render(request, 'contractors/contractorsellform.html', {'contractor_form': contractorsell_form, "new": True})
 
 
+@login_required
 def edit_contractorsell(request, id):
     contractorsell_edit = get_object_or_404(Contractorsell, pk=id)
     contractorsell_form = ContractorsellForm(request.POST or None, instance=contractorsell_edit)
+
+    context = {'contractor_form': contractorsell_form, 'new': False}
 
     if contractorsell_form.is_valid():
         contractorsell_form.save()
         return redirect('contractors:contractorssell_list')
 
-    return render(request, 'contractors/contractorsellform.html',
-                  {'contractor_form': contractorsell_form, "new": False})
+    return render(request, 'contractors/contractorsellform.html', context)

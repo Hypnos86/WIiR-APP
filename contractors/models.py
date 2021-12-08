@@ -6,6 +6,7 @@ class Contractorsell(models.Model):
         verbose_name = "Kontrahenci - sprzedaż"
         verbose_name_plural = "Kontrahenci - sprzedaż"
 
+    nocuntractor = models.CharField(max_length=10, null=False, unique=True)
     nazwa = models.CharField(max_length=30, null=True)
     nip = models.CharField("NIP", max_length=10, null=True, blank=True)
     adres = models.CharField(max_length=30, null=True)
@@ -24,6 +25,7 @@ class Contractorbuy(models.Model):
         verbose_name = "Kontrahenci - kupno"
         verbose_name_plural = "Kontrahenci - kupno"
 
+    nocuntractor = models.CharField(max_length=10, null=False)
     nazwa = models.CharField(max_length=30, null=True)
     nip = models.CharField("NIP", max_length=10, null=True)
     adres = models.CharField(max_length=30, null=True)
