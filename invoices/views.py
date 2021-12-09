@@ -18,11 +18,23 @@ def buy_invoiceslist(request):
 @login_required
 def sell_invoiceslist(request):
     invoicessell = Invoicesell.objects.all().order_by("-data")
+    query = "Wyczyść"
+    search = "Szukaj"
     invoicessellsum = len(invoicessell)
     context = {"invoices": invoicessell,
                "invoicessellsum": invoicessellsum,
                "sell": True}
-    return render(request, "invoices/invoicesselllist.html", context)
+    q = request.GET.get("q")
+
+    if q:
+        nvoicessell = invoicessell.filter(noinvoice__icontains=q)|invoicessell.filter( contractor__nazwa__icontains=q)
+        return render(request, "invoices/invoicesselllist.html", {"invoices": invoicessell,
+                                                                  "invoicessellsum": invoicessellsum,
+                                                                  "sell": True, "query": query})
+    else:
+        return render(request, "invoices/invoicesselllist.html", {"invoices": invoicessell,
+                                                                  "invoicessellsum": invoicessellsum,
+                                                                  "sell": True, "search": search})
 
 
 @login_required
@@ -39,6 +51,7 @@ def new_invoicesell(request):
             return redirect('invoices:sell_invoices_list')
 
     return render(request, 'invoices/invoicesellform.html', context)
+
 
 @login_required
 def edit_invoicesell(request, id):

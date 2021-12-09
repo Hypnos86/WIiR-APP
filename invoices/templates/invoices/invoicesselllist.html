@@ -7,9 +7,9 @@
     <div>
         <form method="get">
             <div class="input-group">
-                <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj faktury"
+                <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj nr. faktury"
                        aria-label="Search" aria-describedby="search-addon">
-                <button type="submit" class="btn btn-outline-primary">Szukaj/Wyczyśc</button>
+                <button type="submit" class="btn btn-outline-primary">{{query}}{{search}}</button>
             </div>
         </form>
     </div>
@@ -26,17 +26,16 @@
 <table class="table table-hover my-table">
     <thead>
     <tr class="my-table-tr text-center">
-        <th width="50" scope="col">L.p.</th>
+        <th width="40" scope="col">L.p.</th>
         <th width="80" scope="col">Data wystawienia</th>
         <th width="80" scope="col">Nr. faktury</th>
         <th width="100" scope="col">Kwota</th>
-        <th width="" scope="col" >Okres</th>
-        <th width="50" scope="col">Nr. kontrahenta</th>
-        <th width="300" scope="col">Kontrahent</th>
-        <th width="220" scope="col">Umowa</th>
-        <th width="" scope="col">Powiat</th>
-        <th  scope="col">Pracownik wystawiający</th>
-        <th scope="col">Informacje</th>
+        <th width="150" scope="col" >Okres</th>
+        <th width="80" scope="col">Nr. kontrahenta</th>
+        <th width="420" scope="col">Kontrahent</th>
+        <th width="120" scope="col">Powiat</th>
+        <th width="120" scope="col">Pracownik wystawiający</th>
+        <th width="450" scope="col">Informacje</th>
 
     </tr>
     </thead>
@@ -50,11 +49,10 @@
         <td class="text-center"><span>{{invoice.period_from|date:"m.Y"}} - {{invoice.period_to|date:"m.Y"}}</span></td>
         <td class="text-center"><span>{{invoice.contractor.nocuntractor}}</span></td>
         <td><span>{{invoice.contractor}}</span></td>
-        <td class="text-center"><span>{{invoice.contract|default_if_none:'---'}}</span></td>
-        <td class="text-center"><span>{{invoice.contract.unit.powiat}}</span></td>
+        <td class="text-center"><span>{{invoice.powiat}}</span></td>
         <td class="text-center"><span>{{invoice.creator}}</span></td>
         <td class="text-center"><span>{{invoice.comments}}</span></td>
-        <td class="text-center">
+        <td width="120" class="text-center">
             <a href="{%url 'invoices:edit_invoicesell' invoice.id %}"><button type="submit" class="btn btn-outline-primary">Edytuj</button></a>
         </td>
     </tr>

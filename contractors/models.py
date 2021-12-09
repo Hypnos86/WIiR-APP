@@ -5,6 +5,7 @@ class Contractorsell(models.Model):
     class Meta:
         verbose_name = "Kontrahenci - sprzedaż"
         verbose_name_plural = "Kontrahenci - sprzedaż"
+        ordering = ['nazwa']
 
     nocuntractor = models.CharField(max_length=10, null=False, unique=True)
     nazwa = models.CharField(max_length=30, null=True)

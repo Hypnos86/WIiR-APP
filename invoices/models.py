@@ -25,8 +25,7 @@ class Invoicesell(models.Model):
     noinvoice = models.CharField("Nr. faktury", max_length=11)
     contractor = models.ForeignKey(Contractorsell, on_delete=models.CASCADE, verbose_name="Kontrahent")
     sum = models.DecimalField("Kwota", max_digits=10, decimal_places=2, null=True, blank=True)
-    contract = models.ForeignKey(Contractimmovables, on_delete=models.CASCADE, verbose_name="Umowa", null=True,
-                                 blank=True)
+    powiat = models.ForeignKey("units.Powiat", on_delete=models.CASCADE, verbose_name="Powiat")
     period_from = models.DateField("Okres od")
     period_to = models.DateField("Okres do")
     creator = models.ForeignKey("invoices.Creator", on_delete=models.CASCADE, verbose_name="Osoba wystawiająca")

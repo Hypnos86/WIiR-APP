@@ -9,10 +9,9 @@ from invoices.models import Invoicesell, Creator
 class InvoicesellResource(resources.ModelResource):
     data = Field(attribute='data', column_name='Data wystawienia')
     noinvoice = Field(attribute='noinvoice', column_name='Nr. faktury')
-
     contractor = Field(attribute='contractor', column_name='Kontrahent')
     sum = Field(attribute='sum', column_name='Kwota')
-    contract = Field(attribute='contract', column_name='Umowa')
+    powiat = Field(attribute='powiat', column_name='Powiat')
     period_from = Field(attribute='period_from', column_name='Okres od')
     period_to = Field(attribute='period_to', column_name='Okres do')
     creator = Field(attribute='creator', column_name='Osoba wystawiająca')
@@ -21,15 +20,15 @@ class InvoicesellResource(resources.ModelResource):
     class Meta:
         model = Invoicesell
         fields = (
-            'data', 'noinvoice', 'contractor', 'sum', 'contract', 'period_from', 'period_to', 'creator', 'comments')
-        export_order = ('data', 'noinvoice', 'sum', 'contractor', 'period_from', 'period_to', 'creator', 'comments')
+            'data', 'noinvoice', 'contractor', 'sum', 'powiat', 'period_from', 'period_to', 'creator', 'comments')
+        export_order = ('data', 'noinvoice', 'sum', 'period_from', 'period_to', 'powiat', 'creator', 'comments')
 
 
 @admin.register(Invoicesell)
 class InvoicesellAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['data', 'noinvoice', 'contractor', 'sum', 'contract', 'period_from', 'period_to',
+    list_display = ['data', 'noinvoice', 'contractor', 'sum', 'period_from', 'period_to', 'powiat',
                     'creator', 'comments']
-    search_fields = ['noinvoice', 'contractor']
+    search_fields = ['noinvoice', 'contractor', 'powiat']
     preserve_filters = True
     resource_class = InvoicesellResource
 
