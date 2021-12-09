@@ -7,14 +7,14 @@ from contracts.forms import ContractimmovablesForm
 # Create your views here.
 @login_required
 def menu_contractsimmovables(request):
-    contracts = Contractimmovables.objects.all().order_by("data_umowy")
+    contracts = Contractimmovables.objects.all().order_by("-data_umowy")
     query = "Wyczyść"
     search = "Szukaj"
     contrsum = len(contracts)
 
     q = request.GET.get("q")
     if q:
-        contracts = contracts.filter(nazwa__icontains=q)
+        contracts = contracts.filter(kontrahent__nazwa__icontains=q)
         return render(request, 'contracts/contractlist.html',
                       {'contracts': contracts, "contrsum": contrsum, "query": query})
     else:

@@ -16,7 +16,7 @@
 </section>
 <div class="row">
     <div class="col-md-6 moj-button-left"><a href="{%url 'invoices:menu_invoices'%}"><button type="button" class="btn btn-outline-primary">Cofni</button></a></div>
-    <div class="col-md-6 moj-button-right"><a id="button-nowa-umowa" href=""><button class="btn btn-outline-primary button-choise-contracts">Nowa faktura</button></a></div>
+    <div class="col-md-6 moj-button-right"><a id="button-nowa-umowa" href="{%url 'invoices:new_invoicesell'%}"><button class="btn btn-outline-primary button-choise-contracts">Nowa faktura</button></a></div>
 </div>
 <div class="kontrahenci-title">
     <h4>Ewidencja faktur sprzedażowych</h4>
@@ -55,7 +55,7 @@
         <td class="text-center"><span>{{invoice.creator}}</span></td>
         <td class="text-center"><span>{{invoice.comments}}</span></td>
         <td class="text-center">
-            <a href=""><button type="submit" class="btn btn-outline-primary">Edytuj</button></a>
+            <a href="{%url 'invoices:edit_invoicesell' invoice.id %}"><button type="submit" class="btn btn-outline-primary">Edytuj</button></a>
         </td>
     </tr>
     {%endfor%}

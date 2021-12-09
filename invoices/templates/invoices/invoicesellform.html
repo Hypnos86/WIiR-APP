@@ -6,13 +6,13 @@
 {%block content%}
 
 <h4 class="text-center">{%if new%}Nowa faktura{%else%}Edycja faktury{%endif%}</h4>
-<div class="col-md-6 moj-button-left"><a href="{%url 'contractors:contractorssell_list'%}">
+<div class="col-md-6 moj-button-left"><a href="{%url 'invoices:sell_invoices_list'%}">
             <button class="btn btn-outline-primary">Cofni</button>
         </a></div>
 <div class="container">
 <form method="post">
     {%csrf_token%}
-    {{contractor_form|bootstrap}}
+    {{invoicesell_form|bootstrap}}
 <div class="row mt-3">
         <div class="col-md-12 moj-button-right">
             <button type="submit" class="btn btn-outline-primary">Zapisz zmiany</button>
