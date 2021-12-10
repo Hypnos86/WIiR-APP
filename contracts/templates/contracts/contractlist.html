@@ -1,7 +1,7 @@
-{% extends 'basic_contracts.html' %}
+{% extends 'base.html' %}
 {% load humanize %}
 {% load static %}
-{% block contracts %}
+{% block content %}
 <section class="w-100 p-4 pb-4 d-flex justify-content-center align-items-center flex-column">
     <div>
         <form method="get">
@@ -13,8 +13,7 @@
     </div>
 </section>
 <div class="row">
-    <div class="col-md-6 moj-button-left"><a href="{%url 'contractors:new_contractorsell'%}"><button type="button" class="btn btn-outline-primary">Nowy kontrahent</button></a></div>
-    <div class="col-md-6 moj-button-right"><a href="{%url 'contracts:new_contractsimmovables'%}"><button class="btn btn-outline-primary button-choise-contracts">Nowa umowa</button></a></div>
+    <div class="col-md-12 moj-button-right"><a href="{%url 'contracts:new_contractsimmovables'%}"><button class="btn btn-outline-primary button-choise-contracts">Nowa umowa</button></a></div>
 </div>
 <div class="kontrahenci-title">
     <h4>Umowy czynszowe</h4>
@@ -29,10 +28,10 @@
         <th width="150" scope="col" class="text-center">Nr. umowy</th>
         <th width="250" scope="col" class="text-center" >Kontrahent</th>
         <th width="150" scope="col" class="text-center">Okres obowiązywania</th>
-        <th scope="col" class="text-center">Powierzchnia użyczona [m<sup>2</sup>]</th>
+        <th width="80" scope="col" class="text-center">Powierzchnia użyczona [m<sup>2</sup>]</th>
         <th scope="col" class="text-center">Rodzaj umowy</th>
-        <th width="120" scope="col" class="text-center">Koszty</th>
-        <th scope="col" class="text-center">Jednostka</th>
+        <th  scope="col" class="text-center">Koszty</th>
+        <th  scope="col" class="text-center">Jednostka</th>
         <th scope="col" class="text-center">Podstawa prawna</th>
         <th scope="col" class="text-center">Stan umowy</th>
 
@@ -41,21 +40,21 @@
     <tbody>
     {%for contract in contracts %}
     <tr class="my-table-tr">
-        <td class="text-center" scope="row"></td>
-        <td class="text-center">{{contract.data_umowy|date:"d.m.Y"}}</td>
-        <td class="text-center">{{contract.nrumowy|default_if_none:'---'}}</td>
-        <td>{{contract.kontrahent}}</td>
-        <td class="text-center">{{contract.okres_obowiazywania|date:"d.m.Y"| default_if_none:'-'}}</td>
-        <td class="text-center">{{contract.pow_uzyczona|default_if_none:'-' |intcomma}}</td>
-        <td class="text-center">{{contract.rodzaj}}</td>
-        <td class="text-center">{%if contract.koszt_czynsz%} Czynsz {%endif%}</td>
+        <td align="center" valign="middle" class="text-center" scope="row"></td>
+        <td align="center" valign="middle" class="text-center">{{contract.data_umowy|date:"d.m.Y"}}</td>
+        <td align="center" valign="middle" class="text-center">{{contract.nrumowy|default_if_none:'---'}}</td>
+        <td valign="middle">{{contract.kontrahent}}</td>
+        <td align="center" valign="middle" class="text-center">{{contract.okres_obowiazywania|date:"d.m.Y"| default_if_none:'-'}}</td>
+        <td align="center" valign="middle" class="text-center">{{contract.pow_uzyczona|default_if_none:'-' |intcomma}}</td>
+        <td align="center" valign="middle" class="text-center">{{contract.rodzaj}}</td>
+        <td valign="middle">{%if contract.koszt_czynsz%}<small>Czynsz |</small>{%endif%} {%if contract.koszt_prad%}<small>Prad |</small>{%endif%} {%if contract.koszt_gaz%}<small>Gaz |</small>{%endif%} {%if contract.koszt_woda%}<small>Woda |</small>{%endif%} {%if contract.koszt_co%}<small>C.O. |</small>{%endif%} {%if contract.koszt_smieci%}<small>Śmieci |</small>{%endif%} {%if contract.koszt_podsmiec%}<small>Zag. odpadami kom. |</small>{%endif%} {%if contract.koszt_podnier%}<small>Podatek od nieruchomości</small>{%endif%}</td>
         <td>{{contract.unit}}</td>
-        <td class="text-center">{{contract.podstawa}}</td>
-        <td class="text-center">{{contract.stan}}</td>
-        <td>
+        <td align="center" valign="middle">{{contract.podstawa}}</td>
+        <td align="center" valign="middle">{{contract.stan}}</td>
+        <td align="center" valign="middle">
             <a href=""><button type="submit" class="btn btn-outline-primary">Podgląd</button></a>
         </td>
-        <td>
+        <td align="center" valign="middle">
             <a href="{%url 'contracts:edit_contractsimmovables' contract.id %}"><button type="button" class="btn btn-outline-primary">Edytuj</button></a>
         </td>
     </tr>
@@ -69,7 +68,9 @@
     </tfoot>
 </table>
 <script>
-     document.getElementById("button-kontrahenci").classList.remove("active");
-     document.getElementById("button-nowa-umowa").classList.add("active");
+     document.getElementById("button-units").classList.remove("active");
+     document.getElementById("button-invoices").classList.remove("active");
+     document.getElementById("button-contracts").classList.add("active");
+     document.getElementById("button-contractors").classList.remove("active");
 </script>
 {%endblock%}

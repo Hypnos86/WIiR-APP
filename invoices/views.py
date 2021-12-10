@@ -27,7 +27,8 @@ def sell_invoiceslist(request):
     q = request.GET.get("q")
 
     if q:
-        invoicessell = invoicessell.filter(noinvoice__icontains=q)
+        invoicessell = invoicessell.filter(noinvoice__icontains=q) | invoicessell.filter(
+            sum__icontains=q) | invoicessell.filter(period_from__icontains=q)
         return render(request, "invoices/invoicesselllist.html", {"invoices": invoicessell,
                                                                   "invoicessellsum": invoicessellsum,
                                                                   "sell": True, "query": query})

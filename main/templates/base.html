@@ -30,14 +30,15 @@
     <title>{%block title%} {%endblock%}</title>
 </head>
 <body>
-<header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom body">
+<header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom body fixed-top bg-col">
     <a href="" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none margin-left-0"><span class="fs-5">Zalogowany użytkownik: {{user.first_name}} {{user.last_name}} (ID: {{user.username}}) </span></a>
         <ul class="nav nav-pills">
 <!--            nav-link-->
-            <li class="nav-item"><a href="#" class="btn btn-sm btn-outline-secondary mx-3" aria-current="page"><span>Aplikacje</span></a></li>
-            <li class="nav-item"><a href="{%url 'units:units_list'%}" class="btn btn-sm btn-outline-secondary mx-3" ><span>Jednostki Policji</span></a></li>
-            <li class="nav-item"><a href="{%url 'invoices:menu_invoices'%}" class="btn btn-sm btn-outline-secondary mx-3" ><span>Faktury</span></a></li>
-            <li class="nav-item"><a href="{%url 'contracts:menu_contractsimmovables'%}" class="btn btn-sm btn-outline-secondary mx-3"><span>Umowy najmu</span></a></li>
+<!--            <li class="nav-item"><a href="#" class="btn btn-sm btn-outline-secondary mx-3" aria-current="page"><span>Aplikacje</span></a></li>-->
+            <li class="nav-item"><a id="button-units" href="{%url 'units:units_list'%}" class="btn btn-sm btn-outline-secondary mx-3" ><span>Jednostki Policji</span></a></li>
+            <li class="nav-item"><a id="button-invoices" href="{%url 'invoices:menu_invoices'%}" class="btn btn-sm btn-outline-secondary mx-3" ><span>Faktury</span></a></li>
+            <li class="nav-item"><a id="button-contracts" href="{%url 'contracts:menu_contractsimmovables'%}" class="btn btn-sm btn-outline-secondary mx-3"><span>Umowy najmu</span></a></li>
+            <li class="nav-item"><a id="button-contractors" href="{%url 'contractors:contractorssell_list'%}" class="btn btn-sm btn-outline-secondary mx-3"><span>Kontrachenci</span></a></li>
             <li class="nav-item"><a href="" class="btn btn-sm btn-outline-secondary mx-5"><span>Wyloguj</span></a></li>
 <!--            <li class="nav-item"><a class="nav-link" href="#"><span>Podatek od nieruchomości</span></a></li>-->
 <!--            <li class="nav-item"><a class="nav-link" href="#"><span>Trwały zarząd</span></a></li>-->
@@ -46,7 +47,7 @@
 
       </ul>
     </header>
-    <div class="containter footer body">
+    <div class="containter footer body header-top">
     {%block content%}
 
     {%endblock%}

@@ -4,10 +4,17 @@
     /*rgb(33, 36, 53);*/
     /*background-color: hsl(85,67%,96%);*/
     font-family: arial;
-    margin: auto 15px;
+    margin: auto 0;
     padding: 0 30px;
     color: #2F4F4F;
     }
+.bg-col{
+    background-color: #F5F5F5;
+}
+
+.header-top {
+    margin-top: 100px;
+}
 
 .footer {
         margin-bottom: 120px;

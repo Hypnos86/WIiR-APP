@@ -1,8 +1,8 @@
-{%extends 'basic_contracts.html'%}
+{%extends 'base.html'%}
 {%load static%}
 
 {%block title%} Kontrahenci umów czynszowych{%endblock%}
-{%block contracts%}
+{%block content%}
 <section class="w-100 p-4 pb-4 d-flex justify-content-center align-items-center flex-column">
     <div>
         <form method="get">
@@ -15,8 +15,7 @@
     </div>
 </section>
 <div class="row">
-    <div class="col-md-6 moj-button-left"><a href="{%url 'contractors:new_contractorsell'%}"><button type="button" class="btn btn-outline-primary">Nowy kontrahent</button></a></div>
-    <div class="col-md-6 moj-button-right"><a href="{%url 'contracts:new_contractsimmovables'%}"><button class="btn btn-outline-primary button-choise-contracts">Nowa umowa</button></a></div>
+    <div class="col-md-12 moj-button-right"><a href="{%url 'contractors:new_contractorsell'%}"><button type="button" class="btn btn-outline-primary">Nowy kontrahent</button></a></div>
 </div>
 <div class="kontrahenci-title">
     <h4>Kontrahenci umów czynszowych WIiR</h4>
@@ -63,8 +62,10 @@
 </table>
     </div>
 <script>
-     document.getElementById("button-kontrahenci").classList.add("active");
-     document.getElementById("button-nowa-umowa").classList.remove("active");
+     document.getElementById("button-units").classList.remove("active");
+     document.getElementById("button-invoices").classList.remove("active");
+     document.getElementById("button-contracts").classList.remove("active");
+     document.getElementById("button-contractors").classList.add("active");
 </script>
 {%endblock%}
 
