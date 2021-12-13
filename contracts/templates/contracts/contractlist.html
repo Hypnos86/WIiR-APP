@@ -52,7 +52,7 @@
         <td align="center" valign="middle">{{contract.podstawa}}</td>
         <td align="center" valign="middle">{{contract.stan}}</td>
         <td align="center" valign="middle">
-            <a href=""><button type="submit" class="btn btn-outline-primary">Podgląd</button></a>
+            <a href="{% url 'contracts:show_contractsimmovables' contract.id%}"><button type="submit" class="btn btn-outline-primary">Podgląd</button></a>
         </td>
         <td align="center" valign="middle">
             <a href="{%url 'contracts:edit_contractsimmovables' contract.id %}"><button type="button" class="btn btn-outline-primary">Edytuj</button></a>

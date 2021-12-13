@@ -67,3 +67,4 @@ def edit_invoicesell(request, id):
         return redirect('invoices:sell_invoices_list')
 
     return render(request, 'invoices/invoicesellform.html', context)
+

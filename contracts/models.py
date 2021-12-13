@@ -43,7 +43,7 @@ class Contractimmovables(models.Model):
         verbose_name_plural = "Umowy nieruchomosci"
 
     data_umowy = models.DateField("Data umowy")
-    nrumowy = models.CharField("Nr umowy", max_length=20, blank=True, default="BRAK")
+    nrumowy = models.CharField("Nr umowy", max_length=20, null=True, blank=True, default="")
     kontrahent = models.ForeignKey("contractors.Contractorsell", on_delete=models.CASCADE, verbose_name="Kontrahent")
     podstawa = models.ForeignKey("contracts.Podstawa", on_delete=models.CASCADE, blank=True,
                                  verbose_name="Podstawa prawna")

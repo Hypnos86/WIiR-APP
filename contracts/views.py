@@ -52,3 +52,10 @@ def edit_contractsimmovables(request, id):
         return redirect('contracts:menu_contractsimmovables')
 
     return render(request, 'contracts/contractform.html', context)
+
+
+@login_required
+def show_contractsimmovables(request, id):
+    contract = Contractimmovables.objects.get(pk=id)
+
+    return render(request, 'contracts/showcontractimmovables.html', {'contract': contract})
