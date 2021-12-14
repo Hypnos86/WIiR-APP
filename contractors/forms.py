@@ -1,10 +1,10 @@
 from django.forms import ModelForm, Textarea
-from contractors.models import Contractorsell
+from contractors.models import Contractor
 
 
 class ContractorsellForm(ModelForm):
     class Meta:
-        model = Contractorsell
+        model = Contractor
         fields = ["nocuntractor", "nazwa", "nip", "adres", "kod_pocztowy", "miasto", "informacje", "utworzenie",
                   "autor"]
         exclude = ["utworzenie", "autor"]

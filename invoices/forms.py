@@ -1,4 +1,4 @@
-from django.forms import ModelForm, DateInput
+from django.forms import ModelForm, DateInput, Textarea
 from invoices.models import Invoicesell
 
 
@@ -16,4 +16,5 @@ class InvoicesellForm(ModelForm):
             'data': DateField(),
             'period_from': DateField(),
             'period_to': DateField(),
+            'comments': Textarea(attrs={'rows': 3})
         }

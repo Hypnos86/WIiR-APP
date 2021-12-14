@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Contractorsell(models.Model):
+class Contractor(models.Model):
     class Meta:
         verbose_name = "Kontrahenci"
         verbose_name_plural = "Kontrahenci"

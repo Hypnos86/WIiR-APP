@@ -1,12 +1,12 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Contractorsell
+from .models import Contractor
 from .forms import ContractorsellForm
 
 
 @login_required
 def contractorsell_list(request):
-    contractorsell = Contractorsell.objects.all().order_by("nazwa")
+    contractorsell = Contractor.objects.all().order_by("nazwa")
     query = "Wyczyść"
     search = "Szukaj"
     consellsum = len(contractorsell)
@@ -37,7 +37,7 @@ def new_contractorsell(request):
 
 @login_required
 def edit_contractorsell(request, id):
-    contractorsell_edit = get_object_or_404(Contractorsell, pk=id)
+    contractorsell_edit = get_object_or_404(Contractor, pk=id)
     contractorsell_form = ContractorsellForm(request.POST or None, instance=contractorsell_edit)
 
     context = {'contractor_form': contractorsell_form, 'new': False}

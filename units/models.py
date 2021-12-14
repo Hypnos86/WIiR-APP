@@ -29,8 +29,8 @@ class Unit(models.Model):
         verbose_name = "Jednostka"
         verbose_name_plural = "Jednostki"
 
-    powiat = models.ForeignKey(Powiat, on_delete=models.CASCADE)
-    rodzaj = models.ForeignKey(Rodzaj, on_delete=models.CASCADE)
+    powiat = models.ForeignKey(Powiat, on_delete=models.CASCADE, related_name="unit")
+    rodzaj = models.ForeignKey(Rodzaj, on_delete=models.CASCADE, related_name="unit")
     adres = models.CharField(max_length=30)
     kod_pocztowy = models.CharField(max_length=6)
     miasto = models.CharField(max_length=20)

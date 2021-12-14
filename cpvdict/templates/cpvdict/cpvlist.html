@@ -11,20 +11,25 @@
                        aria-label="Search" aria-describedby="search-addon">
                 <button type="submit" class="btn btn-outline-primary">{{query}}{{search}}</button>
             </div>
+
         </form>
     </div>
 </section>
 <div class="kontrahenci-title">
     <h4>Słownik kodów PCV</h4>
-    <p>Liczba kodów:{{sumcpv}} </p>
+    <p>Liczba kodów CPV: {{sumcpv}} </p>
+    {%if query%}
+        <p>Znaleziono {{qsum}} kodów CPV</p>
+    {%endif%}
 </div>
 <div class="container">
+    {%if query%}
     <table class="table table-hover my-table">
         <thead>
         <tr class="my-table-tr text-center">
             <th valign="middle" width="50" scope="col">L.p.</th>
             <th valign="middle" width="150" scope="col">Kod CPV</th>
-            <th valign="middle" width="600" scope="col">Nazwa</th>
+            <th valign="middle" width="500" scope="col">Nazwa</th>
         </tr>
         </thead>
         <tbody>
@@ -42,6 +47,7 @@
         </tr>
         </tfoot>
     </table>
+    {%endif%}
 </div>
 <script>
      document.getElementById("button-units").classList.remove("active");

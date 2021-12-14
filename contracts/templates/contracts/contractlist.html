@@ -20,20 +20,19 @@
     <p class="m-0"><span>Liczba umów aktualnych: {{contrsum}}</span></p>
     <p class="m-0"><span>Liczba umów zarchiwizowanych: </span></p>
 </div>
-<table class="table table-hover my-table">
+<table class="table table-hover my-table mt-2">
     <thead>
     <tr class="my-table-tr">
-        <th width="40" scope="col" class="text-center">L.p.</th>
-        <th width="150" scope="col" class="text-center">Data umowy</th>
-        <th width="150" scope="col" class="text-center">Nr. umowy</th>
-        <th width="250" scope="col" class="text-center" >Kontrahent</th>
-        <th width="150" scope="col" class="text-center">Okres obowiązywania</th>
-        <th width="80" scope="col" class="text-center">Powierzchnia użyczona [m<sup>2</sup>]</th>
-        <th scope="col" class="text-center">Rodzaj umowy</th>
-        <th  scope="col" class="text-center">Koszty</th>
-        <th  scope="col" class="text-center">Jednostka</th>
-        <th scope="col" class="text-center">Podstawa prawna</th>
-        <th scope="col" class="text-center">Stan umowy</th>
+        <th align="center" valign="middle" width="40" scope="col" class="text-center">L.p.</th>
+        <th align="center" valign="middle" width="150" scope="col" class="text-center">Data umowy</th>
+        <th align="center" valign="middle" width="150" scope="col" class="text-center">Nr. umowy</th>
+        <th align="center" valign="middle" width="250" scope="col" class="text-center" >Kontrahent</th>
+        <th align="center" valign="middle" width="150" scope="col" class="text-center">Okres obowiązywania</th>
+        <th align="center" valign="middle" width="80" scope="col" class="text-center">Powierzchnia użyczona [m<sup>2</sup>]</th>
+        <th align="center" valign="middle" scope="col" class="text-center">Rodzaj umowy</th>
+        <th align="center" valign="middle" scope="col" class="text-center">Jednostka</th>
+        <th align="center" valign="middle"scope="col" class="text-center">Podstawa prawna</th>
+        <th align="center" valign="middle" scope="col" class="text-center">Stan umowy</th>
 
     </tr>
     </thead>
@@ -47,7 +46,6 @@
         <td align="center" valign="middle" class="text-center">{{contract.okres_obowiazywania|date:"d.m.Y"| default_if_none:'-'}}</td>
         <td align="center" valign="middle" class="text-center">{{contract.pow_uzyczona|default_if_none:'-' |intcomma}}</td>
         <td align="center" valign="middle" class="text-center">{{contract.rodzaj}}</td>
-        <td valign="middle">{%if contract.koszt_czynsz%}<small>Czynsz |</small>{%endif%} {%if contract.koszt_prad%}<small>Prad |</small>{%endif%} {%if contract.koszt_gaz%}<small>Gaz |</small>{%endif%} {%if contract.koszt_woda%}<small>Woda |</small>{%endif%} {%if contract.koszt_co%}<small>C.O. |</small>{%endif%} {%if contract.koszt_smieci%}<small>Śmieci |</small>{%endif%} {%if contract.koszt_podsmiec%}<small>Zag. odpadami kom. |</small>{%endif%} {%if contract.koszt_podnier%}<small>Podatek od nieruchomości</small>{%endif%}</td>
         <td>{{contract.unit}}</td>
         <td align="center" valign="middle">{{contract.podstawa}}</td>
         <td align="center" valign="middle">{{contract.stan}}</td>

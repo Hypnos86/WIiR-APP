@@ -60,4 +60,4 @@ class Financesource(models.Model):
     source = models.ForeignKey(Source, on_delete=models.CASCADE, verbose_name="Źródło finansowania")
 
     def __str__(self):
-        return f'{self.section} {self.paragraph} - {self.source}'
+        return f'{self.section}-{self.group}-{self.paragraph}-{self.source}'

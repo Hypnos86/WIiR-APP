@@ -2,7 +2,7 @@ from django.contrib import admin
 from import_export import resources
 from import_export.fields import Field
 from import_export.admin import ExportMixin
-from invoices.models import Invoicesell, Creator
+from invoices.models import Invoicesell, Invoicebuy, Invoiceitems, Creator
 
 
 # Register your models here.
@@ -34,3 +34,14 @@ class InvoicesellAdmin(ExportMixin, admin.ModelAdmin):
 
 
 admin.site.register(Creator)
+
+admin.site.register(Invoiceitems)
+
+@admin.register(Invoicebuy)
+class Invoicebuy(admin.ModelAdmin):
+    list_display = ['datawyplytu', 'data', 'noinvoice', 'contractor', 'create', 'autor']
+    filter_horizontal = ['invoiceitems']
+
+
+
+

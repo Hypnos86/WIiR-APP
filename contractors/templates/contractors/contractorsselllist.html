@@ -26,11 +26,11 @@
     <thead>
     <tr class="my-table-tr text-center">
         <th align="center" valign="middle" width="50" scope="col">L.p.</th>
-        <th align="center" valign="middle" width="150" scope="col">Nr. kontrahenta</th>
-        <th align="center" valign="middle" width="300" scope="col">Nazwa</th>
+        <th align="center" valign="middle" width="110" scope="col">Nr. kontrahenta</th>
+        <th align="center" valign="middle" width="220" scope="col">Nazwa</th>
         <th align="center" valign="middle" width="200" scope="col">NIP</th>
-        <th align="center" valign="middle" width="300" scope="col">Adres</th>
-        <th align="center" valign="middle" width="150" scope="col">Kod pocztowy</th>
+        <th align="center" valign="middle" width="200" scope="col">Adres</th>
+        <th align="center" valign="middle" width="80" scope="col">Kod pocztowy</th>
         <th align="center" valign="middle" scope="col">Miasto</th>
         <th align="center" valign="middle" scope="col">Informacje</th>
 
@@ -40,7 +40,7 @@
     {%for contractor in contractors %}
     <tr class="my-table-tr">
         <td class="text-center" valign="middle" scope="row"></td>
-        <td valign="middle" scope="row">{{contractor.nocuntractor}}</td>
+        <td align="center" valign="middle" scope="row">{{contractor.nocuntractor}}</td>
         <td valign="middle"><span>{{contractor.nazwa}}</span></td>
         <td class="text-center" valign="middle"><span>{{contractor.nip|default_if_none:''}}</span></td>
         <td valign="middle"><span>{{contractor.adres}}</span></td>

@@ -74,6 +74,72 @@
     text-align: center;
 }
 
+.color-maroon{
+    color: white;
+    background-color: #800000;
+    padding: 4px;
+    margin: 0 3px;
+    border-radius: 3px;
+}
+
+.color-indygo{
+    color: white;
+    background-color: #4B0082;
+    padding: 4px;
+    margin: 0 3px;
+    border-radius: 3px;
+}
+
+.color-gold{
+    color: white;
+    background-color: #DAA520;
+    padding: 4px;
+    margin: 0 3px;
+    border-radius: 3px;
+}
+
+.color-sky{
+    color: white;
+    background-color: #4169E1;
+    padding: 4px;
+    margin: 0 3px;
+    border-radius: 3px;
+}
+
+.color-cinamon{
+    color: white;
+    background-color: #DC143C;
+    padding: 4px;
+    margin: 0 3px;
+    border-radius: 3px;
+}
+
+.color-dirty{
+    color: white;
+    background-color: #556B2F;
+    padding: 4px;
+    margin: 0 3px;
+    border-radius: 3px;
+}
+
+.color-slategrey{
+    color: white;
+    background-color: #778899;
+    padding: 4px;
+    margin: 0 3px;
+    border-radius: 3px;
+}
+
+.color-teal{
+    color: white;
+    background-color: #008080;
+    padding: 4px;
+    margin: 0 3px;
+    border-radius: 3px;
+}
+
+
+
 /* INVOICES */
 .chose-invoices {
     text-align: center;

@@ -2,7 +2,7 @@ from django.contrib import admin
 from import_export import resources
 from import_export.admin import ExportMixin
 from import_export.fields import Field
-from contracts.models import Contractimmovables, Stan, Rodzaj, Podstawa
+from contracts.models import Contractimmovables, Stan, Rodzaj, Podstawa, Aneks
 
 
 # Register your models here.
@@ -31,8 +31,6 @@ class ContractResource(resources.ModelResource):
                         'pow_uzyczona', 'unit', 'stan')
 
 
-#
-
 @admin.register(Contractimmovables)
 class ContractAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ['id', 'data_umowy', 'nrumowy', 'kontrahent', 'podstawa', 'okres_obowiazywania', 'rodzaj',
@@ -47,3 +45,9 @@ class ContractAdmin(ExportMixin, admin.ModelAdmin):
 admin.site.register(Stan)
 admin.site.register(Rodzaj)
 admin.site.register(Podstawa)
+
+
+@admin.register(Aneks)
+class ContractAdmin(admin.ModelAdmin):
+    list_display = ['contract', 'data_aneksu', 'create', 'autor']
+    search_fields = ['data_aneksu', 'contract']

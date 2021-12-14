@@ -5,34 +5,39 @@
 {%block title%} Jednostki Policji w Województwie Wielkopolskim {%endblock%}
 
 {%block content%}
-<div class="row text-right">
+<div class="text-center">
     <form>
-
-            <div class="d-inline-block mx-4 md-3 text-center">
-                <label for="powiaty" class="">Powiat</label>
-                <select id="powiaty" name="powiaty" class="form-control" aria-label="Default select example">
-                    <option selected>--wybierz--</option>
-                    {%for powiat in powiaty%}
-                    <option value="id_powiat">{{powiat}}</option>
-                    {%endfor%}
-                </select>
-            </div>
-            <div class="d-inline-block mx-4 text-center">
-                <label for="rodzaj" class="">Rodzaj jednostki</label>
-                <select id="rodzaj" name="rodzaj" class="form-control" aria-label="Default select example">
-                    <option selected>--wybierz--</option>
-                    {%for r in rodzaj%}
-                    <option value="id_r">{{r}}</option>
-                    {%endfor%}
-                </select>
-            </div>
-            <div class="d-inline-block mx-4">
-                <button type="submit" class="btn btn-outline-primary">Szukaj</button>
-            </div>
+        <div class="d-inline-block mx-4 md-3 text-center">
+            <label for="powiat" class="">Powiat</label>
+            <select id="powiat" name="p" class="form-control" aria-label="Default select example">
+                <option value="">--wybierz--</option>
+                {%for powiat in powiaty%}
+                    <option value={{powiat.id}}>{{powiat}}</option>
+                {%endfor%}
+            </select>
+        </div>
+        <div class="d-inline-block mx-4 text-center">
+            <label for="rodzaj" class="rodzaj">Rodzaj jednostki</label>
+            <select id="rodzaj" name="r" class="form-control" aria-label="Default select example">
+                <option value="">--wybierz--</option>
+                {%for rodzaj in rodzaje%}
+                    <option value={{rodzaj.id}} {%if r %} selected {%endif%}>{{rodzaj}}</option>
+                {%endfor%}
+            </select>
+        </div>
+        <div class="d-inline-block mx-4">
+            <button type="submit" class="btn btn-outline-primary">{{query}}{{search}}</button>
+        </div>
 
     </form>
 </div>
 <h4 class="units-title">Ewidencja jednostek Policji</h4>
+{% if search%}
+<p>Liczba obiektów: {{unitsum}}</p>
+{%endif%}
+{%if query%}
+<p>Znaleziono {{unitsumsearch}} obiektów</p>
+{%endif%}
 <table class="table table-hover my-table">
     <thead>
     <tr class="my-table-tr">
@@ -50,12 +55,12 @@
     {%for unit in units %}
     <tr class="my-table-tr">
         <td align="center" valign="middle" class="text-center" scope="row"></td>
-        <td align="center" valign="middle" >{{unit.powiat}}</td>
+        <td align="center" valign="middle">{{unit.powiat}}</td>
         <td align="center" valign="middle" class="text-center">{{unit.rodzaj}}</td>
-        <td valign="middle" >{{unit.adres}}</td>
+        <td valign="middle">{{unit.adres}}</td>
         <td align="center" valign="middle" class="text-center">{{unit.kod_pocztowy}}</td>
         <td align="center" valign="middle" width="180">{{unit.miasto}}</td>
-        <td valign="middle" >{{unit.informacje}}</td>
+        <td valign="middle">{{unit.informacje}}</td>
         <td align="center" valign="middle">
             {%if unit.aktywna == True%}
             Tak
@@ -78,5 +83,6 @@
      document.getElementById("button-invoices").classList.remove("active");
      document.getElementById("button-contracts").classList.remove("active");
      document.getElementById("button-contractors").classList.remove("active");
+
 </script>
 {%endblock%}

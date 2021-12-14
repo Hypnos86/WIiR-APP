@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-from contracts.models import Contractimmovables
+from contracts.models import Contractimmovables, Aneks
 from contracts.forms import ContractimmovablesForm
 
 
@@ -57,5 +57,6 @@ def edit_contractsimmovables(request, id):
 @login_required
 def show_contractsimmovables(request, id):
     contract = Contractimmovables.objects.get(pk=id)
+    aneksy = contract.aneks.all()
 
-    return render(request, 'contracts/showcontractimmovables.html', {'contract': contract})
+    return render(request, 'contracts/showcontractimmovables.html', {'contract': contract, 'aneksy': aneksy})

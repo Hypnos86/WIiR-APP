@@ -2,7 +2,7 @@ from django.contrib import admin
 from import_export import resources
 from import_export.admin import ExportMixin
 from import_export.fields import Field
-from .models import Contractorsell
+from .models import Contractor
 
 
 # admin.site.register(Post, PostAdmin)
@@ -19,11 +19,11 @@ class ContractorResource(resources.ModelResource):
     # autor = Field(attribute='autor', column_name='Autor')
 
     class Meta:
-        model = Contractorsell
+        model = Contractor
         export_order = ('nocuntractor', 'nazwa', 'nip', 'adres', 'kod_pocztowy', 'miasto', 'informacje')
 
 
-@admin.register(Contractorsell)
+@admin.register(Contractor)
 class ContractorAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ['nocuntractor', 'nazwa', 'nip', 'adres', 'kod_pocztowy', 'miasto', 'informacje', 'data_utworzenia',
                     'autor']

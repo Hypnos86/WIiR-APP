@@ -5,15 +5,45 @@ from units.forms import UnitForm
 
 
 def units_list(request):
-    units_act = Unit.objects.filter(aktywna=1).order_by("powiat")
+    units_active = Unit.objects.filter(aktywna=1).order_by("powiat")
     units_deact = Unit.objects.filter(aktywna=0)
     powiaty = Powiat.objects.all().order_by("powiat")
-    rodzaj = Rodzaj.objects.all()
+    rodzaje = Rodzaj.objects.all()
+    query = "Wyczyść"
+    search = "Szukaj"
+    unitsum = len(units_active)
 
-    context = {"units": units_act,
-               "powiaty": powiaty,
-               "rodzaj":rodzaj}
-    return render(request, "units/unitlist.html", context)
+
+    r = request.GET.get("r")
+    p = request.GET.get("p")
+
+    if p and r:
+        units_active = units_active.filter(powiat__exact=p, rodzaj__exact=r)
+        unitsumsearch = len(units_active)
+        return render(request, "units/unitlist.html", {"units": units_active,
+                                                       "powiaty": powiaty,
+                                                       "rodzaje": rodzaje,
+                                                       "unitsum": unitsum, "query": query, "unitsumsearch":unitsumsearch})
+    elif p and not r:
+        units_active = units_active.filter(powiat__exact=p)
+        unitsumsearch = len(units_active)
+        return render(request, "units/unitlist.html", {"units": units_active,
+                                                       "powiaty": powiaty,
+                                                       "rodzaje": rodzaje,
+                                                       "unitsum": unitsum, "query": query, "unitsumsearch":unitsumsearch})
+    elif r and not p:
+        units_active = units_active.filter(rodzaj__exact=r)
+        unitsumsearch = len(units_active)
+        return render(request, "units/unitlist.html", {"units": units_active,
+                                                       "powiaty": powiaty,
+                                                       "rodzaje": rodzaje,
+                                                       "unitsum": unitsum, "query": query, "unitsumsearch":unitsumsearch})
+
+    else:
+        return render(request, "units/unitlist.html", {"units": units_active,
+                                                       "powiaty": powiaty,
+                                                       "rodzaje": rodzaje,
+                                                       "unitsum": unitsum, "search": search})
 
 
 def add_unit(request):

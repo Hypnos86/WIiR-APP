@@ -10,10 +10,13 @@ def cpvlist(request):
     search = "Szukaj"
     sumcpv = len(cpvs)
     q = request.GET.get("q")
+
     if q:
         cpvs = cpvs.filter(nocpv__startswith=q) | cpvs.filter(name__icontains=q)
+        qsum = len(cpvs)
         return render(request, 'cpvdict/cpvlist.html', {'cpvs': cpvs,
-                                                        'sumcpv': sumcpv, 'sumcpv': sumcpv, 'query': query})
+                                                        'sumcpv': sumcpv, 'sumcpv': sumcpv, 'query': query,
+                                                        'qsum': qsum})
     else:
         return render(request, 'cpvdict/cpvlist.html', {'cpvs': cpvs,
                                                         'sumcpv': sumcpv, 'sumcpv': sumcpv, 'search': search})

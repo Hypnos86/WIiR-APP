@@ -44,7 +44,7 @@ class Contractimmovables(models.Model):
 
     data_umowy = models.DateField("Data umowy")
     nrumowy = models.CharField("Nr umowy", max_length=20, null=True, blank=True, default="")
-    kontrahent = models.ForeignKey("contractors.Contractorsell", on_delete=models.CASCADE, verbose_name="Kontrahent")
+    kontrahent = models.ForeignKey("contractors.Contractor", on_delete=models.CASCADE, verbose_name="Kontrahent")
     podstawa = models.ForeignKey("contracts.Podstawa", on_delete=models.CASCADE, blank=True,
                                  verbose_name="Podstawa prawna")
     okres_obowiazywania = models.DateField("Okres obowiązywania", null=True, blank=True)
@@ -59,7 +59,7 @@ class Contractimmovables(models.Model):
     koszt_podsmiec = models.BooleanField("Zagospodarowanie odpadami komunalnymi")
     koszt_podnier = models.BooleanField("Podatek od nieruchomości")
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE, null=False, verbose_name="Jednostka")
-    skan = models.FileField(upload_to='umowy_pdf', null=True, blank=True, verbose_name="Skan umowy")
+    skan = models.FileField(upload_to='umowy_pdf/%Y/', null=True, blank=True, verbose_name="Skan umowy")
     stan = models.ForeignKey(Stan, on_delete=models.CASCADE, blank=False, default=1)
     comments = models.TextField("Informacje", blank=True, default="")
     archives = models.BooleanField("Aktywna", null=False, default=1)
@@ -72,8 +72,11 @@ class Contractimmovables(models.Model):
 
 
 class Aneks(models.Model):
-    umowa_id = models.ForeignKey("contracts.Contractimmovables", on_delete=models.CASCADE)
-    skan_aneksu = models.FileField(upload_to='aneksy_pdf/%Y', null=True, blank=True, verbose_name="Skan aneksu")
+    class Meta:
+        verbose_name = "Aneks"
+        verbose_name_plural = "Aneksy"
+    contract = models.ForeignKey("contracts.Contractimmovables", on_delete=models.CASCADE, related_name="aneks")
+    skan_aneksu = models.FileField(upload_to='aneksy_pdf/%Y/', null=True, blank=True, verbose_name="Skan aneks")
     data_aneksu = models.DateField("Data aneksu", null=True)
     create = models.DateTimeField("Data utworzenia", auto_now_add=True)
     autor = models.ForeignKey("auth.User", on_delete=models.CASCADE)
