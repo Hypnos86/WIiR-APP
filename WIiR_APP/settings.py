@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'contractors.apps.ContractorsConfig',
     'invoices.apps.InvoicesConfig',
     'sourcefinancing.apps.SourcefinancingConfig',
+    'cpvdict.apps.CpvdictConfig',
 ]
 
 # aby dzialaly PDFy i przegladanie
