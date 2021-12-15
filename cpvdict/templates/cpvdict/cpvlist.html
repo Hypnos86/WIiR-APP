@@ -1,5 +1,5 @@
-{%extends 'base.html'%}
-{%load static%}
+{% extends 'base.html' %}
+{% load static %}
 
 {%block title%} Słownik kodów CPV {%endblock%}
 {%block content%}
@@ -34,11 +34,19 @@
         </thead>
         <tbody>
         {%for cpv in cpvs %}
+        {%if cpv.nocpv|slice:":2" == "45" %}
+        <tr class="my-table-tr table-secondary">
+            <td class="text-center" scope="row"></td>
+            <td scope="row" valign="middle" align="center">{{cpv.nocpv}}</td>
+            <td><span>{{cpv.name}}</span></td>
+        </tr>
+        {%else%}
         <tr class="my-table-tr">
             <td class="text-center" scope="row"></td>
             <td scope="row" valign="middle" align="center">{{cpv.nocpv}}</td>
             <td><span>{{cpv.name}}</span></td>
         </tr>
+        {%endif%}
         {%endfor%}
         </tbody>
         <tfoot>

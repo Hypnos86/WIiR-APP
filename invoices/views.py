@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from invoices.models import Invoicesell
 from invoices.forms import InvoicesellForm
+from contractors.models import Contractor
 
 
 # Create your views here.
@@ -28,7 +29,7 @@ def sell_invoiceslist(request):
 
     if q:
         invoicessell = invoicessell.filter(noinvoice__icontains=q) | invoicessell.filter(
-            sum__icontains=q) | invoicessell.filter(period_from__icontains=q)
+            sum__icontains=q) | invoicessell.filter(data__icontains=q)
         return render(request, "invoices/invoicesselllist.html", {"invoices": invoicessell,
                                                                   "invoicessellsum": invoicessellsum,
                                                                   "sell": True, "query": query})

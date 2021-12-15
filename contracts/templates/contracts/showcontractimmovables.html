@@ -11,20 +11,17 @@
     <div class="row">
         <div class="col-md-8">
             <ul class="list-group list-group-flush">
-                <li class="list-group-item"><span class="text-muted">Data umowy: </span><span>{{contract.data_umowy|date:"d.m.Y"}}</span>
-                </li>
-                <li class="list-group-item">{%if contract.nrumowy%}<span class="text-muted">Nr. umowy: </span><span>{{contract.nrumowy}}</span>{%endif%}
-                </li>
-                <li class="list-group-item"><span
-                        class="text-muted">Kontrachent: </span><span>{{contract.kontrahent}}</span></li>
-                <li class="list-group-item"><span
-                        class="text-muted">Podstawa prawna: </span><span>{{contract.podstawa}}</span></li>
-                <li class="list-group-item"><span
-                        class="text-muted">Rodzaj umowy: </span><span>{{contract.rodzaj}}</span></li>
-                <li class="list-group-item"><span class="text-muted">Powierzchnia użyczona: </span><span>{{contract.pow_uzyczona}}</span>
-                </li>
-                <li class="list-group-item"><span class="text-muted">Okres obowiązywania: </span><span>{{contract.okres_obowiazywania|date:"d.m.Y"}}</span>
-                </li>
+                <li class="list-group-item"><span class="text-muted">Data umowy: </span><span>{{contract.data_umowy|date:"d.m.Y"}}</span></li>
+                {%if contract.nrumowy%}
+                <li class="list-group-item"><span class="text-muted">Nr. umowy: </span><span>{{contract.nrumowy}}</span></li>
+                {%endif%}
+                <li class="list-group-item"><span class="text-muted">Kontrachent: </span><span>{{contract.kontrahent}}</span></li>
+                <li class="list-group-item"><span class="text-muted">Podstawa prawna: </span><span>{{contract.podstawa}}</span></li>
+                <li class="list-group-item"><span class="text-muted">Rodzaj umowy: </span><span>{{contract.rodzaj}}</span></li>
+                {%if contract.pow_uzyczona%}
+                <li class="list-group-item"><span class="text-muted">Powierzchnia użyczona: </span><span>{{contract.pow_uzyczona}} m<sup>2</sup></span></li>
+                {%endif%}
+                <li class="list-group-item"><span class="text-muted">Okres obowiązywania: </span><span>{{contract.okres_obowiazywania|date:"d.m.Y"}}</span></li>
                 <li class="list-group-item"><span class="text-muted">Koszty: </span>
                     {% if contract.koszt_czynsz %} <span class="color-maroon">Czynsz</span>{%endif%}
                     {% if contract.koszt_prad %} <span class="color-indygo">Prąd</span> {%endif%}
@@ -34,9 +31,7 @@
                     {% if contract.koszt_smieci %} <span class="color-dirty">Śmieci</span> {%endif%}
                     {% if contract.koszt_podsmiec %} <span class="color-slategrey">Podatek śmieciowy</span> {%endif%}
                     {% if contract.koszt_podnier %} <span class="color-teal">Podatek od nieruchomości</span> {%endif%}
-                </li>
-                <li class="list-group-item"><span class="text-muted">Jednostka: </span><span> {{contract.unit}}</span>
-                </li>
+                </li><li class="list-group-item"><span class="text-muted">Jednostka: </span><span> {{contract.unit}}</span></li>
                 <li class="list-group-item"><span class="text-muted">Stan umowy: </span><span>{{contract.stan}}</span>
                 </li>
                 {%if contract.comments%}
@@ -51,6 +46,7 @@
                 <a href="/media/{{contract.skan}}" role="button" target="_blank"><button class="btn btn-outline-primary btn-sm" type="button">Podgląd umowy</button></a>
             </div>
             {%endif%}
+
             {%if aneksy%}
             {%for aneks in aneksy%}
             <div class="text-center my-3">

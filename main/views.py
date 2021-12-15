@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from main.models import Team, Telephone
-from main.forms import TelephoneForm
 
 
 # Create your views here.
