@@ -16,7 +16,7 @@ def cpvlist(request):
         qsum = len(cpvs)
         return render(request, 'cpvdict/cpvlist.html', {'cpvs': cpvs,
                                                         'sumcpv': sumcpv, 'sumcpv': sumcpv, 'query': query,
-                                                        'qsum': qsum})
+                                                        'qsum': qsum, "q": q})
     else:
         return render(request, 'cpvdict/cpvlist.html', {'cpvs': cpvs,
                                                         'sumcpv': sumcpv, 'sumcpv': sumcpv, 'search': search})
