@@ -31,7 +31,6 @@
         <th align="center" valign="middle" width="80" scope="col" class="text-center">Powierzchnia użyczona [m<sup>2</sup>]</th>
         <th align="center" valign="middle" scope="col" class="text-center">Rodzaj umowy</th>
         <th align="center" valign="middle" scope="col" class="text-center">Jednostka</th>
-        <th align="center" valign="middle"scope="col" class="text-center">Podstawa prawna</th>
         <th align="center" valign="middle" scope="col" class="text-center">Stan umowy</th>
 
     </tr>
@@ -43,11 +42,10 @@
         <td align="center" valign="middle" class="text-center">{{contract.data_umowy|date:"d.m.Y"}}</td>
         <td align="center" valign="middle" class="text-center">{{contract.nrumowy|default_if_none:'---'}}</td>
         <td valign="middle">{{contract.kontrahent}}</td>
-        <td align="center" valign="middle" class="text-center">{{contract.okres_obowiazywania|date:"d.m.Y"| default_if_none:'-'}}</td>
-        <td align="center" valign="middle" class="text-center">{{contract.pow_uzyczona|default_if_none:'-' |intcomma}}</td>
+        <td align="center" valign="middle" class="text-center">{{contract.okres_obowiazywania|default_if_none:'---'|date:"d.m.Y"}}</td>
+        <td align="center" valign="middle" class="text-center">{{contract.pow_uzyczona|default_if_none:'---'|intcomma}}</td>
         <td align="center" valign="middle" class="text-center">{{contract.rodzaj}}</td>
         <td>{{contract.unit}}</td>
-        <td align="center" valign="middle">{{contract.podstawa}}</td>
         <td align="center" valign="middle">{{contract.stan}}</td>
         <td align="center" valign="middle">
             <a href="{% url 'contracts:show_contractsimmovables' contract.id%}"><button type="submit" class="btn btn-outline-primary">Podgląd</button></a>

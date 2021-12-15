@@ -75,7 +75,7 @@ class Aneks(models.Model):
     class Meta:
         verbose_name = "Aneks"
         verbose_name_plural = "Aneksy"
-    contract = models.ForeignKey("contracts.Contractimmovables", on_delete=models.CASCADE, verbose_name="Umowa",related_name="aneks")
+    contract = models.ForeignKey("contracts.Contractimmovables", on_delete=models.CASCADE, verbose_name="Umowa", related_name="aneks")
     skan_aneksu = models.FileField(upload_to='contracts_immovables_pdf/aneksy_pdf/%Y/', null=True, blank=True, verbose_name="Skan aneks")
     data_aneksu = models.DateField("Data aneksu", null=True)
     create = models.DateTimeField("Data utworzenia", auto_now_add=True)

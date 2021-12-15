@@ -12,7 +12,7 @@ def contractorsell_list(request):
     consellsum = len(contractorsell)
     q = request.GET.get("q")
     if q:
-        contractorsell = contractorsell.filter(nazwa__icontains=q)
+        contractorsell = contractorsell.filter(nazwa__icontains=q)|contractorsell.filter(miasto__icontains=q)|contractorsell.filter(nocuntractor__startswith=q)|contractorsell.filter(nip__startswith=q)
         return render(request, 'contractors/contractorsselllist.html',
                       {'contractors': contractorsell, "consellsum": consellsum, "query": query})
     else:

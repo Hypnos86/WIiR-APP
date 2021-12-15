@@ -35,12 +35,15 @@ class InvoicesellAdmin(ExportMixin, admin.ModelAdmin):
 
 admin.site.register(Creator)
 
-admin.site.register(Invoiceitems)
+@admin.register(Invoiceitems)
+class InvoiceitemsAdmin(admin.ModelAdmin):
+    ordering = ['acount', 'powiat', 'sum']
+    list_display = ['acount', 'powiat', 'sum']
+
 
 @admin.register(Invoicebuy)
-class Invoicebuy(admin.ModelAdmin):
-    list_display = ['datawyplytu', 'data', 'noinvoice', 'contractor', 'create', 'autor']
-    filter_horizontal = ['invoiceitems']
+class InvoicebuyAdmin(admin.ModelAdmin):
+    list_display = ['datawyplytu', 'data', 'noinvoice', 'contractor', 'invoiceitems', 'create', 'autor']
 
 
 

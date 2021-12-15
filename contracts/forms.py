@@ -36,10 +36,10 @@ class ContractimmovablesForm(ModelForm):
                    }
 
 
-# class AneksForm(ModelForm):
-#     class Meta:
-#         model = Aneks
-#
-#     fields = ['contract', 'data_aneksu', 'skan_aneksu', 'create', 'autor']
-#     labels = {'data_aneksu': 'Data aneksu', 'skan_aneksu': 'Skan aneksu'}
-#     widgets = {'data_aneksu': DateField()}
+class AneksForm(ModelForm):
+    class Meta:
+        model = Aneks
+
+        fields = '__all__'
+        labels = {'data_aneksu': 'Data aneksu', 'skan_aneksu': 'Skan aneksu'}
+        widgets = {'data_aneksu': DateField()}

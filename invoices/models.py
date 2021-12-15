@@ -17,12 +17,18 @@ class Creator(models.Model):
 
 
 class Invoiceitems(models.Model):
-    sum = models.DecimalField("Kwota [zł]", max_digits=10, decimal_places=2, null=True, blank=True)
+    class Meta:
+        verbose_name = "Element faktury"
+        verbose_name_plural = "Elementy faktury"
+    acount = models.ForeignKey("sourcefinancing.Financesource", on_delete=models.CASCADE, verbose_name="Konto",
+                               related_name="invoiceitems")
     powiat = models.ForeignKey("units.Powiat", on_delete=models.CASCADE, verbose_name="Powiat",
                                related_name='invoiceitems')
+    sum = models.DecimalField("Kwota [zł]", max_digits=10, decimal_places=2, null=True, blank=True)
+
 
     def __str__(self):
-        return f'{self.powiat} {self.sum} zł.'
+        return f'{self.acount}{self.powiat} - {self.sum} zł.'
 
 
 class Invoicesell(models.Model):
@@ -60,7 +66,8 @@ class Invoicebuy(models.Model):
     noinvoice = models.CharField("Nr. faktury", max_length=30)
     contractor = models.ForeignKey(Contractor, on_delete=models.CASCADE, verbose_name="Kontrahent",
                                    related_name='invoicebuy')
-    invoiceitems = models.ManyToManyField(Invoiceitems, related_name="invoiceitems")
+    invoiceitems = models.ForeignKey(Invoiceitems, on_delete=models.CASCADE, related_name="invoiceitems",
+                                     verbose_name="Źródło finansowania")
     period_from = models.DateField("Okres od")
     period_to = models.DateField("Okres do")
 

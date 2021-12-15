@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from contracts.models import Contractimmovables, Aneks
-from contracts.forms import ContractimmovablesForm
+from contracts.forms import ContractimmovablesForm, AneksForm
 
 
 # Create your views here.
@@ -59,3 +59,19 @@ def show_contractsimmovables(request, id):
     aneksy = contract.aneks.all()
 
     return render(request, 'contracts/showcontractimmovables.html', {'contract': contract, 'aneksy': aneksy})
+
+@login_required
+def new_aneks(request):
+    aneks_form = AneksForm(request.POST or None, request.FILES or None)
+    context = {'aneks_form': aneks_form,
+               'new': True}
+
+    if request.method == 'POST':
+        if aneks_form.is_valid():
+            instance = aneks_form.save(commit=False)
+            instance.autor = request.user
+            instance.contract = request.contractimmovables
+            instance.save()
+            return redirect('contracts:edit_contractsimmovables')
+
+    return render(request, 'contracts/aneksform.html', context)
