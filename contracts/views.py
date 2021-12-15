@@ -50,7 +50,6 @@ def edit_contractsimmovables(request, id):
     if contractsimmovables_form.is_valid():
         contractsimmovables_form.save()
         return redirect('contracts:menu_contractsimmovables')
-
     return render(request, 'contracts/contractform.html', context)
 
 

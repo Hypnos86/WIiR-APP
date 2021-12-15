@@ -1,5 +1,5 @@
 from django.forms import ModelForm, DateInput, Textarea
-from contracts.models import Contractimmovables
+from contracts.models import Contractimmovables, Aneks
 
 
 class DateField(DateInput):
@@ -10,9 +10,9 @@ class ContractimmovablesForm(ModelForm):
     class Meta:
         model = Contractimmovables
         fields = ['data_umowy', 'nrumowy', 'kontrahent', 'okres_obowiazywania', 'pow_uzyczona', 'podstawa',
-                 'rodzaj', 'koszt_czynsz', 'koszt_prad', 'koszt_gaz', 'koszt_woda', 'koszt_co', 'koszt_smieci',
-                 'koszt_podsmiec', 'koszt_podnier', 'unit', 'skan', 'stan', 'comments', 'archives', 'create',
-                 'change', 'autor']
+                  'rodzaj', 'koszt_czynsz', 'koszt_prad', 'koszt_gaz', 'koszt_woda', 'koszt_co', 'koszt_smieci',
+                  'koszt_podsmiec', 'koszt_podnier', 'unit', 'skan', 'stan', 'comments', 'archives', 'create',
+                  'change', 'autor']
 
         field_order = ['data_umowy', 'nrumowy', 'kontrahent', 'okres_obowiazywania', 'pow_uzyczona', 'podstawa',
                        'rodzaj', 'koszt_czynsz', 'koszt_prad', 'koszt_gaz', 'koszt_woda', 'koszt_co', 'koszt_smieci',
@@ -34,3 +34,12 @@ class ContractimmovablesForm(ModelForm):
                    'okres_obowiazywania': DateField(),
                    'comments': Textarea(attrs={'rows': 3}),
                    }
+
+
+# class AneksForm(ModelForm):
+#     class Meta:
+#         model = Aneks
+#
+#     fields = ['contract', 'data_aneksu', 'skan_aneksu', 'create', 'autor']
+#     labels = {'data_aneksu': 'Data aneksu', 'skan_aneksu': 'Skan aneksu'}
+#     widgets = {'data_aneksu': DateField()}

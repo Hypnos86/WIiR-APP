@@ -18,7 +18,7 @@ class PowiatResource(resources.ModelResource):
 
 @admin.register(Powiat)
 class PowiatAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['id', 'swop_id', 'powiat']
+    list_display = ['swop_id', 'powiat']
     resource_class = PowiatResource
 
 
@@ -37,7 +37,7 @@ class UnitResource(resources.ModelResource):
 
 @admin.register(Unit)
 class UnitAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['id', 'powiat', 'rodzaj', 'adres', 'kod_pocztowy', 'miasto', 'aktywna']
+    list_display = ['powiat', 'rodzaj', 'adres', 'kod_pocztowy', 'miasto', 'aktywna']
     search_fields = ['adres, miasto']
     list_filter = ['powiat']
     resource_class = UnitResource
