@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load humanize %}
 {% load static %}
+{% block title %}Umowy najmu{%endblock%}
 {% block content %}
 <section class="w-100 p-4 pb-4 d-flex justify-content-center align-items-center flex-column">
     <div>
@@ -13,13 +14,15 @@
     </div>
 </section>
 <div class="row">
-    <div class="col-md-12 moj-button-right"><a href="{%url 'contracts:new_contractsimmovables'%}"><button class="btn btn-outline-primary button-choise-contracts">Nowa umowa</button></a></div>
+    <div class="col-md-12 moj-button-right my-1"><a href="{%url 'contracts:new_contractsimmovables'%}"><button class="btn btn-outline-primary button-choise-contracts">Nowa umowa</button></a></div>
+    <div class="col-md-12 moj-button-right my-1"><a href="{%url 'contracts:new_aneks'%}" class="btn btn-outline-primary button-choise-contracts">Dodaj aneks</a></div>
 </div>
 <div class="kontrahenci-title">
     <h4>Umowy czynszowe</h4>
     <p class="m-0"><span>Liczba umów aktualnych: {{contrsum}}</span></p>
     <p class="m-0"><span>Liczba umów zarchiwizowanych: </span></p>
 </div>
+
 <table class="table table-hover my-table mt-2">
     <thead>
     <tr class="my-table-tr">

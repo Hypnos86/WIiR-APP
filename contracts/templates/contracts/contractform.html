@@ -1,20 +1,30 @@
 {%extends 'base.html'%}
 {%load bootstrap%}
 {%load static%}
+{% block title %}{%if new%}Dodaj nową umowe{%else%}Edycja umowy{%endif%}{%endblock%}
 {%block content%}
 <h4 class="text-center">{%if new%}Nowa umowa{%else%}Edycja umowy{%endif%}</h4>
 <div class="col-md-6 moj-button-left"><a href="{%url 'contracts:menu_contractsimmovables'%}">
     <button class="btn btn-outline-primary">Cofni</button>
 </a></div>
-<div class="container">
+<div class="container col-md-5">
     <form method="post" enctype="multipart/form-data">
         {%csrf_token%}
         {{contract_form|bootstrap}}
-        <div class="row mt-4">
+
+        <div class="row mt-5">
+            {%if new == False%}
+
             <div class="col-md-12 moj-button-right">
                 <button type="submit" class="btn btn-outline-primary">Zapisz zmiany</button>
             </div>
         </div>
+        {%else%}
+        <div class="col-md-12 moj-button-right">
+                <button type="submit" class="btn btn-outline-primary">Dodaj</button>
+            </div>
+        {%endif%}
+
     </form>
     <script>
      document.getElementById("button-units").classList.remove("active");

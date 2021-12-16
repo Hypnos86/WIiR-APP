@@ -60,6 +60,7 @@ def show_contractsimmovables(request, id):
 
     return render(request, 'contracts/showcontractimmovables.html', {'contract': contract, 'aneksy': aneksy})
 
+
 @login_required
 def new_aneks(request):
     aneks_form = AneksForm(request.POST or None, request.FILES or None)
@@ -70,8 +71,7 @@ def new_aneks(request):
         if aneks_form.is_valid():
             instance = aneks_form.save(commit=False)
             instance.autor = request.user
-            instance.contract = request.contractimmovables
             instance.save()
-            return redirect('contracts:edit_contractsimmovables')
+            return redirect('contracts:menu_contractsimmovables')
 
     return render(request, 'contracts/aneksform.html', context)

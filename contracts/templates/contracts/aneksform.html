@@ -1,10 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{%extends 'base.html'%}
+{%load bootstrap%}
+{%load static%}
 
-</body>
-</html>
+{%block content%}
+<div class="container col-md-2">
+<form method="post" enctype="multipart/form-data">
+    {%csrf_token%}
+    {{aneks_form|bootstrap}}
+    <div class="row">
+    <div class="col-md-1 moj-button-left mt-3"><a class="btn btn-outline-primary" href="{%url 'contracts:menu_contractsimmovables'%}">Cofni</a></div>
+    <div class="col-md-11 moj-button-right mt-3"><button type="submit" class="btn btn-outline-primary">Dodaj</button></div>
+    </div>
+</form>
+</div>
+{%endblock%}
+
