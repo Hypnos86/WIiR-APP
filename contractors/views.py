@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
+from django.core.paginator import Paginator
 from .models import Contractor
 from .forms import ContractorsellForm
 
@@ -11,13 +12,18 @@ def contractorsell_list(request):
     search = "Szukaj"
     consellsum = len(contractorsell)
     q = request.GET.get("q")
+
+    paginator = Paginator(contractorsell, 1)
+    page_number = request.GET.get('page')
+    contractorsell_list = paginator.get_page(page_number)
+
     if q:
         contractorsell = contractorsell.filter(nazwa__icontains=q)|contractorsell.filter(miasto__icontains=q)|contractorsell.filter(nocuntractor__startswith=q)|contractorsell.filter(nip__startswith=q)
         return render(request, 'contractors/contractorsselllist.html',
                       {'contractors': contractorsell, "consellsum": consellsum, "query": query})
     else:
         return render(request, 'contractors/contractorsselllist.html',
-                      {'contractors': contractorsell, "consellsum": consellsum, "search": search})
+                      {'contractors': contractorsell_list, "consellsum": consellsum, "search": search})
 
 
 @login_required

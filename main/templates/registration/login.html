@@ -1,0 +1,62 @@
+{%load static%}
+{%load bootstrap%}
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <!-- Bootstrap CSS -->
+    <link href="{%static 'main/bootstrap/css/bootstrap.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap.rtl.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap.rtl.min.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-grid.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-grid.min.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-grid.rtl.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-grid.rtl.min.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-reboot.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-reboot.min.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-reboot.rtl.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-reboot.rtl.min.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-utilities.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-utilities.min.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-utilities.rtl.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-utilities.rtl.min.css'%}" rel="stylesheet">
+    <link href="{%static 'main/css/style.css'%}" rel="stylesheet">
+    <!-- Bootstrap JS -->
+    <script src="{%static 'main/bootstrap//js/bootstrap.bundle.js'%}"></script>
+    <!-- icon -->
+    <link rel="shortcut icon" href="{%static 'main/media/logo.ico'%}" type="x-icon">
+    <title>Logowanie do WIiR-APP v.2.0</title>
+</head>
+<body>
+<div class="container">
+
+    <div class="row justify-content-center align-items-center" style="height:100vh">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="text-center my-4"> Wydział Inwestycji i Remontów KWP w Poznaniu</h6>
+                    <form method="post" autocomplete="off">
+                        {%csrf_token%}
+                        <div class="form-group">
+                            {{form.username.label}} <span>(ID)</span>
+                            <input type="text" class="form-control" name="username">
+                        </div>
+                        <div class="form-group mt-2">
+                            {{form.password.label}}
+                            <input type="password" class="form-control" name="password">
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-4 col-md-12">Zaloguj</button>
+                    </form>
+                </div>
+                <ul class="nav nav-pills">
+        <li class="nav-item col-md-6 mb-3 moj-button-left"><a id="button-units" href="{%url 'units:units_list'%}" class="btn btn-sm btn-outline-secondary mx-3" ><span>Jednostki Policji</span></a></li>
+        <li class="nav-item col-md-6 mb-3 moj-button-right"><a id="button-cpv" href="{%url 'cpvdict:cpvlist'%}" class="btn btn-sm btn-outline-secondary mx-3"><span>Słownik CPV</span></a></li>
+</ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

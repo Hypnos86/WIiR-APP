@@ -18,9 +18,9 @@
 </section>
 <div class="kontrahenci-title">
     <h4>Słownik kodów PCV</h4>
-    <p>Liczba kodów CPV: {{sumcpv}} </p>
+    <p><span>Liczba kodów CPV: {{sumcpv}} </span></p>
     {%if query%}
-        <p>Znaleziono {{qsum}} kodów CPV</p>
+    <p><span>Znaleziono {{qsum}} kodów CPV</span></p>
     {%endif%}
 </div>
 <div class="container">
@@ -37,15 +37,15 @@
         {%for cpv in cpvs %}
         {%if cpv.nocpv|slice:":2" == "45" %}
         <tr class="my-table-tr table-secondary">
-            <td class="text-center" scope="row"></td>
+            <td class="text-center" scope="row" valign="middle" align="center"></td>
             <td scope="row" valign="middle" align="center">{{cpv.nocpv}}</td>
             <td><span>{{cpv.name}}</span></td>
         </tr>
         {%else%}
         <tr class="my-table-tr">
-            <td class="text-center" scope="row"></td>
+            <td class="text-center" valign="middle" scope="row"></td>
             <td scope="row" valign="middle" align="center">{{cpv.nocpv}}</td>
-            <td><span>{{cpv.name}}</span></td>
+            <td valign="middle"><span>{{cpv.name}}</span></td>
         </tr>
         {%endif%}
         {%empty%}

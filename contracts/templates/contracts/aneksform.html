@@ -8,8 +8,9 @@
     {%csrf_token%}
     {{aneks_form|bootstrap}}
     <div class="row">
-    <div class="col-md-1 moj-button-left mt-3"><a class="btn btn-outline-primary" href="{%url 'contracts:menu_contractsimmovables'%}">Cofni</a></div>
-    <div class="col-md-11 moj-button-right mt-3"><button type="submit" class="btn btn-outline-primary">Dodaj</button></div>
+    <div class="col-md-3 moj-button-left mt-3"><a class="btn btn-outline-primary" href="{%url 'contracts:menu_contractsimmovables'%}"><span>Cofni</span></a></div>
+
+    <div class="col-md-9 moj-button-right mt-3"><button type="submit" class="btn btn-outline-primary">Dodaj</button></div>
     </div>
 </form>
 </div>

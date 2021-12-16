@@ -27,14 +27,14 @@
     <thead>
     <tr class="my-table-tr">
         <th align="center" valign="middle" width="40" scope="col" class="text-center">L.p.</th>
-        <th align="center" valign="middle" width="150" scope="col" class="text-center">Data umowy</th>
-        <th align="center" valign="middle" width="180" scope="col" class="text-center">Nr. umowy</th>
-        <th align="center" valign="middle" width="250" scope="col" class="text-center" >Kontrahent</th>
-        <th align="center" valign="middle" width="150" scope="col" class="text-center">Okres obowiązywania</th>
-        <th align="center" valign="middle" width="80" scope="col" class="text-center">Powierzchnia użyczona [m<sup>2</sup>]</th>
-        <th align="center" valign="middle" scope="col" class="text-center">Rodzaj umowy</th>
-        <th align="center" valign="middle" scope="col" class="text-center">Jednostka</th>
-        <th align="center" valign="middle" scope="col" class="text-center">Stan umowy</th>
+        <th align="center" valign="middle" width="160" scope="col" class="text-center">Data umowy</th>
+        <th align="center" valign="middle" width="200" scope="col" class="text-center">Nr. umowy</th>
+        <th align="center" valign="middle" width="250" scope="col" class="text-center">Kontrahent</th>
+        <th align="center" valign="middle" width="180" scope="col" class="text-center">Okres obowiązywania</th>
+        <th align="center" valign="middle" width="150" scope="col" class="text-center">Powierzchnia użyczona [m<sup>2</sup>]</th>
+        <th align="center" valign="middle" width="120" scope="col" class="text-center">Rodzaj umowy</th>
+        <th align="center" valign="middle" width="850" scope="col" class="text-center">Jednostka</th>
+        <th align="center" valign="middle" width="120" scope="col" class="text-center">Stan umowy</th>
 
     </tr>
     </thead>
@@ -66,6 +66,43 @@
     </tr>
     </tfoot>
 </table>
+<!--Pagination-->
+ {%if query == Flase%}
+    <nav aria-labelledby="Page navigation">
+        <ul class="pagination justify-content-center">
+            {%if contracts.has_previous%}
+            <li class="page-item">
+                <a class="page-link" href="?page={{contracts.previous_page_number}}">Poprzednia</a>
+            </li>
+            {%else%}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Poprzednia</a>
+            </li>
+            {%endif%}
+            {%for i in contracts.paginator.page_range%}
+            {%if contracts.number == i%}
+            <li class="page-item active" aria-current="page">
+            <span class="page-link">
+                {{i}}
+                <span class="sr-only"></span>
+            </span>
+            </li>
+            {%else%}
+            <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+            {%endif%}
+            {%endfor%}
+            {%if contracts.has.next%}
+            <li class="page-item">
+                <a class="page-link" href="?page={{contracts.next_page_number}}">Następna</a>
+            </li>
+            {%else%}
+            <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Następna</a>
+            </li>
+            {%endif%}
+        </ul>
+    </nav>
+{%endif%}
 <script>
      document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-invoices").classList.remove("active");

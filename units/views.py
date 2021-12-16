@@ -13,7 +13,6 @@ def units_list(request):
     search = "Szukaj"
     unitsum = len(units_active)
 
-
     r = request.GET.get("r")
     p = request.GET.get("p")
 
@@ -23,21 +22,24 @@ def units_list(request):
         return render(request, "units/unitlist.html", {"units": units_active,
                                                        "powiaty": powiaty,
                                                        "rodzaje": rodzaje,
-                                                       "unitsum": unitsum, "query": query, "unitsumsearch":unitsumsearch})
+                                                       "unitsum": unitsum, "query": query,
+                                                       "unitsumsearch": unitsumsearch})
     elif p and not r:
         units_active = units_active.filter(powiat__exact=p)
         unitsumsearch = len(units_active)
         return render(request, "units/unitlist.html", {"units": units_active,
                                                        "powiaty": powiaty,
                                                        "rodzaje": rodzaje,
-                                                       "unitsum": unitsum, "query": query, "unitsumsearch":unitsumsearch})
+                                                       "unitsum": unitsum, "query": query,
+                                                       "unitsumsearch": unitsumsearch})
     elif r and not p:
         units_active = units_active.filter(rodzaj__exact=r)
         unitsumsearch = len(units_active)
         return render(request, "units/unitlist.html", {"units": units_active,
                                                        "powiaty": powiaty,
                                                        "rodzaje": rodzaje,
-                                                       "unitsum": unitsum, "query": query, "unitsumsearch":unitsumsearch})
+                                                       "unitsum": unitsum, "query": query,
+                                                       "unitsumsearch": unitsumsearch})
 
     else:
         return render(request, "units/unitlist.html", {"units": units_active,

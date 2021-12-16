@@ -6,6 +6,7 @@ class Powiat(models.Model):
     class Meta:
         verbose_name = "Powiat"
         verbose_name_plural = "Powiaty"
+        ordering = ['swop_id']
 
     swop_id = models.CharField(max_length=4)
     powiat = models.CharField(max_length=15, null=False)

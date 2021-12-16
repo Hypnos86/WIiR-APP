@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
+from django.core.paginator import Paginator
 from contracts.models import Contractimmovables, Aneks
 from contracts.forms import ContractimmovablesForm, AneksForm
 
@@ -11,15 +12,19 @@ def menu_contractsimmovables(request):
     query = "Wyczyść"
     search = "Szukaj"
     contrsum = len(contracts)
-
     q = request.GET.get("q")
+
+    paginator = Paginator(contracts, 40)
+    page_number = request.GET.get('page')
+    contracts_list = paginator.get_page(page_number)
+
     if q:
         contracts = contracts.filter(kontrahent__nazwa__icontains=q)
         return render(request, 'contracts/contractlist.html',
                       {'contracts': contracts, "contrsum": contrsum, "query": query})
     else:
         return render(request, 'contracts/contractlist.html',
-                      {'contracts': contracts, "contrsum": contrsum, "search": search})
+                      {'contracts': contracts_list, "contrsum": contrsum, "search": search})
 
 
 @login_required
