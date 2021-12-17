@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from invoices.models import Invoicesell
 from invoices.forms import InvoicesellForm
@@ -22,10 +23,11 @@ def sell_invoiceslist(request):
     query = "Wyczyść"
     search = "Szukaj"
     invoicessellsum = len(invoicessell)
-    context = {"invoices": invoicessell,
-               "invoicessellsum": invoicessellsum,
-               "sell": True}
     q = request.GET.get("q")
+
+    paginator = Paginator(invoicessell, 30)
+    page_number = request.GET.get('page')
+    invoicessell_list = paginator.get_page(page_number)
 
     if q:
         invoicessell = invoicessell.filter(noinvoice__icontains=q) | invoicessell.filter(
@@ -34,7 +36,7 @@ def sell_invoiceslist(request):
                                                                   "invoicessellsum": invoicessellsum,
                                                                   "sell": True, "query": query})
     else:
-        return render(request, "invoices/invoicesselllist.html", {"invoices": invoicessell,
+        return render(request, "invoices/invoicesselllist.html", {"invoices": invoicessell_list,
                                                                   "invoicessellsum": invoicessellsum,
                                                                   "sell": True, "search": search})
 
@@ -68,4 +70,3 @@ def edit_invoicesell(request, id):
         return redirect('invoices:sell_invoices_list')
 
     return render(request, 'invoices/invoicesellform.html', context)
-

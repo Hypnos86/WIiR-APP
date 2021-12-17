@@ -13,7 +13,7 @@ def contractorsell_list(request):
     consellsum = len(contractorsell)
     q = request.GET.get("q")
 
-    paginator = Paginator(contractorsell, 1)
+    paginator = Paginator(contractorsell, 30)
     page_number = request.GET.get('page')
     contractorsell_list = paginator.get_page(page_number)
 
