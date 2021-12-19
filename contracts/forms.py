@@ -1,5 +1,5 @@
 from django.forms import ModelForm, DateInput, Textarea
-from contracts.models import Contractimmovables, Aneks
+from contracts.models import ContractImmovables, AneksImmovables
 
 
 class DateField(DateInput):
@@ -8,7 +8,7 @@ class DateField(DateInput):
 
 class ContractimmovablesForm(ModelForm):
     class Meta:
-        model = Contractimmovables
+        model = ContractImmovables
         fields = ['data_umowy', 'nrumowy', 'kontrahent', 'okres_obowiazywania', 'pow_uzyczona', 'podstawa',
                   'rodzaj', 'koszt_czynsz', 'koszt_prad', 'koszt_gaz', 'koszt_woda', 'koszt_co', 'koszt_smieci',
                   'koszt_podsmiec', 'koszt_podnier', 'unit', 'skan', 'stan', 'comments', 'archives', 'create',
@@ -38,7 +38,7 @@ class ContractimmovablesForm(ModelForm):
 
 class AneksForm(ModelForm):
     class Meta:
-        model = Aneks
+        model = AneksImmovables
 
         fields = ['contract', 'data_aneksu','skan_aneksu','create','autor'  ]
         labels = {'data_aneksu': 'Data aneksu', 'skan_aneksu': 'Skan aneksu'}

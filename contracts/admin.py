@@ -2,7 +2,7 @@ from django.contrib import admin
 from import_export import resources
 from import_export.admin import ExportMixin
 from import_export.fields import Field
-from contracts.models import Contractimmovables, Stan, Rodzaj, Podstawa, Aneks
+from contracts.models import ContractImmovables, Stan, Rodzaj, Podstawa, AneksImmovables
 
 
 # Register your models here.
@@ -25,13 +25,13 @@ class ContractResource(resources.ModelResource):
     # archives = Field(attribute='archives', column_name='')
 
     class Meta:
-        model = Contractimmovables
+        model = ContractImmovables
         fields = ('id',)
         export_order = ('id', 'data_umowy', 'nrumowy', 'kontrahent', 'podstawa', 'okres_obowiazywania', 'rodzaj',
                         'pow_uzyczona', 'unit', 'stan')
 
 
-@admin.register(Contractimmovables)
+@admin.register(ContractImmovables)
 class ContractAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ['data_umowy', 'nrumowy', 'kontrahent', 'podstawa', 'okres_obowiazywania', 'rodzaj',
                     'pow_uzyczona', 'koszt_czynsz', 'koszt_prad', 'koszt_gaz', 'koszt_woda', 'koszt_co', 'koszt_smieci',
@@ -47,7 +47,7 @@ admin.site.register(Rodzaj)
 admin.site.register(Podstawa)
 
 
-@admin.register(Aneks)
+@admin.register(AneksImmovables)
 class ContractAdmin(admin.ModelAdmin):
     list_display = ['contract', 'data_aneksu', 'create', 'autor']
     search_fields = ['data_aneksu', 'contract']

@@ -20,3 +20,8 @@ def cpvlist(request):
     else:
         return render(request, 'cpvdict/cpvlist.html', {'cpvs': cpvs,
                                                         'sumcpv': sumcpv, 'search': search})
+
+
+def type_expense_list(request):
+    context = {}
+    return render(request, 'cpvdict/typelist.html', context)

@@ -37,18 +37,20 @@ class Podstawa(models.Model):
         return f'{self.podstawa}'
 
 
-class Contractimmovables(models.Model):
+class ContractImmovables(models.Model):
     class Meta:
         verbose_name = "Umowa nieruchomosci"
         verbose_name_plural = "Umowy nieruchomosci"
 
     data_umowy = models.DateField("Data umowy")
     nrumowy = models.CharField("Nr umowy", max_length=20, null=True, blank=True, default="")
-    kontrahent = models.ForeignKey("contractors.Contractor", on_delete=models.CASCADE, verbose_name="Kontrahent", related_name="contractimmovables")
+    kontrahent = models.ForeignKey("contractors.Contractor", on_delete=models.CASCADE, verbose_name="Kontrahent",
+                                   related_name="contractimmovables")
     podstawa = models.ForeignKey("contracts.Podstawa", on_delete=models.CASCADE, blank=True,
                                  verbose_name="Podstawa prawna", related_name="contractimmovables")
     okres_obowiazywania = models.DateField("Okres obowiązywania", null=True, blank=True)
-    rodzaj = models.ForeignKey("contracts.Rodzaj", on_delete=models.CASCADE, verbose_name="Rodzaj umowy", related_name="contractimmovables")
+    rodzaj = models.ForeignKey("contracts.Rodzaj", on_delete=models.CASCADE, verbose_name="Rodzaj umowy",
+                               related_name="contractimmovables")
     pow_uzyczona = models.DecimalField("Powierzchnia użytkowa", max_digits=8, decimal_places=2, null=True, blank=True)
     koszt_czynsz = models.BooleanField("Czynsz")
     koszt_prad = models.BooleanField("Prąd")
@@ -58,7 +60,8 @@ class Contractimmovables(models.Model):
     koszt_smieci = models.BooleanField("Śmieci")
     koszt_podsmiec = models.BooleanField("Zagospodarowanie odpadami komunalnymi")
     koszt_podnier = models.BooleanField("Podatek od nieruchomości")
-    unit = models.ForeignKey(Unit, on_delete=models.CASCADE, null=False, verbose_name="Jednostka", related_name="contractimmovables")
+    unit = models.ForeignKey(Unit, on_delete=models.CASCADE, null=False, verbose_name="Jednostka",
+                             related_name="contractimmovables")
     skan = models.FileField(upload_to='contracts_immovables_pdf/%Y/', null=True, blank=True, verbose_name="Skan umowy")
     stan = models.ForeignKey(Stan, on_delete=models.CASCADE, blank=False, default=1, related_name="contractimmovables")
     comments = models.TextField("Informacje", blank=True, default="")
@@ -71,15 +74,26 @@ class Contractimmovables(models.Model):
         return f'Umowa z dnia {self.data_umowy} ({self.kontrahent})'
 
 
-class Aneks(models.Model):
+class AneksImmovables(models.Model):
     class Meta:
         verbose_name = "Aneks"
         verbose_name_plural = "Aneksy"
-    contract = models.ForeignKey("contracts.Contractimmovables", on_delete=models.CASCADE, verbose_name="Umowa", related_name="aneks")
-    skan_aneksu = models.FileField(upload_to='contracts_immovables_pdf/aneksy_pdf/%Y/', null=True, blank=True, verbose_name="Skan aneks")
+
+    contract = models.ForeignKey("contracts.ContractImmovables", on_delete=models.CASCADE, verbose_name="Umowa",
+                                 related_name="aneks")
+    skan_aneksu = models.FileField(upload_to='contracts_immovables_pdf/aneksy_pdf/%Y/', null=True, blank=True,
+                                   verbose_name="Skan aneks")
     data_aneksu = models.DateField("Data aneksu", null=True)
     create = models.DateTimeField("Data utworzenia", auto_now_add=True)
     autor = models.ForeignKey("auth.User", on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.data_aneksu} {self.skan_aneksu}'
+
+
+class ContractAuction(models.Model):
+    pass
+
+
+class AneksContractAuction(models.Model):
+    pass

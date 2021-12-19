@@ -1,6 +1,6 @@
 from django.db import models
 from contractors.models import Contractor
-from contracts.models import Contractimmovables
+from contracts.models import ContractImmovables
 
 
 # Create your models here.
@@ -14,6 +14,7 @@ class Creator(models.Model):
 
     def __str__(self):
         return f'{self.creator}'
+
 
 
 class Invoiceitems(models.Model):
@@ -30,6 +31,9 @@ class Invoiceitems(models.Model):
     def __str__(self):
         return f'{self.acount}{self.powiat} - {self.sum} zł.'
 
+
+# class Year(models.Model):
+#     year = models.DateField(Year)
 
 class Invoicesell(models.Model):
     class Meta:

@@ -1,4 +1,4 @@
-from django.forms import ModelForm, Textarea
+from django.forms import ModelForm, Textarea, widgets
 from contractors.models import Contractor
 
 
@@ -17,5 +17,9 @@ class ContractorsellForm(ModelForm):
                   'utworzenie': 'Utworzenie',
                   'autor': 'Autor'
                   }
-        widgets = {'informacje': Textarea(attrs={'rows': 5})
+        widgets = {'nocuntractor': widgets.TextInput(attrs={'placeholder': 'wpisz nr kontrahenta zgodny ze SWOP'}),
+                   'informacje': Textarea(attrs={'rows': 5}),
+                   'nip': widgets.TextInput(
+                       attrs={'pattern': '^[0-9]{3}-[0-9]{2}-[0-9]{2}-[0-9]{3}$', 'placeholder': 'xxx-xx-xx-xxx'}),
+                   'kod_pocztowy': widgets.TextInput(attrs={'pattern': '^[0-9]{2}-[0-9]{3}$', 'placeholder': 'xx-xxx'})
                    }

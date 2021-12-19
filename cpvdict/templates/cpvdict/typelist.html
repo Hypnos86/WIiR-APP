@@ -1,0 +1,21 @@
+{% extends 'base.html'%}
+{% load static%}
+{% block title%} Rodzajowość wydatków WIiR {%endblock%}
+{% block content%}
+<div class="row">
+    <div class="col-md-12 moj-button-right my-1"><a href="{%url 'cpvdict:cpvlist'%}"><button class="btn btn-outline-primary button-choise-contracts">Słownik CPV</button></a></div>
+</div>
+<div class="kontrahenci-title">
+    <h4>Lista rodzajowosci WIiR</h4>
+    <i class="bi bi-pencil-square"></i>
+</div>
+<h4></h4>
+
+<script>
+     document.getElementById("button-units").classList.remove("active");
+     document.getElementById("button-invoices").classList.remove("active");
+     document.getElementById("button-contracts").classList.remove("active");
+     document.getElementById("button-contractors").classList.remove("active");
+     document.getElementById("button-cpv").classList.add("active");
+</script>
+{%endblock%}
