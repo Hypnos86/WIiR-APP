@@ -25,6 +25,7 @@ class Telephone(models.Model):
     numbroom = models.CharField("Nr. pokoju", max_length=2, blank=True, default="")
     numbtelbus = models.CharField("Nr. telefonu", max_length=6, blank=True, default="")
     numbtelpri = models.CharField("Nr. komórkowy", max_length=9, null=True, blank=True, default="")
+    information = models.CharField("Informacje", max_length=200, null=True, blank=True)
 
     def __str__(self):
         return f'{self.fname} {self.lname} - {self.position}. Tel: {self.numbtelbus}'

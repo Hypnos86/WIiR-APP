@@ -14,5 +14,6 @@ def telephone_list(request):
     return render(request, 'main/telephones.html', context)
 
 
+@login_required
 def welcome(request):
     return render(request, 'main/welcome.html', {})

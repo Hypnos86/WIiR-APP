@@ -3,13 +3,50 @@
 {% block title%} Rodzajowość wydatków WIiR {%endblock%}
 {% block content%}
 <div class="row">
-    <div class="col-md-12 moj-button-right my-1"><a href="{%url 'cpvdict:cpvlist'%}"><button class="btn btn-outline-primary button-choise-contracts">Słownik CPV</button></a></div>
+    <div class="col-md-2 moj-button-left my-1"><a href=""><button class="btn btn-outline-primary button-choise-contracts">Lista zleceń</button></a></div>
+    <div class="col-md-10 moj-button-right my-1"><a href="{%url 'cpvdict:cpvlist'%}"><button class="btn btn-outline-primary button-choise-contracts">Słownik CPV</button></a></div>
 </div>
+
 <div class="kontrahenci-title">
-    <h4>Lista rodzajowosci WIiR</h4>
-    <i class="bi bi-pencil-square"></i>
+    <h4 class="mb-1">Lista rodzajowosci WIiR</h4>
 </div>
-<h4></h4>
+<div class="row">
+    <div class="col-md-2 moj-button-left my-1"><a href=""><button class="btn btn-outline-primary button-choise-contracts">Roboty budowlane</button></a></div>
+</div>
+<div class="container">
+<table class="table table-hover my-table">
+    <thead>
+    <tr class="my-table-tr text-center">
+        <th align="center" valign="middle" width="50" scope="col">L.p.</th>
+        <th align="center" valign="middle" width="100" scope="col">ID</th>
+        <th align="center" valign="middle" width="450" scope="col">Ogólna nazwa przedmiotu zamówienia w ujęciu rodzajowym</th>
+        <th align="center" valign="middle" width="400" scope="col">Kod CPV obejmuje ten sam rodzaj zamówienia</th>
+        <th align="center" valign="middle" width="120" scope="col">Wykorzystano<br>[zł]</th>
+        <th align="center" valign="middle" width="120" scope="col">Pozostało<br>[zł]</th>
+
+
+    </tr>
+    </thead>
+    <tbody>
+    {%for object in objects %}
+    <tr class="my-table-tr">
+        <td class="text-center" valign="middle" scope="row"></td>
+        <td align="center" valign="middle" scope="row">{{object.name_id}}</td>
+        <td valign="middle"><span>{{object.name}}</span></td>
+        <td valign="middle"><span>{% for cpv in object.cpv.all%} {{cpv}}, {%endfor%}</span></td>
+        <td valign="middle"><span></span></td>
+        <td class="text-center" valign="middle"><span></span></td>
+    </tr>
+    {%endfor%}
+    </tbody>
+    <tfoot>
+    <tr>
+        <th colspan="7">Wydział Inwestycji i Remontów KWP w Poznaniu</th>
+    </tr>
+    </tfoot>
+</table>
+</div>
+
 
 <script>
      document.getElementById("button-units").classList.remove("active");

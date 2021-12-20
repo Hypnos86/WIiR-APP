@@ -31,7 +31,11 @@ def sell_invoiceslist(request):
 
     if q:
         invoicessell = invoicessell.filter(noinvoice__icontains=q) | invoicessell.filter(
-            sum__icontains=q) | invoicessell.filter(data__icontains=q)
+            sum__startswith=q) | invoicessell.filter(data__icontains=q) | invoicessell.filter(
+            contractor__nazwa__icontains=q) | invoicessell.filter(
+            contractor__nocuntractor__startswith=q) | invoicessell.filter(
+            powiat__powiat__icontains=q)|invoicessell.filter(
+            creator__creator__icontains=q)
         return render(request, "invoices/invoicesselllist.html", {"invoices": invoicessell,
                                                                   "invoicessellsum": invoicessellsum,
                                                                   "sell": True, "query": query})

@@ -16,6 +16,11 @@
         </form>
     </div>
 </section>
+{%if user.is_authenticated%}
+<div class="row">
+    <div class="col-md-2 moj-button-left my-1"><a href="{% url 'cpvdict:type_expense_list'%}"><button class="btn btn-outline-primary button-choise-contracts">Cofni</button></a></div>
+</div>
+{%endif%}
 <div class="kontrahenci-title">
     <h4>Słownik kodów PCV</h4>
     <p><span>Liczba kodów CPV: {{sumcpv}} </span></p>
@@ -66,7 +71,7 @@
      document.getElementById("button-contracts").classList.remove("active");
      document.getElementById("button-contractors").classList.remove("active");
      document.getElementById("button-cpv").classList.add("active");
-
+     document.getElementById("button-cpvnotaut").classList.add("active");
 </script>
 {%endblock%}
 

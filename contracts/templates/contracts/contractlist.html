@@ -29,11 +29,11 @@
         <th align="center" valign="middle" width="40" scope="col" class="text-center">L.p.</th>
         <th align="center" valign="middle" width="160" scope="col" class="text-center">Data umowy</th>
         <th align="center" valign="middle" width="200" scope="col" class="text-center">Nr. umowy</th>
-        <th align="center" valign="middle" width="250" scope="col" class="text-center">Kontrahent</th>
+        <th align="center" valign="middle" width="300" scope="col" class="text-center">Kontrahent</th>
         <th align="center" valign="middle" width="180" scope="col" class="text-center">Okres obowiązywania</th>
         <th align="center" valign="middle" width="150" scope="col" class="text-center">Powierzchnia użyczona [m<sup>2</sup>]</th>
         <th align="center" valign="middle" width="120" scope="col" class="text-center">Rodzaj umowy</th>
-        <th align="center" valign="middle" width="850" scope="col" class="text-center">Jednostka</th>
+        <th align="center" valign="middle" width="500" scope="col" class="text-center">Jednostka</th>
         <th align="center" valign="middle" width="120" scope="col" class="text-center">Stan umowy</th>
 
     </tr>
@@ -48,13 +48,13 @@
         <td align="center" valign="middle" class="text-center">{{contract.okres_obowiazywania|default_if_none:'---'|date:"d.m.Y"}}</td>
         <td align="center" valign="middle" class="text-center">{{contract.pow_uzyczona|default_if_none:'---'|intcomma}}</td>
         <td align="center" valign="middle" class="text-center">{{contract.rodzaj}}</td>
-        <td>{{contract.unit}}</td>
+        <td valign="middle">{{contract.unit}}</td>
         <td align="center" valign="middle">{{contract.stan}}</td>
         <td align="center" valign="middle">
-            <a href="{% url 'contracts:show_contractsimmovables' contract.id%}"><button type="submit" class="btn btn-outline-primary">Podgląd</button></a>
+            <a href="{% url 'contracts:show_contractsimmovables' contract.id%}"><button type="submit" class="btn btn-outline-primary"><img src="/static/main/media/bootstrap-icons-1.7.2/eye.svg" alt="Podglad"></button></a>
         </td>
         <td align="center" valign="middle">
-            <a href="{%url 'contracts:edit_contractsimmovables' contract.id %}"><button type="button" class="btn btn-outline-primary">Edytuj</button></a>
+            <a href="{%url 'contracts:edit_contractsimmovables' contract.id %}"><button type="button" class="btn btn-outline-primary"><img class="" src="/static/main/media/bootstrap-icons-1.7.2/pencil-square.svg" alt="Edytuj"></button></a>
         </td>
     </tr>
     {%endfor%}

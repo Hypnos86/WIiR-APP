@@ -137,7 +137,9 @@
     margin: 0 3px;
     border-radius: 3px;
 }
-
+.bi-pencil-square{
+    color: #0a4275;
+}
 
 
 /* INVOICES */

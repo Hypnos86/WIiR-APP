@@ -10,23 +10,22 @@ class Creator(models.Model):
         verbose_name = "Pracownik"
         verbose_name_plural = "Wystawcy faktur - sprzedaż"
 
-    creator = models.CharField(max_length=20)
+    creator = models.CharField("Pracownik",max_length=20)
 
     def __str__(self):
         return f'{self.creator}'
-
 
 
 class Invoiceitems(models.Model):
     class Meta:
         verbose_name = "Element faktury"
         verbose_name_plural = "Elementy faktury"
+
     acount = models.ForeignKey("sourcefinancing.Financesource", on_delete=models.CASCADE, verbose_name="Konto",
                                related_name="invoiceitems")
     powiat = models.ForeignKey("units.Powiat", on_delete=models.CASCADE, verbose_name="Powiat",
                                related_name='invoiceitems')
     sum = models.DecimalField("Kwota [zł]", max_digits=10, decimal_places=2, null=True, blank=True)
-
 
     def __str__(self):
         return f'{self.acount}{self.powiat} - {self.sum} zł.'

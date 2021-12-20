@@ -16,6 +16,7 @@ class TelephoneResource(resources.ModelResource):
     numbroom = Field(attribute='numbroom', column_name='Numer pokoju')
     numbtelbus = Field(attribute='numbtelbus', column_name='Numer telefonu słuzbowego')
     numbtelpri = Field(attribute='numbtelpri', column_name='Numer komórkowy')
+    information = Field(attribute='information', column_name='Informacje')
 
     class Meta:
         model = Telephone
@@ -24,6 +25,6 @@ class TelephoneResource(resources.ModelResource):
 
 @admin.register(Telephone)
 class ContractorAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['team', 'position', 'fname', 'lname', 'numbroom', 'numbtelbus', 'numbtelpri']
-    search_fields = ['team', 'position', 'fname', 'lname', 'numbtelbus', 'numbtelpri']
+    list_display = ['team', 'position', 'fname', 'lname', 'numbroom', 'numbtelbus', 'numbtelpri', 'information']
+    search_fields = ['team', 'position', 'fname', 'lname', 'numbtelbus', 'numbtelpri', 'information']
     resource_class = TelephoneResource
