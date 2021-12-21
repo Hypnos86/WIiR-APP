@@ -33,7 +33,7 @@
         <td class="text-center" valign="middle" scope="row"></td>
         <td align="center" valign="middle" scope="row">{{object.name_id}}</td>
         <td valign="middle"><span>{{object.name}}</span></td>
-        <td valign="middle"><span>{% for cpv in object.cpv.all%} {{cpv}}, {%endfor%}</span></td>
+        <td valign="middle">{% for cpv in object.cpv.all%}<span class="tag-cpv">{{cpv}}</span>{%endfor%}</td>
         <td valign="middle"><span></span></td>
         <td class="text-center" valign="middle"><span></span></td>
     </tr>

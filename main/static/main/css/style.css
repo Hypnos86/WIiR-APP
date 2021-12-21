@@ -60,7 +60,6 @@
     text-align:right;
 }
 
-
 .chose-contracts {
     text-align: center;
 }
@@ -174,4 +173,12 @@
   margin-right: 0.5em;
 }
 
+/* CPVDICT */
 
+.tag-cpv{
+    color: white;
+    background-color: #0a4275;
+    padding: 3px;
+    margin: 0 2px;
+    border-radius: 3px;
+}
