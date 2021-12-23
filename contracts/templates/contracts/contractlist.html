@@ -51,10 +51,10 @@
         <td valign="middle">{{contract.unit}}</td>
         <td align="center" valign="middle">{{contract.stan}}</td>
         <td align="center" valign="middle">
-            <a href="{% url 'contracts:show_contractsimmovables' contract.id%}"><button type="submit" class="btn btn-outline-primary"><img src="/static/main/media/bootstrap-icons-1.7.2/eye.svg" alt="Podglad"></button></a>
+           <a href="{% url 'contracts:show_contractsimmovables' contract.id%}"><button type="button" class="btn btn-outline-primary icon-color"><i class="bi bi-eye"></i></button></a>
         </td>
         <td align="center" valign="middle">
-            <a href="{%url 'contracts:edit_contractsimmovables' contract.id %}"><button type="button" class="btn btn-outline-primary"><img class="" src="/static/main/media/bootstrap-icons-1.7.2/pencil-square.svg" alt="Edytuj"></button></a>
+           <a href="{%url 'contracts:edit_contractsimmovables' contract.id %}"><button type="button" class="btn btn-outline-primary icon-color"><i class="bi bi-pencil-square"></i></button></a>
         </td>
     </tr>
     {%endfor%}

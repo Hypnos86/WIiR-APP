@@ -136,10 +136,15 @@
     margin: 0 3px;
     border-radius: 3px;
 }
-.bi-pencil-square{
+.icon-color{
     color: #0a4275;
+    border-color:#0a4275;
+    font-size: 130%
 }
 
+.icon-color:hover{
+    background-color: #0a4275;
+}
 
 /* INVOICES */
 .chose-invoices {
