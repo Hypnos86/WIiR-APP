@@ -29,3 +29,12 @@ class Telephone(models.Model):
 
     def __str__(self):
         return f'{self.fname} {self.lname} - {self.position}. Tel: {self.numbtelbus}'
+
+
+class OrganisationTelephone(models.Model):
+    class Meta:
+        verbose_name = "Książka telefoniczna KWP w Poznaniu"
+        verbose_name_plural = "Książka telefoniczna KWP w Poznaniu"
+
+    telephone_book = models.FileField(upload_to='KWP_telephone/%Y/', null=True,
+                                     verbose_name="Spis telefonów KWP w Poznaniu")

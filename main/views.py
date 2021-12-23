@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from main.models import Team, Telephone
+from main.models import Team, Telephone, OrganisationTelephone
 
 
 # Create your views here.
@@ -8,9 +8,11 @@ from main.models import Team, Telephone
 def telephone_list(request):
     teams = Team.objects.all()
     tel = Telephone.objects.all()
+    telephone_book = OrganisationTelephone.objects.all()
 
     context = {'tel': tel,
-               'teams': teams}
+               'teams': teams,
+               'telephone_book': telephone_book}
     return render(request, 'main/telephones.html', context)
 
 

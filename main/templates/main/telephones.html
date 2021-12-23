@@ -39,7 +39,11 @@ sieci publicznej należy wybrać dodatkowo „47 XXXXXX”. </p>
 <div class="row">
     <div class="col-md-3 moj-button-left"><span><b>Faks WIiR: 140-44</b></span></div>
     <div class="col-md-9 moj-button-right">
-        <a href="/media/telephone/spis_telefonow.pdf" target="_blank"><button type="button" class="btn btn-outline-dark">Spis telefonów KWP w Poznaniu</button></a>
+        {% if telephone_book %}
+        {%for book in telephone_book%}
+        <a href="/media/{{book.telephone_book}}" target="_blank"><button type="button" class="btn btn-outline-dark">Spis telefonów KWP w Poznaniu</button></a>
+        {%endfor%}
+        {%endif%}
     </div>
 </div>
 

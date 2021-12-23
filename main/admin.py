@@ -2,7 +2,7 @@ from django.contrib import admin
 from import_export import resources
 from import_export.admin import ExportMixin
 from import_export.fields import Field
-from main.models import Telephone, Team
+from main.models import Telephone, Team, OrganisationTelephone
 
 # Register your models here.
 admin.site.register(Team)
@@ -28,3 +28,8 @@ class ContractorAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ['team', 'position', 'fname', 'lname', 'numbroom', 'numbtelbus', 'numbtelpri', 'information']
     search_fields = ['team', 'position', 'fname', 'lname', 'numbtelbus', 'numbtelpri', 'information']
     resource_class = TelephoneResource
+
+
+@admin.register(OrganisationTelephone)
+class OrganisationTelephoneAdmin(admin.ModelAdmin):
+    list_display = ['telephone_book']
