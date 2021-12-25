@@ -38,4 +38,4 @@ class OrganisationTelephone(models.Model):
 
     telephone_book = models.FileField(upload_to='KWP_telephone/%Y/', null=True,
                                      verbose_name="Spis telefonów KWP w Poznaniu")
-    add_date = models.DateField("data")
+    add_date = models.DateField("Data dodania", auto_now_add=True)

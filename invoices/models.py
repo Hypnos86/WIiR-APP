@@ -4,13 +4,20 @@ from contracts.models import ContractImmovables
 
 
 # Create your models here.
+class Year(models.Model):
+    class Meta:
+        verbose_name = "Rok budżetowy"
+        verbose_name_plural = "lata budżetowe"
+
+    pass
+
 
 class Creator(models.Model):
     class Meta:
         verbose_name = "Pracownik"
         verbose_name_plural = "Wystawcy faktur - sprzedaż"
 
-    creator = models.CharField("Pracownik",max_length=20)
+    creator = models.CharField("Pracownik", max_length=20)
 
     def __str__(self):
         return f'{self.creator}'

@@ -5,6 +5,10 @@ from import_export.fields import Field
 from main.models import Telephone, Team, OrganisationTelephone
 
 # Register your models here.
+# admin.site.site_header ="WIiR-APP"
+admin.site.site_title = "Admin WIiR-APP"
+admin.site.index_title = "Witaj w aplikacji WIiR-APP"
+
 admin.site.register(Team)
 
 
@@ -32,4 +36,4 @@ class ContractorAdmin(ExportMixin, admin.ModelAdmin):
 
 @admin.register(OrganisationTelephone)
 class OrganisationTelephoneAdmin(admin.ModelAdmin):
-    list_display = ['telephone_book']
+    list_display = ['add_date', 'telephone_book']

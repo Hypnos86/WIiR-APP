@@ -20,5 +20,5 @@ class TelephoneForm(ModelForm):
 class OrganisationTelephoneForm(ModelForm):
     class Meta:
         model = OrganisationTelephone
-        fields = ['telephone_book']
-        labels = {'telephone_book': 'Książka telefoniczna'}
+        fields = ['add_date', 'telephone_book']
+        labels = {'telephone_book': 'Książka telefoniczna', 'add_date': 'Data dodania'}

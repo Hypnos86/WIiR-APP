@@ -51,10 +51,8 @@
         <td valign="middle">{{contract.unit}}</td>
         <td align="center" valign="middle">{{contract.stan}}</td>
         <td align="center" valign="middle">
-           <a href="{% url 'contracts:show_contractsimmovables' contract.id%}"><button type="button" class="btn btn-outline-primary icon-color"><i class="bi bi-eye"></i></button></a>
-        </td>
-        <td align="center" valign="middle">
-           <a href="{%url 'contracts:edit_contractsimmovables' contract.id %}"><button type="button" class="btn btn-outline-primary icon-color"><i class="bi bi-pencil-square"></i></button></a>
+           <a class="mx-3" href="{% url 'contracts:show_contractsimmovables' contract.id%}"><button type="button" class="btn btn-outline-primary icon-color"><i class="bi bi-eye"></i></button></a>
+           <a class="mx-3" href="{%url 'contracts:edit_contractsimmovables' contract.id %}"><button type="button" class="btn btn-outline-primary icon-color"><i class="bi bi-pencil-square"></i></button></a>
         </td>
     </tr>
     {%endfor%}

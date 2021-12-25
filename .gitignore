@@ -14,5 +14,5 @@ local_conf.py
 ll_theme
 .build
 .datasource
-db.sqlite3
+#db.sqlite3
 .mypy_cache/
