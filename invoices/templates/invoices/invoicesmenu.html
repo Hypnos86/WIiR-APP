@@ -2,23 +2,49 @@
 {%load static%}
 {%block title%}Faktury{%endblock%}
 {%block content%}
-<div class="chose-invoices">
-    <a href="{%url 'invoices:sell_invoices_list'%}"><button class="btn btn-outline-primary button-chose-invoices">Ewidencja faktur - sprzedaż</button></a>
-    <a href="{%url 'invoices:buy_invoices_list'%}"><button class="btn btn-outline-primary button-chose-invoices">Ewidencja faktur - gr.6</button></a>
-</div>
-<div class="row">
-    <div class="row-md-6">
+<div class="container">
 
+    <div class="row">
+
+        <div class="col-md-6 my-div-style py-5 mr-5 ">
+            <div class="chose-invoices mb-5">
+                <a href="{%url 'invoices:sell_invoices_list'%}">
+                    <button class="btn btn-outline-primary button-chose-invoices my-btn">Ewidencja faktur - sprzedaż<br>(rok:
+                        {{now_year}})
+                    </button>
+                </a>
+            </div>
+            <div class="text-center">
+                {% for year in all_year%}
+                <a>
+                    <button class="btn btn-outline-dark m-2">{{year}}</button>
+                </a>
+                {%endfor%}
+            </div>
+        </div>
+
+        <div class="col-md-6 my-div-style py-5">
+            <div class="chose-invoices mb-5">
+                <a href="{%url 'invoices:buy_invoices_list'%}">
+                    <button class="btn btn-outline-primary button-chose-invoices my-btn">Ewidencja faktur - gr.6<br>(rok:
+                        {{now_year}})
+                    </button>
+                </a>
+            </div>
+            <div class="text-center">
+                {% for year in all_year%}
+                <a>
+                    <button class="btn btn-outline-dark m-2">{{year}}</button>
+                </a>
+                {%endfor%}
+            </div>
+        </div>
     </div>
-    <div class="row-md-6">
-
-    </div>
-
-</div>
-<script>
+    <script>
      document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-invoices").classList.add("active");
      document.getElementById("button-contracts").classList.remove("active");
      document.getElementById("button-contractors").classList.remove("active");
-</script>
-{%endblock%}
+
+    </script>
+    {%endblock%}

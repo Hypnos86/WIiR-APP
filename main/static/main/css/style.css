@@ -23,6 +23,21 @@
 .margin-left-0{
     margin-left: 0!important;
 }
+
+.my-btn{
+    color: #0a4275;
+    border-color: #0a4275
+}
+
+.my-btn:hover{
+    background-color: #0a4275;
+    border-color:white;
+}
+
+.my-div-style{
+    border: 2px solid #0a4275;
+    border-radius: 3px;
+}
 /*telephone*/
 .tel-h{
     margin-bottom:20px;

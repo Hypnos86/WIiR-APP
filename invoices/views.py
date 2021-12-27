@@ -4,12 +4,27 @@ from django.shortcuts import render, redirect, get_object_or_404
 from invoices.models import Invoicesell
 from invoices.forms import InvoicesellForm
 from contractors.models import Contractor
+import datetime
+
+
+def year_choises():
+    year = []
+    for y in range(2000, datetime.date.today().year):
+        year.append(y)
+        year.sort(reverse=True)
+    return year
+
+
+def current_year():
+    return datetime.date.today().year
 
 
 # Create your views here.
 @login_required
 def menu_invoices(request):
-    return render(request, 'invoices/invoicesmenu.html')
+    now_year = current_year()
+    all_year = year_choises()
+    return render(request, 'invoices/invoicesmenu.html', {"now_year": now_year, "all_year": all_year})
 
 
 @login_required
@@ -34,7 +49,7 @@ def sell_invoiceslist(request):
             sum__startswith=q) | invoicessell.filter(data__icontains=q) | invoicessell.filter(
             contractor__nazwa__icontains=q) | invoicessell.filter(
             contractor__nocuntractor__startswith=q) | invoicessell.filter(
-            powiat__powiat__icontains=q)|invoicessell.filter(
+            powiat__powiat__icontains=q) | invoicessell.filter(
             creator__creator__icontains=q)
         return render(request, "invoices/invoicesselllist.html", {"invoices": invoicessell,
                                                                   "invoicessellsum": invoicessellsum,

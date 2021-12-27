@@ -33,8 +33,8 @@
         <th align="center" valign="middle" width="180" scope="col" class="text-center">Okres obowiązywania</th>
         <th align="center" valign="middle" width="150" scope="col" class="text-center">Powierzchnia użyczona [m<sup>2</sup>]</th>
         <th align="center" valign="middle" width="120" scope="col" class="text-center">Rodzaj umowy</th>
-        <th align="center" valign="middle" width="500" scope="col" class="text-center">Jednostka</th>
-        <th align="center" valign="middle" width="120" scope="col" class="text-center">Stan umowy</th>
+        <th align="center" valign="middle" width="400" scope="col" class="text-center">Jednostka</th>
+        <th align="center" valign="middle" width="100" scope="col" class="text-center">Stan umowy</th>
 
     </tr>
     </thead>
@@ -51,8 +51,8 @@
         <td valign="middle">{{contract.unit}}</td>
         <td align="center" valign="middle">{{contract.stan}}</td>
         <td align="center" valign="middle">
-           <a class="mx-3" href="{% url 'contracts:show_contractsimmovables' contract.id%}"><button type="button" class="btn btn-outline-primary icon-color"><i class="bi bi-eye"></i></button></a>
-           <a class="mx-3" href="{%url 'contracts:edit_contractsimmovables' contract.id %}"><button type="button" class="btn btn-outline-primary icon-color"><i class="bi bi-pencil-square"></i></button></a>
+           <a href="{% url 'contracts:show_contractsimmovables' contract.id%}"><button type="button" class="btn btn-outline-primary icon-color mx-2 my-1"><i class="bi bi-eye"></i></button></a>
+           <a href="{%url 'contracts:edit_contractsimmovables' contract.id %}"><button type="button" class="btn btn-outline-primary icon-color mx-2 my-1"><i class="bi bi-pencil-square"></i></button></a>
         </td>
     </tr>
     {%endfor%}

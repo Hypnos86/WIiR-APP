@@ -44,7 +44,3 @@ class InvoiceitemsAdmin(admin.ModelAdmin):
 @admin.register(Invoicebuy)
 class InvoicebuyAdmin(admin.ModelAdmin):
     list_display = ['datawyplytu', 'data', 'noinvoice', 'contractor', 'invoiceitems', 'create', 'autor']
-
-
-
-

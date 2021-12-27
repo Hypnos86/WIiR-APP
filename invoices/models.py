@@ -1,15 +1,23 @@
 from django.db import models
 from contractors.models import Contractor
 from contracts.models import ContractImmovables
+import datetime
 
 
-# Create your models here.
-class Year(models.Model):
-    class Meta:
-        verbose_name = "Rok budżetowy"
-        verbose_name_plural = "lata budżetowe"
+# def year_choises():
+#     return [(r, r) for r in range(2019, datetime.date.today().year)]
+#
+#
+# def current_year():
+#     return datetime.date.today().year
 
-    pass
+
+# class BudgetYear(models.Model, models.Choices):
+#     class Meta:
+#         verbose_name = "Rok budżetowy"
+#         verbose_name_plural = "Lata budżetowe"
+#
+#     year = models.SmallIntegerField(choices=year_choises, default=current_year)
 
 
 class Creator(models.Model):
