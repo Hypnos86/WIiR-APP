@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from main.models import Team, Telephone, OrganisationTelephone
@@ -18,4 +20,7 @@ def telephone_list(request):
 
 @login_required
 def welcome(request):
-    return render(request, 'main/welcome.html', {})
+    date = datetime.date.today().today()
+    weekend = datetime.datetime.today().weekday()
+
+    return render(request, 'main/welcome.html', {'date': date})

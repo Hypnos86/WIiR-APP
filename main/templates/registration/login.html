@@ -26,6 +26,7 @@
     <script src="{%static 'main/bootstrap//js/bootstrap.bundle.js'%}"></script>
     <!-- icon -->
     <link rel="shortcut icon" href="{%static 'main/media/logo.ico'%}" type="x-icon">
+    <link rel="stylesheet" href="{%static 'main/bootstrap-icons/bootstrap-icons.css'%}">
     <title>Logowanie do WIiR-APP v.2.0</title>
 </head>
 <body>
@@ -36,6 +37,7 @@
             <div class="card">
                 <div class="card-body">
                     <h6 class="text-center my-4"> Wydział Inwestycji i Remontów KWP w Poznaniu</h6>
+                    <h2 class="bi bi-windows text-center"></h2>
                     <form method="post" autocomplete="off">
                         {%csrf_token%}
                         <div class="form-group">
@@ -46,7 +48,7 @@
                             {{form.password.label}}
                             <input type="password" class="form-control" name="password">
                         </div>
-                        <button type="submit" class="btn btn-primary mt-4 col-md-12">Zaloguj</button>
+                        <button type="submit" class="btn btn-primary mt-4 col-md-12"><span class="bi bi-box-arrow-in-left icon-size">Zaloguj</span></button>
                     </form>
                 </div>
                 <ul class="nav nav-pills">

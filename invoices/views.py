@@ -34,7 +34,7 @@ def buy_invoiceslist(request):
 
 @login_required
 def sell_invoiceslist(request):
-    invoicessell = Invoicesell.objects.all().order_by("-data")
+    invoicessell = Invoicesell.objects.all().order_by("-data").filter(data__year=current_year())
     query = "Wyczyść"
     search = "Szukaj"
     invoicessellsum = len(invoicessell)
@@ -46,7 +46,7 @@ def sell_invoiceslist(request):
 
     if q:
         invoicessell = invoicessell.filter(noinvoice__icontains=q) | invoicessell.filter(
-            sum__startswith=q) | invoicessell.filter(data__icontains=q) | invoicessell.filter(
+            sum__startswith=q) | invoicessell.filter(data__startswith=q) | invoicessell.filter(
             contractor__nazwa__icontains=q) | invoicessell.filter(
             contractor__nocuntractor__startswith=q) | invoicessell.filter(
             powiat__powiat__icontains=q) | invoicessell.filter(

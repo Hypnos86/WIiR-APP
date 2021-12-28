@@ -7,7 +7,7 @@ from units.forms import UnitForm
 def units_list(request):
     units_active = Unit.objects.filter(aktywna=1).order_by("powiat")
     units_deact = Unit.objects.filter(aktywna=0)
-    powiaty = Powiat.objects.all().order_by("powiat")
+    powiaty = Powiat.objects.all().order_by("swop_id")
     rodzaje = Rodzaj.objects.all()
     query = "Wyczyść"
     search = "Szukaj"

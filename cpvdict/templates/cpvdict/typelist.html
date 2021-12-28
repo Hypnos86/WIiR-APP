@@ -18,7 +18,7 @@
     <thead>
     <tr class="my-table-tr text-center">
         <th align="center" valign="middle" width="50" scope="col">L.p.</th>
-        <th align="center" valign="middle" width="100" scope="col">ID</th>
+        <th align="center" valign="middle" width="80" scope="col">ID</th>
         <th align="center" valign="middle" width="450" scope="col">Ogólna nazwa przedmiotu zamówienia w ujęciu rodzajowym</th>
         <th align="center" valign="middle" width="400" scope="col">Kod CPV obejmuje ten sam rodzaj zamówienia</th>
         <th align="center" valign="middle" width="120" scope="col">Wykorzystano<br>[zł]</th>
@@ -33,7 +33,7 @@
         <td class="text-center" valign="middle" scope="row"></td>
         <td align="center" valign="middle" scope="row">{{object.name_id}}</td>
         <td valign="middle"><span>{{object.name}}</span></td>
-        <td valign="middle">{% for cpv in object.cpv.all%}<span class="tag-cpv">{{cpv}}</span>{%endfor%}</td>
+        <td valign="middle">{% for cpv in object.cpv.all%}<span class="tag-cpv" title="{{cpv.name}}">{{cpv}}</span>{%endfor%}</td>
         <td valign="middle"><span></span></td>
         <td class="text-center" valign="middle"><span></span></td>
     </tr>

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'bootstrapform',
     'main.apps.MainConfig',
     'units.apps.UnitsConfig',
+    'investments.apps.InvestmentsConfig',
     'contracts.apps.ContractsConfig',
     'contractors.apps.ContractorsConfig',
     'invoices.apps.InvoicesConfig',

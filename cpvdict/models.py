@@ -18,6 +18,7 @@ class OrderingObject(models.Model):
     class Meta:
         verbose_name = "Przedmiot zamówienia"
         verbose_name_plural = "Klasyfikacja rodzajowa"
+        ordering = ['name_id']
 
     name_id = models.CharField("ID", max_length=4, unique=True)
     name = models.CharField("Ogólna nazwa przedmiotu zamówienia w ujęciu rodzajowym", max_length=200)

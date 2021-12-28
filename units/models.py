@@ -8,7 +8,7 @@ class Powiat(models.Model):
         verbose_name_plural = "Powiaty"
         ordering = ['swop_id']
 
-    swop_id = models.CharField(max_length=4)
+    swop_id = models.CharField(max_length=4, unique=True)
     powiat = models.CharField(max_length=15, null=False)
 
     def __str__(self):

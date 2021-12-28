@@ -1,18 +1,18 @@
-{%extends 'base.html'%}
-{%load bootstrap%}
-{%load static%}
+{% extends 'base.html' %}
+{% load bootstrap %}
+{% load static %}
 
-{%block content%}
+{% block content %}
 <div class="container col-md-2">
 <form method="post" enctype="multipart/form-data">
     {%csrf_token%}
     {{aneks_form|bootstrap}}
     <div class="row">
-    <div class="col-md-3 moj-button-left mt-3"><a class="btn btn-outline-primary" href="{%url 'contracts:menu_contractsimmovables'%}"><span>Cofni</span></a></div>
+    <div class="col-md-5 moj-button-left mt-3"><a class="btn btn-outline-primary" href="{%url 'contracts:menu_contractsimmovables'%}"><span class="bi bi-chevron-compact-left">Cofnij</span></a></div>
 
-    <div class="col-md-9 moj-button-right mt-3"><button type="submit" class="btn btn-outline-primary">Dodaj</button></div>
+    <div class="col-md-7 moj-button-right mt-3"><button type="submit" class="btn btn-outline-primary">Dodaj</button></div>
     </div>
 </form>
 </div>
-{%endblock%}
+{% endblock %}
 
