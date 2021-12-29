@@ -34,7 +34,7 @@ def new_contractorsell(request):
 
         if contractorsell_form.is_valid():
             instance = contractorsell_form.save(commit=False)
-            instance.autor = request.user
+            instance.author = request.user
             instance.save()
             contractorsell_form.save()
             return redirect('contractors:contractorssell_list')

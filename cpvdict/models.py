@@ -26,7 +26,7 @@ class TypeOrder(models.Model):
         return {self.type}
 
 
-class OrderingObject(models.Model):
+class Genre(models.Model):
     class Meta:
         verbose_name = "Przedmiot zamówienia"
         verbose_name_plural = "Klasyfikacja rodzajowa"
@@ -53,9 +53,12 @@ class Order(models.Model):
     sum = models.DecimalField("Szacowana kwota", max_digits=8, decimal_places=2, null=True, blank=True)
     type = models.ForeignKey(TypeOrder, on_delete=models.CASCADE, verbose_name="Rodzaj zamówienia",
                              related_name="Order")
+    cpv_id = models.ForeignKey(Genre, on_delete=models.CASCADE, related_name="Order", verbose_name="ID rodzajowości")
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE, null=False, verbose_name="Obiekt",
                              related_name="Order")
-    brakedown = models.BooleanField("Awaria", default=1)
+    brakedown = models.BooleanField("Awaria")
+    content = models.TextField("Zakres", blank=True, default="")
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name="Order")
 
     def __str__(self):
         return f'Zlecenie nr {self.no_order} z dnia {self.date} (rodzaj: {self.type}'

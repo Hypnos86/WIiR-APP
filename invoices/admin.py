@@ -27,13 +27,14 @@ class InvoicesellResource(resources.ModelResource):
 @admin.register(Invoicesell)
 class InvoicesellAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ['data', 'noinvoice', 'contractor', 'sum', 'period_from', 'period_to', 'powiat',
-                    'creator', 'comments']
+                    'creator', 'comments', 'author']
     search_fields = ['noinvoice', 'contractor', 'powiat']
     preserve_filters = True
     resource_class = InvoicesellResource
 
 
 admin.site.register(Creator)
+
 
 @admin.register(Invoiceitems)
 class InvoiceitemsAdmin(admin.ModelAdmin):
@@ -43,4 +44,4 @@ class InvoiceitemsAdmin(admin.ModelAdmin):
 
 @admin.register(Invoicebuy)
 class InvoicebuyAdmin(admin.ModelAdmin):
-    list_display = ['datawyplytu', 'data', 'noinvoice', 'contractor', 'invoiceitems', 'create', 'autor']
+    list_display = ['datawyplytu', 'data', 'noinvoice', 'contractor', 'invoiceitems', 'create', 'author']

@@ -26,6 +26,7 @@ class Creator(models.Model):
         verbose_name_plural = "Wystawcy faktur - sprzedaż"
 
     creator = models.CharField("Pracownik", max_length=20)
+    author = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name='creator')
 
     def __str__(self):
         return f'{self.creator}'
@@ -58,7 +59,7 @@ class Invoicesell(models.Model):
     noinvoice = models.CharField("Nr. faktury", max_length=11)
     contractor = models.ForeignKey(Contractor, on_delete=models.CASCADE, verbose_name="Kontrahent",
                                    related_name='invoicesell')
-    sum = models.DecimalField("Kwota", max_digits=10, decimal_places=2, null=True, blank=True)
+    sum = models.DecimalField("Kwota [zł]", max_digits=10, decimal_places=2, null=True, blank=True)
     powiat = models.ForeignKey("units.Powiat", on_delete=models.CASCADE, verbose_name="Powiat",
                                related_name='invoicesell')
     period_from = models.DateField("Okres od")
@@ -68,7 +69,7 @@ class Invoicesell(models.Model):
     comments = models.TextField("Informacje", blank=True, default="")
     create = models.DateTimeField("Data utworzenia", auto_now_add=True)
     change = models.DateTimeField("Zmiana", auto_now=True)
-    autor = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name='invoicebuy')
+    author = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name='invoicebuy')
 
     def __str__(self):
         return f'Faktura nr {self.noinvoice} z dnia {self.data} na kwotę {self.sum} zł.'
@@ -92,7 +93,7 @@ class Invoicebuy(models.Model):
     comments = models.TextField("Informacje", blank=True, default="")
     create = models.DateTimeField("Data utworzenia", auto_now_add=True)
     change = models.DateTimeField("Zmiana", auto_now=True)
-    autor = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name='invoicesell')
+    author = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name='invoicesell')
 
     def __str__(self):
         return f'Faktura nr. {self.noinvoice} z dnia {self.data}, na kwotę {self.invoiceitems}'

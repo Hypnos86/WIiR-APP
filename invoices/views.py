@@ -69,7 +69,7 @@ def new_invoicesell(request):
     if request.method == 'POST':
         if invoicesell_form.is_valid():
             instance = invoicesell_form.save(commit=False)
-            instance.autor = request.user
+            instance.author = request.user
             instance.save()
             return redirect('invoices:sell_invoices_list')
 
