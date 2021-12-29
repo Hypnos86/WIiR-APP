@@ -5,5 +5,5 @@ from cpvdict.models import Typecpv
 class TypecpvForm(ModelForm):
     class Meta:
         model = Typecpv
-        fields = ['nocpv', 'name']
-        labels = {'nocpv': 'Kod CPV', 'name': 'Nazwa przedmiotu zamówienia wg CPV'}
+        fields = ['no_cpv', 'name']
+        labels = {'no_cpv': 'Kod CPV', 'name': 'Nazwa przedmiotu zamówienia wg CPV'}

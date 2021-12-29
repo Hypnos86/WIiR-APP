@@ -38,7 +38,7 @@ class UnitResource(resources.ModelResource):
 @admin.register(Unit)
 class UnitAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ['powiat', 'rodzaj', 'adres', 'kod_pocztowy', 'miasto', 'aktywna']
-    search_fields = ['adres, miasto']
+    search_fields = ['adres', 'miasto']
     list_filter = ['powiat']
     resource_class = UnitResource
 

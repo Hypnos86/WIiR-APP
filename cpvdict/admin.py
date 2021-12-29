@@ -7,18 +7,18 @@ from cpvdict.models import Typecpv, OrderingObject
 
 # Register your models here.
 class TypecpvResource(resources.ModelResource):
-    nocpv = Field(attribute='nocpv', column_name='Nr. CPV')
+    no_cpv = Field(attribute='no_cpv', column_name='Nr. CPV')
     name = Field(attribute='name', column_name='Nazwa')
 
     class Meta:
         model = Typecpv
-        export_order = ('nocpv', 'name')
+        export_order = ('no_cpv', 'name')
 
 
 @admin.register(Typecpv)
 class ContractorAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['nocpv', 'name']
-    search_fields = ['nocpv', 'name']
+    list_display = ['no_cpv', 'name']
+    search_fields = ['no_cpv', 'name']
     resource_class = TypecpvResource
 
 

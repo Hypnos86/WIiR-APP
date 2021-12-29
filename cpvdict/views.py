@@ -12,7 +12,7 @@ def cpvlist(request):
     q = request.GET.get("q")
 
     if q:
-        cpvs = cpvs.filter(nocpv__startswith=q) | cpvs.filter(name__icontains=q)
+        cpvs = cpvs.filter(no_cpv__startswith=q) | cpvs.filter(name__icontains=q)
         qsum = len(cpvs)
         return render(request, 'cpvdict/cpvlist.html', {'cpvs': cpvs,
                                                         'sumcpv': sumcpv, 'query': query,
