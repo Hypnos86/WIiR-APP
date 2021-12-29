@@ -60,7 +60,12 @@ class OrderResource(resources.ModelResource):
 
 
 @admin.register(Order)
-class ContractorAdmin(ExportMixin, admin.ModelAdmin):
+class OrderAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ['date', 'no_order', 'sum', 'type', 'cpv_id', 'brakedown', 'content']
     search_fields = ['no_cpv', 'name']
     resource_class = OrderResource
+
+
+@admin.register(TypeOrder)
+class TypeOrderAdmin(admin.ModelAdmin):
+    list_display = ['type']

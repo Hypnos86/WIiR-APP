@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from cpvdict.models import Typecpv, Genre
+from cpvdict.models import Typecpv, Genre, Order
 from cpvdict.forms import TypecpvForm
 
 
@@ -23,6 +23,12 @@ def cpvlist(request):
 
 
 def type_expense_list(request):
-    objects = Genre.objects.all()
+    objects = Genre.objects.all().exclude(name_id="RB")
     context = {'objects': objects}
-    return render(request, 'cpvdict/typelist.html', context)
+    return render(request, 'cpvdict/genrelist.html', context)
+
+
+def order_list(request):
+    orders = Order.objects.all()
+    context = {'orders': orders}
+    return render(request, 'cpvdict/orderlist.html', context)

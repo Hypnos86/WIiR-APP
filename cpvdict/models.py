@@ -23,7 +23,7 @@ class TypeOrder(models.Model):
     type = models.CharField("Rodzaj zamówienia", max_length=20, null=True)
 
     def __str__(self):
-        return {self.type}
+        return f'{self.type}'
 
 
 class Genre(models.Model):
@@ -40,7 +40,7 @@ class Genre(models.Model):
     # leftSum = models.DecimalField("Wykorzystano", max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return f'{self.name}'
+        return f'({self.name_id}) {self.name}'
 
 
 class Order(models.Model):
