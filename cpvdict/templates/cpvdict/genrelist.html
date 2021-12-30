@@ -1,4 +1,5 @@
 {% extends 'base.html'%}
+{% load humanize %}
 {% load static%}
 {% block title%} Rodzajowość wydatków WIiR {%endblock%}
 {% block content%}
@@ -7,8 +8,11 @@
     <div class="col-md-10 moj-button-right my-1"><a href="{%url 'cpvdict:cpvlist'%}"><button class="btn btn-outline-primary button-choise-contracts">Słownik CPV</button></a></div>
 </div>
 
-<div class="kontrahenci-title">
-    <h4 class="mb-1">Klasyfikacja rodzajowa WIiR</h4>
+<div class="my-1 text-center">
+    <h4 class="">Klasyfikacja rodzajowa WIiR</h4>
+    {%if limit != 0 %}
+    <p><span class="text-center">Limit zmówień: {{limit|intcomma}} zł (brutto)</span></p>
+    {%endif%}
 </div>
 <div class="row">
     <div class="col-md-2 moj-button-left my-1"><a href=""><button class="btn btn-outline-primary button-choise-contracts">Roboty budowlane</button></a></div>
@@ -21,8 +25,8 @@
         <th align="center" valign="middle" width="80" scope="col">ID</th>
         <th align="center" valign="middle" width="450" scope="col">Ogólna nazwa przedmiotu zamówienia w ujęciu rodzajowym</th>
         <th align="center" valign="middle" width="450" scope="col">Kod CPV obejmuje ten sam rodzaj zamówienia</th>
-        <th align="center" valign="middle" width="120" scope="col">Wykorzystano<br>[zł]</th>
-        <th align="center" valign="middle" width="120" scope="col">Pozostało<br>[zł]</th>
+        <th align="center" valign="middle" width="120" scope="col">Wykorzystano</th>
+        <th align="center" valign="middle" width="120" scope="col">Pozostało</th>
 
 
     </tr>
@@ -34,7 +38,7 @@
         <td class="text-center" valign="middle" scope="row"></td>
         <td align="center" valign="middle" scope="row">{{object.name_id}}</td>
         <td valign="middle"><span>{{object.name}}</span></td>
-        <td valign="middle">{% for cpv in object.cpv.all%}<span class="tag-cpv" title="{{cpv.name}}"> {{cpv}} </span>{%endfor%}</td>
+        <td valign="middle">{% for cpv in object.cpv.all%}<span class="tag-cpv m-1" title="{{cpv.name}}"> {{cpv}} </span>{%endfor%}</td>
         <td valign="middle"><span></span></td>
         <td class="text-center" valign="middle"><span></span></td>
     </tr>

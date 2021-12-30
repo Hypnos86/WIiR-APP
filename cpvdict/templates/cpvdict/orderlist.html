@@ -49,7 +49,7 @@
         <td align="center" valign="middle">{{order.sum|intcomma}} zł</td>
         <td align="center" valign="middle" class="text-center">{{order.typeorder}}</td>
         <td align="center" valign="middle" class="text-center">{{order.genre.name_id}}</td>
-        <td align="center" valign="middle" class="text-center">{{order.brakedown}}</td>
+        <td align="center" valign="middle" class="text-center">{% if order.brakedown  %} <i class="bi bi-check2-circle text-success icon-check"></i> {%else%} --- {%endif%}</td>
         <td valign="middle">{{order.unit}}</td>
         <td valign="middle">{{order.content}}</td>
         <td align="center" valign="middle">

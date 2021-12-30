@@ -168,7 +168,7 @@
 }
 
 .icon-size{
-    font-size: 110%;
+    font-size: 120%;
 }
 
 /* INVOICES */
@@ -204,11 +204,13 @@
 }
 
 /* CPVDICT */
+.icon-check{
+    font-size: 150%;
+}
 
 .tag-cpv{
     color: white;
     background-color: #0a4275;
-    padding: 3px;
-    margin: 0 2px;
+    padding: 2px;
     border-radius: 3px;
 }

@@ -1,14 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
-from cpvdict.models import Typecpv, Genre, Order
+from cpvdict.models import Typecpv, Genre, OrderLimit, Order
 from cpvdict.forms import OrderForm
+from main.views import current_year
 import datetime
 
 
 # Create your views here.
-def current_year():
-    return datetime.date.today().year
 
 
 def cpvlist(request):
@@ -32,7 +31,9 @@ def cpvlist(request):
 @login_required
 def type_expense_list(request):
     objects = Genre.objects.all().exclude(name_id="RB")
-    context = {'objects': objects}
+    limit = OrderLimit.objects.first()
+    context = {'objects': objects,
+               'limit': limit}
     return render(request, 'cpvdict/genrelist.html', context)
 
 

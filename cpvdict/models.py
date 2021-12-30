@@ -43,6 +43,17 @@ class Genre(models.Model):
         return f'({self.name_id}) {self.name}'
 
 
+class OrderLimit(models.Model):
+    class Meta:
+        verbose_name = "Limit zamówień"
+        verbose_name_plural = "Limit zamówień"
+
+    limit = models.DecimalField("Limit zamówień", max_digits=8, decimal_places=2)
+
+    def __str__(self):
+        return f'{self.limit}'
+
+
 class Order(models.Model):
     class Meta:
         verbose_name = "Zamówienie"

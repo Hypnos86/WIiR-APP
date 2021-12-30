@@ -2,7 +2,7 @@ from django.contrib import admin
 from import_export import resources
 from import_export.admin import ExportMixin
 from import_export.fields import Field
-from cpvdict.models import Typecpv, Genre, Order, TypeOrder
+from cpvdict.models import Typecpv, Genre, OrderLimit, Order, TypeOrder
 
 
 # Register your models here.
@@ -64,6 +64,11 @@ class OrderAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ['date', 'no_order', 'sum', 'typeorder', 'genre', 'brakedown', 'content']
     search_fields = ['no_cpv', 'name']
     resource_class = OrderResource
+
+
+@admin.register(OrderLimit)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ['limit']
 
 
 @admin.register(TypeOrder)

@@ -1,5 +1,5 @@
 from django.forms import ModelForm, DateInput
-from cpvdict.models import Typecpv, Order
+from cpvdict.models import Typecpv, OrderLimit, Order
 
 
 class DateField(DateInput):
@@ -11,6 +11,13 @@ class TypecpvForm(ModelForm):
         model = Typecpv
         fields = ['no_cpv', 'name']
         labels = {'no_cpv': 'Kod CPV', 'name': 'Nazwa przedmiotu zamówienia wg CPV'}
+
+
+class OrderLimitForm(ModelForm):
+    class Meta:
+        model = OrderLimit
+        fields = ['limit']
+        labels = {'limit': 'Limit zamówień'}
 
 
 class OrderForm(ModelForm):

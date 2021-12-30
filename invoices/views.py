@@ -3,19 +3,8 @@ from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from invoices.models import Invoicesell, Creator
 from invoices.forms import InvoicesellForm
+from main.views import current_year, year_choises
 import datetime
-
-
-def year_choises():
-    year = []
-    for y in range(2000, datetime.date.today().year):
-        year.append(y)
-        year.sort(reverse=True)
-    return year
-
-
-def current_year():
-    return datetime.date.today().year
 
 
 # Create your views here.
