@@ -47,8 +47,8 @@ class OrderResource(resources.ModelResource):
     date = Field(attribute='date', column_name='Date')
     no_order = Field(attribute='no_order', column_name='Zlecenie')
     sum = Field(attribute='sum', column_name='Szacowana kwota')
-    type = Field(attribute='type', column_name='Rodzaj zlecenia')
-    cpv_id = Field(attribute='cpv_id', column_name='ID rodzajowości')
+    typeorder = Field(attribute='typeorder', column_name='Rodzaj zamówienia')
+    genre = Field(attribute='genre', column_name='ID rodzajowości')
     unit = Field(attribute='unit', column_name='Jednostka')
     brakedown = Field(attribute='brakedown', column_name='Awaria')
     content = Field(attribute='content', column_name='Zakres')
@@ -56,12 +56,12 @@ class OrderResource(resources.ModelResource):
 
     class Meta:
         model = Order
-        export_order = ('date', 'no_order', 'sum', 'type', 'cpv_id', 'unit', 'brakedown', 'content', 'author')
+        export_order = ('date', 'no_order', 'sum', 'typeorder', 'genre', 'unit', 'brakedown', 'content', 'author')
 
 
 @admin.register(Order)
 class OrderAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['date', 'no_order', 'sum', 'type', 'cpv_id', 'brakedown', 'content']
+    list_display = ['date', 'no_order', 'sum', 'typeorder', 'genre', 'brakedown', 'content']
     search_fields = ['no_cpv', 'name']
     resource_class = OrderResource
 

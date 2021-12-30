@@ -18,4 +18,4 @@ class Contractor(models.Model):
     autor = models.ForeignKey("auth.User", on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.nazwa}, {self.adres}, {self.kod_pocztowy} {self.miasto}'
+        return f'{self.nazwa}, {self.adres}, {self.kod_pocztowy} {self.miasto} ({self.nocuntractor})'

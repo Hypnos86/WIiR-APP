@@ -9,6 +9,9 @@
             <h4 class="text-center">Dziś jest: {{date|date:"d E Y"}}</h4>
             <h4 class="text-center">{{date|date:"l"}}</h4>
             <h4 class="text-center">Dzień w roku: {{date|date:"z"}}</h4>
+            {%if user.username == author.author%}
+            <p><span> {{author.creator}}: {{invoice}}</span></p>
+            {%endif%}
 
         </div>
         <div class="col-md-4 text-center mb-5">

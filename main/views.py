@@ -3,6 +3,7 @@ import datetime
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from main.models import Team, Telephone, OrganisationTelephone
+from invoices.models import Invoicesell, Creator
 
 
 # Create your views here.
@@ -23,4 +24,4 @@ def welcome(request):
     date = datetime.date.today().today()
     weekend = datetime.datetime.today().weekday()
 
-    return render(request, 'main/welcome.html', {'date': date})
+    return render(request, 'main/welcome.html', {'date': date,})

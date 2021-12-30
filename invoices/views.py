@@ -1,9 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
-from invoices.models import Invoicesell
+from invoices.models import Invoicesell, Creator
 from invoices.forms import InvoicesellForm
-from contractors.models import Contractor
 import datetime
 
 
@@ -38,6 +37,8 @@ def sell_invoiceslist(request):
     query = "Wyczyść"
     search = "Szukaj"
     invoicessellsum = len(invoicessell)
+    year = current_year()
+    creators = Creator.objects.all()
     q = request.GET.get("q")
 
     paginator = Paginator(invoicessell, 30)
@@ -53,11 +54,13 @@ def sell_invoiceslist(request):
             creator__creator__icontains=q)
         return render(request, "invoices/invoicesselllist.html", {"invoices": invoicessell,
                                                                   "invoicessellsum": invoicessellsum,
-                                                                  "sell": True, "query": query})
+                                                                  "sell": True, "query": query, "year": year,
+                                                                  "creators": creators})
     else:
         return render(request, "invoices/invoicesselllist.html", {"invoices": invoicessell_list,
                                                                   "invoicessellsum": invoicessellsum,
-                                                                  "sell": True, "search": search})
+                                                                  "sell": True, "search": search, "year": year,
+                                                                  "creators": creators})
 
 
 @login_required

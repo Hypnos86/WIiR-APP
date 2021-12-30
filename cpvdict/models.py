@@ -45,15 +45,16 @@ class Genre(models.Model):
 
 class Order(models.Model):
     class Meta:
-        verbose_name = "Zlecenie/Umowa"
-        verbose_name_plural = "Zlecenia/Umowy"
+        verbose_name = "Zamówienie"
+        verbose_name_plural = "Zamówienia"
+        ordering = ['date']
 
     date = models.DateField("Data")
     no_order = models.CharField("Nr zlecenia", max_length=15)
     sum = models.DecimalField("Szacowana kwota", max_digits=8, decimal_places=2, null=True, blank=True)
-    type = models.ForeignKey(TypeOrder, on_delete=models.CASCADE, verbose_name="Rodzaj zamówienia",
-                             related_name="Order")
-    cpv_id = models.ForeignKey(Genre, on_delete=models.CASCADE, related_name="Order", verbose_name="ID rodzajowości")
+    typeorder = models.ForeignKey(TypeOrder, on_delete=models.CASCADE, verbose_name="Rodzaj zamówienia",
+                                  related_name="order")
+    genre = models.ForeignKey(Genre, on_delete=models.CASCADE, related_name="Order", verbose_name="ID rodzajowości")
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE, null=False, verbose_name="Obiekt",
                              related_name="Order")
     brakedown = models.BooleanField("Awaria")
@@ -61,4 +62,4 @@ class Order(models.Model):
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name="Order")
 
     def __str__(self):
-        return f'Zlecenie nr {self.no_order} z dnia {self.date} (rodzaj: {self.type}'
+        return f'Zlecenie nr {self.no_order} z dnia {self.date} (rodzaj: {self.typeorder}'

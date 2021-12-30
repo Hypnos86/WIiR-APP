@@ -10,7 +10,7 @@ class InvoicesellForm(ModelForm):
     class Meta:
         model = Invoicesell
         fields = "__all__"
-        exclude = ['create', 'change', 'autor']
+        exclude = ['create', 'change', 'author']
 
         widgets = {
             'data': DateField(),

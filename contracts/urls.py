@@ -1,5 +1,6 @@
 from django.urls import path
-from contracts.views import menu_contractsimmovables, new_contractsimmovables, edit_contractsimmovables, show_contractsimmovables, new_aneks
+from contracts.views import menu_contractsimmovables, new_contractsimmovables, edit_contractsimmovables, \
+    show_contractsimmovables, new_aneks
 
 app_name = 'contracts'
 urlpatterns = [

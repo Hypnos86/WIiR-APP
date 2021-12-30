@@ -1,9 +1,16 @@
-from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from django.shortcuts import render, redirect
 from cpvdict.models import Typecpv, Genre, Order
-from cpvdict.forms import TypecpvForm
+from cpvdict.forms import OrderForm
+import datetime
 
 
 # Create your views here.
+def current_year():
+    return datetime.date.today().year
+
+
 def cpvlist(request):
     cpvs = Typecpv.objects.all()
     query = "Wyczyść"
@@ -22,13 +29,53 @@ def cpvlist(request):
                                                         'sumcpv': sumcpv, 'search': search})
 
 
+@login_required
 def type_expense_list(request):
     objects = Genre.objects.all().exclude(name_id="RB")
     context = {'objects': objects}
     return render(request, 'cpvdict/genrelist.html', context)
 
 
+@login_required
 def order_list(request):
-    orders = Order.objects.all()
-    context = {'orders': orders}
-    return render(request, 'cpvdict/orderlist.html', context)
+    orders = Order.objects.all().order_by("-date").filter(date__year=current_year())
+    year = current_year()
+    ordersum = len(orders)
+    query = "Wyczyść"
+    search = "Szukaj"
+    q = request.GET.get("q")
+
+    paginator = Paginator(orders, 30)
+    page_number = request.GET.get('page')
+    order_list = paginator.get_page(page_number)
+
+    if q:
+        orders = orders.filter(date__startswith=q) | orders.filter(no_order__icontains=q) | orders.filter(
+            typeorder__type__icontains=q) | orders.filter(genre__name_id__icontains=q) | orders.filter(
+            unit__powiat__powiat__icontains=q)
+        return render(request, 'cpvdict/orderlist.html', {'orders': orders,
+                                                          'year': year,
+                                                          'ordersum': ordersum,
+                                                          'query': query,
+                                                          })
+    else:
+        return render(request, 'cpvdict/orderlist.html', {'orders': order_list,
+                                                          'year': year,
+                                                          'ordersum': ordersum,
+                                                          'search': search
+                                                          })
+
+
+@login_required
+def new_order(request):
+    order_form = OrderForm(request.POST or None)
+
+    if request.method == 'POST':
+
+        if order_form.is_valid():
+            instance = order_form.save(commit=False)
+            instance.author = request.user
+            instance.save()
+            order_form.save()
+            return redirect('cpvdict:order_list')
+    return render(request, 'cpvdict/orderform.html', {'order_form': order_form, "new": True})

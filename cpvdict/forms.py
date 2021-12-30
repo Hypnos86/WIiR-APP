@@ -1,5 +1,9 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, DateInput
 from cpvdict.models import Typecpv, Order
+
+
+class DateField(DateInput):
+    input_type = "date"
 
 
 class TypecpvForm(ModelForm):
@@ -12,7 +16,10 @@ class TypecpvForm(ModelForm):
 class OrderForm(ModelForm):
     class Meta:
         model = Order
-        fields = ['date', 'no_order', 'sum', 'type', 'cpv_id', 'unit', 'brakedown', 'content']
+        fields = ['date', 'no_order', 'sum', 'typeorder', 'genre', 'unit', 'brakedown', 'content']
         exclude = ['author']
-        labels = {'date': 'Data', 'no_order': 'Nr zamówienia', 'sum': 'Szacowana kwota', 'type': 'Rodzaj zamoówienia',
-                  'cpv_id': 'ID Rodzajowości', 'unit': 'Jednostka', 'brakedown': 'Awaria', 'content': 'Zakres'}
+        labels = {'date': 'Data', 'no_order': 'Nr zamówienia', 'sum': 'Szacowana kwota',
+                  'typeorder': 'Rodzaj zamoówienia',
+                  'genre': 'ID Rodzajowości', 'unit': 'Jednostka', 'brakedown': 'Awaria', 'content': 'Zakres'}
+
+        widgets = {'date': DateField()}
