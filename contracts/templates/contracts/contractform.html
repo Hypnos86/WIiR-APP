@@ -6,6 +6,7 @@
 <h4 class="text-center">{%if new%}Nowa umowa{%else%}Edycja umowy{%endif%}</h4>
 <div class="col-md-6 moj-button-left"><a href="{%url 'contracts:menu_contractsimmovables'%}">
     <button class="btn btn-outline-primary"><span class="bi bi-chevron-compact-left">Cofnij</span></button>
+    <div class="col-md-6 moj-button-right my-1"><a href="{%url 'contracts:new_aneks'%}" class="btn btn-outline-primary button-choise-contracts">Dodaj aneks</a></div>
 </a></div>
 <div class="container col-md-5">
     <form method="post" enctype="multipart/form-data">
