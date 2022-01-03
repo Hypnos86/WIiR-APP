@@ -40,7 +40,7 @@ class AneksForm(ModelForm):
     class Meta:
         model = AneksImmovables
 
-        fields = ['contract', 'data_aneksu','skan_aneksu','create','autor'  ]
+        fields = ['contractimmovables', 'data_aneksu','skan_aneksu','create','autor'  ]
         labels = {'data_aneksu': 'Data aneksu', 'skan_aneksu': 'Skan aneksu'}
         exclude = ['create', 'autor']
         widgets = {'data_aneksu': DateField()}

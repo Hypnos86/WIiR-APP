@@ -79,7 +79,7 @@ class AneksImmovables(models.Model):
         verbose_name = "Aneks"
         verbose_name_plural = "Aneksy"
 
-    contract = models.ForeignKey("contracts.ContractImmovables", on_delete=models.CASCADE, verbose_name="Umowa",
+    contractimmovables = models.ForeignKey("contracts.ContractImmovables", on_delete=models.CASCADE, verbose_name="Umowa",
                                  related_name="aneks")
     skan_aneksu = models.FileField(upload_to='contracts_immovables_pdf/aneksy_pdf/%Y/', null=True, blank=True,
                                    verbose_name="Skan aneks")

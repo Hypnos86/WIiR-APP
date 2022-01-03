@@ -5,7 +5,7 @@ from django.db import models
 class Section(models.Model):
     class Meta:
         verbose_name = "Rozdział"
-        verbose_name_plural = "Rozdziay"
+        verbose_name_plural = "Rozdziały"
 
     section = models.CharField("Rozdział", max_length=5)
     name = models.CharField("Nazwa", max_length=20)
@@ -31,7 +31,7 @@ class Paragraph(models.Model):
         verbose_name = "Paragraf i pozycja"
         verbose_name_plural = "Paragrafy i pozycje"
 
-    paragraph = models.CharField("Paragraf", max_length=6)
+    paragraph = models.CharField("Paragraf", max_length=7)
     name = models.CharField("Nazwa", max_length=50, null=True)
 
     def __str__(self):
@@ -40,8 +40,8 @@ class Paragraph(models.Model):
 
 class Source(models.Model):
     class Meta:
-        verbose_name = "Źródło"
-        verbose_name_plural = "Źródła"
+        verbose_name = "Źródło finansowania"
+        verbose_name_plural = "Źródła finansowania"
 
     source = models.CharField("Źródło", max_length=80, null=True)
 

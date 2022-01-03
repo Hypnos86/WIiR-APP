@@ -49,5 +49,5 @@ admin.site.register(Podstawa)
 
 @admin.register(AneksImmovables)
 class ContractAdmin(admin.ModelAdmin):
-    list_display = ['contract', 'data_aneksu', 'create', 'autor']
+    list_display = ['contractimmovables', 'data_aneksu', 'create', 'autor']
     search_fields = ['data_aneksu', 'contract']
