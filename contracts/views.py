@@ -48,12 +48,22 @@ def edit_contractsimmovables(request, id):
     contractsimmovables_edit = get_object_or_404(ContractImmovables, pk=id)
     contractsimmovables_form = ContractimmovablesForm(request.POST or None, request.FILES or None,
                                                       instance=contractsimmovables_edit)
+    aneks_form = AneksForm(request.POST or None, request.FILES or None)
 
     context = {'contract_form': contractsimmovables_form,
+               'aneks_form': aneks_form,
                'new': False}
-
     if contractsimmovables_form.is_valid():
+        contract = contractsimmovables_form.save(commit=False)
+        contract.author = request.user
         contractsimmovables_form.save()
+
+        if aneks_form.is_valid():
+            instance = aneks_form.save(commit=False)
+            instance.autor = request.user
+            instance.contractimmovables = contractsimmovables_edit
+            instance.save()
+
         return redirect('contracts:menu_contractsimmovables')
     return render(request, 'contracts/contractform.html', context)
 

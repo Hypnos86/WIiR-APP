@@ -13,6 +13,9 @@
         {%csrf_token%}
         {{contract_form|bootstrap}}
 
+        {%if new == False%}
+        {{aneks_form|bootstrap}}
+        {%endif%}
         <div class="row mt-5">
             {%if new == False%}
 

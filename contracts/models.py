@@ -68,7 +68,7 @@ class ContractImmovables(models.Model):
     archives = models.BooleanField("Aktywna", null=False, default=1)
     create = models.DateTimeField("Data utworzenia", auto_now_add=True)
     change = models.DateTimeField("Zmiana", auto_now=True)
-    autor = models.ForeignKey("auth.User", on_delete=models.CASCADE)
+    author = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name="contractimmovables")
 
     def __str__(self):
         return f'Umowa z dnia {self.data_umowy} ({self.kontrahent})'

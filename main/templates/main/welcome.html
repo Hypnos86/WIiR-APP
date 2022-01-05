@@ -6,19 +6,16 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4">
-            <h4 class="text-center">Dziś jest: {{date|date:"d E Y"}}</h4>
-            <h4 class="text-center">{{date|date:"l"}}</h4>
-            <h4 class="text-center">Dzień w roku: {{date|date:"z"}}</h4>
-            {%if user.username == author.author%}
-            <p><span> {{author.creator}}: {{invoice}}</span></p>
-            {%endif%}
+
 
         </div>
         <div class="col-md-4 text-center mb-5">
             <img src="{%static 'main/media/policja.png'%}" height="150px"/>
         </div>
         <div class="col-md-4"></div>
-        <h3 class="text-center">WITAJ</h3>
+        <h4 class="text-center">Dziś jest: {{date|date:"j E Y"}} roku</h4>
+            <h4 class="text-center">{{date|date:"l"}}</h4>
+            <h4 class="text-center">Dzień w roku: {{date|date:"z"}}</h4>
     </div>
 </div>
 {%endblock%}

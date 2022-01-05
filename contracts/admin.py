@@ -35,7 +35,7 @@ class ContractResource(resources.ModelResource):
 class ContractAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ['data_umowy', 'nrumowy', 'kontrahent', 'podstawa', 'okres_obowiazywania', 'rodzaj',
                     'pow_uzyczona', 'koszt_czynsz', 'koszt_prad', 'koszt_gaz', 'koszt_woda', 'koszt_co', 'koszt_smieci',
-                    'unit', 'stan', 'archives', 'create', 'change', 'autor']
+                    'unit', 'stan', 'archives', 'create', 'change', 'author']
     search_fields = ['nrumowy', 'kontrahent']
     preserve_filters = True
     resource_class = ContractResource

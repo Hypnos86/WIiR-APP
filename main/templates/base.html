@@ -47,9 +47,9 @@
             <li class="nav-item"><a id="button-cpvnotaut" href="{%url 'cpvdict:cpvlist'%}" class="btn btn-sm btn-outline-secondary mx-2"><span>Słownik CPV</span></a></li>
             {%endif%}
             {%if user.is_authenticated%}
-            <li class="nav-item"><a href="{%url 'logout'%}" class="btn btn-sm btn-outline-danger mx-5"><span class="bi bi-box-arrow-right icon-size ml-2">Wyloguj</span></a></li>
+            <li class="nav-item "><a href="{%url 'logout'%}" class="btn btn-sm btn-outline-danger mx-5"><span class="bi bi-box-arrow-right icon-size ">Wyloguj</span></a></li>
             {%else%}
-            <li class="nav-item"><a href="{%url 'login'%}" class="btn btn-sm btn-success mx-5"><span class="bi bi-box-arrow-in-left icon-size ml-2">Zaloguj</span></a></li>
+            <li class="nav-item"><a href="{%url 'login'%}" class="btn btn-sm btn-success mx-5"><span class="bi bi-box-arrow-in-left icon-size ">Zaloguj</span></a></li>
             {%endif%}
 <!--            <li class="nav-item"><a class="nav-link" href="#"><span>Podatek od nieruchomości</span></a></li>-->
 <!--            <li class="nav-item"><a class="nav-link" href="#"><span>Trwały zarząd</span></a></li>-->

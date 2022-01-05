@@ -12,12 +12,12 @@ class ContractimmovablesForm(ModelForm):
         fields = ['data_umowy', 'nrumowy', 'kontrahent', 'okres_obowiazywania', 'pow_uzyczona', 'podstawa',
                   'rodzaj', 'koszt_czynsz', 'koszt_prad', 'koszt_gaz', 'koszt_woda', 'koszt_co', 'koszt_smieci',
                   'koszt_podsmiec', 'koszt_podnier', 'unit', 'skan', 'stan', 'comments', 'archives', 'create',
-                  'change', 'autor']
+                  'change', 'author']
 
         field_order = ['data_umowy', 'nrumowy', 'kontrahent', 'okres_obowiazywania', 'pow_uzyczona', 'podstawa',
                        'rodzaj', 'koszt_czynsz', 'koszt_prad', 'koszt_gaz', 'koszt_woda', 'koszt_co', 'koszt_smieci',
                        'koszt_podsmiec', 'koszt_podnier', 'unit', 'skan', 'stan', 'comments', 'archives', 'create',
-                       'change', 'autor']
+                       'change', 'author']
 
         labels = {'data_umowy': 'Data umowy', 'nrumowy': 'Nr umowy', 'kontrahent': 'Kontrahent',
                   'podstawa': 'Podstawa prawda', 'okres_obowiazywania': 'Okres obowiązywania', 'rodzaj': 'Rodzaj umowy',
@@ -28,7 +28,7 @@ class ContractimmovablesForm(ModelForm):
                   'koszt_podnier': 'Podatek od nieruchomości',
                   'unit': 'Jednostka', 'skan': 'Skan umowy', 'stan': 'Stan umowy', 'comments': 'Informacje'}
 
-        exclude = ['archives', 'create', 'change', 'autor']
+        exclude = ['archives', 'create', 'change', 'author']
 
         widgets = {'data_umowy': DateField(),
                    'okres_obowiazywania': DateField(),
@@ -40,7 +40,7 @@ class AneksForm(ModelForm):
     class Meta:
         model = AneksImmovables
 
-        fields = ['contractimmovables', 'data_aneksu','skan_aneksu','create','autor'  ]
+        fields = ['data_aneksu', 'skan_aneksu', 'create', 'autor']
         labels = {'data_aneksu': 'Data aneksu', 'skan_aneksu': 'Skan aneksu'}
         exclude = ['create', 'autor']
         widgets = {'data_aneksu': DateField()}
