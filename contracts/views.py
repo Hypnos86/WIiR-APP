@@ -36,7 +36,7 @@ def new_contractsimmovables(request):
     if request.method == 'POST':
         if contract_form.is_valid():
             instance = contract_form.save(commit=False)
-            instance.autor = request.user
+            instance.author = request.user
             instance.save()
             return redirect('contracts:menu_contractsimmovables')
 

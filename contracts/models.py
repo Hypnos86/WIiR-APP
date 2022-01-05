@@ -68,7 +68,8 @@ class ContractImmovables(models.Model):
     archives = models.BooleanField("Aktywna", null=False, default=1)
     create = models.DateTimeField("Data utworzenia", auto_now_add=True)
     change = models.DateTimeField("Zmiana", auto_now=True)
-    author = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name="contractimmovables")
+    author = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name="contractimmovables",
+                               verbose_name="author")
 
     def __str__(self):
         return f'Umowa z dnia {self.data_umowy} ({self.kontrahent})'
@@ -79,8 +80,9 @@ class AneksImmovables(models.Model):
         verbose_name = "Aneks"
         verbose_name_plural = "Aneksy"
 
-    contractimmovables = models.ForeignKey("contracts.ContractImmovables", on_delete=models.CASCADE, verbose_name="Umowa",
-                                 related_name="aneks")
+    contractimmovables = models.ForeignKey("contracts.ContractImmovables", on_delete=models.CASCADE,
+                                           verbose_name="Umowa",
+                                           related_name="aneks")
     skan_aneksu = models.FileField(upload_to='contracts_immovables_pdf/aneksy_pdf/%Y/', null=True, blank=True,
                                    verbose_name="Skan aneks")
     data_aneksu = models.DateField("Data aneksu", null=True)
