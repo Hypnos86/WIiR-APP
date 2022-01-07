@@ -6,7 +6,6 @@
 <h4 class="text-center">{%if new%}Nowa umowa{%else%}Edycja umowy{%endif%}</h4>
 <div class="col-md-6 moj-button-left"><a href="{%url 'contracts:menu_contractsimmovables'%}">
     <button class="btn btn-outline-primary"><span class="bi bi-chevron-compact-left">Cofnij</span></button>
-    <div class="col-md-6 moj-button-right my-1"><a href="{%url 'contracts:new_aneks'%}" class="btn btn-outline-primary button-choise-contracts">Dodaj aneks</a></div>
 </a></div>
 <div class="container col-md-5">
     <form method="post" enctype="multipart/form-data">
@@ -14,7 +13,10 @@
         {{contract_form|bootstrap}}
 
         {%if new == False%}
-        {{aneks_form|bootstrap}}
+        <fieldset class="mt-5">
+            <legend>Dodaj aneks</legend>
+            {{aneks_form|bootstrap}}
+        </fieldset>
         {%endif%}
         <div class="row mt-5">
             {%if new == False%}
@@ -25,8 +27,8 @@
         </div>
         {%else%}
         <div class="col-md-12 moj-button-right">
-                <button type="submit" class="btn btn-outline-primary">Dodaj</button>
-            </div>
+            <button type="submit" class="btn btn-outline-primary">Dodaj</button>
+        </div>
         {%endif%}
 
     </form>
@@ -35,5 +37,6 @@
      document.getElementById("button-invoices").classList.remove("active");
      document.getElementById("button-contracts").classList.add("active");
      document.getElementById("button-contractors").classList.remove("active");
+
     </script>
     {%endblock%}
