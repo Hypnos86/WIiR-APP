@@ -32,9 +32,27 @@ def cpvlist(request):
 def type_expense_list(request):
     objects = Genre.objects.all().exclude(name_id="RB")
     limit = OrderLimit.objects.first()
+    year = current_year()
+    item = round(float(limit.limit) * 1.23, 2)
+
     context = {'objects': objects,
-               'limit': limit}
+               'limit': limit,
+               'item': item,
+               'year': year}
     return render(request, 'cpvdict/genrelist.html', context)
+
+
+@login_required
+def type_work_list(request):
+    objects_work = Order.objects.all().order_by("-date").filter(date__year=current_year())
+    limit = OrderLimit.objects.first()
+    year = current_year()
+    item = round(float(limit.limit) * 1.23, 2)
+    context = {'objects_work': objects_work,
+               'limit': limit,
+               'item': item,
+               'year': year}
+    return render(request, 'cpvdict/genreworklist.html', context)
 
 
 @login_required

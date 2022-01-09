@@ -5,14 +5,16 @@
 {% block content%}
 <div class="row">
     <div class="col-md-1 moj-button-left my-1"><a href="{%url 'cpvdict:order_list'%}"><button class="btn btn-outline-primary button-choise-contracts">Lista zleceń</button></a></div>
-    <div class="col-md-2 moj-button-left my-1"><a href=""><button class="btn btn-outline-primary button-choise-contracts">Roboty budowlane</button></a></div>
+    <div class="col-md-2 moj-button-left my-1"><a href="{%url 'cpvdict:type_work_list'%}"><button class="btn btn-outline-primary button-choise-contracts">Roboty budowlane</button></a></div>
     <div class="col-md-9 moj-button-right my-1"><a href="{%url 'cpvdict:cpvlist'%}"><button class="btn btn-outline-primary button-choise-contracts">Słownik CPV</button></a></div>
 </div>
 
 <div class="my-1 text-center">
     <h4 class="">Klasyfikacja rodzajowa WIiR</h4>
+    <span class="m-2">({{year}} rok)</span>
     {%if limit != 0 %}
-    <p><span class="text-center">Limit zmówień: {{limit|intcomma}} zł (brutto)</span></p>
+    <p><span class="text-center">Limit zmówień: {{limit|intcomma}} zł (netto)</span><br>
+    <span class="text-center">Limit zmówień: {{item|intcomma}} zł (brutto)</span></p>
     {%endif%}
 </div>
 <div class="container">

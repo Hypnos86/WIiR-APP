@@ -36,9 +36,6 @@ class Genre(models.Model):
     name = models.CharField("Ogólna nazwa przedmiotu zamówienia w ujęciu rodzajowym", max_length=200)
     cpv = models.ManyToManyField("cpvdict.Typecpv", verbose_name="Kody CPV", related_name="OrderingObject")
 
-    # usedSum = models.DecimalField("Wykorzystano", max_digits=10, decimal_places=2)
-    # leftSum = models.DecimalField("Wykorzystano", max_digits=10, decimal_places=2)
-
     def __str__(self):
         return f'({self.name_id}) {self.name}'
 
@@ -48,7 +45,7 @@ class OrderLimit(models.Model):
         verbose_name = "Limit zamówień"
         verbose_name_plural = "Limit zamówień"
 
-    limit = models.DecimalField("Limit zamówień", max_digits=8, decimal_places=2)
+    limit = models.DecimalField('Limit zamówień', max_digits=8, decimal_places=2)
 
     def __str__(self):
         return f'{self.limit}'

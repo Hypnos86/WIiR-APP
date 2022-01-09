@@ -1,9 +1,8 @@
 from django.db import models
-
-import units.models
-from units.models import Unit, Powiat
+from units.models import Unit
 
 
+# my models
 class Stan(models.Model):
     class Meta:
         verbose_name = "Stan umowy"
@@ -37,16 +36,58 @@ class Podstawa(models.Model):
         return f'{self.podstawa}'
 
 
+class LegalBasicZzp(models.Model):
+    class Meta:
+        verbose_name = "Podstawa prawna ZZP"
+        verbose_name_plural = "Podstawy Prawne ZZP"
+
+    legal_basic_zzp = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f'{self.legal_basic_zzp}'
+
+
+class Guarantee(models.Model):
+    class Meta:
+        verbose_name = 'Gwarancja'
+        verbose_name_plural = 'Gwarancje'
+
+    guarantee = models.CharField('Gwarancja', max_length=50)
+
+    def __str__(self):
+        return f'{self.guarantee}'
+
+
+class Period(models.Model):
+    class Meta:
+        verbose_name = 'Okres'
+        verbose_name_plural = 'Okresy'
+
+    period = models.SmallIntegerField()
+
+    def __str__(self):
+        return f'{self.period}'
+
+
+class GuaranteePeriod(Period):
+    pass
+
+
+class WarrantyPeriod(Period):
+    pass
+
+
 class ContractImmovables(models.Model):
     class Meta:
         verbose_name = "Umowa nieruchomosci"
         verbose_name_plural = "Umowy nieruchomosci"
+        ordering = ['data_umowy']
 
     data_umowy = models.DateField("Data umowy")
     nrumowy = models.CharField("Nr umowy", max_length=20, null=True, blank=True, default="")
     kontrahent = models.ForeignKey("contractors.Contractor", on_delete=models.CASCADE, verbose_name="Kontrahent",
                                    related_name="contractimmovables")
-    podstawa = models.ForeignKey("contracts.Podstawa", on_delete=models.CASCADE, blank=True,
+    podstawa = models.ForeignKey("contracts.Podstawa", on_delete=models.CASCADE, blank=True, null=True,
                                  verbose_name="Podstawa prawna", related_name="contractimmovables")
     okres_obowiazywania = models.DateField("Okres obowiązywania", null=True, blank=True)
     rodzaj = models.ForeignKey("contracts.Rodzaj", on_delete=models.CASCADE, verbose_name="Rodzaj umowy",
@@ -77,25 +118,78 @@ class ContractImmovables(models.Model):
 
 class AneksImmovables(models.Model):
     class Meta:
-        verbose_name = "Aneks"
-        verbose_name_plural = "Aneksy"
+        verbose_name = 'Aneks'
+        verbose_name_plural = 'Aneksy'
+        ordering = ['contractimmovables', 'data_aneksu']
 
-    contractimmovables = models.ForeignKey("contracts.ContractImmovables", on_delete=models.CASCADE,
-                                           verbose_name="Umowa",
-                                           related_name="aneks")
-    skan_aneksu = models.FileField(upload_to='contracts_immovables_pdf/aneksy_pdf/%Y/', null=True, blank=True,
-                                   verbose_name="Skan aneks")
-    data_aneksu = models.DateField("Data aneksu", null=True)
-    create = models.DateTimeField("Data utworzenia", auto_now_add=True)
-    autor = models.ForeignKey("auth.User", on_delete=models.CASCADE)
+    contractimmovables = models.ForeignKey('contracts.ContractImmovables', on_delete=models.CASCADE,
+                                           verbose_name='Umowa',
+                                           related_name='aneks')
+    skan_aneksu = models.FileField(upload_to='contracts_immovables/annexes/%Y/', null=True, blank=True,
+                                   verbose_name='Skan aneks')
+    data_aneksu = models.DateField('Data aneksu', null=True)
+    create = models.DateTimeField('Data utworzenia', auto_now_add=True)
+    autor = models.ForeignKey('auth.User', on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.data_aneksu} {self.skan_aneksu}'
 
 
 class ContractAuction(models.Model):
-    pass
+    class Meta:
+        verbose_name = 'Umowa ZZP'
+        verbose_name_plural = 'Umowy ZZP'
+        ordering = ['date']
+
+    date = models.DateField('Data podpisania')
+    no_contract = models.CharField('Nr. umowy', max_length=20)
+    contractor = models.ForeignKey('contractors.Contractor', on_delete=models.CASCADE,
+                                   verbose_name='Kontrahent',
+                                   related_name='contract_auction')
+    price = models.DecimalField('Wartość umowy', max_digits=12, decimal_places=2)
+
+    legal_basic_zzp = models.ForeignKey(LegalBasicZzp, on_delete=models.CASCADE, related_name='contract_auction',
+                                        verbose_name='Tryb UPZP')
+    end_date = models.DateField('Data zakończenia')
+
+    unit = models.ForeignKey('units.Unit', on_delete=models.CASCADE, verbose_name='Jednostka',
+                             related_name='contract_auction')
+    last_report_date = models.DateField('Data ostatniego protokołu')
+    guarantee = models.ForeignKey(Guarantee, on_delete=models.CASCADE, verbose_name='Gwarancja',
+                                  related_name='contract_auction')
+    guarantee_period = models.ForeignKey(GuaranteePeriod, on_delete=models.CASCADE, verbose_name='Okres gwarancji',
+                                         related_name='contract_auction')
+    warranty_period = models.ForeignKey(WarrantyPeriod, on_delete=models.CASCADE, verbose_name='Okres rękojmi',
+                                        related_name='contract_auction')
+    security_percentage = models.SmallIntegerField('Procent zabezpiecznia')
+    contract_security = models.DecimalField('Kwota zabezpiecznia', max_digits=10, decimal_places=2)
+    scan = models.FileField(upload_to='contracts_zzp_pdf/%Y/', null=True, blank=True, verbose_name='Skan umowy')
+    create = models.DateTimeField('Data utworzenia', auto_now_add=True)
+    change = models.DateTimeField('Zmiana', auto_now=True)
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='contract_auction',
+                               verbose_name="author")
+
+    def __str__(self):
+        return f'{self.no_contract} z dnia {self.date}'
 
 
 class AneksContractAuction(models.Model):
-    pass
+    class Meta:
+        verbose_name = 'Aneks ZZP'
+        verbose_name_plural = 'Aneksy ZZP'
+        ordering = ['contract_auction', 'date']
+
+    contract_auction = models.ForeignKey(ContractAuction, on_delete=models.CASCADE,
+                                         verbose_name='Umowa ZZP',
+                                         related_name='aneks_contract_auction')
+    date = models.DateField('Data aneksu', null=True)
+    price_change = models.BooleanField('Zmiana wartości umowy', default=False)
+    price_after_change = models.DecimalField('Kwota aneksu', max_digits=10, decimal_places=2)
+    scope_changes = models.TextField('Zakres zmian', blank=True, default='')
+    scan = models.FileField(upload_to='contracts_zzp/annexes/%Y/', null=True, blank=True,
+                            verbose_name='Skan aneksu')
+    create = models.DateTimeField('Data utworzenia', auto_now_add=True)
+    author = models.ForeignKey("auth.User", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'Aneks z dnia {self.date} {self.scan}'

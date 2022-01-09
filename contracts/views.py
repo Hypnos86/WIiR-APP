@@ -90,3 +90,9 @@ def new_aneks(request):
             return redirect('contracts:menu_contractsimmovables')
 
     return render(request, 'contracts/aneksform.html', context)
+
+
+@login_required
+def menu_contracts_auction(request):
+    context = {}
+    return render(request, 'contracts/contractauctionlist.html', context)

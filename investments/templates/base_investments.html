@@ -3,16 +3,41 @@
 {% block title %} Zadania Inwestycyjne Wielkopolskiej Policji{% endblock %}
 
 {% block content %}
-<nav>
-    <ul>
-        <li> nav1</li>
-        <li> nav2</li>
-        <li> nav3</li>
-        <li> nav4</li>
-    </ul>
-</nav>
+<nav class="justify-content-center py-3 mb-4 row text-center">
+        <ul class="nav nav-pills col-md-4 justify-content-center" >
+            <li class="nav-item"><a id="button-contractzzp" href="{%url 'contracts:menu_contracts_auction'%}" class="btn btn-sm btn-outline-primary mx-2" ><span>Umowy ZZP</span></a></li>
+            <li class="nav-item"><a id="button-inw" href="" class="btn btn-sm btn-outline-primary mx-2" ><span>Zadania Inwestycyjne</span></a></li>
+            <li class="nav-item"><a id="button-invoices" href="" class="btn btn-sm btn-outline-primary mx-2"><span>Galeria?</span></a></li>
+
+      </ul>
+    </nav>
+<script>
+     document.getElementById("button-units").classList.remove("active");
+     document.getElementById("button-invoices").classList.remove("active");
+     document.getElementById("button-contracts").classList.remove("active");
+     document.getElementById("button-contractors").classList.remove("active");
+     document.getElementById("button-cpv").classList.remove("active");
+     document.getElementById("button-cpvnotaut").classList.remove("active");
+     document.getElementById("button-inw").classList.add("active");
+</script>
 {% block investmentsmenu %}
-
-
+<script>
+     document.getElementById("button-units").classList.remove("active");
+     document.getElementById("button-invoices").classList.remove("active");
+     document.getElementById("button-contracts").classList.remove("active");
+     document.getElementById("button-contractors").classList.remove("active");
+     document.getElementById("button-cpv").classList.remove("active");
+     document.getElementById("button-cpvnotaut").classList.remove("active");
+     document.getElementById("button-inw").classList.add("active");
+</script>
 {% endblock %}
+<script>
+     document.getElementById("button-units").classList.remove("active");
+     document.getElementById("button-invoices").classList.remove("active");
+     document.getElementById("button-contracts").classList.remove("active");
+     document.getElementById("button-contractors").classList.remove("active");
+     document.getElementById("button-cpv").classList.remove("active");
+     document.getElementById("button-cpvnotaut").classList.remove("active");
+     document.getElementById("button-inw").classList.add("active");
+</script>
 {% endblock %}

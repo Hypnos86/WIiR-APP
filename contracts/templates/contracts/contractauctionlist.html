@@ -1,8 +1,8 @@
-{% extends 'base.html' %}
+{% extends 'base_investments.html' %}
 {% load humanize %}
 {% load static %}
-{% block title %}Umowy najmu{%endblock%}
-{% block content %}
+{% block title %}Umowy ZZP{%endblock%}
+{% block investmentsmenu %}
 <section class="w-100 p-4 pb-4 d-flex justify-content-center align-items-center flex-column">
     <div>
         <form method="get">
@@ -17,9 +17,8 @@
     <div class="col-md-12 moj-button-right my-1"><a href="{%url 'contracts:new_contractsimmovables'%}"><button class="btn btn-outline-primary button-choise-contracts">Nowa umowa</button></a></div>
 </div>
 <div class="kontrahenci-title">
-    <h4>Umowy najmu</h4>
-    <p class="m-0"><span>Liczba umów aktualnych: {{contrsum}}</span></p>
-    <p class="m-0"><span>Liczba umów zarchiwizowanych: </span></p>
+    <h4>Umowy ZZP</h4>
+    <p class="m-0"><span>Liczba umów: {{contrsum}}</span></p>
 </div>
 
 <table class="table table-hover my-table mt-2">
@@ -103,7 +102,9 @@
 <script>
      document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-invoices").classList.remove("active");
-     document.getElementById("button-contracts").classList.add("active");
+     document.getElementById("button-contracts").classList.remove("active");
      document.getElementById("button-contractors").classList.remove("active");
+     document.getElementById("button-inw").classList.add("active");
+     document.getElementById("button-contractzzp").classList.add("active");
 </script>
 {%endblock%}
