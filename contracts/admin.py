@@ -84,7 +84,7 @@ class ContractAuctionResource(resources.ModelResource):
 
 @admin.register(ContractAuction)
 class ContractAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['date', 'no_contract', 'contractor', 'price', 'legal_basic_zzp', 'end_date', 'unit',
+    list_display = ['date', 'no_contract', 'contractor', 'price', 'work_scope', 'legal_basic_zzp', 'end_date', 'unit',
                     'last_report_date', 'guarantee', 'guarantee_period', 'warranty_period', 'security_percent',
                     'contract_security', 'create', 'change', 'author']
     search_fields = ['no_contract', 'legal_basic_zzp', 'last_report_date', 'guarantee', 'guarantee_period',

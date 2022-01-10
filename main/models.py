@@ -37,5 +37,27 @@ class OrganisationTelephone(models.Model):
         verbose_name_plural = "Książka telefoniczna KWP w Poznaniu"
 
     telephone_book = models.FileField(upload_to='KWP_telephone/%Y/', null=True,
-                                     verbose_name="Spis telefonów KWP w Poznaniu")
+                                      verbose_name="Spis telefonów KWP w Poznaniu")
     add_date = models.DateField("Data dodania", auto_now_add=True)
+
+
+class PermissionsType(models.Model):
+    class Meta:
+        verbose_name = 'Typ uprawnień'
+        verbose_name_plural = 'Uprawnienia'
+
+    permission = models.CharField('Uprawnienia', max_length=50)
+
+
+class Inspector(models.Model):
+    class Meta:
+        verbose_name = 'Inspektor'
+        verbose_name_plural = 'Inspektorzy'
+
+    name = models.CharField('Imię', max_length=20)
+    last_name = models.CharField('Nazwisko', max_length=25)
+    permissions = models.ForeignKey(PermissionsType, on_delete=models.CASCADE, verbose_name='Uprawnienia',
+                                    related_name='inspector')
+
+    def __str__(self):
+        return f'{self.name} {self.last_name} - {self.permissions}'

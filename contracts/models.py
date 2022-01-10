@@ -147,7 +147,7 @@ class ContractAuction(models.Model):
                                    verbose_name='Kontrahent',
                                    related_name='contract_auction')
     price = models.DecimalField('Wartość umowy', max_digits=12, decimal_places=2)
-
+    work_scope = models.CharField('Zakres', max_length=120)
     legal_basic_zzp = models.ForeignKey(LegalBasicZzp, on_delete=models.CASCADE, related_name='contract_auction',
                                         verbose_name='Tryb UPZP')
     end_date = models.DateField('Data zakończenia')
@@ -163,8 +163,9 @@ class ContractAuction(models.Model):
                                         related_name='contract_auction')
     security_percent = models.SmallIntegerField('Procent zabezpiecznia')
     contract_security = models.DecimalField('Kwota zabezpiecznia', max_digits=10, decimal_places=2)
-    raports = models.TextField('Raportowanie', blank=True, default="")
-    informations = models.TextField('Informacje', blank=True, default="")
+    inspector = models.ManyToManyField('main.Inspector', verbose_name='Inspektor', related_name='ContractAuction')
+    raport = models.TextField('Raportowanie', blank=True, default='')
+    information = models.TextField('Informacje', blank=True, default='')
     scan = models.FileField(upload_to='contracts_zzp/%Y/', null=True, blank=True, verbose_name='Skan umowy')
     create = models.DateTimeField('Data utworzenia', auto_now_add=True)
     change = models.DateTimeField('Zmiana', auto_now=True)
