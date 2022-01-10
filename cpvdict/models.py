@@ -34,7 +34,7 @@ class Genre(models.Model):
 
     name_id = models.CharField("ID", max_length=4, unique=True)
     name = models.CharField("Ogólna nazwa przedmiotu zamówienia w ujęciu rodzajowym", max_length=200)
-    cpv = models.ManyToManyField("cpvdict.Typecpv", verbose_name="Kody CPV", related_name="OrderingObject")
+    cpv = models.ManyToManyField("cpvdict.Typecpv", verbose_name="Kody CPV", related_name="Genre")
 
     def __str__(self):
         return f'({self.name_id}) {self.name}'

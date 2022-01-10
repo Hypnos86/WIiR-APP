@@ -36,7 +36,7 @@ def type_expense_list(request):
     item = round(float(limit.limit) * 1.23, 2)
 
     context = {'objects': objects,
-               'limit': limit,
+               'limit': limit.limit,
                'item': item,
                'year': year}
     return render(request, 'cpvdict/genrelist.html', context)

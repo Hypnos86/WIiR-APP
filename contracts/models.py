@@ -6,7 +6,7 @@ from units.models import Unit
 class Stan(models.Model):
     class Meta:
         verbose_name = "Stan umowy"
-        verbose_name_plural = "Stany umów"
+        verbose_name_plural = "Nieruchomości - Stany umów"
 
     stan = models.CharField(max_length=20)
 
@@ -17,7 +17,7 @@ class Stan(models.Model):
 class Rodzaj(models.Model):
     class Meta:
         verbose_name = "Rodzaj umowy"
-        verbose_name_plural = "Rodzaje umów"
+        verbose_name_plural = "Nieruchomości - Rodzaje umów"
 
     rodzaj = models.CharField(max_length=10)
 
@@ -28,7 +28,7 @@ class Rodzaj(models.Model):
 class Podstawa(models.Model):
     class Meta:
         verbose_name = "Podstawa prawna"
-        verbose_name_plural = "Podstawy prawne"
+        verbose_name_plural = "Nieruchomosci - Podstawy prawne"
 
     podstawa = models.CharField(max_length=30, null=False)
 
@@ -39,7 +39,7 @@ class Podstawa(models.Model):
 class LegalBasicZzp(models.Model):
     class Meta:
         verbose_name = "Podstawa prawna ZZP"
-        verbose_name_plural = "Podstawy Prawne ZZP"
+        verbose_name_plural = "Umowy ZZP - Tryb zamówień"
 
     legal_basic_zzp = models.CharField(max_length=50)
 
@@ -50,7 +50,7 @@ class LegalBasicZzp(models.Model):
 class Guarantee(models.Model):
     class Meta:
         verbose_name = 'Gwarancja'
-        verbose_name_plural = 'Gwarancje'
+        verbose_name_plural = 'Umowy ZZP - Gwarancje'
 
     guarantee = models.CharField('Gwarancja', max_length=50)
 
@@ -80,7 +80,7 @@ class WarrantyPeriod(Period):
 class ContractImmovables(models.Model):
     class Meta:
         verbose_name = "Umowa nieruchomosci"
-        verbose_name_plural = "Umowy nieruchomosci"
+        verbose_name_plural = "Nieruchomości - Umowy"
         ordering = ['data_umowy']
 
     data_umowy = models.DateField("Data umowy")
@@ -119,7 +119,7 @@ class ContractImmovables(models.Model):
 class AneksImmovables(models.Model):
     class Meta:
         verbose_name = 'Aneks'
-        verbose_name_plural = 'Aneksy'
+        verbose_name_plural = 'Nieruchomosci - Aneksy do umów'
         ordering = ['contractimmovables', 'data_aneksu']
 
     contractimmovables = models.ForeignKey('contracts.ContractImmovables', on_delete=models.CASCADE,
@@ -176,7 +176,7 @@ class ContractAuction(models.Model):
 class AneksContractAuction(models.Model):
     class Meta:
         verbose_name = 'Aneks ZZP'
-        verbose_name_plural = 'Aneksy ZZP'
+        verbose_name_plural = 'Umowy ZZP (Aneksy)'
         ordering = ['contract_auction', 'date']
 
     contract_auction = models.ForeignKey(ContractAuction, on_delete=models.CASCADE,
