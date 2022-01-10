@@ -61,9 +61,9 @@ class Guarantee(models.Model):
 class Period(models.Model):
     class Meta:
         verbose_name = 'Okres'
-        verbose_name_plural = 'Okresy'
+        verbose_name_plural = 'Umowy ZZP - Okresy'
 
-    period = models.SmallIntegerField()
+    period = models.SmallIntegerField('Okres (mc)')
 
     def __str__(self):
         return f'{self.period}'
@@ -83,7 +83,7 @@ class ContractImmovables(models.Model):
         verbose_name_plural = "Nieruchomości - Umowy"
         ordering = ['data_umowy']
 
-    data_umowy = models.DateField("Data umowy")
+    data_umowy = models.DateField("Data")
     nrumowy = models.CharField("Nr umowy", max_length=20, null=True, blank=True, default="")
     kontrahent = models.ForeignKey("contractors.Contractor", on_delete=models.CASCADE, verbose_name="Kontrahent",
                                    related_name="contractimmovables")
@@ -103,7 +103,7 @@ class ContractImmovables(models.Model):
     koszt_podnier = models.BooleanField("Podatek od nieruchomości")
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE, null=False, verbose_name="Jednostka",
                              related_name="contractimmovables")
-    skan = models.FileField(upload_to='contracts_immovables_pdf/%Y/', null=True, blank=True, verbose_name="Skan umowy")
+    skan = models.FileField(upload_to='contracts_immovables/%Y/', null=True, blank=True, verbose_name="Skan umowy")
     stan = models.ForeignKey(Stan, on_delete=models.CASCADE, blank=False, default=1, related_name="contractimmovables")
     comments = models.TextField("Informacje", blank=True, default="")
     archives = models.BooleanField("Aktywna", null=False, default=1)
@@ -119,7 +119,7 @@ class ContractImmovables(models.Model):
 class AneksImmovables(models.Model):
     class Meta:
         verbose_name = 'Aneks'
-        verbose_name_plural = 'Nieruchomosci - Aneksy do umów'
+        verbose_name_plural = 'Nieruchomosci - Aneksy'
         ordering = ['contractimmovables', 'data_aneksu']
 
     contractimmovables = models.ForeignKey('contracts.ContractImmovables', on_delete=models.CASCADE,
@@ -141,7 +141,7 @@ class ContractAuction(models.Model):
         verbose_name_plural = 'Umowy ZZP'
         ordering = ['date']
 
-    date = models.DateField('Data podpisania')
+    date = models.DateField('Data')
     no_contract = models.CharField('Nr. umowy', max_length=20)
     contractor = models.ForeignKey('contractors.Contractor', on_delete=models.CASCADE,
                                    verbose_name='Kontrahent',
@@ -161,9 +161,11 @@ class ContractAuction(models.Model):
                                          related_name='contract_auction')
     warranty_period = models.ForeignKey(WarrantyPeriod, on_delete=models.CASCADE, verbose_name='Okres rękojmi',
                                         related_name='contract_auction')
-    security_percentage = models.SmallIntegerField('Procent zabezpiecznia')
+    security_percent = models.SmallIntegerField('Procent zabezpiecznia')
     contract_security = models.DecimalField('Kwota zabezpiecznia', max_digits=10, decimal_places=2)
-    scan = models.FileField(upload_to='contracts_zzp_pdf/%Y/', null=True, blank=True, verbose_name='Skan umowy')
+    raports = models.TextField('Raportowanie', blank=True, default="")
+    informations = models.TextField('Informacje', blank=True, default="")
+    scan = models.FileField(upload_to='contracts_zzp/%Y/', null=True, blank=True, verbose_name='Skan umowy')
     create = models.DateTimeField('Data utworzenia', auto_now_add=True)
     change = models.DateTimeField('Zmiana', auto_now=True)
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='contract_auction',

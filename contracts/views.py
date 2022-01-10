@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
-from contracts.models import ContractImmovables, AneksImmovables
+from contracts.models import ContractImmovables, AneksImmovables, ContractAuction, AneksContractAuction
 from contracts.forms import ContractimmovablesForm, AneksForm
 
 
@@ -94,5 +94,15 @@ def new_aneks(request):
 
 @login_required
 def menu_contracts_auction(request):
-    context = {}
-    return render(request, 'contracts/contractauctionlist.html', context)
+    contracts_auctions = ContractAuction.objects.all().order_by('-date')
+    query = "Wyczyść"
+    search = "Szukaj"
+    contracts_auctions_sum = len(contracts_auctions)
+    q = request.GET.get("q")
+
+    paginator = Paginator(contracts_auctions, 20)
+    page_number = request.GET.get('page')
+    contracts_auctions_list = paginator.get_page(page_number)
+
+    return render(request, 'contracts/contractauctionlist.html', {'contracts_auctions_list': contracts_auctions_list,
+                                                                  'contracts_auctions_sum': contracts_auctions_sum})

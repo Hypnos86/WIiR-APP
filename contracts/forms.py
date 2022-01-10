@@ -1,5 +1,5 @@
 from django.forms import ModelForm, DateInput, Textarea
-from contracts.models import ContractImmovables, AneksImmovables
+from contracts.models import ContractImmovables, AneksImmovables, ContractAuction, AneksContractAuction
 
 
 class DateField(DateInput):
@@ -44,3 +44,22 @@ class AneksForm(ModelForm):
         labels = {'data_aneksu': 'Data aneksu', 'skan_aneksu': 'Skan aneksu'}
         exclude = ['create', 'autor']
         widgets = {'data_aneksu': DateField()}
+
+
+class ContractAuctionForm(ModelForm):
+    class Meta:
+        model = ContractAuction
+
+        fields = ['date', 'no_contract', 'contractor', 'price', 'legal_basic_zzp', 'end_date', 'unit',
+                  'last_report_date', 'guarantee', 'guarantee_period', 'warranty_period', 'security_percent',
+                  'contract_security', 'scan', 'create', 'change', 'author']
+        labels = {'date': 'Data', 'no_contract': 'Nr. umowy', 'contractor': 'Wykonawca', 'price': 'Kwota umowy',
+                  'legal_basic_zzp': 'Tryb zamówienia', 'end_date': 'Data zakończenia umowy', 'unit': 'Jednostka',
+                  'last_report_date': 'Data ostatniego protokołu', 'guarantee': 'Rodzaj gwarancji',
+                  'guarantee_period': 'Okres gwarancji', 'warranty_period': 'Okres rękojmi',
+                  'security_percent': 'Procent zabezpieczenia',
+                  'contract_security': 'Kwota zabezpieczenia', 'scan': 'Skan umowy'}
+        exclude = ['create', 'change', 'author']
+        widgets = {'date': DateField(),
+                   'end_date': DateField(),
+                   'last_report_date': DateField(), }

@@ -68,27 +68,27 @@ class ContractAuctionResource(resources.ModelResource):
     guarantee = Field(attribute='guarantee', column_name='Rodzaj gwarancji')
     guarantee_period = Field(attribute='guarantee_period', column_name='Okres gwarancji')
     warranty_period = Field(attribute='warranty_period', column_name='Okres rękojmi')
-    security_percentage = Field(attribute='security_percentage', column_name='Procent zabezpieczenia')
+    security_percent = Field(attribute='security_percent', column_name='Procent zabezpieczenia')
     contract_security = Field(attribute='security_percentage', column_name='Kwota zabezpieczenia')
 
     class Meta:
         model = ContractAuction
         fields = ('date', 'no_contract', 'contractor', 'price', 'legal_basic_zzp', 'end_date', 'unit',
-                  'last_report_date', 'guarantee', 'guarantee_period', 'warranty_period', 'security_percentage',
+                  'last_report_date', 'guarantee', 'guarantee_period', 'warranty_period', 'security_percent',
                   'contract_security',
                   )
         export_order = ('date', 'no_contract', 'contractor', 'price', 'legal_basic_zzp', 'end_date', 'unit',
-                        'last_report_date', 'guarantee', 'guarantee_period', 'warranty_period', 'security_percentage',
+                        'last_report_date', 'guarantee', 'guarantee_period', 'warranty_period', 'security_percent',
                         'contract_security')
 
 
 @admin.register(ContractAuction)
 class ContractAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ['date', 'no_contract', 'contractor', 'price', 'legal_basic_zzp', 'end_date', 'unit',
-                    'last_report_date', 'guarantee', 'guarantee_period', 'warranty_period', 'security_percentage',
+                    'last_report_date', 'guarantee', 'guarantee_period', 'warranty_period', 'security_percent',
                     'contract_security', 'create', 'change', 'author']
     search_fields = ['no_contract', 'legal_basic_zzp', 'last_report_date', 'guarantee', 'guarantee_period',
-                     'warranty_period', 'security_percentage',
+                     'warranty_period', 'security_percent',
                      'contract_security']
     resources_class = ContractAuctionResource
 
