@@ -3,13 +3,14 @@ from import_export import resources
 from import_export.admin import ExportMixin
 from import_export.fields import Field
 from contracts.models import Stan, Rodzaj, Podstawa, LegalBasicZzp, Guarantee, Period, ContractImmovables, \
-    AneksImmovables, ContractAuction, AneksContractAuction
+    AneksImmovables, ContractAuction, AneksContractAuction, GuaranteePeriod
 
 # Register your models here.
 admin.site.register(Stan)
 admin.site.register(Rodzaj)
 admin.site.register(Podstawa)
 admin.site.register(LegalBasicZzp)
+admin.site.register(GuaranteePeriod)
 
 
 @admin.register(Guarantee)

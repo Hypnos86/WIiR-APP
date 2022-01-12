@@ -63,17 +63,20 @@ class Period(models.Model):
         verbose_name = 'Okres'
         verbose_name_plural = 'Umowy ZZP - Okresy'
 
-    period = models.SmallIntegerField('Okres (mc)')
+    period = models.SmallIntegerField('Okres (mc)', null=True)
 
     def __str__(self):
         return f'{self.period}'
 
 
-class GuaranteePeriod(Period):
-    pass
+class GuaranteePeriod(models.Model):
+    guarantee_period = models.ForeignKey(Period, on_delete=models.CASCADE, related_name='GuaranteePeriod', verbose_name='Okres gwarancji')
+
+    def __str__(self):
+        return f'{self.guarantee_period}'
 
 
-class WarrantyPeriod(Period):
+class WarrantyPeriod(models.Model):
     pass
 
 
