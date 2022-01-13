@@ -30,11 +30,11 @@
         <th align="center" valign="middle" width="40" scope="col" class="text-center">L.p.</th>
         <th align="center" valign="middle" width="60" scope="col" class="text-center">Data umowy</th>
         <th align="center" valign="middle" width="150" scope="col" class="text-center">Nr. umowy</th>
-        <th align="center" valign="middle" width="300" scope="col" class="text-center">Wykonawca</th>
+        <th align="center" valign="middle" width="350" scope="col" class="text-center">Wykonawca</th>
         <th align="center" valign="middle" width="150" scope="col" class="text-center">Wartośc</th>
-        <th align="center" valign="middle" width="120" scope="col" class="text-center">Termin</th>
-        <th align="center" valign="middle" width="400" scope="col" class="text-center">Tryb zamówienia</th>
-        <th align="center" valign="middle" width="100" scope="col" class="text-center">Jednostka</th>
+        <th align="center" valign="middle" width="150" scope="col" class="text-center">Termin</th>
+        <th align="center" valign="middle" width="100" scope="col" class="text-center">Tryb zamówienia</th>
+        <th align="center" valign="middle" width="400" scope="col" class="text-center">Jednostka</th>
         <th align="center" valign="middle" width="100" scope="col" class="text-center">Inspektor</th>
 
     </tr>
@@ -45,8 +45,8 @@
         <td align="center" valign="middle" class="text-center" scope="row"></td>
         <td align="center" valign="middle" class="text-center"><span>{{contract.date|date:"d.m.Y"}}</span></td>
         <td align="center" valign="middle" class="text-center" title="{{contract.work_scope}}"><span>{{contract.no_contract|default_if_none:'---'}}</span></td>
-        <td valign="middle"><span>{{contract.contractor}}</span><td>
-        <td align="center" valign="middle"><span>{{contract.price|intcomma}}</span></td>
+        <td valign="middle"><span>{{contract.contractor}}</span></td>
+        <td align="center" valign="middle"><span>{{contract.price|intcomma}} zł.</span></td>
         <td align="center" valign="middle" class="text-center">{{contract.end_date|date:"d.m.Y"}}</td>
         <td align="center" valign="middle" class="text-center">{{contract.legal_basic_zzp}}</td>
         <td valign="middle">{{contract.unit}}</td>

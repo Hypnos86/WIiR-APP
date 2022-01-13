@@ -169,7 +169,7 @@ class ContractAuction(models.Model):
                                         related_name='contract_auction')
     security_percent = models.SmallIntegerField('Procent zabezpiecznia')
     contract_security = models.DecimalField('Kwota zabezpiecznia', max_digits=10, decimal_places=2)
-    inspector = models.ManyToManyField(Inspector, verbose_name='Inspektor', related_name='ContractAuction', null=True, blank=True)
+    inspector = models.ManyToManyField(Inspector, verbose_name='Inspektor', related_name='ContractAuction')
     raport = models.TextField('Raportowanie', blank=True, default='')
     information = models.TextField('Informacje', blank=True, default='')
     scan = models.FileField(upload_to='contracts_zzp/%Y/', null=True, blank=True, verbose_name='Skan umowy')
