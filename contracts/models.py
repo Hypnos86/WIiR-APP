@@ -1,5 +1,6 @@
 from django.db import models
 from units.models import Unit
+from main.models import Inspector
 
 
 # my models
@@ -58,26 +59,28 @@ class Guarantee(models.Model):
         return f'{self.guarantee}'
 
 
-class Period(models.Model):
-    class Meta:
-        verbose_name = 'Okres'
-        verbose_name_plural = 'Umowy ZZP - Okresy'
-
-    period = models.SmallIntegerField('Okres (mc)', null=True)
-
-    def __str__(self):
-        return f'{self.period}'
-
-
 class GuaranteePeriod(models.Model):
-    guarantee_period = models.ForeignKey(Period, on_delete=models.CASCADE, related_name='GuaranteePeriod', verbose_name='Okres gwarancji')
+    class Meta:
+        verbose_name = "Okres gwarancyjny"
+        verbose_name_plural = "Okresy gwarancyjne"
+        ordering = ['guarantee_period']
+
+    guarantee_period = models.SmallIntegerField('Okres gwarancji (mc)')
 
     def __str__(self):
         return f'{self.guarantee_period}'
 
 
 class WarrantyPeriod(models.Model):
-    pass
+    class Meta:
+        verbose_name = "Okres rękojmi"
+        verbose_name_plural = "Okresy rękojmi"
+        ordering = ['warranty_period']
+
+    warranty_period = models.SmallIntegerField('Okres rękojmi (mc)')
+
+    def __str__(self):
+        return f'{self.warranty_period}'
 
 
 class ContractImmovables(models.Model):
@@ -150,14 +153,14 @@ class ContractAuction(models.Model):
                                    verbose_name='Kontrahent',
                                    related_name='contract_auction')
     price = models.DecimalField('Wartość umowy', max_digits=12, decimal_places=2)
-    work_scope = models.CharField('Zakres', max_length=120)
+    work_scope = models.CharField('Przedmiot umowy', max_length=120)
     legal_basic_zzp = models.ForeignKey(LegalBasicZzp, on_delete=models.CASCADE, related_name='contract_auction',
                                         verbose_name='Tryb UPZP')
     end_date = models.DateField('Data zakończenia')
 
     unit = models.ForeignKey('units.Unit', on_delete=models.CASCADE, verbose_name='Jednostka',
                              related_name='contract_auction')
-    last_report_date = models.DateField('Data ostatniego protokołu')
+    last_report_date = models.DateField('Data ostatniego protokołu', null=True, blank=True)
     guarantee = models.ForeignKey(Guarantee, on_delete=models.CASCADE, verbose_name='Gwarancja',
                                   related_name='contract_auction')
     guarantee_period = models.ForeignKey(GuaranteePeriod, on_delete=models.CASCADE, verbose_name='Okres gwarancji',
@@ -166,7 +169,7 @@ class ContractAuction(models.Model):
                                         related_name='contract_auction')
     security_percent = models.SmallIntegerField('Procent zabezpiecznia')
     contract_security = models.DecimalField('Kwota zabezpiecznia', max_digits=10, decimal_places=2)
-    inspector = models.ManyToManyField('main.Inspector', verbose_name='Inspektor', related_name='ContractAuction')
+    inspector = models.ManyToManyField(Inspector, verbose_name='Inspektor', related_name='ContractAuction', null=True, blank=True)
     raport = models.TextField('Raportowanie', blank=True, default='')
     information = models.TextField('Informacje', blank=True, default='')
     scan = models.FileField(upload_to='contracts_zzp/%Y/', null=True, blank=True, verbose_name='Skan umowy')

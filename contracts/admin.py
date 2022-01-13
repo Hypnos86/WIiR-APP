@@ -2,8 +2,8 @@ from django.contrib import admin
 from import_export import resources
 from import_export.admin import ExportMixin
 from import_export.fields import Field
-from contracts.models import Stan, Rodzaj, Podstawa, LegalBasicZzp, Guarantee, Period, ContractImmovables, \
-    AneksImmovables, ContractAuction, AneksContractAuction, GuaranteePeriod
+from contracts.models import Stan, Rodzaj, Podstawa, LegalBasicZzp, Guarantee, ContractImmovables, \
+    AneksImmovables, ContractAuction, AneksContractAuction, GuaranteePeriod, WarrantyPeriod
 
 # Register your models here.
 admin.site.register(Stan)
@@ -11,16 +11,12 @@ admin.site.register(Rodzaj)
 admin.site.register(Podstawa)
 admin.site.register(LegalBasicZzp)
 admin.site.register(GuaranteePeriod)
+admin.site.register(WarrantyPeriod)
 
 
 @admin.register(Guarantee)
 class ContractAdmin(admin.ModelAdmin):
     list_display = ['guarantee']
-
-
-@admin.register(Period)
-class ContractAdmin(admin.ModelAdmin):
-    list_display = ['period']
 
 
 class ContractResource(resources.ModelResource):
@@ -91,6 +87,7 @@ class ContractAdmin(ExportMixin, admin.ModelAdmin):
     search_fields = ['no_contract', 'legal_basic_zzp', 'last_report_date', 'guarantee', 'guarantee_period',
                      'warranty_period', 'security_percent',
                      'contract_security']
+    filter_horizontal = ['inspector']
     resources_class = ContractAuctionResource
 
 

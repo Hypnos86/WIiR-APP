@@ -41,12 +41,15 @@ class OrganisationTelephone(models.Model):
     add_date = models.DateField("Data dodania", auto_now_add=True)
 
 
-class PermissionsType(models.Model):
+class IndustryType(models.Model):
     class Meta:
-        verbose_name = 'Typ uprawnień'
-        verbose_name_plural = 'Uprawnienia'
+        verbose_name = 'Branża'
+        verbose_name_plural = 'Branże inspektorów'
 
-    permission = models.CharField('Uprawnienia', max_length=50)
+    industry = models.CharField('Brażna', max_length=50)
+
+    def __str__(self):
+        return f'{self.industry}'
 
 
 class Inspector(models.Model):
@@ -56,8 +59,8 @@ class Inspector(models.Model):
 
     name = models.CharField('Imię', max_length=20)
     last_name = models.CharField('Nazwisko', max_length=25)
-    permissions = models.ForeignKey(PermissionsType, on_delete=models.CASCADE, verbose_name='Uprawnienia',
-                                    related_name='inspector')
+    industry = models.ForeignKey(IndustryType, on_delete=models.CASCADE, verbose_name='Branża',
+                                 related_name='inspector')
 
     def __str__(self):
-        return f'{self.name} {self.last_name} - {self.permissions}'
+        return f'{self.name} {self.last_name}'
