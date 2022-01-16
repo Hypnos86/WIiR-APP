@@ -27,12 +27,11 @@ class GenreResource(resources.ModelResource):
     name_id = Field(attribute='name_id', column_name='ID')
     name = Field(attribute='name', column_name='Nazwa')
     cpv = fields.Field(attribute='cpv', column_name='Nr cpv', widget=ManyToManyWidget(Genre, ', ', field='no_cpv'))
-    cpvv = Field(attribute='cpv', column_name='Nr cpv')
 
     class Meta:
         model = Genre
-        fields = ['id', 'name_id', 'name', 'cpv', 'cpvv']
-        export_order = ('id', 'name_id', 'name', 'cpv', 'cpvv')
+        fields = ['id', 'name_id', 'name', 'cpv']
+        export_order = ('id', 'name_id', 'name', 'cpv')
 
 
 @admin.register(Genre)

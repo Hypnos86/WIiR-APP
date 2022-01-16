@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
+from decimal import *
 from cpvdict.models import Typecpv, Genre, OrderLimit, Order
 from cpvdict.forms import OrderForm
 from main.views import current_year
@@ -33,7 +34,7 @@ def type_expense_list(request):
     objects = Genre.objects.all().exclude(name_id="RB")
     limit = OrderLimit.objects.first()
     year = current_year()
-    item = round(float(limit.limit) * 1.23, 2)
+    item = round(limit.limit * Decimal(1.23),2)
 
     context = {'objects': objects,
                'limit': limit.limit,

@@ -38,7 +38,7 @@
 <!--            nav-link-->
 <!--            <li class="nav-item"><a href="#" class="btn btn-sm btn-outline-secondary mx-3" aria-current="page"><span>Aplikacje</span></a></li>-->
             <li class="nav-item"><a id="button-units" href="{%url 'units:units_list'%}" class="btn btn-sm btn-outline-secondary mx-2" ><span>Jednostki Policji</span></a></li>
-            {%if user.is_authenticated%}<li class="nav-item"><a id="button-invesments" href="{%url 'investments:investments_list'%}" class="btn btn-sm btn-outline-secondary mx-2" ><span>Inwestycje</span></a></li>{%endif%}
+            {%if user.is_authenticated%}<li class="nav-item"><a id="button-investments" href="{%url 'investments:investments_list'%}" class="btn btn-sm btn-outline-secondary mx-2" ><span>Inwestycje</span></a></li>{%endif%}
             {%if user.is_authenticated%}<li class="nav-item"><a id="button-invoices" href="{%url 'invoices:menu_invoices'%}" class="btn btn-sm btn-outline-secondary mx-2"><span>Faktury</span></a></li>{%endif%}
             {%if user.is_authenticated%}<li class="nav-item"><a id="button-contracts" href="{%url 'contracts:menu_contractsimmovables'%}" class="btn btn-sm btn-outline-secondary mx-2"><span>Umowy najmu</span></a></li>{%endif%}
             {%if user.is_authenticated%}<li class="nav-item"><a id="button-contractors" href="{%url 'contractors:contractorssell_list'%}" class="btn btn-sm btn-outline-secondary mx-2"><span>Kontrahenci</span></a></li>{%endif%}
