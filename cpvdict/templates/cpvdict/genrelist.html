@@ -39,8 +39,8 @@
         <td align="center" valign="middle" scope="row">{{object.name_id}}</td>
         <td valign="middle"><span>{{object.name}}</span></td>
         <td valign="middle">{% for cpv in object.cpv.all%}<span class="tag-cpv m-1" title="{{cpv.name}}"> {{cpv}} </span>{%endfor%}</td>
-        <td valign="middle"><span></span></td>
-        <td class="text-center" valign="middle"><span></span></td>
+        <td valign="middle"><span>{{genre_sum|intcomma}}</span></td>
+        <td class="text-center" valign="middle"><span>{{remain|intcomma}}</span></td>
     </tr>
     {%endfor%}
     </tbody>

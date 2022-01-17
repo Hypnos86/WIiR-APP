@@ -32,13 +32,25 @@ def cpvlist(request):
 @login_required
 def type_expense_list(request):
     objects = Genre.objects.all().exclude(name_id="RB")
+
+    for object in objects:
+        order_genre = Order.objects.all().filter(genre=object)
+        sum = 0
+        for order in order_genre:
+            sum += order.sum
+
+        genre_sum = Decimal(sum)
+
     limit = OrderLimit.objects.first()
+    remain = round(limit.limit - genre_sum, 2)
     year = current_year()
-    item = round(limit.limit * Decimal(1.23),2)
+    item = round(limit.limit * Decimal(1.23), 2)
 
     context = {'objects': objects,
                'limit': limit.limit,
                'item': item,
+               'genre_sum': genre_sum,
+               'remain': remain,
                'year': year}
     return render(request, 'cpvdict/genrelist.html', context)
 
