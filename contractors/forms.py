@@ -17,7 +17,7 @@ class ContractorsellForm(ModelForm):
                   'utworzenie': 'Utworzenie',
                   'autor': 'Autor'
                   }
-        widgets = {'nocuntractor': widgets.TextInput(attrs={'placeholder': 'wpisz nr kontrahenta zgodny ze SWOP'}),
+        widgets = {'nocuntractor': widgets.TextInput(attrs={'placeholder': 'wpisz nr kontrahenta zgodny z nr SWOP'}),
                    'informacje': Textarea(attrs={'rows': 5}),
                    'nip': widgets.TextInput(
                        attrs={'pattern': '^[0-9]{3}-[0-9]{2}-[0-9]{2}-[0-9]{3}$', 'placeholder': 'xxx-xx-xx-xxx'}),

@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
 from contracts.models import ContractImmovables, AneksImmovables, ContractAuction, AneksContractAuction
-from contracts.forms import ContractimmovablesForm, AneksForm
+from contracts.forms import ContractimmovablesForm, AneksForm, ContractAuctionForm
 
 
 # Create your views here.
@@ -104,5 +104,45 @@ def menu_contracts_auction(request):
     page_number = request.GET.get('page')
     contracts_auctions_list = paginator.get_page(page_number)
 
-    return render(request, 'contracts/contractauctionlist.html', {'contracts_auctions_list': contracts_auctions_list,
-                                                                  'contracts_auctions_sum': contracts_auctions_sum})
+    return render(request, 'contracts/contract_auction_list.html', {'contracts_auctions_list': contracts_auctions_list,
+                                                                    'contracts_auctions_sum': contracts_auctions_sum})
+
+
+@login_required
+def new_contract_auction(request):
+    contract_auction_form = ContractAuctionForm(request.POST or None, request.FILES or None)
+
+    context = {'contract_auction_form': contract_auction_form,
+               'new': True}
+
+    if request.method == 'POST':
+        if contract_auction_form.is_valid():
+            instance = contract_auction_form.save(commit=False)
+            instance.author = request.user
+            instance.save()
+            return redirect('contracts:menu_contracts_auction')
+    return render(request, 'contracts/contract_auction_form.html', context)
+
+# @login_required
+# def edit_contract_list(request, id):
+#     contract_auction_edit = get_object_or_404(ContractAuction, pk=id)
+#     contract_auction_edit = ContractAuctionForm(request.POST or None, request.FILES or None,
+#                                                 instance=contract_auction_edit)
+#     aneks_form = AneksForm(request.POST or None, request.FILES or None)
+#
+#     context = {'contract_form': contractsimmovables_form,
+#                'aneks_form': aneks_form,
+#                'new': False}
+#     if contractsimmovables_form.is_valid():
+#         contract = contractsimmovables_form.save(commit=False)
+#         contract.author = request.user
+#         contractsimmovables_form.save()
+#
+#         if aneks_form.is_valid():
+#             instance = aneks_form.save(commit=False)
+#             instance.autor = request.user
+#             instance.contractimmovables = contractsimmovables_edit
+#             instance.save()
+#
+#         return redirect('contracts:menu_contractsimmovables')
+#     return render(request, 'contracts/contractform.html', context)

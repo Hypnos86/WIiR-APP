@@ -173,6 +173,12 @@
     font-size: 120%;
 }
 
+.my-cost{
+border: solid 2px;
+    border-radius: 3px;
+    border-color: #0a4275;;
+}
+
 /* INVOICES */
 .chose-invoices {
     text-align: center;

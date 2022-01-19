@@ -44,11 +44,11 @@ def type_expense_list(request):
     limit = OrderLimit.objects.first()
     remain = round(limit.limit - genre_sum, 2)
     year = current_year()
-    item = round(limit.limit * Decimal(1.23), 2)
+    limit_item = round(limit.limit * Decimal(1.23), 2)
 
     context = {'objects': objects,
                'limit': limit.limit,
-               'item': item,
+               'limit_item': limit_item,
                'genre_sum': genre_sum,
                'remain': remain,
                'year': year}

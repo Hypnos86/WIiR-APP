@@ -52,13 +52,15 @@ class ContractAuctionForm(ModelForm):
 
         fields = ['date', 'no_contract', 'contractor', 'price', 'work_scope', 'legal_basic_zzp', 'end_date', 'unit',
                   'last_report_date', 'guarantee', 'guarantee_period', 'warranty_period', 'security_percent',
-                  'contract_security', 'scan', 'create', 'change', 'author']
+                  'contract_security', 'inspector', 'information', 'scan', 'create', 'change', 'author']
         labels = {'date': 'Data', 'no_contract': 'Nr. umowy', 'contractor': 'Wykonawca', 'price': 'Kwota umowy',
-                  'work_scope': 'Zakres', 'legal_basic_zzp': 'Tryb zamówienia', 'end_date': 'Data zakończenia umowy', 'unit': 'Jednostka',
+                  'work_scope': 'Zakres', 'legal_basic_zzp': 'Tryb zamówienia', 'end_date': 'Data zakończenia umowy',
+                  'unit': 'Jednostka',
                   'last_report_date': 'Data ostatniego protokołu', 'guarantee': 'Rodzaj gwarancji',
                   'guarantee_period': 'Okres gwarancji', 'warranty_period': 'Okres rękojmi',
                   'security_percent': 'Procent zabezpieczenia',
-                  'contract_security': 'Kwota zabezpieczenia', 'scan': 'Skan umowy'}
+                  'contract_security': 'Kwota zabezpieczenia', 'inspector': 'Inspektor', 'information': 'Informacje',
+                  'scan': 'Skan umowy'}
         exclude = ['create', 'change', 'author']
         widgets = {'date': DateField(),
                    'end_date': DateField(),
