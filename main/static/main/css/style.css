@@ -38,6 +38,12 @@
     border: 1px solid #0a4275;
     border-radius: 3px;
 }
+
+.my-home{
+    color:#2F4F4F;
+    font-size: 22px;
+    margin-right: 1rem;
+}
 /*telephone*/
 .tel-h{
     margin-bottom:20px;

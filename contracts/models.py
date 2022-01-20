@@ -131,9 +131,9 @@ class AneksImmovables(models.Model):
     contractimmovables = models.ForeignKey('contracts.ContractImmovables', on_delete=models.CASCADE,
                                            verbose_name='Umowa',
                                            related_name='aneks')
-    skan_aneksu = models.FileField(upload_to='contracts_immovables/annexes/%Y/', null=True, blank=True,
+    skan_aneksu = models.FileField(upload_to='contracts_immovables/annexes/%Y/', null=True,
                                    verbose_name='Skan aneks')
-    data_aneksu = models.DateField('Data aneksu', null=True)
+    data_aneksu = models.DateField('Data aneksu', null=True, blank=True)
     create = models.DateTimeField('Data utworzenia', auto_now_add=True)
     autor = models.ForeignKey('auth.User', on_delete=models.CASCADE)
 
@@ -191,7 +191,7 @@ class AneksContractAuction(models.Model):
     contract_auction = models.ForeignKey(ContractAuction, on_delete=models.CASCADE,
                                          verbose_name='Umowa ZZP',
                                          related_name='aneks_contract_auction')
-    date = models.DateField('Data aneksu', null=True)
+    date = models.DateField('Data aneksu', null=True, blank=True)
     price_change = models.BooleanField('Zmiana wartości umowy', default=False)
     price_after_change = models.DecimalField('Kwota aneksu', max_digits=10, decimal_places=2)
     scope_changes = models.TextField('Zakres zmian', blank=True, default='')

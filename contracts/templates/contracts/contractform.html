@@ -11,36 +11,52 @@
     <form method="post" enctype="multipart/form-data">
         {%csrf_token%}
         <div class="row">
-            <div class="col-md-3 m-2 ">{{contract_form.data_umowy|bootstrap}}</div>
-            <div class="col-md-3 m-2">{{contract_form.nrumowy|bootstrap}}</div>
-            <div class="col-md-3 m-2">{{contract_form.rodzaj|bootstrap}}</div>
-            <div class="col-md-3 m-2">{{contract_form.podstawa|bootstrap}}</div>
-            <div class="col-md-3 m-2">{{contract_form.okres_obowiazywania|bootstrap}}</div>
-            <div class="col-md-3 m-2">{{contract_form.pow_uzyczona|bootstrap}}</div>
-            <div class="col-md-9 m-2">{{contract_form.kontrahent|bootstrap}}</div>
-            <div class="col-md-9 m-2">{{contract_form.unit|bootstrap}}</div>
-            <fieldset class="row col-md-7 m-4 p-2 my-cost">
-                <legend>Koszty</legend>
-                <div class="col-md-3 m-1">{{contract_form.koszt_czynsz|bootstrap}}</div>
-                <div class="col-md-3 m-1">{{contract_form.koszt_prad|bootstrap}}</div>
-                <div class="col-md-3 m-1">{{contract_form.koszt_gaz|bootstrap}}</div>
-                <div class="col-md-3 m-1">{{contract_form.koszt_woda|bootstrap}}</div>
-                <div class="col-md-3 m-1">{{contract_form.koszt_co|bootstrap}}</div>
-                <div class="col-md-3 m-1">{{contract_form.koszt_smieci|bootstrap}}</div>
-                <div class="col-md-3 m-1">{{contract_form.koszt_podsmiec|bootstrap}}</div>
-                <div class="col-md-3 m-1">{{contract_form.koszt_podnier|bootstrap}}</div>
-            </fieldset>
-
-            <div class="col-md-8 m-4">{{contract_form.comments|bootstrap}}</div>
-            <div class="col-md-3 m-2">{{contract_form.skan|bootstrap}}</div>
+            <div class="col-md-4 p-2 ">{{contract_form.data_umowy|bootstrap}}</div>
+            <div class="col-md-4 p-2">{{contract_form.nrumowy|bootstrap}}</div>
+            <div class="col-md-4 p-2">{{contract_form.rodzaj|bootstrap}}</div>
+            <div class="col-md-4 p-2">{{contract_form.podstawa|bootstrap}}</div>
+            <div class="col-md-4 p-2">{{contract_form.okres_obowiazywania|bootstrap}}</div>
+            <div class="col-md-4 p-2">{{contract_form.pow_uzyczona|bootstrap}}</div>
+            <div class="col-md-12 p-2">{{contract_form.kontrahent|bootstrap}}</div>
+            <div class="col-md-12 p-2">{{contract_form.unit|bootstrap}}</div>
+            <div class="col-md-12 my-5">
+                <fieldset class="my-cost">
+                    <legend class="p-2">Koszty</legend>
+                    <div class="row m-3">
+                        <div class="col-md-6 ">
+                            <ul class="list-group">
+                                <li class="list-group-item">{{contract_form.koszt_czynsz|bootstrap}}</li>
+                                <li class="list-group-item">{{contract_form.koszt_prad|bootstrap}}</li>
+                                <li class="list-group-item">{{contract_form.koszt_gaz|bootstrap}}</li>
+                                <li class="list-group-item">{{contract_form.koszt_woda|bootstrap}}</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-group">
+                                <li class="list-group-item">{{contract_form.koszt_co|bootstrap}}</li>
+                                <li class="list-group-item">{{contract_form.koszt_smieci|bootstrap}}</li>
+                                <li class="list-group-item">{{contract_form.koszt_podsmiec|bootstrap}}</li>
+                                <li class="list-group-item"> {{contract_form.koszt_podnier|bootstrap}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="row">
+                <div class="col-md-9">{{contract_form.comments|bootstrap}}</div>
+                <div class="col-md-3">{{contract_form.skan|bootstrap}}</div>
+            </div>
         </div>
         {%if new == False%}
-        <fieldset class="row col-md-7 m-4 p-2 my-cost">
-            <legend>Aneks</legend>
-
-            <div class="col-md-4 m-2">{{aneks_form.data_aneksu|bootstrap}}</div>
-            <div class="col-md-3 m-2">{{aneks_form.skan_aneksu|bootstrap}}</div>
-        </fieldset>
+        <div class="my-5">
+            <fieldset class="col-md-9 p-2 my-cost">
+                <legend>Aneks</legend>
+                <div class="row m-3 col-md-8">
+                    <div class="col-md-5 ">{{aneks_form.data_aneksu|bootstrap}}</div>
+                    <div class="col-md-4 ">{{aneks_form.skan_aneksu|bootstrap}}</div>
+                </div>
+            </fieldset>
+        </div>
         {%endif%}
         <div class="row mt-5">
             {%if new == False%}
@@ -61,6 +77,10 @@
      document.getElementById("button-invoices").classList.remove("active");
      document.getElementById("button-contracts").classList.add("active");
      document.getElementById("button-contractors").classList.remove("active");
+
+
+
+
 
     </script>
     {% endblock %}
