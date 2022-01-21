@@ -131,7 +131,7 @@ class AneksImmovables(models.Model):
     contractimmovables = models.ForeignKey('contracts.ContractImmovables', on_delete=models.CASCADE,
                                            verbose_name='Umowa',
                                            related_name='aneks')
-    skan_aneksu = models.FileField(upload_to='contracts_immovables/annexes/%Y/', null=True,
+    skan_aneksu = models.FileField(upload_to='contracts_immovables/annexes/%Y/', null=True, blank=True,
                                    verbose_name='Skan aneks')
     data_aneksu = models.DateField('Data aneksu', null=True, blank=True)
     create = models.DateTimeField('Data utworzenia', auto_now_add=True)

@@ -19,10 +19,10 @@ def contractorsell_list(request):
 
     if q:
         contractorsell = contractorsell.filter(nazwa__icontains=q)|contractorsell.filter(miasto__icontains=q)|contractorsell.filter(nocuntractor__startswith=q)|contractorsell.filter(nip__startswith=q)
-        return render(request, 'contractors/contractorsselllist.html',
+        return render(request, 'contractors/contractorssell_list.html',
                       {'contractors': contractorsell, "consellsum": consellsum, "query": query})
     else:
-        return render(request, 'contractors/contractorsselllist.html',
+        return render(request, 'contractors/contractorssell_list.html',
                       {'contractors': contractorsell_list, "consellsum": consellsum, "search": search})
 
 
@@ -38,7 +38,7 @@ def new_contractorsell(request):
             instance.save()
             contractorsell_form.save()
             return redirect('contractors:contractorssell_list')
-    return render(request, 'contractors/contractorsellform.html', {'contractor_form': contractorsell_form, "new": True})
+    return render(request, 'contractors/contractorsell_form.html', {'contractor_form': contractorsell_form, "new": True})
 
 
 @login_required
@@ -52,4 +52,4 @@ def edit_contractorsell(request, id):
         contractorsell_form.save()
         return redirect('contractors:contractorssell_list')
 
-    return render(request, 'contractors/contractorsellform.html', context)
+    return render(request, 'contractors/contractorsell_form.html', context)

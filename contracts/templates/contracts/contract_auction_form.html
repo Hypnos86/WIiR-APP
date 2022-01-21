@@ -4,7 +4,7 @@
 {% load static %}
 {% block title %}Dodaj Umowę {%endblock%}
 {% block content %}
-<h4 class="text-center">{%if new%}Nowa umowa ZZP{%else%}Edycja umowy{%endif%}</h4>
+<h4 class="text-center">{%if new%}Nowa umowa ZZP{%else%}Edycja umowy {{contract.no_contract}}{%endif%}</h4>
 <div class="col-md-6 moj-button-left"><a href="{%url 'contracts:menu_contracts_auction'%}">
     <button class="btn btn-outline-primary"><span class="bi bi-chevron-compact-left">Cofnij</span></button></a></div>
 <div class="container col-md-8">
@@ -15,7 +15,7 @@
         {%if new == False%}
         <fieldset class="mt-5">
             <legend>Dodaj aneks</legend>
-            <!--            {{aneks_form|bootstrap}}-->
+
         </fieldset>
         {%endif%}
         <div class="row mt-5">

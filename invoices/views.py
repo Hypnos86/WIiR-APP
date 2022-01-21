@@ -12,12 +12,12 @@ import datetime
 def menu_invoices(request):
     now_year = current_year()
     all_year = year_choises()
-    return render(request, 'invoices/invoicesmenu.html', {"now_year": now_year, "all_year": all_year})
+    return render(request, 'invoices/invoices_menu.html', {"now_year": now_year, "all_year": all_year})
 
 
 @login_required
 def buy_invoiceslist(request):
-    return render(request, 'invoices/invoicesbuylist.html')
+    return render(request, 'invoices/invoices_buy_list.html')
 
 
 @login_required
@@ -41,12 +41,12 @@ def sell_invoiceslist(request):
             contractor__nocuntractor__startswith=q) | invoicessell.filter(
             powiat__powiat__icontains=q) | invoicessell.filter(
             creator__creator__icontains=q)
-        return render(request, "invoices/invoicesselllist.html", {"invoices": invoicessell,
+        return render(request, "invoices/invoicessell_list.html", {"invoices": invoicessell,
                                                                   "invoicessellsum": invoicessellsum,
                                                                   "sell": True, "query": query, "year": year,
                                                                   "creators": creators})
     else:
-        return render(request, "invoices/invoicesselllist.html", {"invoices": invoicessell_list,
+        return render(request, "invoices/invoicessell_list.html", {"invoices": invoicessell_list,
                                                                   "invoicessellsum": invoicessellsum,
                                                                   "sell": True, "search": search, "year": year,
                                                                   "creators": creators})
@@ -65,7 +65,7 @@ def new_invoicesell(request):
             instance.save()
             return redirect('invoices:sell_invoices_list')
 
-    return render(request, 'invoices/invoicesellform.html', context)
+    return render(request, 'invoices/invoicesell_form.html', context)
 
 
 @login_required
@@ -80,4 +80,4 @@ def edit_invoicesell(request, id):
         invoicesell_edit.save()
         return redirect('invoices:sell_invoices_list')
 
-    return render(request, 'invoices/invoicesellform.html', context)
+    return render(request, 'invoices/invoicesell_form.html', context)

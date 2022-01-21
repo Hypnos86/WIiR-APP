@@ -1,4 +1,4 @@
-from django.forms import ModelForm, DateInput, Textarea
+from django.forms import ModelForm, DateInput, Textarea, widgets, DecimalField
 from contracts.models import ContractImmovables, AneksImmovables, ContractAuction, AneksContractAuction
 
 
@@ -32,7 +32,7 @@ class ContractimmovablesForm(ModelForm):
 
         widgets = {'data_umowy': DateField(),
                    'okres_obowiazywania': DateField(),
-                   'comments': Textarea(attrs={'rows': 3}),
+                   'comments': Textarea(attrs={'rows': 5}),
                    }
 
 

@@ -36,7 +36,6 @@
     <a class="bi bi-house my-home" href="{%url 'main:welcome'%}"></a>
     <a href="" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none margin-left-0"><span class="fs-5">{%if user.is_authenticated%} Zalogowany użytkownik: {{user.first_name}} {{user.last_name}} (ID: {{user.username}}) {%else%} Użytkownik anonimowy{%endif%}</span></a>
         <ul class="nav nav-pills">
-<!--            nav-link-->
 <!--            <li class="nav-item"><a href="#" class="btn btn-sm btn-outline-secondary mx-3" aria-current="page"><span>Aplikacje</span></a></li>-->
             <li class="nav-item"><a id="button-units" href="{%url 'units:units_list'%}" class="btn btn-sm btn-outline-secondary mx-2" ><span>Jednostki Policji</span></a></li>
             {%if user.is_authenticated%}<li class="nav-item"><a id="button-investments" href="{%url 'investments:investments_list'%}" class="btn btn-sm btn-outline-secondary mx-2" ><span>Inwestycje</span></a></li>{%endif%}

@@ -64,12 +64,12 @@ class Order(models.Model):
     sum = models.DecimalField("Szacowana kwota", max_digits=8, decimal_places=2, null=True, blank=True)
     typeorder = models.ForeignKey(TypeOrder, on_delete=models.CASCADE, verbose_name="Rodzaj zamówienia",
                                   related_name="order")
-    genre = models.ForeignKey(Genre, on_delete=models.CASCADE, related_name="Order", verbose_name="ID rodzajowości")
+    genre = models.ForeignKey(Genre, on_delete=models.CASCADE, related_name="order", verbose_name="ID rodzajowości")
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE, null=False, verbose_name="Obiekt",
-                             related_name="Order")
+                             related_name="order")
     brakedown = models.BooleanField("Awaria")
     content = models.TextField("Zakres", blank=True, default="")
-    author = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name="Order")
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name="order")
 
     def __str__(self):
-        return f'Zlecenie nr {self.no_order} z dnia {self.date} (rodzaj: {self.typeorder}'
+        return f'Zlecenie nr {self.no_order} z dnia {self.date} (rodzaj: {self.typeorder})'

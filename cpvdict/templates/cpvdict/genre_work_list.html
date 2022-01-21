@@ -18,6 +18,11 @@
     <span class="text-center">Limit zmówień: {{item|intcomma}} zł (brutto)</span></p>
     {%endif%}
 </div>
+    {% for unit in units %}
+    <ol>
+        <li>{{unit}} - {% for u in unit.order.all %} {{u}} {%endfor%}</li>
+    </ol>
+    {% endfor %}
 
 <script>
      document.getElementById("button-units").classList.remove("active");
