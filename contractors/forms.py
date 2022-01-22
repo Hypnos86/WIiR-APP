@@ -8,7 +8,8 @@ class ContractorsellForm(ModelForm):
         fields = ["nocuntractor", "nazwa", "nip", "adres", "kod_pocztowy", "miasto", "informacje", "utworzenie",
                   "autor"]
         exclude = ["utworzenie", "autor"]
-        labels = {'nocuntractor': 'Nr. kontrahenta', 'nazwa': 'Kontrahent',
+        labels = {'nocuntractor': 'Nr. kontrahenta',
+                  'nazwa': 'Kontrahent',
                   "nip": 'NIP',
                   'adres': 'Adres',
                   'kod_pocztowy': 'Kod pocztowy',
@@ -17,7 +18,9 @@ class ContractorsellForm(ModelForm):
                   'utworzenie': 'Utworzenie',
                   'autor': 'Autor'
                   }
-        widgets = {'nocuntractor': widgets.TextInput(attrs={'placeholder': 'wpisz nr kontrahenta zgodny z nr SWOP'}),
+        widgets = {'nocuntractor': widgets.TextInput(attrs={'placeholder': 'nr kontrahenta zgodny z nr SWOP'}),
+                   'nazwa': widgets.TextInput(attrs={'placeholder': 'Pełna nazwa kontrahenta'}),
+                   'adres': widgets.TextInput(attrs={'placeholder': 'np:. ul. Poznańska 4'}),
                    'informacje': Textarea(attrs={'rows': 5}),
                    'nip': widgets.TextInput(
                        attrs={'pattern': '^[0-9]{3}-[0-9]{2}-[0-9]{2}-[0-9]{3}$', 'placeholder': 'xxx-xx-xx-xxx'}),

@@ -20,7 +20,7 @@
 </div>
     {% for unit in units %}
     <ol>
-        <li>{{unit}} - {% for u in unit.order.all %} {{u}} {%endfor%}</li>
+        <li>{{unit}} - <br> {% for u in unit.order.all %} {{u}}<br> {%endfor%}</li>
     </ol>
     {% endfor %}
 

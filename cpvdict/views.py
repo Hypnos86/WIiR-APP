@@ -38,7 +38,6 @@ def type_expense_list(request):
     for object in objects:
         order_genre = Order.objects.all().filter(genre=object).filter(date__year=current_year()).filter(brakedown=False)
         sum = 0
-
         for order in order_genre:
             sum += order.sum
 
@@ -61,10 +60,11 @@ def type_work_list(request):
     limit = OrderLimit.objects.first()
 
     for unit in units:
-        orders = Order.objects.all().filter(unit=unit).filter(date__year=current_year())
+        orders = Order.objects.all().filter(genre__name_id='RB').filter(unit=unit).filter(date__year=current_year())
         sum = 0
         for order in orders:
-            print('text')
+            sum += order.sum
+            print(sum)
 
     year = current_year()
     item = round(float(limit.limit) * 1.23, 2)

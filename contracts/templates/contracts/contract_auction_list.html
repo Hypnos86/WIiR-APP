@@ -47,7 +47,7 @@
         <td valign="middle"><span>{{contract.contractor}}</span></td>
         <td align="center" valign="middle"><span>{{contract.price|intcomma}} zł.</span></td>
         <td align="center" valign="middle" class="text-center">{{contract.end_date|date:"d.m.Y"}}</td>
-        <td align="center" valign="middle" class="text-center">{{contract.legal_basic_zzp}}</td>
+        <td align="center" valign="middle" class="text-center" title="{{contract.legal_basic_zzp.legal_basic_zzp_name}}">{{contract.legal_basic_zzp}}</td>
         <td valign="middle">{{contract.unit}}</td>
         <td valign="middle">{%for inspector in contract.inspector.all%} <span title="{{inspector.industry}}"> {{inspector}} <br></span> {%endfor%}</td>
         <td align="center" valign="middle">

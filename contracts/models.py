@@ -43,6 +43,7 @@ class LegalBasicZzp(models.Model):
         verbose_name_plural = "Umowy ZZP - Tryb zamówień"
 
     legal_basic_zzp = models.CharField(max_length=50)
+    legal_basic_zzp_name = models.CharField(max_length=200)
 
     def __str__(self):
         return f'{self.legal_basic_zzp}'
@@ -168,7 +169,8 @@ class ContractAuction(models.Model):
     warranty_period = models.ForeignKey(WarrantyPeriod, on_delete=models.CASCADE, verbose_name='Okres rękojmi',
                                         related_name='contract_auction')
     security_percent = models.SmallIntegerField('Procent zabezpiecznia')
-    contract_security = models.DecimalField('Kwota zabezpiecznia', max_digits=10, decimal_places=2)
+    contract_security = models.DecimalField('Kwota zabezpiecznia', max_digits=10, decimal_places=2, null=True,
+                                            blank=True)
     inspector = models.ManyToManyField(Inspector, verbose_name='Inspektor', related_name='ContractAuction')
     raport = models.TextField('Raportowanie', blank=True, default='')
     information = models.TextField('Informacje', blank=True, default='')
