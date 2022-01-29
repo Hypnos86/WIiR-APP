@@ -3,6 +3,7 @@ from units.models import Unit
 
 
 class UnitForm(ModelForm):
+
     class Meta:
         model = Unit
         fields = ['powiat', 'rodzaj', 'adres', 'kod_pocztowy', 'miasto', 'informacje', 'aktywna']

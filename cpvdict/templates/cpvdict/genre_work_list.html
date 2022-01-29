@@ -20,7 +20,12 @@
 </div>
     {% for unit in units %}
     <ol>
-        <li>{{unit}} - <br> {% for u in unit.order.all %} {{u}}<br> {%endfor%}</li>
+        {% for key,value in sum_rb.items %}
+        {% if key == unit and value > 0 %}
+        <li>{{unit}} - <br> {% for u in unit.order.all %} {{u}} - {{u.sum}} <br> {%endfor%}</li> <br>
+        {{ value|intcomma }}
+        {% endif %}
+        {% endfor %}
     </ol>
     {% endfor %}
 

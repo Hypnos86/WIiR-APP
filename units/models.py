@@ -39,4 +39,4 @@ class Unit(models.Model):
     aktywna = models.BooleanField("Aktywna", null=False, default=0)
 
     def __str__(self):
-        return f'{self.informacje} {self.miasto}, {self.adres} ({self.powiat})'
+        return f'{self.informacje} {self.miasto}, {self.adres}'

@@ -18,7 +18,28 @@
             <div class="col-md-4 p-2">{{contract_form.okres_obowiazywania|bootstrap}}</div>
             <div class="col-md-4 p-2">{{contract_form.pow_uzyczona|bootstrap}}</div>
             <div class="col-md-12 p-2">{{contract_form.kontrahent|bootstrap}}</div>
-            <div class="col-md-12 p-2">{{contract_form.unit|bootstrap}}</div>
+            <div class="col-md-12 p-2">
+                <div class="form-grup">
+                    <label class="control-label" for="id_unit">Jednostka</label>
+                    <div class="">
+                        <select name="unit" class="form-control" required id="id_unit">
+                            {% regroup units by powiat as powiat_list %}
+                            <option>---------</option>
+                            {% for powiat in powiat_list %}
+                            <optgroup label="{{powiat.grouper}}">
+                                {% for unit in powiat.list %}
+                                {% if contract_form.unit.value == unit.id %}
+                                <option value="{{unit.id}}" selected>{{unit}}</option>
+                                {% else %}
+                                <option value="{{unit.id}}">{{unit}}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </optgroup>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
             <div class="col-md-12 my-5">
                 <fieldset class="my-cost">
                     <legend class="p-2" title="Koszy ponoszone przez WIiR">Koszty</legend>

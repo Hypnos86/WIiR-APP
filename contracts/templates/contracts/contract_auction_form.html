@@ -17,7 +17,28 @@
             <div class="col-md-4 p-2">{{contract_auction_form.price|bootstrap}}</div>
             <div class="col-md-8 p-2">{{contract_auction_form.contractor|bootstrap}}</div>
             <div class="col-md-4 p-2">{{contract_auction_form.legal_basic_zzp|bootstrap}}</div>
-            <div class="col-md-8 p-2">{{contract_auction_form.unit|bootstrap}}</div>
+          <div class="col-md-8 p-2">
+                <div class="form-grup">
+                    <label class="control-label" for="id_unit">Jednostka</label>
+                    <div class="">
+                        <select name="unit" class="form-control" required id="id_unit">
+                            {% regroup units by powiat as powiat_list %}
+                            <option>---------</option>
+                            {% for powiat in powiat_list %}
+                            <optgroup label="{{powiat.grouper}}">
+                                {% for unit in powiat.list %}
+                                {% if contract_auction_form.unit.value == unit.id %}
+                                <option value="{{unit.id}}" selected>{{unit}}</option>
+                                {% else %}
+                                <option value="{{unit.id}}">{{unit}}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </optgroup>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
             <div class="col-md-4 p-2">{{contract_auction_form.end_date|bootstrap}}</div>
             <div class="col-md-12 p-2">{{contract_auction_form.work_scope|bootstrap}}</div>
             <div class="col-md-4 p-2">{{contract_auction_form.guarantee|bootstrap}}</div>
@@ -26,17 +47,16 @@
             <div class="col-md-3 p-2">{{contract_auction_form.security_percent|bootstrap}}</div>
             <div class="col-md-3 p-2">{{contract_auction_form.last_report_date|bootstrap}}</div>
             <div class="col-md-6 p-2">{{contract_auction_form.inspector|bootstrap}}</div>
-            <div class="col-md-12 p-2">{{contract_auction_form.information|bootstrap}}
-            {%if new == False%}
-                <div class="container px-5 pb-5 col-md-8">
-                <div class="row">
-            <div class="col-md-12 p-2 ">{{contract_auction_form.raport|bootstrap}}</div>
-                    </div>
-                    </div>
-            {%endif%}
-                <div class="col-md-4 p-2 mt-2">{{contract_auction_form.scan|bootstrap}}</div>
 
-            </div>
+            {%if new == False%}
+
+            <div class="col-md-6 p-2">{{contract_auction_form.information|bootstrap}}</div>
+            <div class="col-md-6 p-2 ">{{contract_auction_form.raport|bootstrap}}</div>
+            {% else %}
+            <div class="col-md-12 p-2">{{contract_auction_form.information|bootstrap}}</div>
+            {%endif%}
+            <div class="col-md-4 p-2 mt-2">{{contract_auction_form.scan|bootstrap}}</div>
+
             {%if new == False%}
             <div class="mt-5">
                 <span>Dodaj aneks</span>
@@ -45,7 +65,8 @@
             {%endif%}
             <div class="row mt-5">
                 {%if new == False%}
-                <div class="col-md-12 moj-button-right"><button type="submit" class="btn btn-outline-primary">Zapisz zmiany</button>
+                <div class="col-md-12 moj-button-right">
+                    <button type="submit" class="btn btn-outline-primary">Zapisz zmiany</button>
                 </div>
             </div>
             {%else%}
@@ -56,11 +77,16 @@
         </div>
     </form>
 </div>
-    <script>
+<script>
      document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-invoices").classList.remove("active");
      document.getElementById("button-contracts").classList.remove("active");
      document.getElementById("button-contractors").classList.remove("active");
      document.getElementById("button-investments").classList.add("active");
-    </script>
-    {% endblock %}
+
+
+
+
+
+</script>
+{% endblock %}

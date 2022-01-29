@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
 from contracts.models import ContractImmovables, AneksImmovables, ContractAuction, AneksContractAuction
 from contracts.forms import ContractimmovablesForm, AneksForm, ContractAuctionForm
+from units.models import Unit
 
 
 # Create your views here.
@@ -49,10 +50,13 @@ def edit_contractsimmovables(request, id):
     contractsimmovables_form = ContractimmovablesForm(request.POST or None, request.FILES or None,
                                                       instance=contractsimmovables_edit)
     aneks_form = AneksForm(request.POST or None, request.FILES or None)
+    units = Unit.objects.all()
 
     context = {'contract_form': contractsimmovables_form,
                'aneks_form': aneks_form,
+               'units':units,
                'new': False}
+
     if contractsimmovables_form.is_valid():
         contract = contractsimmovables_form.save(commit=False)
         contract.author = request.user
@@ -62,7 +66,7 @@ def edit_contractsimmovables(request, id):
             instance = aneks_form.save(commit=False)
             instance.autor = request.user
             instance.contractimmovables = contractsimmovables_edit
-            instance.save()
+            aneks_form.save()
 
         return redirect('contracts:menu_contractsimmovables')
     return render(request, 'contracts/contract_form.html', context)
@@ -95,6 +99,8 @@ def new_aneks(request):
 @login_required
 def menu_contracts_auction(request):
     contracts_auctions = ContractAuction.objects.all().order_by('-date')
+
+
     query = "Wyczyść"
     search = "Szukaj"
     contracts_auctions_sum = len(contracts_auctions)
@@ -139,11 +145,12 @@ def edit_contract_auction(request, id):
     contract_auction_edit = get_object_or_404(ContractAuction, pk=id)
     contract_auction_form = ContractAuctionForm(request.POST or None, request.FILES or None,
                                                 instance=contract_auction_edit)
+    units = Unit.objects.all()
 
     aneks_form = AneksContractAuction(request.POST or None, request.FILES or None)
 
     context = {'contract_auction_form': contract_auction_form,
-
+               'units':units,
                'new': False}
 
     if contract_auction_form.is_valid():

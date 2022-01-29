@@ -59,21 +59,26 @@ def type_work_list(request):
     units = Unit.objects.all()
     limit = OrderLimit.objects.first()
 
+    sum_rb = {}
     for unit in units:
         orders = Order.objects.all().filter(genre__name_id='RB').filter(unit=unit).filter(date__year=current_year())
         sum = 0
         for order in orders:
             sum += order.sum
             print(sum)
+        sum_rb[unit] = sum
+        # sum_rb.append({'id': unit.id, 'sum': sum })
 
     year = current_year()
     item = round(float(limit.limit) * 1.23, 2)
-    context = {'units': units, 'limit': limit, 'item': item, 'year': year}
+
+    context = {'units': units, 'limit': limit, 'item': item, 'year': year, 'sum_rb': sum_rb}
     return render(request, 'cpvdict/genre_work_list.html', context)
 
 
 @login_required
 def order_list(request):
+
     orders = Order.objects.all().order_by("-date").filter(date__year=current_year())
     year = current_year()
     ordersum = len(orders)
@@ -91,7 +96,7 @@ def order_list(request):
             unit__powiat__powiat__icontains=q) | orders.filter(unit__miasto__icontains=q) | orders.filter(
             unit__adres__icontains=q)
         return render(request, 'cpvdict/order_list.html',
-                      {'orders': orders, 'year': year, 'ordersum': ordersum, 'query': query,
+                      {'orders': orders, 'year': year, 'ordersum': ordersum, 'query': query
                        })
     else:
         return render(request, 'cpvdict/order_list.html',
@@ -102,6 +107,7 @@ def order_list(request):
 @login_required
 def new_order(request):
     order_form = OrderForm(request.POST or None)
+    units = Unit.objects.all()
 
     if request.method == 'POST':
 
@@ -111,13 +117,14 @@ def new_order(request):
             instance.save()
             order_form.save()
             return redirect('cpvdict:order_list')
-    return render(request, 'cpvdict/order_form.html', {'order_form': order_form, "new": True})
+    return render(request, 'cpvdict/order_form.html', {'order_form': order_form, 'new': True, 'units':units})
 
 
 @login_required
 def edit_order(request, id):
     order_edit = get_object_or_404(Order, pk=id)
     order_form = OrderForm(request.POST or None, request.FILES or None, instance=order_edit)
+    units = Unit.objects.all()
 
     if order_form.is_valid():
         order = order_form.save(commit=False)
@@ -125,4 +132,4 @@ def edit_order(request, id):
         order_form.save()
         return redirect('cpvdict:order_list')
 
-    return render(request, 'cpvdict/order_form.html', {'order_form': order_form, "new": False})
+    return render(request, 'cpvdict/order_form.html', {'order_form': order_form, 'new': False, 'units':units})
