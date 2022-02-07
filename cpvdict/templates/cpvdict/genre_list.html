@@ -45,8 +45,8 @@
             <td valign="middle"><span>{{object.name}}</span></td>
             <td valign="middle">{% for cpv in object.cpv.all%}<span class="tag-cpv m-1" title="{{cpv.name}}"> {{cpv}} </span>{%endfor%}
             </td>
-            <td valign="middle"><span>{{object.sum|intcomma}}</span></td>
-            <td class="text-center" valign="middle"><span>{{object.remain|intcomma}}</span></td>
+            <td valign="middle"><span>{{object.sum|intcomma}} zł.</span></td>
+            <td class="text-center" valign="middle"><span>{{object.remain|intcomma}} zł.</span></td>
         </tr>
         {%endfor%}
         </tbody>
