@@ -15,27 +15,44 @@
     <span class="m-2">({{year}} rok)</span>
     {%if limit != 0 %}
     <p><span class="text-center">Limit zmówień: {{limit|intcomma}} zł (netto)</span><br>
-    <span class="text-center">Limit zmówień: {{item|intcomma}} zł (brutto)</span></p>
+        <span class="text-center">Limit zmówień: {{item|intcomma}} zł (brutto)</span></p>
     {%endif%}
 </div>
-    {% for unit in units %}
-    <ol>
-        {% for key,value in sum_rb.items %}
+<div class="container">
+    <table class="table table-hover my-table mt-2">
+        <thead>
+        <tr class="my-table-tr text-center">
+            <th align="center" valign="middle" width="50" scope="col">l.p.</th>
+            <th align="center" valign="middle" width="250" scope="col">Jednostka</th>
+            <th align="center" valign="middle" width="80" scope="col">Wykorzystano</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for unit in units %}
+        {% for key, value in sum_rb.items %}
         {% if key == unit and value > 0 %}
-        <li>{{unit}} - <br> {% for u in unit.order.all %} {{u}} - {{u.sum}} <br> {%endfor%}</li> <br>
-        {{ value|intcomma }}
-        {% endif %}
-        {% endfor %}
-    </ol>
-    {% endfor %}
-
+        <tr class="my-table-tr">
+            <td align="center" valign="middle" scope="row"></td>
+            <td valign="middle">{{unit}}</td>
+            <td valign="middle" title="{% for u in unit.order.all %}{{u|intcomma}}{%endfor%}">{{value|intcomma}}
+            </td>
+            {% endif %}
+            {% endfor %}
+            {% endfor %}
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <th colspan="5">Wydział Inwestycji i Remontów KWP w Poznaniu</th>
+        </tr>
+        </tfoot>
+    </table>
+</div>
 <script>
      document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-invoices").classList.remove("active");
      document.getElementById("button-contracts").classList.remove("active");
      document.getElementById("button-contractors").classList.remove("active");
      document.getElementById("button-cpv").classList.add("active");
-
-
 </script>
 {% endblock%}
