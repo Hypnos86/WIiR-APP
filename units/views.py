@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.template import loader
+''' Units render view '''
+from django.shortcuts import render, redirect
 from units.models import Unit, Powiat, Rodzaj
 from units.forms import UnitForm
 

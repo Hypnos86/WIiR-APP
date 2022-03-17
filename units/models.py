@@ -36,6 +36,7 @@ class Unit(models.Model):
     kod_pocztowy = models.CharField(max_length=6)
     miasto = models.CharField(max_length=20)
     informacje = models.TextField(blank=True)
+    owner = models.CharField(max_length=50)
     aktywna = models.BooleanField("Aktywna", null=False, default=0)
 
     def __str__(self):

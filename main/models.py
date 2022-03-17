@@ -59,8 +59,16 @@ class Inspector(models.Model):
 
     name = models.CharField('Imię', max_length=20)
     last_name = models.CharField('Nazwisko', max_length=25)
-    industry = models.ForeignKey(IndustryType, on_delete=models.CASCADE, verbose_name='Branża',
-                                 related_name='inspector')
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, verbose_name='Zespół')
 
     def __str__(self):
         return f'{self.name} {self.last_name}'
+
+
+class Employer(models.Model):
+    class Meta:
+        verbose_name = 'Pracownik'
+        verbose_name_plural = 'Pracownicy'
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+
+    pass

@@ -39,11 +39,11 @@ class OrganisationTelephoneAdmin(admin.ModelAdmin):
     list_display = ['add_date', 'telephone_book']
 
 
-@admin.register(IndustryType)
-class OrganisationTelephoneAdmin(admin.ModelAdmin):
-    list_display = ['industry']
+# @admin.register(IndustryType)
+# class OrganisationTelephoneAdmin(admin.ModelAdmin):
+#     list_display = ['industry']
 
 
-@admin.register(Inspector)
-class OrganisationTelephoneAdmin(admin.ModelAdmin):
-    list_display = ['name', 'last_name', 'industry']
+# @admin.register(Inspector)
+# class OrganisationTelephoneAdmin(admin.ModelAdmin):
+#     list_display = ['name', 'last_name', 'industry']
