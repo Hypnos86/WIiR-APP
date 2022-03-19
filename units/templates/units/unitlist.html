@@ -17,8 +17,8 @@
             </select>
         </div>
         <div class="d-inline-block mx-4 text-center">
-            <label for="rodzaj" class="rodzaj">Rodzaj jednostki</label>
-            <select id="rodzaj" name="r" class="form-control" aria-label="Default select example">
+            <label for="unit_kind" class="unit_kind">Rodzaj jednostki</label>
+            <select id="unit_kind" name="r" class="form-control" aria-label="Default select example">
                 <option value="">--wybierz--</option>
                 {%for rodzaj in rodzaje%}
                     <option value={{rodzaj.id}}>{{rodzaj}}</option>
@@ -43,23 +43,25 @@
     <tr class="my-table-tr">
         <th align="center" valign="middle" width="80px" scope="col" class="text-center">L.p.</th>
         <th align="center" valign="middle" width="120" scope="col" class="text-center">Powiat</th>
-        <th align="center" valign="middle" width="100" scope="col" class="text-center">Rodzaj jednostki</th>
-        <th align="center" valign="middle" width="300" scope="col" class="text-center">Adres</th>
-        <th align="center" valign="middle" width="150" scope="col" class="text-center">Kod pocztowy</th>
-        <th align="center" valign="middle" width="250" scope="col" class="text-center">Miasto</th>
-        <th align="center" valign="middle" width="800" scope="col" class="text-center">Informacje</th>
+        <th align="center" valign="middle" width="200" scope="col" class="text-center">Rodzaj jednostki</th>
+        <th align="center" valign="middle" width="250" scope="col" class="text-center">Adres</th>
+        <th align="center" valign="middle" width="180" scope="col" class="text-center">Kod pocztowy</th>
+        <th align="center" valign="middle" width="180" scope="col" class="text-center">Miasto</th>
+        <th align="center" valign="middle" width="180" scope="col" class="text-center">Właściciel</th>
+        <th align="center" valign="middle" width="400" scope="col" class="text-center">Informacje</th>
         <th align="center" valign="middle" width="80px" scope="col" class="text-center">Aktywna</th>
     </tr>
     </thead>
     <tbody>
     {%for unit in units %}
     <tr class="my-table-tr">
-        <td align="center" valign="middle" class="text-center" scope="row" width="80px"></td>
-        <td align="center" valign="middle" width="120">{{unit.powiat}}</td>
-        <td align="center" valign="middle" class="text-center">{{unit.rodzaj}}</td>
-        <td valign="middle">{{unit.adres}}</td>
+        <td align="center" valign="middle" class="text-center" scope="row"></td>
+        <td align="center" valign="middle">{{unit.powiat}}</td>
+        <td align="center" valign="middle" class="text-center">{{unit.unit_kind}}</td>
+        <td valign="middle" >{{unit.address}}</td>
         <td align="center" valign="middle" class="text-center">{{unit.kod_pocztowy}}</td>
         <td valign="middle" width="180">{{unit.miasto}}</td>
+        <td valign="middle" width="180">{{unit.owner}}</td>
         <td valign="middle">{{unit.informacje}}</td>
         <td align="center" valign="middle">
             {%if unit.aktywna == True%}

@@ -65,10 +65,18 @@ class Inspector(models.Model):
         return f'{self.name} {self.last_name}'
 
 
-class Employer(models.Model):
+class EmployerProfile(models.Model):
     class Meta:
-        verbose_name = 'Pracownik'
-        verbose_name_plural = 'Pracownicy'
-    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+        verbose_name = 'Pracownika'
+        verbose_name_plural = 'Uprawnienia Wydziałowe'
 
-    pass
+    user = models.OneToOneField('auth.User', on_delete=models.CASCADE, verbose_name='ID użytkownika',
+                                related_name='eployerprofile')
+    contractors_profile = models.BooleanField('Moduł kontrahenci')
+    invoices_profile = models.BooleanField('Moduł faktury')
+    contracts_profile = models.BooleanField('Moduł umowy')
+    investments_profile = models.BooleanField('Moduł inwestycje')
+    cpvdict_profile = models.BooleanField('Moduł rodzajowość')
+
+    def __str__(self):
+        return f'{self.user} ({self.user.first_name} {self.user.last_name})'

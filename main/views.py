@@ -3,8 +3,6 @@ import datetime
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from main.models import Team, Telephone, OrganisationTelephone
-from units.models import Unit
-from invoices.models import Invoicesell, Creator
 
 
 def current_year():
@@ -35,8 +33,5 @@ def telephone_list(request):
 @login_required
 def welcome(request):
     date = datetime.date.today().today()
-    weekend = datetime.datetime.today().weekday()
-    units = Unit.objects.all()
-    unit_kind = set(units.values('rodzaj'))
 
-    return render(request, 'main/welcome.html', {'date': date, 'unit_kind':unit_kind})
+    return render(request, 'main/welcome.html', {'date': date})

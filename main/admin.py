@@ -2,7 +2,7 @@ from django.contrib import admin
 from import_export import resources
 from import_export.admin import ExportMixin
 from import_export.fields import Field
-from main.models import Telephone, Team, OrganisationTelephone, IndustryType, Inspector
+from main.models import Telephone, Team, OrganisationTelephone, EmployerProfile
 
 # Register your models here.
 # admin.site.site_header ="WIiR-APP"
@@ -39,11 +39,8 @@ class OrganisationTelephoneAdmin(admin.ModelAdmin):
     list_display = ['add_date', 'telephone_book']
 
 
-# @admin.register(IndustryType)
-# class OrganisationTelephoneAdmin(admin.ModelAdmin):
-#     list_display = ['industry']
+@admin.register(EmployerProfile)
+class OrganisationTelephoneAdmin(admin.ModelAdmin):
+    list_display = ['user', 'contractors_profile', 'invoices_profile', 'contracts_profile', 'investments_profile',
+                    'cpvdict_profile']
 
-
-# @admin.register(Inspector)
-# class OrganisationTelephoneAdmin(admin.ModelAdmin):
-#     list_display = ['name', 'last_name', 'industry']

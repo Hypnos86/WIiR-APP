@@ -47,7 +47,6 @@ def type_expense_list(request):
 
     year = current_year()
 
-
     context = {'objects': objects,
                'limit': limit.limit,
                'limit_item': limit_item,
@@ -66,9 +65,8 @@ def type_work_list(request):
         sum = 0
         for order in orders:
             sum += order.sum
-            print(sum)
-        sum_rb[unit] = sum
-        # sum_rb.append({'id': unit.id, 'sum': sum })
+        sum_rb[unit] = Decimal(sum)
+        # remain = round(sum_rb[unit] - limit, 2)
 
     year = current_year()
     item = round(float(limit.limit) * 1.23, 2)
@@ -79,7 +77,6 @@ def type_work_list(request):
 
 @login_required
 def order_list(request):
-
     orders = Order.objects.all().order_by("-date").filter(date__year=current_year())
     year = current_year()
     ordersum = len(orders)
@@ -118,7 +115,7 @@ def new_order(request):
             instance.save()
             order_form.save()
             return redirect('cpvdict:order_list')
-    return render(request, 'cpvdict/order_form.html', {'order_form': order_form, 'new': True, 'units':units})
+    return render(request, 'cpvdict/order_form.html', {'order_form': order_form, 'new': True, 'units': units})
 
 
 @login_required
@@ -133,4 +130,4 @@ def edit_order(request, id):
         order_form.save()
         return redirect('cpvdict:order_list')
 
-    return render(request, 'cpvdict/order_form.html', {'order_form': order_form, 'new': False, 'units':units})
+    return render(request, 'cpvdict/order_form.html', {'order_form': order_form, 'new': False, 'units': units})
