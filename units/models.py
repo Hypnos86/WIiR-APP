@@ -15,15 +15,14 @@ class Powiat(models.Model):
         return f'{self.powiat}'
 
 
-class UnitKind(models.Model):
+class Rodzaj(models.Model):
     class Meta:
         verbose_name = "Rodzaj jednostki"
         verbose_name_plural = "Rodzaje jednostek"
-
-    unit_kind = models.CharField(max_length=10, null=False)
+    rodzaj = models.CharField(max_length=10, null=False)
 
     def __str__(self):
-        return f'{self.unit_kind}'
+        return f'{self.rodzaj}'
 
 
 class Unit(models.Model):
@@ -32,13 +31,13 @@ class Unit(models.Model):
         verbose_name_plural = "Jednostki"
 
     powiat = models.ForeignKey(Powiat, on_delete=models.CASCADE, related_name="unit")
-    unit_kind = models.ForeignKey(UnitKind, on_delete=models.CASCADE, related_name="unit", verbose_name="Rodzaj")
-    address = models.CharField('Adres', max_length=30)
-    kod_pocztowy = models.CharField('Kod pocztowy', max_length=6)
-    miasto = models.CharField('miasto', max_length=20)
-    informacje = models.TextField('Informacje', blank=True)
-    owner = models.CharField('Właściciel', max_length=50)
+    rodzaj = models.ForeignKey(Rodzaj, on_delete=models.CASCADE, related_name="unit")
+    adres = models.CharField(max_length=30)
+    kod_pocztowy = models.CharField(max_length=6)
+    miasto = models.CharField(max_length=20)
+    informacje = models.TextField(blank=True)
+    owner = models.CharField(max_length=50)
     aktywna = models.BooleanField("Aktywna", null=False, default=0)
 
     def __str__(self):
-        return f'{self.informacje} {self.miasto}, {self.address}'
+        return f'{self.informacje} {self.miasto}, {self.adres}'

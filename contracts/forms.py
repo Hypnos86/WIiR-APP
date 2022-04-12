@@ -1,49 +1,48 @@
 from django.forms import ModelForm, DateInput, Textarea, widgets, DecimalField
-from contracts.models import ContractImmovables, AneksImmovables, ContractAuction, AneksContractAuction
+from contracts.models import ContractImmovables, AnnexImmovables, ContractAuction
 
 
 class DateField(DateInput):
     input_type = "date"
 
 
-class ContractimmovablesForm(ModelForm):
+class ContractImmovablesForm(ModelForm):
     class Meta:
         model = ContractImmovables
-        fields = ['data_umowy', 'nrumowy', 'kontrahent', 'okres_obowiazywania', 'pow_uzyczona', 'podstawa',
-                  'rodzaj', 'koszt_czynsz', 'koszt_prad', 'koszt_gaz', 'koszt_woda', 'koszt_co', 'koszt_smieci',
-                  'koszt_podsmiec', 'koszt_podnier', 'unit', 'skan', 'stan', 'comments', 'archives', 'create',
-                  'change', 'author']
+        fields = ['date', 'no_contract', 'contractor', 'period_of_validity', 'usable_area', 'legal_basic',
+                  'type_of_contract', 'rent_cost', 'electric_cost', 'gas_cost', 'water_cost', 'central_heating_cost',
+                  'garbage_cost', 'garbage_tax_cost', 'property_cost', 'unit', 'scan', 'state', 'information',
+                  'archives', 'creation_date', 'change', 'author']
 
-        field_order = ['data_umowy', 'nrumowy', 'kontrahent', 'okres_obowiazywania', 'pow_uzyczona', 'podstawa',
-                       'rodzaj', 'koszt_czynsz', 'koszt_prad', 'koszt_gaz', 'koszt_woda', 'koszt_co', 'koszt_smieci',
-                       'koszt_podsmiec', 'koszt_podnier', 'unit', 'skan', 'stan', 'comments', 'archives', 'create',
-                       'change', 'author']
+        field_order = ['date', 'no_contract', 'contractor', 'period_of_validity', 'usable_area', 'legal_basic',
+                       'type_of_contract', 'rent_cost', 'electric_cost', 'gas_cost', 'water_cost',
+                       'central_heating_cost', 'garbage_cost', 'garbage_tax_cost', 'property_cost', 'unit', 'scan',
+                       'state', 'information', 'archives', 'creation_date', 'change', 'author']
 
-        labels = {'data_umowy': 'Data umowy', 'nrumowy': 'Nr umowy', 'kontrahent': 'Kontrahent',
-                  'podstawa': 'Podstawa prawda', 'okres_obowiazywania': 'Okres obowiązywania', 'rodzaj': 'Rodzaj umowy',
-                  'pow_uzyczona': 'Powiezchnia użytkowa', 'koszt_czynsz': 'Czynsz',
-                  'koszt_prad': 'Prąd', 'koszt_gaz': 'Gaz', 'koszt_woda': 'Woda', 'koszt_co': 'C.O.',
-                  'koszt_smieci': 'Śmieci',
-                  'koszt_podsmiec': 'Zagospodarowanie odpadami komunalnymi',
-                  'koszt_podnier': 'Podatek od nieruchomości',
-                  'unit': 'Jednostka', 'skan': 'Skan umowy', 'stan': 'Stan umowy', 'comments': 'Informacje'}
+        labels = {'date': 'Data umowy', 'no_contract': 'Nr umowy', 'contractor': 'Kontrahent',
+                  'legal_basic': 'Podstawa prawda', 'period_of_validity': 'Okres obowiązywania',
+                  'type_of_contract': 'Rodzaj umowy', 'usable_area': 'Powiezchnia użytkowa', 'rent_cost': 'Czynsz',
+                  'electric_cost': 'Prąd', 'gas_cost': 'Gaz', 'water_cost': 'Woda', 'central_heating_cost': 'C.O.',
+                  'garbage_cost': 'Śmieci', 'garbage_tax_cost': 'Zagospodarowanie odpadami komunalnymi',
+                  'property_cost': 'Podatek od nieruchomości', 'unit': 'Jednostka', 'scan': 'Skan umowy',
+                  'state': 'Stan umowy', 'information': 'Informacje'}
 
-        exclude = ['archives', 'create', 'change', 'author']
+        exclude = ['archives', 'creation_date', 'change', 'author']
 
-        widgets = {'data_umowy': DateField(),
-                   'okres_obowiazywania': DateField(),
-                   'comments': Textarea(attrs={'rows': 5}),
+        widgets = {'date': DateField(),
+                   'period_of_validity': DateField(),
+                   'information': Textarea(attrs={'rows': 5}),
                    }
 
 
-class AneksForm(ModelForm):
+class AnnexImmovablesForm(ModelForm):
     class Meta:
-        model = AneksImmovables
+        model = AnnexImmovables
 
-        fields = ['data_aneksu', 'skan_aneksu', 'create', 'autor']
-        labels = {'data_aneksu': 'Data aneksu', 'skan_aneksu': 'Skan aneksu'}
-        exclude = ['create', 'autor']
-        widgets = {'data_aneksu': DateField()}
+        fields = ['date_annex', 'scan_annex', 'creation_date', 'author']
+        labels = {'date_annex': 'Data aneksu', 'scan_annex': 'Skan aneksu'}
+        exclude = ['creation_date', 'author']
+        widgets = {'date_annex': DateField()}
 
 
 class ContractAuctionForm(ModelForm):
@@ -52,17 +51,18 @@ class ContractAuctionForm(ModelForm):
 
         fields = ['date', 'no_contract', 'contractor', 'price', 'work_scope', 'legal_basic_zzp', 'end_date', 'unit',
                   'last_report_date', 'guarantee', 'guarantee_period', 'warranty_period', 'security_percent',
-                  'contract_security', 'inspector', 'information', 'raport', 'scan', 'create', 'change', 'author']
+                  'security_sum', 'inspector', 'information', 'report', 'scan', 'creation_date', 'change_date',
+                  'author']
         labels = {'date': 'Data', 'no_contract': 'Nr. umowy', 'contractor': 'Wykonawca', 'price': 'Kwota umowy',
                   'work_scope': 'Zakres', 'legal_basic_zzp': 'Tryb zamówienia', 'end_date': 'Data zakończenia umowy',
                   'unit': 'Jednostka',
                   'last_report_date': 'Data ostatniego protokołu', 'guarantee': 'Rodzaj gwarancji',
                   'guarantee_period': 'Okres gwarancji', 'warranty_period': 'Okres rękojmi',
                   'security_percent': 'Procent zabezpieczenia',
-                  'contract_security': 'Kwota zabezpieczenia', 'inspector': 'Inspektor', 'information': 'Informacje',
-                  'raport' : 'Raportowanie do ZZP',
+                  'security_sum': 'Kwota zabezpieczenia', 'inspector': 'Inspektor', 'information': 'Informacje',
+                  'report': 'Raportowanie do ZZP',
                   'scan': 'Skan umowy'}
-        exclude = ['create', 'change', 'author']
+        exclude = ['creation_date', 'change_date', 'author']
         widgets = {'date': DateField(),
                    'end_date': DateField(),
                    'last_report_date': DateField(), }

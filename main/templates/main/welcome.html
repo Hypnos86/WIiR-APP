@@ -14,8 +14,17 @@
         </div>
         <div class="col-md-4"></div>
         <h4 class="text-center">Dziś jest: {{date|date:"j E Y"}} roku</h4>
-        <h4 class="text-center">{{date|date:"l"}}</h4>
-        <h4 class="text-center">Dzień w roku: {{date|date:"z"}}</h4>
+            <h4 class="text-center">{{date|date:"l"}}</h4>
+            <h4 class="text-center">Dzień w roku: {{date|date:"z"}}</h4>
+        <div>
+            <span>Rodzaj jednostek w bazie</span>
+            <ul>
+                {%for kind in units_kind%}
+                <li>{{kind}}</li>
+                {%endfor%}
+            </ul>
+
+        </div>
     </div>
 </div>
 {%endblock%}

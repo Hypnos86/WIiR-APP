@@ -41,14 +41,14 @@
     {%for contract in contracts %}
     <tr class="my-table-tr">
         <td align="center" valign="middle" class="text-center" scope="row"></td>
-        <td align="center" valign="middle" class="text-center">{{contract.data_umowy|date:"d.m.Y"}}</td>
-        <td align="center" valign="middle" class="text-center">{{contract.nrumowy|default_if_none:'---'}}</td>
-        <td valign="middle">{{contract.kontrahent}}</td>
-        <td align="center" valign="middle" class="text-center">{{contract.okres_obowiazywania|default_if_none:'---'|date:"d.m.Y"}}</td>
-        <td align="center" valign="middle" class="text-center">{%if contract.pow_uzyczona%} {{contract.pow_uzyczona|intcomma}} m<sup>2 {%else%} --- {%endif%}</sup></td>
-        <td align="center" valign="middle" class="text-center">{{contract.rodzaj}}</td>
+        <td align="center" valign="middle" class="text-center">{{contract.date|date:"d.m.Y"}}</td>
+        <td align="center" valign="middle" class="text-center">{{contract.no_contract|default_if_none:'---'}}</td>
+        <td valign="middle">{{contract.contractor}}</td>
+        <td align="center" valign="middle" class="text-center">{{contract.period_of_validity|default_if_none:'---'|date:"d.m.Y"}}</td>
+        <td align="center" valign="middle" class="text-center">{%if contract.usable_area%} {{contract.usable_area|intcomma}} m<sup>2 {%else%} --- {%endif%}</sup></td>
+        <td align="center" valign="middle" class="text-center">{{contract.type_of_contract}}</td>
         <td valign="middle">{{contract.unit}}</td>
-        <td align="center" valign="middle">{{contract.stan}}</td>
+        <td align="center" valign="middle">{{contract.state}}</td>
         <td align="center" valign="middle">
            <a href="{% url 'contracts:show_contractsimmovables' contract.id %}"><button type="button" class="btn btn-outline-primary icon-color mx-2 my-1"><i class="bi bi-eye"></i></button></a>
            <a href="{% url 'contracts:edit_contractsimmovables' contract.id %}"><button type="button" class="btn btn-outline-primary icon-color mx-2 my-1"><i class="bi bi-pencil-square"></i></button></a>

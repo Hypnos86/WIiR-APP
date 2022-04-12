@@ -7,7 +7,7 @@ from .forms import ContractorsellForm
 
 @login_required
 def contractorsell_list(request):
-    contractorsell = Contractor.objects.all().order_by("nazwa")
+    contractorsell = Contractor.objects.all().order_by("name")
     query = "Wyczyść"
     search = "Szukaj"
     consellsum = len(contractorsell)
@@ -18,7 +18,7 @@ def contractorsell_list(request):
     contractorsell_list = paginator.get_page(page_number)
 
     if q:
-        contractorsell = contractorsell.filter(nazwa__icontains=q)|contractorsell.filter(miasto__icontains=q)|contractorsell.filter(nocuntractor__startswith=q)|contractorsell.filter(nip__startswith=q)
+        contractorsell = contractorsell.filter(name__icontains=q)|contractorsell.filter(city__icontains=q)|contractorsell.filter(nocuntractor__startswith=q)|contractorsell.filter(nip__startswith=q)
         return render(request, 'contractors/contractorssell_list.html',
                       {'contractors': contractorsell, "consellsum": consellsum, "query": query})
     else:

@@ -3,14 +3,14 @@ from units.models import Unit
 
 
 class UnitForm(ModelForm):
+
     class Meta:
         model = Unit
-        fields = ['powiat', 'unit_kind', 'address', 'kod_pocztowy', 'miasto', 'informacje', 'owner', 'aktywna']
+        fields = ['powiat', 'rodzaj', 'adres', 'kod_pocztowy', 'miasto', 'informacje', 'aktywna']
         labels = {"powiat": "Powiat",
-                  "unit_kind": "Rodzaj jednostki",
-                  "address": "Adres",
+                  "rodzaj": "Rodzaj jednostki",
+                  "adres": "Adres",
                   "kod_pocztowy": "kod pocztowy",
                   "miasto": "Miasto",
                   "informacje": "Informacje",
-                  "owner": 'Właściciel',
                   "aktywna": "Aktywna"}

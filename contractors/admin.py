@@ -8,24 +8,24 @@ from .models import Contractor
 # admin.site.register(Post, PostAdmin)
 class ContractorResource(resources.ModelResource):
     nocuntractor = Field(attribute='nocuntractor', column_name='Nr. kontrahenta')
-    nazwa = Field(attribute='nazwa', column_name='Nazwa kontrahenta')
+    name = Field(attribute='name', column_name='Nazwa kontrahenta')
     nip = Field(attribute='nip', column_name='NIP')
-    adres = Field(attribute='adres', column_name='Adres')
-    kod_pocztowy = Field(attribute='kod_pocztowy', column_name='Kod pocztowy')
-    miasto = Field(attribute='miasto', column_name='Miasto')
-    informacje = Field(attribute='informacje', column_name='Informacje')
+    address = Field(attribute='address', column_name='Adres')
+    zip_code = Field(attribute='zip_code', column_name='Kod pocztowy')
+    city = Field(attribute='city', column_name='Miasto')
+    information = Field(attribute='information', column_name='Informacje')
 
     # data_utworzenia = Field(attribute='data_utworzenia', column_name='Data utworzenia', widget=DateWidget('%d/%m/%Y'))
     # autor = Field(attribute='autor', column_name='Autor')
 
     class Meta:
         model = Contractor
-        export_order = ('nocuntractor', 'nazwa', 'nip', 'adres', 'kod_pocztowy', 'miasto', 'informacje')
+        export_order = ('nocuntractor', 'name', 'nip', 'address', 'zip_code', 'city', 'information')
 
 
 @admin.register(Contractor)
 class ContractorAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['nocuntractor', 'nazwa', 'nip', 'adres', 'kod_pocztowy', 'miasto', 'informacje', 'data_utworzenia',
-                    'autor']
-    search_fields = ['nocuntractor', 'nazwa', 'nip', 'adres', 'kod_pocztowy', 'miasto']
+    list_display = ['nocuntractor', 'name', 'nip', 'address', 'zip_code', 'city', 'information', 'creation_date',
+                    'author']
+    search_fields = ['nocuntractor', 'name', 'nip', 'address', 'zip_code', 'city']
     resource_class = ContractorResource

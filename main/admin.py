@@ -2,7 +2,7 @@ from django.contrib import admin
 from import_export import resources
 from import_export.admin import ExportMixin
 from import_export.fields import Field
-from main.models import Telephone, Team, OrganisationTelephone, EmployerProfile
+from main.models import Telephone, Team, OrganisationTelephone
 
 # Register your models here.
 # admin.site.site_header ="WIiR-APP"
@@ -18,7 +18,7 @@ class TelephoneResource(resources.ModelResource):
     fname = Field(attribute='fname', column_name='Imię')
     lname = Field(attribute='lname', column_name='Nazwisko')
     numbroom = Field(attribute='numbroom', column_name='Numer pokoju')
-    numbtelbus = Field(attribute='numbtelbus', column_name='Numer telefonu słuzbowego')
+    numbtelbus = Field(attribute='numbtelbus', column_name='Numer telefonu słuźbowego')
     numbtelpri = Field(attribute='numbtelpri', column_name='Numer komórkowy')
     information = Field(attribute='information', column_name='Informacje')
 
@@ -39,8 +39,11 @@ class OrganisationTelephoneAdmin(admin.ModelAdmin):
     list_display = ['add_date', 'telephone_book']
 
 
-@admin.register(EmployerProfile)
-class OrganisationTelephoneAdmin(admin.ModelAdmin):
-    list_display = ['user', 'contractors_profile', 'invoices_profile', 'contracts_profile', 'investments_profile',
-                    'cpvdict_profile']
+# @admin.register(IndustryType)
+# class OrganisationTelephoneAdmin(admin.ModelAdmin):
+#     list_display = ['industry']
 
+
+# @admin.register(Inspector)
+# class OrganisationTelephoneAdmin(admin.ModelAdmin):
+#     list_display = ['name', 'last_name', 'industry']

@@ -5,24 +5,24 @@ from contractors.models import Contractor
 class ContractorsellForm(ModelForm):
     class Meta:
         model = Contractor
-        fields = ["nocuntractor", "nazwa", "nip", "adres", "kod_pocztowy", "miasto", "informacje", "utworzenie",
-                  "autor"]
-        exclude = ["utworzenie", "autor"]
+        fields = ['nocuntractor', 'name', 'nip', 'address', 'zip_code', 'city', 'information', 'creation_date',
+                  'author']
+        exclude = ['creation_date', 'author']
         labels = {'nocuntractor': 'Nr. kontrahenta',
-                  'nazwa': 'Kontrahent',
+                  'name': 'Kontrahent',
                   "nip": 'NIP',
-                  'adres': 'Adres',
-                  'kod_pocztowy': 'Kod pocztowy',
-                  'miasto': 'Miasto',
-                  'informacje': 'Informacje',
-                  'utworzenie': 'Utworzenie',
-                  'autor': 'Autor'
+                  'address': 'Adres',
+                  'zuo_code': 'Kod pocztowy',
+                  'city': 'Miasto',
+                  'information': 'Informacje',
+                  'creation_date': 'Utworzenie',
+                  'author': 'Autor'
                   }
         widgets = {'nocuntractor': widgets.TextInput(attrs={'placeholder': 'nr kontrahenta zgodny z nr SWOP'}),
-                   'nazwa': widgets.TextInput(attrs={'placeholder': 'Pełna nazwa kontrahenta'}),
-                   'adres': widgets.TextInput(attrs={'placeholder': 'np:. ul. Poznańska 4'}),
-                   'informacje': Textarea(attrs={'rows': 5}),
+                   'name': widgets.TextInput(attrs={'placeholder': 'Pełna nazwa kontrahenta'}),
+                   'address': widgets.TextInput(attrs={'placeholder': 'np:. ul. Poznańska 4'}),
+                   'information': Textarea(attrs={'rows': 5}),
                    'nip': widgets.TextInput(
                        attrs={'pattern': '^[0-9]{3}-[0-9]{2}-[0-9]{2}-[0-9]{3}$', 'placeholder': 'xxx-xx-xx-xxx'}),
-                   'kod_pocztowy': widgets.TextInput(attrs={'pattern': '^[0-9]{2}-[0-9]{3}$', 'placeholder': 'xx-xxx'})
+                   'zip_code': widgets.TextInput(attrs={'pattern': '^[0-9]{2}-[0-9]{3}$', 'placeholder': 'xx-xxx'})
                    }

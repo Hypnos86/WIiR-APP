@@ -41,12 +41,12 @@
     <tr class="my-table-tr">
         <td class="text-center" valign="middle" scope="row"></td>
         <td align="center" valign="middle" scope="row">{{contractor.nocuntractor}}</td>
-        <td valign="middle"><span>{{contractor.nazwa}}</span></td>
+        <td valign="middle"><span>{{contractor.name}}</span></td>
         <td class="text-center" valign="middle"><span>{{contractor.nip|default_if_none:''}}</span></td>
-        <td valign="middle"><span>{{contractor.adres}}</span></td>
-        <td class="text-center" valign="middle"><span>{{contractor.kod_pocztowy}}</span></td>
-        <td class="text-center" valign="middle"><span>{{contractor.miasto}}</span></td>
-        <td valign="middle"><span>{{contractor.informacje}}</span></td>
+        <td valign="middle"><span>{{contractor.address}}</span></td>
+        <td class="text-center" valign="middle"><span>{{contractor.zip_code}}</span></td>
+        <td class="text-center" valign="middle"><span>{{contractor.city}}</span></td>
+        <td valign="middle"><span>{{contractor.information}}</span></td>
         <td class="text-center" valign="middle">
             <a href="{%url 'contractors:edit_contractorsell' contractor.id%}"><button type="submit" class="btn btn-outline-primary icon-color"><i class="bi bi-pencil-square"></i></button></a>
         </td>

@@ -24,8 +24,7 @@
         <tr class="my-table-tr text-center">
             <th align="center" valign="middle" width="50" scope="col">l.p.</th>
             <th align="center" valign="middle" width="250" scope="col">Jednostka</th>
-            <th align="center" valign="middle" width="120" scope="col">Wykorzystano</th>
-            <th align="center" valign="middle" width="120" scope="col">Pozostało</th>
+            <th align="center" valign="middle" width="80" scope="col">Wykorzystano</th>
         </tr>
         </thead>
         <tbody>
@@ -35,8 +34,8 @@
         <tr class="my-table-tr">
             <td align="center" valign="middle" scope="row"></td>
             <td valign="middle">{{unit}}</td>
-            <td valign="middle" title="{% for u in unit.order.all %}{{u|intcomma}}{%endfor%}" class="text-center">{{value|intcomma}}</td>
-            <td valign="middle" class="text-center"></td>
+            <td valign="middle" title="{% for u in unit.order.all %}{{u|intcomma}}{%endfor%}">{{value|intcomma}}
+            </td>
             {% endif %}
             {% endfor %}
             {% endfor %}

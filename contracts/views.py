@@ -1,15 +1,15 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
-from contracts.models import ContractImmovables, AneksImmovables, ContractAuction, AneksContractAuction
-from contracts.forms import ContractimmovablesForm, AneksForm, ContractAuctionForm
+from contracts.models import ContractImmovables, AnnexImmovables, ContractAuction, AnnexContractAuction
+from contracts.forms import ContractImmovablesForm, ContractAuctionForm, AnnexImmovablesForm
 from units.models import Unit
 
 
 # Create your views here.
 @login_required
 def menu_contractsimmovables(request):
-    contracts = ContractImmovables.objects.all().order_by("-data_umowy")
+    contracts = ContractImmovables.objects.all().order_by("-date")
     query = "Wyczyść"
     search = "Szukaj"
     contrsum = len(contracts)
@@ -20,7 +20,7 @@ def menu_contractsimmovables(request):
     contracts_list = paginator.get_page(page_number)
 
     if q:
-        contracts = contracts.filter(kontrahent__nazwa__icontains=q)
+        contracts = contracts.filter(contractor__name__icontains=q)
         return render(request, 'contracts/contract_list.html',
                       {'contracts': contracts, "contrsum": contrsum, "query": query})
     else:
@@ -30,7 +30,7 @@ def menu_contractsimmovables(request):
 
 @login_required
 def new_contractsimmovables(request):
-    contract_form = ContractimmovablesForm(request.POST or None, request.FILES or None)
+    contract_form = ContractImmovablesForm(request.POST or None, request.FILES or None)
     context = {'contract_form': contract_form,
                'new': True}
 
@@ -47,9 +47,9 @@ def new_contractsimmovables(request):
 @login_required
 def edit_contractsimmovables(request, id):
     contractsimmovables_edit = get_object_or_404(ContractImmovables, pk=id)
-    contractsimmovables_form = ContractimmovablesForm(request.POST or None, request.FILES or None,
+    contractsimmovables_form = ContractImmovablesForm(request.POST or None, request.FILES or None,
                                                       instance=contractsimmovables_edit)
-    aneks_form = AneksForm(request.POST or None, request.FILES or None)
+    aneks_form = AnnexImmovablesForm(request.POST or None, request.FILES or None)
     units = Unit.objects.all()
 
     context = {'contract_form': contractsimmovables_form,
@@ -75,14 +75,14 @@ def edit_contractsimmovables(request, id):
 @login_required
 def show_contractsimmovables(request, id):
     contract = ContractImmovables.objects.get(pk=id)
-    aneksy = contract.aneks.all()
+    aneksy = contract.annex.all()
 
     return render(request, 'contracts/show_contract_immovables.html', {'contract': contract, 'aneksy': aneksy})
 
 
 @login_required
 def new_aneks(request):
-    aneks_form = AneksForm(request.POST or None, request.FILES or None)
+    aneks_form = AnnexImmovablesForm(request.POST or None, request.FILES or None)
     context = {'aneks_form': aneks_form,
                'new': True}
 
@@ -147,7 +147,7 @@ def edit_contract_auction(request, id):
                                                 instance=contract_auction_edit)
     units = Unit.objects.all()
 
-    aneks_form = AneksContractAuction(request.POST or None, request.FILES or None)
+    aneks_form = AnnexContractAuction(request.POST or None, request.FILES or None)
 
     context = {'contract_auction_form': contract_auction_form,
                'units':units,

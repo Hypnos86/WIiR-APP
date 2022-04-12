@@ -2,8 +2,8 @@
 {%load bootstrap%}
 {%load static%}
 {%block content%}
-<h4 class="text-center">Umowa {%if contract.nrumowy%} nr {{contract.nrumowy}} {%endif%}z dnia
-    {{contract.data_umowy|date:"d.m.Y"}}</h4>
+<h4 class="text-center">Umowa {%if contract.no_contract%} nr {{contract.no_contract}} {%endif%} z dnia
+    {{contract.date|date:"d.m.Y"}}</h4>
 <div class="col-md-6 moj-button-left"><a href="{%url 'contracts:menu_contractsimmovables'%}">
     <button class="btn btn-outline-primary"><span class="bi bi-chevron-compact-left">Cofnij</span></button>
 </a></div>
@@ -11,37 +11,37 @@
     <div class="row">
         <div class="col-md-8">
             <ul class="list-group list-group-flush">
-                <li class="list-group-item"><span class="text-muted">Data umowy: </span><span>{{contract.data_umowy|date:"d.m.Y"}}</span></li>
-                {%if contract.nrumowy%}
-                <li class="list-group-item"><span class="text-muted">Nr. umowy: </span><span>{{contract.nrumowy}}</span></li>
+                <li class="list-group-item"><span class="text-muted">Data umowy: </span><span>{{contract.date|date:"d.m.Y"}}</span></li>
+                {%if contract.no_contract%}
+                <li class="list-group-item"><span class="text-muted">Nr. umowy: </span><span>{{contract.no_contract}}</span></li>
                 {%endif%}
-                <li class="list-group-item"><span class="text-muted">Kontrahent: </span><span>{{contract.kontrahent}}</span></li>
-                <li class="list-group-item"><span class="text-muted">Podstawa prawna: </span><span>{{contract.podstawa}}</span></li>
-                <li class="list-group-item"><span class="text-muted">Rodzaj umowy: </span><span>{{contract.rodzaj}}</span></li>
-                {%if contract.pow_uzyczona%}
-                <li class="list-group-item"><span class="text-muted">Powierzchnia użyczona: </span><span>{{contract.pow_uzyczona}} m<sup>2</sup></span></li>
+                <li class="list-group-item"><span class="text-muted">Kontrahent: </span><span>{{contract.contractor}}</span></li>
+                <li class="list-group-item"><span class="text-muted">Podstawa prawna: </span><span>{{contract.legal_basic}}</span></li>
+                <li class="list-group-item"><span class="text-muted">Rodzaj umowy: </span><span>{{contract.type_of_contract}}</span></li>
+                {%if contract.usable_area%}
+                <li class="list-group-item"><span class="text-muted">Powierzchnia użyczona: </span><span>{{contract.usable_area}} m<sup>2</sup></span></li>
                 {%endif%}
-                <li class="list-group-item"><span class="text-muted">Okres obowiązywania: </span><span>{{contract.okres_obowiazywania|date:"d.m.Y"}}</span></li>
+                <li class="list-group-item"><span class="text-muted">Okres obowiązywania: </span><span>{{contract.period_of_validity|date:"d.m.Y"}}</span></li>
                 <li class="list-group-item"><span class="text-muted">Koszty: </span>
-                    {% if contract.koszt_czynsz %} <span class="color-maroon">Czynsz</span>{%endif%}
-                    {% if contract.koszt_prad %} <span class="color-indygo">Prąd</span> {%endif%}
-                    {% if contract.koszt_gaz %} <span class="color-gold">Gaz</span> {%endif%}
-                    {% if contract.koszt_woda %} <span class="color-sky">Woda</span> {%endif%}
-                    {% if contract.koszt_co %} <span class="color-cinamon">C.O.</span> {%endif%}
-                    {% if contract.koszt_smieci %} <span class="color-dirty">Śmieci</span> {%endif%}
-                    {% if contract.koszt_podsmiec %} <span class="color-slategrey">Podatek śmieciowy</span> {%endif%}
-                    {% if contract.koszt_podnier %} <span class="color-teal">Podatek od nieruchomości</span> {%endif%}
+                    {% if contract.rent_cost %} <span class="color-maroon">Czynsz</span>{%endif%}
+                    {% if contract.electric_cost %} <span class="color-indygo">Prąd</span> {%endif%}
+                    {% if contract.gas_cost %} <span class="color-gold">Gaz</span> {%endif%}
+                    {% if contract.water_cost %} <span class="color-sky">Woda</span> {%endif%}
+                    {% if contract.central_heating_cost %} <span class="color-cinamon">C.O.</span> {%endif%}
+                    {% if contract.garbage_cost %} <span class="color-dirty">Śmieci</span> {%endif%}
+                    {% if contract.garbage_tax_cost %} <span class="color-slategrey">Podatek śmieciowy</span> {%endif%}
+                    {% if contract.property_cost %} <span class="color-teal">Podatek od nieruchomości</span> {%endif%}
                 </li><li class="list-group-item"><span class="text-muted">Jednostka: </span><span> {{contract.unit}}</span></li>
-                <li class="list-group-item"><span class="text-muted">Stan umowy: </span><span>{{contract.stan}}</span>
+                <li class="list-group-item"><span class="text-muted">Stan umowy: </span><span>{{contract.state}}</span>
                 </li>
-                {%if contract.comments%}
-                <li class="list-group-item"><span class="text-muted">Informacje: </span>{{contract.comments}}</li>
+                {%if contract.information%}
+                <li class="list-group-item"><span class="text-muted">Informacje: </span>{{contract.information}}</li>
                 {%endif%}
             </ul>
 
         </div>
         <div class="col-md-4">
-            {%if contract.skan%}
+            {%if contract.scan%}
             <div class="text-center">
                 <a href="/media/{{contract.skan}}" role="button" target="_blank"><button class="btn btn-outline-primary btn-sm" type="button">Podgląd umowy</button></a>
             </div>
@@ -50,7 +50,7 @@
             {%if aneksy%}
             {%for aneks in aneksy%}
             <div class="text-center my-3">
-                <div ><a href="/media/{{aneks.skan_aneksu}}" target="_blank"><button class="btn btn-outline-primary btn-sm">Aneks z dnia {{aneks.data_aneksu|date:"d.m.Y"}} r.</button>
+                <div ><a href="/media/{{aneks.skan_aneksu}}" target="_blank"><button class="btn btn-outline-primary btn-sm">Aneks z dnia {{aneks.date_annex|date:"d.m.Y"}} r.</button>
                 </a></div>
             </div>
             {%endfor%}
