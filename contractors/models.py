@@ -7,7 +7,7 @@ class Contractor(models.Model):
         verbose_name_plural = 'Kontrahenci'
         ordering = ['name']
 
-    nocuntractor = models.CharField('Nr. kontrahenta', max_length=10, null=False, unique=True)
+    no_contractor = models.CharField('Nr. kontrahenta', max_length=10, null=False, unique=True)
     name = models.CharField('Nazwa', max_length=30, null=True)
     nip = models.CharField('NIP', max_length=13, null=True, blank=True)
     address = models.CharField('Adres', max_length=30, null=True)
@@ -18,4 +18,4 @@ class Contractor(models.Model):
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.name}, {self.address}, {self.zip_code} {self.city} ({self.nocuntractor})'
+        return f'{self.name}, {self.address}, {self.zip_code} {self.city} ({self.no_contractor})'

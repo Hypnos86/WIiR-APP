@@ -5,10 +5,10 @@ from contractors.models import Contractor
 class ContractorsellForm(ModelForm):
     class Meta:
         model = Contractor
-        fields = ['nocuntractor', 'name', 'nip', 'address', 'zip_code', 'city', 'information', 'creation_date',
+        fields = ['no_contractor', 'name', 'nip', 'address', 'zip_code', 'city', 'information', 'creation_date',
                   'author']
         exclude = ['creation_date', 'author']
-        labels = {'nocuntractor': 'Nr. kontrahenta',
+        labels = {'no_contractor': 'Nr. kontrahenta',
                   'name': 'Kontrahent',
                   "nip": 'NIP',
                   'address': 'Adres',
@@ -18,7 +18,7 @@ class ContractorsellForm(ModelForm):
                   'creation_date': 'Utworzenie',
                   'author': 'Autor'
                   }
-        widgets = {'nocuntractor': widgets.TextInput(attrs={'placeholder': 'nr kontrahenta zgodny z nr SWOP'}),
+        widgets = {'no_contractor': widgets.TextInput(attrs={'placeholder': 'nr kontrahenta zgodny z nr SWOP'}),
                    'name': widgets.TextInput(attrs={'placeholder': 'Pełna nazwa kontrahenta'}),
                    'address': widgets.TextInput(attrs={'placeholder': 'np:. ul. Poznańska 4'}),
                    'information': Textarea(attrs={'rows': 5}),

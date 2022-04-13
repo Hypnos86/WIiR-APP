@@ -2,46 +2,47 @@ from django.contrib import admin
 from import_export import resources
 from import_export.fields import Field
 from import_export.admin import ExportMixin
-from invoices.models import Invoicesell, Invoicebuy, Invoiceitems, Creator
+from invoices.models import InvoiceSell, InvoiceBuy, InvoiceItems, Creator
 
 
 # Register your models here.
-class InvoicesellResource(resources.ModelResource):
-    data = Field(attribute='data', column_name='Data wystawienia')
-    noinvoice = Field(attribute='noinvoice', column_name='Nr. faktury')
+class InvoiceSellResource(resources.ModelResource):
+    date = Field(attribute='date', column_name='Data wystawienia')
+    no_invoice = Field(attribute='no_invoice', column_name='Nr. faktury')
     contractor = Field(attribute='contractor', column_name='Kontrahent')
     sum = Field(attribute='sum', column_name='Kwota')
     powiat = Field(attribute='powiat', column_name='Powiat')
     period_from = Field(attribute='period_from', column_name='Okres od')
     period_to = Field(attribute='period_to', column_name='Okres do')
-    creator = Field(attribute='creator', column_name='Osoba wystawiająca')
-    comments = Field(attribute='comments', column_name='Informacje')
+    creation_date = Field(attribute='creator', column_name='Osoba wystawiająca')
+    information = Field(attribute='comments', column_name='Informacje')
 
     class Meta:
-        model = Invoicesell
+        model = InvoiceSell
         fields = (
-            'data', 'noinvoice', 'contractor', 'sum', 'powiat', 'period_from', 'period_to', 'creator', 'comments')
-        export_order = ('data', 'noinvoice', 'sum', 'period_from', 'period_to', 'powiat', 'creator', 'comments')
+            'date', 'no_invoice', 'contractor', 'sum', 'powiat', 'period_from', 'period_to', 'creator', 'information')
+        export_order = ('date', 'no_invoice', 'sum', 'period_from', 'period_to', 'powiat', 'creator', 'information')
 
 
-@admin.register(Invoicesell)
-class InvoicesellAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['data', 'noinvoice', 'contractor', 'sum', 'period_from', 'period_to', 'powiat',
-                    'creator', 'comments', 'author']
-    search_fields = ['noinvoice', 'contractor', 'powiat']
+@admin.register(InvoiceSell)
+class InvoiceSellAdmin(ExportMixin, admin.ModelAdmin):
+    list_display = ['date', 'no_invoice', 'contractor', 'sum', 'period_from', 'period_to', 'powiat',
+                    'creator', 'information', 'author']
+    search_fields = ['no_invoice', 'contractor', 'powiat']
     preserve_filters = True
-    resource_class = InvoicesellResource
+    resource_class = InvoiceSellResource
 
 
 admin.site.register(Creator)
 
 
-@admin.register(Invoiceitems)
-class InvoiceitemsAdmin(admin.ModelAdmin):
-    ordering = ['acount', 'powiat', 'sum']
-    list_display = ['acount', 'powiat', 'sum']
+@admin.register(InvoiceItems)
+class InvoiceItemsAdmin(admin.ModelAdmin):
+    ordering = ['account', 'powiat', 'sum']
+    list_display = ['account', 'powiat', 'sum']
 
 
-@admin.register(Invoicebuy)
-class InvoicebuyAdmin(admin.ModelAdmin):
-    list_display = ['datawyplytu', 'data', 'noinvoice', 'contractor', 'invoiceitems', 'create', 'author']
+@admin.register(InvoiceBuy)
+class InvoiceBuyAdmin(admin.ModelAdmin):
+    list_display = ['date_issue', 'date_receipt', 'no_invoice', 'contractor', 'invoice_items', 'creation_date',
+                    'author']

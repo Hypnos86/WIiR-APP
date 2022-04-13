@@ -4,7 +4,6 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from main.models import Team, Telephone, OrganisationTelephone
 from units.models import Unit
-from invoices.models import Invoicesell, Creator
 
 
 def current_year():

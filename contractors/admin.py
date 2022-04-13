@@ -7,7 +7,7 @@ from .models import Contractor
 
 # admin.site.register(Post, PostAdmin)
 class ContractorResource(resources.ModelResource):
-    nocuntractor = Field(attribute='nocuntractor', column_name='Nr. kontrahenta')
+    no_contractor = Field(attribute='no_contractor', column_name='Nr. kontrahenta')
     name = Field(attribute='name', column_name='Nazwa kontrahenta')
     nip = Field(attribute='nip', column_name='NIP')
     address = Field(attribute='address', column_name='Adres')
@@ -20,12 +20,12 @@ class ContractorResource(resources.ModelResource):
 
     class Meta:
         model = Contractor
-        export_order = ('nocuntractor', 'name', 'nip', 'address', 'zip_code', 'city', 'information')
+        export_order = ('no_contractor', 'name', 'nip', 'address', 'zip_code', 'city', 'information')
 
 
 @admin.register(Contractor)
 class ContractorAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['nocuntractor', 'name', 'nip', 'address', 'zip_code', 'city', 'information', 'creation_date',
+    list_display = ['no_contractor', 'name', 'nip', 'address', 'zip_code', 'city', 'information', 'creation_date',
                     'author']
-    search_fields = ['nocuntractor', 'name', 'nip', 'address', 'zip_code', 'city']
+    search_fields = ['no_contractor', 'name', 'nip', 'address', 'zip_code', 'city']
     resource_class = ContractorResource

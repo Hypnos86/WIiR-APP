@@ -1,20 +1,20 @@
 from django.forms import ModelForm, DateInput, Textarea
-from invoices.models import Invoicesell
+from invoices.models import InvoiceSell
 
 
 class DateField(DateInput):
     input_type = "date"
 
 
-class InvoicesellForm(ModelForm):
+class InvoiceSellForm(ModelForm):
     class Meta:
-        model = Invoicesell
+        model = InvoiceSell
         fields = "__all__"
-        exclude = ['create', 'change', 'author']
+        exclude = ['creation_date', 'change_date', 'author']
 
         widgets = {
-            'data': DateField(),
+            'date': DateField(),
             'period_from': DateField(),
             'period_to': DateField(),
-            'comments': Textarea(attrs={'rows': 3})
+            'information': Textarea(attrs={'rows': 3})
         }

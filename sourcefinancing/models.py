@@ -49,7 +49,7 @@ class Source(models.Model):
         return f'{self.source}'
 
 
-class Financesource(models.Model):
+class FinanceSource(models.Model):
     class Meta:
         verbose_name = "Konto"
         verbose_name_plural = "Konta"

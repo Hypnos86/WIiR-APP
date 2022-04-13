@@ -1,10 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
-from invoices.models import Invoicesell, Creator
-from invoices.forms import InvoicesellForm
+from invoices.models import InvoiceSell, Creator
+from invoices.forms import InvoiceSellForm
 from main.views import current_year, year_choises
-import datetime
 
 
 # Create your views here.
@@ -22,7 +21,7 @@ def buy_invoiceslist(request):
 
 @login_required
 def sell_invoiceslist(request):
-    invoicessell = Invoicesell.objects.all().order_by("-data").filter(data__year=current_year())
+    invoicessell = InvoiceSell.objects.all().order_by("-data").filter(date__year=current_year())
     query = "Wyczyść"
     search = "Szukaj"
     invoicessellsum = len(invoicessell)
@@ -35,26 +34,26 @@ def sell_invoiceslist(request):
     invoicessell_list = paginator.get_page(page_number)
 
     if q:
-        invoicessell = invoicessell.filter(noinvoice__icontains=q) | invoicessell.filter(
-            sum__startswith=q) | invoicessell.filter(data__startswith=q) | invoicessell.filter(
-            contractor__nazwa__icontains=q) | invoicessell.filter(
-            contractor__nocuntractor__startswith=q) | invoicessell.filter(
+        invoicessell = invoicessell.filter(no_invoice__icontains=q) | invoicessell.filter(
+            sum__startswith=q) | invoicessell.filter(date__startswith=q) | invoicessell.filter(
+            contractor__name__icontains=q) | invoicessell.filter(
+            contractor__no_contractor__startswith=q) | invoicessell.filter(
             powiat__powiat__icontains=q) | invoicessell.filter(
             creator__creator__icontains=q)
         return render(request, "invoices/invoicessell_list.html", {"invoices": invoicessell,
-                                                                  "invoicessellsum": invoicessellsum,
-                                                                  "sell": True, "query": query, "year": year,
-                                                                  "creators": creators})
+                                                                   "invoicessellsum": invoicessellsum,
+                                                                   "sell": True, "query": query, "year": year,
+                                                                   "creators": creators})
     else:
         return render(request, "invoices/invoicessell_list.html", {"invoices": invoicessell_list,
-                                                                  "invoicessellsum": invoicessellsum,
-                                                                  "sell": True, "search": search, "year": year,
-                                                                  "creators": creators})
+                                                                   "invoicessellsum": invoicessellsum,
+                                                                   "sell": True, "search": search, "year": year,
+                                                                   "creators": creators})
 
 
 @login_required
 def new_invoicesell(request):
-    invoicesell_form = InvoicesellForm(request.POST or None)
+    invoicesell_form = InvoiceSellForm(request.POST or None)
     context = {'invoicesell_form': invoicesell_form,
                'new': True}
 
@@ -70,8 +69,8 @@ def new_invoicesell(request):
 
 @login_required
 def edit_invoicesell(request, id):
-    invoicesell_edit = get_object_or_404(Invoicesell, pk=id)
-    invoicessell_form = InvoicesellForm(request.POST or None, instance=invoicesell_edit)
+    invoicesell_edit = get_object_or_404(InvoiceSell, pk=id)
+    invoicessell_form = InvoiceSellForm(request.POST or None, instance=invoicesell_edit)
 
     context = {'invoicesell_form': invoicessell_form,
                'new': False}

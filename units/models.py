@@ -27,8 +27,8 @@ class Rodzaj(models.Model):
 
 class Unit(models.Model):
     class Meta:
-        verbose_name = "Jednostka"
-        verbose_name_plural = "Jednostki"
+        verbose_name = 'Jednostka'
+        verbose_name_plural = 'Jednostki'
 
     powiat = models.ForeignKey(Powiat, on_delete=models.CASCADE, related_name="unit")
     rodzaj = models.ForeignKey(Rodzaj, on_delete=models.CASCADE, related_name="unit")
@@ -40,4 +40,4 @@ class Unit(models.Model):
     aktywna = models.BooleanField("Aktywna", null=False, default=0)
 
     def __str__(self):
-        return f'{self.informacje} {self.miasto}, {self.adres}'
+        return f'{self.informacje} - {self.miasto}, {self.adres}'
