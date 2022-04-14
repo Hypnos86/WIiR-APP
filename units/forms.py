@@ -6,11 +6,11 @@ class UnitForm(ModelForm):
 
     class Meta:
         model = Unit
-        fields = ['powiat', 'rodzaj', 'adres', 'kod_pocztowy', 'miasto', 'informacje', 'aktywna']
-        labels = {"powiat": "Powiat",
-                  "rodzaj": "Rodzaj jednostki",
-                  "adres": "Adres",
-                  "kod_pocztowy": "kod pocztowy",
-                  "miasto": "Miasto",
-                  "informacje": "Informacje",
-                  "aktywna": "Aktywna"}
+        fields = ['county', 'type', 'address', 'zip_code', 'city', 'information', 'status']
+        labels = {'county': 'Powiat',
+                  'type': 'Rodzaj jednostki',
+                  'address': 'Adres',
+                  'zip_code': 'kod pocztowy',
+                  'city': 'Miasto',
+                  'information': 'Informacje',
+                  'status': 'Status'}

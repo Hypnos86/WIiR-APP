@@ -2,27 +2,28 @@ from django.db import models
 
 
 # Create your models here.
-class Powiat(models.Model):
+class County(models.Model):
     class Meta:
         verbose_name = "Powiat"
         verbose_name_plural = "Powiaty"
         ordering = ['swop_id']
 
     swop_id = models.CharField(max_length=4, unique=True)
-    powiat = models.CharField(max_length=15, null=False)
+    name = models.CharField(max_length=15, null=False)
 
     def __str__(self):
-        return f'{self.powiat}'
+        return f'{self.name}'
 
 
-class Rodzaj(models.Model):
+class TypeUnit(models.Model):
     class Meta:
         verbose_name = "Rodzaj jednostki"
         verbose_name_plural = "Rodzaje jednostek"
-    rodzaj = models.CharField(max_length=10, null=False)
+    type_short = models.CharField(max_length=10, null=False)
+    type_full = models.CharField(max_length=30, null=False)
 
     def __str__(self):
-        return f'{self.rodzaj}'
+        return f'{self.type_short}'
 
 
 class Unit(models.Model):
@@ -30,14 +31,14 @@ class Unit(models.Model):
         verbose_name = 'Jednostka'
         verbose_name_plural = 'Jednostki'
 
-    powiat = models.ForeignKey(Powiat, on_delete=models.CASCADE, related_name="unit")
-    rodzaj = models.ForeignKey(Rodzaj, on_delete=models.CASCADE, related_name="unit")
-    adres = models.CharField(max_length=30)
-    kod_pocztowy = models.CharField(max_length=6)
-    miasto = models.CharField(max_length=20)
-    informacje = models.TextField(blank=True)
-    owner = models.CharField(max_length=50)
-    aktywna = models.BooleanField("Aktywna", null=False, default=0)
+    county = models.ForeignKey(County, on_delete=models.CASCADE, related_name="unit")
+    type = models.ForeignKey(TypeUnit, on_delete=models.CASCADE, related_name="unit")
+    address = models.CharField(max_length=30)
+    zip_code = models.CharField(max_length=6)
+    city = models.CharField(max_length=20)
+    information = models.TextField(blank=True)
+    manager = models.CharField(max_length=50)
+    status = models.BooleanField('Status', null=False, default=0)
 
     def __str__(self):
-        return f'{self.informacje} - {self.miasto}, {self.adres}'
+        return f'{self.information} - {self.city}, {self.address}'
