@@ -12,9 +12,9 @@ class TeamForm(ModelForm):
 class TelephoneForm(ModelForm):
     class Meta:
         model = Telephone
-        field = ['team', 'position', 'fname', 'lname', 'numbtelbus', 'numbtelpri']
+        field = ['team', 'position', 'fname', 'lname', 'no_tel_room', 'no_tel_private']
         labels = {'team': 'Zespół', 'position': 'Stanowisko', 'fname': 'Imię', 'lname': 'Nazwisko',
-                  'numbtelbus': 'Nr. telefonu', 'numbtelpri': 'Nr komórkowy'}
+                  'no_tel_room': 'Nr. telefonu', 'no_tel_private': 'Nr komórkowy'}
 
 
 class OrganisationTelephoneForm(ModelForm):

@@ -50,10 +50,10 @@
     </div>
 </div>
 
-    {%for te in teams%}
+    {%for team in teams%}
     <div>
     <table class="table table-bordered tel-table my-table">
-        <caption class="tel-table-caption">{{te}}</caption>
+        <caption class="tel-table-caption">{{team}}</caption>
         <thead class="thead-dark">
         <tr class="my-table-tr">
             <th class="text-center" valign="middle" width="40px" scope="col"><span>l.p</span></th>
@@ -66,7 +66,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for worker in te.telephone_set.all %}
+        {% for worker in team.telephone_set.all %}
         <tr class="my-table-tr">
             <td class="text-center" valign="middle" scope="row"></td>
             {% ifequal worker.position 'Koordynator' %}
@@ -75,9 +75,9 @@
             <td class="text-center" valign="middle">{{worker.position|default_if_none:''}}</td>
             {% endifequal %}
             <td width="120px" valign="middle">{{worker.fname|default_if_none:''}} {{worker.lname|default_if_none:''}}</td>
-            <td class="text-center" valign="middle">{{worker.numbroom|default_if_none:''}}</td>
-            <td class="text-center" valign="middle">{{worker.numbtelbus|default_if_none:''}}</td>
-            <td class="text-center" valign="middle">{{worker.numbtelpri|default_if_none:''}}</td>
+            <td class="text-center" valign="middle">{{worker.no_room|default_if_none:''}}</td>
+            <td class="text-center" valign="middle">{{worker.no_tel_room|default_if_none:''}}</td>
+            <td class="text-center" valign="middle">{{worker.no_tel_private|default_if_none:''}}</td>
             <td valign="middle">{{worker.information|default_if_none:''}}</td>
         </tr>
 

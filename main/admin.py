@@ -17,20 +17,20 @@ class TelephoneResource(resources.ModelResource):
     position = Field(attribute='position', column_name='Stanowisko')
     fname = Field(attribute='fname', column_name='Imię')
     lname = Field(attribute='lname', column_name='Nazwisko')
-    numbroom = Field(attribute='numbroom', column_name='Numer pokoju')
-    numbtelbus = Field(attribute='numbtelbus', column_name='Numer telefonu słuźbowego')
-    numbtelpri = Field(attribute='numbtelpri', column_name='Numer komórkowy')
+    no_room = Field(attribute='no_room', column_name='Numer pokoju')
+    no_tel_room = Field(attribute='no_tel_room', column_name='Numer telefonu słóźbowego')
+    no_tel_private = Field(attribute='no_tel_private', column_name='Numer komórkowy')
     information = Field(attribute='information', column_name='Informacje')
 
     class Meta:
         model = Telephone
-        export_order = ('team', 'position', 'fname', 'lname', 'numbroom', 'numbtelbus', 'numbtelpri')
+        export_order = ('team', 'position', 'fname', 'lname', 'no_room', 'no_tel_room', 'no_tel_private')
 
 
 @admin.register(Telephone)
 class ContractorAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['team', 'position', 'fname', 'lname', 'numbroom', 'numbtelbus', 'numbtelpri', 'information']
-    search_fields = ['team', 'position', 'fname', 'lname', 'numbtelbus', 'numbtelpri', 'information']
+    list_display = ['team', 'position', 'fname', 'lname', 'no_room', 'no_tel_room', 'no_tel_private', 'information']
+    search_fields = ['team', 'position', 'fname', 'lname', 'no_tel_room', 'no_tel_private', 'information']
     resource_class = TelephoneResource
 
 

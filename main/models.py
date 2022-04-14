@@ -7,7 +7,7 @@ class Team(models.Model):
         verbose_name = "Komórka Wydziału"
         verbose_name_plural = "Komórki Wydziału"
 
-    team = models.CharField(max_length=50)
+    team = models.CharField(max_length=50, verbose_name='Zespół')
 
     def __str__(self):
         return f'{self.team}'
@@ -17,18 +17,19 @@ class Telephone(models.Model):
     class Meta:
         verbose_name = "Telefony"
         verbose_name_plural = "Telefony"
+        ordering = ['team', 'position']
 
-    team = models.ForeignKey("main.Team", on_delete=models.CASCADE)
+    team = models.ForeignKey("main.Team", on_delete=models.CASCADE, verbose_name='Zespół')
     position = models.CharField("Stanowisko", max_length=20, blank=True, default="")
     fname = models.CharField("Imię", max_length=15, blank=True, default="")
     lname = models.CharField("Nazwisko", max_length=15, null=True, blank=True, default="")
-    numbroom = models.CharField("Nr. pokoju", max_length=2, blank=True, default="")
-    numbtelbus = models.CharField("Nr. telefonu", max_length=6, blank=True, default="")
-    numbtelpri = models.CharField("Nr. komórkowy", max_length=9, null=True, blank=True, default="")
+    no_room = models.CharField("Nr. pokoju", max_length=2, blank=True, default="")
+    no_tel_room = models.CharField("Nr. telefonu", max_length=6, blank=True, default="")
+    no_tel_private = models.CharField("Nr. komórkowy", max_length=9, null=True, blank=True, default="")
     information = models.CharField("Informacje", max_length=200, null=True, blank=True)
 
     def __str__(self):
-        return f'{self.fname} {self.lname} - {self.position}. Tel: {self.numbtelbus}'
+        return f'{self.fname} {self.lname} - {self.position}. Tel: {self.no_tel_room}'
 
 
 class OrganisationTelephone(models.Model):

@@ -5,8 +5,8 @@ from units.forms import UnitForm
 
 
 def units_list(request):
-    units_active = Unit.objects.filter(aktywna=1).order_by("powiat")
-    units_deactivate = Unit.objects.filter(aktywna=0)
+    units_active = Unit.objects.filter(status=1).order_by('county')
+    units_deactivate = Unit.objects.filter(status=0)
     county = County.objects.all().order_by("swop_id")
     type_unit = TypeUnit.objects.all()
     query = "Wyczyść"
@@ -19,24 +19,24 @@ def units_list(request):
     if p and r:
         units_active = units_active.filter(powiat__exact=p, rodzaj__exact=r)
         unit_sum_search = len(units_active)
-        return render(request, "units/unitlist.html", {"units": units_active,
-                                                       "powiaty": county,
-                                                       "rodzaje": type_unit,
-                                                       "unitsum": unit_sum, "query": query,
+        return render(request, "units/unitlist.html", {'units': units_active,
+                                                       'county': county,
+                                                       "type_unit": type_unit,
+                                                       "unit_sum": unit_sum, "query": query,
                                                        "unit_sum_search": unit_sum_search})
     elif p and not r:
         units_active = units_active.filter(powiat__exact=p)
         unit_sum_search = len(units_active)
         return render(request, "units/unitlist.html", {"units": units_active,
-                                                       "powiaty": county,
-                                                       "rodzaje": type_unit,
-                                                       "unitsum": unit_sum, "query": query,
+                                                       "county": county,
+                                                       "type_unit": type_unit,
+                                                       "unit_sum": unit_sum, "query": query,
                                                        "unit_sum_search": unit_sum_search})
     elif r and not p:
         units_active = units_active.filter(rodzaj__exact=r)
         unit_sum_search = len(units_active)
         return render(request, "units/unitlist.html", {"units": units_active,
-                                                       "powiaty": county,
+                                                       "county": county,
                                                        "type_unit": type_unit,
                                                        "unit_sum": unit_sum, "query": query,
                                                        "unit_sum_search": unit_sum_search})

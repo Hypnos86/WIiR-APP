@@ -43,4 +43,7 @@ class UnitAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = UnitResource
 
 
-admin.site.register(TypeUnit)
+@admin.register(TypeUnit)
+class TypeUnitAdmin(admin.ModelAdmin):
+    list_display = ['type_short', 'type_full']
+
