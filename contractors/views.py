@@ -18,7 +18,9 @@ def contractorsell_list(request):
     contractorsell_list = paginator.get_page(page_number)
 
     if q:
-        contractorsell = contractorsell.filter(name__icontains=q)|contractorsell.filter(city__icontains=q)|contractorsell.filter(nocuntractor__startswith=q)|contractorsell.filter(nip__startswith=q)
+        contractorsell = contractorsell.filter(name__icontains=q) | contractorsell.filter(
+            city__icontains=q) | contractorsell.filter(nocuntractor__startswith=q) | contractorsell.filter(
+            nip__startswith=q)
         return render(request, 'contractors/contractorssell_list.html',
                       {'contractors': contractorsell, "consellsum": consellsum, "query": query})
     else:
@@ -38,7 +40,8 @@ def new_contractorsell(request):
             instance.save()
             contractorsell_form.save()
             return redirect('contractors:contractorssell_list')
-    return render(request, 'contractors/contractorsell_form.html', {'contractor_form': contractorsell_form, "new": True})
+    return render(request, 'contractors/contractorsell_form.html',
+                  {'contractor_form': contractorsell_form, "new": True})
 
 
 @login_required

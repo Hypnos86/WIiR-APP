@@ -17,28 +17,31 @@ def units_list(request):
     p = request.GET.get("p")
 
     if p and r:
-        units_active = units_active.filter(powiat__exact=p, rodzaj__exact=r)
+        units_active = units_active.filter(county__exact=p, type__exact=r)
         unit_sum_search = len(units_active)
         return render(request, "units/unitlist.html", {'units': units_active,
                                                        'county': county,
                                                        "type_unit": type_unit,
-                                                       "unit_sum": unit_sum, "query": query,
+                                                       "unit_sum": unit_sum,
+                                                       "query": query,
                                                        "unit_sum_search": unit_sum_search})
     elif p and not r:
-        units_active = units_active.filter(powiat__exact=p)
+        units_active = units_active.filter(county__exact=p)
         unit_sum_search = len(units_active)
         return render(request, "units/unitlist.html", {"units": units_active,
                                                        "county": county,
                                                        "type_unit": type_unit,
-                                                       "unit_sum": unit_sum, "query": query,
+                                                       "unit_sum": unit_sum,
+                                                       "query": query,
                                                        "unit_sum_search": unit_sum_search})
     elif r and not p:
-        units_active = units_active.filter(rodzaj__exact=r)
+        units_active = units_active.filter(type__exact=r)
         unit_sum_search = len(units_active)
         return render(request, "units/unitlist.html", {"units": units_active,
                                                        "county": county,
                                                        "type_unit": type_unit,
-                                                       "unit_sum": unit_sum, "query": query,
+                                                       "unit_sum": unit_sum,
+                                                       "query": query,
                                                        "unit_sum_search": unit_sum_search})
 
     else:
