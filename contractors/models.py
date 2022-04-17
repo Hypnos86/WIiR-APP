@@ -9,7 +9,7 @@ class Contractor(models.Model):
 
     no_contractor = models.CharField('Nr. kontrahenta', max_length=10, null=False, unique=True)
     name = models.CharField('Nazwa', max_length=30, null=True)
-    nip = models.CharField('NIP', max_length=13, null=True, blank=True)
+    nip = models.CharField('NIP', max_length=10, null=True, blank=True)
     address = models.CharField('Adres', max_length=30, null=True)
     zip_code = models.CharField('Kod pocztowy', max_length=6, null=True)
     city = models.CharField('Miasto', max_length=20, null=True)

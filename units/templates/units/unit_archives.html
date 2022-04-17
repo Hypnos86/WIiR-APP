@@ -1,37 +1,42 @@
 {%extends 'base.html'%}
 {%load static%}
 
-
 {%block title%} Jednostki Policji w Województwie Wielkopolskim {%endblock%}
 
 {%block content%}
-<div class="text-center">
-    <form>
-        <div class="d-inline-block mx-4 md-3 text-center">
-            <label for="county" class="county">Powiat</label>
-            <select id="county" name="p" class="form-control" aria-label="Default select example">
-                <option value="">--wybierz--</option>
-                {%for district in county%}
-                    <option value={{district.id}}>{{district}}</option>
-                {%endfor%}
-            </select>
+<div class="row">
+    <div class="text-center col-md-11">
+        <form>
+            <div class="d-inline-block mx-4 md-3 text-center">
+                <label for="county" class="county">Powiat</label>
+                <select id="county" name="p" class="form-control" aria-label="Default select example">
+                    <option value="">--wybierz--</option>
+                    {%for district in county%}
+                        <option value={{district.id}}>{{district}}</option>
+                    {%endfor%}
+                </select>
+            </div>
+            <div class="d-inline-block mx-4 text-center">
+                <label for="type" class="type">Rodzaj jednostki</label>
+                <select id="type" name="r" class="form-control" aria-label="Default select example">
+                    <option value="">--wybierz--</option>
+                    {%for type in type_unit%}
+                        <option value={{type.id}}>{{type}}</option>
+                    {%endfor%}
+                </select>
+            </div>
+            <div class="d-inline-block mx-4">
+                <button type="submit" class="btn btn-outline-primary">{{query}}{{search}}</button>
+            </div>
+        </form>
         </div>
-        <div class="d-inline-block mx-4 text-center">
-            <label for="type" class="type">Rodzaj jednostki</label>
-            <select id="type" name="r" class="form-control" aria-label="Default select example">
-                <option value="">--wybierz--</option>
-                {%for type in type_unit%}
-                    <option value={{type.id}}>{{type}}</option>
-                {%endfor%}
-            </select>
-        </div>
-        <div class="d-inline-block mx-4">
-            <button type="submit" class="btn btn-outline-primary">{{query}}{{search}}</button>
-        </div>
-
-    </form>
+        <div class="col-md-1 moj-button-right my-1"><a href="{%url 'units:units_list'%}">
+            <button class="btn btn-primary">Aktualne</button></a>
+    </div>
 </div>
-<h4 class="units-title">Ewidencja lokalizacji jednostek Policji</h4>
+
+<h4 class="units-title">Ewidencja zarchiwizowanych lokalizacji jednostek Policji</h4>
+
 {% if search%}
 <p><span>Liczba obiektów: {{unit_sum}}</span></p>
 {%endif%}
@@ -41,13 +46,13 @@
 <table class="table table-hover my-table">
     <thead>
     <tr class="my-table-tr">
-        <th align="center" valign="middle" width="80px" scope="col" class="text-center">L.p.</th>
+        <th align="center" valign="middle" width="60px" scope="col" class="text-center">L.p.</th>
         <th align="center" valign="middle" width="120" scope="col" class="text-center">Powiat</th>
         <th align="center" valign="middle" width="100" scope="col" class="text-center">Rodzaj jednostki</th>
         <th align="center" valign="middle" width="300" scope="col" class="text-center">Adres</th>
         <th align="center" valign="middle" width="150" scope="col" class="text-center">Kod pocztowy</th>
         <th align="center" valign="middle" width="250" scope="col" class="text-center">Miasto</th>
-        <th align="center" valign="middle" width="500" scope="col" class="text-center">Informacje</th>
+        <th align="center" valign="middle" width="400" scope="col" class="text-center">Informacje</th>
         <th align="center" valign="middle" width="200" scope="col" class="text-center">Zarządca</th>
         <th align="center" valign="middle" width="50px" scope="col" class="text-center">Stan</th>
     </tr>
@@ -62,14 +67,16 @@
         <td align="center" valign="middle" class="text-center">{{unit.zip_code}}</td>
         <td valign="middle" width="180">{{unit.city}}</td>
         <td valign="middle">{{unit.information}}</td>
-        <td valign="middle">{{unit.manager}}</td>
-        <td align="center" valign="middle">
-            {%if unit.status == True%}
-                Działający
-            {%else%}
-                Zdany
-            {%endif%}
-        </td>
+        {%if unit.manager == 'Policja' %}
+            <td valign="middle">{{unit.manager}}</td>
+        {%else%}
+            <td class = "table-warning" valign="middle">{{unit.manager}}</td>
+        {%endif%}
+        {%if unit.status == True%}
+            <td align="center" valign="middle" title="Działający"><i class="bi bi-circle-fill text-success"></i></td>
+        {%else%}
+            <td align="center" valign="middle" title="Zdany"><i class="bi bi-x-circle-fill text-danger"></i></td>
+        {%endif%}
 
     </tr>
     {%endfor%}

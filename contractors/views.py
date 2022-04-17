@@ -19,7 +19,7 @@ def contractorsell_list(request):
 
     if q:
         contractorsell = contractorsell.filter(name__icontains=q) | contractorsell.filter(
-            city__icontains=q) | contractorsell.filter(nocuntractor__startswith=q) | contractorsell.filter(
+            city__icontains=q) | contractorsell.filter(no_contractor__startswith=q) | contractorsell.filter(
             nip__startswith=q)
         return render(request, 'contractors/contractorssell_list.html',
                       {'contractors': contractorsell, "consellsum": consellsum, "query": query})
