@@ -2,14 +2,13 @@ from django.contrib import admin
 from import_export import resources
 from import_export.admin import ExportMixin
 from import_export.fields import Field
-from contracts.models import State, TypeOfContract, LegalBasic, LegalBasicZzp, Guarantee, ContractImmovables, \
+from contracts.models import State, TypeOfContract, LegalBasic, Guarantee, ContractImmovables, \
     AnnexImmovables, ContractAuction, AnnexContractAuction, GuaranteePeriod, WarrantyPeriod
 
 # Register your models here.
 admin.site.register(State)
 admin.site.register(TypeOfContract)
 admin.site.register(LegalBasic)
-admin.site.register(LegalBasicZzp)
 admin.site.register(GuaranteePeriod)
 admin.site.register(WarrantyPeriod)
 
@@ -60,7 +59,7 @@ class ContractAuctionResource(resources.ModelResource):
     no_contract = Field(attribute='no_contract')
     contractor = Field(attribute='contractor', column_name='Wykonawca')
     price = Field(attribute='price', column_name='Wartość umowy')
-    legal_basic_zzp = Field(attribute='legal_basic_zzp', column_name='Tryb UPZP')
+    legal_basic = Field(attribute='legal_basic', column_name='Tryb UPZP')
     end_date = Field(attribute='end_date', column_name='Data realizacji')
     unit = Field(attribute='unit', column_name='Jednostka')
     last_report_date = Field(attribute='last_report_date', column_name='Data protokołu końcowego')
@@ -72,24 +71,24 @@ class ContractAuctionResource(resources.ModelResource):
 
     class Meta:
         model = ContractAuction
-        fields = ('date', 'no_contract', 'contractor', 'price', 'legal_basic_zzp', 'end_date', 'unit',
+        fields = ('date', 'no_contract', 'contractor', 'price', 'legal_basic', 'end_date', 'unit',
                   'last_report_date', 'guarantee', 'guarantee_period', 'warranty_period', 'security_percent',
                   'security_sum',
                   )
-        export_order = ('date', 'no_contract', 'contractor', 'price', 'legal_basic_zzp', 'end_date', 'unit',
+        export_order = ('date', 'no_contract', 'contractor', 'price', 'legal_basic', 'end_date', 'unit',
                         'last_report_date', 'guarantee', 'guarantee_period', 'warranty_period', 'security_percent',
                         'security_sum')
 
 
 @admin.register(ContractAuction)
 class ContractAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['date', 'no_contract', 'contractor', 'price', 'work_scope', 'legal_basic_zzp', 'end_date', 'unit',
+    list_display = ['date', 'no_contract', 'contractor', 'price', 'work_scope', 'legal_basic', 'end_date', 'unit',
                     'last_report_date', 'guarantee', 'guarantee_period', 'warranty_period', 'security_percent',
                     'security_sum', 'creation_date', 'change_date', 'author']
-    search_fields = ['no_contract', 'legal_basic_zzp', 'last_report_date', 'guarantee', 'guarantee_period',
+    search_fields = ['no_contract', 'legal_basic', 'last_report_date', 'guarantee', 'guarantee_period',
                      'warranty_period', 'security_percent',
                      'security_sum']
-    filter_horizontal = ['inspector']
+    filter_horizontal = ['worker']
     resources_class = ContractAuctionResource
 
 

@@ -3,20 +3,19 @@
 
 {%block title%} Kontrahenci umów czynszowych{%endblock%}
 {%block content%}
-<section class="w-100 p-4 pb-4 d-flex justify-content-center align-items-center flex-column">
-    <div>
+<div class="row">
+    <section class="w-100 p-4 pb-4 d-flex justify-content-center align-items-center flex-column text_center">
         <form method="get">
             <div class="input-group">
-                <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj kontrahenta"
-                       aria-label="Search" aria-describedby="search-addon">
+                <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj kontrahenta" aria-label="Search" aria-describedby="search-addon">
                 <button type="submit" class="btn btn-outline-primary">{{query}}{{search}}</button>
             </div>
         </form>
+    </section>
+        <div class="col-md-12 moj-button-right "><a href="{%url 'contractors:new_contractorsell'%}"><button type="button" class="btn btn-outline-primary">Nowy kontrahent</button></a>
     </div>
-</section>
-<div class="row">
-    <div class="col-md-12 moj-button-right"><a href="{%url 'contractors:new_contractorsell'%}"><button type="button" class="btn btn-outline-primary">Nowy kontrahent</button></a></div>
 </div>
+
 <div class="kontrahenci-title">
     <h4>Kontrahenci umów czynszowych WIiR</h4>
     <p>Liczba kontrahentów: {{consellsum}}</p>

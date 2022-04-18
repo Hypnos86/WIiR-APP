@@ -45,7 +45,7 @@ class OrganisationTelephone(models.Model):
 class IndustryType(models.Model):
     class Meta:
         verbose_name = 'Branża'
-        verbose_name_plural = 'Branże inspektorów'
+        verbose_name_plural = 'Branże'
 
     industry = models.CharField('Brażna', max_length=50)
 
@@ -53,23 +53,17 @@ class IndustryType(models.Model):
         return f'{self.industry}'
 
 
-class Inspector(models.Model):
-    class Meta:
-        verbose_name = 'Inspektor'
-        verbose_name_plural = 'Inspektorzy'
-
-    name = models.CharField('Imię', max_length=20)
-    last_name = models.CharField('Nazwisko', max_length=25)
-    team = models.ForeignKey(Team, on_delete=models.CASCADE, verbose_name='Zespół')
-
-    def __str__(self):
-        return f'{self.name} {self.last_name}'
-
-
 class Employer(models.Model):
     class Meta:
         verbose_name = 'Pracownik'
         verbose_name_plural = 'Pracownicy'
-    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+        ordering = ['team', 'last_name']
 
-    pass
+    name = models.CharField('Imię', max_length=20)
+    last_name = models.CharField('Nazwisko', max_length=25)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, verbose_name='Zespół')
+    industry_specialist = models.BooleanField(default=0, verbose_name='Branżysta merytoryczny')
+    industry = models.ForeignKey(IndustryType, on_delete=models.CASCADE, verbose_name='Branża')
+
+    def __str__(self):
+        return f'{self.name} {self.last_name}'

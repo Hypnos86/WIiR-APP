@@ -47,7 +47,6 @@ def type_expense_list(request):
 
     year = current_year()
 
-
     context = {'objects': objects,
                'limit': limit.limit,
                'limit_item': limit_item,
@@ -118,7 +117,7 @@ def new_order(request):
             instance.save()
             order_form.save()
             return redirect('cpvdict:order_list')
-    return render(request, 'cpvdict/order_form.html', {'order_form': order_form, 'new': True, 'units':units})
+    return render(request, 'cpvdict/order_form.html', {'order_form': order_form, 'new': True, 'units': units})
 
 
 @login_required

@@ -49,17 +49,17 @@ class ContractAuctionForm(ModelForm):
     class Meta:
         model = ContractAuction
 
-        fields = ['date', 'no_contract', 'contractor', 'price', 'work_scope', 'legal_basic_zzp', 'end_date', 'unit',
+        fields = ['date', 'no_contract', 'contractor', 'price', 'work_scope', 'legal_basic', 'end_date', 'unit',
                   'last_report_date', 'guarantee', 'guarantee_period', 'warranty_period', 'security_percent',
-                  'security_sum', 'inspector', 'information', 'report', 'scan', 'creation_date', 'change_date',
+                  'security_sum', 'worker', 'information', 'report', 'scan', 'creation_date', 'change_date',
                   'author']
         labels = {'date': 'Data', 'no_contract': 'Nr. umowy', 'contractor': 'Wykonawca', 'price': 'Kwota umowy',
-                  'work_scope': 'Zakres', 'legal_basic_zzp': 'Tryb zamówienia', 'end_date': 'Data zakończenia umowy',
+                  'work_scope': 'Zakres', 'legal_basic': 'Tryb zamówienia', 'end_date': 'Data zakończenia umowy',
                   'unit': 'Jednostka',
                   'last_report_date': 'Data ostatniego protokołu', 'guarantee': 'Rodzaj gwarancji',
                   'guarantee_period': 'Okres gwarancji', 'warranty_period': 'Okres rękojmi',
                   'security_percent': 'Procent zabezpieczenia',
-                  'security_sum': 'Kwota zabezpieczenia', 'inspector': 'Inspektor', 'information': 'Informacje',
+                  'security_sum': 'Kwota zabezpieczenia', 'worker': 'Pracownik', 'information': 'Informacje',
                   'report': 'Raportowanie do ZZP',
                   'scan': 'Skan umowy'}
         exclude = ['creation_date', 'change_date', 'author']

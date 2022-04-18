@@ -31,7 +31,9 @@ def menu_contractsimmovables(request):
 @login_required
 def new_contractsimmovables(request):
     contract_form = ContractImmovablesForm(request.POST or None, request.FILES or None)
+    units = Unit.objects.all()
     context = {'contract_form': contract_form,
+               'units': units,
                'new': True}
 
     if request.method == 'POST':
@@ -54,7 +56,7 @@ def edit_contractsimmovables(request, id):
 
     context = {'contract_form': contractsimmovables_form,
                'aneks_form': aneks_form,
-               'units':units,
+               'units': units,
                'new': False}
 
     if contractsimmovables_form.is_valid():
@@ -99,8 +101,6 @@ def new_aneks(request):
 @login_required
 def menu_contracts_auction(request):
     contracts_auctions = ContractAuction.objects.all().order_by('-date')
-
-
     query = "Wyczyść"
     search = "Szukaj"
     contracts_auctions_sum = len(contracts_auctions)
@@ -117,8 +117,9 @@ def menu_contracts_auction(request):
 @login_required
 def new_contract_auction(request):
     contract_auction_form = ContractAuctionForm(request.POST or None, request.FILES or None)
-
+    units = Unit.objects.all()
     context = {'contract_auction_form': contract_auction_form,
+               'units': units,
                'new': True}
 
     if request.method == 'POST':
@@ -150,7 +151,7 @@ def edit_contract_auction(request, id):
     aneks_form = AnnexContractAuction(request.POST or None, request.FILES or None)
 
     context = {'contract_auction_form': contract_auction_form,
-               'units':units,
+               'units': units,
                'new': False}
 
     if contract_auction_form.is_valid():

@@ -1,10 +1,9 @@
 from django.db import models
 from units.models import Unit
-from main.models import Inspector
+from main.models import Employer
 from contractors.models import Contractor
 
 
-# my models
 class State(models.Model):
     class Meta:
         verbose_name = "Stan umowy"
@@ -30,24 +29,14 @@ class TypeOfContract(models.Model):
 class LegalBasic(models.Model):
     class Meta:
         verbose_name = "Podstawa prawna"
-        verbose_name_plural = "Nieruchomosci - Podstawy prawne"
+        verbose_name_plural = "Podstawy prawne"
 
-    legal_basic = models.CharField(max_length=30, null=False)
+    act = models.CharField(max_length=100, null=False, verbose_name='Ustawa')
+    legal_basic = models.CharField(max_length=30, null=False, verbose_name='Paragraf w ustawie')
+    legal_basic_text = models.TextField(null=False, verbose_name='Tekst paragrafu')
 
     def __str__(self):
         return f'{self.legal_basic}'
-
-
-class LegalBasicZzp(models.Model):
-    class Meta:
-        verbose_name = "Podstawa prawna ZZP"
-        verbose_name_plural = "Umowy ZZP - Tryb zamówień"
-
-    legal_basic_zzp = models.CharField(max_length=50)
-    legal_basic_zzp_name = models.CharField(max_length=200)
-
-    def __str__(self):
-        return f'{self.legal_basic_zzp}'
 
 
 class Guarantee(models.Model):
@@ -112,7 +101,8 @@ class ContractImmovables(models.Model):
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE, null=False, verbose_name="Jednostka",
                              related_name="contractimmovables")
     scan = models.FileField(upload_to='contracts_immovables/%Y/', null=True, blank=True, verbose_name="Skan umowy")
-    state = models.ForeignKey(State, on_delete=models.CASCADE, blank=False, default=1, related_name="contractimmovables")
+    state = models.ForeignKey(State, on_delete=models.CASCADE, blank=False, default=1,
+                              related_name="contractimmovables")
     information = models.TextField("Informacje", blank=True, default="")
     archives = models.BooleanField("Aktywna", null=False, default=1)
     creation_date = models.DateTimeField("Data utworzenia", auto_now_add=True)
@@ -156,8 +146,8 @@ class ContractAuction(models.Model):
                                    related_name='contract_auction')
     price = models.DecimalField('Wartość umowy', max_digits=12, decimal_places=2)
     work_scope = models.CharField('Przedmiot umowy', max_length=120)
-    legal_basic_zzp = models.ForeignKey(LegalBasicZzp, on_delete=models.CASCADE, related_name='contract_auction',
-                                        verbose_name='Tryb UPZP')
+    legal_basic = models.ForeignKey(LegalBasic, on_delete=models.CASCADE, related_name='contract_auction',
+                                    verbose_name='Tryb UPZP')
     end_date = models.DateField('Data zakończenia')
 
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE, verbose_name='Jednostka',
@@ -171,15 +161,15 @@ class ContractAuction(models.Model):
                                         related_name='contract_auction')
     security_percent = models.SmallIntegerField('Procent zabezpiecznia')
     security_sum = models.DecimalField('Kwota zabezpiecznia', max_digits=10, decimal_places=2, null=True,
-                                            blank=True)
-    inspector = models.ManyToManyField(Inspector, verbose_name='Inspektor', related_name='ContractAuction')
+                                       blank=True)
+    worker = models.ManyToManyField(Employer, verbose_name='Inspektor', related_name='ContractAuction')
     report = models.TextField('Raportowanie', blank=True, default='')
     information = models.TextField('Informacje', blank=True, default='')
     scan = models.FileField(upload_to='contracts_zzp/%Y/', null=True, blank=True, verbose_name='Skan umowy')
     creation_date = models.DateTimeField('Data utworzenia', auto_now_add=True)
     change_date = models.DateTimeField('Zmiana', auto_now=True)
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='contract_auction',
-                               verbose_name="author")
+                               verbose_name="Autor")
 
     def __str__(self):
         return f'{self.no_contract} z dnia {self.date}'
@@ -205,3 +195,11 @@ class AnnexContractAuction(models.Model):
 
     def __str__(self):
         return f'Aneks z dnia {self.date} {self.scan}'
+
+
+class InvestmentTask():
+    title = models.CharField(max_length=80, null=True, verbose_name='Nazwa zadania')
+    no_letter = models.CharField(max_length=40, null=True, verbose_name='Pismo l.dz.')
+    acceptance_letter = models.FileField(upload_to='contracts/omvestment_program/%Y/', null=True, blank=True,
+                                         verbose_name='Skan pisma')
+

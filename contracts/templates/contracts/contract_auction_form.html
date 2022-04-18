@@ -16,17 +16,17 @@
             <div class="col-md-4 p-2">{{contract_auction_form.no_contract|bootstrap}}</div>
             <div class="col-md-4 p-2">{{contract_auction_form.price|bootstrap}}</div>
             <div class="col-md-8 p-2">{{contract_auction_form.contractor|bootstrap}}</div>
-            <div class="col-md-4 p-2">{{contract_auction_form.legal_basic_zzp|bootstrap}}</div>
+            <div class="col-md-4 p-2">{{contract_auction_form.legal_basic|bootstrap}}</div>
           <div class="col-md-8 p-2">
                 <div class="form-grup">
                     <label class="control-label" for="id_unit">Jednostka</label>
                     <div class="">
                         <select name="unit" class="form-control" required id="id_unit">
-                            {% regroup units by powiat as powiat_list %}
+                            {% regroup units by county as county_list %}
                             <option>---------</option>
-                            {% for powiat in powiat_list %}
-                            <optgroup label="{{powiat.grouper}}">
-                                {% for unit in powiat.list %}
+                            {% for county in county_list %}
+                            <optgroup label="{{county.grouper}}">
+                                {% for unit in county.list %}
                                 {% if contract_auction_form.unit.value == unit.id %}
                                 <option value="{{unit.id}}" selected>{{unit}}</option>
                                 {% else %}
@@ -46,7 +46,7 @@
             <div class="col-md-4 p-2">{{contract_auction_form.warranty_period|bootstrap}}</div>
             <div class="col-md-3 p-2">{{contract_auction_form.security_percent|bootstrap}}</div>
             <div class="col-md-3 p-2">{{contract_auction_form.last_report_date|bootstrap}}</div>
-            <div class="col-md-6 p-2">{{contract_auction_form.inspector|bootstrap}}</div>
+            <div class="col-md-6 p-2">{{contract_auction_form.worker|bootstrap}}</div>
 
             {%if new == False%}
 

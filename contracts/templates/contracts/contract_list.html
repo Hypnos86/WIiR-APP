@@ -3,20 +3,20 @@
 {% load static %}
 {% block title %}Umowy najmu - WIiR{%endblock%}
 {% block content %}
-<section class="w-100 p-4 pb-4 d-flex justify-content-center align-items-center flex-column">
-    <div>
+<div class="row">
+    <section class="w-100 p-4 pb-4 d-flex justify-content-center align-items-center flex-column text-center">
         <form method="get">
             <div class="input-group">
                 <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj umowy" aria-label="Search" aria-describedby="search-addon">
                 <button type="submit" class="btn btn-outline-primary">{{query}}{{search}}</button>
             </div>
         </form>
+    </section>
+        <div class="col-md-12 moj-button-right my-1"><a href="{%url 'contracts:new_contractsimmovables'%}"><button class="btn btn-outline-primary button-choise-contracts">Nowa umowa</button></a>
     </div>
-</section>
-<div class="row">
-    <div class="col-md-12 moj-button-right my-1"><a href="{%url 'contracts:new_contractsimmovables'%}">
-        <button class="btn btn-outline-primary button-choise-contracts">Nowa umowa</button></a></div>
 </div>
+
+
 <div class="kontrahenci-title">
     <h4>Umowy najmu</h4>
     <p class="m-0"><span>Liczba umów aktualnych: {{contrsum}}</span></p>
