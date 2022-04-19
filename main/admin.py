@@ -2,7 +2,7 @@ from django.contrib import admin
 from import_export import resources
 from import_export.admin import ExportMixin
 from import_export.fields import Field
-from main.models import Telephone, Team, OrganisationTelephone, Employer, IndustryType
+from main.models import Telephone, Team, OrganisationTelephone, Employer, IndustryType, AccesModule
 
 # Register your models here.
 # admin.site.site_header ="WIiR-APP"
@@ -55,3 +55,8 @@ class EmployerResource(resources.ModelResource):
 @admin.register(Employer)
 class EmployerAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ['id', 'name', 'last_name', 'team', 'industry_specialist', 'industry']
+
+
+@admin.register(AccesModule)
+class AccesModuleAdmin(admin.ModelAdmin):
+    list_display = ['user', 'contractors_module', 'contracts_module', 'investments_module', 'invoices_module']
