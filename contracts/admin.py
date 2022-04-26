@@ -41,7 +41,7 @@ class ContractImmovablesResource(resources.ModelResource):
 class ContractAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ['date', 'no_contract', 'contractor', 'legal_basic', 'period_of_validity', 'type_of_contract',
                     'usable_area', 'rent_cost', 'electric_cost', 'gas_cost', 'water_cost', 'central_heating_cost',
-                    'garbage_cost', 'garbage_tax_cost', 'property_cost', 'unit', 'state', 'archives', 'creation_date',
+                    'garbage_cost', 'garbage_tax_cost', 'property_cost', 'unit', 'state', 'creation_date',
                     'change','author']
     search_fields = ['no_contract', 'contractor']
     preserve_filters = True

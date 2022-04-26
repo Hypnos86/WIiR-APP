@@ -12,12 +12,12 @@ class ContractImmovablesForm(ModelForm):
         fields = ['date', 'no_contract', 'contractor', 'period_of_validity', 'usable_area', 'legal_basic',
                   'type_of_contract', 'rent_cost', 'electric_cost', 'gas_cost', 'water_cost', 'central_heating_cost',
                   'garbage_cost', 'garbage_tax_cost', 'property_cost', 'unit', 'scan', 'state', 'information',
-                  'archives', 'creation_date', 'change', 'author']
+                  'creation_date', 'change', 'author']
 
         field_order = ['date', 'no_contract', 'contractor', 'period_of_validity', 'usable_area', 'legal_basic',
                        'type_of_contract', 'rent_cost', 'electric_cost', 'gas_cost', 'water_cost',
                        'central_heating_cost', 'garbage_cost', 'garbage_tax_cost', 'property_cost', 'unit', 'scan',
-                       'state', 'information', 'archives', 'creation_date', 'change', 'author']
+                       'state', 'information', 'creation_date', 'change', 'author']
 
         labels = {'date': 'Data umowy', 'no_contract': 'Nr umowy', 'contractor': 'Kontrahent',
                   'legal_basic': 'Podstawa prawda', 'period_of_validity': 'Okres obowiązywania',
@@ -27,7 +27,7 @@ class ContractImmovablesForm(ModelForm):
                   'property_cost': 'Podatek od nieruchomości', 'unit': 'Jednostka', 'scan': 'Skan umowy',
                   'state': 'Stan umowy', 'information': 'Informacje'}
 
-        exclude = ['archives', 'creation_date', 'change', 'author']
+        exclude = ['creation_date', 'change', 'author']
 
         widgets = {'date': DateField(),
                    'period_of_validity': DateField(),

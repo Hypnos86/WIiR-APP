@@ -58,19 +58,19 @@ def edit_contractsimmovables(request, id):
                'aneks_form': aneks_form,
                'units': units,
                'new': False}
+    if request.method == 'POST':
+        if contractsimmovables_form.is_valid():
+            contract = contractsimmovables_form.save(commit=False)
+            contract.author = request.user
+            contractsimmovables_form.save()
 
-    if contractsimmovables_form.is_valid():
-        contract = contractsimmovables_form.save(commit=False)
-        contract.author = request.user
-        contractsimmovables_form.save()
+            if aneks_form.is_valid():
+                instance = aneks_form.save(commit=False)
+                instance.author = request.user
+                instance.contract_immovables = contractsimmovables_edit
+                aneks_form.save()
 
-        if aneks_form.is_valid():
-            instance = aneks_form.save(commit=False)
-            instance.autor = request.user
-            instance.contractimmovables = contractsimmovables_edit
-            aneks_form.save()
-
-        return redirect('contracts:menu_contractsimmovables')
+                return redirect('contracts:menu_contractsimmovables')
     return render(request, 'contracts/contract_form.html', context)
 
 
