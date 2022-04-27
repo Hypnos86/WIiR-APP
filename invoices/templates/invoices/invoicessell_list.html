@@ -47,15 +47,15 @@
         {% for invoice in invoices %}
         <tr class="my-table-tr">
             <td align="center" valign="middle" scope="row"><span class="text-center"></span></td>
-            <td align="center" valign="middle"><span>{{invoice.data|date:"d.m.Y"}}</span></td>
-            <td align="center" valign="middle"><span>{{invoice.noinvoice|default_if_none:''}}</span></td>
+            <td align="center" valign="middle"><span>{{invoice.date|date:"d.m.Y"}}</span></td>
+            <td align="center" valign="middle"><span>{{invoice.no_invoice|default_if_none:''}}</span></td>
             <td align="center" valign="middle"><span>{{invoice.sum|intcomma}} zł</span></td>
             <td align="center" valign="middle"><span>{{invoice.period_from|date:"m.Y"}} - {{invoice.period_to|date:"m.Y"}}</span>
             </td>
             <td valign="middle"><span>{{invoice.contractor}}</span></td>
-            <td align="center" valign="middle">{{invoice.powiat}}</td>
+            <td align="center" valign="middle">{{invoice.county}}</td>
             <td align="center" valign="middle"><span>{{invoice.creator}}</span></td>
-            <td align="center" valign="middle"><span>{{invoice.comments}}</span></td>
+            <td align="center" valign="middle"><span>{{invoice.information}}</span></td>
             <td width="120" class="text-center">
                 <a href="{%url 'invoices:edit_invoicesell' invoice.id %}">
                     <button type="submit" class="btn btn-outline-primary icon-color mx-1 "><i

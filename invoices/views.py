@@ -21,7 +21,7 @@ def buy_invoiceslist(request):
 
 @login_required
 def sell_invoiceslist(request):
-    invoicessell = InvoiceSell.objects.all().order_by("-data").filter(date__year=current_year())
+    invoicessell = InvoiceSell.objects.all().order_by("-date").filter(date__year=current_year())
     query = "Wyczyść"
     search = "Szukaj"
     invoicessellsum = len(invoicessell)

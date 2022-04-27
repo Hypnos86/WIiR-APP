@@ -11,7 +11,7 @@ class InvoiceSellResource(resources.ModelResource):
     no_invoice = Field(attribute='no_invoice', column_name='Nr. faktury')
     contractor = Field(attribute='contractor', column_name='Kontrahent')
     sum = Field(attribute='sum', column_name='Kwota')
-    powiat = Field(attribute='powiat', column_name='Powiat')
+    county = Field(attribute='county', column_name='Powiat')
     period_from = Field(attribute='period_from', column_name='Okres od')
     period_to = Field(attribute='period_to', column_name='Okres do')
     creation_date = Field(attribute='creator', column_name='Osoba wystawiająca')
@@ -20,15 +20,15 @@ class InvoiceSellResource(resources.ModelResource):
     class Meta:
         model = InvoiceSell
         fields = (
-            'date', 'no_invoice', 'contractor', 'sum', 'powiat', 'period_from', 'period_to', 'creator', 'information')
-        export_order = ('date', 'no_invoice', 'sum', 'period_from', 'period_to', 'powiat', 'creator', 'information')
+            'date', 'no_invoice', 'contractor', 'sum', 'county', 'period_from', 'period_to', 'creator', 'information')
+        export_order = ('date', 'no_invoice', 'sum', 'period_from', 'period_to', 'county', 'creator', 'information')
 
 
 @admin.register(InvoiceSell)
 class InvoiceSellAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['date', 'no_invoice', 'contractor', 'sum', 'period_from', 'period_to', 'powiat',
+    list_display = ['date', 'no_invoice', 'contractor', 'sum', 'period_from', 'period_to', 'county',
                     'creator', 'information', 'author']
-    search_fields = ['no_invoice', 'contractor', 'powiat']
+    search_fields = ['no_invoice', 'contractor', 'county']
     preserve_filters = True
     resource_class = InvoiceSellResource
 
@@ -38,8 +38,8 @@ admin.site.register(Creator)
 
 @admin.register(InvoiceItems)
 class InvoiceItemsAdmin(admin.ModelAdmin):
-    ordering = ['account', 'powiat', 'sum']
-    list_display = ['account', 'powiat', 'sum']
+    ordering = ['account', 'county', 'sum']
+    list_display = ['account', 'county', 'sum']
 
 
 @admin.register(InvoiceBuy)
