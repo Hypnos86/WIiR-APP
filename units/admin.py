@@ -23,7 +23,7 @@ class CountyAdmin(ExportMixin, admin.ModelAdmin):
 
 
 class UnitResource(resources.ModelResource):
-    county = Field(attribute='powiat', column_name='Powiat')
+    county = Field(attribute='county', column_name='Powiat')
     type = Field(attribute='type', column_name='Rodzaj jednostki')
     zip_code = Field(attribute='zip_code', column_name='Kod pocztowy')
     address = Field(attribute='address', column_name='Adres')
