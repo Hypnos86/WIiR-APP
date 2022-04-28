@@ -9,7 +9,7 @@ class State(models.Model):
         verbose_name = "Stan umowy"
         verbose_name_plural = "Nieruchomości - Stany umów"
 
-    state = models.CharField(max_length=20)
+    state = models.CharField(max_length=20, verbose_name='Stan')
 
     def __str__(self):
         return f'{self.state}'

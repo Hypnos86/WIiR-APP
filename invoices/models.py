@@ -26,7 +26,6 @@ class Creator(models.Model):
         verbose_name_plural = "Wystawcy faktur - sprzedaż"
 
     creator = models.CharField("Pracownik", max_length=20)
-    author = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name='creator')
 
     def __str__(self):
         return f'{self.creator}'

@@ -10,7 +10,6 @@
         <form method="post" enctype="multipart/form-data">
         {%csrf_token%}
             <div class="row">
-<!--                <div class="col-md-4 p-2 ">{{contract_form|bootstrap}}</div>-->
                 <div class="col-md-4 p-2 ">{{contract_form.date|bootstrap}}</div>
                 <div class="col-md-4 p-2">{{contract_form.no_contract|bootstrap}}</div>
                 <div class="col-md-4 p-2">{{contract_form.type_of_contract|bootstrap}}</div>
@@ -24,7 +23,7 @@
                         <div class="">
                             <select name="unit" class="form-control" required id="id_unit">
                                 {% regroup units by county as county_list %}
-                                <option>---------</option>
+                                    <option>---------</option>
                                 {% for county in county_list %}
                                     <optgroup label="{{county.grouper}}">
                                         {% for unit in county.list %}
@@ -67,29 +66,33 @@
                 <div class="col-md-9">{{contract_form.information|bootstrap}}</div>
                 <div class="col-md-3">{{contract_form.scan|bootstrap}}</div>
             </div>
+
         </div>
         {%if new == False%}
-<!--        <div class="my-5">-->
-<!--            <fieldset class="col-md-9 p-2 my-cost">-->
-<!--                <legend>Aneks</legend>-->
-<!--                <div class="row m-3 col-md-8">-->
-<!--                    <div class="col-md-5 ">{{aneks_form.date_annex|bootstrap}}</div>-->
-<!--                    <div class="col-md-4 ">{{aneks_form.scan_annex|bootstrap}}</div>-->
-<!--                </div>-->
-<!--            </fieldset>-->
-<!--        </div>-->
-        {%endif%}
-        <div class="row mt-5">
-            {%if new == False%}
-
-            <div class="col-md-12 moj-button-right">
-                <button type="submit" class="btn btn-outline-primary">Zapisz zmiany</button>
+            <div class="my-5">
+                <fieldset class="col-md-9 p-2 my-cost">
+                    <legend>Aneks</legend>
+                    <div class="row m-3 col-md-8">
+                        <div class="col-md-5 ">{{aneks_form.date_annex|bootstrap}}</div>
+                        <div class="col-md-4 ">{{aneks_form.scan_annex|bootstrap}}</div>
+                    </div>
+                </fieldset>
+                <div class="row">
+                    <li class="col_md-2">{{contract_form.state|bootstrap}}</li>
+                </div>
             </div>
-        </div>
+        {%endif%}
+            <div class="row mt-5">
+                {%if new == False%}
+
+                <div class="col-md-12 moj-button-right">
+                    <button type="submit" class="btn btn-outline-primary">Zapisz zmiany</button>
+                </div>
+            </div>
         {%else%}
-        <div class="col-md-12 moj-button-right">
-            <button type="submit" class="btn btn-outline-primary">Dodaj</button>
-        </div>
+            <div class="col-md-12 moj-button-right">
+                <button type="submit" class="btn btn-outline-primary">Dodaj</button>
+            </div>
         {%endif%}
     </form>
 </div>

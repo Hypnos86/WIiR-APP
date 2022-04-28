@@ -9,10 +9,13 @@ from units.models import Unit
 # Create your views here.
 @login_required
 def menu_contractsimmovables(request):
-    contracts = ContractImmovables.objects.all().order_by("-date")
+    contracts = ContractImmovables.objects.all().order_by("-date").filter(state__state__icontains='Aktualna')
+    contracts_archive = ContractImmovables.objects.all().order_by("-date").filter(state__state__icontains='Zakończona')
+
     query = "Wyczyść"
     search = "Szukaj"
     contrsum = len(contracts)
+    con_archive_sum = len(contracts_archive)
     q = request.GET.get("q")
 
     paginator = Paginator(contracts, 40)
@@ -22,10 +25,12 @@ def menu_contractsimmovables(request):
     if q:
         contracts = contracts.filter(contractor__name__icontains=q)
         return render(request, 'contracts/contract_list.html',
-                      {'contracts': contracts, "contrsum": contrsum, "query": query})
+                      {'contracts': contracts, 'con_archive_sum': con_archive_sum, 'contrsum': contrsum,
+                       'query': query})
     else:
         return render(request, 'contracts/contract_list.html',
-                      {'contracts': contracts_list, "contrsum": contrsum, "search": search})
+                      {'contracts': contracts_list, 'contrsum': contrsum, 'con_archive_sum': con_archive_sum,
+                       'search': search})
 
 
 @login_required
