@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'invoices.apps.InvoicesConfig',
     'sourcefinancing.apps.SourcefinancingConfig',
     'cpvdict.apps.CpvdictConfig',
-    'sustainable_management.app.Sustainable_managementConfig'
+    'permanentadministration.apps.PermanentadministrationConfig'
 ]
 
 # aby dzialaly PDFy i przegladanie
