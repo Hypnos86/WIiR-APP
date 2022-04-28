@@ -13,15 +13,15 @@
 <form class="container" method="post">
     {%csrf_token%}
      <div class="row">
-            <div class="col-md-4 p-2">{{invoicesell_form.data|bootstrap}}</div>
-            <div class="col-md-4 p-2">{{invoicesell_form.noinvoice|bootstrap}}</div>
+            <div class="col-md-4 p-2">{{invoicesell_form.date|bootstrap}}</div>
+            <div class="col-md-4 p-2">{{invoicesell_form.no_invoice|bootstrap}}</div>
              <div class="col-md-4 p-2">{{invoicesell_form.sum|bootstrap}}</div>
             <div class="col-md-12 p-2">{{invoicesell_form.contractor|bootstrap}}</div>
             <div class="col-md-6 p-2">{{invoicesell_form.period_from|bootstrap}}</div>
             <div class="col-md-6 p-2">{{invoicesell_form.period_to|bootstrap}}</div>
-            <div class="col-md-6 p-2">{{invoicesell_form.powiat|bootstrap}}</div>
+            <div class="col-md-6 p-2">{{invoicesell_form.county|bootstrap}}</div>
             <div class="col-md-6 p-2">{{invoicesell_form.creator|bootstrap}}</div>
-            <div class="col-md-12 p-2">{{invoicesell_form.comments|bootstrap}}</div>
+            <div class="col-md-12 p-2">{{invoicesell_form.information|bootstrap}}</div>
         </div>
 <div class="row mt-3">
         <div class="col-md-12 moj-button-right">
