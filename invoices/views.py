@@ -38,7 +38,7 @@ def sell_invoiceslist(request):
             sum__startswith=q) | invoicessell.filter(date__startswith=q) | invoicessell.filter(
             contractor__name__icontains=q) | invoicessell.filter(
             contractor__no_contractor__startswith=q) | invoicessell.filter(
-            powiat__powiat__icontains=q) | invoicessell.filter(
+            county__name__icontains=q) | invoicessell.filter(
             creator__creator__icontains=q)
         return render(request, "invoices/invoicessell_list.html", {"invoices": invoicessell,
                                                                    "invoicessellsum": invoicessellsum,

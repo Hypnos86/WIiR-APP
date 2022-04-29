@@ -57,11 +57,9 @@ def edit_contractsimmovables(request, id):
     contractsimmovables_form = ContractImmovablesForm(request.POST or None, request.FILES or None,
                                                       instance=contractsimmovables_edit)
 
-    aneks_form = AnnexImmovablesForm(request.POST or None, request.FILES or None)
     units = Unit.objects.all()
 
     context = {'contract_form': contractsimmovables_form,
-               'aneks_form': aneks_form,
                'units': units,
                'new': False}
     if request.method == 'POST':
@@ -70,14 +68,25 @@ def edit_contractsimmovables(request, id):
             contract.author = request.user
             contractsimmovables_form.save()
 
-            if aneks_form.is_multipart():
-                instance = aneks_form.save(commit=False)
-                instance.author = request.user
-                instance.contract_immovables = contractsimmovables_edit
-                aneks_form.save()
-
             return redirect('contracts:menu_contractsimmovables')
     return render(request, 'contracts/contract_form.html', context)
+
+
+@login_required
+def add_annex_immovables(request, id):
+    contractsimmovables_edit = get_object_or_404(ContractImmovables, pk=id)
+    annex_form = AnnexImmovablesForm(request.POST or None, request.FILES or None)
+    context = {'annex_form': annex_form}
+
+    if request.method == 'POST':
+        if annex_form.is_valid():
+            instance = annex_form.save(commit=False)
+            instance.contract_immovables = contractsimmovables_edit
+            instance.author = request.user
+            instance.save()
+        return redirect('contracts:menu_contractsimmovables')
+
+    return render(request, 'contracts/new_annex_immovables_form.html', context)
 
 
 @login_required
@@ -86,22 +95,6 @@ def show_contractsimmovables(request, id):
     aneksy = contract.annex.all()
 
     return render(request, 'contracts/show_contract_immovables.html', {'contract': contract, 'aneksy': aneksy})
-
-
-@login_required
-def new_aneks(request):
-    aneks_form = AnnexImmovablesForm(request.POST or None, request.FILES or None)
-    context = {'aneks_form': aneks_form,
-               'new': True}
-
-    if request.method == 'POST':
-        if aneks_form.is_valid():
-            instance = aneks_form.save(commit=False)
-            instance.author = request.user
-            instance.save()
-            return redirect('contracts:menu_contractsimmovables')
-
-    return render(request, 'contracts/aneks_form.html', context)
 
 
 @login_required

@@ -101,7 +101,7 @@ class ContractImmovables(models.Model):
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE, null=False, verbose_name="Jednostka",
                              related_name="contractimmovables")
     scan = models.FileField(upload_to='contracts_immovables/%Y/', null=True, blank=True, verbose_name="Skan umowy")
-    state = models.ForeignKey(State, on_delete=models.CASCADE, blank=False, default=1,
+    state = models.ForeignKey(State, on_delete=models.CASCADE, blank=False, default='Aktualna',
                               related_name="contractimmovables", verbose_name='Stan')
     information = models.TextField("Informacje", blank=True, default="")
     creation_date = models.DateTimeField("Data utworzenia", auto_now_add=True)
@@ -122,9 +122,8 @@ class AnnexImmovables(models.Model):
     contract_immovables = models.ForeignKey(ContractImmovables, on_delete=models.CASCADE,
                                             verbose_name='Umowa',
                                             related_name='annex')
-    scan_annex = models.FileField(upload_to='contracts_immovables/annexes/%Y/', null=True, blank=True,
-                                  verbose_name='Skan aneks')
-    date_annex = models.DateField('Data aneksu', null=True, blank=True)
+    scan_annex = models.FileField(upload_to='contracts_immovables/annexes/%Y/', null=True, verbose_name='Skan aneks')
+    date_annex = models.DateField('Data aneksu', null=True)
     creation_date = models.DateTimeField('Data utworzenia', auto_now_add=True)
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
 
