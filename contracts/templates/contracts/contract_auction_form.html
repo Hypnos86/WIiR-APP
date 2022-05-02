@@ -46,10 +46,12 @@
             <div class="col-md-4 p-2">{{contract_auction_form.warranty_period|bootstrap}}</div>
             <div class="col-md-3 p-2">{{contract_auction_form.security_percent|bootstrap}}</div>
             <div class="col-md-3 p-2">{{contract_auction_form.last_report_date|bootstrap}}</div>
+
+
             <div class="col-md-6 p-2">{{contract_auction_form.worker|bootstrap}}</div>
+           
 
             {%if new == False%}
-
             <div class="col-md-6 p-2">{{contract_auction_form.information|bootstrap}}</div>
             <div class="col-md-6 p-2 ">{{contract_auction_form.raport|bootstrap}}</div>
             {% else %}

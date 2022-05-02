@@ -59,7 +59,7 @@ class GuaranteePeriod(models.Model):
     guarantee_period = models.SmallIntegerField('Okres gwarancji (mc)')
 
     def __str__(self):
-        return f'{self.guarantee_period}'
+        return f'{self.guarantee_period} mc'
 
 
 class WarrantyPeriod(models.Model):
@@ -71,7 +71,7 @@ class WarrantyPeriod(models.Model):
     warranty_period = models.SmallIntegerField('Okres rękojmi (mc)')
 
     def __str__(self):
-        return f'{self.warranty_period}'
+        return f'{self.warranty_period} mc'
 
 
 class ContractImmovables(models.Model):

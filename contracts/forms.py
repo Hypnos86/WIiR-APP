@@ -1,5 +1,6 @@
 from django.forms import ModelForm, DateInput, Textarea, widgets, DecimalField
 from contracts.models import ContractImmovables, AnnexImmovables, ContractAuction
+from main.models import Employer
 
 
 class DateField(DateInput):
@@ -66,3 +67,7 @@ class ContractAuctionForm(ModelForm):
         widgets = {'date': DateField(),
                    'end_date': DateField(),
                    'last_report_date': DateField(), }
+
+        def __init__(self, worker, *args, **kwargs):
+            super(ContractAuctionForm, self).__init__(*args, **kwargs)
+            self.fields['worker'].queryset = Employer.objects.filter(industry_specialist=True)

@@ -69,18 +69,18 @@ class Employer(models.Model):
         return f'{self.name} {self.last_name}'
 
 
-class AccesModule(models.Model):
+class AccessModule(models.Model):
     class Meta:
         verbose_name = 'Dostęp do modułów'
         verbose_name_plural = 'Dostęp do modułów'
 
-    user = models.OneToOneField('auth.User', on_delete=models.CASCADE, related_name='accesmodule',
-                                verbose_name='Użytkownik')
-    contractors_module = models.BooleanField('Moduł Kontrahenci', default=0)
-    contracts_module = models.BooleanField('Moduł Umowy', default=0)
-    investments_module = models.BooleanField('Moduł Inwestycje', default=0)
-    invoices_module = models.BooleanField('Moduł Faktury', default=0)
+    user = models.OneToOneField('auth.User', on_delete=models.CASCADE, verbose_name='Użytkownik',
+                                related_name='accessmodule')
+    contractors_module = models.BooleanField('Moduł Kontrahenci', default=False)
+    contracts_immovables_module = models.BooleanField('Moduł Umowy Najmu', default=False)
+    investments_module = models.BooleanField('Moduł Inwestycje', default=False)
+    invoices_module = models.BooleanField('Moduł Faktury', default=False)
+    cpvdict_module = models.BooleanField('Moduł Rodzajowośc WIiR', default=False)
 
     def __str__(self):
         return f'{self.user}'
-

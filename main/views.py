@@ -1,7 +1,7 @@
 import datetime
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from main.models import Team, Telephone, OrganisationTelephone
+from main.models import Team, Telephone, OrganisationTelephone, AccessModule
 
 
 def current_year():
@@ -33,3 +33,10 @@ def telephone_list(request):
 def welcome(request):
     date = datetime.date.today().today()
     return render(request, 'main/welcome.html', {'date': date})
+
+
+def give_access_to_modules(request):
+    access = AccessModule.objects.all()
+
+    context = {'access': access}
+    return render(request, 'main/access_modules.html', context)

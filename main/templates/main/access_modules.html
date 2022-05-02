@@ -1,0 +1,26 @@
+{%extends 'base.html'%}
+{%load static%}
+
+{%block title%}{%endblock%}
+{%block content%}
+<div class="container">
+    {%if user.is_authenticated%}
+
+    <ul class="list-group col-md-3">
+        <li class="list-group-item"><span>Moduł Kontrahenci: </span> {%if user.accessmodule.contractors_module%}<i
+                class="bi bi-check-circle-fill text-success"></i> {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}
+        </li>
+        <li class="list-group-item"><span>Moduł Umowy: </span>{%if user.accessmodule.contracts_immovables_module%}<i
+                class="bi bi-check-circle-fill text-success"></i> {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</li>
+        <li class="list-group-item"><span>Moduł Inwestycje: </span>{%if user.accessmodule.investments_module%}<i
+                class="bi bi-check-circle-fill text-success"></i> {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</li>
+        <li class="list-group-item"><span>Moduł Faktury: </span>{%if user.accessmodule.invoices_module%}<i
+                class="bi bi-check-circle-fill text-success"></i> {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</li>
+        <li class="list-group-item"><span>Moduł Rodzajowość WIiR: </span>{%if user.accessmodule.cpvdict_module%}<i
+                class="bi bi-check-circle-fill text-success"></i> {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</li>
+    </ul>
+
+    {%else%}
+    Użytkownik anonimowy{%endif%}
+</div>
+{%endblock%}
