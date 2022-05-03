@@ -8,7 +8,9 @@
     <button class="btn btn-outline-primary"><span class="bi bi-chevron-compact-left">Cofnij</span></button></a></div>
     {%if new == False%}
         <div class="col-md-12 moj-button-right">
-            <a href="{% url 'contracts:add_annex_immovables' %}"><button type="submit" class="btn btn-outline-primary">Dodaj aneks</button></a>
+<!--            <a href="{% url 'contracts:add_annex_immovables' contract.id %}"></a>-->
+                <button type="button" class="btn btn-outline-primary" onclick="openModal()">Dodaj aneks </button>
+
         </div>
     {%endif%}
 <div class="container px-5 pb-5 col-md-8">
@@ -91,14 +93,32 @@
     </form>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="annexModal" data-url="{% url 'contracts:add_annex_immovables' contract.id %}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+    </div>
+  </div>
+</div>
+
 <script>
      document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-invoices").classList.remove("active");
      document.getElementById("button-contracts").classList.add("active");
      document.getElementById("button-contractors").classList.remove("active");
 
+    // definicja funkcji otwierającej modal
+    // będzie uruchamiana na event "onclick"
+    function openModal(){
+        var url = $("#annexModal").data("url");
+        $("#annexModal .modal-content").load(url);
+        $("#annexModal").modal("show");
+    }
 
-
+    function submitForm(){
+        $("#submitButton").closest("form").submit();
+    }
 
 </script>
 {% endblock %}

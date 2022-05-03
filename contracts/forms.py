@@ -10,17 +10,17 @@ class DateField(DateInput):
 class ContractImmovablesForm(ModelForm):
     class Meta:
         model = ContractImmovables
-        fields = ['date', 'no_contract', 'contractor', 'period_of_validity', 'usable_area', 'legal_basic',
+        fields = ['id', 'date', 'no_contract', 'contractor', 'period_of_validity', 'usable_area', 'legal_basic',
                   'type_of_contract', 'rent_cost', 'electric_cost', 'gas_cost', 'water_cost', 'central_heating_cost',
                   'garbage_cost', 'garbage_tax_cost', 'property_cost', 'unit', 'scan', 'state', 'information',
                   'creation_date', 'change', 'author']
 
-        field_order = ['date', 'no_contract', 'contractor', 'period_of_validity', 'usable_area', 'legal_basic',
+        field_order = ['id', 'date', 'no_contract', 'contractor', 'period_of_validity', 'usable_area', 'legal_basic',
                        'type_of_contract', 'rent_cost', 'electric_cost', 'gas_cost', 'water_cost',
                        'central_heating_cost', 'garbage_cost', 'garbage_tax_cost', 'property_cost', 'unit', 'scan',
                        'state', 'information', 'creation_date', 'change', 'author']
 
-        labels = {'date': 'Data umowy', 'no_contract': 'Nr umowy', 'contractor': 'Kontrahent',
+        labels = {'id': 'id', 'date': 'Data umowy', 'no_contract': 'Nr umowy', 'contractor': 'Kontrahent',
                   'legal_basic': 'Podstawa prawda', 'period_of_validity': 'Okres obowiązywania',
                   'type_of_contract': 'Rodzaj umowy', 'usable_area': 'Powiezchnia użytkowa', 'rent_cost': 'Czynsz',
                   'electric_cost': 'Prąd', 'gas_cost': 'Gaz', 'water_cost': 'Woda', 'central_heating_cost': 'C.O.',

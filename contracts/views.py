@@ -61,6 +61,7 @@ def edit_contractsimmovables(request, id):
 
     context = {'contract_form': contractsimmovables_form,
                'units': units,
+               'contract': contractsimmovables_edit,
                'new': False}
     if request.method == 'POST':
         if contractsimmovables_form.is_valid():
@@ -76,17 +77,20 @@ def edit_contractsimmovables(request, id):
 def add_annex_immovables(request, id):
     contractsimmovables_edit = get_object_or_404(ContractImmovables, pk=id)
     annex_form = AnnexImmovablesForm(request.POST or None, request.FILES or None)
-    context = {'annex_form': annex_form}
+    context = {'annex_form': annex_form,
+               'contract_id': id}
 
     if request.method == 'POST':
         if annex_form.is_valid():
             instance = annex_form.save(commit=False)
-            instance.contract_immovables = contractsimmovables_edit
             instance.author = request.user
+            instance.contract_immovables = contractsimmovables_edit
             instance.save()
+
         return redirect('contracts:menu_contractsimmovables')
 
-    return render(request, 'contracts/new_annex_immovables_form.html', context)
+    if request.method == 'GET':
+        return render(request, 'contracts/new_annex_immovables_form.html', context)
 
 
 @login_required
