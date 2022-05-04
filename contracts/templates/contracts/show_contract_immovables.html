@@ -43,14 +43,14 @@
         <div class="col-md-4">
             {%if contract.scan%}
             <div class="text-center">
-                <a href="/media/{{contract.skan}}" role="button" target="_blank"><button class="btn btn-outline-primary btn-sm" type="button">Podgląd umowy</button></a>
+                <a href="/media/{{contract.scan}}" role="button" target="_blank"><button class="btn btn-outline-primary button-chose-invoices my-btn" type="button">Podgląd umowy</button></a>
             </div>
             {%endif%}
 
-            {%if aneksy%}
-            {%for aneks in aneksy%}
+            {%if annexes%}
+            {%for annex in annexes%}
             <div class="text-center my-3">
-                <div ><a href="/media/{{aneks.skan_aneksu}}" target="_blank"><button class="btn btn-outline-primary btn-sm">Aneks z dnia {{aneks.date_annex|date:"d.m.Y"}} r.</button>
+                <div ><a href="/media/{{annex.scan_annex}}" target="_blank"><button class="btn btn-outline-primary button-chose-invoices my-btn"><i class="bi bi-arrow-return-right"> Aneks z dnia {{annex.date_annex|date:"d.m.Y"}} r.</i></button>
                 </a></div>
             </div>
             {%endfor%}

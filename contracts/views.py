@@ -96,9 +96,9 @@ def add_annex_immovables(request, id):
 @login_required
 def show_contractsimmovables(request, id):
     contract = ContractImmovables.objects.get(pk=id)
-    aneksy = contract.annex.all()
+    annexes = contract.annex.all()
 
-    return render(request, 'contracts/show_contract_immovables.html', {'contract': contract, 'aneksy': aneksy})
+    return render(request, 'contracts/show_contract_immovables.html', {'contract': contract, 'annexes': annexes})
 
 
 @login_required
