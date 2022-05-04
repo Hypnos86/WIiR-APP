@@ -2,14 +2,14 @@
 {% load static %}
 
 {% block content %}
-<div class="container col-md-2">
-<form method="post" action="{% url 'contracts:add_annex_immovables' contract_id %}" enctype="multipart/form-data">
+<div class="container ">
+<form class="m-2 p-5" method="post" action="{% url 'contracts:add_annex_immovables' contract_id %}" enctype="multipart/form-data">
     {%csrf_token%}
     {{annex_form|bootstrap}}
     <div class="row">
-    <div class="col-md-5 moj-button-left mt-3"><a class="btn btn-outline-primary" href="{%url 'contracts:menu_contractsimmovables'%}"><span class="bi bi-chevron-compact-left">Cofnij</span></a></div>
+    <div class="col-md-6 moj-button-left mt-3"><a class="btn btn-outline-primary" href="{%url 'contracts:menu_contractsimmovables'%}"><span class="bi bi-chevron-compact-left">Cofnij</span></a></div>
 
-    <div class="col-md-7 moj-button-right mt-3"><button id="submitButton" type="submit" class="btn btn-outline-primary" >Dodaj</button></div>
+    <div class="col-md-6 moj-button-right mt-3"><button id="submitButton" type="submit" class="btn btn-outline-primary" >Dodaj</button></div>
     </div>
 </form>
 </div>
