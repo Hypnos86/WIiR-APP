@@ -15,12 +15,12 @@ def menu_invoices(request):
 
 
 @login_required
-def buy_invoiceslist(request):
+def buy_invoices_list(request):
     return render(request, 'invoices/invoices_buy_list.html')
 
 
 @login_required
-def sell_invoiceslist(request):
+def sell_invoices_list(request):
     invoicessell = InvoiceSell.objects.all().order_by("-date").filter(date__year=current_year())
     query = "Wyczyść"
     search = "Szukaj"
@@ -52,7 +52,7 @@ def sell_invoiceslist(request):
 
 
 @login_required
-def new_invoicesell(request):
+def new_invoice_sell(request):
     invoicesell_form = InvoiceSellForm(request.POST or None)
     context = {'invoicesell_form': invoicesell_form,
                'new': True}
@@ -68,7 +68,7 @@ def new_invoicesell(request):
 
 
 @login_required
-def edit_invoicesell(request, id):
+def edit_invoice_sell(request, id):
     invoicesell_edit = get_object_or_404(InvoiceSell, pk=id)
     invoicessell_form = InvoiceSellForm(request.POST or None, instance=invoicesell_edit)
 

@@ -3,29 +3,29 @@
 {% load static %}
 {% block title %}Ewidencja faktur - sprzedaż{%endblock%}
 {% block content %}
-<section class="w-100 p-4 pb-4 d-flex justify-content-center align-items-center flex-column">
+<div class="moj-button-left"><a href="{%url 'invoices:menu_invoices'%}">
+        <button type="button" class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span>
+        </button>
+    </a></div>
+<section class="w-100 pb-4 d-flex justify-content-center align-items-center flex-column">
     <div>
         <form method="get">
             <div class="input-group">
                 <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj nr. faktury"
                        aria-label="Search" aria-describedby="search-addon">
-                <button type="submit" class="btn btn-outline-primary">{{query}}{{search}}</button>
+                <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
             </div>
         </form>
     </div>
 </section>
-<div class="row">
-    <div class="col-md-6 moj-button-left"><a href="{%url 'invoices:menu_invoices'%}">
-        <button type="button" class="btn btn-outline-primary"><span class="bi bi-chevron-compact-left">Cofnij</span>
-        </button>
-    </a></div>
-    <div class="col-md-6 moj-button-right"><a id="button-nowa-umowa" href="{%url 'invoices:new_invoicesell'%}">
-        <button class="btn btn-outline-primary button-choise-contracts">Nowa faktura</button>
-    </a></div>
-</div>
 <div class="kontrahenci-title">
     <h4>Ewidencja faktur sprzedażowych za {{year}} rok</h4>
-    <p title="{%for invoice in invoices %}{% if forloop.first%} {{invoice.creator.author}}: {{invoices|length}} {%endif%}{%endfor%}">Liczba wystawionych faktur: {{invoicessellsum}}</p>
+    <div class="row">
+        <div class="col-md-3">
+            <p>Liczba wystawionych faktur: {{invoicessellsum}}</p>
+        </div>
+        <div class="col-md-9 moj-button-right"><a id="button-nowa-umowa" href="{%url 'invoices:new_invoice_sell'%}"><button class="btn btn-outline-primary button-choise-contracts my-btn">Nowa faktura</button></a></div>
+    </div>
 </div>
 <div>
     <table class="table table-hover my-table">
@@ -57,7 +57,7 @@
             <td align="center" valign="middle"><span>{{invoice.creator}}</span></td>
             <td align="center" valign="middle"><span>{{invoice.information}}</span></td>
             <td width="120" class="text-center">
-                <a href="{%url 'invoices:edit_invoicesell' invoice.id %}">
+                <a href="{%url 'invoices:edit_invoice_sell' invoice.id %}">
                     <button type="submit" class="btn btn-outline-primary icon-color mx-1 "><i
                             class="bi bi-pencil-square"></i></button>
                 </a>

@@ -6,20 +6,20 @@
 <div class="row">
     {%if user.accessmodule.cpvdict_module%}
     <div class="col-md-2 moj-button-left my-1"><a href="{%url 'cpvdict:order_list'%}">
-        <button class="btn btn-outline-primary button-choise-contracts">Lista zleceń</button>
+        <button class="btn btn-outline-primary button-choise-contracts my-btn">Lista zleceń</button>
     </a></div>
     <div class="col-md-2 moj-button-left my-1"><a href="{%url 'cpvdict:type_work_list'%}">
-        <button class="btn btn-outline-primary button-choise-contracts">Roboty budowlane</button>
+        <button class="btn btn-outline-primary button-choise-contracts my-btn">Roboty budowlane</button>
     </a></div>
     <div class="col-md-8 moj-button-right my-1"><a href="{%url 'cpvdict:cpvlist'%}">
-        <button class="btn btn-outline-primary button-choise-contracts">Słownik CPV</button>
+        <button class="btn btn-outline-primary button-choise-contracts my-btn">Słownik CPV</button>
     </a></div>
     {%else%}
     <div class="col-md-2 moj-button-left my-1"><a href="{%url 'cpvdict:type_work_list'%}">
-        <button class="btn btn-outline-primary button-choise-contracts">Roboty budowlane</button>
+        <button class="btn btn-outline-primary button-choise-contracts my-btn">Roboty budowlane</button>
     </a></div>
     <div class="col-md-10 moj-button-right my-1"><a href="{%url 'cpvdict:cpvlist'%}">
-        <button class="btn btn-outline-primary button-choise-contracts">Słownik CPV</button>
+        <button class="btn btn-outline-primary button-choise-contracts my-btn">Słownik CPV</button>
     </a></div>
     {%endif%}
 </div>
@@ -42,7 +42,7 @@
                 rodzajowym
             </th>
             <th align="center" valign="middle" width="450" scope="col">Kod CPV obejmuje ten sam rodzaj zamówienia</th>
-            <th align="center" valign="middle" width="120" scope="col">Wykorzystano</th>
+            <th align="center" valign="middle" width="120" scope="col">Wydatkowano</th>
             <th align="center" valign="middle" width="120" scope="col">Pozostało</th>
         </tr>
         </thead>

@@ -3,26 +3,30 @@
 {% load static %}
 {% block title %} Ewidencja zleceń na rok {{year}} {% endblock %}
 {% block content %}
-<section class="w-100 p-4 pb-4 d-flex justify-content-center align-items-center flex-column">
+<div class="row">
+     <div class="col-md-6 moj-button-left"><a href="{%url 'cpvdict:type_expense_list'%}">
+        <button type="button" class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span></button></a></div>
+</div>
+<section class="w-100 pb-4 d-flex justify-content-center align-items-center flex-column">
     <div>
         <form method="get">
             <div class="input-group">
                 <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj zlecenia" aria-label="Search" aria-describedby="search-addon">
-                <button type="submit" class="btn btn-outline-primary">{{query}}{{search}}</button>
+                <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
             </div>
         </form>
     </div>
 </section>
-<div class="row">
-     <div class="col-md-6 moj-button-left"><a href="{%url 'cpvdict:type_expense_list'%}">
-        <button type="button" class="btn btn-outline-primary"><span class="bi bi-chevron-compact-left">Cofnij</span>
-        </button>
-    </a></div>
-    <div class="col-md-6 moj-button-right my-1"><a href="{%url 'cpvdict:new_order'%}"><button class="btn btn-outline-primary button-choise-contracts">Nowe zlecenie</button></a></div>
-</div>
 <div class="kontrahenci-title">
     <h4>Zlecenia za {{year}} rok</h4>
-    <p class="m-0"><span>Liczba zleceń: {{ordersum}}</span></p>
+    <div class="row">
+        <div class="col-md-3">
+            <p class="m-0"><span>Liczba zleceń: {{ordersum}}</span></p>
+        </div>
+        <div class="col-md-9 moj-button-right my-1">
+            <a href="{%url 'cpvdict:new_order'%}"><button class="btn btn-outline-primary button-choise-contracts my-btn">Nowe zlecenie</button></a>
+        </div>
+    </div>
 </div>
 
 <table class="table table-hover my-table mt-2">

@@ -4,60 +4,69 @@
 {%block title%} Kontrahenci umów czynszowych{%endblock%}
 {%block content%}
 <div class="row">
-    <section class="w-100 p-4 pb-4 d-flex justify-content-center align-items-center flex-column text_center">
+    <div class="w-100 pb-4 d-flex justify-content-center align-items-center flex-column text_center">
         <form method="get">
             <div class="input-group">
-                <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj kontrahenta" aria-label="Search" aria-describedby="search-addon">
-                <button type="submit" class="btn btn-outline-primary">{{query}}{{search}}</button>
+                <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj kontrahenta"
+                       aria-label="Search" aria-describedby="search-addon">
+                <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
             </div>
         </form>
-    </section>
-        <div class="col-md-12 moj-button-right "><a href="{%url 'contractors:new_contractorsell'%}"><button type="button" class="btn btn-outline-primary">Nowy kontrahent</button></a>
     </div>
 </div>
-
-<div class="kontrahenci-title">
+<div class="kontrahenci-title justify-content-center align-items-center">
     <h4>Kontrahenci umów czynszowych WIiR</h4>
-    <p>Liczba kontrahentów: {{consellsum}}</p>
+    <div class="row">
+        <div class="col-md-2">
+            <p>Liczba kontrahentów: {{consellsum}}</p>
+        </div>
+        <div class="col-md-10 moj-button-right "><a href="{%url 'contractors:new_contractorsell'%}">
+            <button type="button" class="btn btn-outline-primary my-btn">Nowy kontrahent</button>
+        </a>
+        </div>
+    </div>
 </div>
-<div class="containter">
-<table class="table table-hover my-table">
-    <thead>
-    <tr class="my-table-tr text-center">
-        <th align="center" valign="middle" width="50" scope="col">L.p.</th>
-        <th align="center" valign="middle" width="110" scope="col">Nr. kontrahenta</th>
-        <th align="center" valign="middle" width="220" scope="col">Nazwa</th>
-        <th align="center" valign="middle" width="200" scope="col">NIP</th>
-        <th align="center" valign="middle" width="200" scope="col">Adres</th>
-        <th align="center" valign="middle" width="80" scope="col">Kod pocztowy</th>
-        <th align="center" valign="middle" scope="col">Miasto</th>
-        <th align="center" valign="middle" scope="col">Informacje</th>
+<div class="container">
+    <table class="table table-hover my-table">
+        <thead>
+        <tr class="my-table-tr text-center">
+            <th align="center" valign="middle" width="50" scope="col">L.p.</th>
+            <th align="center" valign="middle" width="110" scope="col">Nr. kontrahenta</th>
+            <th align="center" valign="middle" width="220" scope="col">Nazwa</th>
+            <th align="center" valign="middle" width="200" scope="col">NIP</th>
+            <th align="center" valign="middle" width="200" scope="col">Adres</th>
+            <th align="center" valign="middle" width="80" scope="col">Kod pocztowy</th>
+            <th align="center" valign="middle" scope="col">Miasto</th>
+            <th align="center" valign="middle" scope="col">Informacje</th>
 
-    </tr>
-    </thead>
-    <tbody>
-    {%for contractor in contractors %}
-    <tr class="my-table-tr">
-        <td class="text-center" valign="middle" scope="row"></td>
-        <td align="center" valign="middle" scope="row">{{contractor.no_contractor}}</td>
-        <td valign="middle"><span>{{contractor.name}}</span></td>
-        <td class="text-center" valign="middle"><span>{{contractor.nip|default_if_none:''}}</span></td>
-        <td valign="middle"><span>{{contractor.address}}</span></td>
-        <td class="text-center" valign="middle"><span>{{contractor.zip_code}}</span></td>
-        <td class="text-center" valign="middle"><span>{{contractor.city}}</span></td>
-        <td valign="middle"><span>{{contractor.information}}</span></td>
-        <td class="text-center" valign="middle">
-            <a href="{%url 'contractors:edit_contractorsell' contractor.id%}"><button type="submit" class="btn btn-outline-primary icon-color"><i class="bi bi-pencil-square"></i></button></a>
-        </td>
-    </tr>
-    {%endfor%}
-    </tbody>
-    <tfoot>
-    <tr>
-        <th colspan="7">Wydział Inwestycji i Remontów KWP w Poznaniu</th>
-    </tr>
-    </tfoot>
-</table>
+        </tr>
+        </thead>
+        <tbody>
+        {%for contractor in contractors %}
+        <tr class="my-table-tr">
+            <td class="text-center" valign="middle" scope="row"></td>
+            <td align="center" valign="middle" scope="row">{{contractor.no_contractor}}</td>
+            <td valign="middle"><span>{{contractor.name}}</span></td>
+            <td class="text-center" valign="middle"><span>{{contractor.nip|default_if_none:''}}</span></td>
+            <td valign="middle"><span>{{contractor.address}}</span></td>
+            <td class="text-center" valign="middle"><span>{{contractor.zip_code}}</span></td>
+            <td class="text-center" valign="middle"><span>{{contractor.city}}</span></td>
+            <td valign="middle"><span>{{contractor.information}}</span></td>
+            <td class="text-center" valign="middle">
+                <a href="{%url 'contractors:edit_contractorsell' contractor.id%}">
+                    <button type="submit" class="btn btn-outline-primary icon-color"><i class="bi bi-pencil-square"></i>
+                    </button>
+                </a>
+            </td>
+        </tr>
+        {%endfor%}
+        </tbody>
+        <tfoot>
+        <tr>
+            <th colspan="7">Wydział Inwestycji i Remontów KWP w Poznaniu</th>
+        </tr>
+        </tfoot>
+    </table>
     {%if search%}
     <nav aria-labelledby="Page navigation">
         <ul class="pagination justify-content-center">
@@ -88,18 +97,20 @@
             </li>
             {%else%}
             <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Następna</a>
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Następna</a>
             </li>
             {%endif%}
         </ul>
     </nav>
-{%endif%}
-    </div>
+    {%endif%}
+</div>
 <script>
      document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-invoices").classList.remove("active");
      document.getElementById("button-contracts").classList.remove("active");
      document.getElementById("button-contractors").classList.add("active");
+
+
 </script>
 {%endblock%}
 

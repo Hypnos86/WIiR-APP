@@ -3,7 +3,7 @@
 {% load static %}
 {% block title %}Umowy ZZP - WIiR{%endblock%}
 {% block investmentsmenu %}
-<section class="w-100 p-4 pb-4 d-flex justify-content-center align-items-center flex-column">
+<section class="w-100 pb-4 d-flex justify-content-center align-items-center flex-column">
     <div>
         <form method="get">
             <div class="input-group">
@@ -14,13 +14,15 @@
         </form>
     </div>
 </section>
-<div class="row">
-    <div class="col-md-12 moj-button-right my-1"><a href="{%url 'contracts:new_contract_auction'%}"><button class="btn btn-outline-primary button-choise-contracts">Nowa umowa</button>
-    </a></div>
-</div>
 <div class="kontrahenci-title">
     <h4>Ewidencja Umów ZZP</h4>
-    <p class="m-0"><span>Liczba umów: {{contracts_auctions_sum}}</span></p>
+    <div class="row">
+        <div class="col-md-3">
+            <p class="m-0"><span>Liczba umów: {{contracts_auctions_sum}}</span></p>
+        </div>
+        <div class="col-md-9 moj-button-right"><a href="{%url 'contracts:new_contract_auction'%}"><button class="btn btn-outline-primary button-choise-contracts my-btn">Nowa umowa</button>
+    </a></div>
+    </div>
 </div>
 
 <table class="table table-hover my-table mt-2">

@@ -23,5 +23,5 @@ class ContractorsellForm(ModelForm):
                    'address': widgets.TextInput(attrs={'placeholder': 'np:. ul. Poznańska 4'}),
                    'information': Textarea(attrs={'rows': 5}),
                    'nip': widgets.TextInput(attrs={'pattern': '^[0-9]{10}$', 'placeholder': '0123456789'}),
-                   'zip_code': widgets.TextInput(attrs={'pattern': '^[0-9]{2}-[0-9]{3}$', 'placeholder': 'xx-xxx'})
+                   'zip_code': widgets.TextInput(attrs={'pattern': '^[0-9]{2}-[0-9]{3}$', 'placeholder': '01-234'})
                    }
