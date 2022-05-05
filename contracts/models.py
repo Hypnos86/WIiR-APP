@@ -2,6 +2,7 @@ from django.db import models
 from units.models import Unit
 from main.models import Employer
 from contractors.models import Contractor
+from investments.models import Project
 
 
 class State(models.Model):
@@ -42,7 +43,7 @@ class LegalBasic(models.Model):
 class Guarantee(models.Model):
     class Meta:
         verbose_name = 'Gwarancja'
-        verbose_name_plural = 'Umowy ZZP - Gwarancje'
+        verbose_name_plural = 'INW - Umowy - Gwarancja'
 
     guarantee = models.CharField('Gwarancja', max_length=50)
 
@@ -53,7 +54,7 @@ class Guarantee(models.Model):
 class GuaranteePeriod(models.Model):
     class Meta:
         verbose_name = "Okres gwarancyjny"
-        verbose_name_plural = "Okresy gwarancyjne"
+        verbose_name_plural = "INW - Umowy - Okres gwarancyjne"
         ordering = ['guarantee_period']
 
     guarantee_period = models.SmallIntegerField('Okres gwarancji (mc)')
@@ -65,7 +66,7 @@ class GuaranteePeriod(models.Model):
 class WarrantyPeriod(models.Model):
     class Meta:
         verbose_name = "Okres rękojmi"
-        verbose_name_plural = "Okresy rękojmi"
+        verbose_name_plural = "INW - Umowy - Okres rękojmi"
         ordering = ['warranty_period']
 
     warranty_period = models.SmallIntegerField('Okres rękojmi (mc)')
@@ -116,11 +117,11 @@ class ContractImmovables(models.Model):
 class AnnexImmovables(models.Model):
     class Meta:
         verbose_name = 'Aneks'
-        verbose_name_plural = 'Nieruchomosci - Aneksy'
+        verbose_name_plural = 'Nieruchomosci - Umowy - Aneksy'
         ordering = ['contract_immovables', 'date_annex']
 
     contract_immovables = models.ForeignKey(ContractImmovables, on_delete=models.CASCADE,
-                                            verbose_name='Umowa',
+                                            verbose_name='umowa',
                                             related_name='annex')
     scan_annex = models.FileField(upload_to='contracts_immovables/annexes/%Y/', null=True, verbose_name='Skan aneks')
     date_annex = models.DateField('Data aneksu', null=True)
@@ -134,9 +135,11 @@ class AnnexImmovables(models.Model):
 class ContractAuction(models.Model):
     class Meta:
         verbose_name = 'Umowa ZZP'
-        verbose_name_plural = 'Umowy ZZP'
+        verbose_name_plural = 'INW - Umowy'
         ordering = ['date']
 
+    investments_project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='contract_auction',
+                                            verbose_name='Zadanie inwestycyjne')
     date = models.DateField('Data')
     no_contract = models.CharField('Nr. umowy', max_length=20)
     contractor = models.ForeignKey(Contractor, on_delete=models.CASCADE,
@@ -160,7 +163,7 @@ class ContractAuction(models.Model):
     security_percent = models.SmallIntegerField('Procent zabezpiecznia')
     security_sum = models.DecimalField('Kwota zabezpiecznia', max_digits=10, decimal_places=2, null=True,
                                        blank=True)
-    worker = models.ManyToManyField(Employer, verbose_name='Inspektor', related_name='ContractAuction')
+    worker = models.ManyToManyField(Employer, verbose_name='Inspektor', related_name='contract_auction')
     report = models.TextField('Raportowanie', blank=True, default='')
     information = models.TextField('Informacje', blank=True, default='')
     scan = models.FileField(upload_to='contracts_zzp/%Y/', null=True, blank=True, verbose_name='Skan umowy')
@@ -176,7 +179,7 @@ class ContractAuction(models.Model):
 class AnnexContractAuction(models.Model):
     class Meta:
         verbose_name = 'Aneks ZZP'
-        verbose_name_plural = 'Umowy ZZP (Aneksy)'
+        verbose_name_plural = 'INW - Umowy - Aneksy'
         ordering = ['contract_auction', 'date']
 
     contract_auction = models.ForeignKey(ContractAuction, on_delete=models.CASCADE,
@@ -193,11 +196,3 @@ class AnnexContractAuction(models.Model):
 
     def __str__(self):
         return f'Aneks z dnia {self.date} {self.scan}'
-
-
-class InvestmentTask():
-    title = models.CharField(max_length=80, null=True, verbose_name='Nazwa zadania')
-    no_letter = models.CharField(max_length=40, null=True, verbose_name='Pismo l.dz.')
-    acceptance_letter = models.FileField(upload_to='contracts/omvestment_program/%Y/', null=True, blank=True,
-                                         verbose_name='Skan pisma')
-

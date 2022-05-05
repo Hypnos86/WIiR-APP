@@ -32,6 +32,7 @@ class Unit(models.Model):
     class Meta:
         verbose_name = 'Jednostka'
         verbose_name_plural = 'Jednostki'
+        ordering = ['county']
 
     county = models.ForeignKey(County, on_delete=models.CASCADE, related_name='unit')
     type = models.ForeignKey(TypeUnit, on_delete=models.CASCADE, related_name='unit')

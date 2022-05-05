@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 
 
-class PermanentadministrationConfig(AppConfig):
+class PermanentmanagementConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'permanentadministration'
+    name = 'permanentmanagement'
     verbose_name = 'Trwały zarząd'
