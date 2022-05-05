@@ -4,20 +4,20 @@
 {% block title %} Rodzajowość wydatków WIiR - Roboty budowlane {% endblock %}
 {% block content %}
 <div class="row">
-    <div class="col-md-6 moj-button-left"><a href="{%url 'cpvdict:type_expense_list'%}">
-        <button type="button" class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span>
-        </button>
-    </a></div>
-</div>
-<div class="my-1 text-center">
-    <h4 class="">Klasyfikacja rodzajowa WIiR</h4>
-    <h5 class="">Roboty budowlane</h5>
-    <span class="m-2">({{year}} rok)</span>
-    {%if limit != 0 %}
-    <p><span class="text-center">Limit zmówień: {{limit|intcomma}} zł (netto)</span><br>
+    <div class="col-md-3">
+        <a href="{%url 'cpvdict:type_expense_list'%}"><button type="button" class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span></button></a>
+    </div>
+    <div class="col-md-6 text-center">
+        <h4 class="">Klasyfikacja rodzajowa WIiR</h4>
+        <h5 class="">Roboty budowlane</h5>
+        <span class="m-2">({{year}} rok)</span>
+        {%if limit != 0 %}
+        <p><span class="text-center">Limit zmówień: {{limit|intcomma}} zł (netto)</span><br>
         <span class="text-center">Limit zmówień: {{item|intcomma}} zł (brutto)</span></p>
-    {%endif%}
+        {%endif%}
+    </div>
 </div>
+
 <div class="container">
     <table class="table table-hover my-table mt-2">
         <thead>

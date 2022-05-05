@@ -4,26 +4,27 @@
 {% block title%} Rodzajowość wydatków WIiR {%endblock%}
 {% block content%}
 <div class="row">
+    <div class="col-md-3">
     {%if user.accessmodule.cpvdict_module%}
-    <div class="col-md-2 moj-button-left my-1"><a href="{%url 'cpvdict:order_list'%}">
+    <div class="col-md-12  m-2"><a href="{%url 'cpvdict:order_list'%}">
         <button class="btn btn-outline-primary button-choise-contracts my-btn">Lista zleceń</button>
     </a></div>
-    <div class="col-md-2 moj-button-left my-1"><a href="{%url 'cpvdict:type_work_list'%}">
+    <div class="col-md-12 m-2 "><a href="{%url 'cpvdict:type_work_list'%}">
         <button class="btn btn-outline-primary button-choise-contracts my-btn">Roboty budowlane</button>
     </a></div>
-    <div class="col-md-8 moj-button-right my-1"><a href="{%url 'cpvdict:cpvlist'%}">
+    <div class="col-md-12 m-2 "><a href="{%url 'cpvdict:cpvlist'%}">
         <button class="btn btn-outline-primary button-choise-contracts my-btn">Słownik CPV</button>
     </a></div>
     {%else%}
-    <div class="col-md-2 moj-button-left my-1"><a href="{%url 'cpvdict:type_work_list'%}">
+    <div class="col-md-12 m-2 "><a href="{%url 'cpvdict:type_work_list'%}">
         <button class="btn btn-outline-primary button-choise-contracts my-btn">Roboty budowlane</button>
     </a></div>
-    <div class="col-md-10 moj-button-right my-1"><a href="{%url 'cpvdict:cpvlist'%}">
+    <div class="col-md-12 m-2 "><a href="{%url 'cpvdict:cpvlist'%}">
         <button class="btn btn-outline-primary button-choise-contracts my-btn">Słownik CPV</button>
     </a></div>
     {%endif%}
 </div>
-
+<div class="col-md-6">
 <div class="my-1 text-center">
     <h4 class="">Klasyfikacja rodzajowa WIiR</h4>
     <span class="m-2">({{year}} rok)</span>
@@ -31,6 +32,8 @@
     <p><span class="text-center">Limit zmówień NETTO: {{limit|intcomma}} zł</span><br>
         <span class="text-center">Limit zmówień BRUTTO: {{limit_item|intcomma}} zł</span></p>
     {%endif%}
+</div>
+    </div>
 </div>
 <div class="container">
     <table class="table table-hover my-table">

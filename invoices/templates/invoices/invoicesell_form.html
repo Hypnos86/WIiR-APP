@@ -4,11 +4,13 @@
 {%block title%}{%if new%}Nowa faktura{%else%}Edycja faktury{%endif%}{%endblock%}
 
 {%block content%}
-
-<h4 class="text-center">{%if new%}Nowa faktura{%else%}Edycja faktury{%endif%}</h4>
-<div class="col-md-6 moj-button-left"><a href="{%url 'invoices:sell_invoices_list'%}">
-            <button class="btn btn-outline-primary"><span class="bi bi-chevron-compact-left">Cofnij</span></button>
+<div class="row">
+    <div class="col-md-3"><a href="{%url 'invoices:sell_invoices_list'%}">
+            <button class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span></button>
         </a></div>
+    <div class="col-md-6"><h4 class="text-center">{%if new%}Nowa faktura{%else%}Edycja faktury{%endif%}</h4></div>
+</div>
+
 <div class="container px-5 pb-5 col-md-8">
 <form class="container" method="post">
     {%csrf_token%}
@@ -25,7 +27,7 @@
         </div>
 <div class="row mt-3">
         <div class="col-md-12 moj-button-right">
-            <button type="submit" class="btn btn-outline-primary">Zapisz zmiany</button>
+            <button type="submit" class="btn btn-outline-primary my-btn">Zapisz zmiany</button>
         </div>
     </div>
 </form>

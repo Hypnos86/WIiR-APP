@@ -44,6 +44,7 @@
             {%if user.is_authenticated%}{%if user.accessmodule.invoices_module%}<li class="nav-item"><a id="button-invoices" href="{%url 'invoices:menu_invoices'%}" class="btn btn-sm btn-outline-secondary mx-2"><span>Faktury</span></a></li>{%endif%}{%endif%}
             {%if user.is_authenticated%}{%if user.accessmodule.contracts_immovables_module%}<li class="nav-item"><a id="button-contracts" href="{%url 'contracts:menu_contractsimmovables'%}" class="btn btn-sm btn-outline-secondary mx-2"><span>Umowy najmu</span></a></li>{%endif%}{%endif%}
             {%if user.is_authenticated%}{%if user.accessmodule.contractors_module%}<li class="nav-item"><a id="button-contractors" href="{%url 'contractors:contractorssell_list'%}" class="btn btn-sm btn-outline-secondary mx-2"><span>Kontrahenci</span></a></li>{%endif%}{%endif%}
+            {%if user.is_authenticated%}{%if user.accessmodule.contractors_module%}<li class="nav-item"><a id="button-record" href="" class="btn btn-sm btn-outline-secondary mx-2"><span>Ewidencje</span></a></li>{%endif%}{%endif%}
             {%if user.is_authenticated%}<li class="nav-item"><a id="button-cpv" href="{%url 'cpvdict:type_expense_list'%}" class="btn btn-sm btn-outline-secondary mx-2"><span>Rodzajowość WIiR</span></a></li>
             {%else%}
             <li class="nav-item"><a id="button-cpvnotaut" href="{%url 'cpvdict:cpvlist'%}" class="btn btn-sm btn-outline-secondary mx-2"><span>Słownik CPV</span></a></li>
