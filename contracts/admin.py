@@ -7,7 +7,7 @@ from contracts.models import TypeOfContract, LegalBasic, Guarantee, ContractImmo
 
 # Register your models here.
 admin.site.register(TypeOfContract)
-admin.site.register(LegalBasic)
+
 admin.site.register(GuaranteePeriod)
 admin.site.register(WarrantyPeriod)
 
@@ -95,3 +95,19 @@ class ContractAdmin(ExportMixin, admin.ModelAdmin):
 @admin.register(AnnexContractAuction)
 class ContractAdmin(admin.ModelAdmin):
     list_display = ['date', 'price_change', 'price_after_change', 'creation_date', 'author']
+
+
+class LegalBasicResource(resources.ModelResource):
+    act = Field(attribute='act', column_name='Ustawa')
+    legal_basic = Field(attribute='legal_basic', column_name='Paragraf')
+    legal_basic_text = Field(attribute='legal_basic_text', column_name='Tekst paragrafu')
+
+    class Meta:
+        model = LegalBasic
+        fields = ('act', 'legal_basic', 'legal_basic_text')
+        export_order = ('act', 'legal_basic', 'legal_basic_text')
+
+
+@admin.register(LegalBasic)
+class LegalBasicAdmin(admin.ModelAdmin):
+    list_display = ['act', 'legal_basic', 'legal_basic_text']

@@ -33,7 +33,6 @@ def new_contractorsell(request):
     contractorsell_form = ContractorsellForm(request.POST or None)
 
     if request.method == 'POST':
-
         if contractorsell_form.is_valid():
             instance = contractorsell_form.save(commit=False)
             instance.author = request.user

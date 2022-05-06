@@ -1,7 +1,7 @@
-{%extends 'base.html'%}
-{%load static%}
-{%block title%} Jednostki Policji w Województwie Wielkopolskim {%endblock%}
-{%block content%}
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Jednostki Policji w Województwie Wielkopolskim {% endblock %}
+{% block content %}
 <div class="row">
     <div class="text-center">
         <form>
@@ -35,10 +35,10 @@
 <div class="row">
     <div class="col-md-3">
         {% if search%}
-        <p><span>Liczba obiektów: {{unit_sum}}</span></p>
+        <p><span>Liczba obiektów: <span class="badge text-white info badge-pill">{{unit_sum}}</span></span></p>
         {%endif%}
         {%if query%}
-        <p><span>Znaleziono {{unit_sum_search}} obiektów</span></p>
+        <p><span>Znaleziono <span class="badge text-white info badge-pill">{{unit_sum_search}}</span> obiektów</span></p>
         {%endif%}
     </div>
     <div class="col-md-9 moj-button-right my-9">

@@ -6,7 +6,7 @@
 <div class="container">
     {%if user.is_authenticated%}
 
-    <ul class="list-group col-md-3">
+    <ul class="list-group col-md-4">
         <li class="list-group-item"><span>Moduł Kontrahenci: </span> {%if user.accessmodule.contractors_module%}<i
                 class="bi bi-check-circle-fill text-success"></i> {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}
         </li>
@@ -18,7 +18,9 @@
                 class="bi bi-check-circle-fill text-success"></i> {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</li>
         <li class="list-group-item"><span>Moduł Rodzajowość WIiR: </span>{%if user.accessmodule.cpvdict_module%}<i
                 class="bi bi-check-circle-fill text-success"></i> {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</li>
-        <li class="list-group-item"><span>Moduł Ewidencje WIiR: </span>{%if user.accessmodule.listregister_module%}<i
+        <li class="list-group-item"><span>Moduł Ewidencje WIiR - Zespół Mieszkaniowy: </span>{%if user.accessmodule.listregister_float_team_module%}<i
+                class="bi bi-check-circle-fill text-success"></i> {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</li>
+        <li class="list-group-item"><span>Moduł Ewidencje WIiR - Zespół Eksploatacji: </span>{%if user.accessmodule.listregister_exploatation_team_module%}<i
                 class="bi bi-check-circle-fill text-success"></i> {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</li>
     </ul>
     {%else%}

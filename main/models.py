@@ -80,8 +80,9 @@ class AccessModule(models.Model):
     contracts_immovables_module = models.BooleanField('Moduł Umowy Najmu', default=False)
     investments_module = models.BooleanField('Moduł Inwestycje', default=False)
     invoices_module = models.BooleanField('Moduł Faktury', default=False)
-    cpvdict_module = models.BooleanField('Moduł Rodzajowośc WIiR', default=False)
-    listregister_module = models.BooleanField('Moduł Ewidencjae WIiR', default=False)
+    cpvdict_module = models.BooleanField('Moduł Rodzajowość', default=False)
+    listregister_float_team_module = models.BooleanField('Moduł Ewidencja: ZM', default=False)
+    listregister_exploatation_team_module = models.BooleanField('Moduł Ewidencja: ZE', default=False)
 
     def __str__(self):
         return f'{self.user}'

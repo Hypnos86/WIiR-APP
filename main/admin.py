@@ -55,12 +55,14 @@ class EmployerResource(resources.ModelResource):
 @admin.register(Employer)
 class EmployerAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ['id', 'name', 'last_name', 'team', 'industry_specialist', 'industry']
+    list_display_links = ['name']
 
 
 @admin.register(AccessModule)
 class AccessModuleAdmin(admin.ModelAdmin):
     list_display = ['user', 'contractors_module', 'contracts_immovables_module', 'investments_module',
-                    'invoices_module', 'cpvdict_module', 'listregister_module']
+                    'invoices_module', 'cpvdict_module', 'listregister_float_team_module',
+                    'listregister_exploatation_team_module']
     ordering = ['user']
 
 

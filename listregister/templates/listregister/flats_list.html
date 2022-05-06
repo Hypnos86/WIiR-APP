@@ -1,8 +1,9 @@
-{%extends 'base.html'%}
-{%load static%}
+{% extends 'base.html' %}
+{% load humanize %}
+{% load static %}
+{% block title %}Ewidencja - Mieszkania Służbowe{% endblock %}
+{% block content %}
 
-{%block title%} Kontrahenci umów czynszowych{%endblock%}
-{%block content%}
 <div class="row">
     <div class="w-100 pb-4 d-flex justify-content-center align-items-center flex-column text_center">
         <form method="get">
@@ -15,13 +16,13 @@
     </div>
 </div>
 <div class="kontrahenci-title justify-content-center align-items-center">
-    <h4>Kontrahenci umów czynszowych WIiR</h4>
+    <h4>Mieszkania służbowe</h4>
     <div class="row">
         <div class="col-md-2">
-            <p><span>Liczba kontrahentów: </span><span class="badge text-white info badge-pill">{{consellsum}}</span> </p>
+            <p><span>Liczba mieszkań: </span><span class="badge text-white info badge-pill">{{count_flats}}</span></p>
         </div>
-        <div class="col-md-10 moj-button-right "><a href="{%url 'contractors:new_contractorsell'%}">
-            <button type="button" class="btn btn-outline-primary my-btn">Nowy kontrahent</button>
+        <div class="col-md-10 moj-button-right "><a href="{%url 'listregister:add_new_flat'%}">
+            <button type="button" class="btn btn-outline-primary my-btn">Dodaj nowy lokal</button>
         </a>
         </div>
     </div>
@@ -31,29 +32,31 @@
         <thead>
         <tr class="my-table-tr text-center">
             <th align="center" valign="middle" width="50" scope="col">L.p.</th>
-            <th align="center" valign="middle" width="110" scope="col">Nr. kontrahenta</th>
-            <th align="center" valign="middle" width="220" scope="col">Nazwa</th>
-            <th align="center" valign="middle" width="200" scope="col">NIP</th>
-            <th align="center" valign="middle" width="200" scope="col">Adres</th>
-            <th align="center" valign="middle" width="80" scope="col">Kod pocztowy</th>
-            <th align="center" valign="middle" scope="col">Miasto</th>
-            <th align="center" valign="middle" scope="col">Informacje</th>
+            <th align="center" valign="middle" width="450" scope="col">Adres</th>
+            <th align="center" valign="middle" width="120" scope="col">Powierzchnia</th>
+            <th align="center" valign="middle" width="120" scope="col">Liczba pomieszczeń</th>
+            <th align="center" valign="middle" width="120" scope="col">Piętro</th>
+            <th align="center" valign="middle" width="100" scope="col">Stan</th>
+            <th align="center" valign="middle" width="800" scope="col">Informacje</th>
 
         </tr>
         </thead>
         <tbody>
-        {%for contractor in contractors %}
+        {%for flat in flats %}
         <tr class="my-table-tr">
             <td class="text-center" valign="middle" scope="row"></td>
-            <td align="center" valign="middle" scope="row">{{contractor.no_contractor}}</td>
-            <td valign="middle"><span>{{contractor.name}}</span></td>
-            <td class="text-center" valign="middle"><span>{{contractor.nip|default_if_none:''}}</span></td>
-            <td valign="middle"><span>{{contractor.address}}</span></td>
-            <td class="text-center" valign="middle"><span>{{contractor.zip_code}}</span></td>
-            <td class="text-center" valign="middle"><span>{{contractor.city}}</span></td>
-            <td valign="middle"><span>{{contractor.information}}</span></td>
+            <td align="left" valign="middle" scope="row">{{flat.address}}</td>
+            <td align="center" valign="middle"><span>{{flat.area|intcomma}}</span></td>
+            <td align="center" class="text-center" valign="middle"><span>{{flat.room_numbers}}</span></td>
+            <td align="center" valign="middle"><span>{{flat.flor}}</span></td>
+            {%if flat.state%}
+            <td class="text-center" valign="middle" title="Wolne"><i class="bi bi-geo-alt-fill text-success"></i></td>
+            {%else%}
+            <td class="text-center" valign="middle" title="Zajęte"><i class="bi bi-geo-alt-fill text-danger"></i></td>
+            {%endif%}
+            <td valign="middle"><span>{{flat.information}}</span></td>
             <td class="text-center" valign="middle">
-                <a href="{%url 'contractors:edit_contractorsell' contractor.id%}">
+                <a href="">
                     <button type="submit" class="btn btn-outline-primary icon-color"><i class="bi bi-pencil-square"></i>
                     </button>
                 </a>
@@ -70,17 +73,17 @@
     {%if search%}
     <nav aria-labelledby="Page navigation">
         <ul class="pagination justify-content-center">
-            {%if contractors.has_previous%}
+            {%if flats.has_previous%}
             <li class="page-item">
-                <a class="page-link" href="?page={{contractors.previous_page_number}}">Poprzednia</a>
+                <a class="page-link" href="?page={{flats.previous_page_number}}">Poprzednia</a>
             </li>
             {%else%}
             <li class="page-item disabled">
                 <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Poprzednia</a>
             </li>
             {%endif%}
-            {%for i in contractors.paginator.page_range%}
-            {%if contractors.number == i%}
+            {%for i in flats.paginator.page_range%}
+            {%if flats.number == i%}
             <li class="page-item active" aria-current="page">
             <span class="page-link">
                 {{i}}
@@ -91,9 +94,9 @@
             <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
             {%endif%}
             {%endfor%}
-            {%if contractors.has.next%}
+            {%if flats.has.next%}
             <li class="page-item">
-                <a class="page-link" href="?page={{contractors.next_page_number}}">Następna</a>
+                <a class="page-link" href="?page={{flats.next_page_number}}">Następna</a>
             </li>
             {%else%}
             <li class="page-item disabled">
@@ -105,12 +108,13 @@
     {%endif%}
 </div>
 <script>
-     document.getElementById("button-units").classList.remove("active");
+    document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-invoices").classList.remove("active");
      document.getElementById("button-contracts").classList.remove("active");
-     document.getElementById("button-contractors").classList.add("active");
-
+     document.getElementById("button-contractors").classList.remove("active");
+     document.getElementById("button-cpv").classList.remove("active");
+     document.getElementById("button-record").classList.add("active");
+     document.getElementById("button-cpvnotaut").classList.remove("active");
 
 </script>
 {%endblock%}
-

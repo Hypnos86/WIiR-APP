@@ -6,6 +6,7 @@
 <div class="container">
     <h3 class="text-center m-5">Ewidencje WIiR</h3>
     <div class="row">
+        {%if user.accessmodule.listregister_exploatation_team_module%}
         <div class="col-md-6 text-center">
             <h5 class="mb-5"><span>Zespół Eksploatacji</span></h5>
             <div class="col-md-12 d-flex justify-content-center">
@@ -45,30 +46,26 @@
                 </div>
             </div>
         </div>
+        {%endif%}
+        {%if user.accessmodule.listregister_float_team_module%}
         <div class="col-md-6 text-center">
             <h5 class="mb-5"><span>Zespół Mieszkaniowy</span></h5>
             <div class="col-md-12 d-flex justify-content-center">
                 <div class="col-md-6">
                     <div class="list-group">
-                        <a class="text-decoration-none" href="#" target="_blank">
+                        <a class="text-decoration-none" href="{% url 'listregister:make_flats_list'%}">
                             <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
-                                Mieszkania służbowe<span class="badge text-white info badge-pill">10</span>
+                                Mieszkania służbowe<span class="badge text-white info badge-pill">{{count_flats}}</span>
                             </button>
                         </a>
                     </div>
                 </div>
             </div>
         </div>
-
-
-        <!--<nav class="justify-content-center py-3 mb-4 row text-center">-->
-        <!--        <ul class="nav nav-pills col-md-4 justify-content-center" >-->
-        <!--            <li class="nav-item"><a id="" href="{%url 'contracts:menu_contracts_auction'%}" class="btn btn-sm btn-outline-primary mx-2 my-btn" ><span>1?</span></a></li>-->
-        <!--            <li class="nav-item"><a id="" href="{%url 'investments:investment_projects_list'%}" class="btn btn-sm btn-outline-primary mx-2 my-btn" ><span>2?</span></a></li>-->
-        <!--            <li class="nav-item"><a id="" href="" class="btn btn-sm btn-outline-primary mx-2 my-btn"><span>3?</span></a></li>-->
-        <!--      </ul>-->
-        <!--    </nav>-->
-        <script>
+        {%endif%}
+    </div>
+</div>
+<script>
      document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-invoices").classList.remove("active");
      document.getElementById("button-contracts").classList.remove("active");
@@ -76,19 +73,5 @@
      document.getElementById("button-cpv").classList.remove("active");
      document.getElementById("button-record").classList.add("active");
      document.getElementById("button-cpvnotaut").classList.remove("active");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        </script>
-        {% endblock %}
+</script>
+{% endblock %}

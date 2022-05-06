@@ -8,13 +8,14 @@
     <div class="col-md-4">
 
         <div class="list-group col-md-10">
-            {%for command in commands%}
-            <a href="/media/{{command.scan}}" target="_blank" class="list-group-item list-group-item-action flex-column align-items-start">
+            {%for head_command in commands%}
+            <a href="/media/{{command.scan}}" target="_blank"
+               class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
-                    <p class="mb-1">{{command.title}}</p>
-                    <small>{{command.create_date}}</small>
+                    <p class="mb-1"><span>{{head_command.title}}</span></p>
+                    <small>{{head_command.create_date}}</small>
                 </div>
-                <small class="text-muted">{{command.content}}</small>
+                <small class="text-muted">{{head_command.content}}</small>
             </a>
             {%endfor%}
         </div>
