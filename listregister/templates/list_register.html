@@ -3,20 +3,92 @@
 {% block title %} Ewidencje WIiR {% endblock %}
 
 {% block content %}
-<!--<nav class="justify-content-center py-3 mb-4 row text-center">-->
-<!--        <ul class="nav nav-pills col-md-4 justify-content-center" >-->
-<!--            <li class="nav-item"><a id="" href="{%url 'contracts:menu_contracts_auction'%}" class="btn btn-sm btn-outline-primary mx-2 my-btn" ><span>1?</span></a></li>-->
-<!--            <li class="nav-item"><a id="" href="{%url 'investments:investment_projects_list'%}" class="btn btn-sm btn-outline-primary mx-2 my-btn" ><span>2?</span></a></li>-->
-<!--            <li class="nav-item"><a id="" href="" class="btn btn-sm btn-outline-primary mx-2 my-btn"><span>3?</span></a></li>-->
-<!--      </ul>-->
-<!--    </nav>-->
-<script>
+<div class="container">
+    <h3 class="text-center m-5">Ewidencje WIiR</h3>
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <h5 class="mb-5"><span>Zespół Eksploatacji</span></h5>
+            <div class="col-md-12 d-flex justify-content-center">
+                <div class="col-md-6">
+                    <div class="list-group">
+                        <a class="text-decoration-none" href="#" target="_blank">
+                            <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
+                                Agregaty<span class="badge text-white info badge-pill">10</span>
+                            </button>
+                        </a>
+                        <a class="text-decoration-none" href="#" target="_blank">
+                            <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
+                                Klimatyzatory<span class="badge text-white info badge-pill">1</span>
+                            </button>
+                        </a>
+                        <a class="text-decoration-none" href="#" target="_blank">
+                            <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
+                                Windy<span class="badge text-white info badge-pill">5</span>
+                            </button>
+                        </a>
+                        <a class="text-decoration-none" href="#" target="_blank">
+                            <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
+                                Kotłu grzewcze<span class="badge text-white info badge-pill">10</span>
+                            </button>
+                        </a>
+                        <a class="text-decoration-none" href="#" target="_blank">
+                            <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
+                                Monitoring CCTV<span class="badge text-white info badge-pill">8</span>
+                            </button>
+                        </a>
+                        <a class="text-decoration-none" href="#" target="_blank">
+                            <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
+                                Hydranty<span class="badge text-white info badge-pill">10</span>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 text-center">
+            <h5 class="mb-5"><span>Zespół Mieszkaniowy</span></h5>
+            <div class="col-md-12 d-flex justify-content-center">
+                <div class="col-md-6">
+                    <div class="list-group">
+                        <a class="text-decoration-none" href="#" target="_blank">
+                            <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
+                                Mieszkania służbowe<span class="badge text-white info badge-pill">10</span>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--<nav class="justify-content-center py-3 mb-4 row text-center">-->
+        <!--        <ul class="nav nav-pills col-md-4 justify-content-center" >-->
+        <!--            <li class="nav-item"><a id="" href="{%url 'contracts:menu_contracts_auction'%}" class="btn btn-sm btn-outline-primary mx-2 my-btn" ><span>1?</span></a></li>-->
+        <!--            <li class="nav-item"><a id="" href="{%url 'investments:investment_projects_list'%}" class="btn btn-sm btn-outline-primary mx-2 my-btn" ><span>2?</span></a></li>-->
+        <!--            <li class="nav-item"><a id="" href="" class="btn btn-sm btn-outline-primary mx-2 my-btn"><span>3?</span></a></li>-->
+        <!--      </ul>-->
+        <!--    </nav>-->
+        <script>
      document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-invoices").classList.remove("active");
      document.getElementById("button-contracts").classList.remove("active");
      document.getElementById("button-contractors").classList.remove("active");
      document.getElementById("button-cpv").classList.remove("active");
-     document.getElementById("button-cpvnotaut").classList.remove("active");
      document.getElementById("button-record").classList.add("active");
-</script>
-{% endblock %}
+     document.getElementById("button-cpvnotaut").classList.remove("active");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </script>
+        {% endblock %}

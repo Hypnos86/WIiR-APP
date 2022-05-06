@@ -81,6 +81,22 @@ class AccessModule(models.Model):
     investments_module = models.BooleanField('Moduł Inwestycje', default=False)
     invoices_module = models.BooleanField('Moduł Faktury', default=False)
     cpvdict_module = models.BooleanField('Moduł Rodzajowośc WIiR', default=False)
+    listregister_module = models.BooleanField('Moduł Ewidencjae WIiR', default=False)
 
     def __str__(self):
         return f'{self.user}'
+
+
+class Command(models.Model):
+    class Meta:
+        verbose_name = 'Polecenie'
+        verbose_name_plural = 'Polecenia'
+        ordering = ['create_date']
+
+    title = models.CharField('Nazwa', max_length=120)
+    content = models.TextField('Treść')
+    scan = models.FileField(upload_to='Commands/%Y-%m/', verbose_name='Skan polecenia')
+    create_date = models.DateField("Data dodania", auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.title}'

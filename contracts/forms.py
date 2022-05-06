@@ -26,7 +26,7 @@ class ContractImmovablesForm(ModelForm):
                   'electric_cost': 'Prąd', 'gas_cost': 'Gaz', 'water_cost': 'Woda', 'central_heating_cost': 'C.O.',
                   'garbage_cost': 'Śmieci', 'garbage_tax_cost': 'Zagospodarowanie odpadami komunalnymi',
                   'property_cost': 'Podatek od nieruchomości', 'unit': 'Jednostka', 'scan': 'Skan umowy',
-                  'state': 'Stan umowy', 'information': 'Informacje'}
+                  'state': 'Aktualna', 'information': 'Informacje'}
 
         exclude = ['creation_date', 'change', 'author']
 

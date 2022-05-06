@@ -5,17 +5,6 @@ from contractors.models import Contractor
 from investments.models import Project
 
 
-class State(models.Model):
-    class Meta:
-        verbose_name = "Stan umowy"
-        verbose_name_plural = "Nieruchomości - Stany umów"
-
-    state = models.CharField(max_length=20, verbose_name='Stan')
-
-    def __str__(self):
-        return f'{self.state}'
-
-
 class TypeOfContract(models.Model):
     class Meta:
         verbose_name = 'Rodzaj umowy'
@@ -102,8 +91,7 @@ class ContractImmovables(models.Model):
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE, null=False, verbose_name="Jednostka",
                              related_name="contractimmovables")
     scan = models.FileField(upload_to='contracts_immovables/%Y/', null=True, blank=True, verbose_name="Skan umowy")
-    state = models.ForeignKey(State, on_delete=models.CASCADE, blank=False, default='Aktualna',
-                              related_name="contractimmovables", verbose_name='Stan')
+    state = models.BooleanField(default=True, verbose_name='Stan umowy')
     information = models.TextField("Informacje", blank=True, default="")
     creation_date = models.DateTimeField("Data utworzenia", auto_now_add=True)
     change = models.DateTimeField("Zmiana", auto_now=True)

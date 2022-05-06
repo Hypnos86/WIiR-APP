@@ -6,7 +6,6 @@ from units.forms import UnitForm
 
 def units_list(request):
     units_active = Unit.objects.filter(status=1).order_by('county')
-    units_archive = Unit.objects.filter(status=0).order_by('county')
     county = County.objects.all().order_by("swop_id")
     type_unit = TypeUnit.objects.all()
     query = "Wyczyść"

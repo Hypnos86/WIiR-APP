@@ -2,11 +2,10 @@ from django.contrib import admin
 from import_export import resources
 from import_export.admin import ExportMixin
 from import_export.fields import Field
-from contracts.models import State, TypeOfContract, LegalBasic, Guarantee, ContractImmovables, \
+from contracts.models import TypeOfContract, LegalBasic, Guarantee, ContractImmovables, \
     AnnexImmovables, ContractAuction, AnnexContractAuction, GuaranteePeriod, WarrantyPeriod
 
 # Register your models here.
-admin.site.register(State)
 admin.site.register(TypeOfContract)
 admin.site.register(LegalBasic)
 admin.site.register(GuaranteePeriod)
@@ -42,8 +41,9 @@ class ContractAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ['date', 'no_contract', 'contractor', 'legal_basic', 'period_of_validity', 'type_of_contract',
                     'usable_area', 'rent_cost', 'electric_cost', 'gas_cost', 'water_cost', 'central_heating_cost',
                     'garbage_cost', 'garbage_tax_cost', 'property_cost', 'unit', 'state', 'creation_date',
-                    'change','author']
+                    'change', 'author']
     search_fields = ['no_contract', 'contractor']
+    list_filter = ['state']
     preserve_filters = True
     resource_class = ContractImmovablesResource
 

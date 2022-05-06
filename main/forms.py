@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from main.models import Team, Telephone, OrganisationTelephone, AccessModule
+from main.models import Team, Telephone, OrganisationTelephone, AccessModule, Commands
 
 
 class TeamForm(ModelForm):
@@ -30,3 +30,9 @@ class AccessModuleForm(ModelForm):
         fields = '__all__'
         labels = {'contractors_module': 'Moduł kontrahenci', 'contracts_module': 'Moduł umowy',
                   'investments_module': 'Moduł inwestycje', 'invoices_module': 'Moduł faktury'}
+
+
+class CommandsForm(ModelForm):
+    class Meta:
+        model = Commands
+        fields = ['title', 'content', 'scan', 'create_date']

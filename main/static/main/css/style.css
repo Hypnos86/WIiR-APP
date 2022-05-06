@@ -226,3 +226,9 @@ border: solid 2px;
     padding: 2px;
     border-radius: 3px;
 }
+/* RECORDS*/
+
+.info{
+    background-color: #0a4275;
+    border-color:white;
+}

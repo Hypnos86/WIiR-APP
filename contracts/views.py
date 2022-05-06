@@ -9,8 +9,8 @@ from units.models import Unit
 # Create your views here.
 @login_required
 def menu_contractsimmovables(request):
-    contracts = ContractImmovables.objects.all().order_by("-date").filter(state__state__icontains='Aktualna')
-    contracts_archive = ContractImmovables.objects.all().order_by("-date").filter(state__state__icontains='Zakończona')
+    contracts = ContractImmovables.objects.all().order_by("-date").filter(state=True)
+    contracts_archive = ContractImmovables.objects.all().order_by("-date").filter(state=False)
 
     query = "Wyczyść"
     search = "Szukaj"
@@ -26,11 +26,36 @@ def menu_contractsimmovables(request):
         contracts = contracts.filter(contractor__name__icontains=q)
         return render(request, 'contracts/contract_list.html',
                       {'contracts': contracts, 'con_archive_sum': con_archive_sum, 'contrsum': contrsum,
-                       'query': query})
+                       'query': query, 'actual': True})
     else:
         return render(request, 'contracts/contract_list.html',
                       {'contracts': contracts_list, 'contrsum': contrsum, 'con_archive_sum': con_archive_sum,
-                       'search': search})
+                       'search': search, 'actual': True})
+
+@login_required
+def menu_contractsimmovables_archive(request):
+    contracts = ContractImmovables.objects.all().order_by("-date").filter(state=True)
+    contracts_archive = ContractImmovables.objects.all().order_by("-date").filter(state=False)
+
+    query = "Wyczyść"
+    search = "Szukaj"
+    contrsum = len(contracts)
+    con_archive_sum = len(contracts_archive)
+    q = request.GET.get("q")
+
+    paginator = Paginator(contracts_archive, 40)
+    page_number = request.GET.get('page')
+    contracts_list = paginator.get_page(page_number)
+
+    if q:
+        contracts = contracts_archive.filter(contractor__name__icontains=q)
+        return render(request, 'contracts/contract_list.html',
+                      {'contracts_archive': contracts, 'con_archive_sum': con_archive_sum, 'contrsum': contrsum,
+                       'query': query, 'actual': False})
+    else:
+        return render(request, 'contracts/contract_list.html',
+                      {'contracts_archive': contracts_list, 'contrsum': contrsum, 'con_archive_sum': con_archive_sum,
+                       'search': search, 'actual': False})
 
 
 @login_required

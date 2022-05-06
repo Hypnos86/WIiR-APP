@@ -2,7 +2,7 @@ from django.contrib import admin
 from import_export import resources
 from import_export.admin import ExportMixin
 from import_export.fields import Field
-from main.models import Telephone, Team, OrganisationTelephone, Employer, IndustryType, AccessModule
+from main.models import Telephone, Team, OrganisationTelephone, Employer, IndustryType, AccessModule, Command
 
 # Register your models here.
 # admin.site.site_header ="WIiR-APP"
@@ -59,4 +59,21 @@ class EmployerAdmin(ExportMixin, admin.ModelAdmin):
 
 @admin.register(AccessModule)
 class AccessModuleAdmin(admin.ModelAdmin):
-    list_display = ['user', 'contractors_module', 'contracts_immovables_module', 'investments_module', 'invoices_module', 'cpvdict_module']
+    list_display = ['user', 'contractors_module', 'contracts_immovables_module', 'investments_module',
+                    'invoices_module', 'cpvdict_module', 'listregister_module']
+    ordering = ['user']
+
+
+class CommandResource(resources.ModelResource):
+    title = Field(attribute='title', column_name='Tytuł')
+    content = Field(attribute='content', column_name='Dotyczy')
+    create_date = Field(attribute='create_date', column_name='Data dodania')
+
+    class Meta:
+        model = Command
+        export_order = ('title', 'content', 'create_date')
+
+
+@admin.register(Command)
+class CommandAdmin(admin.ModelAdmin):
+    list_display = ['title', 'content', 'create_date']

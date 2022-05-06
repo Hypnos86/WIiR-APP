@@ -3,17 +3,31 @@
 
 {%block title%}Strona główna{%endblock%}
 {%block content%}
-<div class="container">
-    <div class="row">
-        <div class="col-md-4">
+
+<div class="row">
+    <div class="col-md-4">
+
+        <div class="list-group col-md-10">
+            {%for command in commands%}
+            <a href="/media/{{command.scan}}" target="_blank" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <p class="mb-1">{{command.title}}</p>
+                    <small>{{command.create_date}}</small>
+                </div>
+                <small class="text-muted">{{command.content}}</small>
+            </a>
+            {%endfor%}
         </div>
-        <div class="col-md-4 text-center mb-5">
-            <img src="{%static 'main/media/policja.png'%}" height="150px"/>
+
+    </div>
+    <div class="text-center col-md-8 ">
+        <div class="col-md-6 mb-5">
+            <img src="{%static 'main/media/policja.png'%}" height="90px"/>
+            <h5 class="text-center mt-5">Dziś jest: {{date|date:"j E Y"}} roku</h5>
+            <h5 class="text-center">{{date|date:"l"}}</h5>
+            <h5 class="text-center">Dzień w roku: {{date|date:"z"}}</h5>
         </div>
-        <div class="col-md-4"></div>
-        <h4 class="text-center">Dziś jest: {{date|date:"j E Y"}} roku</h4>
-            <h4 class="text-center">{{date|date:"l"}}</h4>
-            <h4 class="text-center">Dzień w roku: {{date|date:"z"}}</h4>
     </div>
 </div>
+
 {%endblock%}
