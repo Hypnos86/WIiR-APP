@@ -4,16 +4,50 @@
 {% load static %}
 {% block title %}Ewidencja - Mieszkania Służbowe{% endblock %}
 {% block content %}
-<form method="post">
-    {%csrf_token%}
-    {{new_float_form|bootstrap}}
-    <div class="row mt-3">
-            <div class="col-md-12 moj-button-right">
-                <button type="submit" class="btn btn-outline-primary my-btn">{%if new%}Dodaj lokal{%else%}Zapisz zmiany{%endif%}</button>
+<div class="row">
+    <div class="col-md-3"><a href="{% url 'listregister:make_flats_list'%}">
+        <button class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span>
+        </button>
+    </a></div>
+    <div class="col-md-6">
+        <h4 class="text-center">{%if new%}Nowe mieszkanie{%else%}Edycja mieszkania{%endif%}</h4>
+    </div>
+</div>
+<div class="container col-md-5">
+    <form method="post">
+        {%csrf_token%}
+        <div class="mb-3">
+            {{new_flat_form.address|bootstrap}}
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-4">
+                {{new_flat_form.area|bootstrap}}
+            </div>
+            <div class="col-md-4">
+                {{new_flat_form.room_numbers|bootstrap}}
+            </div>
+            <div class="col-md-4">
+                {{new_flat_form.flor|bootstrap}}
             </div>
         </div>
-</form>
+        <div class="">
+            {{new_flat_form.information|bootstrap}}
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                {{new_flat_form.state|bootstrap}}
+            </div>
+            <div class="col-md-6 moj-button-right">
+                <button type="submit" class="btn btn-outline-primary my-btn">{%if new%}Dodaj lokal{%else%}Zapisz
+                    zmiany{%endif%}
+                </button>
 
+            </div>
+        </div>
+
+
+    </form>
+</div>
 <script>
     document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-invoices").classList.remove("active");
@@ -22,5 +56,8 @@
      document.getElementById("button-cpv").classList.remove("active");
      document.getElementById("button-record").classList.add("active");
      document.getElementById("button-cpvnotaut").classList.remove("active");
+
+
+
 </script>
 {%endblock%}

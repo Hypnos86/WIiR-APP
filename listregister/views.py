@@ -19,13 +19,13 @@ def make_flats_list(request):
 
 
 def add_new_flat(request):
-    new_float_form = OfficialFlatForm(request.POST or None)
+    new_flat_form = OfficialFlatForm(request.POST or None)
 
     if request.method == 'POST':
-        if new_float_form.is_valid():
-            instance = new_float_form.save(commit=False)
+        if new_flat_form.is_valid():
+            instance = new_flat_form.save(commit=False)
             instance.author = request.user
             instance.save()
-            new_float_form.save()
+            new_flat_form.save()
             return redirect('listregister:make_flats_list')
-    return render(request, 'listregister/add_new_flat.html', {'new_float_form': new_float_form, 'new': True})
+    return render(request, 'listregister/add_new_flat.html', {'new_flat_form': new_flat_form, 'new': True})
