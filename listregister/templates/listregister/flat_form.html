@@ -17,25 +17,25 @@
     <form method="post">
         {%csrf_token%}
         <div class="mb-3">
-            {{new_flat_form.address|bootstrap}}
+            {{flat_form.address|bootstrap}}
         </div>
         <div class="row mb-3">
             <div class="col-md-4">
-                {{new_flat_form.area|bootstrap}}
+                {{flat_form.area|bootstrap}}
             </div>
             <div class="col-md-4">
-                {{new_flat_form.room_numbers|bootstrap}}
+                {{flat_form.room_numbers|bootstrap}}
             </div>
             <div class="col-md-4">
-                {{new_flat_form.flor|bootstrap}}
+                {{flat_form.flor|bootstrap}}
             </div>
         </div>
         <div class="">
-            {{new_flat_form.information|bootstrap}}
+            {{flat_form.information|bootstrap}}
         </div>
         <div class="row mt-4">
             <div class="col-md-6">
-                {{new_flat_form.state|bootstrap}}
+                {{flat_form.state|bootstrap}}
             </div>
             <div class="col-md-6 moj-button-right">
                 <button type="submit" class="btn btn-outline-primary my-btn">{%if new%}Dodaj lokal{%else%}Zapisz
@@ -44,8 +44,6 @@
 
             </div>
         </div>
-
-
     </form>
 </div>
 <script>
@@ -56,8 +54,6 @@
      document.getElementById("button-cpv").classList.remove("active");
      document.getElementById("button-record").classList.add("active");
      document.getElementById("button-cpvnotaut").classList.remove("active");
-
-
 
 </script>
 {%endblock%}
