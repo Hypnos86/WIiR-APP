@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from listregister.models import OfficialFlat
 from listregister.forms import OfficialFlatForm
 
@@ -13,8 +13,9 @@ def make_list_register(request):
 
 def make_flats_list(request):
     flats = OfficialFlat.objects.all()
+    last = OfficialFlat.objects.values('change').latest('change')
     count_flats = len(flats)
-    context = {'flats': flats, 'count_flats': count_flats}
+    context = {'flats': flats, 'count_flats': count_flats, 'last_date': last}
     return render(request, 'listregister/flats_list.html', context)
 
 
@@ -28,4 +29,18 @@ def add_new_flat(request):
             instance.save()
             new_flat_form.save()
             return redirect('listregister:make_flats_list')
-    return render(request, 'listregister/add_new_flat.html', {'new_flat_form': new_flat_form, 'new': True})
+    return render(request, 'listregister/flat_form.html', {'flat_form': new_flat_form, 'new': True})
+
+
+def edit_flat(request, id):
+    flats = get_object_or_404(OfficialFlat, pk=id)
+    flat_form = OfficialFlatForm(request.POST or None, instance=flats)
+    context = {'flat_form': flat_form, 'new': False}
+
+    if request.method == 'POST':
+        if flat_form.is_valid():
+            flat = flat_form.save(commit=False)
+            flat.author = request.user
+            flat_form.save()
+            return redirect('listregister:make_flats_list')
+    return render(request, 'listregister/flat_form.html', context)

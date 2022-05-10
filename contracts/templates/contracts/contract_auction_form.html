@@ -15,7 +15,6 @@
         <h4 class="text-center">{%if new%}Nowa umowa ZZP{%else%}Edycja umowy {{contract.no_contract}}{%endif%}</h4>
     </div>
 </div>
-
 <div class="container px-5 pb-5 col-md-8">
     <form method="post" enctype="multipart/form-data">
         {%csrf_token%}
@@ -67,23 +66,24 @@
             {%endif%}
             <div class="row">
                 <div class="col-md-6 p-2 mt-2">{{contract_auction_form.scan|bootstrap}}</div>
-            <div class="col-md-6">
-                {%if new == False%}
-                <div class="mt-5">
-                    <span>Dodaj aneks</span>
-                </div>
-                {%endif%}
-                <div class="row">
+                <div class="col-md-6">
                     {%if new == False%}
-                    <div class="col-md-12 moj-button-right py-4">
-                        <button type="submit" class="btn btn-outline-primary my-btn">Zapisz zmiany</button>
+                    <div class="mt-5">
+                        <span>Dodaj aneks</span>
                     </div>
+                    {%endif%}
+                    <div class="row">
+                        {%if new == False%}
+                        <div class="col-md-12 moj-button-right py-4">
+                            <button type="submit" class="btn btn-outline-primary my-btn">Zapisz zmiany</button>
+                        </div>
+                    </div>
+                    {%else%}
+                    <div class="col-md-12 moj-button-right py-4">
+                        <button type="submit" class="btn btn-outline-primary my-btn">Dodaj umowę</button>
+                    </div>
+                    {%endif%}
                 </div>
-                {%else%}
-                <div class="col-md-12 moj-button-right py-4">
-                    <button type="submit" class="btn btn-outline-primary my-btn">Dodaj umowę</button>
-                </div>
-                {%endif%}
             </div>
         </div>
     </form>
@@ -94,12 +94,5 @@
      document.getElementById("button-contracts").classList.remove("active");
      document.getElementById("button-contractors").classList.remove("active");
      document.getElementById("button-investments").classList.add("active");
-
-
-
-
-
-
-
 </script>
 {% endblock %}

@@ -15,8 +15,9 @@
         </form>
     </div>
 </div>
-<div class="kontrahenci-title justify-content-center align-items-center">
+<div class="kontrahenci-title justify-content-center align-items-center text-center">
     <h4>Mieszkania służbowe</h4>
+    <small>Ostatnia aktualizacja: {{last_date.change|date:"d.m.Y - a"}}</small>
     <div class="row">
         <div class="col-md-2">
             <p><span>Liczba mieszkań: </span><span class="badge text-white info badge-pill">{{count_flats}}</span></p>
@@ -45,7 +46,7 @@
         {%for flat in flats %}
         <tr class="my-table-tr">
             <td class="text-center" valign="middle" scope="row"></td>
-            <td align="left" valign="middle" scope="row">{{flat.address}}</td>
+            <td align="left" valign="middle" scope="row" title="Ostatnie zmiany: {{flat.change|date:"d.m.Y"}} r. ({{flat.author.first_name}} {{flat.author.last_name}})">{{flat.address}}</td>
             <td align="center" valign="middle"><span>{{flat.area|intcomma}}</span></td>
             <td align="center" class="text-center" valign="middle"><span>{{flat.room_numbers}}</span></td>
             <td align="center" valign="middle"><span>{{flat.flor}}</span></td>
@@ -56,7 +57,7 @@
             {%endif%}
             <td valign="middle"><span>{{flat.information}}</span></td>
             <td class="text-center" valign="middle">
-                <a href="">
+                <a href="{%url 'listregister:edit_flat' flat.id %}">
                     <button type="submit" class="btn btn-outline-primary icon-color"><i class="bi bi-pencil-square"></i>
                     </button>
                 </a>
