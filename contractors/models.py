@@ -15,6 +15,7 @@ class Contractor(models.Model):
     city = models.CharField('Miasto', max_length=20, null=True)
     information = models.TextField('Informacje', null=True, blank=True, default="")
     creation_date = models.DateTimeField(auto_now_add=True)
+    change = models.DateTimeField('Zmiany', auto_now=True)
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
 
     def __str__(self):

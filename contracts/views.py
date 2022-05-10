@@ -11,6 +11,7 @@ from units.models import Unit
 def menu_contractsimmovables(request):
     contracts = ContractImmovables.objects.all().order_by("-date").filter(state=True)
     contracts_archive = ContractImmovables.objects.all().order_by("-date").filter(state=False)
+    last_date = ContractImmovables.objects.values('change').latest('change')
 
     query = "Wyczyść"
     search = "Szukaj"
@@ -26,11 +27,12 @@ def menu_contractsimmovables(request):
         contracts = contracts.filter(contractor__name__icontains=q)
         return render(request, 'contracts/contract_list.html',
                       {'contracts': contracts, 'con_archive_sum': con_archive_sum, 'contrsum': contrsum,
-                       'query': query, 'actual': True})
+                       'query': query, 'last_date': last_date, 'actual': True})
     else:
         return render(request, 'contracts/contract_list.html',
                       {'contracts': contracts_list, 'contrsum': contrsum, 'con_archive_sum': con_archive_sum,
-                       'search': search, 'actual': True})
+                       'search': search, 'last_date': last_date, 'actual': True})
+
 
 @login_required
 def menu_contractsimmovables_archive(request):
@@ -123,7 +125,8 @@ def show_contractsimmovables(request, id):
     contract = ContractImmovables.objects.get(pk=id)
     annexes = contract.annex.all()
 
-    return render(request, 'contracts/show_contract_immovables.html', {'contract': contract, 'annexes': annexes})
+    return render(request, 'contracts/show_contract_immovables.html',
+                  {'contract': contract, 'annexes': annexes, 'actual': True})
 
 
 @login_required

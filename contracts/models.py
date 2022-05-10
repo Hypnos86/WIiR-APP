@@ -91,7 +91,7 @@ class ContractImmovables(models.Model):
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE, null=False, verbose_name="Jednostka",
                              related_name="contractimmovables")
     scan = models.FileField(upload_to='contracts_immovables/%Y/', null=True, blank=True, verbose_name="Skan umowy")
-    state = models.BooleanField(default=True, verbose_name='Stan umowy')
+    state = models.BooleanField(default=True, verbose_name='Aktualna')
     information = models.TextField("Informacje", blank=True, default="")
     creation_date = models.DateTimeField("Data utworzenia", auto_now_add=True)
     change = models.DateTimeField("Zmiana", auto_now=True)

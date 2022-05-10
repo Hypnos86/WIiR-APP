@@ -51,10 +51,10 @@
             </div>
             <div class="col-md-12 my-5">
                 <fieldset class="my-cost">
-                    <legend class="p-2" title="Koszy ponoszone przez WIiR">Koszty</legend>
-                    <div class="row m-3">
+                    <legend class="p-2 text-center">Koszty</legend>
+                    <div class="row p-2">
                         <div class="col-md-6 ">
-                            <ul class="list-group">
+                            <ul class="list-group p-3">
                                 <li class="list-group-item">{{contract_form.rent_cost|bootstrap}}</li>
                                 <li class="list-group-item">{{contract_form.electric_cost|bootstrap}}</li>
                                 <li class="list-group-item">{{contract_form.gas_cost|bootstrap}}</li>
@@ -62,7 +62,7 @@
                             </ul>
                         </div>
                         <div class="col-md-6">
-                            <ul class="list-group">
+                            <ul class="list-group p-3">
                                 <li class="list-group-item">{{contract_form.central_heating_cost|bootstrap}}</li>
                                 <li class="list-group-item">{{contract_form.garbage_cost|bootstrap}}</li>
                                 <li class="list-group-item">{{contract_form.garbage_tax_cost|bootstrap}}</li>
@@ -85,15 +85,16 @@
                 </div>
             </div>
             <div class="col-md-10 my-3 py-3">
-            {%if new == False%}
+                {%if new == False%}
                 <div class="moj-button-right">
                     <button type="submit" class="btn btn-outline-primary my-btn">Zapisz zmiany</button>
+                </div>
+                {%else%}
+                <div class="moj-button-right">
+                    <button type="submit" class="btn btn-outline-primary my-btn">Dodaj umowę</button>
+                </div>
+                {%endif%}
             </div>
-            {%else%}
-            <div class="moj-button-right">
-                <button type="submit" class="btn btn-outline-primary my-btn">Dodaj umowę</button>
-            </div>
-            {%endif%}
         </div>
     </form>
 </div>
@@ -124,6 +125,7 @@
     function submitForm(){
         $("#submitButton").closest("form").submit();
     }
+
 
 
 </script>

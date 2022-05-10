@@ -21,7 +21,7 @@ class ContractImmovablesForm(ModelForm):
                        'state', 'information', 'creation_date', 'change', 'author']
 
         labels = {'id': 'id', 'date': 'Data umowy', 'no_contract': 'Nr umowy', 'contractor': 'Kontrahent',
-                  'legal_basic': 'Podstawa prawda', 'period_of_validity': 'Okres obowiązywania',
+                  'legal_basic': 'Podstawa prawna', 'period_of_validity': 'Okres obowiązywania',
                   'type_of_contract': 'Rodzaj umowy', 'usable_area': 'Powiezchnia użytkowa', 'rent_cost': 'Czynsz',
                   'electric_cost': 'Prąd', 'gas_cost': 'Gaz', 'water_cost': 'Woda', 'central_heating_cost': 'C.O.',
                   'garbage_cost': 'Śmieci', 'garbage_tax_cost': 'Zagospodarowanie odpadami komunalnymi',

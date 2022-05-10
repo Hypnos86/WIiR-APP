@@ -42,6 +42,7 @@ class Unit(models.Model):
     information = models.TextField(blank=True)
     manager = models.CharField(max_length=50)
     status = models.BooleanField('Status', null=False, default=0)
+    change = models.DateTimeField('Zmiany', auto_now=True)
 
     def __str__(self):
         return f'{self.information} - {self.city}, {self.address}'

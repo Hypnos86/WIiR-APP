@@ -8,6 +8,7 @@ from .forms import ContractorsellForm
 @login_required
 def contractorsell_list(request):
     contractorsell = Contractor.objects.all().order_by("name")
+    last_date = Contractor.objects.values('change').latest('change')
     query = "Wyczyść"
     search = "Szukaj"
     consellsum = len(contractorsell)
@@ -22,10 +23,11 @@ def contractorsell_list(request):
             city__icontains=q) | contractorsell.filter(no_contractor__startswith=q) | contractorsell.filter(
             nip__startswith=q)
         return render(request, 'contractors/contractorssell_list.html',
-                      {'contractors': contractorsell, "consellsum": consellsum, "query": query})
+                      {'contractors': contractorsell, "consellsum": consellsum, "query": query, 'last_date': last_date})
     else:
         return render(request, 'contractors/contractorssell_list.html',
-                      {'contractors': contractorsell_list, "consellsum": consellsum, "search": search})
+                      {'contractors': contractorsell_list, "consellsum": consellsum, "search": search,
+                       'last_date': last_date})
 
 
 @login_required

@@ -3,12 +3,20 @@
 {%load static%}
 {%block content%}
 <div class="row">
+    {%if actual%}
     <div class="col-md-2 moj-button-left"><a href="{%url 'contracts:menu_contractsimmovables'%}">
     <button class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span></button>
 </a>
 </div>
+    {%else%}
+    <div class="col-md-2 moj-button-left"><a href="{%url 'contracts:menu_contractsimmovables_archive'%}">
+    <button class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span></button>
+</a>
+</div>
+    {%endif%}
+
 <div class="col-md-8">
-<h4 class="text-center">Umowa {%if contract.no_contract%} nr {{contract.no_contract}} {%endif%} z dnia
+<h4 class="text-center" title="Ostatnie zmiany na umowie: {{contract.change|date:'d.m.Y - (H:i)'}}">Umowa {%if contract.no_contract%} nr {{contract.no_contract}} {%endif%} z dnia
     {{contract.date|date:"d.m.Y"}}</h4>
     </div>
 
@@ -43,6 +51,8 @@
                 {%if contract.information%}
                 <li class="list-group-item"><span class="text-muted">Informacje: </span>{{contract.information}}</li>
                 {%endif%}
+                <li class="list-group-item"><small class="text-muted">Data dodania umowy: {{contract.creation_date|date:"d.m.Y"}}</small></li>
+                <li class="list-group-item"><small class="text-muted">Użytkownik: {{contract.author}}</small></li>
             </ul>
 
         </div>
