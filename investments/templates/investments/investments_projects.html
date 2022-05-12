@@ -13,7 +13,9 @@
 {% block investmentsmenu %}
 
 <p>Zadania inwestycyjne</p>
-
+{%for project in projects%}
+{{project|bootstrap}}
+{%endfor%}
 <script>
      document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-invoices").classList.remove("active");

@@ -25,6 +25,7 @@ class Project(models.Model):
     information = models.TextField('Informacje', null=True, blank=True)
     date_of_settlement = models.DateField('Data rozliczenia', null=True, blank=True)
     settlement_scan = models.FileField(upload_to='investments/settlements/%Y/', null=True, blank=True, verbose_name='Rozliczenie inwestycyjne')
+    realized = models.BooleanField('Zrealizowane', default=False)
     creation_date = models.DateTimeField('Data utworzenia', auto_now_add=True)
     change = models.DateField('Zmiana', auto_now=True)
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='project', verbose_name='Autor')

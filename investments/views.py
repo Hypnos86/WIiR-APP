@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from investments.models import Project
 
 
 # Create your views here.
@@ -7,4 +8,6 @@ def investments_list(request):
 
 
 def investment_projects_list(request):
-    return render(request, 'investments/investments_projects.html')
+    projects = Project.objects.all()
+    context = {'projects': projects}
+    return render(request, 'investments/investments_projects.html', context)

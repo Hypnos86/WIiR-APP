@@ -96,7 +96,7 @@ class Command(models.Model):
 
     title = models.CharField('Nazwa', max_length=120)
     content = models.TextField('Treść')
-    scan = models.FileField(upload_to='Commands/%Y-%m/', verbose_name='Skan polecenia')
+    scan = models.FileField(upload_to='commands/%Y/%m/', verbose_name='Skan polecenia')
     create_date = models.DateField("Data dodania", auto_now_add=True)
 
     def __str__(self):
