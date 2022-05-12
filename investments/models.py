@@ -12,7 +12,7 @@ class Project(models.Model):
 
     date_of_acceptance = models.DateField('Data pisma', null=True, blank=True)
     no_acceptance_document = models.CharField('Liczba pisma', max_length=15, null=True, blank=True)
-    investment_program = models.FileField(upload_to='investment_program/%Y/', null=True, blank=True,
+    investment_program = models.FileField(upload_to='investments/investment_program/%Y/', null=True, blank=True,
                                           verbose_name='Program inwestycji')
     project_title = models.CharField('Nazwa zadania', max_length=200, null=True, blank=True)
     investment_cost_estimate_value = models.DecimalField('WKI', max_digits=12, decimal_places=2, null=True, blank=True)
@@ -23,7 +23,11 @@ class Project(models.Model):
                                   verbose_name='Paragraf')
     source_financing = models.TextField('Opis źródła finansowania', null=True, blank=True)
     information = models.TextField('Informacje', null=True, blank=True)
+    date_of_settlement = models.DateField('Data rozliczenia', null=True, blank=True)
+    settlement_scan = models.FileField(upload_to='investments/settlements/%Y/', null=True, blank=True, verbose_name='Rozliczenie inwestycyjne')
     creation_date = models.DateTimeField('Data utworzenia', auto_now_add=True)
+    change = models.DateField('Zmiana', auto_now=True)
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='project', verbose_name='Autor')
 
     def __str__(self):
         return f'{self.unit} - {self.project_title}'
