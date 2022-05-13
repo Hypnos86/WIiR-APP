@@ -8,7 +8,12 @@ from .forms import ContractorsellForm
 @login_required
 def contractorsell_list(request):
     contractorsell = Contractor.objects.all().order_by("name")
-    last_date = Contractor.objects.values('change').latest('change')
+
+    try:
+        last_date = Contractor.objects.values('change').latest('change')
+    except Contractor.DoesNotExist:
+        last_date = None
+
     query = "Wyczyść"
     search = "Szukaj"
     consellsum = len(contractorsell)

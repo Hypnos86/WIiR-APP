@@ -6,9 +6,15 @@ from units.forms import UnitForm
 
 def units_list(request):
     units_active = Unit.objects.filter(status=1).order_by('county')
-    last_date = Unit.objects.values('change').latest('change')
+
     county = County.objects.all().order_by("swop_id")
     type_unit = TypeUnit.objects.all()
+
+    try:
+        last_date = Unit.objects.values('change').latest('change')
+    except Unit.DoesNotExist:
+        last_date = None
+
     query = "Wyczyść"
     search = "Szukaj"
     unit_sum = len(units_active)

@@ -11,7 +11,11 @@ from units.models import Unit
 def menu_contractsimmovables(request):
     contracts = ContractImmovables.objects.all().order_by("-date").filter(state=True)
     contracts_archive = ContractImmovables.objects.all().order_by("-date").filter(state=False)
-    last_date = ContractImmovables.objects.values('change').latest('change')
+
+    try:
+        last_date = ContractImmovables.objects.values('change').latest('change')
+    except ContractImmovables.DoesNotExist:
+        last_date = None
 
     query = "Wyczyść"
     search = "Szukaj"

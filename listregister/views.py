@@ -13,8 +13,13 @@ def make_list_register(request):
 
 def make_flats_list(request):
     flats = OfficialFlat.objects.all()
-    last_date = OfficialFlat.objects.values('change').latest('change')
     count_flats = len(flats)
+
+    try:
+        last_date = OfficialFlat.objects.values('change').latest('change')
+    except OfficialFlat.DoesNotExist:
+        last_date = None
+
     query = "Wyczyść"
     search = "Szukaj"
     q = request.GET.get("q")

@@ -16,7 +16,9 @@
 </div>
 <div class="kontrahenci-title justify-content-center align-items-center text-center">
     <h4>Kontrahenci umów czynszowych WIiR</h4>
-    <small>Ostatnia aktualizacja: {{last_date.change|date:"d.m.Y - (H:i)"}}</small>
+    {% if last_date %}
+        <small>Ostatnia aktualizacja: {{last_date.change|date:"d.m.Y - (H:i)"}}</small>
+    {%endif%}
     <div class="row">
         <div class="col-md-2">
             <p><span>Liczba kontrahentów: </span><span class="badge text-white info badge-pill">{{consellsum}}</span> </p>

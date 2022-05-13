@@ -29,7 +29,13 @@
             {%endif%}
         </div>
         <div class="col-md-8 text-center">
-            <h4 title=" {%if actual%}Ostatnia aktualizacja: {{last_date.change|date:'d.m.Y - (H:i)'}}{%endif%}">Umowy najmu</h4>
+
+            {%if last_date %}
+                <h4 title=" {%if actual%}Ostatnia aktualizacja: {{last_date.change|date:'d.m.Y - (H:i)'}}{%endif%}">Umowy najmu</h4>
+            {%else%}
+                <h4>Umowy najmu</h4>
+            {%endif%}
+
             <small>{%if actual%}(Obowiązujące){%else%}(Archiwum){%endif%}</small><br>
         </div>
         <div class="col-md-2 moj-button-right my-1">
