@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>{% extends 'base_investments.html' %}
+{% extends 'base_investments.html' %}
 {% load bootstrap %}
 {% load static%}
+{% load humanize %}
 {% block investmentsmenu %}
 
 <div class="row">
@@ -24,14 +16,19 @@
     </div>
 </div>
 <div class="row">
-    <div class="kontrahenci-title justify-content-center align-items-center text-center">
-        <h4>Ewidencja zadań inwestycyjnych</h4>
+    <div class="kontrahenci-title justify-content-center align-items-center">
+        {%if last_date%}
+            <h4 title="Ostatnia aktualizacja: {{last_date.change|date:'d.m.Y'}}">Ewidencja zadań inwestycyjnych</h4>
+        {%else%}
+            <h4>Ewidencja zadań inwestycyjnych</h4>
+        {%endif%}
+
         <div class="row">
             <div class="col-md-2">
-                <p><span>Liczba zadań: </span><span class="badge text-white info badge-pill">{{consellsum}}</span></p>
+                <p class="m-0"><span>Liczba zadań: </span><span class="badge text-white info badge-pill">{{consellsum}}</span></p>
             </div>
-            <div class="col-md-10 moj-button-right "><a href="{%url 'contractors:new_contractorsell'%}">
-                <button type="button" class="btn btn-outline-primary my-btn">Nowe zadanie</button>
+            <div class="col-md-10 moj-button-right "><a href="">
+                <button type="button" class="btn btn-outline-primary my-btn "><span class="bi bi-plus-circle"> Dodaj zadanie</span></button>
             </a>
             </div>
         </div>
@@ -42,11 +39,11 @@
         <thead>
         <tr class="my-table-tr text-center">
             <th align="center" valign="middle" width="50" scope="col">L.p.</th>
-            <th align="center" valign="middle" width="200" scope="col">Realizacja</th>
+            <th align="center" valign="middle" width="150" scope="col">Okres realizacji</th>
             <th align="center" valign="middle" width="520" scope="col">Nazwa zadania</th>
-            <th align="center" valign="middle" width="250" scope="col">Jednostka</th>
-            <th align="center" valign="middle" width="250" scope="col">WKI</th>
-            <th align="center" valign="middle" width="250" scope="col">Informacje</th>
+            <th align="center" valign="middle" width="400" scope="col">Jednostka</th>
+            <th align="center" valign="middle" width="150" scope="col">WKI</th>
+            <th align="center" valign="middle" width="450" scope="col">Informacje</th>
 
         </tr>
         </thead>
@@ -54,10 +51,14 @@
         {%for project in projects %}
         <tr class="my-table-tr">
             <td class="text-center" valign="middle" scope="row"></td>
-            <td align="center" valign="middle" scope="row"></td>
-            <td valign="middle"><span></span></td>
-            <td class="text-center" valign="middle"><span></span></td>
-            <td valign="middle"><span></span></td>
+            {%if project.realized%}
+            <td align="center" valign="middle" scope="row" title="Zadanie zrealizowane"><span>{{project.date_of_acceptance|date:'m.Y'}} {%if project.date_of_settlement%}- {{project.date_of_settlement|date:'m.Y'}} {%endif%}</span></td>
+            {%else%}
+            <td align="center" valign="middle" scope="row" title="Zadanie w trakcie realizacji"><span>{{project.date_of_acceptance|date:'m.Y'}}</span></td>
+            {%endif%}
+            <td valign="middle"><span>{{project.project_title}}</span></td>
+            <td class="text-center" valign="middle"><span>{{project.unit}}</span></td>
+            <td align="right" valign="middle" ><span class="p-3">{{project.investment_cost_estimate_value|intcomma}}</span></td>
             <td valign="middle"><span></span></td>
             <td align="right"  valign="middle">
                 <a href="">

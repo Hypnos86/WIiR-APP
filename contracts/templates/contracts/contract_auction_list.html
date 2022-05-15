@@ -20,7 +20,10 @@
         <div class="col-md-3">
             <p class="m-0"><span>Liczba umów: {{contracts_auctions_sum}}</span></p>
         </div>
-        <div class="col-md-9 moj-button-right"><a href="{%url 'contracts:new_contract_auction'%}"><button class="btn btn-outline-primary button-choise-contracts my-btn">Nowa umowa</button>
+        <div class="col-md-9 moj-button-right"><a href="{%url 'contracts:new_contract_auction'%}">
+            <button class="btn btn-outline-primary button-choise-contracts my-btn">
+                <span class="bi bi-plus-circle"> Dodaj umowę</span>
+            </button>
     </a></div>
     </div>
 </div>
@@ -53,8 +56,16 @@
         <td valign="middle">{{contract.unit}}</td>
         <td valign="middle">{%for inspector in contract.inspector.all%} <span title="{{inspector.industry}}"> {{inspector}} <br></span> {%endfor%}</td>
         <td align="center" valign="middle">
-            <a href="{% url 'contracts:show_contract_auction' contract.id %}"><button type="button" class="btn btn-outline-primary icon-color mx-2 my-1"><i class="bi bi-eye"></i></button></a>
-            <a href="{% url 'contracts:edit_contract_auction' contract.id %}"><button type="button" class="btn btn-outline-primary icon-color mx-2 my-1"><i class="bi bi-pencil-square"></i></button></a>
+            <a href="{% url 'contracts:show_contract_auction' contract.id %}">
+                <button type="button" class="btn btn-outline-primary icon-color mx-2 my-1">
+                    <i class="bi bi-eye"></i>
+                </button>
+            </a>
+            <a href="{% url 'contracts:edit_contract_auction' contract.id %}">
+                <button type="button" class="btn btn-outline-primary icon-color mx-2 my-1">
+                    <i class="bi bi-pencil-square"></i>
+                </button>
+            </a>
         </td>
     </tr>
     {%endfor%}
