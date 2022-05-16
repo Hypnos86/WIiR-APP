@@ -9,16 +9,20 @@
             <div class="input-group">
                 <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj umowy"
                        aria-label="Search" aria-describedby="search-addon">
-                <button type="submit" class="btn btn-outline-primary">{{query}}{{search}}</button>
+                <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
             </div>
         </form>
     </div>
 </section>
 <div class="kontrahenci-title">
+    {%if last_date%}
+    <h4 title="Ostatni aktualizacja {{last_date.change|date:'d.m.Y'}}">Ewidencja Umów ZZP</h4>
+    {%else%}
     <h4>Ewidencja Umów ZZP</h4>
+    {%endif%}
     <div class="row">
         <div class="col-md-3">
-            <p class="m-0"><span>Liczba umów: {{contracts_auctions_sum}}</span></p>
+            <p class="m-0">Liczba umów: <span class="badge text-white info badge-pill">{{contracts_auctions_sum}}</span></p>
         </div>
         <div class="col-md-9 moj-button-right"><a href="{%url 'contracts:new_contract_auction'%}">
             <button class="btn btn-outline-primary button-choise-contracts my-btn">
@@ -78,48 +82,49 @@
     </tfoot>
 </table>
 <!--Pagination-->
-{%if query == False%}
-<nav aria-labelledby="Page navigation">
-    <ul class="pagination justify-content-center">
-        {%if contracts_auctions_list.has_previous%}
-        <li class="page-item">
-            <a class="page-link" href="?page={{contracts_auctions_list.previous_page_number}}">Poprzednia</a>
-        </li>
-        {%else%}
-        <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Poprzednia</a>
-        </li>
-        {%endif%}
-        {%for i in contracts_auctions_list.paginator.page_range%}
-        {%if contracts_auctions_list.number == i%}
-        <li class="page-item active" aria-current="page">
+   {%if search%}
+    <nav aria-labelledby="Page navigation">
+        <ul class="pagination justify-content-center">
+            {%if contracts_auctions_list.has_previous%}
+            <li class="page-item">
+                <a class="page-link" href="?page={{contracts_auctions_list.previous_page_number}}">Poprzednia</a>
+            </li>
+            {%else%}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Poprzednia</a>
+            </li>
+            {%endif%}
+            {%for i in contracts_auctions_list.paginator.page_range%}
+            {%if contracts_auctions_list.number == i%}
+            <li class="page-item active" aria-current="page">
             <span class="page-link">
                 {{i}}
                 <span class="sr-only"></span>
             </span>
-        </li>
-        {%else%}
-        <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
-        {%endif%}
-        {%endfor%}
-        {%if contracts_auctions_list.has.next%}
-        <li class="page-item">
-            <a class="page-link" href="?page={{contracts_auctions_list.next_page_number}}">Następna</a>
-        </li>
-        {%else%}
-        <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Następna</a>
-        </li>
-        {%endif%}
-    </ul>
-</nav>
-{%endif%}
+            </li>
+            {%else%}
+            <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+            {%endif%}
+            {%endfor%}
+            {%if contracts_auctions_list.has.next%}
+            <li class="page-item">
+                <a class="page-link" href="?page={{contracts_auctions_list.next_page_number}}">Następna</a>
+            </li>
+            {%else%}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Następna</a>
+            </li>
+            {%endif%}
+        </ul>
+    </nav>
+    {%endif%}
+
 <script>
      document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-invoices").classList.remove("active");
      document.getElementById("button-contracts").classList.remove("active");
-     document.getElementById("button-contractors").classList.remove("active");
      document.getElementById("button-investments").classList.add("active");
      document.getElementById("button-contractzzp").classList.add("active");
+     document.getElementById("button-contractors").classList.remove("active");
 </script>
 {%endblock%}

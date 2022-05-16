@@ -1,0 +1,14 @@
+{%extends 'base.html'%}
+{%load bootstrap%}
+{%load static%}
+{%block content%}
+
+{{project_form}}
+
+<script>
+     document.getElementById("button-units").classList.remove("active");
+     document.getElementById("button-invoices").classList.remove("active");
+     document.getElementById("button-contracts").classList.add("active");
+     document.getElementById("button-contractors").classList.remove("active");
+</script>
+{%endblock%}

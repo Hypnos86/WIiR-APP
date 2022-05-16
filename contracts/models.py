@@ -156,7 +156,7 @@ class ContractAuction(models.Model):
     information = models.TextField('Informacje', blank=True, default='')
     scan = models.FileField(upload_to='contracts_zzp/%Y/', null=True, blank=True, verbose_name='Skan umowy')
     creation_date = models.DateTimeField('Data utworzenia', auto_now_add=True)
-    change_date = models.DateTimeField('Zmiana', auto_now=True)
+    change = models.DateTimeField('Zmiana', auto_now=True)
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='contract_auction',
                                verbose_name="Autor")
 

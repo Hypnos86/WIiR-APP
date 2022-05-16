@@ -33,6 +33,10 @@
     background-color: #0a4275;
     border-color:white;
 }
+.my-btn.active{
+    background-color: #0a4275;
+    border-color:white;
+}
 
 .my-div-style{
     border: 1px solid #0a4275;

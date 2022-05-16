@@ -25,9 +25,9 @@
 
         <div class="row">
             <div class="col-md-2">
-                <p class="m-0"><span>Liczba zadań: </span><span class="badge text-white info badge-pill">{{consellsum}}</span></p>
+                <p class="m-0"><span>Liczba zadań: </span><span class="badge text-white info badge-pill">{{projects_sum}}</span></p>
             </div>
-            <div class="col-md-10 moj-button-right "><a href="">
+            <div class="col-md-10 moj-button-right "><a href="{% url 'investments:add_new_project'%}">
                 <button type="button" class="btn btn-outline-primary my-btn "><span class="bi bi-plus-circle"> Dodaj zadanie</span></button>
             </a>
             </div>
@@ -43,7 +43,7 @@
             <th align="center" valign="middle" width="520" scope="col">Nazwa zadania</th>
             <th align="center" valign="middle" width="400" scope="col">Jednostka</th>
             <th align="center" valign="middle" width="150" scope="col">WKI</th>
-            <th align="center" valign="middle" width="450" scope="col">Informacje</th>
+            <th align="center" valign="middle" width="250" scope="col">Informacje</th>
 
         </tr>
         </thead>
@@ -57,14 +57,12 @@
             <td align="center" valign="middle" scope="row" title="Zadanie w trakcie realizacji"><span>{{project.date_of_acceptance|date:'m.Y'}}</span></td>
             {%endif%}
             <td valign="middle"><span>{{project.project_title}}</span></td>
-            <td class="text-center" valign="middle"><span>{{project.unit}}</span></td>
-            <td align="right" valign="middle" ><span class="p-3">{{project.investment_cost_estimate_value|intcomma}}</span></td>
+            <td class="left" valign="middle"><span>{{project.unit}}</span></td>
+            <td align="right" valign="middle" ><span class="px-3">{{project.investment_cost_estimate_value|intcomma}}</span></td>
             <td valign="middle"><span></span></td>
             <td align="right"  valign="middle">
-                <a href="">
-                    <button type="submit" class="btn btn-outline-primary icon-color"><i class="bi bi-pencil-square"></i>
-                    </button>
-                </a>
+                <a class="mx=2" href="{%url 'investments:show_project' project.id%}"><button type="submit" class="btn btn-outline-primary icon-color"><i class="bi bi-eye"></i></button></a>
+                <a class="mx-2" href="{%url 'investments:edit_project' project.id%}"><button type="submit" class="btn btn-outline-primary icon-color"><i class="bi bi-pencil-square"></i></button></a>
             </td>
         </tr>
         {%endfor%}
@@ -75,20 +73,22 @@
         </tr>
         </tfoot>
     </table>
-    {%if search%}
+
+<!--Paginator-->
+   {%if search%}
     <nav aria-labelledby="Page navigation">
         <ul class="pagination justify-content-center">
-            {%if contractors.has_previous%}
+            {%if projects.has_previous%}
             <li class="page-item">
-                <a class="page-link" href="?page={{contractors.previous_page_number}}">Poprzednia</a>
+                <a class="page-link" href="?page={{projects.previous_page_number}}">Poprzednia</a>
             </li>
             {%else%}
             <li class="page-item disabled">
                 <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Poprzednia</a>
             </li>
             {%endif%}
-            {%for i in contractors.paginator.page_range%}
-            {%if contractors.number == i%}
+            {%for i in projects.paginator.page_range%}
+            {%if projects.number == i%}
             <li class="page-item active" aria-current="page">
             <span class="page-link">
                 {{i}}
@@ -99,9 +99,9 @@
             <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
             {%endif%}
             {%endfor%}
-            {%if contractors.has.next%}
+            {%if projects.has.next%}
             <li class="page-item">
-                <a class="page-link" href="?page={{contractors.next_page_number}}">Następna</a>
+                <a class="page-link" href="?page={{projects.next_page_number}}">Następna</a>
             </li>
             {%else%}
             <li class="page-item disabled">
@@ -118,9 +118,8 @@
      document.getElementById("button-contracts").classList.remove("active");
      document.getElementById("button-contractors").classList.remove("active");
      document.getElementById("button-cpv").classList.remove("active");
-     document.getElementById("button-cpvnotaut").classList.remove("active");
      document.getElementById("button-investments").classList.add("active");
-
-
+     document.getElementById("button-projects").classList.add("active");
+     document.getElementById("button-cpvnotaut").classList.remove("active");
 </script>
 {% endblock %}

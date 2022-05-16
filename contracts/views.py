@@ -136,17 +136,30 @@ def show_contractsimmovables(request, id):
 @login_required
 def menu_contracts_auction(request):
     contracts_auctions = ContractAuction.objects.all().order_by('-date')
+    contracts_auctions_sum = len(contracts_auctions)
     query = "Wyczyść"
     search = "Szukaj"
-    contracts_auctions_sum = len(contracts_auctions)
-    q = request.GET.get("q")
 
     paginator = Paginator(contracts_auctions, 20)
     page_number = request.GET.get('page')
     contracts_auctions_list = paginator.get_page(page_number)
 
-    return render(request, 'contracts/contract_auction_list.html', {'contracts_auctions_list': contracts_auctions_list,
-                                                                    'contracts_auctions_sum': contracts_auctions_sum})
+    q = request.GET.get("q")
+
+    try:
+        last_date = ContractAuction.objects.values('change').latest('change')
+    except ContractAuction.DoesNotExist:
+        last_date = None
+
+    if q:
+        contracts_auctions = contracts_auctions.filter(no_contract__icontains=q)
+        return render(request, 'contracts/contract_auction_list.html',
+                      {'contracts_auctions_list': contracts_auctions,
+                       'contracts_auctions_sum': contracts_auctions_sum, 'last_date': last_date, 'query': query})
+    else:
+        return render(request, 'contracts/contract_auction_list.html',
+                      {'contracts_auctions_list': contracts_auctions_list,
+                       'contracts_auctions_sum': contracts_auctions_sum, 'last_date': last_date, 'search': search})
 
 
 @login_required

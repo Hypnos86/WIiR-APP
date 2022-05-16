@@ -84,7 +84,7 @@ class ContractAuctionResource(resources.ModelResource):
 class ContractAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ['date', 'no_contract', 'contractor', 'price', 'work_scope', 'legal_basic', 'end_date', 'unit',
                     'last_report_date', 'guarantee', 'guarantee_period', 'warranty_period', 'security_percent',
-                    'security_sum', 'creation_date', 'change_date', 'author']
+                    'security_sum', 'creation_date', 'change', 'author']
     search_fields = ['no_contract', 'legal_basic', 'last_report_date', 'guarantee', 'guarantee_period',
                      'warranty_period', 'security_percent',
                      'security_sum']

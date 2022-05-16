@@ -46,8 +46,8 @@
     </div>
     <div class="row">
         <div class="col-md-3">
-            <p class="m-0"><span>Liczba umów aktualnych: {{contrsum}}</span></p>
-            <p class="m-0"><span>Liczba umów zarchiwizowanych: {{con_archive_sum}}</span></p>
+            <p class="m-0">Liczba umów aktualnych: <span class="badge text-white info badge-pill">{{contrsum}}</span></p>
+            <p class="m-0">Liczba umów zarchiwizowanych: <span class="badge text-white info badge-pill">{{con_archive_sum}}</span></p>
         </div>
     </div>
 </div>
@@ -80,13 +80,13 @@
             {{contract.usable_area|intcomma}} m<sup>2 {%else%} --- {%endif%}</sup></td>
         <td align="center" valign="middle" class="text-center">{{contract.type_of_contract}}</td>
         <td valign="middle">{{contract.unit}}</td>
-        <td align="center" valign="middle">
-            <a href="{% url 'contracts:show_contractsimmovables' contract.id %}">
-                <button type="button" class="btn btn-outline-primary icon-color mx-2 my-1">
+        <td align="right" valign="middle">
+            <a class="mx-2" href="{% url 'contracts:show_contractsimmovables' contract.id %}">
+                <button type="button" class="btn btn-outline-primary icon-color">
                     <i class="bi bi-eye"></i>
                 </button></a>
-            <a href="{% url 'contracts:edit_contractsimmovables' contract.id %}">
-                <button type="button" class="btn btn-outline-primary icon-color mx-2 my-1">
+            <a class="mx-2" href="{% url 'contracts:edit_contractsimmovables' contract.id %}">
+                <button type="button" class="btn btn-outline-primary icon-color">
                     <i class="bi bi-pencil-square"></i>
                 </button></a>
         </td>
@@ -139,7 +139,7 @@
         {%for i in contracts.paginator.page_range%}
         {%if contracts.number == i%}
         <li class="page-item active" aria-current="page">
-                    <span class="page-link">
+                    <span class="page-link my-btn">
                         {{i}}
                         <span class="sr-only"></span>
                     </span>
