@@ -3,39 +3,40 @@
 {%load bootstrap%}
 {%block title%}{%if new%}Nowe zadanie{%else%}Edycja zadania{%endif%}{%endblock%}
 {%block investmentsmenu%}
-<div class="row">
-    <div class="col-md-3">
-        <a href="{%url 'investments:investment_projects_list'%}">
-            <button class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span>
-            </button>
-        </a>
-    </div>
-    <div class="col-md-6">
-        <h4 class="text-center">{%if new%}Nowe zadanie{%else%}Edycja zadania{%endif%}</h4>
-    </div>
-</div>
-<div class="container px-5 pb-5 col-md-8">
-    <form method="post">
-        {%csrf_token%}
-        <div class="row">
-            {{project_form.no_acceptance_document}}
-            <div class="col-md-7 p-2"></div>
-            <div class="col-md-4 p-2"></div>
-            <div class="col-md-7 p-2"></div>
-            <div class="col-md-4 p-2"></div>
-            <div class="col-md-4 p-2"></div>
-            <div class="col-md-4 p-2"></div>
-            <div class="col-md-11 p-2"></div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-md-12 moj-button-right">
-                <button type="submit" class="btn btn-outline-primary my-btn">{%if new%}Dodaj Zadanie {%else%} Zapisz
-                    zmiany{%endif%}
-                </button>
-            </div>
-        </div>
-    </form>
-</div>
+{{project_form|bootstrap}}
+<!--<div class="row">-->
+<!--    <div class="col-md-3">-->
+<!--        <a href="{%url 'investments:investment_projects_list'%}">-->
+<!--            <button class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span>-->
+<!--            </button>-->
+<!--        </a>-->
+<!--    </div>-->
+<!--    <div class="col-md-6">-->
+<!--        <h4 class="text-center">{%if new%}Nowe zadanie{%else%}Edycja zadania{%endif%}</h4>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<div class="container px-5 pb-5 col-md-8">-->
+<!--    <form method="post">-->
+<!--        {%csrf_token%}-->
+<!--        <div class="row">-->
+<!--            {{project_form|bootstrap}}-->
+<!--            <div class="col-md-7 p-2"></div>-->
+<!--            <div class="col-md-4 p-2"></div>-->
+<!--            <div class="col-md-7 p-2"></div>-->
+<!--            <div class="col-md-4 p-2"></div>-->
+<!--            <div class="col-md-4 p-2"></div>-->
+<!--            <div class="col-md-4 p-2"></div>-->
+<!--            <div class="col-md-11 p-2"></div>-->
+<!--        </div>-->
+<!--        <div class="row mt-3">-->
+<!--            <div class="col-md-12 moj-button-right">-->
+<!--                <button type="submit" class="btn btn-outline-primary my-btn">{%if new%}Dodaj Zadanie {%else%} Zapisz-->
+<!--                    zmiany{%endif%}-->
+<!--                </button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </form>-->
+<!--</div>-->
 <script>
      document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-invoices").classList.remove("active");

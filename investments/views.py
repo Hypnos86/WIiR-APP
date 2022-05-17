@@ -78,7 +78,7 @@ def edit_project(request, id):
     project_form = ProjectForm(request.POST or None, request.FILES or None, instance=project_edit)
     units = Unit.objects.all()
 
-    context = {'project_edit': project_form,
+    context = {'project_form': project_form,
                'units': units,
                'new': False}
 
