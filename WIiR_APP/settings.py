@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django_extensions',
     'import_export',
+    'django_filters',
     'bootstrapform',
 
     'units.apps.UnitsConfig',

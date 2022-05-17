@@ -43,7 +43,7 @@ class OrderingObjectAdmin(ExportMixin, admin.ModelAdmin):
 
 
 class OrderResource(resources.ModelResource):
-    date = Field(attribute='date', column_name='Date')
+    date = Field(attribute='date', column_name='Data')
     no_order = Field(attribute='no_order', column_name='Zlecenie')
     sum = Field(attribute='sum', column_name='Szacowana kwota')
     typeorder = Field(attribute='typeorder', column_name='Rodzaj zamówienia')

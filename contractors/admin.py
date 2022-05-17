@@ -15,9 +15,6 @@ class ContractorResource(resources.ModelResource):
     city = Field(attribute='city', column_name='Miasto')
     information = Field(attribute='information', column_name='Informacje')
 
-    # data_utworzenia = Field(attribute='data_utworzenia', column_name='Data utworzenia', widget=DateWidget('%d/%m/%Y'))
-    # autor = Field(attribute='autor', column_name='Autor')
-
     class Meta:
         model = Contractor
         export_order = ('no_contractor', 'name', 'nip', 'address', 'zip_code', 'city', 'information')

@@ -39,11 +39,11 @@
         <thead>
         <tr class="my-table-tr text-center">
             <th align="center" valign="middle" width="50" scope="col">L.p.</th>
-            <th align="center" valign="middle" width="150" scope="col">Okres realizacji</th>
+            <th align="center" valign="middle" width="160" scope="col">Okres realizacji</th>
             <th align="center" valign="middle" width="520" scope="col">Nazwa zadania</th>
             <th align="center" valign="middle" width="400" scope="col">Jednostka</th>
             <th align="center" valign="middle" width="150" scope="col">WKI</th>
-            <th align="center" valign="middle" width="250" scope="col">Informacje</th>
+            <th align="center" valign="middle" width="400" scope="col">Inspektor wiodący</th>
 
         </tr>
         </thead>
@@ -59,7 +59,7 @@
             <td valign="middle"><span>{{project.project_title}}</span></td>
             <td class="left" valign="middle"><span>{{project.unit}}</span></td>
             <td align="right" valign="middle" ><span class="px-3">{{project.investment_cost_estimate_value|intcomma}}</span></td>
-            <td valign="middle"><span></span></td>
+            <td valign="middle">{%for worker in project.worker.all%}<span class="mx-1" title="{{worker.industry}}">{{worker}},</span>{%endfor%}</td>
             <td align="right"  valign="middle">
                 <a class="mx=2" href="{%url 'investments:show_project' project.id%}"><button type="submit" class="btn btn-outline-primary icon-color"><i class="bi bi-eye"></i></button></a>
                 <a class="mx-2" href="{%url 'investments:edit_project' project.id%}"><button type="submit" class="btn btn-outline-primary icon-color"><i class="bi bi-pencil-square"></i></button></a>

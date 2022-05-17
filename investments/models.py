@@ -1,6 +1,7 @@
 from django.db import models
 from units.models import Unit
 from sourcefinancing.models import Section, Group, Paragraph
+from main.models import Employer
 
 
 # Create your models here.
@@ -23,8 +24,10 @@ class Project(models.Model):
                                   verbose_name='Paragraf')
     source_financing = models.TextField('Opis źródła finansowania', null=True, blank=True)
     information = models.TextField('Informacje', null=True, blank=True)
+    worker = models.ManyToManyField(Employer, related_name='project', verbose_name='Odpowiedzialny')
     date_of_settlement = models.DateField('Data rozliczenia', null=True, blank=True)
-    settlement_scan = models.FileField(upload_to='investments/settlements/%Y/', null=True, blank=True, verbose_name='Rozliczenie inwestycyjne')
+    settlement_scan = models.FileField(upload_to='investments/settlements/%Y/', null=True, blank=True,
+                                       verbose_name='Rozliczenie inwestycyjne')
     realized = models.BooleanField('Zrealizowane', default=False)
     creation_date = models.DateTimeField('Data utworzenia', auto_now_add=True)
     change = models.DateField('Zmiana', auto_now=True)
@@ -32,3 +35,10 @@ class Project(models.Model):
 
     def __str__(self):
         return f'{self.unit} - {self.project_title}'
+
+
+class Gallery(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='gallery', verbose_name='Id inwestycji')
+    add_date = models.DateField(auto_now_add=True)
+    photo = models.ImageField(upload_to=f'Gallery/{{Project}}/%Y/%m')
+    pass

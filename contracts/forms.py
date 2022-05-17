@@ -1,6 +1,8 @@
+import django_filters
 from django.forms import ModelForm, DateInput, Textarea, widgets, DecimalField
 from contracts.models import ContractImmovables, AnnexImmovables, ContractAuction
-from main.models import Employer
+from django_filters import FilterSet
+
 
 
 class DateField(DateInput):
@@ -8,6 +10,8 @@ class DateField(DateInput):
 
 
 class ContractImmovablesForm(ModelForm):
+
+
     class Meta:
         model = ContractImmovables
         fields = ['id', 'date', 'no_contract', 'contractor', 'period_of_validity', 'usable_area', 'legal_basic',
@@ -47,6 +51,8 @@ class AnnexImmovablesForm(ModelForm):
 
 
 class ContractAuctionForm(ModelForm):
+    worker = django_filters.BooleanFilter(field_name='worker.industry_specialist')
+
     class Meta:
         model = ContractAuction
 
@@ -67,7 +73,3 @@ class ContractAuctionForm(ModelForm):
         widgets = {'date': DateField(),
                    'end_date': DateField(),
                    'last_report_date': DateField(), }
-
-        def __init__(self, worker, *args, **kwargs):
-            super(ContractAuctionForm, self).__init__(*args, **kwargs)
-            self.fields['worker'].queryset = Employer.objects.filter(industry_specialist=True)

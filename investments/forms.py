@@ -7,7 +7,7 @@ class ProjectForm(ModelForm):
         model = Project
         fields = ['date_of_acceptance', 'no_acceptance_document', 'investment_program', 'project_title',
                   'investment_cost_estimate_value', 'unit', 'section', 'group', 'paragraph',
-                  'source_financing', 'information', 'date_of_settlement', 'settlement_scan', 'realized',
+                  'source_financing', 'information', 'date_of_settlement', 'settlement_scan', 'realized', 'worker',
                   'creation_date', 'change', 'author']
 
         label = {'date_of_acceptance': 'Data akceptacji',
@@ -24,6 +24,7 @@ class ProjectForm(ModelForm):
                  'date_of_settlement': 'Data rozliczenia',
                  'settlement_scan': 'Skan rozliczenia',
                  'realized': 'Zrealizowano',
+                 'worker': 'Pracownik',
                  'creation_date': 'Data utworzenia',
                  'change': 'Zmiany',
                  'author': 'Autor'}
