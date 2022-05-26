@@ -39,5 +39,5 @@ class ProjectAdmin(ExportMixin, admin.ModelAdmin):
                     'investment_cost_estimate_value', 'unit', 'section', 'paragraph',
                     'date_of_settlement', 'realized', 'creation_date', 'change', 'author']
     list_display_links = ['project_title']
-    filter_horizontal = ['worker']
+    autocomplete_fields = ('worker',)
     resource_class = ProjectResources

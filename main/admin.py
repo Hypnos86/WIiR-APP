@@ -56,6 +56,7 @@ class EmployerResource(resources.ModelResource):
 class EmployerAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ['id', 'name', 'last_name', 'team', 'industry_specialist', 'industry']
     list_display_links = ['name']
+    search_fields = ['name']
 
 
 @admin.register(AccessModule)

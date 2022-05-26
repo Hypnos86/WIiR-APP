@@ -1,8 +1,15 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, ModelMultipleChoiceField
 from investments.models import Project
+from django.contrib.admin.widgets import AutocompleteSelectMultiple
+from django.contrib import admin
+from main.models import Employer
 
 
 class ProjectForm(ModelForm):
+    worker = ModelMultipleChoiceField(queryset=Employer.objects.all(),
+                                      widget=AutocompleteSelectMultiple(Project._meta.get_field('worker'),
+                                                                        admin.AdminSite(), ))
+
     class Meta:
         model = Project
         fields = ['date_of_acceptance', 'no_acceptance_document', 'investment_program', 'project_title',
@@ -10,7 +17,7 @@ class ProjectForm(ModelForm):
                   'source_financing', 'information', 'date_of_settlement', 'settlement_scan', 'realized', 'worker',
                   'creation_date', 'change', 'author']
 
-        label = {'date_of_acceptance': 'Data akceptacji',
+        label = {'date_of_acceptance': 'Data akceptacji programu',
                  'no_acceptance_document': 'L.dz.',
                  'investment_program': 'Program inwestycyjny',
                  'project_title': 'Tytuł zadania',
