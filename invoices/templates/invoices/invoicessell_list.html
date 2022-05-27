@@ -22,7 +22,7 @@
     <h4>Ewidencja faktur sprzedażowych za {{year}} rok</h4>
     <div class="row">
         <div class="col-md-3">
-            <p><span>Liczba wystawionych faktur: <span></span><span class="badge text-white info badge-pill">{{invoicessellsum}}</span></p>
+            <p><span>Liczba wystawionych faktur: </span><span class="badge text-white info badge-pill">{{invoicessellsum}}</span></p>
         </div>
         <div class="col-md-9 moj-button-right"><a id="button-nowa-umowa" href="{%url 'invoices:new_invoice_sell'%}">
             <button class="btn btn-outline-primary button-choise-contracts my-btn">Nowa faktura</button>
@@ -116,7 +116,5 @@
      document.getElementById("button-invoices").classList.add("active");
      document.getElementById("button-contracts").classList.remove("active");
      document.getElementById("button-contractors").classList.remove("active");
-
-
 </script>
 {%endblock%}

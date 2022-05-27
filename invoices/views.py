@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
-from invoices.models import InvoiceSell, Creator
+from invoices.models import InvoiceSell, Creator, InvoiceBuy
 from invoices.forms import InvoiceSellForm
 from main.views import current_year, year_choises
 
@@ -16,7 +16,37 @@ def menu_invoices(request):
 
 @login_required
 def buy_invoices_list(request):
-    return render(request, 'invoices/invoices_buy_list.html')
+    invoices_buy = InvoiceBuy.objects.all().order_by("-date_receipt").filter(date_receipt__year=current_year())
+    query = "Wyczyść"
+    search = "Szukaj"
+    invoices_buy_sum = len(invoices_buy)
+    year = current_year()
+    q = request.GET.get("q")
+
+    paginator = Paginator(invoices_buy, 40)
+    page_number = request.GET.get('page')
+    invoices_buy_list = paginator.get_page(page_number)
+
+    if q:
+        invoicesbuy = invoices_buy.filter(no_invoice__icontains=q) | invoices_buy.filter(
+            sum__startswith=q) | invoices_buy.filter(contractor__name__icontains=q) | invoices_buy.filter(
+            contractor__no_contractor__startswith=q) | invoices_buy.filter(
+            invoice_items__county__name__icontains=q)
+        return render(request, 'invoices/invoices_buy_list.html', {"invoices": invoicesbuy,
+                                                                   "invoices_buy_sum": invoices_buy_sum,
+                                                                   "query": query, "year": year,
+                                                                   })
+    else:
+        return render(request, 'invoices/invoices_buy_list.html', {"invoices": invoices_buy_list,
+                                                                   "invoices_buy_sum": invoices_buy_sum,
+                                                                   "search": search, "year": year,
+                                                                   })
+
+
+@login_required
+def new_invoice_buy(request):
+    context = {'new': True}
+    return render(request, 'invoices/invoice_buy_form.html', context)
 
 
 @login_required
@@ -29,7 +59,7 @@ def sell_invoices_list(request):
     creators = Creator.objects.all()
     q = request.GET.get("q")
 
-    paginator = Paginator(invoicessell, 30)
+    paginator = Paginator(invoicessell, 40)
     page_number = request.GET.get('page')
     invoicessell_list = paginator.get_page(page_number)
 
@@ -42,12 +72,12 @@ def sell_invoices_list(request):
             creator__creator__icontains=q)
         return render(request, "invoices/invoicessell_list.html", {"invoices": invoicessell,
                                                                    "invoicessellsum": invoicessellsum,
-                                                                   "sell": True, "query": query, "year": year,
+                                                                   "query": query, "year": year,
                                                                    "creators": creators})
     else:
         return render(request, "invoices/invoicessell_list.html", {"invoices": invoicessell_list,
                                                                    "invoicessellsum": invoicessellsum,
-                                                                   "sell": True, "search": search, "year": year,
+                                                                   "search": search, "year": year,
                                                                    "creators": creators})
 
 
@@ -80,3 +110,9 @@ def edit_invoice_sell(request, id):
         return redirect('invoices:sell_invoices_list')
 
     return render(request, 'invoices/invoicesell_form.html', context)
+
+
+@login_required
+def make_verification(request):
+    context = {}
+    return render(request, 'invoices/verification.html', context)

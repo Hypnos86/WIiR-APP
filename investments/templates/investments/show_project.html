@@ -13,52 +13,59 @@
         </div>
         <div class="col-md-11 text-center">
             <h3>Zadanie inwestycyjne</h3>
-            <h4>{{project_form.project_title}}</h4>
+            <h4>{{project_form.project_title}} ({{project_form.date_of_acceptance|date:"Y"}}{%if project_form.date_of_settlement%} - {{project_form.date_of_settlement|date:"Y"}}{%endif%})</h4>
         </div>
+
         <div class="container">
-            <div class="row my-2">
+            <div class="row my-3">
                 <div class="d-flex justify-content-around">
-                    <div class="card col-md-3 mx-1">
-                        <div class="card-body">
-                            <h5 class="card-title bi bi-building"> {{project_form.unit.type.type_full}}
-                                {{project_form.unit.city}}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">Powiat: {{project_form.unit.county}}
-                                ({{project_form.unit.county.swop_id}})</h6>
-                            <h6 class="card-subtitle mb-2 text-muted bi bi-geo-alt"> {{project_form.unit.address}},
-                                {{project_form.unit.zip_code}}, {{project_form.unit.city}}</h6>
-                            <small class="card-text">Trwały zarząd: {{project_form.unit.manager}} </small>
-                        </div>
-                    </div>
-                    <div class="card col-md-3 mx-1">
-                        <div class="card-body">
-                            <h5 class="card-title bi bi-journal-check"> Program inwestycji</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">Data akceptacji programu:
-                                {{project_form.date_of_acceptance}} r.</h6>
-                            <h6 class="card-subtitle mb-2 text-muted">L.dz.:
-                                {{project_form.no_acceptance_document}}</h6>
-                            {%if project_form.investment_program%}
-                            <div class="float-right">
-                                <a href="/media/{{project_form.investment_program}}" role="button"
-                                   target="_blank">
-                                    <button class="card-text btn btn-secondary btn-sm bi bi-file-text"
-                                            type="button">Skan
-                                    </button>
-                                </a>
+                    <section class="container col-md-3 mx-1">
+                        <div class="card col-md-12">
+                            <div class="card-body">
+                                <h5 class="card-title bi bi-building"> {{project_form.unit.type.type_full}}
+                                    {{project_form.unit.city}}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Powiat: {{project_form.unit.county}}
+                                    ({{project_form.unit.county.swop_id}})</h6>
+                                <h6 class="card-subtitle mb-2 text-muted bi bi-geo-alt"> {{project_form.unit.address}},
+                                    {{project_form.unit.zip_code}}, {{project_form.unit.city}}</h6>
+                                <small class="card-text">Trwały zarząd: {{project_form.unit.manager}} </small>
                             </div>
-                            {%endif%}
                         </div>
-                    </div>
-                    <div class="card col-md-2 mx-1">
-                        <div class="card-body">
-                            <h5 class="card-title bi bi-cash-stack"> Finansowanie</h5>
-                            <h6 class="card-subtitle mb-2 text-muted" title="Wartość kosztorysowa Inwestycji">WKI:
-                                {{project_form.investment_cost_estimate_value|intcomma}} zł.</h6>
-                            <small class="card-subtitle text-muted">Rozdział: {{project_form.section}}</small><br>
-                            <small class="card-subtitle text-muted">Paragraf: {{project_form.group}}
-                                {{project_form.paragraph}}</small>
+                    </section>
+                    <section class="container col-md-3 mx-1">
+                        <div class="card col-md-12">
+                            <div class="card-body">
+                                <h5 class="card-title bi bi-journal-check"> Program inwestycji</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Data akceptacji programu:
+                                    {{project_form.date_of_acceptance}} r.</h6>
+                                <h6 class="card-subtitle mb-2 text-muted">L.dz.:
+                                    {{project_form.no_acceptance_document}}</h6>
+                                {%if project_form.investment_program%}
+                                <div class="float-right">
+                                    <a href="/media/{{project_form.investment_program}}" role="button"
+                                       target="_blank">
+                                        <button class="card-text btn btn-secondary btn-sm bi bi-file-text"
+                                                type="button">Skan
+                                        </button>
+                                    </a>
+                                </div>
+                                {%endif%}
+                            </div>
                         </div>
-                    </div>
-                    <div class="container col-md-3 mx-1">
+                    </section>
+                    <section class="container col-md-2 mx-1">
+                        <div class="card col-md-12">
+                            <div class="card-body">
+                                <h5 class="card-title bi bi-cash-stack"> Finansowanie</h5>
+                                <h6 class="card-subtitle mb-2 text-muted" title="Wartość kosztorysowa Inwestycji">WKI:
+                                    {{project_form.investment_cost_estimate_value|intcomma}} zł.</h6>
+                                <small class="card-subtitle text-muted">Rozdział: {{project_form.section}}</small><br>
+                                <small class="card-subtitle text-muted">Paragraf: {{project_form.group}}
+                                    {{project_form.paragraph}}</small>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="container col-md-3 mx-1">
                         <div class="card col-md-12">
                             <div class="card-body">
                                 <h5 class="card-title bi bi-person-lines-fill"> Majster</h5>
@@ -67,7 +74,7 @@
                                 </h6>{%endfor%}
                             </div>
                         </div>
-                    </div>
+                    </section>
                 </div>
             </div>
         </div>
@@ -98,18 +105,22 @@
                         </div>
                     </div>
                     {%endif%}
-                    <div class="card col-md-5 mx-1">
-                        <div class="card-body">
-                            <h5 class="card-title bi bi-safe"> Źródło finansowania</h5>
-                            <small class="card-subtitle text-muted">{{project_form.source_financing}}</small>
+                    <section class="container col-md-5 mx-1">
+                        <div class="card col-md-12">
+                            <div class="card-body">
+                                <h5 class="card-title bi bi-safe"> Źródło finansowania</h5>
+                                <small class="card-subtitle text-muted">{{project_form.source_financing}}</small>
+                            </div>
                         </div>
-                    </div>
-                    <div class="card col-md-5 mx-1">
-                        <div class="card-body mx-2">
-                            <h5 class="card-title bi bi-info-square"> Informacje</h5>
-                            <small class="card-subtitle text-muted">{{project_form.source_financing}}</small>
+                    </section>
+                    <section class="container col-md-5 mx-1">
+                        <div class="card col-md-12">
+                            <div class="card-body mx-2">
+                                <h5 class="card-title bi bi-info-square"> Informacje</h5>
+                                <small class="card-subtitle text-muted">{{project_form.source_financing}}</small>
+                            </div>
                         </div>
-                    </div>
+                    </section>
                 </div>
             </div>
         </div>
@@ -129,7 +140,5 @@
      document.getElementById("button-investments").classList.add("active");
      document.getElementById("button-projects").classList.add("active");
      document.getElementById("button-contractors").classList.remove("active");
-
-
 </script>
 {%endblock%}

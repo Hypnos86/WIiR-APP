@@ -1,8 +1,12 @@
-from django.forms import ModelForm, ModelMultipleChoiceField
+from django.forms import ModelForm, ModelMultipleChoiceField, DateInput, Textarea
 from investments.models import Project
 from django.contrib.admin.widgets import AutocompleteSelectMultiple
 from django.contrib import admin
 from main.models import Employer
+
+
+class DataFiled(DateInput):
+    input_type = 'date'
 
 
 class ProjectForm(ModelForm):
@@ -36,3 +40,8 @@ class ProjectForm(ModelForm):
                  'change': 'Zmiany',
                  'author': 'Autor'}
         exclude = ['creation_date', 'change', 'author']
+        widgets = {
+            'date_of_acceptance': DataFiled(),
+            'date_of_settlement': DataFiled(),
+            'information': Textarea(attrs={'rows': 3})
+        }

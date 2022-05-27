@@ -1,27 +1,136 @@
 {%extends 'base.html'%}
+{% load humanize %}
 {%load static%}
 {%block title%}Ewidencja faktur gr.6 - zobowiązania{%endblock%}
 {%block content%}
-<div class="moj-button-left"><a href="{%url 'invoices:menu_invoices'%}"><button type="button" class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span></button></a></div>
+<div class="moj-button-left"><a href="{%url 'invoices:menu_invoices'%}">
+    <button type="button" class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span>
+    </button>
+</a></div>
 <section class="w-100 pb-4 d-flex justify-content-center align-items-center flex-column">
     <div>
         <form method="get">
             <div class="input-group">
                 <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj faktury"
                        aria-label="Search" aria-describedby="search-addon">
-                <button type="submit" class="btn btn-outline-primary my-btn">Szukaj/Wyczyśc</button>
+                <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
             </div>
         </form>
     </div>
 </section>
-<h4 class="text-center">Ewidencja faktur gr.6 - zobowiązania</h4>
+<div class="row my-2">
 <div class="row">
-    <div class="col-md-12 moj-button-right"><a id="button-nowa-umowa" href=""><button class="btn btn-outline-primary button-choise-contracts my-btn">Nowa faktura</button></a></div>
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-8 moj-button-right">
+        <h4 class="text-center ">Ewidencja faktur gr.6 - zobowiązania</h4>
+    </div>
+    <div class="col-md-2 moj-button-right">
+    <a href="{%url 'invoices:make_verification'%}">
+            <button class="btn btn-outline-primary button-choise-contracts my-btn">Weryfikacja</button>
+        </a>
+    </div>
 </div>
+    </div>
+<div class="row my-2">
+    <div class="row">
+        <div class="col-md-6">
+            <p><span>Liczba faktur: </span><span class="badge text-white info badge-pill">{{invoices_buy_sum}}</span>
+            </p>
+        </div>
+        <div class="col-md-6 moj-button-right">
+            <a id="button-nowa-umowa" href="{%url 'invoices:new_invoice_buy'%}">
+            <button class="btn btn-outline-primary button-choise-contracts my-btn">Nowa faktura</button>
+        </a></div>
+    </div>
+</div>
+<div>
+    <table class="table table-hover my-table">
+        <thead>
+        <tr class="my-table-tr text-center">
+            <th align="center" valign="middle" width="40" scope="col">L.p.</th>
+            <th align="center" valign="middle" width="40" scope="col">Data wpływu</th>
+            <th align="center" valign="middle" width="40" scope="col">Data wystawienia</th>
+            <th align="center" valign="middle" width="120" scope="col">Nr. faktury</th>
+            <th align="center" valign="middle" width="200" scope="col">Kontrahent</th>
+            <th align="center" valign="middle" width="100" scope="col">Kwota</th>
+            <th align="center" valign="middle" width="50" scope="col">Osoba zapisująca</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for invoice in invoices %}
+        <tr class="my-table-tr">
+            <td align="center" valign="middle" scope="row"><span class="text-center"></span></td>
+            <td align="center" valign="middle"><span>{{invoice.date_receipt|date:"d.m.Y"}}</span></td>
+            <td align="center" valign="middle"><span>{{invoice.date_issue|date:"d.m.Y"}}</span></td>
+            <td align="left" valign="middle"><span>{{invoice.no_invoice|default_if_none:''}}</span></td>
+            <td valign="middle"><span>{{invoice.contractor}}</span></td>
+            <td align="center" valign="middle"><span>{{invoice.sum|intcomma}} zł</span></td>
+            <td align="center" valign="middle" title="{{invoice.author.first_name}} {{invoice.author.last_name}}">
+                {{invoice.author}}
+            </td>
+            <td width="120" class="text-center">
+                <a href="{%url 'invoices:edit_invoice_sell' invoice.id %}">
+                    <button type="submit" class="btn btn-outline-primary icon-color mx-1 "><i
+                            class="bi bi-pencil-square"></i></button>
+                </a>
+            </td>
+        </tr>
+        {%endfor%}
+        </tbody>
+        <tfoot>
+        <tr>
+            <th colspan="5">Wydział Inwestycji i Remontów KWP w Poznaniu</th>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+<!--Paginator-->
+{%if search%}
+<nav aria-labelledby="Page navigation">
+    <ul class="pagination justify-content-center">
+        {%if invoices.has_previous%}
+        <li class="page-item">
+            <a class="page-link" href="?page={{invoices.previous_page_number}}">Poprzednia</a>
+        </li>
+        {%else%}
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Poprzednia</a>
+        </li>
+        {%endif%}
+        {%for i in invoices.paginator.page_range%}
+        {%if invoices.number == i%}
+        <li class="page-item active" aria-current="page">
+            <span class="page-link">
+                {{i}}
+                <span class="sr-only"></span>
+            </span>
+        </li>
+        {%else%}
+        <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+        {%endif%}
+        {%endfor%}
+        {%if invoices.has.next%}
+        <li class="page-item">
+            <a class="page-link" href="?page={{invoices.next_page_number}}">Następna</a>
+        </li>
+        {%else%}
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Następna</a>
+        </li>
+        {%endif%}
+    </ul>
+</nav>
+{%endif%}
 <script>
      document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-invoices").classList.add("active");
      document.getElementById("button-contracts").classList.remove("active");
      document.getElementById("button-contractors").classList.remove("active");
+
+
+
+
 </script>
 {%endblock%}
