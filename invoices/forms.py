@@ -26,7 +26,7 @@ class InvoiceBuyForm(ModelForm):
         model = InvoiceBuy
         fields = "__all__"
         label = {'date_receipt': 'Data wpływu', 'date_issue': 'Data wystawienia', 'Nr. faktury': 'no_invoice',
-                 'Kwota': 'sum', 'Kontrahent': 'contractor', 'Konto': 'invoice_items', 'period_from': 'Okres od',
+                 'Kwota': 'sum', 'date_of_payment':'Data płatności', 'Kontrahent': 'contractor', 'Konto': 'invoice_items', 'period_from': 'Okres od',
                  'Okres do': 'period_to', 'information': 'Informacje'}
         exclude = ['creation_date', 'change_date', 'author']
         widgets = {

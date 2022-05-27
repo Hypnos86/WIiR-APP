@@ -34,15 +34,15 @@
         <thead>
         <tr class="my-table-tr text-center">
             <th align="center" valign="middle" width="40" scope="col">L.p.</th>
-            <th align="center" valign="middle" width="120" scope="col">Data wystawienia</th>
+            <th align="center" valign="middle" width="40" scope="col">Data wystawienia</th>
             <th align="center" valign="middle" width="120" scope="col">Nr. faktury</th>
             <th align="center" valign="middle" width="120" scope="col">Kwota</th>
+            <th align="center" valign="middle" width="40" scope="col">Data płatności</th>
             <th align="center" valign="middle" width="180" scope="col">Okres</th>
-            <th align="center" valign="middle" width="300" scope="col">Kontrahent</th>
+            <th align="center" valign="middle" width="200" scope="col">Kontrahent</th>
             <th align="center" valign="middle" width="120" scope="col">Powiat</th>
-            <th align="center" valign="middle" width="150" scope="col">Pracownik wystawiający</th>
-            <th align="center" valign="middle" width="400" scope="col">Informacje</th>
-
+            <th align="center" valign="middle" width="100" scope="col">Pracownik wystawiający</th>
+            <th align="center" valign="middle" width="250" scope="col">Informacje</th>
         </tr>
         </thead>
         <tbody>
@@ -52,6 +52,7 @@
             <td align="center" valign="middle"><span>{{invoice.date|date:"d.m.Y"}}</span></td>
             <td align="center" valign="middle"><span>{{invoice.no_invoice|default_if_none:''}}</span></td>
             <td align="center" valign="middle"><span>{{invoice.sum|intcomma}} zł</span></td>
+            <td valign="middle"><span>{{invoice.date_of_payment|date:"d.m.Y"}}</span></td>
             <td align="center" valign="middle"><span>{{invoice.period_from|date:"m.Y"}} - {{invoice.period_to|date:"m.Y"}}</span>
             </td>
             <td valign="middle"><span>{{invoice.contractor}}</span></td>

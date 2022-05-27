@@ -60,6 +60,7 @@ class InvoiceSell(models.Model):
                                    related_name='invoicesell')
     sum = models.DecimalField("Kwota [zł]", max_digits=10, decimal_places=2, null=True, blank=True)
     county = models.ForeignKey(County, on_delete=models.CASCADE, verbose_name="Powiat", related_name='invoicesell')
+    date_of_payment = models.DateField("Termin płatności")
     period_from = models.DateField("Okres od")
     period_to = models.DateField("Okres do")
     creator = models.ForeignKey(Creator, on_delete=models.CASCADE, verbose_name="Osoba wystawiająca",
@@ -82,6 +83,7 @@ class InvoiceBuy(models.Model):
     date_issue = models.DateField("Data wystawienia")
     no_invoice = models.CharField("Nr. faktury", max_length=30)
     sum = models.DecimalField('Kwota [zł]', max_digits=10, decimal_places=2, null=True, blank=True)
+    date_of_payment = models.DateField("Termin płatności")
     contractor = models.ForeignKey(Contractor, on_delete=models.CASCADE, verbose_name="Kontrahent",
                                    related_name='invoicebuy')
     invoice_items = models.ForeignKey(InvoiceItems, on_delete=models.CASCADE, related_name="invoiceitems",
