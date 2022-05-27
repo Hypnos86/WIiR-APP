@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from invoices.models import InvoiceSell, Creator, InvoiceBuy
-from invoices.forms import InvoiceSellForm
+from invoices.forms import InvoiceSellForm, InvoiceBuyForm
 from main.views import current_year, year_choises
 
 
@@ -45,7 +45,16 @@ def buy_invoices_list(request):
 
 @login_required
 def new_invoice_buy(request):
-    context = {'new': True}
+    invoice_buy_form = InvoiceBuyForm(request.POST or None)
+    context = {'invoice': invoice_buy_form, 'new': True}
+
+    if request.method == 'POST':
+        if invoice_buy_form.is_valid():
+            instance = invoice_buy_form.save(commit=False)
+            instance.author = request.author
+            instance.save()
+            return redirect('invoices/buy_invoices_list')
+
     return render(request, 'invoices/invoice_buy_form.html', context)
 
 

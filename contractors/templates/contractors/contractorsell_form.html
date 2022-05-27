@@ -18,17 +18,16 @@
     <form method="post">
         {%csrf_token%}
         <div class="row">
-            <div class="col-md-7 p-2">{{contractor_form.name|bootstrap}}</div>
-            <div class="col-md-4 p-2">{{contractor_form.no_contractor|bootstrap}}</div>
-            <div class="col-md-7 p-2">{{contractor_form.address|bootstrap}}</div>
-            <div class="col-md-4 p-2">{{contractor_form.nip|bootstrap}}</div>
-            <div class="col-md-4 p-2">{{contractor_form.zip_code|bootstrap}}</div>
-            <div class="col-md-4 p-2">{{contractor_form.city|bootstrap}}</div>
-            <div class="col-md-11 p-2">{{contractor_form.information|bootstrap}}</div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-md-12 moj-button-right">
-                <button type="submit" class="btn btn-outline-primary my-btn">{%if new%}Dodaj kontrachenta {%else%} Zapisz
+            <div class="col-md-8 my-1">{{contractor_form.name|bootstrap}}</div>
+            <div class="col-md-4 my-1">{{contractor_form.no_contractor|bootstrap}}</div>
+            <div class="col-md-9 my-1">{{contractor_form.address|bootstrap}}</div>
+            <div class="col-md-3 my-1">{{contractor_form.nip|bootstrap}}</div>
+            <div class="col-md-6 my-1">{{contractor_form.zip_code|bootstrap}}</div>
+            <div class="col-md-6 my-1">{{contractor_form.city|bootstrap}}</div>
+            <div class="col-md-12 my-1">{{contractor_form.information|bootstrap}}</div>
+            <div class="col-md-12 moj-button-right my-4">
+                <button type="submit" class="btn btn-outline-primary my-btn">{%if new%}<span class="bi bi-save2"> Dodaj kontrachenta</span>{%else%}<span
+                        class="bi bi-save2"> Zapisz</span>
                     zmiany{%endif%}
                 </button>
             </div>
@@ -40,6 +39,10 @@
      document.getElementById("button-invoices").classList.remove("active");
      document.getElementById("button-contracts").classList.remove("active");
      document.getElementById("button-contractors").classList.add("active");
+
+
+
+
 
 
 </script>

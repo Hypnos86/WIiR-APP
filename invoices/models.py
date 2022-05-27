@@ -31,28 +31,11 @@ class Creator(models.Model):
         return f'{self.creator}'
 
 
-class InvoiceItems(models.Model):
-    class Meta:
-        verbose_name = "Element faktury"
-        verbose_name_plural = "Elementy faktury"
-
-    account = models.ForeignKey(FinanceSource, on_delete=models.CASCADE, verbose_name="Konto",
-                                related_name="invoiceitems")
-    county = models.ForeignKey(County, on_delete=models.CASCADE, verbose_name="Powiat",
-                               related_name='invoiceitems')
-    sum = models.DecimalField("Kwota [zł]", max_digits=10, decimal_places=2, null=True, blank=True)
-
-    def __str__(self):
-        return f'{self.account}{self.county} - {self.sum} zł.'
-
-
-# class Year(models.Model):
-#     year = models.DateField(Year)
-
 class InvoiceSell(models.Model):
     class Meta:
         verbose_name = "Faktura sprzedaży"
         verbose_name_plural = "Faktury - sprzedaż"
+        ordering = ['date']
 
     date = models.DateField("Data wystawienia")
     no_invoice = models.CharField("Nr. faktury", max_length=11)
@@ -78,6 +61,7 @@ class InvoiceBuy(models.Model):
     class Meta:
         verbose_name = "Faktura - kupno"
         verbose_name_plural = "Faktury - kupno"
+        ordering = ['date_receipt']
 
     date_receipt = models.DateField("Data wpływu")
     date_issue = models.DateField("Data wystawienia")
@@ -86,8 +70,6 @@ class InvoiceBuy(models.Model):
     date_of_payment = models.DateField("Termin płatności")
     contractor = models.ForeignKey(Contractor, on_delete=models.CASCADE, verbose_name="Kontrahent",
                                    related_name='invoicebuy')
-    invoice_items = models.ForeignKey(InvoiceItems, on_delete=models.CASCADE, related_name="invoiceitems",
-                                      verbose_name="Źródło finansowania")
     period_from = models.DateField("Okres od")
     period_to = models.DateField("Okres do")
 
@@ -97,4 +79,22 @@ class InvoiceBuy(models.Model):
     author = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name='invoicebuy')
 
     def __str__(self):
-        return f'Faktura nr. {self.no_invoice} z dnia {self.date_issue}, na kwotę {self.invoice_items}'
+        return f'Faktura nr. {self.no_invoice} z dnia {self.date_issue}'
+
+
+class InvoiceItems(models.Model):
+    class Meta:
+        verbose_name = "Element faktury"
+        verbose_name_plural = "Elementy faktury"
+
+    invoice_id = models.ForeignKey(InvoiceBuy, on_delete=models.CASCADE, verbose_name='ID Faktury',
+                                   related_name='invoiceitems')
+
+    account = models.ForeignKey(FinanceSource, on_delete=models.CASCADE, verbose_name="Konto",
+                                related_name="invoiceitems")
+    county = models.ForeignKey(County, on_delete=models.CASCADE, verbose_name="Powiat",
+                               related_name='invoiceitems')
+    sum = models.DecimalField("Kwota [zł]", max_digits=10, decimal_places=2, null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.account}{self.county} - {self.sum} zł.'
