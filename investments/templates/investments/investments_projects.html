@@ -57,7 +57,7 @@
             <td align="center" valign="middle" scope="row" title="Zadanie w trakcie realizacji"><span>{{project.date_of_acceptance|date:'m.Y'}}</span></td>
             {%endif%}
             <td valign="middle"><span>{{project.project_title}}</span></td>
-            <td class="left" valign="middle"><span>{{project.unit}}</span></td>
+            <td class="left" valign="middle"><span>{{project.unit.type.type_full}} - {{project.unit.city}}<br>{{project.unit.address}}, {{project.unit.zip_code}} {{project.unit.city}} </span></td>
             <td align="right" valign="middle" ><span class="px-3">{{project.investment_cost_estimate_value|intcomma}}</span></td>
             <td valign="middle">{%for worker in project.worker.all%}<span class="mx-1" title="{{worker.industry}}">{{worker}},</span>{%endfor%}</td>
             <td align="right"  valign="middle">

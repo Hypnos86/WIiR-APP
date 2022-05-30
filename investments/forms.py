@@ -43,5 +43,6 @@ class ProjectForm(ModelForm):
         widgets = {
             'date_of_acceptance': DataFiled(),
             'date_of_settlement': DataFiled(),
+            'source_financing': Textarea(attrs={'rows': 3}),
             'information': Textarea(attrs={'rows': 3})
         }

@@ -17,7 +17,7 @@ class InvoiceSellForm(ModelForm):
             'date': DateField(),
             'period_from': DateField(),
             'period_to': DateField(),
-            'information': Textarea(attrs={'rows': 3})
+            'information': Textarea(attrs={'rows': 4})
         }
 
 
@@ -35,5 +35,6 @@ class InvoiceBuyForm(ModelForm):
             'date_issue': DateField(),
             'period_from': DateField(),
             'period_to': DateField(),
+            'date_of_payment': DateField(),
             'information': Textarea(attrs={'rows': 3})
         }
