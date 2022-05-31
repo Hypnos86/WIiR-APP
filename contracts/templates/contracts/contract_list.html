@@ -38,16 +38,16 @@
 
             <small>{%if actual%}(Obowiązujące){%else%}(Archiwum){%endif%}</small><br>
         </div>
-        <div class="col-md-2 moj-button-right my-1">
+        <div class="col-md-2 moj-button-right my-3">
             <a href="{%url 'contracts:new_contractsimmovables'%}">
-                <button class="btn btn-outline-primary button-choise-contracts my-btn"><span class="bi bi-plus-circle"> Dodaj umowę</span></button>
+                <button class="btn btn-outline-primary my-btn"><span class="bi bi-plus-circle"> Dodaj umowę</span></button>
             </a>
         </div>
     </div>
     <div class="row">
         <div class="col-md-3">
-            <p class="m-0">Liczba umów aktualnych: <span class="badge text-white info badge-pill">{{contrsum}}</span></p>
-            <p class="m-0">Liczba umów zarchiwizowanych: <span class="badge text-white info badge-pill">{{con_archive_sum}}</span></p>
+            <p class="m-0"><span>Liczba umów aktualnych: </span><span class="badge text-white info badge-pill">{{contrsum}}</span></p>
+            <p class="m-0"><span>Liczba umów zarchiwizowanych: </span><span class="badge text-white info badge-pill">{{con_archive_sum}}</span></p>
         </div>
     </div>
 </div>
@@ -62,7 +62,7 @@
         <th align="center" valign="middle" width="40" scope="col" class="text-center">Okres obowiązywania</th>
         <th align="center" valign="middle" width="150" scope="col" class="text-center">Powierzchnia użyczona</th>
         <th align="center" valign="middle" width="120" scope="col" class="text-center">Rodzaj umowy</th>
-        <th align="center" valign="middle" width="450" scope="col" class="text-center">Jednostka</th>
+        <th align="center" valign="middle" width="350" scope="col" class="text-center">Jednostka</th>
     </tr>
     </thead>
     <tbody>
@@ -72,14 +72,14 @@
         <td align="center" valign="middle" class="text-center" scope="row"></td>
         <td align="center" valign="middle" class="text-center">{{contract.date|date:"d.m.Y"}}</td>
         <td align="center" valign="middle" class="text-center">{{contract.no_contract|default_if_none:'---'}}</td>
-        <td valign="middle">{{contract.contractor}}</td>
+        <td valign="middle"><span title="SWOP ID: {{contract.contractor.no_contractor}}">{{contract.contractor.name}}<br>{{contract.contractor.address}}, {{contract.contractor.zip_code}} {{contract.contractor.city}}</span></td>
         <td align="center" valign="middle" class="text-center">
             {{contract.period_of_validity|default_if_none:'---'|date:"d.m.Y"}}
         </td>
         <td align="center" valign="middle" class="text-center">{%if contract.usable_area%}
             {{contract.usable_area|intcomma}} m<sup>2 {%else%} --- {%endif%}</sup></td>
         <td align="center" valign="middle" class="text-center">{{contract.type_of_contract}}</td>
-        <td valign="middle">{{contract.unit}}</td>
+        <td valign="middle"><span>{{contract.unit.type.type_full}} - {{contract.unit.city}}<br>{{contract.unit.address}}, {{contract.unit.zip_code}} {{contract.unit.city}} </span></td>
         <td align="right" valign="middle">
             <a class="mx-2" href="{% url 'contracts:show_contractsimmovables' contract.id %}">
                 <button type="button" class="btn btn-outline-primary icon-color">

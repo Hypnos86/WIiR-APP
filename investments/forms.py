@@ -10,9 +10,9 @@ class DataFiled(DateInput):
 
 
 class ProjectForm(ModelForm):
-    worker = ModelMultipleChoiceField(queryset=Employer.objects.all(),
-                                      widget=AutocompleteSelectMultiple(Project._meta.get_field('worker'),
-                                                                        admin.AdminSite(), ))
+    # worker = ModelMultipleChoiceField(queryset=Employer.objects.all(),
+    #                                   widget=AutocompleteSelectMultiple(Project._meta.get_field('worker'),
+    #                                                                     admin.AdminSite(), ))
 
     class Meta:
         model = Project
@@ -35,7 +35,7 @@ class ProjectForm(ModelForm):
                  'date_of_settlement': 'Data rozliczenia',
                  'settlement_scan': 'Skan rozliczenia',
                  'realized': 'Zrealizowano',
-                 'worker': 'Pracownik',
+                 'worker': 'Branżysta',
                  'creation_date': 'Data utworzenia',
                  'change': 'Zmiany',
                  'author': 'Autor'}

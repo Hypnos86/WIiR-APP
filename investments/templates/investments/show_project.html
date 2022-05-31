@@ -55,8 +55,8 @@
                             </div>
                         </div>
                     </section>
+                    {%if project_form.realized%}
                     <section class="container col-md-2 mx-1">
-                               {%if project_form.realized%}
                         <div class="card col-md-12 ">
                             <div class="card-body">
                                 <h5 class="card-title bi bi-journal-bookmark"> Rozliczenie</h5>
@@ -77,8 +77,9 @@
                                 {%endif%}
                             </div>
                         </div>
-                        {%endif%}
+
                     </section>
+                    {%endif%}
                     <section class="container col-md-3 mx-1">
                         <div class="card col-md-12">
                             <div class="card-body">

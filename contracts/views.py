@@ -197,14 +197,13 @@ def edit_contract_auction(request, id):
 
     context = {'contract_auction_form': contract_auction_form,
                'units': units,
-               'contract':contract_auction_edit,
+               'contract': contract_auction_edit,
                'new': False}
 
     if contract_auction_form.is_valid():
         contract = contract_auction_form.save(commit=False)
         contract.author = request.user
         contract_auction_form.save()
-
         return redirect('contracts:menu_contracts_auction')
     return render(request, 'contracts/contract_auction_form.html', context)
 

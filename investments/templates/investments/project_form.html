@@ -5,7 +5,7 @@
 {%block investmentsmenu%}
 <div class="container">
     <hr>
-
+    <h3 class="text-center m-4">Nowe zadanie inwestycyjne</h3>
     <form method="post">
         {%csrf_token%}
         <div class="row">
@@ -49,10 +49,12 @@
                     <small>Stan zadania</small>
                     <div class="list-group-item">{{project_form.realized|bootstrap}}</div>
                 </div>
+                {%if new == False%}
                 <div class="list-group mt-2">
-                <button class="btn btn-outline-primary my-btn"><span class="bi bi-folder-plus"> Podepni umowę</span>
+                <button type="button" class="btn btn-outline-primary my-btn" onclick="openModal()"><span class="bi bi-folder-plus"> Podepni umowę</span>
                 </button>
                 </div>
+                {%endif%}
             </div>
             <div class="col-md-2">{{project_form.date_of_settlement|bootstrap}}</div>
             <div class="col-md-8">{{project_form.settlement_scan|bootstrap}}</div>
@@ -65,6 +67,16 @@
         </div>
     </form>
 </div>
+{%if new == False%}
+<!-- Modal -->
+<div class="modal fade" id="annexModal" data-url="{% url 'investments:add_contract_to_project' project.id %}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+{%endif%}
 <script>
      document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-invoices").classList.remove("active");
@@ -74,8 +86,16 @@
      document.getElementById("button-projects").classList.add("active");
      document.getElementById("button-contractors").classList.remove("active");
 
+    // definicja funkcji otwierającej modal
+        // będzie uruchamiana na event "onclick"
+        function openModal(){
+            var url = $("#annexModal").data("url");
+            $("#annexModal .modal-content").load(url);
+            $("#annexModal").modal("show");
+        }
 
-
-
+        function submitForm(){
+            $("#submitButton").closest("form").submit();
+        }
 </script>
 {%endblock%}

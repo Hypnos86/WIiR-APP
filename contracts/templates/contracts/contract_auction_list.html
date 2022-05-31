@@ -22,13 +22,11 @@
     {%endif%}
     <div class="row">
         <div class="col-md-3">
-            <p class="m-0">Liczba umów: <span class="badge text-white info badge-pill">{{contracts_auctions_sum}}</span></p>
+            <p class="m-0"><span>Liczba umów: </span><span class="badge text-white info badge-pill">{{contracts_auctions_sum}}</span></p>
         </div>
         <div class="col-md-9 moj-button-right"><a href="{%url 'contracts:new_contract_auction'%}">
-            <button class="btn btn-outline-primary button-choise-contracts my-btn">
-                <span class="bi bi-plus-circle"> Dodaj umowę</span>
-            </button>
-    </a></div>
+            <button class="btn btn-outline-primary my-btn"><span class="bi bi-plus-circle"> Dodaj umowę</span></button></a>
+        </div>
     </div>
 </div>
 
@@ -42,7 +40,7 @@
         <th align="center" valign="middle" width="150" scope="col" class="text-center">Wartość</th>
         <th align="center" valign="middle" width="150" scope="col" class="text-center">Termin</th>
         <th align="center" valign="middle" width="150" scope="col" class="text-center">Tryb zamówienia</th>
-        <th align="center" valign="middle" width="400" scope="col" class="text-center">Jednostka</th>
+        <th align="center" valign="middle" width="350" scope="col" class="text-center">Jednostka</th>
         <th align="center" valign="middle" width="150" scope="col" class="text-center">Inspektor</th>
 
     </tr>
@@ -57,12 +55,12 @@
         <td align="center" valign="middle"><span>{{contract.price|intcomma}} zł.</span></td>
         <td align="center" valign="middle" class="text-center">{{contract.end_date|date:"d.m.Y"}}</td>
         <td align="center" valign="middle" class="text-center" title="{{contract.legal_basic_zzp.legal_basic_zzp_name}}">{{contract.legal_basic.act}} - {{contract.legal_basic}}</td>
-        <td valign="middle">{{contract.unit}}</td>
+        <td valign="middle"><span>{{contract.unit.type.type_full}} - {{contract.unit.city}}<br>{{contract.unit.address}}, {{contract.unit.zip_code}} {{contract.unit.city}}</span></td>
         <td valign="middle">{%for inspector in contract.inspector.all%} <span title="{{inspector.industry}}"> {{inspector}} <br></span> {%endfor%}</td>
-        <td align="center" valign="middle">
-            <a class="mx-2 my-1" href="{% url 'contracts:show_contract_auction' contract.id %}"><button type="button" class="btn btn-outline-primary icon-color">
+        <td align="right" valign="middle">
+            <a class="mx-2" href="{% url 'contracts:show_contract_auction' contract.id %}"><button type="button" class="btn btn-outline-primary icon-color">
                     <i class="bi bi-eye"></i></button></a>
-            <a class="mx-2 my-1" href="{% url 'contracts:edit_contract_auction' contract.id %}"><button type="button" class="btn btn-outline-primary icon-color">
+            <a class="mx-2" href="{% url 'contracts:edit_contract_auction' contract.id %}"><button type="button" class="btn btn-outline-primary icon-color">
                     <i class="bi bi-pencil-square"></i></button></a>
         </td>
     </tr>

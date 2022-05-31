@@ -24,7 +24,7 @@ class Project(models.Model):
                                   verbose_name='Paragraf')
     source_financing = models.TextField('Opis źródła finansowania', null=True, blank=True)
     information = models.TextField('Informacje', null=True, blank=True)
-    worker = models.ManyToManyField(Employer, related_name='project', verbose_name='Odpowiedzialny')
+    worker = models.ManyToManyField(Employer, related_name='project', verbose_name='Branżysta')
     date_of_settlement = models.DateField('Data rozliczenia', null=True, blank=True)
     settlement_scan = models.FileField(upload_to='investments/settlements/%Y/', null=True, blank=True,
                                        verbose_name='Rozliczenie inwestycyjne')
