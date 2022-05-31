@@ -126,7 +126,7 @@ class ContractAuction(models.Model):
         verbose_name_plural = 'INW - Umowy'
         ordering = ['date']
 
-    investments_project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='contract_auction',
+    investments_project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True, related_name='contract_auction',
                                             verbose_name='Zadanie inwestycyjne')
     date = models.DateField('Data')
     no_contract = models.CharField('Nr. umowy', max_length=20)
@@ -173,9 +173,9 @@ class AnnexContractAuction(models.Model):
     contract_auction = models.ForeignKey(ContractAuction, on_delete=models.CASCADE,
                                          verbose_name='Umowa ZZP',
                                          related_name='aneks_contract_auction')
-    date = models.DateField('Data aneksu', null=True, blank=True)
+    date = models.DateField('Data aneksu')
     price_change = models.BooleanField('Zmiana wartości umowy', default=False)
-    price_after_change = models.DecimalField('Kwota aneksu', max_digits=10, decimal_places=2)
+    price_after_change = models.DecimalField('Kwota aneksu', max_digits=10, decimal_places=2, null=True, blank=True)
     scope_changes = models.TextField('Zakres zmian', blank=True, default='')
     scan = models.FileField(upload_to='contracts_zzp/annexes/%Y/', null=True, blank=True,
                             verbose_name='Skan aneksu')

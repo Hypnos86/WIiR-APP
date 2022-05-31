@@ -1,36 +1,58 @@
 {%extends 'base.html'%}
 {%load bootstrap%}
+{%load humanize%}
 {%load static%}
 {%block content%}
-<h4 class="text-center">Umowa {%if contract.no_contract%} nr {{contract.no_contract}} {%endif%}z dnia
-    {{contract.date|date:"d.m.Y"}}</h4>
-<div class="col-md-6 moj-button-left"><a href="{% url 'contracts:menu_contracts_auction' %}"><button class="btn btn-outline-primary"><span class="bi bi-chevron-compact-left">Cofnij</span></button>
-</a></div>
+<div class="row">
+    <div class="col-md-2 moj-button-left"><a href="{% url 'contracts:menu_contracts_auction' %}">
+        <button class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span></button>
+    </a></div>
+    <div class="col-md-8">
+        <h4 class="text-center">Umowa {%if contract.no_contract%} nr {{contract.no_contract}} {%endif%}z dnia
+            {{contract.date|date:"d.m.Y"}}</h4>
+    </div>
+</div>
 <div class="container">
-    <div class="row">
-        <div class="col-md-8">
+    <div class="row mt-2">
+        <div class="col-md-7">
             <ul class="list-group list-group-flush">
-               <li>{{show_contract_auction}}</li>
-
+                <li class="list-group-item"><span class="text-muted">Wykonawca: </span>{{contract.contractor}}</li>
+                <li class="list-group-item"><span class="text-muted">Wartość umowy: </span><span>{{contract.price|intcomma}} zł.</span></li>
+                <li class="list-group-item"><span class="text-muted">Zakres umowy: </span>{{contract.work_scope}}</li>
+                <li class="list-group-item"><span class="text-muted">Tryb zamówienia: </span><span title="{{contract.legal_basic.act}} - {{contract.legal_basic_legal_basic_text}}">{{contract.legal_basic}}</span></li>
+                <li class="list-group-item"><span class="text-muted">Termin realizacji: </span><span>{{contract.end_date}} r.</span></li>
+                <li class="list-group-item"><span class="text-muted">Jednostka: </span><span>{{contract.unit}}</span></li>
+                <li class="list-group-item"><span class="text-muted">Gwarancja: </span><span>{{contract.guarantee}}</span></li>
+                {%if contract.last_report_date%}
+                <li class="list-group-item"><span class="text-muted">Data ostatniego protokołu: </span>{{contract.last_report_date}} r.</li>
+                {%endif%}
+                <li class="list-group-item"><span class="text-muted">Okres gwarancji: </span><span>{{contract.guarantee_period}}</span></li>
+                <li class="list-group-item"><span class="text-muted">Okres rękojmi: </span><span>{{contract.warranty_period}}</span></li>
+                {%if contract.security_sum%}
+                <li class="list-group-item"><span class="text-muted">Kwota zabezpieczenia: </span><span>{{contract.security_sum}}</span></li>
+                {%endif%}
+                <li class="list-group-item"><span class="text-muted">Branżysta: </span>{%for worker in contract.worker.all%}<span> {{worker}}</span>{%endfor%}</li>
+                {%if contract.report%}
+                <li class="list-group-item"><span class="text-muted"></span>Raportowanie do Zaspołu Zamówień Publicznych: <span>{{contract.report}}</span></li>
+                {%endif%}
+                {%if contract.information%}
+                <li class="list-group-item"><span class="text-muted"></span><span>{{contract.information}}</span></li>
+                {%endif%}
             </ul>
-
         </div>
-<!--        <div class="col-md-4">-->
-<!--            {%if contract.skan%}-->
-<!--            <div class="text-center">-->
-<!--                <a href="/media/{{contract.skan}}" role="button" target="_blank"><button class="btn btn-outline-primary btn-sm" type="button">Podgląd umowy</button></a>-->
-<!--            </div>-->
-<!--            {%endif%}-->
-
-<!--            {%if aneksy%}-->
-<!--            {%for aneks in aneksy%}-->
-<!--            <div class="text-center my-3">-->
-<!--                <div ><a href="/media/{{aneks.skan_aneksu}}" target="_blank"><button class="btn btn-outline-primary btn-sm">Aneks z dnia {{aneks.data_aneksu|date:"d.m.Y"}} r.</button>-->
-<!--                </a></div>-->
-<!--            </div>-->
-<!--            {%endfor%}-->
-<!--            {%endif%}-->
-<!--        </div>-->
+        <div class="col-md-5">
+            <div class="text-center mt-2">
+                <a href="/media/{{contract.scan}}" target="_blank"><button class="btn btn-outline-primary button-chose-invoices my-btn"><span class="bi bi-file-text"> Podgląd umowy</span></button></a>
+            {%if annexes%}
+            {%for annex in annexes%}
+            <div class="my-3">
+                <a href="/media/{{annex.scan}}" target="_blank"><button class="btn btn-outline-primary button-chose-invoices my-btn"><i class="bi bi-arrow-return-right"> Aneks z dnia {{annex.date|date:"d.m.Y"}} r.</i></button>
+                </a>
+            </div>
+            {%endfor%}
+            {%endif%}
+            </div>
+        </div>
     </div>
 </div>
 <script>
@@ -39,5 +61,7 @@
      document.getElementById("button-contracts").classList.remove("active");
      document.getElementById("button-contractors").classList.remove("active");
      document.getElementById("button-investments").classList.add("active");
+
+
 </script>
 {%endblock%}

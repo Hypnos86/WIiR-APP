@@ -63,16 +63,17 @@
         </div>
         <div class="row">
             <div class="col-md-6 my-2">{{contract_auction_form.scan|bootstrap}}</div>
-            <div class="col-md-6">
+            <div class="col-md-6 my-2">
                 {%if new == False%}
-                <div class="mt-5">
-                    <span>Dodaj aneks</span>
-                </div>
-                {%endif%}
-                {%if new == False%}
-                <div class="col-md-12 moj-button-right">
-                    <button type="submit" class="btn btn-outline-primary my-btn"><span class="bi bi-save2"> Zapisz zmiany</span>
-                    </button>
+                <div class="row">
+                    <div class="col-md-6 moj-button-left">
+                        <button type="button" class="btn btn-outline-primary my-btn" onclick="openModal()">Dodaj aneks
+                        </button>
+                    </div>
+                    <div class="col-md-6 moj-button-right">
+                        <button type="submit" class="btn btn-outline-primary my-btn"><span class="bi bi-save2"> Zapisz zmiany</span>
+                        </button>
+                    </div>
                 </div>
                 {%else%}
                 <div class="col-md-12 py-4 moj-button-right">
@@ -85,12 +86,36 @@
         </div>
     </form>
 </div>
+{%if new == False%}
+<!-- Modal -->
+<div class="modal fade" id="annexModal" data-url="{% url 'contracts:add_annex_contract_auction' contract.id %}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+{%endif%}
 <script>
      document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-invoices").classList.remove("active");
      document.getElementById("button-contracts").classList.remove("active");
      document.getElementById("button-contractors").classList.remove("active");
      document.getElementById("button-investments").classList.add("active");
+
+    // definicja funkcji otwierającej modal
+    // będzie uruchamiana na event "onclick"
+    function openModal(){
+        var url = $("#annexModal").data("url");
+        $("#annexModal .modal-content").load(url);
+        $("#annexModal").modal("show");
+    }
+
+    function submitForm(){
+        $("#submitButton").closest("form").submit();
+    }
+
+
 
 
 </script>

@@ -41,7 +41,7 @@
         <th align="center" valign="middle" width="350" scope="col" class="text-center">Wykonawca</th>
         <th align="center" valign="middle" width="150" scope="col" class="text-center">Wartość</th>
         <th align="center" valign="middle" width="150" scope="col" class="text-center">Termin</th>
-        <th align="center" valign="middle" width="120" scope="col" class="text-center">Tryb zamówienia</th>
+        <th align="center" valign="middle" width="150" scope="col" class="text-center">Tryb zamówienia</th>
         <th align="center" valign="middle" width="400" scope="col" class="text-center">Jednostka</th>
         <th align="center" valign="middle" width="150" scope="col" class="text-center">Inspektor</th>
 
@@ -56,20 +56,14 @@
         <td valign="middle"><span>{{contract.contractor}}</span></td>
         <td align="center" valign="middle"><span>{{contract.price|intcomma}} zł.</span></td>
         <td align="center" valign="middle" class="text-center">{{contract.end_date|date:"d.m.Y"}}</td>
-        <td align="center" valign="middle" class="text-center" title="{{contract.legal_basic_zzp.legal_basic_zzp_name}}">{{contract.legal_basic_zzp}}</td>
+        <td align="center" valign="middle" class="text-center" title="{{contract.legal_basic_zzp.legal_basic_zzp_name}}">{{contract.legal_basic.act}} - {{contract.legal_basic}}</td>
         <td valign="middle">{{contract.unit}}</td>
         <td valign="middle">{%for inspector in contract.inspector.all%} <span title="{{inspector.industry}}"> {{inspector}} <br></span> {%endfor%}</td>
         <td align="center" valign="middle">
-            <a href="{% url 'contracts:show_contract_auction' contract.id %}">
-                <button type="button" class="btn btn-outline-primary icon-color mx-2 my-1">
-                    <i class="bi bi-eye"></i>
-                </button>
-            </a>
-            <a href="{% url 'contracts:edit_contract_auction' contract.id %}">
-                <button type="button" class="btn btn-outline-primary icon-color mx-2 my-1">
-                    <i class="bi bi-pencil-square"></i>
-                </button>
-            </a>
+            <a class="mx-2 my-1" href="{% url 'contracts:show_contract_auction' contract.id %}"><button type="button" class="btn btn-outline-primary icon-color">
+                    <i class="bi bi-eye"></i></button></a>
+            <a class="mx-2 my-1" href="{% url 'contracts:edit_contract_auction' contract.id %}"><button type="button" class="btn btn-outline-primary icon-color">
+                    <i class="bi bi-pencil-square"></i></button></a>
         </td>
     </tr>
     {%endfor%}

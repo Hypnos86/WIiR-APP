@@ -22,13 +22,9 @@
 
 </div>
 <div class="container px-5 pb-5 col-md-10">
-    <div class="row">
+    <div class="row mt-2">
         <div class="col-md-8">
             <ul class="list-group list-group-flush">
-                <li class="list-group-item"><span class="text-muted">Data umowy: </span><span>{{contract.date|date:"d.m.Y"}}</span></li>
-                {%if contract.no_contract%}
-                <li class="list-group-item"><span class="text-muted">Nr. umowy: </span><span>{{contract.no_contract}}</span></li>
-                {%endif%}
                 <li class="list-group-item"><span class="text-muted">Kontrahent: </span><span>{{contract.contractor}}</span></li>
                 <li class="list-group-item"><span class="text-muted">Podstawa prawna: </span><span>{{contract.legal_basic}}</span></li>
                 <li class="list-group-item"><span class="text-muted">Rodzaj umowy: </span><span>{{contract.type_of_contract}}</span></li>
@@ -57,20 +53,19 @@
 
         </div>
         <div class="col-md-4">
+            <div class="text-center mt-2">
             {%if contract.scan%}
-            <div class="text-center">
-                <a href="/media/{{contract.scan}}" role="button" target="_blank"><button class="btn btn-outline-primary button-chose-invoices my-btn" type="button">Podgląd umowy</button></a>
-            </div>
+                <a href="/media/{{contract.scan}}" role="button" target="_blank"><button class="btn btn-outline-primary button-chose-invoices my-btn" type="button"><span class="bi bi-file-text"> Podgląd umowy</span></button></a>
             {%endif%}
-
             {%if annexes%}
             {%for annex in annexes%}
-            <div class="text-center my-3">
-                <div ><a href="/media/{{annex.scan_annex}}" target="_blank"><button class="btn btn-outline-primary button-chose-invoices my-btn"><i class="bi bi-arrow-return-right"> Aneks z dnia {{annex.date_annex|date:"d.m.Y"}} r.</i></button>
-                </a></div>
-            </div>
+                <div class="my-3">
+                    <div ><a href="/media/{{annex.scan_annex}}" target="_blank"><button class="btn btn-outline-primary button-chose-invoices my-btn"><i class="bi bi-arrow-return-right"> Aneks z dnia {{annex.date_annex|date:"d.m.Y"}} r.</i></button>
+                    </a></div>
+                </div>
             {%endfor%}
             {%endif%}
+            </div>
         </div>
     </div>
 </div>

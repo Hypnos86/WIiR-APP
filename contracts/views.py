@@ -1,8 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
-from contracts.models import ContractImmovables, AnnexImmovables, ContractAuction, AnnexContractAuction
-from contracts.forms import ContractImmovablesForm, ContractAuctionForm, AnnexImmovablesForm
+from contracts.models import ContractImmovables, ContractAuction, AnnexContractAuction
+from contracts.forms import ContractImmovablesForm, ContractAuctionForm, AnnexImmovablesForm, AnnexContractAuctionForm
 from units.models import Unit
 
 
@@ -185,7 +185,6 @@ def show_contract_auction(request, id):
     annexes = contract.aneks_contract_auction.all()
     context = {'contract': contract,
                'annexes': annexes}
-
     return render(request, 'contracts/show_contract_auction.html', context)
 
 
@@ -196,10 +195,9 @@ def edit_contract_auction(request, id):
                                                 instance=contract_auction_edit)
     units = Unit.objects.all()
 
-    aneks_form = AnnexContractAuction(request.POST or None, request.FILES or None)
-
     context = {'contract_auction_form': contract_auction_form,
                'units': units,
+               'contract':contract_auction_edit,
                'new': False}
 
     if contract_auction_form.is_valid():
@@ -209,3 +207,23 @@ def edit_contract_auction(request, id):
 
         return redirect('contracts:menu_contracts_auction')
     return render(request, 'contracts/contract_auction_form.html', context)
+
+
+@login_required
+def add_annex_contract_auction(request, id):
+    contract_edit = get_object_or_404(ContractAuction, pk=id)
+    add_annex_form = AnnexContractAuctionForm(request.POST or None, request.FILES or None)
+    context = {'annex_form': add_annex_form,
+               'contract_id': id}
+
+    if request.method == 'POST':
+        if add_annex_form.is_valid():
+            instance = add_annex_form.save(commit=False)
+            instance.author = request.user
+            instance.contract_auction = contract_edit
+            instance.save()
+
+        return redirect('contracts:menu_contracts_auction')
+
+    if request.method == 'GET':
+        return render(request, 'contracts/new_annex_auction_form.html', context)

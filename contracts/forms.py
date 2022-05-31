@@ -1,8 +1,6 @@
 import django_filters
 from django.forms import ModelForm, DateInput, Textarea, widgets, DecimalField
-from contracts.models import ContractImmovables, AnnexImmovables, ContractAuction
-from django_filters import FilterSet
-
+from contracts.models import ContractImmovables, AnnexImmovables, ContractAuction, AnnexContractAuction
 
 
 class DateField(DateInput):
@@ -10,8 +8,6 @@ class DateField(DateInput):
 
 
 class ContractImmovablesForm(ModelForm):
-
-
     class Meta:
         model = ContractImmovables
         fields = ['id', 'date', 'no_contract', 'contractor', 'period_of_validity', 'usable_area', 'legal_basic',
@@ -51,15 +47,14 @@ class AnnexImmovablesForm(ModelForm):
 
 
 class ContractAuctionForm(ModelForm):
-    worker = django_filters.BooleanFilter(field_name='worker.industry_specialist')
+    # worker = django_filters.BooleanFilter(field_name='worker.industry_specialist')
 
     class Meta:
         model = ContractAuction
 
-        fields = ['date', 'no_contract', 'contractor', 'price', 'work_scope', 'legal_basic', 'end_date', 'unit',
+        fields = ['id', 'date', 'no_contract', 'contractor', 'price', 'work_scope', 'legal_basic', 'end_date', 'unit',
                   'last_report_date', 'guarantee', 'guarantee_period', 'warranty_period', 'security_percent',
-                  'security_sum', 'worker', 'information', 'report', 'scan', 'creation_date', 'change',
-                  'author']
+                  'security_sum', 'worker', 'information', 'report', 'scan']
         labels = {'date': 'Data', 'no_contract': 'Nr. umowy', 'contractor': 'Wykonawca', 'price': 'Kwota umowy',
                   'work_scope': 'Zakres', 'legal_basic': 'Tryb zamówienia', 'end_date': 'Data zakończenia umowy',
                   'unit': 'Jednostka',
@@ -73,3 +68,13 @@ class ContractAuctionForm(ModelForm):
         widgets = {'date': DateField(),
                    'end_date': DateField(),
                    'last_report_date': DateField(), }
+
+
+class AnnexContractAuctionForm(ModelForm):
+    class Meta:
+        model = AnnexContractAuction
+        fields = ['date', 'price_change', 'price_after_change', 'scope_changes', 'scan', 'creation_date', 'author']
+        labels = {'date': 'Data aneksu', 'price_change': 'Zmiana wartości umowy', 'price_after_change': 'Kwota aneksu',
+                  'scope_changes': 'Zakres zamian', 'scan': 'Skan aneksu'}
+        exclude = ['creation_date', 'author']
+        widgets = {'date': DateField()}
