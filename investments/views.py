@@ -4,7 +4,7 @@ from django.core.paginator import Paginator
 from investments.models import Project
 from investments.forms import ProjectForm
 from units.models import Unit
-from contracts.forms import ContractAuctionForm
+from contracts.models import ContractAuction
 
 
 # Create your views here.
@@ -104,13 +104,13 @@ def show_project(request, id):
 @login_required
 def add_contract_to_project(request, id):
     project = get_object_or_404(Project, pk=id)
-    add_contract_form = ContractAuctionForm(request.POST or None)
-    context = {'add_contract_form': add_contract_form,
+    add_contract = ContractAuction.objects.all()
+    context = {'add_contract': add_contract,
                'project_id': id}
 
     if request.method == 'POST':
-        if add_contract_form.is_valid():
-            add_contract_form.save()
+        if add_contract.is_valid():
+            add_contract.save()
         return redirect('investments:investment_projects_list')
 
     if request.method == 'GET':

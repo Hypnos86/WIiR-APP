@@ -33,10 +33,10 @@
                 {%endif%}
                 <li class="list-group-item"><span class="text-muted">Branżysta: </span>{%for worker in contract.worker.all%}<span> {{worker}}</span>{%endfor%}</li>
                 {%if contract.report%}
-                <li class="list-group-item"><span class="text-muted"></span>Raportowanie do Zaspołu Zamówień Publicznych: <span>{{contract.report}}</span></li>
+                <li class="list-group-item"><span class="text-muted">Raportowanie do Zaspołu Zamówień Publicznych: </span><span>{{contract.report}}</span></li>
                 {%endif%}
                 {%if contract.information%}
-                <li class="list-group-item"><span class="text-muted"></span><span>{{contract.information}}</span></li>
+                <li class="list-group-item"><span class="text-muted">Informacje: </span><span>{{contract.information}}</span></li>
                 {%endif%}
             </ul>
         </div>

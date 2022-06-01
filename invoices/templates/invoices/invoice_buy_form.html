@@ -11,16 +11,16 @@
     <div class="col-md-6"><h4 class="text-center">{%if new%}Nowa faktura{%else%}Edycja faktury{%endif%}</h4></div>
 </div>
 
-<div class="container px-5 pb-5 col-md-8">
+<div class="container px-5 pb-5 col-md-6">
     <form class="container" method="post">
         {%csrf_token%}
         <div class="row">
-            <div class="col-md-6 p-2">{{invoice.date_receipt|bootstrap}}</div>
-            <div class="col-md-6 p-2">{{invoice.date_issue|bootstrap}}</div>
-            <div class="col-md-6 p-2">{{invoice.no_invoice|bootstrap}}</div>
-            <div class="col-md-3 p-2">{{invoice.sum|bootstrap}}</div>
+            <div class="col-md-3 p-2">{{invoice.date_receipt|bootstrap}}</div>
+            <div class="col-md-3 p-2">{{invoice.date_issue|bootstrap}}</div>
+            <div class="col-md-3 p-2">{{invoice.no_invoice|bootstrap}}</div>
             <div class="col-md-3 p-2">{{invoice.date_of_payment|bootstrap}}</div>
-            <div class="col-md-12 p-2">{{invoice.contractor|bootstrap}}</div>
+            <div class="col-md-9 p-2">{{invoice.contractor|bootstrap}}</div>
+            <div class="col-md-3 p-2">{{invoice.sum|bootstrap}}</div>
             <div class="col-md-3 p-2">{{invoice.period_from|bootstrap}}</div>
             <div class="col-md-3 p-2">{{invoice.period_to|bootstrap}}</div>
             <div class="col-md-6 p-2">{{invoice.information|bootstrap}}</div>
