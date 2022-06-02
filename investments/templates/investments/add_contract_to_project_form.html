@@ -5,7 +5,8 @@
     <form class="m-2 p-5" method="post" action="{% url 'investments:add_contract_to_project' project_id %}"
           enctype="multipart/form-data">
         {%csrf_token%}
-        <select class="form-select" aria-label="Default select example">
+        <label for="contract">Umowy</label>
+        <select id="contract" name="q" class="form-select" aria-label="Default select example">
             <option selected>--wybierz umowę--</option>
             {%for contract in add_contract%}
             <option value="{{contract.id}}">{{contract}}</option>

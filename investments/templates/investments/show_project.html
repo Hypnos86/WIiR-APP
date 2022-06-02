@@ -5,7 +5,7 @@
 {% block title %} {{project_form.project_title}} {% endblock %}
 {% block content %}
 <div class="row" xmlns="http://www.w3.org/1999/html">
-    <div class="row col-md-10">
+    <div class="row col-md-9">
         <div class="col-md-1 moj-button-left"><a href="{%url 'investments:investment_projects_list'%}">
             <button class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span>
             </button>
@@ -80,7 +80,7 @@
 
                     </section>
                     {%endif%}
-                    <section class="container col-md-3 mx-1">
+                    <section class="container col-md-4 mx-1">
                         <div class="card col-md-12">
                             <div class="card-body">
                                 <h5 class="card-title bi bi-person-lines-fill"> Majster</h5>
@@ -122,8 +122,15 @@
 
         </div>
     </div>
-    <div class="col-md-2 text-center">
+    <div class="col-md-3 text-center">
         <h6 class="bi bi-folder"> Umowy realizujące zadanie</h6>
+        {%for contract in contracts%}
+        <div class="my-4">
+                <a href="/media/{{contract.scan}}" target="_blank"><button class="btn btn-outline-primary button-chose-invoices my-btn"><i class="bi bi-arrow-return-right"> {{contract}}</i></button>
+                </a>
+            </div>
+
+        {%endfor%}
     </div>
 </div>
 <script>

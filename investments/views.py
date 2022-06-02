@@ -96,7 +96,9 @@ def edit_project(request, id):
 @login_required
 def show_project(request, id):
     project = Project.objects.get(pk=id)
-    context = {'project_form': project}
+    contracts = project.contract_auction.all()
+    context = {'project_form': project,
+               'contracts': contracts}
 
     return render(request, 'investments/show_project.html', context)
 
@@ -104,13 +106,19 @@ def show_project(request, id):
 @login_required
 def add_contract_to_project(request, id):
     project = get_object_or_404(Project, pk=id)
-    add_contract = ContractAuction.objects.all()
+    add_contract = ContractAuction.objects.all().filter(investments_project=None)
+    c = request.GET.get("q")
     context = {'add_contract': add_contract,
                'project_id': id}
 
     if request.method == 'POST':
-        if add_contract.is_valid():
-            add_contract.save()
+        print(c)
+        if c:
+            print(c)
+            instance = add_contract.get(pk=c)
+            print(instance)
+            instance.contract_auction = project
+            instance.save()
         return redirect('investments:investment_projects_list')
 
     if request.method == 'GET':
