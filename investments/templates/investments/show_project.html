@@ -126,7 +126,7 @@
         <h6 class="bi bi-folder"> Umowy realizujące zadanie</h6>
         {%for contract in contracts%}
         <div class="my-4">
-                <a href="/media/{{contract.scan}}" target="_blank"><button class="btn btn-outline-primary button-chose-invoices my-btn"><i class="bi bi-arrow-return-right"> {{contract}}</i></button>
+            <a href="/media/{{contract.scan}}" target="_blank"><button class="btn btn-outline-primary button-chose-invoices my-btn"><i class="bi bi-arrow-return-right"><span> {{contract.no_contract}} z dnia {{contract.date|date:"d.m.Y"}}</span></i></button>
                 </a>
             </div>
 
