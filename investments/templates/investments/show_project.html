@@ -2,6 +2,7 @@
 {% load bootstrap %}
 {% load humanize %}
 {% load static %}
+{% load thumbnail%}
 {% block title %} {{project_form.project_title}} {% endblock %}
 {% block content %}
 <div class="row" xmlns="http://www.w3.org/1999/html">
@@ -133,6 +134,29 @@
         {%endfor%}
     </div>
 </div>
+{%if galleries%}
+<div class="row my-5">
+    <div class="col-md-12">
+        <h4 class="text-center">Galeria zdjęć</h4>
+    </div>
+    {%for gallery in galleries%}
+    <div class="col-lg-2 col-md-2 mb-4 my-4">
+        <div class="card h-100">
+            {%thumbnail gallery.photo.first.src '200x150' crop='center' as im%}
+            <img class="card-img-top" src={{im.url}} alt="">
+            {%endthumbnail%}
+            <div class="card-body">
+            <h6 class="card-title text-center">{{gallery.name}} r.</h6>
+            </div>
+            <div class="card-footer text-center">
+                <a href="" class="btn btn-outline-primary my-btn">Pokaż</a>
+            </div>
+        </div>
+    </div>
+
+    {%endfor%}
+</div>
+{%endif%}
 <script>
      document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-invoices").classList.remove("active");

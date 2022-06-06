@@ -5,6 +5,7 @@ from investments.models import Project
 from investments.forms import ProjectForm
 from units.models import Unit
 from contracts.models import ContractAuction
+from gallery.models import Gallery
 
 
 # Create your views here.
@@ -97,8 +98,10 @@ def edit_project(request, id):
 def show_project(request, id):
     project = Project.objects.get(pk=id)
     contracts = project.contract_auction.all()
+    galleries = project.gallery.all()
     context = {'project_form': project,
-               'contracts': contracts}
+               'contracts': contracts,
+               'galleries': galleries}
 
     return render(request, 'investments/show_project.html', context)
 

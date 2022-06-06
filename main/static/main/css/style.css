@@ -236,3 +236,8 @@ border: solid 2px;
     background-color: #0a4275;
     border-color:white;
 }
+
+.card-body .bi::before{
+    margin-right:10px;
+
+}

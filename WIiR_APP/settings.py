@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'import_export',
     'django_filters',
     'bootstrapform',
-
+    'sorl.thumbnail',
     'units.apps.UnitsConfig',
     'investments.apps.InvestmentsConfig',
     'contracts.apps.ContractsConfig',
