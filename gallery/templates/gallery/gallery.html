@@ -1,0 +1,20 @@
+{%extends 'base.html'%}
+{%load static%}
+{%load thumbnail%}
+{%block title%} Galeria {%endblock%}
+{%block content%}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h4>{{gallery.name}} ({{photocount}})</h4>
+            <section class="photo_gallery">
+                {%for photo in gallery.photo.all%}
+                {%thumbnail photo.src '300x300' as im%}
+                    <a href="{{photo.src.url}}"><img src="{{im.url}}" alt="" title=""></a>
+                {%endthumbnail%}
+                {%endfor%}
+            </section>
+        </div>
+    </div>
+</div>
+{%endblock%}

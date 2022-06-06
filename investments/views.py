@@ -99,9 +99,11 @@ def show_project(request, id):
     project = Project.objects.get(pk=id)
     contracts = project.contract_auction.all()
     galleries = project.gallery.all()
+
     context = {'project_form': project,
                'contracts': contracts,
-               'galleries': galleries}
+               'galleries': galleries,
+               }
 
     return render(request, 'investments/show_project.html', context)
 

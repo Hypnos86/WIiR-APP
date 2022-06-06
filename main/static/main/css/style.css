@@ -239,5 +239,11 @@ border: solid 2px;
 
 .card-body .bi::before{
     margin-right:10px;
+}
 
+hr {
+    color: #0a4275;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
 }
