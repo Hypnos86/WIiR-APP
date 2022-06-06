@@ -112,8 +112,9 @@ def add_contract_to_project(request, id):
                'project_id': id}
 
     if request.method == 'POST':
+        print(request)
         if c:
-            print((c))
+            print(c)
             instance = add_contract.get(pk=c)
             print(instance)
             instance.contract_auction = project

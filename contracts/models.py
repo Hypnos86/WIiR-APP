@@ -120,13 +120,18 @@ class AnnexImmovables(models.Model):
         return f'{self.date_annex} {self.scan_annex}'
 
 
+def up_load_contract_auction(instance, filename):
+    return f'contracts_zzp/{instance.no_contract}/{filename}'
+
+
 class ContractAuction(models.Model):
     class Meta:
         verbose_name = 'Umowa ZZP'
         verbose_name_plural = 'INW - Umowy'
         ordering = ['date']
 
-    investments_project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True, related_name='contract_auction',
+    investments_project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True,
+                                            related_name='contract_auction',
                                             verbose_name='Zadanie inwestycyjne')
     date = models.DateField('Data')
     no_contract = models.CharField('Nr. umowy', max_length=20)
@@ -154,7 +159,7 @@ class ContractAuction(models.Model):
     worker = models.ManyToManyField(Employer, verbose_name='Inspektor', related_name='contract_auction')
     report = models.TextField('Raportowanie', blank=True, default='')
     information = models.TextField('Informacje', blank=True, default='')
-    scan = models.FileField(upload_to='contracts_zzp/%Y/', null=True, blank=True, verbose_name='Skan umowy')
+    scan = models.FileField(upload_to=up_load_contract_auction, null=True, blank=True, verbose_name='Skan umowy')
     creation_date = models.DateTimeField('Data utworzenia', auto_now_add=True)
     change = models.DateTimeField('Zmiana', auto_now=True)
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='contract_auction',
@@ -162,6 +167,10 @@ class ContractAuction(models.Model):
 
     def __str__(self):
         return f'{self.no_contract} z dnia {self.date}'
+
+
+def up_load_annex_contract_auction(instance, filename):
+    return f'contracts_zzp/{instance.contract_auction.no_contract}/annexes/{filename}'
 
 
 class AnnexContractAuction(models.Model):
@@ -177,7 +186,7 @@ class AnnexContractAuction(models.Model):
     price_change = models.BooleanField('Zmiana wartości umowy', default=False)
     price_after_change = models.DecimalField('Kwota aneksu', max_digits=10, decimal_places=2, null=True, blank=True)
     scope_changes = models.TextField('Zakres zmian', blank=True, default='')
-    scan = models.FileField(upload_to='contracts_zzp/annexes/%Y/', null=True, blank=True,
+    scan = models.FileField(upload_to=up_load_annex_contract_auction, null=True, blank=True,
                             verbose_name='Skan aneksu')
     creation_date = models.DateTimeField('Data utworzenia', auto_now_add=True)
     author = models.ForeignKey("auth.User", on_delete=models.CASCADE)
