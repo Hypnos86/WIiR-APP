@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'sourcefinancing.apps.SourcefinancingConfig',
     'cpvdict.apps.CpvdictConfig',
     'listregister.apps.ListregisterConfig',
-    'permanentmanagement.apps.PermanentmanagementConfig'
+    'permanentmanagement.apps.PermanentmanagementConfig',
+    'gallery.apps.GalleryConfig'
 ]
 
 # aby dzialaly PDFy i przegladanie

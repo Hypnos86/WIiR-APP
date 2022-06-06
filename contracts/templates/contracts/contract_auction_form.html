@@ -65,6 +65,7 @@
             <div class="col-md-6 my-2">{{contract_auction_form.scan|bootstrap}}</div>
             <div class="col-md-6 my-2">
                 {%if new == False%}
+                {%if contract_auction_form.scan%}
                 <div class="row">
                     <div class="col-md-6 moj-button-left">
                         <button type="button" class="btn btn-outline-primary my-btn" onclick="openModal()">Dodaj aneks
@@ -75,6 +76,13 @@
                         </button>
                     </div>
                 </div>
+                {%else%}
+                 <div class="col-md-12 moj-button-right">
+                        <button type="submit" class="btn btn-outline-primary my-btn"><span class="bi bi-save2"> Zapisz zmiany</span>
+                        </button>
+                    </div>
+                </div>
+                {%endif%}
                 {%else%}
                 <div class="col-md-12 py-4 moj-button-right">
                     <button type="submit" class="btn btn-outline-primary my-btn"><span

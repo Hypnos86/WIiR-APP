@@ -35,10 +35,3 @@ class Project(models.Model):
 
     def __str__(self):
         return f'{self.unit} - {self.project_title}'
-
-
-class Gallery(models.Model):
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='gallery', verbose_name='Id inwestycji')
-    add_date = models.DateField(auto_now_add=True)
-    photo = models.ImageField(upload_to=f'Gallery/{{Project}}/%Y/%m')
-    pass
