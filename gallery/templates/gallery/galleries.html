@@ -1,0 +1,70 @@
+{%extends 'base_investments.html'%}
+{%load static%}
+{%load thumbnail%}
+{%block title%} Galerie {%endblock%}
+{%block investmentsmenu%}
+
+<div class="row">
+    <div class="col-md-2">
+
+    </div>
+    <div class="col-md-8">
+        <h5 class="text-center"><span>Galeria zdjęć inwestycji ({{gallery_count}})</span></h5>
+    </div>
+    <div class="col-md-2 moj-button-right">
+            <button class="btn btn-outline-primary my-btn"><span class="bi bi-images" onclick="openModal()"> Dodaj galerie</span>
+            </button>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        {%for gallery in galleries%}
+        <div class="col-lg-2 col-md-2 mb-4 my-4">
+            <div class="card h-100">
+                {%thumbnail gallery.photo.first.src '200x150' crop='center' as im%}
+                <img class="card-img-top" src={{im.url}} alt="">
+                {%endthumbnail%}
+                <div class=" text-center">
+                    <small class="card-title text-center"><b>{{gallery.name}} r.</b></small>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="{%url 'gallery:gallery_details' gallery.id%}" class="btn btn-outline-primary my-btn"
+                       target="_blank">Pokaż</a>
+                </div>
+            </div>
+        </div>
+        {%endfor%}
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="galleryModal" data-url="{% url 'gallery:add_gallery' %}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+<script>
+     document.getElementById("button-units").classList.remove("active");
+     document.getElementById("button-invoices").classList.remove("active");
+     document.getElementById("button-contracts").classList.remove("active");
+     document.getElementById("button-contractors").classList.remove("active");
+     document.getElementById("button-cpv").classList.remove("active");
+     document.getElementById("button-investments").classList.add("active");
+     document.getElementById("button-projects").classList.remove("active");
+     document.getElementById("button-gallery").classList.add("active");
+     document.getElementById("button-cpvnotaut").classList.remove("active");
+   // definicja funkcji otwierającej modal
+    // będzie uruchamiana na event "onclick"
+    function openModal(){
+        var url = $("#galleryModal").data("url");
+        $("#galleryModal .modal-content").load(url);
+        $("#galleryModal").modal("show");
+    }
+
+    function submitForm(){
+        $("#submitButton").closest("form").submit();
+    }
+
+</script>
+{%endblock%}

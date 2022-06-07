@@ -41,6 +41,7 @@
             </ul>
         </div>
         <div class="col-md-5">
+            {%if contract.scan%}
             <div class="text-center mt-2">
                 <a href="/media/{{contract.scan}}" target="_blank"><button class="btn btn-outline-primary button-chose-invoices my-btn"><span class="bi bi-file-text"> Podgląd umowy</span></button></a>
             {%if annexes%}
@@ -50,6 +51,7 @@
                 </a>
             </div>
             {%endfor%}
+            {%endif%}
             {%endif%}
             </div>
         </div>

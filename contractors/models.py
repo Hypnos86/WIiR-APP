@@ -7,9 +7,9 @@ class Contractor(models.Model):
         verbose_name_plural = 'Kontrahenci'
         ordering = ['name']
 
-    no_contractor = models.CharField('Nr. kontrahenta', max_length=10, null=False, unique=True)
+    no_contractor = models.IntegerField('Nr. kontrahenta', null=False, unique=True)
     name = models.CharField('Nazwa', max_length=30, null=True)
-    nip = models.CharField('NIP', max_length=10, null=True, blank=True)
+    nip = models.CharField('NIP', max_length=10, null=True, blank=True, unique=True)
     address = models.CharField('Adres', max_length=30, null=True)
     zip_code = models.CharField('Kod pocztowy', max_length=6, null=True)
     city = models.CharField('Miasto', max_length=20, null=True)

@@ -4,6 +4,10 @@ from sourcefinancing.models import Section, Group, Paragraph
 from main.models import Employer
 
 
+def upload_scan(instance, filename):
+    return f'investments/{instance.project_title}/{filename}'
+
+
 # Create your models here.
 class Project(models.Model):
     class Meta:
@@ -13,7 +17,7 @@ class Project(models.Model):
 
     date_of_acceptance = models.DateField('Data programu', null=True, blank=True)
     no_acceptance_document = models.CharField('L.dz. programu', max_length=15, null=True, blank=True)
-    investment_program = models.FileField(upload_to='investments/investment_program/%Y/', null=True, blank=True,
+    investment_program = models.FileField(upload_to=upload_scan, null=True, blank=True,
                                           verbose_name='Program inwestycji')
     project_title = models.CharField('Pełna nazwa zadania', max_length=250, null=True, blank=True)
     investment_cost_estimate_value = models.DecimalField('WKI', max_digits=12, decimal_places=2, null=True, blank=True)
@@ -26,7 +30,7 @@ class Project(models.Model):
     information = models.TextField('Informacje', null=True, blank=True)
     worker = models.ManyToManyField(Employer, related_name='project', verbose_name='Branżysta')
     date_of_settlement = models.DateField('Data rozliczenia', null=True, blank=True)
-    settlement_scan = models.FileField(upload_to='investments/settlements/%Y/', null=True, blank=True,
+    settlement_scan = models.FileField(upload_to=upload_scan, null=True, blank=True,
                                        verbose_name='Rozliczenie inwestycyjne')
     realized = models.BooleanField('Zrealizowane', default=False)
     creation_date = models.DateTimeField('Data utworzenia', auto_now_add=True)

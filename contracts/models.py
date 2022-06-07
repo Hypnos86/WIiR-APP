@@ -64,6 +64,10 @@ class WarrantyPeriod(models.Model):
         return f'{self.warranty_period} mc'
 
 
+def upload_scan_contract_immovables(instance, filename):
+    return f'contracts_immovables/{instance.no_contract}/{filename}'
+
+
 class ContractImmovables(models.Model):
     class Meta:
         verbose_name = "Umowa nieruchomosci"
@@ -90,7 +94,7 @@ class ContractImmovables(models.Model):
     property_cost = models.BooleanField("Podatek od nieruchomości")
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE, null=False, verbose_name="Jednostka",
                              related_name="contractimmovables")
-    scan = models.FileField(upload_to='contracts_immovables/%Y/', null=True, blank=True, verbose_name="Skan umowy")
+    scan = models.FileField(upload_to=upload_scan_contract_immovables, null=True, blank=True, verbose_name="Skan umowy")
     state = models.BooleanField(default=True, verbose_name='Aktualna')
     information = models.TextField("Informacje", blank=True, default="")
     creation_date = models.DateTimeField("Data utworzenia", auto_now_add=True)
@@ -111,7 +115,7 @@ class AnnexImmovables(models.Model):
     contract_immovables = models.ForeignKey(ContractImmovables, on_delete=models.CASCADE,
                                             verbose_name='umowa',
                                             related_name='annex')
-    scan_annex = models.FileField(upload_to='contracts_immovables/annexes/%Y/', null=True, verbose_name='Skan aneks')
+    scan_annex = models.FileField(upload_to=upload_scan_contract_immovables, null=True, verbose_name='Skan aneks')
     date_annex = models.DateField('Data aneksu', null=True)
     creation_date = models.DateTimeField('Data utworzenia', auto_now_add=True)
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
@@ -134,7 +138,7 @@ class ContractAuction(models.Model):
                                             related_name='contract_auction',
                                             verbose_name='Zadanie inwestycyjne')
     date = models.DateField('Data')
-    no_contract = models.CharField('Nr. umowy', max_length=20)
+    no_contract = models.CharField('Nr. umowy', max_length=20, unique=True)
     contractor = models.ForeignKey(Contractor, on_delete=models.CASCADE,
                                    verbose_name='Kontrahent',
                                    related_name='contract_auction')

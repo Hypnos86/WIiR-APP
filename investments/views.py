@@ -117,12 +117,13 @@ def add_contract_to_project(request, id):
                'project_id': id}
 
     if request.method == 'POST':
-        print(request)
+        print(c)
         if c:
+            print(request)
             print(c)
             instance = add_contract.get(pk=c)
             print(instance)
-            instance.contract_auction = project
+            instance = project
             instance.save()
         return redirect('investments:investment_projects_list')
 

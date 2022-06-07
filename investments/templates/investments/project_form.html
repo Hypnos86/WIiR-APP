@@ -6,7 +6,7 @@
 <div class="container">
     <hr>
     <h3 class="text-center m-4">Nowe zadanie inwestycyjne</h3>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         {%csrf_token%}
         <div class="row">
             <div class="col-md-2 mb-3">{{project_form.date_of_acceptance|bootstrap}}</div>
@@ -69,7 +69,7 @@
 </div>
 {%if new == False%}
 <!-- Modal -->
-<div class="modal fade" id="annexModal" data-url="{% url 'investments:add_contract_to_project' project.id %}">
+<div class="modal fade" id="projectModal" data-url="{% url 'investments:add_contract_to_project' project.id %}">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
 
@@ -89,9 +89,9 @@
     // definicja funkcji otwierającej modal
         // będzie uruchamiana na event "onclick"
         function openModal(){
-            var url = $("#annexModal").data("url");
-            $("#annexModal .modal-content").load(url);
-            $("#annexModal").modal("show");
+            var url = $("#projectModal").data("url");
+            $("#projectModal .modal-content").load(url);
+            $("#projectModal").modal("show");
         }
 
         function submitForm(){
