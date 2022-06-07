@@ -8,24 +8,52 @@
         <div class="moj-button-left"><a href="{%url 'invoices:buy_invoices_list'%}">
             <button type="button" class="btn btn-outline-primary my-btn"><span
                     class="bi bi-chevron-compact-left">Cofnij</span>
-            </button></a>
+            </button>
+        </a>
         </div>
     </div>
     <div class="col-md-10">
         <div class="col-md-12 moj-button-right">
             <h4 class="text-center ">TREZOR</h4>
-            <h5 class="text-center ">Weryfikacja</h5>
+            <h5 class="text-center ">Weryfikacja - {{year}} r.</h5>
         </div>
-    </div>
-    <div class="col-md-1">
     </div>
 </section>
-<div class="row my-5">
-    <div class="row">
-        <div class="col-md-6">
-            <p><span>Liczba faktur: </span><span class="badge text-white info badge-pill">{{invoices_buy_sum}}</span>
+    <div class="row my-4">
+        <div class="col-md-4">
+            <p class="my-4 py-2"><span>Liczba faktur: </span><span class="badge text-white info badge-pill">{%if query%}{{invoices_buy_sum}}{%else%}{{invoices_buy_sum}}{%endif%}</span>
             </p>
         </div>
+        <form class="row col-md-4">
+            <div class="col-md-5">
+                <div class="">
+                    <label class="control-label" for="from">Data płatności od</label>
+                    <div class=" ">
+                        <input type="date" name="from" class="form-control" id="from">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="">
+                    <label class="control-label" for="to">Data płatności do</label>
+                    <div class=" ">
+                        <input type="date" name="to" class="form-control" id="to">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-outline-primary my-btn mt-4">{{query}}{{search}}</button>
+            </div>
+        </form>
+        <div class="col-md-4"></div>
+    </div>
+
+<div class="row my-5">
+    <div class="row">
+        {%if query%}
+        <div class="col-md-6"><span>Zakres weryfikacji: {{date_from}} - {{date_to}}</span>
+        </div>
+        {%endif%}
     </div>
 </div>
 <script>
@@ -33,6 +61,12 @@
      document.getElementById("button-invoices").classList.add("active");
      document.getElementById("button-contracts").classList.remove("active");
      document.getElementById("button-contractors").classList.remove("active");
+
+
+
+
+
+
 
 
 

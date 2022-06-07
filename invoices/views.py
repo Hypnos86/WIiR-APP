@@ -123,5 +123,25 @@ def edit_invoice_sell(request, id):
 
 @login_required
 def make_verification(request):
-    context = {}
-    return render(request, 'invoices/verification.html', context)
+    invoices_buy = InvoiceBuy.objects.all().order_by("-date_receipt")
+    query = "Wyczyść"
+    search = "Szukaj"
+
+    year = current_year()
+    date_from = request.GET.get("from")
+    date_to = request.GET.get("to")
+
+    if date_from and date_to:
+        invoicesbuy = invoices_buy.filter(date_of_payment__range=[date_from, date_to])
+        invoices_buy_sum = len(invoicesbuy)
+        return render(request, 'invoices/verification.html', {'invoices': invoicesbuy,
+                                                              'invoices_buy_sum': invoices_buy_sum,
+                                                              'query': query, 'year': year,
+                                                              'date_from': date_from,
+                                                              'date_to': date_to})
+    else:
+        invoices_buy_sum = 0
+        return render(request, 'invoices/verification.html', {
+            "invoices_buy_sum": invoices_buy_sum,
+            "search": search, "year": year,
+        })
