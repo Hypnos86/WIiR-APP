@@ -9,7 +9,7 @@
 
     </div>
     <div class="col-md-8">
-        <h5 class="text-center"><span>Galeria zdjęć inwestycji ({{gallery_count}})</span></h5>
+        <h5 class="text-center"><span>Galeria zdjęć zadań inwestycyjnych ({{gallery_count}})</span></h5>
     </div>
     <div class="col-md-2 moj-button-right">
             <button class="btn btn-outline-primary my-btn"><span class="bi bi-images" onclick="openModal()"> Dodaj galerie</span>
@@ -40,7 +40,6 @@
 <div class="modal fade" id="galleryModal" data-url="{% url 'gallery:add_gallery' %}">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-
         </div>
     </div>
 </div>
@@ -65,6 +64,5 @@
     function submitForm(){
         $("#submitButton").closest("form").submit();
     }
-
 </script>
 {%endblock%}

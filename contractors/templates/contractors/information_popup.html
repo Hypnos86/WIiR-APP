@@ -1,0 +1,16 @@
+{%load static%}
+{%load bootstrap%}
+{%block content%}
+<div class="container ">
+<form class="m-2 p-4" method="get" action="{% url 'contractors:show_information' id %}">
+    {%csrf_token%}
+    <div class="container">
+        <div>{{contractor.name}}</div>
+        <div class="my-4"><span>NIP: </span>{{contractor.nip}}</div>
+        <div><span>Informacje: </span>{{contractor.information}}</div>
+
+    </div>
+</form>
+</div>
+{%endblock%}
+

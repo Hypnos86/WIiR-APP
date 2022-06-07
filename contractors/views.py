@@ -36,6 +36,12 @@ def contractorsell_list(request):
 
 
 @login_required
+def show_information(request, id):
+    contractor = get_object_or_404(Contractor, pk=id)
+    return render(request, 'contractors/information_popup.html', {'contractor': contractor, 'id': id})
+
+
+@login_required
 def new_contractorsell(request):
     contractorsell_form = ContractorsellForm(request.POST or None)
 

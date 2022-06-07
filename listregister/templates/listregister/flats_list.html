@@ -28,7 +28,7 @@
             <p><span>Liczba mieszkań: </span><span class="badge text-white info badge-pill">{{count_flats}}</span></p>
         </div>
         <div class="col-md-10 moj-button-right "><a href="{%url 'listregister:add_new_flat'%}">
-            <button type="button" class="btn btn-outline-primary my-btn">Dodaj nowy lokal</button>
+            <button type="button" class="btn btn-outline-primary my-btn"><span class="bi bi-pin-map"> Dodaj nowy lokal</span></button>
         </a>
         </div>
     </div>
@@ -43,7 +43,6 @@
             <th align="center" valign="middle" width="120" scope="col">Liczba pomieszczeń</th>
             <th align="center" valign="middle" width="120" scope="col">Piętro</th>
             <th align="center" valign="middle" width="100" scope="col">Stan</th>
-            <th align="center" valign="middle" width="800" scope="col">Informacje</th>
 
         </tr>
         </thead>
@@ -51,19 +50,22 @@
         {%for flat in flats %}
         <tr class="my-table-tr">
             <td class="text-center" valign="middle" scope="row"></td>
-            <td align="left" valign="middle" scope="row" title="Ostatnie zmiany: {{flat.change|date:" d.m.Y
-            "}} r. ({{flat.author.first_name}} {{flat.author.last_name}})">{{flat.address}}</td>
-            <td align="center" valign="middle"><span>{{flat.area|intcomma}}</span></td>
-            <td align="center" class="text-center" valign="middle"><span>{{flat.room_numbers}}</span></td>
-            <td align="center" valign="middle"><span>{{flat.flor}}</span></td>
+            <td align="left" valign="middle" scope="row" title="Ostatnie zmiany: {{flat.change|date:'d.m.Y'}} r. ({{flat.author.first_name}} {{flat.author.last_name}})">{{flat.address}}</td>
+            <td align="center" valign="middle"><span>{%if flat.area%}{{flat.area|intcomma}}{%else%}{{flat.area|default_if_none:'---'}}{%endif%}</span></td>
+            <td align="center" class="text-center" valign="middle"><span>{{flat.room_numbers|default_if_none:'---'}}</span></td>
+            <td align="center" valign="middle"><span>{{flat.flor|default_if_none:'---'}}</span></td>
             {%if flat.state%}
             <td class="text-center" valign="middle" title="Wolne"><i class="bi bi-geo-alt-fill text-success"></i></td>
             {%else%}
             <td class="text-center" valign="middle" title="Zajęte"><i class="bi bi-geo-alt-fill text-danger"></i></td>
             {%endif%}
-            <td valign="middle"><span>{{flat.information}}</span></td>
-            <td class="text-center" valign="middle">
-                <a href="{%url 'listregister:edit_flat' flat.id %}">
+            <td align="right" valign="middle">
+                {%if flat.information%}
+                <button type="submit" class="btn btn-outline-success mx-2" onclick="openModal()"><i
+                        class="bi bi-info-lg"></i>
+                </button>
+                {%endif%}
+                <a class="mx-2" href="{%url 'listregister:edit_flat' flat.id %}">
                     <button type="submit" class="btn btn-outline-primary icon-color"><i class="bi bi-pencil-square"></i>
                     </button>
                 </a>
@@ -114,6 +116,15 @@
     </nav>
     {%endif%}
 </div>
+{%for flat in flats%}
+<div class="modal fade" id="informationModal" data-url="{% url 'listregister:show_information' flat.id %}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+{%endfor%}
 <script>
     document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-invoices").classList.remove("active");
@@ -122,7 +133,16 @@
      document.getElementById("button-cpv").classList.remove("active");
      document.getElementById("button-record").classList.add("active");
      document.getElementById("button-cpvnotaut").classList.remove("active");
+    // definicja funkcji otwierającej modal
+            // będzie uruchamiana na event "onclick"
+            function openModal(){
+                var url = $("#informationModal").data("url");
+                $("#informationModal .modal-content").load(url);
+                $("#informationModal").modal("show");
+            }
 
-
+            function submitForm(){
+                $("#submitButton").closest("form").submit();
+            }
 </script>
 {%endblock%}

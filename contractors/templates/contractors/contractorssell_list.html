@@ -1,6 +1,6 @@
 {%extends 'base.html'%}
 {%load static%}
-
+{%load bootstrap%}
 {%block title%} Kontrahenci umów czynszowych{%endblock%}
 {%block content%}
 <div class="row">
@@ -17,14 +17,16 @@
 <div class="kontrahenci-title justify-content-center align-items-center text-center">
     <h4>Kontrahenci umów czynszowych WIiR</h4>
     {% if last_date %}
-        <small>Ostatnia aktualizacja: {{last_date.change|date:"d.m.Y - (H:i)"}}</small>
+    <small>Ostatnia aktualizacja: {{last_date.change|date:"d.m.Y - (H:i)"}}</small>
     {%endif%}
     <div class="row">
         <div class="col-md-2">
-            <p><span>Liczba kontrahentów: </span><span class="badge text-white info badge-pill">{{consellsum}}</span> </p>
+            <p><span>Liczba kontrahentów: </span><span class="badge text-white info badge-pill">{{consellsum}}</span>
+            </p>
         </div>
         <div class="col-md-10 moj-button-right "><a href="{%url 'contractors:new_contractorsell'%}">
-            <button type="button" class="btn btn-outline-primary my-btn"><span class="bi bi-plus-circle"> Dodaj kontrahenta</span></button>
+            <button type="button" class="btn btn-outline-primary my-btn"><span class="bi bi-plus-circle"> Dodaj kontrahenta</span>
+            </button>
         </a>
         </div>
     </div>
@@ -35,13 +37,11 @@
         <tr class="my-table-tr text-center">
             <th align="center" valign="middle" width="50" scope="col">L.p.</th>
             <th align="center" valign="middle" width="110" scope="col">Nr. kontrahenta</th>
-            <th align="center" valign="middle" width="220" scope="col">Nazwa</th>
+            <th align="center" valign="middle" width="280" scope="col">Nazwa</th>
             <th align="center" valign="middle" width="200" scope="col">NIP</th>
-            <th align="center" valign="middle" width="200" scope="col">Adres</th>
-            <th align="center" valign="middle" width="80" scope="col">Kod pocztowy</th>
+            <th align="center" valign="middle" width="260" scope="col">Adres</th>
+            <th align="center" valign="middle" width="100" scope="col">Kod pocztowy</th>
             <th align="center" valign="middle" scope="col">Miasto</th>
-            <th align="center" valign="middle" scope="col">Informacje</th>
-
         </tr>
         </thead>
         <tbody>
@@ -54,9 +54,13 @@
             <td valign="middle"><span>{{contractor.address}}</span></td>
             <td class="text-center" valign="middle"><span>{{contractor.zip_code}}</span></td>
             <td class="text-center" valign="middle"><span>{{contractor.city}}</span></td>
-            <td valign="middle"><span>{{contractor.information}}</span></td>
-            <td class="text-center" valign="middle">
-                <a href="{%url 'contractors:edit_contractorsell' contractor.id%}">
+            <td align="right" valign="middle">
+                {%if contractor.information%}
+                <button type="submit" class="btn btn-outline-success mx-2" onclick="openModal()"><i
+                        class="bi bi-info-lg"></i>
+                </button>
+                {%endif%}
+                <a class="mx-2 moj-button-right" href="{%url 'contractors:edit_contractorsell' contractor.id%}">
                     <button type="submit" class="btn btn-outline-primary icon-color"><i class="bi bi-pencil-square"></i>
                     </button>
                 </a>
@@ -107,14 +111,33 @@
     </nav>
     {%endif%}
 </div>
+<!-- Modal -->
+{%for contractor in contractors%}
+<div class="modal fade" id="informationModal" data-url="{% url 'contractors:show_information' contractor.id %}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+{%endfor%}
 <script>
      document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-invoices").classList.remove("active");
      document.getElementById("button-contracts").classList.remove("active");
      document.getElementById("button-contractors").classList.add("active");
      document.getElementById("button-investments").classList.remove("active");
+     // definicja funkcji otwierającej modal
+        // będzie uruchamiana na event "onclick"
+        function openModal(){
+            var url = $("#informationModal").data("url");
+            $("#informationModal .modal-content").load(url);
+            $("#informationModal").modal("show");
+        }
 
-
+        function submitForm(){
+            $("#submitButton").closest("form").submit();
+        }
 </script>
 {%endblock%}
 

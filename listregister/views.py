@@ -1,9 +1,11 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from listregister.models import OfficialFlat
 from listregister.forms import OfficialFlatForm
 
 
 # Create your views here.
+@login_required
 def make_list_register(request):
     flats = OfficialFlat.objects.all()
     count_flats = len(flats)
@@ -11,6 +13,13 @@ def make_list_register(request):
     return render(request, 'list_register.html', context)
 
 
+@login_required
+def show_information(request, id):
+    flat = get_object_or_404(OfficialFlat, pk=id)
+    return render(request, 'listregister/information_popup.html', {'flat': flat, 'id': id})
+
+
+@login_required
 def make_flats_list(request):
     flats = OfficialFlat.objects.all()
     count_flats = len(flats)
@@ -35,6 +44,7 @@ def make_flats_list(request):
                        'last_date': last_date, 'count_flats': count_flats})
 
 
+@login_required
 def add_new_flat(request):
     new_flat_form = OfficialFlatForm(request.POST or None)
 
@@ -48,6 +58,7 @@ def add_new_flat(request):
     return render(request, 'listregister/flat_form.html', {'flat_form': new_flat_form, 'new': True})
 
 
+@login_required
 def edit_flat(request, id):
     flats = get_object_or_404(OfficialFlat, pk=id)
     flat_form = OfficialFlatForm(request.POST or None, instance=flats)

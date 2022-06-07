@@ -1,0 +1,17 @@
+{%load static%}
+{%load bootstrap%}
+{%block content%}
+<div class="container ">
+<form class="m-2 p-4" method="get" action="{% url 'listregister:show_information' id %}">
+    {%csrf_token%}
+    <div class="container">
+        <h3 class="bi bi-pin-map text-center"></h3>
+        <div><span>Adres: </span>{{flat.address}}</div>
+        <div class="mb-3"><span>Stan: </span>{%if flat.state%}<span>Wolne</span>{%else%}<span>Zajęte</span>{%endif%}</div>
+
+        <div class="mt-4"><h6>Informacje:</h6><span>{{flat.information}}</span></div>
+    </div>
+</form>
+</div>
+{%endblock%}
+
