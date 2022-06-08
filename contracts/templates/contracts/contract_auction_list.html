@@ -29,19 +29,19 @@
         </div>
     </div>
 </div>
-
+<div class="col">
 <table class="table table-hover my-table mt-2">
     <thead>
     <tr class="my-table-tr">
         <th align="center" valign="middle" width="40" scope="col" class="text-center">L.p.</th>
-        <th align="center" valign="middle" width="60" scope="col" class="text-center">Data umowy</th>
+        <th align="center" valign="middle" width="120" scope="col" class="text-center">Data umowy</th>
         <th align="center" valign="middle" width="180" scope="col" class="text-center">Nr. umowy</th>
-        <th align="center" valign="middle" width="350" scope="col" class="text-center">Wykonawca</th>
+        <th align="center" valign="middle" width="320" scope="col" class="text-center">Wykonawca</th>
         <th align="center" valign="middle" width="150" scope="col" class="text-center">Wartość</th>
-        <th align="center" valign="middle" width="150" scope="col" class="text-center">Termin</th>
+        <th align="center" valign="middle" width="150" scope="col" class="text-center">Termin realizacji</th>
         <th align="center" valign="middle" width="150" scope="col" class="text-center">Tryb zamówienia</th>
-        <th align="center" valign="middle" width="350" scope="col" class="text-center">Jednostka</th>
-        <th align="center" valign="middle" width="150" scope="col" class="text-center">Inspektor</th>
+        <th align="center" valign="middle" width="320" scope="col" class="text-center">Jednostka</th>
+        <th align="center" valign="middle" width="200" scope="col" class="text-center">Inspektor</th>
 
     </tr>
     </thead>
@@ -49,19 +49,17 @@
     {%for contract in contracts_auctions_list %}
     <tr class="my-table-tr">
         <td align="center" valign="middle" class="text-center" scope="row"></td>
-        <td align="center" valign="middle" class="text-center"><span>{{contract.date|date:"d.m.Y"}}</span></td>
-        <td align="center" valign="middle" class="text-center" title="{{contract.work_scope}}"><span>{{contract.no_contract|default_if_none:'---'}}</span></td>
-        <td valign="middle"><span>{{contract.contractor}}</span></td>
+        <td align="center" valign="middle" class="text-center"><span>{{contract.date|date:"d.m.Y"}} r.</span></td>
+        <td align="center" valign="middle" class="text-center" title="Przedmiot umowy: {{contract.work_scope}}"><span>{{contract.no_contract|default_if_none:'---'}}</span></td>
+        <td valign="middle"><span title="SWOP ID: {{contract.contractor.no_contractor}}">{{contract.contractor.name}}<br><small>{{contract.contractor.address}}, {{contract.contractor.zip_code}} {{contract.contractor.city}}</small></span></td>
         <td align="center" valign="middle"><span>{{contract.price|intcomma}} zł.</span></td>
-        <td align="center" valign="middle" class="text-center">{{contract.end_date|date:"d.m.Y"}}</td>
-        <td align="center" valign="middle" class="text-center" title="{{contract.legal_basic_zzp.legal_basic_zzp_name}}">{{contract.legal_basic.act}} - {{contract.legal_basic}}</td>
-        <td valign="middle"><span>{{contract.unit.type.type_full}} - {{contract.unit.city}}<br>{{contract.unit.address}}, {{contract.unit.zip_code}} {{contract.unit.city}}</span></td>
-        <td valign="middle">{%for inspector in contract.inspector.all%} <span title="{{inspector.industry}}"> {{inspector}} <br></span> {%endfor%}</td>
+        <td align="center" valign="middle" class="text-center">{%if contract.end_date%}{{contract.end_date|date:"d.m.Y"}} r.{%else%}{{contract.end_date|default_if_none:'---'}}{%endif%}</td>
+        <td align="center" valign="middle" class="text-center" title="{{contract.legal_basic.legal_basic_text}}">{{contract.legal_basic.act}} - {{contract.legal_basic}}</td>
+        <td valign="middle"><span>{{contract.unit.type.type_full}} - {{contract.unit.city}}<br><small>{{contract.unit.address}}, {{contract.unit.zip_code}} {{contract.unit.city}}</small></span></td>
+        <td valign="middle">{%for inspector in contract.inspector.all%}<small title="{{inspector.industry}}">{{inspector}}</small>{%endfor%}</td>
         <td align="right" valign="middle">
-            <a class="mx-2" href="{% url 'contracts:show_contract_auction' contract.id %}"><button type="button" class="btn btn-outline-primary icon-color">
-                    <i class="bi bi-eye"></i></button></a>
-            <a class="mx-2" href="{% url 'contracts:edit_contract_auction' contract.id %}"><button type="button" class="btn btn-outline-primary icon-color">
-                    <i class="bi bi-pencil-square"></i></button></a>
+            <a class="col m-2" href="{% url 'contracts:show_contract_auction' contract.id %}"><button type="button" class="btn btn-outline-primary icon-color"><i class="bi bi-eye"></i></button></a>
+            <a class="col m-2" href="{% url 'contracts:edit_contract_auction' contract.id %}"><button type="submit" class="btn btn-outline-primary icon-color"><i class="bi bi-pencil-square"></i></button></a>
         </td>
     </tr>
     {%endfor%}
@@ -110,7 +108,7 @@
         </ul>
     </nav>
     {%endif%}
-
+</div>
 <script>
      document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-invoices").classList.remove("active");

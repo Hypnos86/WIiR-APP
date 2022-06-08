@@ -152,7 +152,7 @@ def edit_invoice_sell(request, id):
 
 @login_required
 def make_verification(request):
-    invoices_buy = InvoiceBuy.objects.all().order_by("-date_receipt")
+    invoices_buy = InvoiceBuy.objects.all().order_by("date_of_payment")
     query = "Wyczyść"
     search = "Szukaj"
 

@@ -56,7 +56,7 @@
             <td class="text-center" valign="middle"><span>{{contractor.city}}</span></td>
             <td align="right" valign="middle">
                 {%if contractor.information%}
-                <button type="submit" class="btn btn-outline-success mx-2" onclick="openModal()"><i
+                <button type="button" data-url="{% url 'contractors:show_information' contractor.id %}" class="btn btn-outline-success mx-2" onclick="openModal(this)"><i
                         class="bi bi-info-lg"></i>
                 </button>
                 {%endif%}
@@ -112,29 +112,24 @@
     {%endif%}
 </div>
 <!-- Modal -->
-{%for contractor in contractors%}
-<div class="modal fade" id="informationModal" data-url="{% url 'contractors:show_information' contractor.id %}">
+<div class="modal fade" id="informationModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
 
         </div>
     </div>
 </div>
-{%endfor%}
 <script>
      document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-invoices").classList.remove("active");
      document.getElementById("button-contracts").classList.remove("active");
      document.getElementById("button-contractors").classList.add("active");
      document.getElementById("button-investments").classList.remove("active");
-     // definicja funkcji otwierającej modal
-        // będzie uruchamiana na event "onclick"
-        function openModal(){
-            var url = $("#informationModal").data("url");
+        function openModal(button){
+            var url = $(button).data("url");
             $("#informationModal .modal-content").load(url);
             $("#informationModal").modal("show");
         }
-
         function submitForm(){
             $("#submitButton").closest("form").submit();
         }

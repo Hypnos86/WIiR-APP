@@ -50,10 +50,10 @@
         {% for invoice in invoices %}
         <tr class="my-table-tr">
             <td align="center" valign="middle" scope="row"><span class="text-center"></span></td>
-            <td align="center" valign="middle"><span>{{invoice.date|date:"d.m.Y"}}</span></td>
+            <td align="center" valign="middle"><span>{{invoice.date|date:"d.m.Y"}} r.</span></td>
             <td align="center" valign="middle"><span>{{invoice.no_invoice|default_if_none:''}}</span></td>
             <td align="center" valign="middle"><span>{{invoice.sum|intcomma}} zł</span></td>
-            <td valign="middle"><span>{{invoice.date_of_payment|date:"d.m.Y"}}</span></td>
+            <td align="center" valign="middle"><span>{{invoice.date_of_payment|date:"d.m.Y"}} r.</span></td>
             <td align="center" valign="middle"><span>{{invoice.period_from|date:"m.Y"}} - {{invoice.period_to|date:"m.Y"}}</span>
             </td>
             <td valign="middle"><span>{{invoice.contractor}}</span></td>
@@ -61,7 +61,7 @@
             <td align="center" valign="middle"><span>{{invoice.creator}}</span></td>
             <td align="right" width="120">
                 {%if invoice.information%}
-                <button type="submit" class="btn btn-outline-success mx-2" onclick="openModal()"><i
+                <button type="button" data-url="{% url 'invoices:show_info_sell' invoice.id %}" class="btn btn-outline-success mx-2" onclick="openModal(this)"><i
                         class="bi bi-info-lg"></i>
                 </button>
                 {%endif%}
@@ -118,30 +118,25 @@
 </nav>
 {%endif%}
 <!-- Modal -->
-{% for invoice in invoices %}
-<div class="modal fade" id="info_sell_Modal" data-url="{% url 'invoices:show_info_sell' invoice.id %}">
+<div class="modal fade" id="info_sell_Modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
 
         </div>
     </div>
 </div>
-{%endfor%}
 <script>
      document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-invoices").classList.add("active");
      document.getElementById("button-contracts").classList.remove("active");
      document.getElementById("button-contractors").classList.remove("active");
-      // definicja funkcji otwierającej modal
-        // będzie uruchamiana na event "onclick"
-        function openModal(){
-            var url = $("#info_sell_Modal").data("url");
+        function openModal(button){
+            var url = $(button).data("url");
             $("#info_sell_Modal .modal-content").load(url);
             $("#info_sell_Modal").modal("show");
         }
         function submitForm(){
             $("#submitButton").closest("form").submit();
         }
-
 </script>
 {%endblock%}

@@ -5,7 +5,7 @@
 {%block content%}
 <section class="row">
     <div class="col-md-1">
-        <div class="moj-button-left"><a href="{%url 'invoices:buy_invoices_list'%}">
+        <div class="moj-button-left py-3"><a href="{%url 'invoices:buy_invoices_list'%}">
             <button type="button" class="btn btn-outline-primary my-btn"><span
                     class="bi bi-chevron-compact-left">Cofnij</span>
             </button>
@@ -19,39 +19,50 @@
         </div>
     </div>
 </section>
-    <div class="row my-4">
-        <div class="col-md-4">
-            <p class="my-4 py-2"><span>Liczba faktur: </span><span class="badge text-white info badge-pill">{%if query%}{{invoices_buy_sum}}{%else%}{{invoices_buy_sum}}{%endif%}</span>
-            </p>
-        </div>
-        <form class="row col-md-4">
-            <div class="col-md-5">
-                <div class="">
-                    <label class="control-label" for="from">Data płatności od</label>
-                    <div class=" ">
-                        <input type="date" name="from" class="form-control" id="from">
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-5">
-                <div class="">
-                    <label class="control-label" for="to">Data płatności do</label>
-                    <div class=" ">
-                        <input type="date" name="to" class="form-control" id="to">
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-outline-primary my-btn mt-4">{{query}}{{search}}</button>
-            </div>
-        </form>
-        <div class="col-md-4"></div>
+<div class="row my-4">
+    <div class="col-md-4">
+        <p class="my-4 py-2"><span>Liczba faktur: </span><span class="badge text-white info badge-pill">{%if query%}{{invoices_buy_sum}}{%else%}{{invoices_buy_sum}}{%endif%}</span>
+        </p>
     </div>
+    <form class="row col-md-4">
+        <div class="col-md-5">
+            <div class="">
+                <label class="control-label" for="from">Data płatności od</label>
+                <div class=" ">
+                    <input type="date" name="from" class="form-control" id="from">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="">
+                <label class="control-label" for="to">Data płatności do</label>
+                <div class=" ">
+                    <input type="date" name="to" class="form-control" id="to">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-outline-primary my-btn mt-4">{{query}}{{search}}</button>
+        </div>
+    </form>
 
 <div class="row my-5">
-    <div class="row">
-        {%if query%}
-        <div class="col-md-6"><span>Zakres weryfikacji: {{date_from}} - {{date_to}}</span>
+    {%if query%}
+    <div class="container col-5">
+        <h4 class="mb-4 text-center">Zakres weryfikacji: {{date_from}} - {{date_to}}</h4>
+        <div>
+            {% regroup invoices by date_of_payment as list_payment %}
+            {% for date_of_payment in list_payment %}
+            <div class="col-12 mt-4 mb-1 d-flex justify-content-between">
+                <strong class="">Płatności na {{date_of_payment.grouper}} r. (liczba faktur) (suma zł.) </strong>
+                <div><span class="badge text-white info badge-pill my-badge-pill">5</span></div>
+            </div>
+            <ul class="list-group">
+            {% for invoice in date_of_payment.list %}
+                <li class="list-group-item list-group-item-action list-group-item-light">{{invoice.no_invoice}} z dnia {{invoice.date_issue}} - (Kwota: {%if invoice.sum%}{{invoice.sum|intcomma}} zł.{%else%}{{invoice.sum|default_if_none:'0 zł.'}}{%endif%}) - {{invoice.contractor.name}} </li>
+            {% endfor %}
+            </ul>
+            {% endfor %}
         </div>
         {%endif%}
     </div>
@@ -61,6 +72,8 @@
      document.getElementById("button-invoices").classList.add("active");
      document.getElementById("button-contracts").classList.remove("active");
      document.getElementById("button-contractors").classList.remove("active");
+
+
 
 
 

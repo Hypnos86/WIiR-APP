@@ -18,13 +18,13 @@
     <form method="post">
         {%csrf_token%}
         <div class="row">
-            <div class="col-md-8 my-1">{{contractor_form.name|bootstrap}}</div>
-            <div class="col-md-4 my-1">{{contractor_form.no_contractor|bootstrap}}</div>
-            <div class="col-md-9 my-1">{{contractor_form.address|bootstrap}}</div>
-            <div class="col-md-3 my-1">{{contractor_form.nip|bootstrap}}</div>
-            <div class="col-md-6 my-1">{{contractor_form.zip_code|bootstrap}}</div>
-            <div class="col-md-6 my-1">{{contractor_form.city|bootstrap}}</div>
-            <div class="col-md-12 my-1">{{contractor_form.information|bootstrap}}</div>
+            <div class="col-md-8 my-2">{{contractor_form.name|bootstrap}}</div>
+            <div class="col-md-4 my-2">{{contractor_form.no_contractor|bootstrap}}</div>
+            <div class="col-md-9 my-2">{{contractor_form.address|bootstrap}}</div>
+            <div class="col-md-3 my-2">{{contractor_form.nip|bootstrap}}</div>
+            <div class="col-md-6 my-2">{{contractor_form.zip_code|bootstrap}}</div>
+            <div class="col-md-6 my-2">{{contractor_form.city|bootstrap}}</div>
+            <div class="col-md-12 my-2">{{contractor_form.information|bootstrap}}</div>
             <div class="col-md-12 moj-button-right my-4">
                 <button type="submit" class="btn btn-outline-primary my-btn">{%if new%}<span class="bi bi-save2"> Dodaj kontrachenta</span>{%else%}<span
                         class="bi bi-save2"> Zapisz zmiany</span>{%endif%}

@@ -74,7 +74,7 @@
             </td>
             <td align="right" width="100">
                 {%if invoice.information%}
-                <button type="submit" class="btn btn-outline-success mx-2" onclick="openModal()"><i
+                <button type="button" data-url="{% url 'invoices:show_info_buy' invoice.id %}" class="btn btn-outline-success mx-2" onclick="openModal(this) "><i
                         class="bi bi-info-lg"></i>
                 </button>
                 {%endif%}
@@ -131,24 +131,19 @@
 </nav>
 {%endif%}
 <!-- Modal -->
-{% for invoice in invoices %}
-<div class="modal fade" id="info_buy_Modal" data-url="{% url 'invoices:show_info_buy' invoice.id %}">
+<div class="modal fade" id="info_buy_Modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-
         </div>
     </div>
 </div>
-{%endfor%}
 <script>
      document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-invoices").classList.add("active");
      document.getElementById("button-contracts").classList.remove("active");
      document.getElementById("button-contractors").classList.remove("active");
-       // definicja funkcji otwierającej modal
-        // będzie uruchamiana na event "onclick"
-        function openModal(){
-            var url = $("#info_buy_Modal").data("url");
+        function openModal(button){
+            var url = $(button).data("url");
             $("#info_buy_Modal .modal-content").load(url);
             $("#info_buy_Modal").modal("show");
         }

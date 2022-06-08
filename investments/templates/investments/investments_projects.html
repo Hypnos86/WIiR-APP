@@ -33,13 +33,13 @@
         </div>
     </div>
 </div>
-<div class="">
-    <table class="table table-hover my-table">
+<div class="col">
+    <table class="table table-hover my-table mt-2">
         <thead>
         <tr class="my-table-tr text-center">
             <th align="center" valign="middle" width="50" scope="col">L.p.</th>
             <th align="center" valign="middle" width="150" scope="col">Okres realizacji</th>
-            <th align="center" valign="middle" width="420" scope="col">Nazwa zadania</th>
+            <th align="center" valign="middle" width="520" scope="col">Nazwa zadania</th>
             <th align="center" valign="middle" width="350" scope="col">Jednostka</th>
             <th align="center" valign="middle" width="180" scope="col">WKI</th>
             <th align="center" valign="middle" width="350" scope="col">Inspektor wiodący</th>
@@ -56,12 +56,12 @@
             <td align="center" valign="middle" scope="row" title="Zadanie w trakcie realizacji"><span>{{project.date_of_acceptance|date:'m.Y'}}</span></td>
             {%endif%}
             <td valign="middle"><span>{{project.project_title}}</span></td>
-            <td class="left" valign="middle"><span>{{project.unit.type.type_full}} - {{project.unit.city}}<br>{{project.unit.address}}, {{project.unit.zip_code}} {{project.unit.city}} </span></td>
+            <td class="left" valign="middle"><span>{{project.unit.type.type_full}} - {{project.unit.city}}<br><small>{{project.unit.address}}, {{project.unit.zip_code}} {{project.unit.city}}</small></span></td>
             <td align="right" valign="middle" >{%if project.investment_cost_estimate_value%}<span class="px-3">{{project.investment_cost_estimate_value|intcomma}} zł.</span>{%endif%}</td>
-            <td valign="middle">{%for worker in project.worker.all%}<span class="" title="{{worker.industry}}">{{worker}}, </span>{%endfor%}</td>
+            <td valign="middle">{%for worker in project.worker.all%}<small class="" title="{{worker.industry}}">{{worker}}, </small>{%endfor%}</td>
             <td align="right"  valign="middle">
-                <a class="mx=2" href="{%url 'investments:show_project' project.id%}"><button type="submit" class="btn btn-outline-primary icon-color"><i class="bi bi-eye"></i></button></a>
-                <a class="mx-2" href="{%url 'investments:edit_project' project.id%}"><button type="submit" class="btn btn-outline-primary icon-color"><i class="bi bi-pencil-square"></i></button></a>
+                <a class="m-2" href="{%url 'investments:show_project' project.id%}"><button type="button" class="btn btn-outline-primary icon-color"><i class="bi bi-eye"></i></button></a>
+                <a class="m-2" href="{%url 'investments:edit_project' project.id%}"><button type="submit" class="btn btn-outline-primary icon-color"><i class="bi bi-pencil-square"></i></button></a>
             </td>
         </tr>
         {%endfor%}
