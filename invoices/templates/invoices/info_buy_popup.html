@@ -1,0 +1,19 @@
+{% load static %}
+{% load bootstrap %}
+{% load humanize %}
+{% block content %}
+<div class="container ">
+<form class="m-2 p-4" method="get" action="{% url 'invoices:show_info_buy' id %}">
+    {%csrf_token%}
+    <div class="container">
+        <div><span class="text-muted">Faktura nr: </span><span>{{invoice.no_invoice}} z dnia {{invoice.date_issue|date:'d.n.Y'}}</span></div>
+        <div><span class="text-muted">Kwota: </span><span>{%if invoice.sum%}{{invoice.sum|intcomma}} zł. {%else%}{{invoice.sum|default_if_none:'---'}}{%endif%}</span></div>
+        <div><span class="text-muted">Kontrahent: </span><span>{{invoice.contractor.name}}</span></div>
+        <div class="my-4"></div>
+        <div><span class="text-muted">Informacje: </span><p>{{invoice.information}}</p></div>
+
+    </div>
+</form>
+</div>
+{%endblock%}
+

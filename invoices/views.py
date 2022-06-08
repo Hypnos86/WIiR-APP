@@ -31,9 +31,10 @@ def buy_invoices_list(request):
         invoicesbuy = invoices_buy.filter(no_invoice__icontains=q) | invoices_buy.filter(
             sum__startswith=q) | invoices_buy.filter(contractor__name__icontains=q) | invoices_buy.filter(
             contractor__no_contractor__startswith=q) | invoices_buy.filter(
-            invoice_items__county__name__icontains=q)
+            invoiceitems__county__name__icontains=q)
+        invoices_buy_filter_sum = len(invoicesbuy)
         return render(request, 'invoices/invoices_buy_list.html', {"invoices": invoicesbuy,
-                                                                   "invoices_buy_sum": invoices_buy_sum,
+                                                                   "invoices_buy_sum": invoices_buy_filter_sum,
                                                                    "query": query, "year": year,
                                                                    })
     else:
@@ -44,6 +45,12 @@ def buy_invoices_list(request):
 
 
 @login_required
+def show_info_buy(request, id):
+    invoice = get_object_or_404(InvoiceBuy, pk=id)
+    return render(request, 'invoices/info_buy_popup.html', {'invoice': invoice, 'id': id})
+
+
+@login_required
 def new_invoice_buy(request):
     invoice_buy_form = InvoiceBuyForm(request.POST or None)
     context = {'invoice': invoice_buy_form, 'new': True}
@@ -51,9 +58,25 @@ def new_invoice_buy(request):
     if request.method == 'POST':
         if invoice_buy_form.is_valid():
             instance = invoice_buy_form.save(commit=False)
-            instance.author = request.author
+            instance.author = request.user
             instance.save()
-            return redirect('invoices/buy_invoices_list')
+            return redirect('invoices:buy_invoices_list')
+    return render(request, 'invoices/invoice_buy_form.html', context)
+
+
+@login_required
+def edit_invoice_buy(request, id):
+    invoice_buy_edit = get_object_or_404(InvoiceBuy, pk=id)
+    invoice_buy_form = InvoiceBuyForm(request.POST or None, instance=invoice_buy_edit)
+
+    context = {'invoice': invoice_buy_form,
+               'new': False}
+
+    if invoice_buy_form.is_valid():
+        instance = invoice_buy_form.save(commit=False)
+        instance.author = request.user
+        instance.save()
+        return redirect('invoices:buy_invoices_list')
 
     return render(request, 'invoices/invoice_buy_form.html', context)
 
@@ -79,46 +102,52 @@ def sell_invoices_list(request):
             contractor__no_contractor__startswith=q) | invoicessell.filter(
             county__name__icontains=q) | invoicessell.filter(
             creator__creator__icontains=q)
-        return render(request, "invoices/invoicessell_list.html", {"invoices": invoicessell,
-                                                                   "invoicessellsum": invoicessellsum,
-                                                                   "query": query, "year": year,
-                                                                   "creators": creators})
+        invoices_sell_filter_sum = len(invoicessell)
+        return render(request, "invoices/invoices_sell_list.html", {"invoices": invoicessell,
+                                                                    "invoicessellsum": invoices_sell_filter_sum,
+                                                                    "query": query, "year": year,
+                                                                    "creators": creators})
     else:
-        return render(request, "invoices/invoicessell_list.html", {"invoices": invoicessell_list,
-                                                                   "invoicessellsum": invoicessellsum,
-                                                                   "search": search, "year": year,
-                                                                   "creators": creators})
+        return render(request, "invoices/invoices_sell_list.html", {"invoices": invoicessell_list,
+                                                                    "invoicessellsum": invoicessellsum,
+                                                                    "search": search, "year": year,
+                                                                    "creators": creators})
+
+
+@login_required
+def show_info_sell(request, id):
+    invoice = get_object_or_404(InvoiceSell, pk=id)
+    return render(request, 'invoices/info_sell_popup.html', {'invoice': invoice, 'id': id})
 
 
 @login_required
 def new_invoice_sell(request):
-    invoicesell_form = InvoiceSellForm(request.POST or None)
-    context = {'invoicesell_form': invoicesell_form,
-               'new': True}
+    invoice_sell_form = InvoiceSellForm(request.POST or None)
+    context = {'invoice': invoice_sell_form, 'new': True}
 
     if request.method == 'POST':
-        if invoicesell_form.is_valid():
-            instance = invoicesell_form.save(commit=False)
+        if invoice_sell_form.is_valid():
+            instance = invoice_sell_form.save(commit=False)
             instance.author = request.user
             instance.save()
             return redirect('invoices:sell_invoices_list')
-
-    return render(request, 'invoices/invoicesell_form.html', context)
+    return render(request, 'invoices/invoice_sell_form.html', context)
 
 
 @login_required
 def edit_invoice_sell(request, id):
-    invoicesell_edit = get_object_or_404(InvoiceSell, pk=id)
-    invoicessell_form = InvoiceSellForm(request.POST or None, instance=invoicesell_edit)
+    invoice_sell_edit = get_object_or_404(InvoiceSell, pk=id)
+    invoice_sell_form = InvoiceSellForm(request.POST or None, instance=invoice_sell_edit)
 
-    context = {'invoicesell_form': invoicessell_form,
+    context = {'invoice': invoice_sell_form,
                'new': False}
 
-    if invoicessell_form.is_valid():
-        invoicesell_edit.save()
+    if invoice_sell_form.is_valid():
+        instance = invoice_sell_form.save(commit=False)
+        instance.author = request.user
+        instance.save()
         return redirect('invoices:sell_invoices_list')
-
-    return render(request, 'invoices/invoicesell_form.html', context)
+    return render(request, 'invoices/invoice_sell_form.html', context)
 
 
 @login_required

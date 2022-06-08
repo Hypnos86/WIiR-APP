@@ -51,11 +51,11 @@
             <th align="center" valign="middle" width="40" scope="col">L.p.</th>
             <th align="center" valign="middle" width="40" scope="col">Data wpływu</th>
             <th align="center" valign="middle" width="40" scope="col">Data wystawienia</th>
-            <th align="center" valign="middle" width="100" scope="col">Nr. faktury</th>
-            <th align="center" valign="middle" width="200" scope="col">Kontrahent</th>
+            <th align="center" valign="middle" width="120" scope="col">Nr. faktury</th>
+            <th align="center" valign="middle" width="350" scope="col">Kontrahent</th>
             <th align="center" valign="middle" width="100" scope="col">Kwota</th>
             <th align="center" valign="middle" width="40" scope="col">Data płatności</th>
-            <th align="center" valign="middle" width="50" scope="col">Osoba zapisująca</th>
+            <th align="center" valign="middle" width="50" scope="col">Zapisujący</th>
 
         </tr>
         </thead>
@@ -63,17 +63,22 @@
         {% for invoice in invoices %}
         <tr class="my-table-tr">
             <td align="center" valign="middle" scope="row"><span class="text-center"></span></td>
-            <td align="center" valign="middle"><span>{{invoice.date_receipt|date:"d.m.Y"}}</span></td>
-            <td align="center" valign="middle"><span>{{invoice.date_issue|date:"d.m.Y"}}</span></td>
+            <td align="center" valign="middle"><span>{{invoice.date_receipt|date:"d.m.Y"}} r.</span></td>
+            <td align="center" valign="middle"><span>{{invoice.date_issue|date:"d.m.Y"}} r.</span></td>
             <td align="left" valign="middle"><span>{{invoice.no_invoice|default_if_none:''}}</span></td>
-            <td valign="middle"><span>{{invoice.contractor}}</span></td>
-            <td align="center" valign="middle"><span>{{invoice.sum|intcomma}} zł</span></td>
-            <td align="center" valign="middle"><span>{{invoice.date_of_payment|date:"d.m.Y"}}</span></td>
+            <td valign="middle"><span title="SWOP ID: {{invoice.contractor.no_contractor}}">{{invoice.contractor.name}}. <small>Adres: {{invoice.contractor.address}}, {{invoice.contractor.zip_code}} {{invoice.contractor.city}}</small></span></td>
+            <td align="center" valign="middle"><span>{%if invoice.sum%}{{invoice.sum|intcomma}} zł. {%else%} {{invoice.sum|default_if_none:'---'}} {%endif%}</span></td>
+            <td align="center" valign="middle"><span>{{invoice.date_of_payment|date:"d.m.Y"}} r.</span></td>
             <td align="center" valign="middle" title="{{invoice.author.first_name}} {{invoice.author.last_name}}">
                 {{invoice.author}}
             </td>
-            <td width="120" class="text-center">
-                <a href="{%url 'invoices:edit_invoice_sell' invoice.id %}">
+            <td align="right" width="100">
+                {%if invoice.information%}
+                <button type="submit" class="btn btn-outline-success mx-2" onclick="openModal()"><i
+                        class="bi bi-info-lg"></i>
+                </button>
+                {%endif%}
+                <a class="mx-1" href="{%url 'invoices:edit_invoice_buy' invoice.id %}">
                     <button type="submit" class="btn btn-outline-primary icon-color mx-1 "><i
                             class="bi bi-pencil-square"></i></button>
                 </a>
@@ -125,14 +130,30 @@
     </ul>
 </nav>
 {%endif%}
+<!-- Modal -->
+{% for invoice in invoices %}
+<div class="modal fade" id="info_buy_Modal" data-url="{% url 'invoices:show_info_buy' invoice.id %}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+{%endfor%}
 <script>
      document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-invoices").classList.add("active");
      document.getElementById("button-contracts").classList.remove("active");
      document.getElementById("button-contractors").classList.remove("active");
-
-
-
-
+       // definicja funkcji otwierającej modal
+        // będzie uruchamiana na event "onclick"
+        function openModal(){
+            var url = $("#info_buy_Modal").data("url");
+            $("#info_buy_Modal .modal-content").load(url);
+            $("#info_buy_Modal").modal("show");
+        }
+        function submitForm(){
+            $("#submitButton").closest("form").submit();
+        }
 </script>
 {%endblock%}

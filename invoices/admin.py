@@ -44,5 +44,5 @@ class InvoiceItemsAdmin(admin.ModelAdmin):
 
 @admin.register(InvoiceBuy)
 class InvoiceBuyAdmin(admin.ModelAdmin):
-    list_display = ['date_issue', 'date_receipt', 'no_invoice', 'contractor', 'creation_date',
+    list_display = ['date_receipt', 'date_issue', 'no_invoice', 'sum', 'contractor', 'creation_date',
                     'author']

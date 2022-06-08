@@ -5,7 +5,8 @@
 {% block content %}
 <div class="moj-button-left"><a href="{%url 'invoices:menu_invoices'%}">
     <button type="button" class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span>
-    </button></a>
+    </button>
+</a>
 </div>
 <section class="w-100 pb-4 d-flex justify-content-center align-items-center flex-column">
     <div>
@@ -22,7 +23,8 @@
     <h4>Ewidencja faktur sprzedażowych za {{year}} rok</h4>
     <div class="row">
         <div class="col-md-3">
-            <p><span>Liczba wystawionych faktur: </span><span class="badge text-white info badge-pill">{{invoicessellsum}}</span></p>
+            <p><span>Liczba wystawionych faktur: </span><span class="badge text-white info badge-pill">{{invoicessellsum}}</span>
+            </p>
         </div>
         <div class="col-md-9 moj-button-right"><a id="button-nowa-umowa" href="{%url 'invoices:new_invoice_sell'%}">
             <button class="btn btn-outline-primary button-choise-contracts my-btn">Nowa faktura</button>
@@ -42,7 +44,6 @@
             <th align="center" valign="middle" width="200" scope="col">Kontrahent</th>
             <th align="center" valign="middle" width="120" scope="col">Powiat</th>
             <th align="center" valign="middle" width="100" scope="col">Pracownik wystawiający</th>
-            <th align="center" valign="middle" width="250" scope="col">Informacje</th>
         </tr>
         </thead>
         <tbody>
@@ -58,9 +59,13 @@
             <td valign="middle"><span>{{invoice.contractor}}</span></td>
             <td align="center" valign="middle">{{invoice.county}}</td>
             <td align="center" valign="middle"><span>{{invoice.creator}}</span></td>
-            <td align="center" valign="middle"><span>{{invoice.information}}</span></td>
-            <td width="120" class="text-center">
-                <a href="{%url 'invoices:edit_invoice_sell' invoice.id %}">
+            <td align="right" width="120">
+                {%if invoice.information%}
+                <button type="submit" class="btn btn-outline-success mx-2" onclick="openModal()"><i
+                        class="bi bi-info-lg"></i>
+                </button>
+                {%endif%}
+                <a class="mx-2" href="{%url 'invoices:edit_invoice_sell' invoice.id %}">
                     <button type="submit" class="btn btn-outline-primary icon-color mx-1 "><i
                             class="bi bi-pencil-square"></i></button>
                 </a>
@@ -112,10 +117,31 @@
     </ul>
 </nav>
 {%endif%}
+<!-- Modal -->
+{% for invoice in invoices %}
+<div class="modal fade" id="info_sell_Modal" data-url="{% url 'invoices:show_info_sell' invoice.id %}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+{%endfor%}
 <script>
      document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-invoices").classList.add("active");
      document.getElementById("button-contracts").classList.remove("active");
      document.getElementById("button-contractors").classList.remove("active");
+      // definicja funkcji otwierającej modal
+        // będzie uruchamiana na event "onclick"
+        function openModal(){
+            var url = $("#info_sell_Modal").data("url");
+            $("#info_sell_Modal .modal-content").load(url);
+            $("#info_sell_Modal").modal("show");
+        }
+        function submitForm(){
+            $("#submitButton").closest("form").submit();
+        }
+
 </script>
 {%endblock%}
