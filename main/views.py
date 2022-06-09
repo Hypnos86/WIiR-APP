@@ -23,7 +23,7 @@ def telephone_list(request):
 
 @login_required
 def welcome(request):
-    commands = Command.objects.all()
+    commands = Command.objects.all().order_by('create_date')[:4]
     date = datetime.date.today().today()
     context = {'date': date,
                'commands': commands}
