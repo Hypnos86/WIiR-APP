@@ -35,7 +35,7 @@
                 <div class="row mt-2">
                     <div class="col-md-6 moj-button-left">
                         <a>
-                            <button class="btn btn-outline-primary my-btn"><span
+                            <button type="button" data-url="{%url 'invoices:make_invoice_elements' %}" class="btn btn-outline-primary my-btn"><span
                                     class="bi bi-plus-circle"> Elementy</span>
                             </button>
                         </a>
@@ -50,4 +50,20 @@
         </div>
     </form>
 </div>
+<div class="modal fade" id="elementsModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+<script>
+     function openModal(button){
+            var url = $(button).data("url");
+            $("#elementsModal .modal-content").load(url);
+            $("#elementsModal").modal("show");
+        }
+        function submitForm(){
+            $("#submitButton").closest("form").submit();
+        }
+</script>
 {%endblock%}

@@ -46,25 +46,29 @@
         </div>
     </form>
 
-<div class="row my-5">
-    {%if query%}
-    <div class="container col-5">
-        <h4 class="mb-4 text-center">Zakres weryfikacji: {{date_from}} - {{date_to}}</h4>
-        <div>
-            {% regroup invoices by date_of_payment as list_payment %}
-            {% for date_of_payment in list_payment %}
-            <div class="col-12 mt-4 mb-1 d-flex justify-content-between">
-                <strong class="">Płatności na {{date_of_payment.grouper}} r. (liczba faktur) (suma zł.) </strong>
-                <div><span class="badge text-white info badge-pill my-badge-pill">5</span></div>
+    <div class="row my-5">
+        {%if query%}
+        <div class="container col-5">
+            <h4 class="mb-4 text-center">Zakres weryfikacji: {{date_from}} - {{date_to}}</h4>
+            <div>
+                {% regroup invoices by date_of_payment as list_payment %}
+                {% for date_of_payment in list_payment %}
+                <div class="col-12 mt-4 mb-1 d-flex justify-content-between">
+                    <strong class="">Płatności na {{date_of_payment.grouper}} r. (liczba faktur) (suma zł.) </strong>
+                    <div><span class="badge text-white info badge-pill my-badge-pill">5</span></div>
+                </div>
+                <ul class="list-group">
+                    {% for invoice in date_of_payment.list %}
+                    <li class="list-group-item list-group-item-action list-group-item-light">{{invoice.no_invoice}} z
+                        dnia {{invoice.date_issue}} - (Kwota: {%if invoice.sum%}{{invoice.sum|intcomma}}
+                        zł.{%else%}{{invoice.sum|default_if_none:'0 zł.'}}{%endif%}) - {{invoice.contractor.name}}
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endfor %}
             </div>
-            <ul class="list-group">
-            {% for invoice in date_of_payment.list %}
-                <li class="list-group-item list-group-item-action list-group-item-light">{{invoice.no_invoice}} z dnia {{invoice.date_issue}} - (Kwota: {%if invoice.sum%}{{invoice.sum|intcomma}} zł.{%else%}{{invoice.sum|default_if_none:'0 zł.'}}{%endif%}) - {{invoice.contractor.name}} </li>
-            {% endfor %}
-            </ul>
-            {% endfor %}
+            {%endif%}
         </div>
-        {%endif%}
     </div>
 </div>
 <script>
@@ -72,21 +76,6 @@
      document.getElementById("button-invoices").classList.add("active");
      document.getElementById("button-contracts").classList.remove("active");
      document.getElementById("button-contractors").classList.remove("active");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 </script>
 {%endblock%}

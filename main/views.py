@@ -8,14 +8,6 @@ def current_year():
     return datetime.date.today().year
 
 
-def year_choises():
-    year = []
-    for y in range(2000, datetime.date.today().year):
-        year.append(y)
-        year.sort(reverse=True)
-    return year
-
-
 # Create your views here.
 @login_required
 def telephone_list(request):

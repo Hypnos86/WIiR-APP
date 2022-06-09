@@ -1,5 +1,5 @@
 from django.forms import ModelForm, DateInput, Textarea
-from invoices.models import InvoiceSell, InvoiceBuy
+from invoices.models import InvoiceSell, InvoiceBuy, InvoiceItems
 
 
 class DateField(DateInput):
@@ -40,3 +40,10 @@ class InvoiceBuyForm(ModelForm):
             'date_of_payment': DateField(),
             'information': Textarea(attrs={'rows': 3})
         }
+
+
+class InvoiceItemsForm(ModelForm):
+    class Meta:
+        model = InvoiceItems
+        fields = '__all__'
+        label = {'invoice_id': 'Faktura', 'account': 'Konto', 'county': 'Powiat', 'sum': 'Kwota'}

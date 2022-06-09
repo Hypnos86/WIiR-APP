@@ -35,7 +35,7 @@ class InvoiceSell(models.Model):
     class Meta:
         verbose_name = "Faktura sprzedaży"
         verbose_name_plural = "Faktury - sprzedaż"
-        ordering = ['date']
+        ordering = ['-date']
 
     date = models.DateField("Data wystawienia")
     no_invoice = models.CharField("Nr. faktury", max_length=11)
@@ -61,7 +61,7 @@ class InvoiceBuy(models.Model):
     class Meta:
         verbose_name = "Faktura - kupno"
         verbose_name_plural = "Faktury - kupno"
-        ordering = ['date_receipt']
+        ordering = ['-date_receipt']
 
     date_receipt = models.DateField("Data wpływu")
     date_issue = models.DateField("Data wystawienia")
@@ -97,4 +97,4 @@ class InvoiceItems(models.Model):
     sum = models.DecimalField("Kwota [zł]", max_digits=10, decimal_places=2, null=True, blank=True)
 
     def __str__(self):
-        return f'{self.account}{self.county} - {self.sum} zł.'
+        return f'{self.account} - {self.county} - {self.sum} zł.'

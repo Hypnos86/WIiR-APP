@@ -3,53 +3,40 @@
 {%block title%}Faktury{%endblock%}
 {%block content%}
 <div>
-<h2 class="text-center mb-5">Ewidencje faktur</h2>
+    <h2 class="text-center mb-5">Ewidencje faktur</h2>
 </div>
 <div class="container mt-3 ">
-    <div class="row">
-        <div class="col-md-4 my-div-style py-5">
-            <div class="chose-invoices mb-5">
-                <a href="{%url 'invoices:sell_invoices_list'%}">
-                    <button class="btn btn-outline-primary button-chose-invoices my-btn">Sprzedaż<br>(rok: {{now_year}})</button>
-                </a>
-            </div>
-            <div class="text-center">
-                {% for year in all_year%}
-                <a>
-                    <button class="btn btn-outline-dark m-2">{{year}}</button>
-                </a>
-                {%endfor%}
-            </div>
-        </div>
+    <div class="container row d-flex justify-content-around">
         <div class="col-md-4">
-        </div>
-
-        <div class="col-md-4 my-div-style py-5">
+            <section class="container my-div-style py-5">
+                <div class="chose-invoices mb-5">
+                    <a href="{%url 'invoices:sell_invoices_list'%}"><button type="button" class="btn btn-outline-primary button-chose-invoices my-btn">Sprzedaż<br>(rok: {{now_year}})</button></a>
+                </div>
+                <div class="text-center">
+                    {%for year in all_year_sell%}
+                    <a href="{%url 'invoices:sell_invoices_list_archive' year %}"><button type="button" class="btn btn-outline-dark m-2" title="Rok wystawienia faktur">{{year}}</button></a>
+                    {%endfor%}
+                </div>
+                </section>
+            </div>
+        <div class="col-md-4">
+            <section class="container my-div-style py-5">
             <div class="chose-invoices mb-5">
-                <a href="{%url 'invoices:buy_invoices_list'%}">
-                    <button class="btn btn-outline-primary button-chose-invoices my-btn">Wydatki - gr.6<br>(rok:
-                        {{now_year}})
-                    </button>
-                </a>
+                <a href="{%url 'invoices:buy_invoices_list'%}"><button type="button" class="btn btn-outline-primary button-chose-invoices my-btn">Wydatki - gr.6<br>(rok:{{now_year}})</button></a>
             </div>
             <div class="text-center">
-                {% for year in all_year%}
-                <a>
-                    <button class="btn btn-outline-dark m-2">{{year}}</button>
-                </a>
+                {% for year in all_year_buy%}
+                <a href="{%url 'invoices:buy_invoices_list_archive' year%}"><button type="button" name="year_buy" class="btn btn-outline-dark m-2" title="Rok wpływu faktur">{{year}}</button></a>
                 {%endfor%}
             </div>
+           </section>
         </div>
     </div>
-    <script>
+</div>
+<script>
      document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-invoices").classList.add("active");
      document.getElementById("button-contracts").classList.remove("active");
      document.getElementById("button-contractors").classList.remove("active");
-
-
-
-
-
-    </script>
-    {%endblock%}
+</script>
+{%endblock%}

@@ -1,17 +1,29 @@
+import datetime
+
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
-from invoices.models import InvoiceSell, Creator, InvoiceBuy
-from invoices.forms import InvoiceSellForm, InvoiceBuyForm
-from main.views import current_year, year_choises
+from invoices.models import InvoiceSell, Creator, InvoiceBuy, InvoiceItems
+from invoices.forms import InvoiceSellForm, InvoiceBuyForm, InvoiceItemsForm
+from main.views import current_year
 
 
 # Create your views here.
 @login_required
 def menu_invoices(request):
     now_year = current_year()
-    all_year = year_choises()
-    return render(request, 'invoices/invoices_menu.html', {"now_year": now_year, "all_year": all_year})
+    # Filtrowanie faktur sprzedażowych
+    all_year_sell = InvoiceSell.objects.all().values('date__year').exclude(date__year=now_year)
+    year_sell_set = set([year['date__year'] for year in all_year_sell])
+    year_sell_list = sorted(year_sell_set, reverse=True)
+    # Filtrowanie faktur przychodzących
+    all_year_buy = InvoiceBuy.objects.all().values('date_receipt__year').exclude(date_receipt__year=now_year)
+    year_buy_set = set([year['date_receipt__year'] for year in all_year_buy])
+    year_buy_list = sorted(year_buy_set, reverse=True)
+
+    return render(request, 'invoices/invoices_menu.html',
+                  {"now_year": now_year, 'all_year_sell': year_sell_list,
+                   'all_year_buy': year_buy_list})
 
 
 @login_required
@@ -48,6 +60,16 @@ def buy_invoices_list(request):
 def show_info_buy(request, id):
     invoice = get_object_or_404(InvoiceBuy, pk=id)
     return render(request, 'invoices/info_buy_popup.html', {'invoice': invoice, 'id': id})
+
+
+@login_required
+def buy_invoices_list_archive(request, year):
+    invoices_buy = InvoiceBuy.objects.all().filter(date_receipt__year=year).order_by("-date_receipt")
+    invoices_buy_sum = len(invoices_buy)
+    context = {'invoices': invoices_buy,
+               'year': year,
+               'invoices_buy_sum': invoices_buy_sum}
+    return render(request, 'invoices/invoices_buy_list_archive.html', context)
 
 
 @login_required
@@ -88,7 +110,6 @@ def sell_invoices_list(request):
     search = "Szukaj"
     invoicessellsum = len(invoicessell)
     year = current_year()
-    creators = Creator.objects.all()
     q = request.GET.get("q")
 
     paginator = Paginator(invoicessell, 40)
@@ -105,19 +126,48 @@ def sell_invoices_list(request):
         invoices_sell_filter_sum = len(invoicessell)
         return render(request, "invoices/invoices_sell_list.html", {"invoices": invoicessell,
                                                                     "invoicessellsum": invoices_sell_filter_sum,
-                                                                    "query": query, "year": year,
-                                                                    "creators": creators})
+                                                                    "query": query, "year": year})
     else:
         return render(request, "invoices/invoices_sell_list.html", {"invoices": invoicessell_list,
                                                                     "invoicessellsum": invoicessellsum,
-                                                                    "search": search, "year": year,
-                                                                    "creators": creators})
+                                                                    "search": search, "year": year})
 
 
 @login_required
 def show_info_sell(request, id):
     invoice = get_object_or_404(InvoiceSell, pk=id)
     return render(request, 'invoices/info_sell_popup.html', {'invoice': invoice, 'id': id})
+
+
+@login_required
+def sell_invoices_list_archive(request, year):
+    invoices_sell = InvoiceSell.objects.all().filter(date__year=year).order_by("-date")
+    invoices_sell_sum = len(invoices_sell)
+    query = "Wyczyść"
+    search = "Szukaj"
+    q = request.GET.get("q")
+
+    paginator = Paginator(invoices_sell, 40)
+    page_number = request.GET.get('page')
+    invoicessell_list = paginator.get_page(page_number)
+
+    if q:
+        invoices_sell = invoices_sell.filter(no_invoice__icontains=q) | invoices_sell.filter(
+            sum__startswith=q) | invoices_sell.filter(date__startswith=q) | invoices_sell.filter(
+            contractor__name__icontains=q) | invoices_sell.filter(
+            contractor__no_contractor__startswith=q) | invoices_sell.filter(
+            county__name__icontains=q) | invoices_sell.filter(
+            creator__creator__icontains=q)
+        invoices_sell_filter_sum = len(invoices_sell)
+        return render(request, 'invoices/invoices_sell_list_archive.html', {"invoices": invoices_sell,
+                                                                            "invoices_sell_sum": invoices_sell_filter_sum,
+                                                                            "query": query, "year": year,
+                                                                            })
+    else:
+        return render(request, 'invoices/invoices_sell_list_archive.html', {"invoices": invoicessell_list,
+                                                                            "invoices_sell_sum": invoices_sell_sum,
+                                                                            "search": search, "year": year,
+                                                                            })
 
 
 @login_required
@@ -148,6 +198,17 @@ def edit_invoice_sell(request, id):
         instance.save()
         return redirect('invoices:sell_invoices_list')
     return render(request, 'invoices/invoice_sell_form.html', context)
+
+
+@login_required
+def make_invoice_elements(request):
+    element_form = InvoiceItemsForm(request.POST or None)
+    context = {'element_form': element_form}
+
+    if request.methot == 'POST':
+        if element_form.is_valid():
+            element_form.save()
+    return render(request, 'invoices/elements_popup.html', context)
 
 
 @login_required
