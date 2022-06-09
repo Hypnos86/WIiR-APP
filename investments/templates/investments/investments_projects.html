@@ -60,8 +60,8 @@
             <td align="right" valign="middle" >{%if project.investment_cost_estimate_value%}<span class="px-3">{{project.investment_cost_estimate_value|intcomma}} zł.</span>{%endif%}</td>
             <td valign="middle">{%for worker in project.worker.all%}<small class="" title="{{worker.industry}}">{{worker}}, </small>{%endfor%}</td>
             <td align="right"  valign="middle">
-                <a class="m-2" href="{%url 'investments:show_project' project.id%}"><button type="button" class="btn btn-outline-primary icon-color"><i class="bi bi-eye"></i></button></a>
-                <a class="m-2" href="{%url 'investments:edit_project' project.id%}"><button type="submit" class="btn btn-outline-primary icon-color"><i class="bi bi-pencil-square"></i></button></a>
+                <a class="m-2" href="{%url 'investments:show_project' project.id%}"><button type="button" class="btn btn-outline-primary icon-color my-1"><i class="bi bi-eye"></i></button></a>
+                <a class="m-2" href="{%url 'investments:edit_project' project.id%}"><button type="submit" class="btn btn-outline-primary icon-color my-1"><i class="bi bi-pencil-square"></i></button></a>
             </td>
         </tr>
         {%endfor%}

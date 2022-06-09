@@ -1,5 +1,4 @@
 import datetime
-
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
@@ -221,14 +220,24 @@ def make_verification(request):
     date_from = request.GET.get("from")
     date_to = request.GET.get("to")
 
+    if date_from:
+        date_from_obj = datetime.datetime.strptime(date_from, '%Y-%m-%d')
+    else:
+        date_from_obj = ''
+
+    if date_to:
+        date_to_obj = datetime.datetime.strptime(date_to, '%Y-%m-%d')
+    else:
+        date_to_obj = ''
+
     if date_from and date_to:
         invoicesbuy = invoices_buy.filter(date_of_payment__range=[date_from, date_to])
         invoices_buy_sum = len(invoicesbuy)
         return render(request, 'invoices/verification.html', {'invoices': invoicesbuy,
                                                               'invoices_buy_sum': invoices_buy_sum,
                                                               'query': query, 'year': year,
-                                                              'date_from': date_from,
-                                                              'date_to': date_to})
+                                                              'date_from': date_from_obj,
+                                                              'date_to': date_to_obj})
     else:
         invoices_buy_sum = 0
         return render(request, 'invoices/verification.html', {
