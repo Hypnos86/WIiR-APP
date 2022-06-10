@@ -106,6 +106,10 @@ class ContractImmovables(models.Model):
         return f'Umowa z dnia {self.date} ({self.contractor})'
 
 
+def upload_scan_annex_contract_immovables(instance, filename):
+    return f'contracts_immovables/{instance.contract_immovables.no_contract}/{filename}'
+
+
 class AnnexImmovables(models.Model):
     class Meta:
         verbose_name = 'Aneks'
@@ -115,7 +119,7 @@ class AnnexImmovables(models.Model):
     contract_immovables = models.ForeignKey(ContractImmovables, on_delete=models.CASCADE,
                                             verbose_name='umowa',
                                             related_name='annex')
-    scan_annex = models.FileField(upload_to=upload_scan_contract_immovables, null=True, verbose_name='Skan aneks')
+    scan_annex = models.FileField(upload_to=upload_scan_annex_contract_immovables, null=True, verbose_name='Skan aneks')
     date_annex = models.DateField('Data aneksu', null=True)
     creation_date = models.DateTimeField('Data utworzenia', auto_now_add=True)
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)

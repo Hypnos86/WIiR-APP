@@ -107,13 +107,13 @@ def edit_contractsimmovables(request, id):
 @login_required
 def add_annex_immovables(request, id):
     contractsimmovables_edit = get_object_or_404(ContractImmovables, pk=id)
-    annex_form = AnnexImmovablesForm(request.POST or None, request.FILES or None)
-    context = {'annex_form': annex_form,
+    add_annex_form = AnnexImmovablesForm(request.POST or None, request.FILES or None)
+    context = {'annex_form': add_annex_form,
                'contract_id': id}
 
     if request.method == 'POST':
-        if annex_form.is_valid():
-            instance = annex_form.save(commit=False)
+        if add_annex_form.is_valid():
+            instance = add_annex_form.save(commit=False)
             instance.author = request.user
             instance.contract_immovables = contractsimmovables_edit
             instance.save()
