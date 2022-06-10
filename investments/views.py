@@ -5,6 +5,7 @@ from investments.models import Project
 from investments.forms import ProjectForm
 from units.models import Unit
 from contracts.models import ContractAuction
+from main.models import Employer
 from gallery.models import Gallery
 
 
@@ -57,6 +58,7 @@ def investment_projects_list(request):
 @login_required
 def add_new_project(request):
     project = ProjectForm(request.POST or None, request.FILES or None)
+    project.fields['worker'].queryset = Employer.objects.filter(industry_specialist=True)
     units = Unit.objects.all()
 
     context = {'project_form': project,
@@ -78,6 +80,7 @@ def add_new_project(request):
 def edit_project(request, id):
     project_edit = get_object_or_404(Project, pk=id)
     project_form = ProjectForm(request.POST or None, request.FILES or None, instance=project_edit)
+    project_form.fields['worker'].queryset = Employer.objecys.all().filter(industry_specialist=True)
     units = Unit.objects.all()
 
     context = {'project_form': project_form,
