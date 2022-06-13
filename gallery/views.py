@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from gallery.models import Gallery, Photo
 from gallery.forms import GalleryForm, PhotoForm
@@ -24,7 +25,7 @@ def add_gallery(request):
             instance = gallery_form.save(commit=False)
             instance.author = request.user
             instance.save()
-            return redirect('gallery:gallery_list')
+            return redirect('gallery:gallery_details', instance.id)
     return render(request, 'gallery/gallery_form.html', context)
 
 
@@ -33,13 +34,16 @@ def gallery_details(request, gallery_id):
     gallery = Gallery.objects.get(pk=gallery_id)
     photos = gallery.photo.all()
     photocount = len(photos)
-    return render(request, 'gallery/gallery.html', {'gallery': gallery, 'photocount': photocount})
+    photo_form = PhotoForm()
 
+    if request.method == 'POST':
+        photo_form = request.FILES.getlist('images')
+        for img in photo_form:
+            instance = photos.objects.create(photo_form=img)
+            instance.save(commit=False)
+            instance.gallery = gallery
+            instance.save()
+        return redirect('gallery:gallery_details', gallery.id)
 
-@login_required
-def add_photo_to_gallery(request, id):
-    gallery = Gallery.objects.get(pk=id)
-    photo = PhotoForm()
-    context = {'gallery': gallery,
-               'photo': photo}
-    return render(request, 'gallery/add_photo.html', context)
+    return render(request, 'gallery/gallery.html',
+                  {'gallery': gallery, 'photocount': photocount, 'photo_form': photo_form})

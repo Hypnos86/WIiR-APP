@@ -24,3 +24,4 @@ class PhotoForm(ModelForm):
         labels = {'gallery': 'Galeria',
                   'src': 'Zdjęcie',
                   'add_date': 'Data dodania'}
+        exclude = ['gallery']

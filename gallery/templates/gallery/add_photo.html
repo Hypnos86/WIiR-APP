@@ -1,10 +1,85 @@
+{%load static%}
+{%load bootstrap%}
+{%load thumbnail%}
+{%load static%}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="{%static 'main/bootstrap/css/bootstrap.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap.rtl.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap.rtl.min.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-grid.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-grid.min.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-grid.rtl.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-grid.rtl.min.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-reboot.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-reboot.min.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-reboot.rtl.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-reboot.rtl.min.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-utilities.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-utilities.min.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-utilities.rtl.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap-utilities.rtl.min.css'%}" rel="stylesheet">
+    <link href="{%static 'main/css/style.css'%}" rel="stylesheet">
+    <!-- Bootstrap JS -->
+    <script src="{%static 'main/bootstrap/js/bootstrap.bundle.js'%}"></script>
+    <!--    jquery-->
+    <script src="{%static 'main/bootstrap/jquery/jquery-3.6.0.min.js'%}"></script>
+    <!-- icon -->
+    <link rel="shortcut icon" href="{%static 'main/media/logo.ico'%}" type="x-icon">
+    <!--    ICON SOURCE-->
+    <link rel="stylesheet" href="{%static 'main/bootstrap-icons/bootstrap-icons.css'%}">
+
+    <title>Galeria - {{gallery.name}}</title>
 </head>
 <body>
+<div class="container footer body header-top">
+    <div class="row">
+        <div class="col">
+            <h4 class="text-center"> {{gallery.project.project_title}} - {{gallery.name}} ({{photocount}})</h4>
+            <section class="photo_gallery">
+                {%for photo in gallery.photo.all%}
+                {%thumbnail photo.src '300x300' as im%}
+                <a href="{{photo.src.url}}"><img src="{{im.url}}" alt="" title=""></a>
+                {%endthumbnail%}
+                {%endfor%}
+            </section>
+        </div>
+    </div>
+    <form id="gallery_id" method="POST" action=".">
+        {{photo_form|bootstrap}}
+        <input type="submit" value="Dodaj zdjęcie" class="btn ">
+    </form>
+</div>
+<section class="fixed-bottom">
+    <!-- Footer -->
+    <footer class="text-center text-white" style="background-color: #0a4275;">
+        <!-- Grid container -->
+        <div class="container p-4 pb-0">
+            <!-- Section: CTA -->
+            {%if user.is_authenticated%}
+            <section class="">
+                <p class="d-flex justify-content-center align-items-center"><a class="text-decoration-none link-light"
+                                                                               href="{%url 'main:telephone_list'%}"
+                                                                               target="_blank"><span>Spis telefonów</span></a>
+                </p>
+            </section>
+            {%endif%}
+            <!-- Section: CTA -->
+        </div>
+        <!-- Grid container -->
 
+        <!-- Copyright -->
+        <div class="text-center p-1" style="background-color: rgba(0, 0, 0, 0.2);">
+            <span>© 2021 Wydział inwestycji i Remontów KWP w Poznaniu</span>
+        </div>
+        <!-- Copyright -->
+    </footer>
+    <!-- Footer -->
+</section>
 </body>
 </html>

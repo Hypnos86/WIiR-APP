@@ -1,4 +1,5 @@
 {%load static%}
+{%load bootstrap%}
 {%load thumbnail%}
 {%load static%}
 <!DOCTYPE html>
@@ -36,19 +37,35 @@
     <title>Galeria - {{gallery.name}}</title>
 </head>
 <body>
-<div class="container footer body header-top">
+<div class="body footer mt-5">
     <div class="row">
-        <div class="col">
-            <h4 class="text-center"> {{gallery.project.project_title}} - {{gallery.name}} ({{photocount}})</h4>
-            <section class="photo_gallery">
-                {%for photo in gallery.photo.all%}
-                {%thumbnail photo.src '300x300' as im%}
-                <a href="{{photo.src.url}}"><img src="{{im.url}}" alt="" title=""></a>
-                {%endthumbnail%}
-                {%endfor%}
-            </section>
+        <div class="col-10">
+            <h4 class="text-center"> {{gallery.project.project_title}} - {{gallery.name}} r. ({{photocount}})</h4>
+        </div>
+        <div class="col-md-2">
+                <button type="button" class="btn btn-outline-danger"><span class="bi bi-x-lg" onclick="top.close()"> Zamkni</span>
+                </button>
         </div>
     </div>
+    <div class="row">
+        <div class="container my-5 col-md-9">
+            <div class="photo_gallery">
+                {%for photo in gallery.photo.all%}
+                {%thumbnail photo.src '400x350' as im%}
+                <a class="m-4" href="{{photo.src.url}}"><img src="{{im.url}}" alt="" title=""></a>
+                {%endthumbnail%}
+                {%endfor%}
+            </div>
+        </div>
+        <div class="col-md-2 my-5">
+            <form class="mt-5" method="POST" enctype="multipart/form-data" action=".">
+                {%csrf_token%}
+                <input type="file" name="photo_form" multiple>
+                <input class="btn btn-outline-primary my-btn my-4" type="submit" value="Dodaj zdjęcie">
+            </form>
+        </div>
+    </div>
+
 </div>
 <section class="fixed-bottom">
     <!-- Footer -->
