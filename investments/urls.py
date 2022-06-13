@@ -1,6 +1,6 @@
 from django.urls import path
 from investments.views import make_important_task_investments, investment_projects_list, add_new_project, edit_project, \
-    show_project, add_contract_to_project
+    show_project, show_galleries_popup ,add_contract_to_project
 
 app_name = 'investments'
 urlpatterns = [
@@ -9,5 +9,6 @@ urlpatterns = [
     path('nowe_zadanie_inw/', add_new_project, name='add_new_project'),
     path('edycja_zadania_inw/<int:id>', edit_project, name='edit_project'),
     path('podglad_zadania_inw/<int:id>', show_project, name='show_project'),
+    path("geleria_projektu/<int:id>", show_galleries_popup, name='show_galleries_popup'),
     path('podepnii_umowe/<int:id>', add_contract_to_project, name='add_contract_to_project')
 ]

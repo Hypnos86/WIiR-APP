@@ -19,17 +19,17 @@
 <div class="container">
     <div class="row">
         {%for gallery in galleries%}
-        <div class="col-lg-2 col-md-2 mb-4 my-4">
+        <div class="col-md-2 mb-4 my-4 ">
             <div class="card h-100">
                 {%thumbnail gallery.photo.first.src '200x150' crop='center' as im%}
                 <img class="card-img-top" src={{im.url}} alt="">
                 {%endthumbnail%}
-                <div class=" text-center">
-                    <small class="card-title text-center"><b>{{gallery.name}} r.</b></small>
+                <div class=" text-center my-2">
+                    <small class="card-title"><b>{{gallery.name}} r.</b></small>
                 </div>
                 <div class="card-footer text-center">
                     <a href="{%url 'gallery:gallery_details' gallery.id%}" class="btn btn-outline-primary my-btn"
-                       target="_blank">Pokaż</a>
+                       target="_blank" title="{{gallery.project}}">Pokaż</a>
                 </div>
             </div>
         </div>

@@ -80,7 +80,7 @@ def add_new_project(request):
 def edit_project(request, id):
     project_edit = get_object_or_404(Project, pk=id)
     project_form = ProjectForm(request.POST or None, request.FILES or None, instance=project_edit)
-    project_form.fields['worker'].queryset = Employer.objecys.all().filter(industry_specialist=True)
+    project_form.fields['worker'].queryset = Employer.objects.all().filter(industry_specialist=True)
     units = Unit.objects.all()
 
     context = {'project_form': project_form,
@@ -101,14 +101,19 @@ def edit_project(request, id):
 def show_project(request, id):
     project = Project.objects.get(pk=id)
     contracts = project.contract_auction.all()
-    galleries = project.gallery.all()
-
     context = {'project_form': project,
                'contracts': contracts,
-               'galleries': galleries,
                }
-
     return render(request, 'investments/show_project.html', context)
+
+
+@login_required
+def show_galleries_popup(request, id):
+    project = Project.objects.get(pk=id)
+    galleries = project.gallery.all()
+    context = {'id': id,
+               'galleries': galleries}
+    return render(request, "investments/show_galleries_popup.html", context)
 
 
 @login_required

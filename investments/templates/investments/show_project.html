@@ -5,7 +5,7 @@
 {% load thumbnail%}
 {% block title %} {{project_form.project_title}} {% endblock %}
 {% block content %}
-<div class="row" xmlns="http://www.w3.org/1999/html">
+<div class="row">
     <div class="row col-md-9">
         <div class="col-md-1 moj-button-left"><a href="{%url 'investments:investment_projects_list'%}">
             <button class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span>
@@ -19,10 +19,10 @@
         <div class="container">
             <div class="row my-3">
                 <div class="d-flex justify-content-between">
-                    <section class="container col-md-3 mx-1">
+                    <div class="container col-md-3 mx-1">
                         <div class="card col-md-12">
                             <div class="card-body">
-                                <h5 class="card-title bi bi-building">{%if project_form.unit.type.type_full == 'Inne'%} {%else%} {{project_form.unit.type.type_full}} {%endif%}
+                                <h5 class="card-title bi bi-building pb-2 ">{%if project_form.unit.type.type_full == 'Inne'%} {%else%} {{project_form.unit.type.type_full}} {%endif%}
                                     {{project_form.unit.city}}</h5>
                                 <h6 class="card-subtitle mb-2 text-muted">Powiat: {{project_form.unit.county}}
                                     ({{project_form.unit.county.swop_id}})</h6>
@@ -31,11 +31,11 @@
                                 <small class="card-text">Trwały zarząd: {{project_form.unit.manager}} </small>
                             </div>
                         </div>
-                    </section>
-                    <section class="container col-md-3 mx-1">
+                    </div>
+                    <div class="container col-md-3 mx-1">
                         <div class="card col-md-12">
                             <div class="card-body">
-                                <h5 class="card-title bi bi-journal-check">Program inwestycji</h5>
+                                <h5 class="card-title bi bi-journal-check pb-2">Program inwestycji</h5>
                                 <h6 class="card-subtitle mb-2 text-muted">Data akceptacji programu:
                                     {{project_form.date_of_acceptance}} r.</h6>
                                 <h6 class="card-subtitle mb-2 text-muted">L.dz.:
@@ -54,12 +54,12 @@
                                 {%endif%}
                             </div>
                         </div>
-                    </section>
+                    </div>
                     {%if project_form.realized%}
-                    <section class="container col-md-2 mx-1">
+                    <div class="container col-md-2 mx-1">
                         <div class="card col-md-12 ">
                             <div class="card-body">
-                                <h5 class="card-title bi bi-journal-bookmark">Rozliczenie</h5>
+                                <h5 class="card-title bi bi-journal-bookmark pb-2">Rozliczenie</h5>
                                 {%if project_form.date_of_settlement%}
                                 <h6 class="card-subtitle mb-2 mt-1 text-muted">Data rozliczenia:
                                     {{project_form.date_of_settlement}} r.</h6>
@@ -77,25 +77,25 @@
                             </div>
                         </div>
 
-                    </section>
+                    </div>
                     {%endif%}
-                    <section class="container col-md-4 mx-1">
+                    <div class="container col-md-4 mx-1">
                         <div class="card col-md-12">
                             <div class="card-body">
-                                <h5 class="card-title bi bi-person-lines-fill">Majster</h5>
+                                <h5 class="card-title bi bi-person-lines-fill pb-2">Majster</h5>
                                 {%for worker in project_form.worker.all%}
                                 <h6 class="card-subtitle mb-2 text-muted">{{worker.name}} {{worker.last_name}} - <small>{{worker.industry}}</small>
                                 </h6>{%endfor%}
                             </div>
                         </div>
-                    </section>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="container">
             <div class="row my-2">
                 <div class="d-flex justify-content-between">
-                    <section class="container col-md-6 mx-1">
+                    <div class="container col-md-6 mx-1">
                         <div class="card col-md-12">
                             <div class="card-body">
                                 <h5 class="card-title bi bi-safe">Źródło finansowania</h5>
@@ -105,55 +105,50 @@
                                 <small class="card-subtitle text-muted">{{project_form.source_financing}}</small>
                             </div>
                         </div>
-                    </section>
-                    <section class="container col-md-6 mx-1">
+                    </div>
+                    {%if project_form.information%}
+                    <div class="container col-md-5 mx-1">
                         <div class="card col-md-12">
-                            <div class="card-body mx-2">
+                            <div class="card-body mx-1">
                                 <h5 class="card-title bi bi-info-square">Informacje</h5>
-                                <small class="card-subtitle text-muted">{{project_form.source_financing}}</small>
+                                <small class="card-subtitle text-muted">{{project_form.information}}</small>
                             </div>
                         </div>
-                    </section>
+                    </div>
+                    {%endif%}
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-3 text-center">
-        <h6 class="bi bi-folder"> Umowy realizujące zadanie</h6>
-        {%for contract in contracts%}
-        <div class="my-4">
-            <a href="/media/{{contract.scan}}" target="_blank"><button class="btn btn-outline-primary button-chose-invoices my-btn"><i class="bi bi-arrow-return-right"><span> {{contract.no_contract}} z dnia {{contract.date|date:"d.m.Y"}}</span></i></button>
-                </a>
-            </div>
-
-        {%endfor%}
+    <div class="col-md-3 text-center d-flex align-content-between flex-wrap">
+        <div class="col-md-12">
+            <h6 class="bi bi-folder text-center"> Umowy realizujące zadanie</h6>
+            {%for contract in contracts%}
+                <div class="my-4">
+                    <a href="/media/{{contract.scan}}" target="_blank">
+                        <button class="btn btn-outline-primary button-chose-invoices my-btn">
+                            <i class="bi bi-arrow-return-right">
+                                <span> {{contract.no_contract}} z dnia {{contract.date|date:"d.m.Y"}}</span>
+                            </i>
+                        </button>
+                    </a>
+                </div>
+            {%endfor%}
+        </div>
+        <div class="col-md-12 mb-5">
+            <a class="btn btn-outline-primary my-btn" onclick="openModal()"><span class="bi bi-images"> Galeria</span></a>
+        </div>
     </div>
 </div>
 <hr class="my-4">
-{%if galleries%}
-<div class="container">
-    <div class="col-md-12">
-        <h4 class="text-center">Galeria zdjęć</h4>
-    </div>
-    <div class="row">
-    {%for gallery in galleries%}
-    <div class="col-lg-2 col-md-2 mb-4 my-4">
-        <div class="card h-100">
-            {%thumbnail gallery.photo.first.src '200x150' crop='center' as im%}
-            <img class="card-img-top" src={{im.url}} alt="">
-            {%endthumbnail%}
-            <div class=" text-center">
-                <small class="card-title text-center"><b>{{gallery.name}} r.</b></small>
-            </div>
-            <div class="card-footer text-center">
-                <a href="{%url 'gallery:gallery_details' gallery.id%}" class="btn btn-outline-primary my-btn" target="_blank">Pokaż</a>
-            </div>
+<!-- Modal -->
+<div class="modal fade" id="galleryModal" data-url="{%url 'investments:show_galleries_popup' project_form.id%}">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+
         </div>
     </div>
-    {%endfor%}
-    </div>
 </div>
-{%endif%}
 <script>
      document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-invoices").classList.remove("active");
@@ -162,5 +157,13 @@
      document.getElementById("button-investments").classList.add("active");
      document.getElementById("button-projects").classList.add("active");
      document.getElementById("button-contractors").classList.remove("active");
+      function openModal(){
+            var url = $(galleryModal).data("url");
+            $("#galleryModal .modal-content").load(url);
+            $("#galleryModal").modal("show");
+        }
+        function submitForm(){
+            $("#submitButton").closest("form").submit();
+        }
 </script>
 {%endblock%}
