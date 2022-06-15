@@ -28,6 +28,9 @@
                 {%endif%}
                 <li class="list-group-item"><span class="text-muted">Okres gwarancji: </span><span>{{contract.guarantee_period}}</span></li>
                 <li class="list-group-item"><span class="text-muted">Okres rękojmi: </span><span>{{contract.warranty_period}}</span></li>
+                {%if contract.security_percent%}
+                <li class="list-group-item"><span class="text-muted">Procent zabezpieczenia: </span><span>{{contract.security_percent}} %</span></li>
+                {%endif%}
                 {%if contract.security_sum%}
                 <li class="list-group-item"><span class="text-muted">Kwota zabezpieczenia: </span><span>{{contract.security_sum}}</span></li>
                 {%endif%}

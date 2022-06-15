@@ -100,9 +100,11 @@ def edit_project(request, id):
 @login_required
 def show_project(request, id):
     project = Project.objects.get(pk=id)
+    galleries = project.gallery.all()
     contracts = project.contract_auction.all()
     context = {'project_form': project,
                'contracts': contracts,
+               'galleries': galleries
                }
     return render(request, 'investments/show_project.html', context)
 

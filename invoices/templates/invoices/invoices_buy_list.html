@@ -75,12 +75,12 @@
             </td>
             <td align="right" width="100">
                 {%if invoice.information%}
-                <button type="button" data-url="{% url 'invoices:show_info_buy' invoice.id %}" class="btn btn-outline-success mx-2" onclick="openModal(this) "><i
+                <button type="button" data-url="{% url 'invoices:show_info_buy' invoice.id %}" class="btn btn-outline-success mx-2 my-1" onclick="openModal(this) "><i
                         class="bi bi-info-lg"></i>
                 </button>
                 {%endif%}
                 <a class="mx-1" href="{%url 'invoices:edit_invoice_buy' invoice.id %}">
-                    <button type="submit" class="btn btn-outline-primary icon-color mx-1 "><i
+                    <button type="submit" class="btn btn-outline-primary icon-color mx-1 my-1"><i
                             class="bi bi-pencil-square"></i></button>
                 </a>
             </td>

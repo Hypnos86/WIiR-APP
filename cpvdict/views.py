@@ -65,9 +65,7 @@ def type_work_list(request):
         sum = 0
         for order in orders:
             sum += order.sum
-            print(sum)
         sum_rb[unit] = sum
-        # sum_rb.append({'id': unit.id, 'sum': sum })
 
     year = current_year()
     item = round(float(limit.limit) * 1.23, 2)

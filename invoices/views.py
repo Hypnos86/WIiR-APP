@@ -231,9 +231,17 @@ def make_verification(request):
         date_to_obj = ''
 
     if date_from and date_to:
-        invoicesbuy = invoices_buy.filter(date_of_payment__range=[date_from, date_to])
-        invoices_buy_sum = len(invoicesbuy)
-        return render(request, 'invoices/verification.html', {'invoices': invoicesbuy,
+        invoices_buy_list = invoices_buy.filter(date_of_payment__range=[date_from, date_to])
+        invoices_buy_sum = len(invoices_buy_list)
+
+        # for dates in invoices_buy_list:
+        #     sum = 0
+        #     len_list = 0
+        #     for object in dates:
+        #         sum += object.sum
+
+
+        return render(request, 'invoices/verification.html', {'invoices': invoices_buy_list,
                                                               'invoices_buy_sum': invoices_buy_sum,
                                                               'query': query, 'year': year,
                                                               'date_from': date_from_obj,

@@ -4,6 +4,7 @@ from django.core.paginator import Paginator
 from contracts.models import ContractImmovables, ContractAuction, AnnexContractAuction
 from contracts.forms import ContractImmovablesForm, ContractAuctionForm, AnnexImmovablesForm, AnnexContractAuctionForm
 from units.models import Unit
+from main.models import Employer
 
 
 # Create your views here.
@@ -165,6 +166,7 @@ def menu_contracts_auction(request):
 @login_required
 def new_contract_auction(request):
     contract_auction_form = ContractAuctionForm(request.POST or None, request.FILES or None)
+    contract_auction_form.fields['worker'].queryset = Employer.objects.all().filter(industry_specialist=True)
     units = Unit.objects.all()
     context = {'contract_auction_form': contract_auction_form,
                'units': units,
@@ -193,6 +195,7 @@ def edit_contract_auction(request, id):
     contract_auction_edit = get_object_or_404(ContractAuction, pk=id)
     contract_auction_form = ContractAuctionForm(request.POST or None, request.FILES or None,
                                                 instance=contract_auction_edit)
+    contract_auction_form.fields['worker'].queryset = Employer.objects.all().filter(industry_specialist=True)
     units = Unit.objects.all()
 
     context = {'contract_auction_form': contract_auction_form,
