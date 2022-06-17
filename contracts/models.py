@@ -26,7 +26,7 @@ class LegalBasic(models.Model):
     legal_basic_text = models.TextField(null=False, verbose_name='Tekst paragrafu')
 
     def __str__(self):
-        return f'{self.legal_basic}'
+        return f'{self.act} - {self.legal_basic}'
 
 
 class Guarantee(models.Model):

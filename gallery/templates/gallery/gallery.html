@@ -52,7 +52,7 @@
             <div class="photo_gallery">
                 {%for photo in gallery.photo.all%}
                 {%thumbnail photo.src '400x350' as im%}
-                <a class="m-4" href="{{photo.src.url}}"><img src="{{im.url}}" alt="" title=""></a>
+                <a href="{{photo.src.url}}"><img class="img-thumbnail m-3" src="{{im.url}}" alt="" title=""></a>
                 {%endthumbnail%}
                 {%endfor%}
             </div>
@@ -60,7 +60,7 @@
         <div class="col-md-2 my-5">
             <form class="mt-5" method="POST" enctype="multipart/form-data" action=".">
                 {%csrf_token%}
-                <input type="file" name="photo_form" multiple>
+                <input type="file" name="images" multiple>
                 <input class="btn btn-outline-primary my-btn my-4" type="submit" value="Dodaj zdjęcie">
             </form>
         </div>

@@ -27,11 +27,20 @@ def welcome(request):
     date = datetime.date.today().today()
     context = {'date': date,
                'commands': commands}
-    return render(request, 'main/welcome.html', context)
+    return render(request, 'main/home.html', context)
 
 
+@login_required
 def give_access_to_modules(request):
     access = AccessModule.objects.all()
+    commands = Command.objects.all()
 
-    context = {'access': access}
+    context = {'access': access,
+               'commands': commands}
     return render(request, 'main/access_modules.html', context)
+
+
+@login_required
+def make_command_list(request):
+    commands = Command.objects.all()
+    return render(request, 'main/command.html', {'commands': commands})

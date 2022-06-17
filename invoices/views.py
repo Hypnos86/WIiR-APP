@@ -1,6 +1,7 @@
 import datetime
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.db.models import Sum
 from django.shortcuts import render, redirect, get_object_or_404
 from invoices.models import InvoiceSell, Creator, InvoiceBuy, InvoiceItems
 from invoices.forms import InvoiceSellForm, InvoiceBuyForm, InvoiceItemsForm
@@ -215,7 +216,6 @@ def make_verification(request):
     invoices_buy = InvoiceBuy.objects.all().order_by("date_of_payment")
     query = "Wyczyść"
     search = "Szukaj"
-
     year = current_year()
     date_from = request.GET.get("from")
     date_to = request.GET.get("to")
@@ -233,22 +233,24 @@ def make_verification(request):
     if date_from and date_to:
         invoices_buy_list = invoices_buy.filter(date_of_payment__range=[date_from, date_to])
         invoices_buy_sum = len(invoices_buy_list)
+        verification_all_dict = invoices_buy_list.aggregate(Sum('sum'))
+        verification_all = round(verification_all_dict['sum__sum'], 2)
 
-        # for dates in invoices_buy_list:
-        #     sum = 0
-        #     len_list = 0
-        #     for object in dates:
-        #         sum += object.sum
-
+        #     # for dates in invoices_buy_list:
+        #     #     sum = 0
+        #     #     len_list = 0
+        #     #     for object in dates:
+        #     #         sum += object.sum
 
         return render(request, 'invoices/verification.html', {'invoices': invoices_buy_list,
                                                               'invoices_buy_sum': invoices_buy_sum,
                                                               'query': query, 'year': year,
                                                               'date_from': date_from_obj,
-                                                              'date_to': date_to_obj})
+                                                              'date_to': date_to_obj,
+                                                              'verification_all': verification_all})
     else:
         invoices_buy_sum = 0
         return render(request, 'invoices/verification.html', {
             "invoices_buy_sum": invoices_buy_sum,
-            "search": search, "year": year,
+            "search": search, "year": year
         })

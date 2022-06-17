@@ -37,11 +37,9 @@ def gallery_details(request, gallery_id):
     photo_form = PhotoForm()
 
     if request.method == 'POST':
-        photo_form = request.FILES.getlist('images')
-        for img in photo_form:
-            instance = photos.objects.create(photo_form=img)
-            instance.save(commit=False)
-            instance.gallery = gallery
+        photo_list_post = request.FILES.getlist('images')
+        for img in photo_list_post:
+            instance = Photo.objects.create(src=img, gallery=gallery)
             instance.save()
         return redirect('gallery:gallery_details', gallery.id)
 

@@ -5,25 +5,45 @@
 {%block content%}
 <div class="container">
     {%if user.is_authenticated%}
-
-    <ul class="list-group col-md-4">
-        <li class="list-group-item"><span>Moduł Kontrahenci: </span> {%if user.accessmodule.contractors_module%}<i
-                class="bi bi-check-circle-fill text-success"></i> {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}
-        </li>
-        <li class="list-group-item"><span>Moduł Umowy: </span>{%if user.accessmodule.contracts_immovables_module%}<i
-                class="bi bi-check-circle-fill text-success"></i> {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</li>
-        <li class="list-group-item"><span>Moduł Inwestycje: </span>{%if user.accessmodule.investments_module%}<i
-                class="bi bi-check-circle-fill text-success"></i> {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</li>
-        <li class="list-group-item"><span>Moduł Faktury: </span>{%if user.accessmodule.invoices_module%}<i
-                class="bi bi-check-circle-fill text-success"></i> {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</li>
-        <li class="list-group-item"><span>Moduł Rodzajowość WIiR: </span>{%if user.accessmodule.cpvdict_module%}<i
-                class="bi bi-check-circle-fill text-success"></i> {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</li>
-        <li class="list-group-item"><span>Moduł Ewidencje WIiR - Zespół Mieszkaniowy: </span>{%if user.accessmodule.listregister_float_team_module%}<i
-                class="bi bi-check-circle-fill text-success"></i> {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</li>
-        <li class="list-group-item"><span>Moduł Ewidencje WIiR - Zespół Eksploatacji: </span>{%if user.accessmodule.listregister_exploatation_team_module%}<i
-                class="bi bi-check-circle-fill text-success"></i> {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</li>
-    </ul>
+    <div class="row d-flex justify-content-around">
+        <div class="col-md-4">
+            <h5 class="text-center">Dostęp do modułów</h5>
+            <ul class="list-group">
+                <li class="list-group-item"><span>Moduł Kontrahenci: </span> {%if user.accessmodule.contractors_module%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}
+                </li>
+                <li class="list-group-item"><span>Moduł Umowy: </span>{%if user.accessmodule.contracts_immovables_module%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}
+                </li>
+                <li class="list-group-item"><span>Moduł Inwestycje: </span>{%if user.accessmodule.investments_module%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}
+                </li>
+                <li class="list-group-item"><span>Moduł Faktury: </span>{%if user.accessmodule.invoices_module%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}
+                </li>
+                <li class="list-group-item"><span>Moduł Rodzajowość WIiR: </span>{%if user.accessmodule.cpvdict_module%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}
+                </li>
+                <li class="list-group-item"><span>Moduł Ewidencje WIiR - Zespół Mieszkaniowy: </span>{%if user.accessmodule.listregister_float_team_module%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</li>
+                <li class="list-group-item"><span>Moduł Ewidencje WIiR - Zespół Eksploatacji: </span>{%if user.accessmodule.listregister_exploatation_team_module%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i>
+                    {%endif%}
+                </li>
+            </ul>
+            </div>
+        {%if commands%}
+        <div class="col-md-4">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="{%url 'main:make_command_list'%}"><input type="button" class="btn btn-outline-primary my-btn" value="Polecenia Naczelnika"></a></li>
+            </ul>
+        </div>
+        {%endif%}
+    </div>
     {%else%}
-    Użytkownik anonimowy{%endif%}
+    <ul class="list-group">
+        <li class="list-group-item"><span>Użytkownik anonimowy</span></li>
+    </ul>
+    {%endif%}
 </div>
 {%endblock%}

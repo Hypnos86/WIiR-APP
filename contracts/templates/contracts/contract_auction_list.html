@@ -54,12 +54,12 @@
         <td valign="middle"><span title="SWOP ID: {{contract.contractor.no_contractor}}">{{contract.contractor.name}}<br><small>{{contract.contractor.address}}, {{contract.contractor.zip_code}} {{contract.contractor.city}}</small></span></td>
         <td align="center" valign="middle"><span>{{contract.price|intcomma}} zł.</span></td>
         <td align="center" valign="middle" class="text-center">{%if contract.end_date%}{{contract.end_date|date:"d.m.Y"}} r.{%else%}{{contract.end_date|default_if_none:'---'}}{%endif%}</td>
-        <td align="center" valign="middle" class="text-center" title="{{contract.legal_basic.legal_basic_text}}">{{contract.legal_basic.act}} - {{contract.legal_basic}}</td>
+        <td align="center" valign="middle" class="text-center" title="{{contract.legal_basic.legal_basic_text}}">{{contract.legal_basic}}</td>
         <td valign="middle"><span>{{contract.unit.type.type_full}} - {{contract.unit.city}}<br><small>{{contract.unit.address}}, {{contract.unit.zip_code}} {{contract.unit.city}}</small></span></td>
         <td valign="middle">{%for inspector in contract.inspector.all%}<small title="{{inspector.industry}}">{{inspector}}</small>{%endfor%}</td>
         <td align="right" valign="middle">
-            <a class="col m-2" href="{% url 'contracts:show_contract_auction' contract.id %}"><button type="button" class="btn btn-outline-primary icon-color"><i class="bi bi-eye"></i></button></a>
-            <a class="col m-2" href="{% url 'contracts:edit_contract_auction' contract.id %}"><button type="submit" class="btn btn-outline-primary icon-color"><i class="bi bi-pencil-square"></i></button></a>
+            <a class="col m-2" href="{% url 'contracts:show_contract_auction' contract.id %}"><button type="button" class="btn btn-outline-primary icon-color my-1"><i class="bi bi-eye"></i></button></a>
+            <a class="col m-2" href="{% url 'contracts:edit_contract_auction' contract.id %}"><button type="submit" class="btn btn-outline-primary icon-color my-1"><i class="bi bi-pencil-square"></i></button></a>
         </td>
     </tr>
     {%endfor%}
