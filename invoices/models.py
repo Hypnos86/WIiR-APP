@@ -4,20 +4,15 @@ from units.models import County
 from sourcefinancing.models import FinanceSource
 
 
-# def year_choises():
-#     return [(r, r) for r in range(2019, datetime.date.today().year)]
-#
-#
-# def current_year():
-#     return datetime.date.today().year
+class DocumentTypes(models.Model):
+    class Meta:
+        verbose_name = 'Rodzaj dokumentu księgowego'
+        verbose_name_plural = "Rodzaje dokumentów księgowych"
 
+    type = models.CharField('Typ dokumentu', max_length=20)
 
-# class BudgetYear(models.Model, models.Choices):
-#     class Meta:
-#         verbose_name = "Rok budżetowy"
-#         verbose_name_plural = "Lata budżetowe"
-#
-#     year = models.SmallIntegerField(choices=year_choises, default=current_year)
+    def __str__(self):
+        return f'{self.type}'
 
 
 class Creator(models.Model):
@@ -39,6 +34,8 @@ class InvoiceSell(models.Model):
 
     date = models.DateField("Data wystawienia")
     no_invoice = models.CharField("Nr. faktury", max_length=11)
+    doc_types = models.ForeignKey(DocumentTypes, null=False, blank=False, on_delete=models.CASCADE,
+                                  verbose_name='Rodzaj dokumentu', related_name='invoicesell')
     contractor = models.ForeignKey(Contractor, on_delete=models.CASCADE, verbose_name="Kontrahent",
                                    related_name='invoicesell')
     sum = models.DecimalField("Kwota [zł]", max_digits=10, decimal_places=2, null=True, blank=True)
@@ -66,13 +63,13 @@ class InvoiceBuy(models.Model):
     date_receipt = models.DateField("Data wpływu")
     date_issue = models.DateField("Data wystawienia")
     no_invoice = models.CharField("Nr. faktury", max_length=30)
+    doc_types = models.ForeignKey(DocumentTypes, null=False, blank=False, on_delete=models.CASCADE,
+                                  verbose_name='Rodzaj dokumentu',
+                                  related_name='invoicebuy')
     sum = models.DecimalField('Kwota [zł]', max_digits=10, decimal_places=2, null=True, blank=True)
     date_of_payment = models.DateField("Termin płatności")
     contractor = models.ForeignKey(Contractor, on_delete=models.CASCADE, verbose_name="Kontrahent",
                                    related_name='invoicebuy')
-    period_from = models.DateField("Okres od")
-    period_to = models.DateField("Okres do")
-
     information = models.TextField("Informacje", blank=True, default="")
     creation_date = models.DateTimeField("Data utworzenia", auto_now_add=True)
     change_date = models.DateTimeField("Zmiana", auto_now=True)

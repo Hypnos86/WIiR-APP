@@ -15,9 +15,10 @@
     <form class="container" method="post">
         {%csrf_token%}
         <div class="row">
-            <div class="col-md-4 p-2">{{invoice.date|bootstrap}}</div>
-            <div class="col-md-4 p-2">{{invoice.no_invoice|bootstrap}}</div>
-            <div class="col-md-4 p-2">{{invoice.sum|bootstrap}}</div>
+            <div class="col-md-3 p-2">{{invoice.date|bootstrap}}</div>
+            <div class="col-md-3 p-2">{{invoice.no_invoice|bootstrap}}</div>
+            <div class="col-md-3 p-2">{{invoice.doc_types|bootstrap}}</div>
+            <div class="col-md-3 p-2">{{invoice.sum|bootstrap}}</div>
             <div class="col-md-8 p-2">{{invoice.contractor|bootstrap}}</div>
             <div class="col-md-4 p-2">{{invoice.date_of_payment|bootstrap}}</div>
             <div class=" col-md-6 p-2">

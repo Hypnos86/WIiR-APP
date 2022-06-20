@@ -75,8 +75,13 @@ def type_work_list(request):
 
 
 @login_required
-def order_list(request):
+def show_information_work_object(request, id):
+    work_object = get_object_or_404(Unit, pk=id)
+    return render(request, 'cpvdict/information_popup.html', {'work_object': work_object, 'id': id})
 
+
+@login_required
+def order_list(request):
     orders = Order.objects.all().order_by("-date").filter(date__year=current_year())
     year = current_year()
     ordersum = len(orders)
@@ -130,4 +135,4 @@ def edit_order(request, id):
         order_form.save()
         return redirect('cpvdict:order_list')
 
-    return render(request, 'cpvdict/order_form.html', {'order_form': order_form, 'new': False, 'units':units})
+    return render(request, 'cpvdict/order_form.html', {'order_form': order_form, 'new': False, 'units': units})

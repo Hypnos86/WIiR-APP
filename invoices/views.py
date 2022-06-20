@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Sum
 from django.shortcuts import render, redirect, get_object_or_404
-from invoices.models import InvoiceSell, Creator, InvoiceBuy, InvoiceItems
+from invoices.models import InvoiceSell, Creator, InvoiceBuy, InvoiceItems, DocumentTypes
 from invoices.forms import InvoiceSellForm, InvoiceBuyForm, InvoiceItemsForm
 from main.views import current_year
 
@@ -76,6 +76,7 @@ def buy_invoices_list_archive(request, year):
 def new_invoice_buy(request):
     invoice_buy_form = InvoiceBuyForm(request.POST or None)
     context = {'invoice': invoice_buy_form, 'new': True}
+    invoice_buy_form.fields['doc_types'].queryset = DocumentTypes.objects.exclude(type='Nota korygująca')
 
     if request.method == 'POST':
         if invoice_buy_form.is_valid():
@@ -90,6 +91,7 @@ def new_invoice_buy(request):
 def edit_invoice_buy(request, id):
     invoice_buy_edit = get_object_or_404(InvoiceBuy, pk=id)
     invoice_buy_form = InvoiceBuyForm(request.POST or None, instance=invoice_buy_edit)
+    invoice_buy_form.fields['doc_types'].queryset = DocumentTypes.objects.exclude(type='Nota korygująca')
 
     context = {'invoice': invoice_buy_form,
                'new': False}
@@ -122,7 +124,8 @@ def sell_invoices_list(request):
             contractor__name__icontains=q) | invoicessell.filter(
             contractor__no_contractor__startswith=q) | invoicessell.filter(
             county__name__icontains=q) | invoicessell.filter(
-            creator__creator__icontains=q)
+            creator__creator__icontains=q) | invoicessell.filter(
+            information__icontains=q)
         invoices_sell_filter_sum = len(invoicessell)
         return render(request, "invoices/invoices_sell_list.html", {"invoices": invoicessell,
                                                                     "invoicessellsum": invoices_sell_filter_sum,
@@ -173,6 +176,7 @@ def sell_invoices_list_archive(request, year):
 @login_required
 def new_invoice_sell(request):
     invoice_sell_form = InvoiceSellForm(request.POST or None)
+    invoice_sell_form.fields['doc_types'].queryset = DocumentTypes.objects.exclude(type='Nota korygująca')
     context = {'invoice': invoice_sell_form, 'new': True}
 
     if request.method == 'POST':
@@ -188,6 +192,7 @@ def new_invoice_sell(request):
 def edit_invoice_sell(request, id):
     invoice_sell_edit = get_object_or_404(InvoiceSell, pk=id)
     invoice_sell_form = InvoiceSellForm(request.POST or None, instance=invoice_sell_edit)
+    invoice_sell_form.fields['doc_types'].queryset = DocumentTypes.objects.exclude(type='Nota korygująca')
 
     context = {'invoice': invoice_sell_form,
                'new': False}

@@ -23,8 +23,9 @@
         <thead>
         <tr class="my-table-tr text-center">
             <th align="center" valign="middle" width="50" scope="col">l.p.</th>
-            <th align="center" valign="middle" width="250" scope="col">Jednostka</th>
+            <th align="center" valign="middle" width="600" scope="col">Jednostka</th>
             <th align="center" valign="middle" width="80" scope="col">Wydatkowano</th>
+            <th align="center" valign="middle">Informacje</th>
         </tr>
         </thead>
         <tbody>
@@ -34,7 +35,10 @@
         <tr class="my-table-tr">
             <td align="center" valign="middle" scope="row"></td>
             <td valign="middle">{{unit}}</td>
-            <td valign="middle" title="{% for u in unit.order.all %}{{u|intcomma}}{%endfor%}">{{value|intcomma}}
+            <td valign="middle" align="center" title="{% for u in unit.order.all %}{{u|intcomma}}{%endfor%}">{{value|intcomma}} zł.</td>
+            <td valign="middle" align="center">
+              <button type="button" data-url="{%url 'cpvdict:show_information_work_object' unit.id%}" class="btn btn-outline-success mx-2" onclick="openModal(this)">
+                <i class="bi bi-info-lg"></i></button>
             </td>
             {% endif %}
             {% endfor %}
@@ -48,11 +52,27 @@
         </tfoot>
     </table>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="informationModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
 <script>
      document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-invoices").classList.remove("active");
      document.getElementById("button-contracts").classList.remove("active");
      document.getElementById("button-contractors").classList.remove("active");
      document.getElementById("button-cpv").classList.add("active");
+       function openModal(button){
+            var url = $(button).data("url");
+            $("#information_work_object_Modal .modal-content").load(url);
+            $("#information_work_object_Modal").modal("show");
+        }
+        function submitForm(){
+            $("#submitButton").closest("form").submit();
+        }
 </script>
 {% endblock%}

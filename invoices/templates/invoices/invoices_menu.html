@@ -22,6 +22,18 @@
         <div class="col-md-4">
             <section class="container my-div-style py-5">
             <div class="chose-invoices mb-5">
+                <a href=""><button type="button" class="btn btn-outline-primary button-chose-invoices my-btn">Noty korygujące<br>(rok:{{now_year}})</button></a>
+            </div>
+            <div class="text-center">
+                {% for year in all_year_buy%}
+                <a href=""><button type="button" name="year_buy" class="btn btn-outline-dark m-2" title="Rok wpływu faktur">{{year}}</button></a>
+                {%endfor%}
+            </div>
+           </section>
+        </div>
+        <div class="col-md-4">
+            <section class="container my-div-style py-5">
+            <div class="chose-invoices mb-5">
                 <a href="{%url 'invoices:buy_invoices_list'%}"><button type="button" class="btn btn-outline-primary button-chose-invoices my-btn">Wydatki - gr.6<br>(rok:{{now_year}})</button></a>
             </div>
             <div class="text-center">

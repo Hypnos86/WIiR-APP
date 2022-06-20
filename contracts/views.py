@@ -29,7 +29,8 @@ def menu_contractsimmovables(request):
     contracts_list = paginator.get_page(page_number)
 
     if q:
-        contracts = contracts.filter(contractor__name__icontains=q)
+        contracts = contracts.filter(contractor__name__icontains=q) | contracts.filter(
+            type_of_contract__type__icontains=q) | contracts.filter(unit__county__name__icontains=q) | contracts.filter(unit__city__icontains=q)
         return render(request, 'contracts/contract_list.html',
                       {'contracts': contracts, 'con_archive_sum': con_archive_sum, 'contrsum': contrsum,
                        'query': query, 'last_date': last_date, 'actual': True})

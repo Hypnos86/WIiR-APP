@@ -34,10 +34,13 @@
             {{flat_form.information|bootstrap}}
         </div>
         <div class="row mt-4">
-            <div class="col-md-6">
-                {{flat_form.state|bootstrap}}
+            <div class="col-md-3">
+                <div class="list-group">
+                    <label class="" for="id_state">Stan lokalu</label>
+                    <div class="list-group-item" id="id_state">{{flat_form.state|bootstrap}}</div>
+                </div>
             </div>
-            <div class="col-md-6 moj-button-right">
+            <div class="col-md-9 moj-button-right">
                 <button type="submit" class="btn btn-outline-primary my-btn">{%if new%}<span class="bi bi-save2"> Dodaj lokal</span>{%else%}Zapisz
                     zmiany{%endif%}
                 </button>
