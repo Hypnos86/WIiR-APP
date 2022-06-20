@@ -17,7 +17,22 @@
         <div class="row">
             <div class="col-md-3 p-2">{{invoice.date|bootstrap}}</div>
             <div class="col-md-3 p-2">{{invoice.no_invoice|bootstrap}}</div>
-            <div class="col-md-3 p-2">{{invoice.doc_types|bootstrap}}</div>
+            <div class="col-md-3 p-2">
+                {%if new%}
+                <div class="form-group">
+                    <label class="control-label  " for="id_doc_types">Rodzaj dokumentu</label>
+                    <div class=" ">
+                        <select name="doc_types" class=" form-control" required="" id="id_doc_types">
+                           {%for doc in doc_types%}
+                            <option value="{{doc.id}}">{{doc}}</option>
+                            {%endfor%}
+                        </select>
+                    </div>
+                </div>
+                {%else%}
+                {{invoice.doc_types|bootstrap}}
+                {%endif%}
+            </div>
             <div class="col-md-3 p-2">{{invoice.sum|bootstrap}}</div>
             <div class="col-md-8 p-2">{{invoice.contractor|bootstrap}}</div>
             <div class="col-md-4 p-2">{{invoice.date_of_payment|bootstrap}}</div>
@@ -33,8 +48,7 @@
         </div>
         <div class="row mt-2">
             <div class="col-md-12 moj-button-right">
-                <button type="submit" class="btn btn-outline-primary my-btn"><span
-                        class="bi bi-save2"> Zapisz zmiany</span></button>
+                <button type="submit" class="btn btn-outline-primary my-btn"><span class="bi bi-save2"> Zapisz zmiany</span></button>
             </div>
         </div>
     </form>
