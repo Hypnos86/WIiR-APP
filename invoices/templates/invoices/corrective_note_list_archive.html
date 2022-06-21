@@ -2,7 +2,7 @@
 {% load humanize %}
 {% load bootstrap %}
 {% load static %}
-{% block title %}Ewidencja faktur - sprzedaż{%endblock%}
+{% block title %}Ewidencja Not księgowych na {{year}} rok{%endblock%}
 {% block content %}
 <div class="moj-button-left"><a href="{%url 'invoices:menu_invoices'%}">
     <button type="button" class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span>
@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class="input-group">
-                <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj dokumentu"
+                <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj nr. noty"
                        aria-label="Search" aria-describedby="search-addon">
                 <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
             </div>
@@ -42,72 +42,47 @@
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-8">
-            <h4>Ewidencja faktur sprzedażowych za {{year}} rok</h4>
-        </div>
-        <div class="col-md-2 moj-button-right">
-            <a id="" href="{%url 'invoices:make_pdf'%}">
-                <button class="btn btn-outline-primary button-choise-contracts my-btn"><span class="bi bi-file-earmark-pdf"> Zapisz</span></button>
-            </a>
+            <h4>Ewidencja Not księgowych za {{year}} rok</h4>
         </div>
     </div>
     <div class="row">
         <div class="col-md-3">
             <p>
-                <span>Liczba faktur: </span>
-                <span class="badge text-white info badge-pill">{{invoices_sell_len}}</span>
+                <span>Liczba Not księgowych: </span>
+                <span class="badge text-white info badge-pill">{{notes_len}}</span>
             </p>
-            <p>
-                <span>Kwota faktur: </span>
-                <span class="badge text-white info badge-pill">{{invoices_sell_sum|intcomma}} zł.</span>
-            </p>
-        </div>
-        <div class="col-md-9 moj-button-right">
-            <a id="button-nowa-umowa" href="{%url 'invoices:new_invoice_sell'%}">
-                <button class="btn btn-outline-primary button-choise-contracts my-btn my-3">Nowa faktura</button>
-            </a>
         </div>
     </div>
 </div>
-<div>
+<div class="container">
     <table class="table table-hover my-table">
         <thead>
         <tr class="my-table-tr text-center">
             <th align="center" valign="middle" width="40" scope="col">L.p.</th>
             <th align="center" valign="middle" width="40" scope="col">Data wystawienia</th>
-            <th align="center" valign="middle" width="120" scope="col">Nr. dokumentu</th>
-            <th align="center" valign="middle" width="50" scope="col">Typ dokumentu</th>
-            <th align="center" valign="middle" width="120" scope="col">Kwota</th>
-            <th align="center" valign="middle" width="40" scope="col">Data płatności</th>
-            <th align="center" valign="middle" width="180" scope="col">Okres</th>
-            <th align="center" valign="middle" width="200" scope="col">Kontrahent</th>
-            <th align="center" valign="middle" width="120" scope="col">Powiat</th>
-            <th align="center" valign="middle" width="100" scope="col">Zapisujący</th>
+            <th align="center" valign="middle" width="200" scope="col">Nr. Noty</th>
+            <th align="center" valign="middle" width="300" scope="col">Kontrahent</th>
+            <th align="center" valign="middle" width="250" scope="col">Korygowana faktura</th>
         </tr>
         </thead>
         <tbody>
-        {% for invoice in invoices %}
+        {% for note in notes %}
         <tr class="my-table-tr">
             <td align="center" valign="middle" scope="row"><span class="text-center"></span></td>
-            <td align="center" valign="middle"><span>{{invoice.date|date:"d.m.Y"}} r.</span></td>
-            <td align="center" valign="middle"><span title="{{invoice.creator}}">{{invoice.no_invoice|default_if_none:''}}</span></td>
-            <td align="center" valign="middle"><span>{{invoice.doc_types}}</span></td>
-            <td align="center" valign="middle"><span>{{invoice.sum|intcomma}} zł</span></td>
-            <td align="center" valign="middle"><span>{{invoice.date_of_payment|date:"d.m.Y"}} r.</span></td>
-            <td align="center" valign="middle"><span>{{invoice.period_from|date:"m.Y"}} - {{invoice.period_to|date:"m.Y"}}</span>
-            </td>
-            <td valign="middle"><span title="SWOP ID: {{invoice.contractor.no_contractor}}">{{invoice.contractor.name}}. <br><small>Adres: {{invoice.contractor.address}}, {{invoice.contractor.zip_code}} {{invoice.contractor.city}}</small></span></td>
-            <td align="center" valign="middle">{{invoice.county}}</td>
-            <td align="center" valign="middle"><span title="{{invoice.author.first_name}} {{invoice.author.last_name}}">{{invoice.author}}</span></td>
+            <td align="center" valign="middle"><span>{{note.date|date:"d.m.Y"}} r.</span></td>
+            <td align="center" valign="middle"><span title="{{invoice.creator}}">{{note.no_note|default_if_none:''}}</span></td>
+            <td align="left" valign="middle"><span title="SWOP ID: {{note.contractor.no_contractor}}">{{note.contractor.name}}.<br> <small>Adres: {{note.contractor.address}}, {{note.contractor.zip_code}} {{note.contractor.city}}</small></span></td>
+            <td align="center" valign="middle"><span>{{note.corrective_invoice}}</span></td>
             <td align="right" width="120">
-                {%if invoice.information%}
-                <button type="button" data-url="{% url 'invoices:show_info_sell' invoice.id %}"
-                        class="btn btn-outline-success mx-2" onclick="openModal(this)"><i
+                {%if note.information%}
+                <button type="button" data-url="{% url 'invoices:show_info_note' note.id %}"
+                        class="btn btn-outline-success mx-2 my-1" onclick="openModal(this)"><i
                         class="bi bi-info-lg"></i>
                 </button>
                 {%endif%}
-                <a class="mx-2" href="{%url 'invoices:edit_invoice_sell' invoice.id %}">
+                <a class="mx-2" href="{%url 'invoices:edit_note' note.id%}">
                     <button type="submit" class="btn btn-outline-primary icon-color mx-1 "><i
-                            class="bi bi-pencil-square"></i></button>
+                            class="bi bi-pencil-square my-1"></i></button>
                 </a>
             </td>
         </tr>
@@ -124,17 +99,17 @@
 {%if search%}
 <nav aria-labelledby="Page navigation">
     <ul class="pagination justify-content-center">
-        {%if invoices.has_previous%}
+        {%if notes.has_previous%}
         <li class="page-item">
-            <a class="page-link" href="?page={{invoices.previous_page_number}}">Poprzednia</a>
+            <a class="page-link" href="?page={{notes.previous_page_number}}">Poprzednia</a>
         </li>
         {%else%}
         <li class="page-item disabled">
             <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Poprzednia</a>
         </li>
         {%endif%}
-        {%for i in invoices.paginator.page_range%}
-        {%if invoices.number == i%}
+        {%for i in notes.paginator.page_range%}
+        {%if notes.number == i%}
         <li class="page-item active" aria-current="page">
             <span class="page-link">
                 {{i}}
@@ -145,9 +120,9 @@
         <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
         {%endif%}
         {%endfor%}
-        {%if invoices.has.next%}
+        {%if notes.has.next%}
         <li class="page-item">
-            <a class="page-link" href="?page={{invoices.next_page_number}}">Następna</a>
+            <a class="page-link" href="?page={{notes.next_page_number}}">Następna</a>
         </li>
         {%else%}
         <li class="page-item disabled">
@@ -158,10 +133,9 @@
 </nav>
 {%endif%}
 <!-- Modal -->
-<div class="modal fade" id="info_sell_Modal">
+<div class="modal fade" id="info_note_Modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-
         </div>
     </div>
 </div>
@@ -170,10 +144,10 @@
      document.getElementById("button-invoices").classList.add("active");
      document.getElementById("button-contracts").classList.remove("active");
      document.getElementById("button-contractors").classList.remove("active");
-        function openModal(button){
-            var url = $(button).data("url");
-            $("#info_sell_Modal .modal-content").load(url);
-            $("#info_sell_Modal").modal("show");
+     function openModal(button){
+         var url = $(button).data("url");
+            $("#info_note_Modal .modal-content").load(url);
+            $("#info_note_Modal").modal("show");
         }
         function submitForm(){
             $("#submitButton").closest("form").submit();

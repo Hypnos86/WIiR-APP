@@ -1,0 +1,17 @@
+{% load static %}
+{% load bootstrap %}
+{% load humanize %}
+{% block content %}
+<div class="container ">
+<form class="m-2 p-4" method="get" action="{% url 'invoices:show_info_note' id %}">
+    {%csrf_token%}
+    <div class="container">
+        <div><span class="text-muted">Nota nr: </span><span>{{note.no_note}} z dnia {{note.date|date:'d.n.Y'}} r.</span></div>
+        <div class="my-4"></div>
+        <div><span class="text-muted">Informacje: </span><p>{{note.information}}</p></div>
+
+    </div>
+</form>
+</div>
+{%endblock%}
+

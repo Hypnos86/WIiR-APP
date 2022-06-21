@@ -1,5 +1,5 @@
 from django.forms import ModelForm, DateInput, Textarea
-from invoices.models import InvoiceSell, InvoiceBuy, InvoiceItems
+from invoices.models import InvoiceSell, InvoiceBuy, InvoiceItems, CorrectiveNote
 
 
 class DateField(DateInput):
@@ -46,3 +46,13 @@ class InvoiceItemsForm(ModelForm):
         model = InvoiceItems
         fields = '__all__'
         label = {'invoice_id': 'Faktura', 'account': 'Konto', 'county': 'Powiat', 'sum': 'Kwota'}
+
+
+class CorrectiveNoteForm(ModelForm):
+    class Meta:
+        model = CorrectiveNote
+        fields = '__all__'
+        label = {'date': 'Data wystawienia', 'no_note': 'Nr. noty', 'contractor': 'Kontrahent',
+                 'corrective_invoice': 'Korygowana faktura', 'information': 'Informacje'}
+        exclude = ['creation_date', 'author']
+        widgets = {'date': DateField()}

@@ -8,6 +8,10 @@ def current_year():
     return datetime.date.today().year
 
 
+def now_date():
+    return datetime.datetime.now()
+
+
 # Create your views here.
 @login_required
 def telephone_list(request):

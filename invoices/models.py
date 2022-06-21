@@ -95,3 +95,23 @@ class InvoiceItems(models.Model):
 
     def __str__(self):
         return f'{self.account} - {self.county} - {self.sum} zł.'
+
+
+class CorrectiveNote(models.Model):
+    class Meta:
+        verbose_name = 'Nota korygująca'
+        verbose_name_plural = 'Noty korygujące'
+        ordering = ['-date']
+
+    date = models.DateField('Data wystawienia')
+    no_note = models.CharField('Nr. noty', max_length=15)
+    contractor = models.ForeignKey(Contractor, on_delete=models.CASCADE, verbose_name='Kontrahent',
+                                   related_name='correctivenote')
+    corrective_invoice = models.CharField('Korygowana faktura', max_length=50)
+    information = models.TextField('Informacje', blank=True, default="")
+    creation_date = models.DateField('Data uworzenia', auto_now_add=True)
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE, verbose_name="Autor",
+                               related_name="correctivenote")
+
+    def __str__(self):
+        return f'{self.no_note} z dnia {self.date}'

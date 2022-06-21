@@ -3,9 +3,15 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Sum
 from django.shortcuts import render, redirect, get_object_or_404
-from invoices.models import InvoiceSell, Creator, InvoiceBuy, InvoiceItems, DocumentTypes
-from invoices.forms import InvoiceSellForm, InvoiceBuyForm, InvoiceItemsForm
+from invoices.models import InvoiceSell, Creator, InvoiceBuy, InvoiceItems, DocumentTypes, CorrectiveNote
+from invoices.forms import InvoiceSellForm, InvoiceBuyForm, InvoiceItemsForm, CorrectiveNoteForm
 from main.views import current_year
+# for pdf
+from django.http import FileResponse
+import io
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import inch
+from reportlab.lib.pagesizes import letter
 
 
 # Create your views here.
@@ -20,10 +26,15 @@ def menu_invoices(request):
     all_year_buy = InvoiceBuy.objects.all().values('date_receipt__year').exclude(date_receipt__year=now_year)
     year_buy_set = set([year['date_receipt__year'] for year in all_year_buy])
     year_buy_list = sorted(year_buy_set, reverse=True)
+    # Filtrowanie not księgowych
+    all_year_note = CorrectiveNote.objects.all().values('date__year').exclude(date__year=now_year)
+    year_note_set = set([year['date__year'] for year in all_year_note])
+    year_note_list = sorted(year_note_set, reverse=True)
 
     return render(request, 'invoices/invoices_menu.html',
-                  {"now_year": now_year, 'all_year_sell': year_sell_list,
-                   'all_year_buy': year_buy_list})
+                  {'now_year': now_year, 'all_year_sell': year_sell_list,
+                   'all_year_buy': year_buy_list,
+                   'year_note_list': year_note_list})
 
 
 @login_required
@@ -238,6 +249,114 @@ def make_invoice_elements(request):
 
 
 @login_required
+def corrective_note_list(request):
+    notes = CorrectiveNote.objects.all().filter(date__year=current_year()).order_by('-date')
+    notes_len = len(notes)
+    year = current_year()
+    query = "Wyczyść"
+    search = "Szukaj"
+
+    q = request.GET.get('q')
+    date_from = request.GET.get('from')
+    date_to = request.GET.get('to')
+
+    paginator = Paginator(notes, 30)
+    page_number = request.GET.get('page')
+    note_list = paginator.get_page(page_number)
+
+    if q or date_from or date_to:
+        if q:
+            notes = notes.filter(no_note__icontains=q) | notes.filter(contractor__name__icontains=q) | notes.filter(
+                corrective_invoice__icontains=q)
+
+        if date_from:
+            notes = notes.filter(date__gte=date_from)
+
+        if date_to:
+            notes = notes.filter(date__lte=date_to)
+
+        note_len = len(notes)
+
+        return render(request, "invoices/corrective_note_list.html", {'notes': notes,
+                                                                      'note_len': note_len,
+                                                                      'query': query, 'year': year})
+    else:
+        return render(request, 'invoices/corrective_note_list.html',
+                      {'notes': note_list, 'notes_len': notes_len, 'year': year, 'search': search})
+
+
+@login_required
+def show_info_note(request, id):
+    note = get_object_or_404(CorrectiveNote, pk=id)
+    return render(request, 'invoices/info_note_popup.html', {'note': note, 'id': id})
+
+
+@login_required
+def corrective_note_list_archive(request, year):
+    notes = CorrectiveNote.objects.all().filter(date__year=year).order_by('-date')
+    notes_len = len(notes)
+    query = "Wyczyść"
+    search = "Szukaj"
+
+    q = request.GET.get('q')
+    date_from = request.GET.get('from')
+    date_to = request.GET.get('to')
+
+    paginator = Paginator(notes, 30)
+    page_number = request.GET.get('page')
+    note_list = paginator.get_page(page_number)
+
+    if q or date_from or date_to:
+        if q:
+            notes = notes.filter(no_note__icontains=q) | notes.filter(contractor__name__icontains=q) | notes.filter(
+                corrective_invoice__icontains=q)
+
+        if date_from:
+            notes = notes.filter(date__gte=date_from)
+
+        if date_to:
+            notes = notes.filter(date__lte=date_to)
+
+        note_len = len(notes)
+
+        return render(request, "invoices/corrective_note_list_archive.html", {'notes': notes,
+                                                                              'note_len': note_len,
+                                                                              'query': query, 'year': year})
+    else:
+        return render(request, 'invoices/corrective_note_list_archive.html',
+                      {'notes': note_list, 'notes_len': notes_len, 'year': year, 'search': search})
+
+
+@login_required
+def new_note(request):
+    note_form = CorrectiveNoteForm(request.POST or None)
+    context = {'note_form': note_form, 'new': True}
+
+    if request.method == 'POST':
+        if note_form.is_valid():
+            instance = note_form.save(commit=False)
+            instance.author = request.user
+            instance.save()
+            return redirect('invoices:corrective_note_list')
+    return render(request, 'invoices/corrective_note_form.html', context)
+
+
+@login_required
+def edit_note(request, id):
+    note = get_object_or_404(CorrectiveNote, pk=id)
+    note_form = CorrectiveNoteForm(request.POST or None, instance=note)
+    context = {'note_form': note_form,
+               'new': False}
+
+    if note_form.is_valid():
+        instance = note_form.save(commit=False)
+        instance.author = request.user
+        instance.save()
+        return redirect('invoices:corrective_note_list')
+    return render(request, 'invoices/corrective_note_form.html', context)
+
+
+@login_required
 def make_verification(request):
     invoices_buy = InvoiceBuy.objects.all().order_by("date_of_payment")
     query = "Wyczyść"
@@ -280,3 +399,27 @@ def make_verification(request):
             "invoices_buy_sum": invoices_buy_sum,
             "search": search, "year": year
         })
+
+
+@login_required
+def make_pdf(request):
+    # Create Bytestream buffer
+    buf = io.BytesIO()
+    # Create a canvas
+    c = canvas.Canvas(buf, pagesize=letter, bottomup=0)
+    # Create text object
+    textob = c.beginText()
+    textob.setTextOrigin(inch, inch)
+    # textob.setFont("Cambria", 12)
+    # Add some lines ox text
+    lines = ['jedna linia', 'druga linia']
+    # Loop
+    for line in lines:
+        textob.textLine(line)
+    # Finish up
+    c.drawText(textob)
+    c.showPage()
+    c.save()
+    buf.seek(0)
+    # Return
+    return FileResponse(buf, as_attachment=True, filename='cos.pdf')

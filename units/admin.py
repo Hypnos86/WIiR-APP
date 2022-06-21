@@ -40,6 +40,7 @@ class UnitAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ['county', 'type', 'address', 'zip_code', 'city', 'status']
     search_fields = ['address', 'city']
     list_filter = ['county']
+    list_display_links = ['address']
     resource_class = UnitResource
 
 

@@ -2,7 +2,7 @@ from django.contrib import admin
 from import_export import resources
 from import_export.fields import Field
 from import_export.admin import ExportMixin
-from invoices.models import InvoiceSell, InvoiceBuy, InvoiceItems, Creator, DocumentTypes
+from invoices.models import InvoiceSell, InvoiceBuy, InvoiceItems, Creator, DocumentTypes, CorrectiveNote
 
 
 # Register your models here.
@@ -31,6 +31,26 @@ class InvoiceSellAdmin(ExportMixin, admin.ModelAdmin):
     search_fields = ['no_invoice', 'contractor', 'county']
     preserve_filters = True
     resource_class = InvoiceSellResource
+
+
+class CorrectiveNoteResource(resources.ModelResource):
+    date = Field(attribute='date', column_name='Data wystawienia')
+    no_note = Field(attribute='no_note', column_name='Nr. noty')
+    contractor = Field(attribute='contractor', column_name='Kontrahent')
+    corrective_invoice = Field(attribute='corrective_invoice', column_name='Korygowana faktura')
+    information = Field(attribute='information', column_name='Informacje')
+
+    class Meta:
+        model = CorrectiveNote
+        fields = ('date', 'no_note', 'contractor', 'corrective_invoice', 'information')
+
+
+@admin.register(CorrectiveNote)
+class CorrectiveNoteAdmin(ExportMixin, admin.ModelAdmin):
+    list_display = ['date', 'no_note', 'contractor', 'corrective_invoice']
+    search_fields = ['no_note', 'corrective_invoice']
+    list_display_links = ['no_note']
+    resource_class = CorrectiveNoteResource
 
 
 admin.site.register(Creator)

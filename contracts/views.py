@@ -5,6 +5,7 @@ from contracts.models import ContractImmovables, ContractAuction, AnnexContractA
 from contracts.forms import ContractImmovablesForm, ContractAuctionForm, AnnexImmovablesForm, AnnexContractAuctionForm
 from units.models import Unit
 from main.models import Employer
+from main.views import now_date
 
 
 # Create your views here.
@@ -12,6 +13,7 @@ from main.models import Employer
 def menu_contractsimmovables(request):
     contracts = ContractImmovables.objects.all().order_by("-date").filter(state=True)
     contracts_archive = ContractImmovables.objects.all().order_by("-date").filter(state=False)
+    now = now_date()
 
     try:
         last_date = ContractImmovables.objects.values('change').latest('change')
@@ -30,14 +32,15 @@ def menu_contractsimmovables(request):
 
     if q:
         contracts = contracts.filter(contractor__name__icontains=q) | contracts.filter(
-            type_of_contract__type__icontains=q) | contracts.filter(unit__county__name__icontains=q) | contracts.filter(unit__city__icontains=q)
+            type_of_contract__type__icontains=q) | contracts.filter(unit__county__name__icontains=q) | contracts.filter(
+            unit__city__icontains=q)
         return render(request, 'contracts/contract_list.html',
                       {'contracts': contracts, 'con_archive_sum': con_archive_sum, 'contrsum': contrsum,
-                       'query': query, 'last_date': last_date, 'actual': True})
+                       'query': query, 'last_date': last_date, 'now': now, 'actual': True})
     else:
         return render(request, 'contracts/contract_list.html',
                       {'contracts': contracts_list, 'contrsum': contrsum, 'con_archive_sum': con_archive_sum,
-                       'search': search, 'last_date': last_date, 'actual': True})
+                       'search': search, 'last_date': last_date, 'now': now, 'actual': True})
 
 
 @login_required

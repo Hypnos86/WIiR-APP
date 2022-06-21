@@ -53,11 +53,10 @@
             <th align="center" valign="middle" width="40" scope="col">Data wpływu</th>
             <th align="center" valign="middle" width="40" scope="col">Data wystawienia</th>
             <th align="center" valign="middle" width="120" scope="col">Nr. faktury</th>
-            <th align="center" valign="middle" width="350" scope="col">Kontrahent</th>
+            <th align="center" valign="middle" width="250" scope="col">Kontrahent</th>
             <th align="center" valign="middle" width="100" scope="col">Kwota</th>
             <th align="center" valign="middle" width="40" scope="col">Data płatności</th>
             <th align="center" valign="middle" width="50" scope="col">Zapisujący</th>
-
         </tr>
         </thead>
         <tbody>
@@ -67,7 +66,7 @@
             <td align="center" valign="middle"><span>{{invoice.date_receipt|date:"d.m.Y"}} r.</span></td>
             <td align="center" valign="middle"><span>{{invoice.date_issue|date:"d.m.Y"}} r.</span></td>
             <td align="left" valign="middle"><span>{{invoice.no_invoice|default_if_none:''}}</span></td>
-            <td valign="middle"><span title="SWOP ID: {{invoice.contractor.no_contractor}}">{{invoice.contractor.name}}. <small>Adres: {{invoice.contractor.address}}, {{invoice.contractor.zip_code}} {{invoice.contractor.city}}</small></span></td>
+            <td valign="middle"><span title="SWOP ID: {{invoice.contractor.no_contractor}}">{{invoice.contractor.name}}. <br><small>Adres: {{invoice.contractor.address}}, {{invoice.contractor.zip_code}} {{invoice.contractor.city}}</small></span></td>
             <td align="center" valign="middle"><span>{%if invoice.sum%}{{invoice.sum|intcomma}} zł. {%else%} {{invoice.sum|default_if_none:'---'}} {%endif%}</span></td>
             <td align="center" valign="middle"><span>{{invoice.date_of_payment|date:"d.m.Y"}} r.</span></td>
             <td align="center" valign="middle" title="{{invoice.author.first_name}} {{invoice.author.last_name}}">
