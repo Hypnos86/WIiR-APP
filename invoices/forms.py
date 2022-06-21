@@ -53,6 +53,6 @@ class CorrectiveNoteForm(ModelForm):
         model = CorrectiveNote
         fields = '__all__'
         label = {'date': 'Data wystawienia', 'no_note': 'Nr. noty', 'contractor': 'Kontrahent',
-                 'corrective_invoice': 'Korygowana faktura', 'information': 'Informacje'}
+                 'corrective_invoice': 'Korygowana faktura', 'information': 'Korygowana treść'}
         exclude = ['creation_date', 'author']
         widgets = {'date': DateField()}

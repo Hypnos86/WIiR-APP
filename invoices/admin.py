@@ -38,7 +38,7 @@ class CorrectiveNoteResource(resources.ModelResource):
     no_note = Field(attribute='no_note', column_name='Nr. noty')
     contractor = Field(attribute='contractor', column_name='Kontrahent')
     corrective_invoice = Field(attribute='corrective_invoice', column_name='Korygowana faktura')
-    information = Field(attribute='information', column_name='Informacje')
+    information = Field(attribute='information', column_name='Korygowana treść')
 
     class Meta:
         model = CorrectiveNote

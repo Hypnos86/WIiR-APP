@@ -82,7 +82,7 @@
                 {%if note.information%}
                 <button type="button" data-url="{% url 'invoices:show_info_note' note.id %}"
                         class="btn btn-outline-success mx-2 my-1" onclick="openModal(this)"><i
-                        class="bi bi-info-lg"></i>
+                        class="bi bi-file-earmark-text"></i>
                 </button>
                 {%endif%}
                 <a class="mx-2" href="{%url 'invoices:edit_note' note.id%}">

@@ -31,7 +31,7 @@
                 {%if contract.usable_area%}
                 <li class="list-group-item"><span class="text-muted">Powierzchnia użyczona: </span><span>{{contract.usable_area}} m<sup>2</sup></span></li>
                 {%endif%}
-                <li class="list-group-item"><span class="text-muted">Okres obowiązywania: </span><span>{{contract.period_of_validity|date:"d.m.Y"}}</span></li>
+                <li class="list-group-item"><span class="text-muted">Okres obowiązywania: </span><span>{%if contract.period_of_validity%} {{contract.period_of_validity|date:"d.m.Y"}} r.{%else%} --- {%endif%}</span></li>
                 <li class="list-group-item"><span class="text-muted">Koszty: </span>
                     {% if contract.rent_cost %} <span class="color-maroon">Czynsz</span>{%endif%}
                     {% if contract.electric_cost %} <span class="color-indygo">Prąd</span> {%endif%}

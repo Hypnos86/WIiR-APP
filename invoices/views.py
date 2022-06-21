@@ -400,7 +400,6 @@ def make_verification(request):
             "search": search, "year": year
         })
 
-
 @login_required
 def make_pdf(request):
     # Create Bytestream buffer
@@ -411,7 +410,7 @@ def make_pdf(request):
     textob = c.beginText()
     textob.setTextOrigin(inch, inch)
     # textob.setFont("Cambria", 12)
-    # Add some lines ox text
+    # Add some lines on text
     lines = ['jedna linia', 'druga linia']
     # Loop
     for line in lines:

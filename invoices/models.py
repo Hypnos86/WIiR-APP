@@ -108,7 +108,7 @@ class CorrectiveNote(models.Model):
     contractor = models.ForeignKey(Contractor, on_delete=models.CASCADE, verbose_name='Kontrahent',
                                    related_name='correctivenote')
     corrective_invoice = models.CharField('Korygowana faktura', max_length=50)
-    information = models.TextField('Informacje', blank=True, default="")
+    information = models.TextField('Korygowana treść', blank=True, default="")
     creation_date = models.DateField('Data uworzenia', auto_now_add=True)
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE, verbose_name="Autor",
                                related_name="correctivenote")
