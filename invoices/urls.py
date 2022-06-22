@@ -1,8 +1,8 @@
 from django.urls import path
-from .views import menu_invoices, buy_invoices_list, buy_invoices_list_archive, new_invoice_buy, sell_invoices_list, \
+from .views import menu_invoices, buy_invoices_list, buy_invoices_list_archive, new_invoice_buy, sell_invoices_list,\
     sell_invoices_list_archive, new_invoice_sell, edit_invoice_sell, edit_invoice_buy, make_verification, show_info_buy, \
     show_info_sell, make_invoice_elements, corrective_note_list, corrective_note_list_archive, show_info_note, new_note, \
-    edit_note, make_pdf
+    edit_note, make_pdf_from_invoices_sell
 
 app_name = 'invoices'
 urlpatterns = [
@@ -24,5 +24,5 @@ urlpatterns = [
     path('ewidencja_not_archiwum/<int:year>', corrective_note_list_archive, name='corrective_note_list_archive'),
     path('nowa_nota/', new_note, name='new_note'),
     path('edycja_noty/<int:id>', edit_note, name='edit_note'),
-    path('create_pdf', make_pdf, name='make_pdf')
+    path('create_pdf', make_pdf_from_invoices_sell, name='make_pdf_from_invoices_sell')
 ]

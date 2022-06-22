@@ -15,11 +15,12 @@
     </div>
 </section>
 <div class="kontrahenci-title">
-    {%if last_date%}
-    <h4 title="Ostatni aktualizacja {{last_date.change|date:'d.m.Y'}}">Ewidencja Umów ZZP</h4>
-    {%else%}
-    <h4>Ewidencja Umów ZZP</h4>
-    {%endif%}
+    <div class="text-center">
+        <h4>Ewidencja Umów ZZP</h4>
+        {%if last_date%}
+        <small>Ostatnia aktualizacja: {{last_date.change|date:'d.m.Y'}} r.</small>
+        {%endif%}
+    </div>
     <div class="row">
         <div class="col-md-3">
             <p class="m-0"><span>Liczba umów: </span><span class="badge text-white info badge-pill">{{contracts_auctions_sum}}</span></p>
@@ -35,12 +36,12 @@
     <tr class="my-table-tr">
         <th align="center" valign="middle" width="40" scope="col" class="text-center">L.p.</th>
         <th align="center" valign="middle" width="120" scope="col" class="text-center">Data umowy</th>
-        <th align="center" valign="middle" width="180" scope="col" class="text-center">Nr. umowy</th>
+        <th align="center" valign="middle" width="200" scope="col" class="text-center">Nr. umowy</th>
         <th align="center" valign="middle" width="320" scope="col" class="text-center">Wykonawca</th>
         <th align="center" valign="middle" width="150" scope="col" class="text-center">Wartość</th>
-        <th align="center" valign="middle" width="150" scope="col" class="text-center">Termin realizacji</th>
+        <th align="center" valign="middle" width="180" scope="col" class="text-center">Termin realizacji</th>
         <th align="center" valign="middle" width="150" scope="col" class="text-center">Tryb zamówienia</th>
-        <th align="center" valign="middle" width="320" scope="col" class="text-center">Jednostka</th>
+        <th align="center" valign="middle" width="300" scope="col" class="text-center">Jednostka</th>
         <th align="center" valign="middle" width="200" scope="col" class="text-center">Inspektor</th>
 
     </tr>

@@ -68,9 +68,6 @@
     <tbody>
     {%if actual%}
     {%for contract in contracts %}
-
-    {%if contract.period_of_validity|date:"d.m.Y" <= now|date:"d.m.Y"%}zaktualizuj{%else%}ok{%endif%}
-
     <tr class="my-table-tr">
         <td align="center" valign="middle" class="text-center" scope="row"></td>
         <td align="center" valign="middle" class="text-center">{{contract.date|date:"d.m.Y"}} r.</td>
@@ -78,7 +75,7 @@
         <td valign="middle"><span title="SWOP ID: {{contract.contractor.no_contractor}}">{{contract.contractor.name}}<br><small>{{contract.contractor.address}}, {{contract.contractor.zip_code}} {{contract.contractor.city}}</small></span></td>
         {%if contract.period_of_validity%}
         {%if contract.period_of_validity|date:"d.m.Y" <= now|date:"d.m.Y"%}
-        <td align="center" valign="middle" class="text-center bg-danger text-white">{{contract.period_of_validity|date:"d.m.Y"}} r.</td>
+        <td align="center" valign="middle" class="text-center bg-danger text-white"><span>{{contract.period_of_validity|date:"d.m.Y"}} r.</span></td>
         {%else%}
         <td align="center" valign="middle" class="text-center">{{contract.period_of_validity|default_if_none:'---'|date:"d.m.Y"}} r.</td>
         {%endif%}

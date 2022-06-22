@@ -16,12 +16,11 @@
     </div>
 </div>
 <div class="kontrahenci-title justify-content-center align-items-center text-center">
-
-    {%if last_date %}
-        <h4 title="Ostatnia aktualizacja: {{last_date.change|date:'d.m.Y - (H:i)'}}">Mieszkania służbowe</h4>
-    {%else%}
-        <h4>Mieszkania służbowe</h4>
+    <h4>Mieszkania służbowe</h4>
+    {% if last_date %}
+    <small>Ostatnia aktualizacja: {{last_date.change|date:"d.m.Y - (H:i)"}}</small>
     {%endif%}
+
 
     <div class="row">
         <div class="col-md-2">

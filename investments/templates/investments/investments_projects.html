@@ -7,7 +7,7 @@
     <div class="w-100 pb-4 d-flex justify-content-center align-items-center flex-column text_center">
         <form method="get">
             <div class="input-group">
-                <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj zadania"
+                <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj inwestycji"
                        aria-label="Search" aria-describedby="search-addon">
                 <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
             </div>
@@ -16,12 +16,12 @@
 </div>
 <div class="row">
     <div class="kontrahenci-title justify-content-center align-items-center">
-        {%if last_date%}
-            <h4 title="Ostatnia aktualizacja: {{last_date.change|date:'d.m.Y'}}">Ewidencja zadań inwestycyjnych</h4>
-        {%else%}
+        <div class="text-center">
             <h4>Ewidencja zadań inwestycyjnych</h4>
-        {%endif%}
-
+            {% if last_date %}
+            <small>Ostatnia aktualizacja: {{last_date.change|date:"d.m.Y"}} r.</small>
+            {%endif%}
+        </div>
         <div class="row">
             <div class="col-md-2">
                 <p class="m-0"><span>Liczba zadań: </span><span class="badge text-white info badge-pill">{{projects_sum}}</span></p>

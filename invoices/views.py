@@ -5,13 +5,20 @@ from django.db.models import Sum
 from django.shortcuts import render, redirect, get_object_or_404
 from invoices.models import InvoiceSell, Creator, InvoiceBuy, InvoiceItems, DocumentTypes, CorrectiveNote
 from invoices.forms import InvoiceSellForm, InvoiceBuyForm, InvoiceItemsForm, CorrectiveNoteForm
-from main.views import current_year
+from main.views import current_year, now_date
 # for pdf
 from django.http import FileResponse
 import io
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
 from reportlab.lib.pagesizes import letter
+# xhtml2pdf
+import os
+from django.conf import settings
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from django.contrib.staticfiles import finders
 
 
 # Create your views here.
@@ -400,25 +407,95 @@ def make_verification(request):
             "search": search, "year": year
         })
 
+
+# @login_required
+# def make_pdf(request):
+#     # Create Bytestream buffer
+#     buf = io.BytesIO()
+#     # Create a canvas
+#     c = canvas.Canvas(buf, pagesize=letter, bottomup=0)
+#     # Create text object
+#     textob = c.beginText()
+#     textob.setTextOrigin(inch, inch)
+#     # textob.setFont("Cambria", 12)
+#     # Add some lines on text
+#     lines = ['jedna linia', 'druga linia']
+#     textob.textLine('Zestawienie z dnia ')
+#     # Loop
+#     for line in lines:
+#         textob.textLine(line)
+#     # Finish up
+#     c.drawText(textob)
+#     c.showPage()
+#     c.save()
+#     buf.seek(0)
+#     # Return
+#     return FileResponse(buf, as_attachment=True, filename='cos.pdf')
+
 @login_required
-def make_pdf(request):
-    # Create Bytestream buffer
-    buf = io.BytesIO()
-    # Create a canvas
-    c = canvas.Canvas(buf, pagesize=letter, bottomup=0)
-    # Create text object
-    textob = c.beginText()
-    textob.setTextOrigin(inch, inch)
-    # textob.setFont("Cambria", 12)
-    # Add some lines on text
-    lines = ['jedna linia', 'druga linia']
-    # Loop
-    for line in lines:
-        textob.textLine(line)
-    # Finish up
-    c.drawText(textob)
-    c.showPage()
-    c.save()
-    buf.seek(0)
-    # Return
-    return FileResponse(buf, as_attachment=True, filename='cos.pdf')
+def make_pdf_from_invoices_sell(request):
+    invoicessell = InvoiceSell.objects.all().order_by("-date").filter(date__year=current_year())
+
+    invoices_sell_len = len(invoicessell)
+    invoices_sell_sum_dict = invoicessell.aggregate(Sum('sum'))
+    invoices_sell_sum = round(invoices_sell_sum_dict['sum__sum'], 2)
+    year = current_year()
+    now = now_date()
+    q = request.GET.get('q')
+    date_from = request.GET.get('from')
+    date_to = request.GET.get('to')
+
+    if q or date_from or date_to:
+        if q:
+            invoicessell = invoicessell.filter(no_invoice__icontains=q) | invoicessell.filter(
+                sum__startswith=q) | invoicessell.filter(date__startswith=q) | invoicessell.filter(
+                contractor__name__icontains=q) | invoicessell.filter(
+                contractor__no_contractor__startswith=q) | invoicessell.filter(
+                county__name__icontains=q) | invoicessell.filter(
+                creator__creator__icontains=q) | invoicessell.filter(
+                information__icontains=q)
+
+        if date_from:
+            invoicessell = invoicessell.filter(date__gte=date_from)
+
+        if date_to:
+            invoicessell = invoicessell.filter(date__lte=date_to)
+
+        invoices_sell_sum_dict = invoicessell.aggregate(Sum('sum'))
+
+        try:
+            invoices_sell_sum = round(invoices_sell_sum_dict['sum__sum'], 2)
+        except TypeError:
+            invoices_sell_sum = 0
+
+        try:
+            invoices_sell_filter_sum = len(invoicessell)
+        except TypeError:
+            invoices_sell_filter_sum = 0
+
+    objects = range(1, len(invoicessell)+1)
+    invoicessell = zip(objects, invoicessell)
+
+
+
+    template_path = 'invoices/invoices_sell_pdf.html'
+
+    context = {'invoices': invoicessell,
+               'invoices_sell_sum': invoices_sell_sum, 'now': now, 'year': year,
+               'invoices_sell_sum_dict': invoices_sell_sum_dict, 'objects': objects, 'date_from':date_from, 'date_to':date_to}
+
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="Ewidencja wystawionych faktur.pdf"'
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+        html, dest=response)
+
+    # if error then show some funny view
+    if pisa_status.err:
+        return HttpResponse('Wystąpił jakiś problem :( Error:997 <pre>' + html + '</pre>')
+    return response

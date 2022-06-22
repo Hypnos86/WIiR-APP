@@ -69,11 +69,11 @@
         {% for worker in team.telephone_set.all %}
         <tr class="my-table-tr">
             <td class="text-center" valign="middle" scope="row"></td>
-            {% ifequal worker.position 'Koordynator' %}
+            {% if worker.position == 'Koordynator' %}
             <td class="text-center table-primary" valign="middle"><u><b>{{worker.position|default_if_none:''}}</b></u></td>
             {%else%}
             <td class="text-center" valign="middle">{{worker.position|default_if_none:''}}</td>
-            {% endifequal %}
+            {% endif %}
             <td width="120px" valign="middle">{{worker.fname|default_if_none:''}} {{worker.lname|default_if_none:''}}</td>
             <td class="text-center" valign="middle">{{worker.no_room|default_if_none:''}}</td>
             <td class="text-center" valign="middle">{{worker.no_tel_room|default_if_none:''}}</td>
