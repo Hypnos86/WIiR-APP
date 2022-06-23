@@ -4,7 +4,6 @@
 {%block title%}{%if new%}Nowe zadanie{%else%}Edycja zadania{%endif%}{%endblock%}
 {%block investmentsmenu%}
 <div class="container">
-    <hr>
     <h3 class="text-center m-4">Nowe zadanie inwestycyjne</h3>
     <form method="post" enctype="multipart/form-data">
         {%csrf_token%}
@@ -59,7 +58,7 @@
             <div class="col-md-2">{{project_form.date_of_settlement|bootstrap}}</div>
             <div class="col-md-8">{{project_form.settlement_scan|bootstrap}}</div>
             <div class="col-md-2 moj-button-right my-4">
-                <button type="submit" class="btn btn-outline-primary my-btn">{%if new%}<span class="bi bi-save2">Dodaj zadanie</span>{%else%}<span
+                <button type="submit" class="btn btn-outline-primary my-btn">{%if new%}<span class="bi bi-save2"> Dodaj zadanie</span>{%else%}<span
                         class="bi bi-save2"> Zapisz zmiany</span>
                     {%endif%}
                 </button>

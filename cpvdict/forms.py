@@ -23,10 +23,10 @@ class OrderLimitForm(ModelForm):
 class OrderForm(ModelForm):
     class Meta:
         model = Order
-        fields = ['date', 'no_order', 'sum', 'typeorder', 'genre', 'unit', 'brakedown', 'content']
-        exclude = ['author']
+        fields = ['date', 'no_order', 'sum', 'typeorder', 'genre', 'unit', 'contractor', 'brakedown', 'worker', 'content']
+        exclude = ['author', 'create_date']
         labels = {'date': 'Data', 'no_order': 'Nr zamówienia', 'sum': 'Szacowana kwota',
-                  'typeorder': 'Rodzaj zamoówienia',
-                  'genre': 'ID Rodzajowości', 'unit': 'Jednostka', 'brakedown': 'Awaria', 'content': 'Zakres'}
+                  'typeorder': 'Rodzaj zamoówienia', 'genre': 'ID Rodzajowości', 'unit': 'Jednostka',
+                  'contractor': 'Wykonawca', 'brakedown': 'Awaria', 'content': 'Zakres'}
 
         widgets = {'date': DateField()}

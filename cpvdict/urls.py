@@ -1,5 +1,5 @@
 from django.urls import path
-from cpvdict.views import cpvlist, type_expense_list, order_list, new_order, type_work_list, \
+from cpvdict.views import cpvlist, type_expense_list, order_list, show_order_info_popup, new_order, type_work_list, \
     show_information_work_object, edit_order
 
 app_name = 'cpvdict'
@@ -9,6 +9,7 @@ urlpatterns = [
     path('rodzajowosc_rb/', type_work_list, name='type_work_list'),
     path('informacje/<int:id>', show_information_work_object, name='show_information_work_object'),
     path('lista_zlecen/', order_list, name='order_list'),
+    path('show_information<int:id>', show_order_info_popup, name='show_order_info_popup'),
     path('nowe_zlecenie/', new_order, name='new_order'),
     path('edycja_zlecenia/<int:id>', edit_order, name='edit_order')
 ]

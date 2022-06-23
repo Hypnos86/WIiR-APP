@@ -6,6 +6,7 @@ from cpvdict.models import Typecpv, Genre, OrderLimit, Order
 from cpvdict.forms import OrderForm
 from main.views import current_year
 from units.models import Unit
+from main.models import Employer
 import datetime
 
 
@@ -96,8 +97,8 @@ def order_list(request):
     if q:
         orders = orders.filter(date__startswith=q) | orders.filter(no_order__icontains=q) | orders.filter(
             typeorder__type__icontains=q) | orders.filter(genre__name_id__icontains=q) | orders.filter(
-            unit__powiat__powiat__icontains=q) | orders.filter(unit__miasto__icontains=q) | orders.filter(
-            unit__adres__icontains=q)
+            unit__county__name__icontains=q) | orders.filter(unit__city__icontains=q) | orders.filter(
+            unit__address__icontains=q)
         return render(request, 'cpvdict/order_list.html',
                       {'orders': orders, 'year': year, 'ordersum': ordersum, 'query': query
                        })
@@ -108,8 +109,15 @@ def order_list(request):
 
 
 @login_required
+def show_order_info_popup(request, id):
+    order = get_object_or_404(Order, pk=id)
+    return render(request, 'cpvdict/order_info_popup.html', {'order': order, 'id': id})
+
+
+@login_required
 def new_order(request):
     order_form = OrderForm(request.POST or None)
+    order_form.fields['worker'].queryset = Employer.objects.all().filter(industry_specialist=True)
     units = Unit.objects.all()
 
     if request.method == 'POST':
@@ -127,12 +135,13 @@ def new_order(request):
 def edit_order(request, id):
     order_edit = get_object_or_404(Order, pk=id)
     order_form = OrderForm(request.POST or None, request.FILES or None, instance=order_edit)
+    order_form.fields['worker'].queryset = Employer.objects.all().filter(industry_specialist=True)
     units = Unit.objects.all()
 
-    if order_form.is_valid():
-        order = order_form.save(commit=False)
-        order.author = request.user
-        order_form.save()
-        return redirect('cpvdict:order_list')
-
+    if request.method == "POST":
+        if order_form.is_valid():
+            order = order_form.save(commit=False)
+            order.author = request.user
+            order_form.save()
+            return redirect('cpvdict:order_list')
     return render(request, 'cpvdict/order_form.html', {'order_form': order_form, 'new': False, 'units': units})

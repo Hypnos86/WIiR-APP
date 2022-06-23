@@ -21,7 +21,7 @@
     <h4>Zlecenia za {{year}} rok</h4>
     <div class="row">
         <div class="col-md-3">
-            <p class="m-0"><span>Liczba zleceń: {{ordersum}}</span></p>
+            <p class="m-0"><span>Liczba zleceń: </span><span class="badge text-white info badge-pill">{{ordersum}}</span></p>
         </div>
         <div class="col-md-9 moj-button-right my-1">
             <a href="{%url 'cpvdict:new_order'%}"><button class="btn btn-outline-primary button-choise-contracts my-btn">Nowe zlecenie</button></a>
@@ -29,34 +29,34 @@
     </div>
 </div>
 
-<table class="table table-hover my-table mt-2">
+<table class="container table table-hover my-table mt-2">
     <thead>
     <tr class="my-table-tr">
         <th align="center" valign="middle" width="40" scope="col" class="text-center">L.p.</th>
-        <th align="center" valign="middle" width="80" scope="col" class="text-center">Data</th>
-        <th align="center" valign="middle" width="100" scope="col" class="text-center">Nr. zlecenia</th>
-        <th align="center" valign="middle" width="150" scope="col" class="text-center">Szacowana kwota</th>
-        <th align="center" valign="middle" width="150" scope="col" class="text-center">Rodzaj usługi</th>
-        <th align="center" valign="middle" width="80" scope="col" class="text-center">ID rodzajowości</th>
+        <th align="center" valign="middle" width="120" scope="col" class="text-center">Data</th>
+        <th align="center" valign="middle" width="220" scope="col" class="text-center">Nr. dokumentu</th>
+        <th align="center" valign="middle" width="120" scope="col" class="text-center">Szacowana kwota</th>
+        <th align="center" valign="middle" width="120" scope="col" class="text-center">ID rodzajowości</th>
         <th align="center" valign="middle" width="120" scope="col" class="text-center">Awaria</th>
-        <th align="center" valign="middle" width="400" scope="col" class="text-center">Jednostka</th>
-        <th align="center" valign="middle" width="600" scope="col" class="text-center">Zakres prac</th>
-
+        <th align="center" valign="middle" width="420" scope="col" class="text-center">Jednostka</th>
     </tr>
     </thead>
     <tbody>
     {%for order in orders %}
     <tr class="my-table-tr">
         <td align="center" valign="middle" class="text-center" scope="row"></td>
-        <td align="center" valign="middle" class="text-center">{{order.date|date:"d.m.Y"}}</td>
-        <td align="center" valign="middle" class="text-center">{{order.no_order|default_if_none:'---'}}</td>
-        <td align="center" valign="middle">{{order.sum|intcomma}} zł</td>
-        <td align="center" valign="middle" class="text-center">{{order.typeorder}}</td>
-        <td align="center" valign="middle" class="text-center">{{order.genre.name_id}}</td>
+        <td align="center" valign="middle" class="text-center">{{order.date|date:"d.m.Y"}} r.</td>
+        <td align="center" valign="middle" class="text-center" title="{{order.worker}}">{{order.no_order|default_if_none:'---'}}</td>
+        <td align="right" valign="middle">{{order.sum|intcomma}} zł.</td>
+        <td align="center" valign="middle" class="text-center" title="{{order.typeorder}}">{{order.genre.name_id}}</td>
         <td align="center" valign="middle" class="text-center">{% if order.brakedown  %} <i class="bi bi-check2-circle text-success icon-check"></i> {%else%} --- {%endif%}</td>
-        <td valign="middle">{{order.unit}}</td>
-        <td valign="middle">{{order.content}}</td>
-        <td align="center" valign="middle">
+        <td valign="middle"><span>{{order.unit.type.type_full}} - {{order.unit.city}}<br><small>{{order.unit.address}}, {{order.unit.zip_code}} {{order.unit.city}}</small></span></td>
+        <td align="right" valign="middle">
+        {%if order.content%}
+            <button type="button" data-url="{%url 'cpvdict:show_order_info_popup' order.id%}" class="btn btn-outline-success mx-2" onclick="openModal(this)"><i
+                    class="bi bi-info-lg"></i>
+            </button>
+            {%endif%}
            <a href="{% url 'cpvdict:edit_order' order.id %}"><button type="button" class="btn btn-outline-primary icon-color mx-2 my-1"><i class="bi bi-pencil-square"></i></button></a>
         </td>
     </tr>
@@ -105,6 +105,13 @@
     </ul>
 </nav>
 {%endif%}
+<!-- Modal -->
+<div class="modal fade" id="orderInformationModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
 <script>
      document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-invoices").classList.remove("active");
@@ -112,5 +119,13 @@
      document.getElementById("button-contractors").classList.remove("active");
      document.getElementById("button-cpv").classList.add("active");
      document.getElementById("button-cpvnotaut").classList.add("active");
+       function openModal(button){
+            var url = $(button).data("url");
+            $("#orderInformationModal .modal-content").load(url);
+            $("#orderInformationModal").modal("show");
+        }
+        function submitForm(){
+            $("#submitButton").closest("form").submit();
+        }
 </script>
 {% endblock %}

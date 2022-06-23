@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
+from django.core.paginator import Paginator
 from listregister.models import OfficialFlat
 from listregister.forms import OfficialFlatForm
 
@@ -23,6 +24,9 @@ def show_information(request, id):
 def make_flats_list(request):
     flats = OfficialFlat.objects.all()
     count_flats = len(flats)
+    paginator = Paginator(flats, 10)
+    page_number = request.GET.get('page')
+    flats_list = paginator.get_page(page_number)
 
     try:
         last_date = OfficialFlat.objects.values('change').latest('change')
@@ -41,7 +45,7 @@ def make_flats_list(request):
                       {'flats': flats, "query": query, 'last_date': last_date, 'count_flats': count_flats_query})
     else:
         return render(request, 'listregister/flats_list.html',
-                      {'flats': flats, "search": search,
+                      {'flats': flats_list, "search": search,
                        'last_date': last_date, 'count_flats': count_flats})
 
 
