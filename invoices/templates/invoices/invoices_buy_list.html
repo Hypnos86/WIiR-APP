@@ -3,10 +3,19 @@
 {%load static%}
 {%block title%}Ewidencja faktur gr.6 - zobowiązania{%endblock%}
 {%block content%}
-<div class="moj-button-left"><a href="{%url 'invoices:menu_invoices'%}">
-    <button type="button" class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span>
-    </button>
-</a></div>
+<div class="row mb-3">
+    <div class="col-md-2">
+        <a href="{%url 'invoices:menu_invoices'%}">
+            <button type="button" class="btn btn-outline-primary my-btn">
+                <span class="bi bi-chevron-compact-left">Cofnij</span>
+            </button>
+        </a>
+    </div>
+<div class="col-md-8">
+        <h4 class="text-center ">Ewidencja faktur gr.6</h4>
+        <h6 class="text-center">Zobowiązania na {{year}} rok.</h6>
+    </div>
+   </div>
 <section class="w-100 pb-4 d-flex justify-content-center align-items-center flex-column">
     <div>
         <form method="get">
@@ -18,33 +27,26 @@
         </form>
     </div>
 </section>
-<div class="row my-2">
 <div class="row">
-    <div class="col-md-2">
+    <div class="col-md-6 align-self-end">
+        <p><span>Liczba faktur: </span><span class="badge text-white info badge-pill">{{invoices_buy_sum}}</span>
+        </p>
     </div>
-    <div class="col-md-8 moj-button-right">
-        <h4 class="text-center ">Ewidencja faktur gr.6</h4>
-        <h6 class="text-center">Zobowiązania na {{year}} rok.</h6>
-    </div>
-    <div class="col-md-2 moj-button-right">
-    <a href="{%url 'invoices:make_verification'%}">
-            <button class="btn btn-outline-primary button-choise-contracts my-btn">Weryfikacja</button>
-        </a>
-    </div>
-</div>
-    </div>
-<div class="row my-2">
-    <div class="row">
-        <div class="col-md-6">
-            <p><span>Liczba faktur: </span><span class="badge text-white info badge-pill">{{invoices_buy_sum}}</span>
-            </p>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12 moj-button-right my-1">
+                <a href="{%url 'invoices:make_verification'%}">
+                    <button class="btn btn-outline-primary button-choise-contracts my-btn">Weryfikacja</button>
+                </a>
+            </div>
+            {%if user.accessmodule.invoices_module_edit%}
+            <div class="moj-button-right my-1">
+                <a id="button-nowa-umowa" href="{%url 'invoices:new_invoice_buy'%}">
+                    <button class="btn btn-outline-primary button-choise-contracts my-btn">Nowa faktura</button>
+                </a>
+            </div>
+            {%endif%}
         </div>
-        {%if user.accessmodule.invoices_module_edit%}
-        <div class="col-md-6 moj-button-right">
-            <a id="button-nowa-umowa" href="{%url 'invoices:new_invoice_buy'%}">
-            <button class="btn btn-outline-primary button-choise-contracts my-btn">Nowa faktura</button>
-        </a></div>
-        {%endif%}
     </div>
 </div>
 <div>

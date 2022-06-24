@@ -4,18 +4,6 @@
 {% load static %}
 {% block title %}Ewidencja - Mieszkania Służbowe{% endblock %}
 {% block content %}
-
-<div class="row">
-    <div class="w-100 pb-4 d-flex justify-content-center align-items-center flex-column text_center">
-        <form method="get">
-            <div class="input-group">
-                <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj lokalu"
-                       aria-label="Search" aria-describedby="search-addon">
-                <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
-            </div>
-        </form>
-    </div>
-</div>
 <div class="kontrahenci-title justify-content-center align-items-center text-center">
     <h4>Mieszkania służbowe</h4>
     {% if last_date %}
@@ -35,6 +23,18 @@
         {%endif%}
     </div>
 </div>
+<div class="row">
+    <div class="w-100 pb-4 d-flex justify-content-center align-items-center flex-column text_center">
+        <form method="get">
+            <div class="input-group">
+                <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj lokalu"
+                       aria-label="Search" aria-describedby="search-addon">
+                <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <div class="container">
     <table class="table table-hover my-table">
         <thead>

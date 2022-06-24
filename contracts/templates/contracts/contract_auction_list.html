@@ -3,6 +3,12 @@
 {% load static %}
 {% block title %}Umowy ZZP - WIiR{%endblock%}
 {% block investmentsmenu %}
+<div class="text-center mb-3">
+        <h4>Ewidencja Umów ZZP</h4>
+        {%if last_date%}
+        <small>Ostatnia aktualizacja: {{last_date.change|date:'d.m.Y'}} r.</small>
+        {%endif%}
+    </div>
 <section class="w-100 pb-4 d-flex justify-content-center align-items-center flex-column">
     <div>
         <form method="get">
@@ -15,12 +21,6 @@
     </div>
 </section>
 <div class="kontrahenci-title">
-    <div class="text-center">
-        <h4>Ewidencja Umów ZZP</h4>
-        {%if last_date%}
-        <small>Ostatnia aktualizacja: {{last_date.change|date:'d.m.Y'}} r.</small>
-        {%endif%}
-    </div>
     <div class="row">
         <div class="col-md-3">
             <p class="m-0"><span>Liczba umów: </span><span class="badge text-white info badge-pill">{{contracts_auctions_sum}}</span></p>
