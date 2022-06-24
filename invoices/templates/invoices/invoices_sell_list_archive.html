@@ -64,10 +64,12 @@
                         class="bi bi-info-lg"></i>
                 </button>
                 {%endif%}
+                {%if user.accessmodule.invoices_module_edit%}
                 <a class="mx-2" href="{%url 'invoices:edit_invoice_sell' invoice.id %}">
                     <button type="submit" class="btn btn-outline-primary icon-color mx-1 "><i
                             class="bi bi-pencil-square"></i></button>
                 </a>
+                {%endif%}
             </td>
         </tr>
         {%endfor%}

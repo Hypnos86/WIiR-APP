@@ -37,13 +37,11 @@
     <table class="table table-hover my-table mt-2">
         <thead>
         <tr class="my-table-tr text-center">
-            <th align="center" valign="middle" width="50" scope="col">L.p.</th>
-            <th align="center" valign="middle" width="150" scope="col">Okres realizacji</th>
-            <th align="center" valign="middle" width="520" scope="col">Nazwa zadania</th>
-            <th align="center" valign="middle" width="350" scope="col">Jednostka</th>
-            <th align="center" valign="middle" width="180" scope="col">WKI</th>
-            <th align="center" valign="middle" width="350" scope="col">Inspektor wiodący</th>
-
+            <th align="center" valign="middle" width="5%" scope="col">L.p.</th>
+            <th align="center" valign="middle" width="15%" scope="col">Okres realizacji</th>
+            <th align="center" valign="middle" width="25%" scope="col">Nazwa zadania</th>
+            <th align="center" valign="middle" width="10%" scope="col">WKI</th>
+            <th align="center" valign="middle" width="25%" scope="col">Jednostka</th>
         </tr>
         </thead>
         <tbody>
@@ -51,17 +49,16 @@
         <tr class="my-table-tr">
             <td class="text-center" valign="middle" scope="row"></td>
             {%if project.realized%}
-            <td align="center" valign="middle" scope="row" title="Zadanie zrealizowane"><span>{{project.date_of_acceptance|date:'m.Y'}} {%if project.date_of_settlement%}- {{project.date_of_settlement|date:'m.Y'}} {%endif%}</span></td>
+            <td align="center" valign="middle" scope="row" ><span data-toggle="info" title="Zrealizowane">{{project.date_of_acceptance|date:'m.Y'}} r. {%if project.date_of_settlement%} - {{project.date_of_settlement|date:'m.Y'}} r.{%endif%}</span></td>
             {%else%}
-            <td align="center" valign="middle" scope="row" title="Zadanie w trakcie realizacji"><span>{{project.date_of_acceptance|date:'m.Y'}}</span></td>
+            <td align="center" valign="middle" scope="row" ><span data-toggle="info" title="W trakcie realizacji">{{project.date_of_acceptance|date:'m.Y'}} r.</span></td>
             {%endif%}
             <td valign="middle"><span>{{project.project_title}}</span></td>
-            <td class="left" valign="middle"><span>{{project.unit.type.type_full}} - {{project.unit.city}}<br><small>{{project.unit.address}}, {{project.unit.zip_code}} {{project.unit.city}}</small></span></td>
-            <td align="right" valign="middle" >{%if project.investment_cost_estimate_value%}<span class="px-3">{{project.investment_cost_estimate_value|intcomma}} zł.</span>{%endif%}</td>
-            <td valign="middle">{%for worker in project.worker.all%}<small class="" title="{{worker.industry}}">{{worker}}, </small>{%endfor%}</td>
+            <td align="right" valign="middle">{%if project.investment_cost_estimate_value%}<span class="pe-3">{{project.investment_cost_estimate_value|intcomma}} zł.</span>{%endif%}</td>
+            <td class="left" valign="middle"><span class="ps-4">{{project.unit.type.type_full}} - {{project.unit.city}}<br><small class="ps-4">{{project.unit.address}}, {{project.unit.zip_code}} {{project.unit.city}}</small></span></td>
             <td align="right"  valign="middle">
-                <a class="m-2" href="{%url 'investments:show_project' project.id%}"><button type="button" class="btn btn-outline-primary icon-color my-1"><i class="bi bi-eye"></i></button></a>
-                <a class="m-2" href="{%url 'investments:edit_project' project.id%}"><button type="submit" class="btn btn-outline-primary icon-color my-1"><i class="bi bi-pencil-square"></i></button></a>
+                <a class="m-2" href="{%url 'investments:show_project' project.id%}"><button data-toggle="info" title="Pokaż" type="button" class="btn btn-outline-primary icon-color my-1"><i class="bi bi-eye"></i></button></a>
+                <a class="m-2" href="{%url 'investments:edit_project' project.id%}"><button data-toggle="info" title="Edytuj" type="submit" class="btn btn-outline-primary icon-color my-1"><i class="bi bi-pencil-square"></i></button></a>
             </td>
         </tr>
         {%endfor%}
@@ -112,13 +109,16 @@
     {%endif%}
 </div>
 <script>
-     document.getElementById("button-units").classList.remove("active");
-     document.getElementById("button-invoices").classList.remove("active");
-     document.getElementById("button-contracts").classList.remove("active");
-     document.getElementById("button-contractors").classList.remove("active");
-     document.getElementById("button-cpv").classList.remove("active");
-     document.getElementById("button-investments").classList.add("active");
-     document.getElementById("button-projects").classList.add("active");
-     document.getElementById("button-cpvnotaut").classList.remove("active");
+    document.getElementById("button-units").classList.remove("active");
+    document.getElementById("button-invoices").classList.remove("active");
+    document.getElementById("button-contracts").classList.remove("active");
+    document.getElementById("button-contractors").classList.remove("active");
+    document.getElementById("button-cpv").classList.remove("active");
+    document.getElementById("button-investments").classList.add("active");
+    document.getElementById("button-projects").classList.add("active");
+    document.getElementById("button-cpv").classList.remove("active");
+    $(function () {
+        $('[data-toggle="info"]').tooltip()
+    })
 </script>
 {% endblock %}

@@ -76,13 +76,23 @@ class AccessModule(models.Model):
 
     user = models.OneToOneField('auth.User', on_delete=models.CASCADE, verbose_name='Użytkownik',
                                 related_name='accessmodule')
-    contractors_module = models.BooleanField('Moduł Kontrahenci', default=False)
-    contracts_immovables_module = models.BooleanField('Moduł Umowy Najmu', default=False)
-    investments_module = models.BooleanField('Moduł Inwestycje', default=False)
-    invoices_module = models.BooleanField('Moduł Faktury', default=False)
-    cpvdict_module = models.BooleanField('Moduł Rodzajowość', default=False)
-    listregister_float_team_module = models.BooleanField('Moduł Ewidencja: ZM', default=False)
-    listregister_exploatation_team_module = models.BooleanField('Moduł Ewidencja: ZE', default=False)
+    contractors_module = models.BooleanField('Kontrahenci - Podgląd', default=False)
+    contractors_module_edit = models.BooleanField('Kontrahenci - Edycja', default=False)
+    contracts_immovables_module = models.BooleanField('Umowy Najmu - Podgląd', default=False)
+    contracts_immovables_module_edit = models.BooleanField('Umowy Najmu - Edycja', default=False)
+    contracts_auction_module = models.BooleanField('Umowy ZZP - Podgląd', default=False)
+    contracts_auction_module_edit = models.BooleanField('Umowy ZZP - Edycja', default=False)
+    investments_module = models.BooleanField('Inwestycje - Podgląd', default=False)
+    investments_module_edit = models.BooleanField('Inwestycje - Edycja', default=False)
+    invoices_module = models.BooleanField('Faktury - Podgląd', default=False)
+    invoices_module_edit = models.BooleanField('Faktury - Edycja', default=False)
+    cpvdict_module = models.BooleanField('Rodzajowość - Podgląd', default=False)
+    cpvdict_module_edit = models.BooleanField('Rodzajowość - Edycja', default=False)
+    listregister_float_team_module = models.BooleanField('Ewidencja: ZM - Podgląd', default=False)
+    listregister_float_team_module_edit = models.BooleanField('Ewidencja: ZM - Edycja', default=False)
+    listregister_exploatation_team_module = models.BooleanField('Ewidencja: ZE - Podgląd', default=False)
+    gallery_module = models.BooleanField('Galeria - Podgląd', default=False)
+    gallery_module_edit = models.BooleanField('Galeria - Edycja', default=False)
 
     def __str__(self):
         return f'{self.user}'

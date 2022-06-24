@@ -52,11 +52,13 @@
                 <span class="badge text-white info badge-pill">{{notes_len}}</span>
             </p>
         </div>
+        {%if user.accessmodule.invoices_module_edit%}
         <div class="col-md-9 moj-button-right">
             <a id="button-nowa-umowa" href="{%url 'invoices:new_note'%}">
                 <button class="btn btn-outline-primary button-choise-contracts my-btn">Nowa nota</button>
             </a>
         </div>
+        {%endif%}
     </div>
 </div>
 <div class="container">
@@ -85,10 +87,12 @@
                         class="bi bi-file-earmark-text"></i>
                 </button>
                 {%endif%}
+                {%if user.accessmodule.invoices_module_edit%}
                 <a class="mx-2" href="{%url 'invoices:edit_note' note.id%}">
                     <button type="submit" class="btn btn-outline-primary icon-color mx-1 "><i
                             class="bi bi-pencil-square my-1"></i></button>
                 </a>
+                {%endif%}
             </td>
         </tr>
         {%endfor%}

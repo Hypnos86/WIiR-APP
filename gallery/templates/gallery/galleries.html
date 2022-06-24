@@ -11,10 +11,12 @@
     <div class="col-md-8">
         <h5 class="text-center"><span>Galeria zdjęć zadań inwestycyjnych ({{gallery_count}})</span></h5>
     </div>
+    {%if user.accessmodule.gallery_module_edit%}
     <div class="col-md-2 moj-button-right">
             <button class="btn btn-outline-primary my-btn"><span class="bi bi-images" onclick="openModal()"> Dodaj galerie</span>
             </button>
     </div>
+    {%endif%}
 </div>
 <div class="container">
     <div class="row">
@@ -52,7 +54,7 @@
      document.getElementById("button-investments").classList.add("active");
      document.getElementById("button-projects").classList.remove("active");
      document.getElementById("button-gallery").classList.add("active");
-     document.getElementById("button-cpvnotaut").classList.remove("active");
+     document.getElementById("button-cpv").classList.remove("active");
    // definicja funkcji otwierającej modal
     // będzie uruchamiana na event "onclick"
     function openModal(){

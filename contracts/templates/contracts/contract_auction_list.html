@@ -49,15 +49,15 @@
     <tr class="my-table-tr">
         <td align="center" valign="middle" class="text-center" scope="row"></td>
         <td align="center" valign="middle" class="text-center"><span>{{contract.date|date:"d.m.Y"}} r.</span></td>
-        <td align="center" valign="middle" class="text-center" title="Przedmiot umowy: {{contract.work_scope}}"><span>{{contract.no_contract|default_if_none:'---'}}</span></td>
+        <td align="center" valign="middle" class="text-center"><span data-toggle="info" title="{{contract.work_scope}}">{{contract.no_contract|default_if_none:'---'}}</span></td>
         <td valign="middle"><span title="SWOP ID: {{contract.contractor.no_contractor}}">{{contract.contractor.name}}<br><small>{{contract.contractor.address}}, {{contract.contractor.zip_code}} {{contract.contractor.city}}</small></span></td>
         <td align="center" valign="middle"><span>{{contract.price|intcomma}} zł.</span></td>
         <td align="center" valign="middle" class="text-center">{%if contract.end_date%}{{contract.end_date|date:"d.m.Y"}} r.{%else%}{{contract.end_date|default_if_none:'---'}}{%endif%}</td>
-        <td align="center" valign="middle" class="text-center" title="{{contract.legal_basic.legal_basic_text}}">{{contract.legal_basic}}</td>
+        <td align="center" valign="middle" class="text-center"><span data-toggle="info" title="{{contract.legal_basic.legal_basic_text}}">{{contract.legal_basic}}</span></td>
         <td valign="middle"><span>{{contract.unit.type.type_full}} - {{contract.unit.city}}<br><small>{{contract.unit.address}}, {{contract.unit.zip_code}} {{contract.unit.city}}</small></span></td>
         <td align="right" valign="middle">
-            <a class="col m-2" href="{% url 'contracts:show_contract_auction' contract.id %}"><button type="button" class="btn btn-outline-primary icon-color my-1"><i class="bi bi-eye"></i></button></a>
-            <a class="col m-2" href="{% url 'contracts:edit_contract_auction' contract.id %}"><button type="submit" class="btn btn-outline-primary icon-color my-1"><i class="bi bi-pencil-square"></i></button></a>
+            <a class="col m-2" href="{% url 'contracts:show_contract_auction' contract.id %}"><button data-toggle="info" title="Pokaz" type="button" class="btn btn-outline-primary icon-color my-1"><i class="bi bi-eye"></i></button></a>
+            <a class="col m-2" href="{% url 'contracts:edit_contract_auction' contract.id %}"><button data-toggle="info" title="Edytuj" type="submit" class="btn btn-outline-primary icon-color my-1"><i class="bi bi-pencil-square"></i></button></a>
         </td>
     </tr>
     {%endfor%}
@@ -108,11 +108,14 @@
     {%endif%}
 </div>
 <script>
-     document.getElementById("button-units").classList.remove("active");
-     document.getElementById("button-invoices").classList.remove("active");
-     document.getElementById("button-contracts").classList.remove("active");
-     document.getElementById("button-investments").classList.add("active");
-     document.getElementById("button-contractzzp").classList.add("active");
-     document.getElementById("button-contractors").classList.remove("active");
+    document.getElementById("button-units").classList.remove("active");
+    document.getElementById("button-invoices").classList.remove("active");
+    document.getElementById("button-contracts").classList.remove("active");
+    document.getElementById("button-investments").classList.add("active");
+    document.getElementById("button-contractzzp").classList.add("active");
+    document.getElementById("button-contractors").classList.remove("active");
+    $(function () {
+        $('[data-toggle="info"]').tooltip()
+    })
 </script>
 {%endblock%}

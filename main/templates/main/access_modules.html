@@ -6,31 +6,81 @@
 <div class="container">
     {%if user.is_authenticated%}
     <div class="row d-flex justify-content-around">
-        <div class="col-md-4">
-            <h5 class="text-center">Dostęp do modułów</h5>
-            <ul class="list-group">
-                <li class="list-group-item"><span>Moduł Kontrahenci: </span> {%if user.accessmodule.contractors_module%}<i class="bi bi-check-circle-fill text-success"></i>
-                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}
-                </li>
-                <li class="list-group-item"><span>Moduł Umowy: </span>{%if user.accessmodule.contracts_immovables_module%}<i class="bi bi-check-circle-fill text-success"></i>
-                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}
-                </li>
-                <li class="list-group-item"><span>Moduł Inwestycje: </span>{%if user.accessmodule.investments_module%}<i class="bi bi-check-circle-fill text-success"></i>
-                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}
-                </li>
-                <li class="list-group-item"><span>Moduł Faktury: </span>{%if user.accessmodule.invoices_module%}<i class="bi bi-check-circle-fill text-success"></i>
-                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}
-                </li>
-                <li class="list-group-item"><span>Moduł Rodzajowość WIiR: </span>{%if user.accessmodule.cpvdict_module%}<i class="bi bi-check-circle-fill text-success"></i>
-                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}
-                </li>
-                <li class="list-group-item"><span>Moduł Ewidencje WIiR - Zespół Mieszkaniowy: </span>{%if user.accessmodule.listregister_float_team_module%}<i class="bi bi-check-circle-fill text-success"></i>
-                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</li>
-                <li class="list-group-item"><span>Moduł Ewidencje WIiR - Zespół Eksploatacji: </span>{%if user.accessmodule.listregister_exploatation_team_module%}<i class="bi bi-check-circle-fill text-success"></i>
+        <div class="col-md-5">
+            <table class="table">
+                <thead data-toggle="info" title="Dostep do modułów" class="table-dark">
+                <tr class="my-table-tr">
+                    <th align="center" valign="middle" width="auto" scope="col">Moduł</th>
+                    <th align="center" valign="middle" width="20" scope="col">Podglad</th>
+                    <th align="center" valign="middle" width="20" scope="col">Edycja</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Moduł Kontrahenci</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.contractors_module%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.contractors_module_edit%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
+                </tr>
+                <tr>
+                    <td>Moduł Umowy najmu</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.contracts_immovables_module%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.contracts_immovables_module_edit%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
+                </tr><tr>
+                    <td>Moduł Umowy ZZP</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.contracts_auction_module%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.contracts_auction_module_edit%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
+                </tr>
+                <tr>
+                    <td>Moduł Inwestycje</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.investments_module%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.investments_module_edit%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
+                </tr>
+                <tr>
+                    <td>Moduł Faktury</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.invoices_module%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.invoices_module_edit%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
+                </tr>
+                <tr>
+                    <td>Moduł Rodzajowość WIiR</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.cpvdict_module%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.cpvdict_module_edit%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
+                </tr>
+                <tr>
+                    <td>Moduł Ewidencje WIiR - Zespół Mieszkaniowy</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.listregister_float_team_module%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.listregister_float_team_module_edit%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
+                </tr>
+                <tr>
+                    <td>Moduł Ewidencje WIiR - Zespół Eksploatacji</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.listregister_exploatation_team_module%}<i class="bi bi-check-circle-fill text-success"></i>
                     {%else%} <i class="bi bi-x-circle-fill text-danger"></i>
-                    {%endif%}
-                </li>
-            </ul>
+                    {%endif%}</td>
+                    <td align="center" valign="middle">BRAK</td>
+                </tr>
+                <tr>
+                    <td>Moduł Galeria</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.gallery_module%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i>
+                    {%endif%}</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.gallery_module_edit%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
+                </tr>
+                </tbody>
+            </table>
             </div>
         {%if commands%}
         <div class="col-md-4">
@@ -46,4 +96,9 @@
     </ul>
     {%endif%}
 </div>
+<script>
+    $(function () {
+        $('[data-toggle="info"]').tooltip()
+    })
+</script>
 {%endblock%}

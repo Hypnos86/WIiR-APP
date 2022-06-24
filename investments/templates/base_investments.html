@@ -5,9 +5,9 @@
 {% block content %}
 <nav class="justify-content-center mb-4 row text-center">
     <ul class="nav nav-pills col-md-4 justify-content-around" >
-            <li class="nav-item"><a id="button-contractzzp" href="{%url 'contracts:menu_contracts_auction'%}" class="btn btn-sm btn-outline-primary mx-2 my-btn" ><span>Umowy ZZP</span></a></li>
+            {%if user.accessmodule.contracts_auction_module%}<li class="nav-item"><a id="button-contractzzp" href="{%url 'contracts:menu_contracts_auction'%}" class="btn btn-sm btn-outline-primary mx-2 my-btn" ><span>Umowy ZZP</span></a></li>{%endif%}
             <li class="nav-item"><a id="button-projects" href="{%url 'investments:investment_projects_list'%}" class="btn btn-sm btn-outline-primary mx-2 my-btn" ><span>Zadania Inwestycyjne</span></a></li>
-            <li class="nav-item"><a id="button-gallery" href="{%url 'gallery:gallery_list'%}" class="btn btn-sm btn-outline-primary mx-2 my-btn"><span>Galeria</span></a></li>
+            {%if user.accessmodule.gallery_module%}<li class="nav-item"><a id="button-gallery" href="{%url 'gallery:gallery_list'%}" class="btn btn-sm btn-outline-primary mx-2 my-btn"><span>Galeria</span></a></li>{%endif%}
     </ul>
 </nav>
 <hr class="mb-4">
@@ -21,7 +21,6 @@
      document.getElementById("button-contractors").classList.remove("active");
      document.getElementById("button-cpv").classList.remove("active");
      document.getElementById("button-investments").classList.add("active");
-     document.getElementById("button-cpvnotaut").classList.remove("active");
-
+     document.getElementById("button-cpv").classList.remove("active");
 </script>
 {% endblock %}

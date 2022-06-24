@@ -24,11 +24,13 @@
             <p><span>Liczba kontrahentów: </span><span class="badge text-white info badge-pill">{{consellsum}}</span>
             </p>
         </div>
+        {%if user.accessmodule.contractors_module_edit%}
         <div class="col-md-10 moj-button-right "><a href="{%url 'contractors:new_contractorsell'%}">
             <button type="button" class="btn btn-outline-primary my-btn"><span class="bi bi-plus-circle"> Dodaj kontrahenta</span>
             </button>
         </a>
         </div>
+        {%endif%}
     </div>
 </div>
 <div class="container">
@@ -36,9 +38,9 @@
         <thead>
         <tr class="my-table-tr text-center">
             <th align="center" valign="middle" width="50" scope="col">L.p.</th>
-            <th align="center" valign="middle" width="110" scope="col">Nr. kontrahenta</th>
-            <th align="center" valign="middle" width="280" scope="col">Nazwa</th>
-            <th align="center" valign="middle" width="200" scope="col">NIP</th>
+            <th align="center" valign="middle" width="5%" scope="col">Nr. kontrahenta</th>
+            <th align="center" valign="middle" scope="col">Nazwa</th>
+            <th align="center" valign="middle" width="180" scope="col">NIP</th>
             <th align="center" valign="middle" width="260" scope="col">Adres</th>
             <th align="center" valign="middle" width="100" scope="col">Kod pocztowy</th>
             <th align="center" valign="middle" scope="col">Miasto</th>
@@ -57,13 +59,15 @@
             <td align="right" valign="middle">
                 {%if contractor.information%}
                 <button type="button" data-url="{% url 'contractors:show_information' contractor.id %}" class="btn btn-outline-success mx-2" onclick="openModal(this)"><i
-                        class="bi bi-info-lg"></i>
+                        class="bi bi-info-lg my-1"></i>
                 </button>
                 {%endif%}
+                {%if user.accessmodule.contractors_module_edit%}
                 <a class="mx-2 moj-button-right" href="{%url 'contractors:edit_contractorsell' contractor.id%}">
-                    <button type="submit" class="btn btn-outline-primary icon-color"><i class="bi bi-pencil-square"></i>
+                    <button type="submit" class="btn btn-outline-primary icon-color my-1"><i class="bi bi-pencil-square"></i>
                     </button>
                 </a>
+                {%endif%}
             </td>
         </tr>
         {%endfor%}

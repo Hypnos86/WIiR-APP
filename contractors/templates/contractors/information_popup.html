@@ -5,7 +5,7 @@
 <form class="m-2 p-4" method="get" action="{% url 'contractors:show_information' id %}">
     {%csrf_token%}
     <div class="container">
-        <div>{{contractor.name}}</div>
+        <div><span class="text-muted">Kontrahent: </span><span>{{contractor.name}}</span></div>
         <div class="my-4"><span class="text-muted">NIP: </span>{{contractor.nip|default_if_none:'---'}}</div>
         <div><span class="text-muted">Informacje: </span><p>{{contractor.information}}</p></div>
 

@@ -79,8 +79,8 @@
     <tr class="my-table-tr">
         <td align="center" valign="middle" class="text-center" scope="row" width="80px"></td>
         <td align="center" valign="middle" width="120">{{unit.county}}</td>
-        <td align="center" valign="middle" class="text-center" title="{{unit.type.type_full}}">
-            {{unit.type.type_short}}
+        <td align="center" valign="middle" class="text-center"><span data-toggle="info" title="{{unit.type.type_full}}">{{unit.type.type_short}}</span>
+
         </td>
         <td valign="middle">{{unit.address}}</td>
         <td align="center" valign="middle" class="text-center">{{unit.zip_code}}</td>
@@ -136,13 +136,13 @@
     </tfoot>
 </table>
 <script>
-     document.getElementById("button-units").classList.add("active");
-     document.getElementById("button-invoices").classList.remove("active");
-     document.getElementById("button-contracts").classList.remove("active");
-     document.getElementById("button-contractors").classList.remove("active");
-     document.getElementById("button-record").classList.remove("active");
-
-
-
+    document.getElementById("button-units").classList.add("active");
+    document.getElementById("button-invoices").classList.remove("active");
+    document.getElementById("button-contracts").classList.remove("active");
+    document.getElementById("button-contractors").classList.remove("active");
+    document.getElementById("button-record").classList.remove("active");
+    $(function () {
+        $('[data-toggle="info"]').tooltip()
+    })
 </script>
 {%endblock%}

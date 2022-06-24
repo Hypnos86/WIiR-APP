@@ -23,9 +23,11 @@
         <div class="col-md-3">
             <p class="m-0"><span>Liczba zleceń: </span><span class="badge text-white info badge-pill">{{ordersum}}</span></p>
         </div>
+        {%if user.accessmodule.cpvdict_module_edit%}
         <div class="col-md-9 moj-button-right my-1">
             <a href="{%url 'cpvdict:new_order'%}"><button class="btn btn-outline-primary button-choise-contracts my-btn">Nowe zlecenie</button></a>
         </div>
+        {%endif%}
     </div>
 </div>
 
@@ -57,7 +59,9 @@
                     class="bi bi-info-lg"></i>
             </button>
             {%endif%}
+        {%if user.accessmodule.cpvdict_module_edit%}
            <a href="{% url 'cpvdict:edit_order' order.id %}"><button type="button" class="btn btn-outline-primary icon-color mx-2 my-1"><i class="bi bi-pencil-square"></i></button></a>
+        {%endif%}
         </td>
     </tr>
     {%endfor%}
@@ -118,7 +122,7 @@
      document.getElementById("button-contracts").classList.remove("active");
      document.getElementById("button-contractors").classList.remove("active");
      document.getElementById("button-cpv").classList.add("active");
-     document.getElementById("button-cpvnotaut").classList.add("active");
+     document.getElementById("button-cpv").classList.add("active");
        function openModal(button){
             var url = $(button).data("url");
             $("#orderInformationModal .modal-content").load(url);

@@ -14,7 +14,7 @@
                 </div>
                 <div class="text-center">
                     {%for year in all_year_sell%}
-                    <a href="{%url 'invoices:sell_invoices_list_archive' year %}"><button type="button" class="btn btn-outline-dark m-2" title="Rok wystawienia faktur">{{year}}</button></a>
+                    <a href="{%url 'invoices:sell_invoices_list_archive' year %}"><button type="button" class="btn btn-outline-dark m-2" data-toggle="info" title="Rok wystawienia">{{year}}</button></a>
                     {%endfor%}
                 </div>
                 </section>
@@ -26,7 +26,7 @@
             </div>
             <div class="text-center">
                 {% for year in year_note_list%}
-                <a href="{%url 'invoices:corrective_note_list_archive' year%}"><button type="button" name="year_buy" class="btn btn-outline-dark m-2" title="Rok wystawienia not księgowych">{{year}}</button></a>
+                <a href="{%url 'invoices:corrective_note_list_archive' year%}"><button type="button" name="year_buy" class="btn btn-outline-dark m-2" data-toggle="info" title="Rok wystawienia">{{year}}</button></a>
                 {%endfor%}
             </div>
            </section>
@@ -38,7 +38,7 @@
             </div>
             <div class="text-center">
                 {% for year in all_year_buy%}
-                <a href="{%url 'invoices:buy_invoices_list_archive' year%}"><button type="button" name="year_buy" class="btn btn-outline-dark m-2" title="Rok wpływu faktur">{{year}}</button></a>
+                <a href="{%url 'invoices:buy_invoices_list_archive' year%}"><button type="button" name="year_buy" class="btn btn-outline-dark m-2" data-toggle="info" title="Rok wpływu">{{year}}</button></a>
                 {%endfor%}
             </div>
            </section>
@@ -46,9 +46,12 @@
     </div>
 </div>
 <script>
-     document.getElementById("button-units").classList.remove("active");
-     document.getElementById("button-invoices").classList.add("active");
-     document.getElementById("button-contracts").classList.remove("active");
-     document.getElementById("button-contractors").classList.remove("active");
+    document.getElementById("button-units").classList.remove("active");
+    document.getElementById("button-invoices").classList.add("active");
+    document.getElementById("button-contracts").classList.remove("active");
+    document.getElementById("button-contractors").classList.remove("active");
+    $(function () {
+        $('[data-toggle="info"]').tooltip()
+    })
 </script>
 {%endblock%}
