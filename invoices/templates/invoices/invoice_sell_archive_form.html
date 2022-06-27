@@ -5,7 +5,7 @@
 
 {%block content%}
 <div class="row">
-    <div class="col-md-3"><a href="{%url 'invoices:sell_invoices_list'%}">
+    <div class="col-md-3"><a href="{%url 'invoices:sell_invoices_list_archive' year%}">
         <button class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span></button>
     </a></div>
     <div class="col-md-6"><h4 class="text-center">{%if new%}Nowa faktura{%else%}Edycja faktury{%endif%}</h4></div>
@@ -47,15 +47,12 @@
             <div class="col-md-6  mt-3">{{invoice.information|bootstrap}}</div>
         </div>
         <div class="row mt-2">
-            {%if new%}
             <div class="col-md-12 moj-button-right">
-                <button type="submit" class="btn btn-outline-primary my-btn"><span class="bi bi-save2"> Zapisz</span></button>
+                <a href="{%url 'invoices:sell_invoices_list_archive' year %}">
+                    <button type="submit" class="btn btn-outline-primary my-btn">
+                        <span class="bi bi-save2"> Zapisz zmiany </span>
+                    </button></a>
             </div>
-            {%else%}
-            <div class="col-md-12 moj-button-right">
-                <button type="submit" class="btn btn-outline-primary my-btn"><span class="bi bi-save2"> Zapisz zmiany </span></button>
-            </div>
-            {%endif%}
         </div>
     </form>
 </div>

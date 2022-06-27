@@ -5,28 +5,45 @@
 {%block content%}
 {%if user.is_authenticated%}
 <div class="row">
-    <div class="col-md-2 moj-button-left my-1"><a href="{% url 'cpvdict:type_expense_list'%}"><button class="btn btn-outline-primary button-choise-contracts my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span></button></a></div>
+    <div class="col-md-2 moj-button-left my-1">
+        <a href="{% url 'cpvdict:type_expense_list'%}">
+            <button class="btn btn-outline-primary button-choise-contracts my-btn">
+                <span class="bi bi-chevron-compact-left">Cofnij</span>
+            </button></a>
+    </div>
+    <div class="col-md-8 text-center">
+        <h4>Słownik kodów PCV</h4>
+    </div>
 </div>
 {%endif%}
-<section class="w-100 pb-4 d-flex justify-content-center align-items-center flex-column">
-    <div>
-        <form method="get">
-            <div class="input-group">
-                <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj kodu lub nazwy"
-                       aria-label="Search" aria-describedby="search-addon">
+<div class="container my-3">
+    <div class="row">
+        <div class="col-md-3 align-self-end">
+            <p><span>Liczba kodów CPV: <span class="badge text-white info badge-pill">{{sumcpv}}</span></span></p>
+            {%if query%}
+            <p><span>Znaleziono <span class="badge text-white info badge-pill">{{qsum}}</span> kodów CPV</span></p>
+            {%endif%}
+        </div>
+        <div class="col-md-6">
+            <section class="w-100 pb-4 d-flex justify-content-center align-items-center flex-column">
+                <div>
+                    <form method="get">
+                        <div class="input-group">
+                            <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj kodu lub nazwy"
+                                   aria-label="Search" aria-describedby="search-addon">
 
-                <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
-            </div>
+                            <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
+                        </div>
 
-        </form>
+                    </form>
+                </div>
+            </section>
+        </div>
     </div>
-</section>
+</div>
 <div class="kontrahenci-title">
-    <h4>Słownik kodów PCV</h4>
-    <p><span>Liczba kodów CPV: <span class="badge text-white info badge-pill">{{sumcpv}}</span></span></p>
-    {%if query%}
-    <p><span>Znaleziono <span class="badge text-white info badge-pill">{{qsum}}</span> kodów CPV</span></p>
-    {%endif%}
+
+
 </div>
 <div class="container">
     {%if query%}

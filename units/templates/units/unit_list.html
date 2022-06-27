@@ -79,8 +79,8 @@
     <tr class="my-table-tr">
         <td align="center" valign="middle" class="text-center" scope="row" width="80px"></td>
         <td align="center" valign="middle" width="120">{{unit.county}}</td>
-        <td align="center" valign="middle" class="text-center"><span data-toggle="info" title="{{unit.type.type_full}}">{{unit.type.type_short}}</span>
-
+        <td align="center" valign="middle" class="text-center">
+            <span data-toggle="info" title="{{unit.type.type_full}}">{{unit.type.type_short}}</span>
         </td>
         <td valign="middle">{{unit.address}}</td>
         <td align="center" valign="middle" class="text-center">{{unit.zip_code}}</td>
@@ -92,10 +92,10 @@
         <td class="table-warning" valign="middle">{{unit.manager}}</td>
         {%endif%}
         {%if unit.status == True%}
-        <td align="center" valign="middle" title="Działający"><i class="bi bi-circle-fill text-success"></i>
+        <td data-toggle="info" align="center" valign="middle" title="Działający"><i class="bi bi-circle-fill text-success"></i>
         </td>
         {%else%}
-        <td align="center" valign="middle" title="Zdany"><i class="bi bi-x-circle-fill text-danger"></i></td>
+        <td data-toggle="info" align="center" valign="middle" title="Zdany"><i class="bi bi-x-circle-fill text-danger"></i></td>
         {%endif%}
     </tr>
     {%endfor%}
@@ -106,8 +106,8 @@
     <tr class="my-table-tr">
         <td align="center" valign="middle" class="text-center" scope="row" width="80px"></td>
         <td align="center" valign="middle" width="120">{{unit.county}}</td>
-        <td align="center" valign="middle" class="text-center" title="{{unit.type.type_full}}">
-            {{unit.type.type_short}}
+        <td align="center" valign="middle" class="text-center">
+            <span data-toggle="info" title="{{unit.type.type_full}}">{{unit.type.type_short}}</span>
         </td>
         <td valign="middle">{{unit.address}}</td>
         <td align="center" valign="middle" class="text-center">{{unit.zip_code}}</td>
@@ -119,10 +119,10 @@
         <td class="table-warning" valign="middle">{{unit.manager}}</td>
         {%endif%}
         {%if unit.status == True%}
-        <td align="center" valign="middle" title="Działający"><i class="bi bi-circle-fill text-success"></i>
+        <td data-toggle="info" align="center" valign="middle" title="Działający"><i class="bi bi-circle-fill text-success"></i>
         </td>
         {%else%}
-        <td align="center" valign="middle" title="Zdany"><i class="bi bi-x-circle-fill text-danger"></i></td>
+        <td data-toggle="info" align="center" valign="middle" title="Zdany"><i class="bi bi-x-circle-fill text-danger"></i></td>
         {%endif%}
     </tr>
     {%endfor%}

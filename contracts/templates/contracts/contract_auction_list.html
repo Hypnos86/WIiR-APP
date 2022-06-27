@@ -4,30 +4,35 @@
 {% block title %}Umowy ZZP - WIiR{%endblock%}
 {% block investmentsmenu %}
 <div class="text-center mb-3">
-        <h4>Ewidencja Umów ZZP</h4>
-        {%if last_date%}
-        <small>Ostatnia aktualizacja: {{last_date.change|date:'d.m.Y'}} r.</small>
-        {%endif%}
+    <h4>Ewidencja Umów ZZP</h4>
+    {%if last_date%}
+    <small>Ostatnia aktualizacja: {{last_date.change|date:'d.m.Y'}} r.</small>
+    {%endif%}
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <span>Liczba umów: </span>
+        <span class="badge text-white info badge-pill">{{contracts_auctions_sum}}</span>
     </div>
-<section class="w-100 pb-4 d-flex justify-content-center align-items-center flex-column">
-    <div>
-        <form method="get">
-            <div class="input-group">
-                <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj umowy"
-                       aria-label="Search" aria-describedby="search-addon">
-                <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
+    <div class="col-md-6">
+        <section class="w-100 pb-4 d-flex justify-content-center align-items-center flex-column">
+            <div>
+                <form method="get">
+                    <div class="input-group">
+                        <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj umowy"
+                               aria-label="Search" aria-describedby="search-addon">
+                        <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
+                    </div>
+                </form>
             </div>
-        </form>
+        </section>
     </div>
-</section>
-<div class="kontrahenci-title">
-    <div class="row">
-        <div class="col-md-3">
-            <p class="m-0"><span>Liczba umów: </span><span class="badge text-white info badge-pill">{{contracts_auctions_sum}}</span></p>
-        </div>
-        <div class="col-md-9 moj-button-right"><a href="{%url 'contracts:new_contract_auction'%}">
-            <button class="btn btn-outline-primary my-btn"><span class="bi bi-plus-circle"> Dodaj umowę</span></button></a>
-        </div>
+    <div class="col-md-3 moj-button-right">
+        <a href="{%url 'contracts:new_contract_auction'%}">
+            <button class="btn btn-outline-primary my-btn">
+                <span class="bi bi-plus-circle"> Dodaj umowę</span>
+            </button>
+        </a>
     </div>
 </div>
 <div class="col">
@@ -48,16 +53,40 @@
     {%for contract in contracts_auctions_list %}
     <tr class="my-table-tr">
         <td align="center" valign="middle" class="text-center" scope="row"></td>
-        <td align="center" valign="middle" class="text-center"><span>{{contract.date|date:"d.m.Y"}} r.</span></td>
-        <td align="center" valign="middle" class="text-center"><span data-toggle="info" title="{{contract.work_scope}}">{{contract.no_contract|default_if_none:'---'}}</span></td>
-        <td valign="middle"><span title="SWOP ID: {{contract.contractor.no_contractor}}">{{contract.contractor.name}}<br><small>{{contract.contractor.address}}, {{contract.contractor.zip_code}} {{contract.contractor.city}}</small></span></td>
-        <td align="center" valign="middle"><span>{{contract.price|intcomma}} zł.</span></td>
-        <td align="center" valign="middle" class="text-center">{%if contract.end_date%}{{contract.end_date|date:"d.m.Y"}} r.{%else%}{{contract.end_date|default_if_none:'---'}}{%endif%}</td>
-        <td align="center" valign="middle" class="text-center"><span data-toggle="info" title="{{contract.legal_basic.legal_basic_text}}">{{contract.legal_basic}}</span></td>
-        <td valign="middle"><span>{{contract.unit.type.type_full}} - {{contract.unit.city}}<br><small>{{contract.unit.address}}, {{contract.unit.zip_code}} {{contract.unit.city}}</small></span></td>
+        <td align="center" valign="middle" class="text-center">
+            <span>{{contract.date|date:"d.m.Y"}} r.</span>
+        </td>
+        <td align="center" valign="middle" class="text-center">
+            <span data-toggle="info" title="{{contract.work_scope}}">{{contract.no_contract|default_if_none:'---'}}</span>
+        </td>
+        <td valign="middle">
+            <span title="SWOP ID: {{contract.contractor.no_contractor}}">{{contract.contractor.name}}<br>
+                <small>{{contract.contractor.address}}, {{contract.contractor.zip_code}} {{contract.contractor.city}}</small>
+            </span>
+        </td>
+        <td align="center" valign="middle">
+            <span>{{contract.price|intcomma}} zł.</span>
+        </td>
+        <td align="center" valign="middle" class="text-center">
+            <span>{%if contract.end_date%}{{contract.end_date|date:"d.m.Y"}} r.{%else%}{{contract.end_date|default_if_none:'---'}}{%endif%}</span>
+        </td>
+        <td align="center" valign="middle" class="text-center">
+            <span data-toggle="info" title="{{contract.legal_basic.legal_basic_text}}">{{contract.legal_basic}}</span>
+        </td>
+        <td valign="middle">
+            <span>{{contract.unit.type.type_full}} - {{contract.unit.city}}<br>
+                <small>{{contract.unit.address}}, {{contract.unit.zip_code}} {{contract.unit.city}}</small>
+            </span>
+        </td>
         <td align="right" valign="middle">
-            <a class="col m-2" href="{% url 'contracts:show_contract_auction' contract.id %}"><button data-toggle="info" title="Pokaz" type="button" class="btn btn-outline-primary icon-color my-1"><i class="bi bi-eye"></i></button></a>
-            <a class="col m-2" href="{% url 'contracts:edit_contract_auction' contract.id %}"><button data-toggle="info" title="Edytuj" type="submit" class="btn btn-outline-primary icon-color my-1"><i class="bi bi-pencil-square"></i></button></a>
+            <a class="col m-2" href="{% url 'contracts:show_contract_auction' contract.id %}">
+                <button data-toggle="info" title="Pokaz" type="button" class="btn btn-outline-primary icon-color my-1">
+                    <i class="bi bi-eye"></i>
+                </button></a>
+            <a class="col m-2" href="{% url 'contracts:edit_contract_auction' contract.id %}">
+                <button data-toggle="info" title="Edytuj" type="submit" class="btn btn-outline-primary icon-color my-1">
+                    <i class="bi bi-pencil-square"></i>
+                </button></a>
         </td>
     </tr>
     {%endfor%}

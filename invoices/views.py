@@ -3,15 +3,9 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Sum
 from django.shortcuts import render, redirect, get_object_or_404
-from invoices.models import InvoiceSell, Creator, InvoiceBuy, InvoiceItems, DocumentTypes, CorrectiveNote
+from invoices.models import InvoiceSell, InvoiceBuy, InvoiceItems, DocumentTypes, CorrectiveNote
 from invoices.forms import InvoiceSellForm, InvoiceBuyForm, InvoiceItemsForm, CorrectiveNoteForm
 from main.views import current_year, now_date
-# for pdf
-from django.http import FileResponse
-import io
-from reportlab.pdfgen import canvas
-from reportlab.lib.units import inch
-from reportlab.lib.pagesizes import letter
 # xhtml2pdf
 import os
 from django.conf import settings
@@ -84,6 +78,11 @@ def show_info_buy(request, id):
 def buy_invoices_list_archive(request, year):
     invoices_buy = InvoiceBuy.objects.all().filter(date_receipt__year=year).order_by("-date_receipt")
     invoices_buy_sum = len(invoices_buy)
+    query = "Wyczyść"
+    search = "Szukaj"
+    invoices_buy_sum = len(invoices_buy)
+    q = request.GET.get("q")
+
     context = {'invoices': invoices_buy,
                'year': year,
                'invoices_buy_sum': invoices_buy_sum}
@@ -184,31 +183,50 @@ def show_info_sell(request, id):
 def sell_invoices_list_archive(request, year):
     invoices_sell = InvoiceSell.objects.all().filter(date__year=year).order_by("-date")
     invoices_sell_len = len(invoices_sell)
+    invoices_sell_sum_dict = invoices_sell.aggregate(Sum('sum'))
+    invoices_sell_sum = round(invoices_sell_sum_dict['sum__sum'], 2)
     query = "Wyczyść"
     search = "Szukaj"
     q = request.GET.get("q")
+    date_from = request.GET.get('from')
+    date_to = request.GET.get('to')
 
     paginator = Paginator(invoices_sell, 40)
     page_number = request.GET.get('page')
     invoicessell_list = paginator.get_page(page_number)
 
-    if q:
-        invoices_sell = invoices_sell.filter(no_invoice__icontains=q) | invoices_sell.filter(
-            sum__startswith=q) | invoices_sell.filter(date__startswith=q) | invoices_sell.filter(
-            contractor__name__icontains=q) | invoices_sell.filter(
-            contractor__no_contractor__startswith=q) | invoices_sell.filter(
-            county__name__icontains=q) | invoices_sell.filter(
-            creator__creator__icontains=q)
+    if q or date_from or date_to:
+        if q:
+            invoicess_ell = invoices_sell.filter(no_invoice__icontains=q) | invoices_sell.filter(
+                sum__startswith=q) | invoices_sell.filter(date__startswith=q) | invoices_sell.filter(
+                contractor__name__icontains=q) | invoices_sell.filter(
+                contractor__no_contractor__startswith=q) | invoices_sell.filter(
+                county__name__icontains=q) | invoices_sell.filter(
+                creator__creator__icontains=q) | invoices_sell.filter(
+                information__icontains=q)
+
+        if date_from:
+            invoices_sell = invoices_sell.filter(date__gte=date_from)
+
+        if date_to:
+            invoices_sell = invoices_sell.filter(date__lte=date_to)
+
         invoices_sell_filter_sum = len(invoices_sell)
-        return render(request, 'invoices/invoices_sell_list_archive.html', {"invoices": invoices_sell,
-                                                                            "invoices_sell_len": invoices_sell_filter_sum,
-                                                                            "query": query, "year": year,
-                                                                            })
+        invoices_sell_sum_dict = invoices_sell.aggregate(Sum('sum'))
+        try:
+            invoices_sell_sum = round(invoices_sell_sum_dict['sum__sum'], 2)
+        except TypeError:
+            invoices_sell_sum = 0
+
+        return render(request, 'invoices/invoices_sell_list_archive.html', {'invoices': invoices_sell,
+                                                                            'invoices_sell_len': invoices_sell_filter_sum,
+                                                                            'invoices_sell_sum': invoices_sell_sum,
+                                                                            'query': query, 'year': year})
     else:
-        return render(request, 'invoices/invoices_sell_list_archive.html', {"invoices": invoicessell_list,
-                                                                            "invoices_sell_len": invoices_sell_len,
-                                                                            "search": search, "year": year,
-                                                                            })
+        return render(request, 'invoices/invoices_sell_list_archive.html', {'invoices': invoicessell_list,
+                                                                            'invoices_sell_len': invoices_sell_len,
+                                                                            'invoices_sell_sum': invoices_sell_sum,
+                                                                            'search': search, 'year': year})
 
 
 @login_required
@@ -242,6 +260,24 @@ def edit_invoice_sell(request, id):
         instance.save()
         return redirect('invoices:sell_invoices_list')
     return render(request, 'invoices/invoice_sell_form.html', context)
+
+
+@login_required
+def edit_invoice_sell_archive(request, id):
+    invoice_sell_edit = get_object_or_404(InvoiceSell, pk=id)
+    invoice_sell_form = InvoiceSellForm(request.POST or None, instance=invoice_sell_edit)
+    invoice_sell_form.fields['doc_types'].queryset = DocumentTypes.objects.exclude(type='Nota korygująca')
+    year = invoice_sell_edit.date.year
+
+    context = {'invoice': invoice_sell_form,
+               'new': False,
+               'year': year}
+
+    if invoice_sell_form.is_valid():
+        instance = invoice_sell_form.save(commit=False)
+        instance.author = request.user
+        instance.save()
+    return render(request, 'invoices/invoice_sell_archive_form.html', context)
 
 
 @login_required
@@ -282,14 +318,16 @@ def corrective_note_list(request):
         if date_to:
             notes = notes.filter(date__lte=date_to)
 
-        note_len = len(notes)
+        notes_len = len(notes)
 
         return render(request, "invoices/corrective_note_list.html", {'notes': notes,
-                                                                      'note_len': note_len,
+                                                                      'notes_len': notes_len,
                                                                       'query': query, 'year': year})
     else:
-        return render(request, 'invoices/corrective_note_list.html',
-                      {'notes': note_list, 'notes_len': notes_len, 'year': year, 'search': search})
+        return render(request, 'invoices/corrective_note_list.html', {'notes': note_list,
+                                                                      'notes_len': notes_len,
+                                                                      'year': year,
+                                                                      'search': search})
 
 
 @login_required
@@ -364,6 +402,22 @@ def edit_note(request, id):
 
 
 @login_required
+def edit_note_archive(request, id):
+    note = get_object_or_404(CorrectiveNote, pk=id)
+    note_form = CorrectiveNoteForm(request.POST or None, instance=note)
+    year = note.date.year
+    context = {'note_form': note_form,
+               'year': year}
+
+    if note_form.is_valid():
+        instance = note_form.save(commit=False)
+        instance.author = request.user
+        instance.save()
+        return redirect('invoices:edit_invoice_sell_archive', year)
+    return render(request, 'invoices/corrective_note_archive_form.html', context)
+
+
+@login_required
 def make_verification(request):
     invoices_buy = InvoiceBuy.objects.all().order_by("date_of_payment")
     query = "Wyczyść"
@@ -408,30 +462,6 @@ def make_verification(request):
         })
 
 
-# @login_required
-# def make_pdf(request):
-#     # Create Bytestream buffer
-#     buf = io.BytesIO()
-#     # Create a canvas
-#     c = canvas.Canvas(buf, pagesize=letter, bottomup=0)
-#     # Create text object
-#     textob = c.beginText()
-#     textob.setTextOrigin(inch, inch)
-#     # textob.setFont("Cambria", 12)
-#     # Add some lines on text
-#     lines = ['jedna linia', 'druga linia']
-#     textob.textLine('Zestawienie z dnia ')
-#     # Loop
-#     for line in lines:
-#         textob.textLine(line)
-#     # Finish up
-#     c.drawText(textob)
-#     c.showPage()
-#     c.save()
-#     buf.seek(0)
-#     # Return
-#     return FileResponse(buf, as_attachment=True, filename='cos.pdf')
-
 @login_required
 def make_pdf_from_invoices_sell(request):
     invoicessell = InvoiceSell.objects.all().order_by("-date").filter(date__year=current_year())
@@ -473,16 +503,15 @@ def make_pdf_from_invoices_sell(request):
         except TypeError:
             invoices_sell_filter_sum = 0
 
-    objects = range(1, len(invoicessell)+1)
+    objects = range(1, len(invoicessell) + 1)
     invoicessell = zip(objects, invoicessell)
-
-
 
     template_path = 'invoices/invoices_sell_pdf.html'
 
     context = {'invoices': invoicessell,
                'invoices_sell_sum': invoices_sell_sum, 'now': now, 'year': year,
-               'invoices_sell_sum_dict': invoices_sell_sum_dict, 'objects': objects, 'date_from':date_from, 'date_to':date_to}
+               'invoices_sell_sum_dict': invoices_sell_sum_dict, 'objects': objects, 'date_from': date_from,
+               'date_to': date_to}
 
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')

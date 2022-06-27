@@ -4,58 +4,57 @@
 {% load static %}
 {% block title %}Ewidencja Not księgowych na {{year}} rok{%endblock%}
 {% block content %}
-<div class="moj-button-left"><a href="{%url 'invoices:menu_invoices'%}">
-    <button type="button" class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span>
-    </button>
-</a>
-</div>
 <div class="row">
-    <section class="w-100 pb-4 d-flex justify-content-center align-items-center flex-column">
-        <form method="get">
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <div class="">
-                        <label class="control-label" for="from">Data wystawienia od</label>
-                        <div class=" ">
-                            <input type="date" name="from" class="form-control" id="from">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="">
-                        <label class="control-label" for="to">Data wystawienia do</label>
-                        <div class=" ">
-                            <input type="date" name="to" class="form-control" id="to">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="input-group">
-                <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj nr. noty"
-                       aria-label="Search" aria-describedby="search-addon">
-                <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
-            </div>
-        </form>
-    </section>
-</div>
-<div class="kontrahenci-title">
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
-            <h4>Ewidencja Not księgowych za {{year}} rok</h4>
-        </div>
+    <div class=" col-md-3 moj-button-left">
+        <a href="{%url 'invoices:menu_invoices'%}">
+            <button type="button" class="btn btn-outline-primary my-btn">
+                <span class="bi bi-chevron-compact-left">Cofnij</span>
+            </button>
+        </a>
     </div>
+    <div class="col-md-6 text-center">
+        <h4>Ewidencja Not księgowych za {{year}} rok</h4>
+    </div>
+</div>
+<div class="container my-3">
     <div class="row">
-        <div class="col-md-3">
-            <p>
-                <span>Liczba Not księgowych: </span>
-                <span class="badge text-white info badge-pill">{{notes_len}}</span>
-            </p>
+        <div class="col-md-3 align-self-end">
+            <span>Liczba Not księgowych: </span>
+            <span class="badge text-white info badge-pill">{{notes_len}}</span>
+        </div>
+        <div class="col-md-6">
+            <section class="w-100 d-flex justify-content-center align-items-center flex-column">
+                <form method="get">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="">
+                                <label class="control-label" for="from">Data wystawienia od</label>
+                                <div class=" ">
+                                    <input type="date" name="from" class="form-control" id="from">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="">
+                                <label class="control-label" for="to">Data wystawienia do</label>
+                                <div class=" ">
+                                    <input type="date" name="to" class="form-control" id="to">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj nr. noty"
+                               aria-label="Search" aria-describedby="search-addon">
+                        <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
+                    </div>
+                </form>
+            </section>
         </div>
         {%if user.accessmodule.invoices_module_edit%}
-        <div class="col-md-9 moj-button-right">
+        <div class="col-md-3 align-self-end moj-button-right">
             <a id="button-nowa-umowa" href="{%url 'invoices:new_note'%}">
-                <button class="btn btn-outline-primary button-choise-contracts my-btn">Nowa nota</button>
+                <button class="btn btn-outline-primary my-btn">Nowa nota</button>
             </a>
         </div>
         {%endif%}
@@ -75,21 +74,21 @@
         <tbody>
         {% for note in notes %}
         <tr class="my-table-tr">
-            <td align="center" valign="middle" scope="row"><span class="text-center"></span></td>
+            <td align="center" valign="middle" scope="row" data-toggle="info" title="Zapisujący: {{user.first_name}} {{user.last_name}}"><span class="text-center"></span></td>
             <td align="center" valign="middle"><span>{{note.date|date:"d.m.Y"}} r.</span></td>
             <td align="center" valign="middle"><span title="{{invoice.creator}}">{{note.no_note|default_if_none:''}}</span></td>
             <td align="left" valign="middle"><span title="SWOP ID: {{note.contractor.no_contractor}}">{{note.contractor.name}}.<br> <small>Adres: {{note.contractor.address}}, {{note.contractor.zip_code}} {{note.contractor.city}}</small></span></td>
-            <td align="center" valign="middle"><span>{{note.corrective_invoice}}</span></td>
+            <td align="left" valign="middle"><span>{{note.corrective_invoice}}</span></td>
             <td align="right" width="120">
                 {%if note.information%}
-                <button type="button" data-url="{% url 'invoices:show_info_note' note.id %}"
-                        class="btn btn-outline-success mx-2 my-1" onclick="openModal(this)"><i
-                        class="bi bi-file-earmark-text"></i>
+                <button data-toggle="info" title="Korygowaną treść" type="button" data-url="{% url 'invoices:show_info_note' note.id %}"
+                        class="btn btn-outline-success mx-2 my-1" onclick="openModal(this)">
+                    <i class="bi bi-file-earmark-text"></i>
                 </button>
                 {%endif%}
                 {%if user.accessmodule.invoices_module_edit%}
                 <a class="mx-2" href="{%url 'invoices:edit_note' note.id%}">
-                    <button type="submit" class="btn btn-outline-primary icon-color mx-1 "><i
+                    <button data-toggle="info" title="Edytuj" type="submit" class="btn btn-outline-primary icon-color mx-1 "><i
                             class="bi bi-pencil-square my-1"></i></button>
                 </a>
                 {%endif%}
@@ -149,17 +148,20 @@
     </div>
 </div>
 <script>
-     document.getElementById("button-units").classList.remove("active");
-     document.getElementById("button-invoices").classList.add("active");
-     document.getElementById("button-contracts").classList.remove("active");
-     document.getElementById("button-contractors").classList.remove("active");
-     function openModal(button){
-         var url = $(button).data("url");
-            $("#info_note_Modal .modal-content").load(url);
-            $("#info_note_Modal").modal("show");
-        }
-        function submitForm(){
-            $("#submitButton").closest("form").submit();
-        }
+    document.getElementById("button-units").classList.remove("active");
+    document.getElementById("button-invoices").classList.add("active");
+    document.getElementById("button-contracts").classList.remove("active");
+    document.getElementById("button-contractors").classList.remove("active");
+    function openModal(button){
+        var url = $(button).data("url");
+        $("#info_note_Modal .modal-content").load(url);
+        $("#info_note_Modal").modal("show");
+    }
+    function submitForm(){
+        $("#submitButton").closest("form").submit();
+    }
+    $(function () {
+        $('[data-toggle="info"]').tooltip()
+    })
 </script>
 {%endblock%}

@@ -3,29 +3,73 @@
 {% load static %}
 {% block title %}Ewidencja faktur - sprzedaż{%endblock%}
 {% block content %}
-<div class="moj-button-left"><a href="{%url 'invoices:menu_invoices'%}">
-    <button type="button" class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span>
-    </button>
-</a>
-</div>
-<section class="w-100 pb-4 d-flex justify-content-center align-items-center flex-column">
-    <div>
-        <form method="get">
-            <div class="input-group">
-                <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj dokumentu"
-                       aria-label="Search" aria-describedby="search-addon">
-                <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
-            </div>
-        </form>
+<div class="row">
+    <div class="col-md-3 moj-button-left">
+        <a href="{%url 'invoices:menu_invoices'%}">
+            <button type="button" class="btn btn-outline-primary my-btn">
+                <span class="bi bi-chevron-compact-left">Cofnij</span>
+            </button>
+        </a>
     </div>
-</section>
-<div class="kontrahenci-title">
-    <h4>Ewidencja faktur sprzedażowych za {{year}} rok</h4>
-    <div class="row">
-        <div class="col-md-3">
-            <p><span>Liczba wystawionych faktur: </span><span class="badge text-white info badge-pill">{{invoices_sell_len}}</span>
-            </p>
+    <div class="col-md-6 text-center">
+        <h4>Ewidencja faktur sprzedażowych za <b>{{year}}</b> rok</h4>
+    </div>
+</div>
+<div class="row my-3">
+    <div class="col-md-3 align-self-end">
+        <span class="d-block mb-1">
+            <span>Liczba faktur: </span>
+            <span class="badge text-white info badge-pill">{{invoices_sell_len}}</span>
+        </span>
+        <span class="d-block mt-1">
+            <span>Kwota faktur: </span>
+            <span class="badge text-white info badge-pill">{{invoices_sell_sum|intcomma}} zł.</span>
+        </span>
         </div>
+    <div class="col-md-6">
+        <section class="w-100 d-flex justify-content-center align-items-center flex-column">
+            <form method="get">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="">
+                            <label class="control-label" for="from">Data wystawienia od</label>
+                            <div class=" ">
+                                <input type="date" name="from" class="form-control" id="from">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="">
+                            <label class="control-label" for="to">Data wystawienia do</label>
+                            <div class=" ">
+                                <input type="date" name="to" class="form-control" id="to">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj dokumentu"
+                           aria-label="Search" aria-describedby="search-addon">
+                    <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
+                </div>
+            </form>
+        </section>
+    </div>
+    <div class="col-md-3 align-self-end moj-button-right">
+        <span class="d-block">
+            <a id="" href="{%url 'invoices:make_pdf_from_invoices_sell'%}">
+                <button data-toggle="info" title="Zapis do PDF" name="q" id="t" class="btn btn-outline-primary my-btn mb-1">
+                    <span class="bi bi-file-earmark-pdf h5"></span>
+                </button>
+            </a>
+        </span>
+        {%if user.accessmodule.invoices_module_edit%}
+        <span class="d-block">
+            <a id="button-nowa-umowa" href="{%url 'invoices:new_invoice_sell'%}">
+                <button class="btn btn-outline-primary my-btn mt-1">Nowa faktura</button>
+            </a>
+        </span>
+        {%endif%}
     </div>
 </div>
 <div>
@@ -38,34 +82,32 @@
             <th align="center" valign="middle" width="50" scope="col">Typ dokumentu</th>
             <th align="center" valign="middle" width="120" scope="col">Kwota</th>
             <th align="center" valign="middle" width="40" scope="col">Data płatności</th>
-            <th align="center" valign="middle" width="180" scope="col">Okres</th>
-            <th align="center" valign="middle" width="200" scope="col">Kontrahent</th>
-            <th align="center" valign="middle" width="120" scope="col">Powiat</th>
-            <th align="center" valign="middle" width="100" scope="col">Zapisujący</th>
+            <th align="center" valign="middle" width="120" scope="col">Okres</th>
+            <th align="center" valign="middle" width="250" scope="col">Kontrahent</th>
+            <th align="center" valign="middle" width="150" scope="col">Powiat</th>
         </tr>
         </thead>
         <tbody>
         {% for invoice in invoices %}
         <tr class="my-table-tr">
-            <td align="center" valign="middle" scope="row"><span class="text-center"></span></td>
+            <td align="center" valign="middle" scope="row" data-toggle="info" title="Zapisujący: {{invoice.author.first_name}} {{invoice.author.last_name}}"><span class="text-center"></span></td>
             <td align="center" valign="middle"><span>{{invoice.date|date:"d.m.Y"}} r.</span></td>
             <td align="center" valign="middle"><span title="{{invoice.creator}}">{{invoice.no_invoice|default_if_none:''}}</span></td>
             <td align="center" valign="middle"><span>{{invoice.doc_types}}</span></td>
             <td align="center" valign="middle"><span>{{invoice.sum|intcomma}} zł</span></td>
             <td align="center" valign="middle"><span>{{invoice.date_of_payment|date:"d.m.Y"}} r.</span></td>
-            <td align="center" valign="middle"><span>{{invoice.period_from|date:"m.Y"}} - {{invoice.period_to|date:"m.Y"}}</span>
+            <td align="center" valign="middle"><span>{{invoice.period_from|date:"m.Y"}} r. - {{invoice.period_to|date:"m.Y"}} r.</span>
             </td>
             <td valign="middle"><span title="SWOP ID: {{invoice.contractor.no_contractor}}">{{invoice.contractor.name}}. <br><small>Adres: {{invoice.contractor.address}}, {{invoice.contractor.zip_code}} {{invoice.contractor.city}}</small></span></td>
             <td align="center" valign="middle">{{invoice.county}}</td>
-            <td align="center" valign="middle"><span title="{{invoice.author.first_name}} {{invoice.author.last_name}}">{{invoice.author}}</span></td>
             <td align="right" width="120">
                 {%if invoice.information%}
-                <button type="button" data-url="{% url 'invoices:show_info_sell' invoice.id %}" class="btn btn-outline-success mx-2" onclick="openModal(this)"><i
+                <button type="button" data-url="{% url 'invoices:show_info_sell' invoice.id archive=True %}" class="btn btn-outline-success mx-2" onclick="openModal(this)"><i
                         class="bi bi-info-lg"></i>
                 </button>
                 {%endif%}
                 {%if user.accessmodule.invoices_module_edit%}
-                <a class="mx-2" href="{%url 'invoices:edit_invoice_sell' invoice.id %}">
+                <a class="mx-2" href="{%url 'invoices:edit_invoice_sell_archive' invoice.id %}">
                     <button type="submit" class="btn btn-outline-primary icon-color mx-1 "><i
                             class="bi bi-pencil-square"></i></button>
                 </a>
@@ -127,17 +169,20 @@
     </div>
 </div>
 <script>
-     document.getElementById("button-units").classList.remove("active");
-     document.getElementById("button-invoices").classList.add("active");
-     document.getElementById("button-contracts").classList.remove("active");
-     document.getElementById("button-contractors").classList.remove("active");
-        function openModal(button){
-            var url = $(button).data("url");
-            $("#info_sell_Modal .modal-content").load(url);
-            $("#info_sell_Modal").modal("show");
-        }
-        function submitForm(){
-            $("#submitButton").closest("form").submit();
-        }
+    document.getElementById("button-units").classList.remove("active");
+    document.getElementById("button-invoices").classList.add("active");
+    document.getElementById("button-contracts").classList.remove("active");
+    document.getElementById("button-contractors").classList.remove("active");
+    function openModal(button){
+        var url = $(button).data("url");
+        $("#info_sell_Modal .modal-content").load(url);
+        $("#info_sell_Modal").modal("show");
+    }
+    function submitForm(){
+        $("#submitButton").closest("form").submit();
+    }
+    $(function () {
+        $('[data-toggle="info"]').tooltip()
+    })
 </script>
 {%endblock%}

@@ -4,33 +4,37 @@
 {% block title %} Ewidencja zleceń na rok {{year}} {% endblock %}
 {% block content %}
 <div class="row">
-     <div class="col-md-6 moj-button-left"><a href="{%url 'cpvdict:type_expense_list'%}">
-        <button type="button" class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span></button></a></div>
-</div>
-<section class="w-100 pb-4 d-flex justify-content-center align-items-center flex-column">
-    <div>
-        <form method="get">
-            <div class="input-group">
-                <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj zlecenia" aria-label="Search" aria-describedby="search-addon">
-                <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
-            </div>
-        </form>
+     <div class="col-md-3 moj-button-left">
+         <a href="{%url 'cpvdict:type_expense_list'%}">
+            <button type="button" class="btn btn-outline-primary my-btn">
+                <span class="bi bi-chevron-compact-left">Cofnij</span>
+            </button>
+         </a>
+     </div>
+    <div class="col-md-6 text-center">
+        <h4>Zlecenia za {{year}} rok</h4>
     </div>
-</section>
-<div class="kontrahenci-title">
-    <h4>Zlecenia za {{year}} rok</h4>
-    <div class="row">
-        <div class="col-md-3">
-            <p class="m-0"><span>Liczba zleceń: </span><span class="badge text-white info badge-pill">{{ordersum}}</span></p>
-        </div>
-        {%if user.accessmodule.cpvdict_module_edit%}
-        <div class="col-md-9 moj-button-right my-1">
-            <a href="{%url 'cpvdict:new_order'%}"><button class="btn btn-outline-primary button-choise-contracts my-btn">Nowe zlecenie</button></a>
+</div>
+<div class="row mt-3">
+    <div class="col-md-3 align-self-end">
+        <p class=""><span>Liczba zleceń: </span><span class="badge text-white info badge-pill">{{ordersum}}</span></p>
+    </div>
+    <div class="col-md-6">
+        <section class="w-100 pb-4 d-flex justify-content-center align-items-center flex-column">
+                <form method="get">
+                    <div class="input-group">
+                        <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj zlecenia" aria-label="Search" aria-describedby="search-addon">
+                        <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
+                    </div>
+                </form>
+        </section>
+    </div>
+    {%if user.accessmodule.cpvdict_module_edit%}
+        <div class="col-md-3 moj-button-right my-1">
+            <a href="{%url 'cpvdict:new_order'%}"><button class="btn btn-outline-primary my-btn">Nowe zlecenie</button></a>
         </div>
         {%endif%}
-    </div>
 </div>
-
 <table class="container table table-hover my-table mt-2">
     <thead>
     <tr class="my-table-tr">
@@ -55,12 +59,12 @@
         <td valign="middle"><span>{{order.unit.type.type_full}} - {{order.unit.city}}<br><small>{{order.unit.address}}, {{order.unit.zip_code}} {{order.unit.city}}</small></span></td>
         <td align="right" valign="middle">
         {%if order.content%}
-            <button type="button" data-url="{%url 'cpvdict:show_order_info_popup' order.id%}" class="btn btn-outline-success mx-2" onclick="openModal(this)"><i
+            <button data-toggle="info" title="Pokaż" type="button" data-url="{%url 'cpvdict:show_order_info_popup' order.id%}" class="btn btn-outline-success mx-2" onclick="openModal(this)"><i
                     class="bi bi-info-lg"></i>
             </button>
             {%endif%}
         {%if user.accessmodule.cpvdict_module_edit%}
-           <a href="{% url 'cpvdict:edit_order' order.id %}"><button type="button" class="btn btn-outline-primary icon-color mx-2 my-1"><i class="bi bi-pencil-square"></i></button></a>
+           <a href="{% url 'cpvdict:edit_order' order.id %}"><button data-toggle="info" title="Edytuj" type="button" class="btn btn-outline-primary icon-color mx-2 my-1"><i class="bi bi-pencil-square"></i></button></a>
         {%endif%}
         </td>
     </tr>
@@ -117,19 +121,22 @@
     </div>
 </div>
 <script>
-     document.getElementById("button-units").classList.remove("active");
-     document.getElementById("button-invoices").classList.remove("active");
-     document.getElementById("button-contracts").classList.remove("active");
-     document.getElementById("button-contractors").classList.remove("active");
-     document.getElementById("button-cpv").classList.add("active");
-     document.getElementById("button-cpv").classList.add("active");
-       function openModal(button){
-            var url = $(button).data("url");
-            $("#orderInformationModal .modal-content").load(url);
-            $("#orderInformationModal").modal("show");
-        }
-        function submitForm(){
-            $("#submitButton").closest("form").submit();
-        }
+    document.getElementById("button-units").classList.remove("active");
+    document.getElementById("button-invoices").classList.remove("active");
+    document.getElementById("button-contracts").classList.remove("active");
+    document.getElementById("button-contractors").classList.remove("active");
+    document.getElementById("button-cpv").classList.add("active");
+    document.getElementById("button-cpv").classList.add("active");
+    function openModal(button){
+        var url = $(button).data("url");
+        $("#orderInformationModal .modal-content").load(url);
+        $("#orderInformationModal").modal("show");
+    }
+    function submitForm(){
+        $("#submitButton").closest("form").submit();
+    }
+    $(function () {
+        $('[data-toggle="info"]').tooltip()
+    })
 </script>
 {% endblock %}

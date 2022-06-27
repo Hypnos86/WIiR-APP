@@ -9,32 +9,31 @@
     {% if last_date %}
     <small>Ostatnia aktualizacja: {{last_date.change|date:"d.m.Y - (H:i)"}}</small>
     {%endif%}
-
-
-    <div class="row">
-        <div class="col-md-2">
+</div>
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-md-3 align-self-end">
             <p><span>Liczba mieszkań: </span><span class="badge text-white info badge-pill">{{count_flats}}</span></p>
         </div>
-        {%if user.accessmodule.listregister_float_team_module_edit%}
-        <div class="col-md-10 moj-button-right "><a href="{%url 'listregister:add_new_flat'%}">
-            <button type="button" class="btn btn-outline-primary my-btn"><span class="bi bi-pin-map"> Dodaj nowy lokal</span></button>
-        </a>
-        </div>
-        {%endif%}
-    </div>
-</div>
-<div class="row">
-    <div class="w-100 pb-4 d-flex justify-content-center align-items-center flex-column text_center">
-        <form method="get">
-            <div class="input-group">
-                <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj lokalu"
-                       aria-label="Search" aria-describedby="search-addon">
-                <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
+        <div class="col-md-6">
+            <div class="w-100 pb-4 d-flex justify-content-center align-items-center flex-column text_center">
+                <form method="get">
+                    <div class="input-group">
+                        <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj lokalu"
+                               aria-label="Search" aria-describedby="search-addon">
+                        <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
+            {%if user.accessmodule.listregister_float_team_module_edit%}
+            <div class="col-md-3 moj-button-right "><a href="{%url 'listregister:add_new_flat'%}">
+                <button type="button" class="btn btn-outline-primary my-btn"><span class="bi bi-pin-map"> Dodaj nowy lokal</span></button>
+            </a>
+            </div>
+            {%endif%}
     </div>
 </div>
-
 <div class="container">
     <table class="table table-hover my-table">
         <thead>

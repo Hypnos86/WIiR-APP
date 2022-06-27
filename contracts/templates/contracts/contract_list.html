@@ -8,7 +8,7 @@
         <div class="col-md-2">
             {%if actual%}
             <a href="{%url 'contracts:menu_contractsimmovables_archive'%}">
-                <button class="btn btn-outline-danger button-choise-contracts">Archiwum umów</button>
+                <button class="btn btn-outline-danger">Archiwum umów</button>
             </a>
             {%else%}
             <a href="{%url 'contracts:menu_contractsimmovables'%}">
@@ -26,11 +26,11 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row my-3">
     <div class="col-md-3">
-            <p class="m-0"><span>Liczba umów aktualnych: </span><span class="badge text-white info badge-pill">{{contrsum}}</span></p>
-            <p class="m-0"><span>Liczba umów zarchiwizowanych: </span><span class="badge text-white info badge-pill">{{con_archive_sum}}</span></p>
-        </div>
+        <p class="m-0"><span>Liczba umów aktualnych: </span><span class="badge text-white info badge-pill">{{contrsum}}</span></p>
+        <p class="m-0"><span>Liczba umów zarchiwizowanych: </span><span class="badge text-white info badge-pill">{{con_archive_sum}}</span></p>
+    </div>
     <div class="col-md-6">
         <section class="w-100 pb-4 d-flex justify-content-center align-items-center flex-column text-center">
             <form method="get">
@@ -89,12 +89,12 @@
         <td valign="middle"><span>{{contract.unit.type.type_full}} - {{contract.unit.city}}<br><small>{{contract.unit.address}}, {{contract.unit.zip_code}} {{contract.unit.city}}</small></span></td>
         <td align="right" valign="middle">
             <a class="m-2" href="{% url 'contracts:show_contractsimmovables' contract.id %}">
-                <button type="button" class="btn btn-outline-primary icon-color">
+                <button data-toggle="info" title="Pokaż" type="button" class="btn btn-outline-primary icon-color">
                     <i class="bi bi-eye"></i>
                 </button></a>
             {%if user.accessmodule.contracts_immovables_module_edit%}
             <a class="m-2" href="{% url 'contracts:edit_contractsimmovables' contract.id %}">
-                <button type="submit" class="btn btn-outline-primary icon-color">
+                <button data-toggle="info" title="Edytuj" type="submit" class="btn btn-outline-primary icon-color">
                     <i class="bi bi-pencil-square"></i>
                 </button></a>
             {%endif%}
@@ -117,7 +117,7 @@
         <td valign="middle"><span>{{contract.unit.type.type_full}} - {{contract.unit.city}}<br><small>{{contract.unit.address}}, {{contract.unit.zip_code}} {{contract.unit.city}}</small></span></td>
         <td align="right" valign="middle">
             <a class="m-2" href="{% url 'contracts:show_contractsimmovables' contract.id %}">
-                <button type="button" class="btn btn-outline-primary icon-color mx-2 my-1">
+                <button data-toggle="info" title="Pokaż" type="button" class="btn btn-outline-primary icon-color mx-2 my-1">
                     <i class="bi bi-eye"></i></button>
             </a>
         </td>
@@ -212,5 +212,11 @@
     document.getElementById("button-invoices").classList.remove("active");
     document.getElementById("button-contracts").classList.add("active");
     document.getElementById("button-contractors").classList.remove("active");
+    $(function () {
+        $('[data-toggle="info"]').tooltip()
+    })
+    $(function () {
+        $('[data-toggle="info"]').tooltip()
+    })
 </script>
 {%endblock%}

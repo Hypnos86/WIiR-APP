@@ -61,10 +61,9 @@ class EmployerAdmin(ExportMixin, admin.ModelAdmin):
 
 @admin.register(AccessModule)
 class AccessModuleAdmin(admin.ModelAdmin):
-    list_display = ['user', 'contractors_module', 'contracts_immovables_module', 'investments_module',
-                    'invoices_module', 'cpvdict_module', 'listregister_float_team_module',
-                    'listregister_exploatation_team_module']
+    list_display = ['user']
     ordering = ['user']
+    search_fields = ['user']
 
 
 class CommandResource(resources.ModelResource):

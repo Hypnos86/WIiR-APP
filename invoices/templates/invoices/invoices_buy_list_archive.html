@@ -3,36 +3,34 @@
 {%load static%}
 {%block title%}Ewidencja faktur gr.6 - zobowiązania{%endblock%}
 {%block content%}
-<div class="moj-button-left"><a href="{%url 'invoices:menu_invoices'%}">
-    <button type="button" class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span>
-    </button>
-</a></div>
-<section class="w-100 pb-4 d-flex justify-content-center align-items-center flex-column">
-    <div>
-        <form method="get">
-            <div class="input-group">
-                <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj faktury"
-                       aria-label="Search" aria-describedby="search-addon">
-                <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
-            </div>
-        </form>
+
+<div class="row mb-3">
+    <div class="col-md-2">
+        <a href="{%url 'invoices:menu_invoices'%}">
+            <button type="button" class="btn btn-outline-primary my-btn">
+                <span class="bi bi-chevron-compact-left">Cofnij</span>
+            </button>
+        </a>
     </div>
-</section>
-<div class="row my-2">
-<div class="container">
-    <div>
+    <div class="col-md-8">
         <h4 class="text-center ">Ewidencja faktur gr.6</h4>
         <h6 class="text-center">Zobowiązania na {{year}} rok.</h6>
     </div>
 </div>
+<div class="row mb-3">
+    <div class="col-md-3 align-self-end">
+        <span>Liczba faktur: </span><span class="badge text-white info badge-pill">{{invoices_buy_sum}}</span>
     </div>
-<div class="row my-2">
-    <div class="row">
-        <div class="col-md-6">
-            <p><span>Liczba faktur: </span><span class="badge text-white info badge-pill">{{invoices_buy_sum}}</span>
-            </p>
-        </div>
-        <div class="col-md-6 moj-button-right">
+    <div class="col-md-6">
+        <section class="w-100 d-flex justify-content-center align-items-center flex-column">
+                <form method="get">
+                    <div class="input-group">
+                        <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj faktury"
+                               aria-label="Search" aria-describedby="search-addon">
+                        <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
+                    </div>
+                </form>
+        </section>
     </div>
 </div>
 <div>
@@ -43,35 +41,30 @@
             <th align="center" valign="middle" width="40" scope="col">Data wpływu</th>
             <th align="center" valign="middle" width="40" scope="col">Data wystawienia</th>
             <th align="center" valign="middle" width="120" scope="col">Nr. faktury</th>
-            <th align="center" valign="middle" width="350" scope="col">Kontrahent</th>
+            <th align="center" valign="middle" width="250" scope="col">Kontrahent</th>
             <th align="center" valign="middle" width="100" scope="col">Kwota</th>
             <th align="center" valign="middle" width="40" scope="col">Data płatności</th>
-            <th align="center" valign="middle" width="50" scope="col">Zapisujący</th>
-
         </tr>
         </thead>
         <tbody>
         {% for invoice in invoices %}
         <tr class="my-table-tr">
-            <td align="center" valign="middle" scope="row"><span class="text-center"></span></td>
+            <td align="center" valign="middle" scope="row" data-toggle="info" title="Zapisujący: {{invoice.author.first_name}} {{invoice.author.last_name}}"><span class="text-center"></span></td>
             <td align="center" valign="middle"><span>{{invoice.date_receipt|date:"d.m.Y"}} r.</span></td>
             <td align="center" valign="middle"><span>{{invoice.date_issue|date:"d.m.Y"}} r.</span></td>
             <td align="left" valign="middle"><span>{{invoice.no_invoice|default_if_none:''}}</span></td>
-            <td valign="middle"><span title="SWOP ID: {{invoice.contractor.no_contractor}}">{{invoice.contractor.name}}. <small>Adres: {{invoice.contractor.address}}, {{invoice.contractor.zip_code}} {{invoice.contractor.city}}</small></span></td>
+            <td valign="middle"><span title="SWOP ID: {{invoice.contractor.no_contractor}}">{{invoice.contractor.name}}. <br><small>Adres: {{invoice.contractor.address}}, {{invoice.contractor.zip_code}} {{invoice.contractor.city}}</small></span></td>
             <td align="center" valign="middle"><span>{%if invoice.sum%}{{invoice.sum|intcomma}} zł. {%else%} {{invoice.sum|default_if_none:'---'}} {%endif%}</span></td>
             <td align="center" valign="middle"><span>{{invoice.date_of_payment|date:"d.m.Y"}} r.</span></td>
-            <td align="center" valign="middle" title="{{invoice.author.first_name}} {{invoice.author.last_name}}">
-                {{invoice.author}}
-            </td>
             <td align="right" width="100">
                 {%if invoice.information%}
-                <button type="button" data-url="{% url 'invoices:show_info_buy' invoice.id %}" class="btn btn-outline-success mx-2" onclick="openModal(this) "><i
+                <button  data-toggle="info" title="Pokaż" type="button" data-url="{% url 'invoices:show_info_buy' invoice.id %}" class="btn btn-outline-success mx-2 my-1" onclick="openModal(this) "><i
                         class="bi bi-info-lg"></i>
                 </button>
                 {%endif%}
                 {%if user.accessmodule.invoices_module_edit%}
                 <a class="mx-1" href="{%url 'invoices:edit_invoice_buy' invoice.id %}">
-                    <button type="submit" class="btn btn-outline-primary icon-color mx-1 "><i
+                    <button data-toggle="info" title="Edytuj" type="submit" class="btn btn-outline-primary icon-color mx-1 my-1"><i
                             class="bi bi-pencil-square"></i></button>
                 </a>
                 {%endif%}
@@ -131,17 +124,20 @@
     </div>
 </div>
 <script>
-     document.getElementById("button-units").classList.remove("active");
-     document.getElementById("button-invoices").classList.add("active");
-     document.getElementById("button-contracts").classList.remove("active");
-     document.getElementById("button-contractors").classList.remove("active");
-        function openModal(button){
-            var url = $(button).data("url");
-            $("#info_buy_Modal .modal-content").load(url);
-            $("#info_buy_Modal").modal("show");
-        }
-        function submitForm(){
-            $("#submitButton").closest("form").submit();
-        }
+    document.getElementById("button-units").classList.remove("active");
+    document.getElementById("button-invoices").classList.add("active");
+    document.getElementById("button-contracts").classList.remove("active");
+    document.getElementById("button-contractors").classList.remove("active");
+    function openModal(button){
+        var url = $(button).data("url");
+        $("#info_buy_Modal .modal-content").load(url);
+        $("#info_buy_Modal").modal("show");
+    }
+    function submitForm(){
+        $("#submitButton").closest("form").submit();
+    }
+    $(function () {
+        $('[data-toggle="info"]').tooltip()
+    })
 </script>
 {%endblock%}
