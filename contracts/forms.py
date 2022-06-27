@@ -47,8 +47,6 @@ class AnnexImmovablesForm(ModelForm):
 
 
 class ContractAuctionForm(ModelForm):
-    # worker = django_filters.BooleanFilter(field_name='worker.industry_specialist')
-
     class Meta:
         model = ContractAuction
 
