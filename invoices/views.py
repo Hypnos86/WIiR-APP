@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from invoices.models import InvoiceSell, InvoiceBuy, InvoiceItems, DocumentTypes, CorrectiveNote
 from invoices.forms import InvoiceSellForm, InvoiceBuyForm, InvoiceItemsForm, CorrectiveNoteForm
 from main.views import current_year, now_date
+from django.urls import reverse
 # xhtml2pdf
 import os
 from django.conf import settings
@@ -118,7 +119,25 @@ def edit_invoice_buy(request, id):
         instance.author = request.user
         instance.save()
         return redirect('invoices:buy_invoices_list')
+    return render(request, 'invoices/invoice_buy_form.html', context)
 
+
+@login_required
+def edit_invoice_buy_archive(request, id):
+    invoice_buy_edit = get_object_or_404(InvoiceBuy, pk=id)
+    invoice_buy_form = InvoiceBuyForm(request.POST or None, instance=invoice_buy_edit)
+    invoice_buy_form.fields['doc_types'].queryset = DocumentTypes.objects.exclude(type='Nota korygująca')
+    year = invoice_buy_edit.date_receipt.year
+
+    context = {'invoice': invoice_buy_form,
+               'new': False,
+               'year': year}
+
+    if invoice_buy_form.is_valid():
+        instance = invoice_buy_form.save(commit=False)
+        instance.author = request.user
+        instance.save()
+        return redirect(reverse('invoices:buy_invoices_list', kwargs={'year': year}))
     return render(request, 'invoices/invoice_buy_form.html', context)
 
 
@@ -277,6 +296,8 @@ def edit_invoice_sell_archive(request, id):
         instance = invoice_sell_form.save(commit=False)
         instance.author = request.user
         instance.save()
+        return redirect(reverse('invoices:sell_invoices_list_archive', kwargs={'year': year}))
+
     return render(request, 'invoices/invoice_sell_archive_form.html', context)
 
 
@@ -350,7 +371,6 @@ def corrective_note_list_archive(request, year):
     paginator = Paginator(notes, 30)
     page_number = request.GET.get('page')
     note_list = paginator.get_page(page_number)
-
     if q or date_from or date_to:
         if q:
             notes = notes.filter(no_note__icontains=q) | notes.filter(contractor__name__icontains=q) | notes.filter(
@@ -362,10 +382,10 @@ def corrective_note_list_archive(request, year):
         if date_to:
             notes = notes.filter(date__lte=date_to)
 
-        note_len = len(notes)
+        notes_len = len(notes)
 
         return render(request, "invoices/corrective_note_list_archive.html", {'notes': notes,
-                                                                              'note_len': note_len,
+                                                                              'note_len': notes_len,
                                                                               'query': query, 'year': year})
     else:
         return render(request, 'invoices/corrective_note_list_archive.html',
@@ -413,7 +433,7 @@ def edit_note_archive(request, id):
         instance = note_form.save(commit=False)
         instance.author = request.user
         instance.save()
-        return redirect('invoices:edit_invoice_sell_archive', year)
+        return redirect(reverse('invoices:corrective_note_list_archive', kwargs={'year': year}))
     return render(request, 'invoices/corrective_note_archive_form.html', context)
 
 
