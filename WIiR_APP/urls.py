@@ -14,6 +14,7 @@ urlpatterns = [
                   path('permanentmanagement/', include('permanentmanagement.urls')),
                   path('listregister/', include('listregister.urls')),
                   path('cpv/', include('cpvdict.urls')),
+                  path('donations/', include('donations.urls')),
                   path('gallery/', include('gallery.urls')),
                   path('login/', auth_views.LoginView.as_view(), name='login'),
                   path('logout/', auth_views.LogoutView.as_view(), name='logout'),

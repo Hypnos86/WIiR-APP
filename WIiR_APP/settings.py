@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'contracts.apps.ContractsConfig',
     'contractors.apps.ContractorsConfig',
     'invoices.apps.InvoicesConfig',
+    'donations.apps.DonationsConfig',
     'sourcefinancing.apps.SourcefinancingConfig',
     'cpvdict.apps.CpvdictConfig',
     'listregister.apps.ListregisterConfig',

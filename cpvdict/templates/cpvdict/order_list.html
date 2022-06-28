@@ -15,25 +15,27 @@
         <h4>Zlecenia za {{year}} rok</h4>
     </div>
 </div>
-<div class="row mt-3">
-    <div class="col-md-3 align-self-end">
-        <p class=""><span>Liczba zleceń: </span><span class="badge text-white info badge-pill">{{ordersum}}</span></p>
-    </div>
-    <div class="col-md-6">
-        <section class="w-100 pb-4 d-flex justify-content-center align-items-center flex-column">
-                <form method="get">
-                    <div class="input-group">
-                        <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj zlecenia" aria-label="Search" aria-describedby="search-addon">
-                        <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
-                    </div>
-                </form>
-        </section>
-    </div>
-    {%if user.accessmodule.cpvdict_module_edit%}
-        <div class="col-md-3 moj-button-right my-1">
-            <a href="{%url 'cpvdict:new_order'%}"><button class="btn btn-outline-primary my-btn">Nowe zlecenie</button></a>
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-3 align-self-end">
+            <p class=""><span>Liczba zleceń: </span><span class="badge text-white info badge-pill">{{ordersum}}</span></p>
         </div>
-        {%endif%}
+        <div class="col-md-6">
+            <section class="w-100 pb-4 d-flex justify-content-center align-items-center flex-column">
+                    <form method="get">
+                        <div class="input-group">
+                            <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj zlecenia" aria-label="Search" aria-describedby="search-addon">
+                            <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
+                        </div>
+                    </form>
+            </section>
+        </div>
+        {%if user.accessmodule.cpvdict_module_edit%}
+            <div class="col-md-3 moj-button-right my-1 align-self-end">
+                <a href="{%url 'cpvdict:new_order'%}"><button class="btn btn-outline-primary my-btn">Nowe zlecenie</button></a>
+            </div>
+            {%endif%}
+    </div>
 </div>
 <table class="container table table-hover my-table mt-2">
     <thead>

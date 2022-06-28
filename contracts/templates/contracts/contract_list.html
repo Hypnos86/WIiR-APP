@@ -89,12 +89,12 @@
         <td valign="middle"><span>{{contract.unit.type.type_full}} - {{contract.unit.city}}<br><small>{{contract.unit.address}}, {{contract.unit.zip_code}} {{contract.unit.city}}</small></span></td>
         <td align="right" valign="middle">
             <a class="m-2" href="{% url 'contracts:show_contractsimmovables' contract.id %}">
-                <button data-toggle="info" title="Pokaż" type="button" class="btn btn-outline-primary icon-color">
+                <button data-toggle="info" title="Pokaż" type="button" class="btn btn-outline-primary icon-color my-1">
                     <i class="bi bi-eye"></i>
                 </button></a>
             {%if user.accessmodule.contracts_immovables_module_edit%}
             <a class="m-2" href="{% url 'contracts:edit_contractsimmovables' contract.id %}">
-                <button data-toggle="info" title="Edytuj" type="submit" class="btn btn-outline-primary icon-color">
+                <button data-toggle="info" title="Edytuj" type="submit" class="btn btn-outline-primary icon-color my-1">
                     <i class="bi bi-pencil-square"></i>
                 </button></a>
             {%endif%}
