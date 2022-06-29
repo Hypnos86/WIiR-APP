@@ -75,7 +75,7 @@
         {% for note in notes %}
         <tr class="my-table-tr">
             <td align="center" valign="middle" scope="row" data-toggle="info" title="Zapisujący: {{user.first_name}} {{user.last_name}}"><span class="text-center"></span></td>
-            <td align="center" valign="middle"><span>{{note.date|date:"d.m.Y"}} r.</span></td>
+            <td align="center" valign="middle"><span>{{note.date|date:"d.m.Y"}}&nbspr.</span></td>
             <td align="center" valign="middle"><span title="{{invoice.creator}}">{{note.no_note|default_if_none:''}}</span></td>
             <td align="left" valign="middle"><span title="SWOP ID: {{note.contractor.no_contractor}}">{{note.contractor.name}}.<br> <small>Adres: {{note.contractor.address}}, {{note.contractor.zip_code}} {{note.contractor.city}}</small></span></td>
             <td align="left" valign="middle"><span>{{note.corrective_invoice}}</span></td>

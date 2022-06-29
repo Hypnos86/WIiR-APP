@@ -166,7 +166,7 @@ def sell_invoices_list(request):
                 contractor__no_contractor__startswith=q) | invoicessell.filter(
                 county__name__icontains=q) | invoicessell.filter(
                 creator__creator__icontains=q) | invoicessell.filter(
-                information__icontains=q)
+                information__icontains=q)| invoicessell.filter(doc_types__type__icontains=q)
 
         if date_from:
             invoicessell = invoicessell.filter(date__gte=date_from)
@@ -216,13 +216,13 @@ def sell_invoices_list_archive(request, year):
 
     if q or date_from or date_to:
         if q:
-            invoicess_ell = invoices_sell.filter(no_invoice__icontains=q) | invoices_sell.filter(
+            invoices_sell = invoices_sell.filter(no_invoice__icontains=q) | invoices_sell.filter(
                 sum__startswith=q) | invoices_sell.filter(date__startswith=q) | invoices_sell.filter(
                 contractor__name__icontains=q) | invoices_sell.filter(
                 contractor__no_contractor__startswith=q) | invoices_sell.filter(
                 county__name__icontains=q) | invoices_sell.filter(
                 creator__creator__icontains=q) | invoices_sell.filter(
-                information__icontains=q)
+                information__icontains=q)|invoices_sell.filter(doc_types__type__icontains=q)
 
         if date_from:
             invoices_sell = invoices_sell.filter(date__gte=date_from)

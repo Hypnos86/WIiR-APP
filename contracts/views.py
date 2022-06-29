@@ -29,7 +29,7 @@ def menu_contractsimmovables(request):
     paginator = Paginator(contracts, 40)
     page_number = request.GET.get('page')
     contracts_list = paginator.get_page(page_number)
-
+    # print(contracts.period_of_validity)
     if q:
         contracts = contracts.filter(contractor__name__icontains=q) | contracts.filter(
             type_of_contract__type__icontains=q) | contracts.filter(unit__county__name__icontains=q) | contracts.filter(
