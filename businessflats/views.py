@@ -1,28 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-from listregister.models import OfficialFlat
-from contracts.models import ContractImmovables
-from listregister.forms import OfficialFlatForm
+from businessflats.models import OfficialFlat
+from businessflats.forms import OfficialFlatForm
 from django.core.paginator import Paginator
 
 
 # Create your views here.
-@login_required
-def make_list_register(request):
-    contracts = ContractImmovables.objects.all().order_by("-date").filter(state=True)
-    flats = OfficialFlat.objects.all()
-    count_flats = len(flats)
-    contract_len = len(contracts)
-    context = {'count_flats': count_flats, 'con_len':contract_len}
-    return render(request, 'list_register.html', context)
-
-
-@login_required
-def show_information(request, id):
-    flat = get_object_or_404(OfficialFlat, pk=id)
-    return render(request, 'listregister/information_popup.html', {'flat': flat, 'id': id})
-
-
 @login_required
 def make_flats_list(request):
     flats = OfficialFlat.objects.all()
@@ -45,12 +28,18 @@ def make_flats_list(request):
         flats = flats.filter(address__icontains=q) | flats.filter(area__startswith=q) | flats.filter(
             information__icontains=q)
         count_flats_query = len(flats)
-        return render(request, 'listregister/flats_list.html',
+        return render(request, 'businessflats/flats_list.html',
                       {'flats': flats, "query": query, 'last_date': last_date, 'count_flats': count_flats_query})
     else:
-        return render(request, 'listregister/flats_list.html',
+        return render(request, 'businessflats/flats_list.html',
                       {'flats': flats_list, "search": search,
                        'last_date': last_date, 'count_flats': count_flats})
+
+
+@login_required
+def show_information(request, id):
+    flat = get_object_or_404(OfficialFlat, pk=id)
+    return render(request, 'businessflats/information_popup.html', {'flat': flat, 'id': id})
 
 
 @login_required
@@ -63,8 +52,8 @@ def add_new_flat(request):
             instance.author = request.user
             instance.save()
             new_flat_form.save()
-            return redirect('listregister:make_flats_list')
-    return render(request, 'listregister/flat_form.html', {'flat_form': new_flat_form, 'new': True})
+            return redirect('businessflats:make_flats_list')
+    return render(request, 'businessflats/flat_form.html', {'flat_form': new_flat_form, 'new': True})
 
 
 @login_required
@@ -78,5 +67,5 @@ def edit_flat(request, id):
             flat = flat_form.save(commit=False)
             flat.author = request.user
             flat_form.save()
-            return redirect('listregister:make_flats_list')
-    return render(request, 'listregister/flat_form.html', context)
+            return redirect('businessflats:make_flats_list')
+    return render(request, 'businessflats/flat_form.html', context)

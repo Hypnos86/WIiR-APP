@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from listregister.models import OfficialFlat
+from businessflats.models import OfficialFlat
 
 
 class OfficialFlatForm(ModelForm):

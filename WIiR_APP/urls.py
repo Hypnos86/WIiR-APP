@@ -12,7 +12,7 @@ urlpatterns = [
                   path('contractors/', include('contractors.urls')),
                   path('invoices/', include('invoices.urls')),
                   path('permanentmanagement/', include('permanentmanagement.urls')),
-                  path('listregister/', include('listregister.urls')),
+                  path('businessflats/', include('businessflats.urls')),
                   path('cpv/', include('cpvdict.urls')),
                   path('donations/', include('donations.urls')),
                   path('gallery/', include('gallery.urls')),

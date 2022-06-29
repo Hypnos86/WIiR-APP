@@ -40,9 +40,7 @@
         <ul class="nav nav-pills">
             <li class="nav-item my-2 py-2"><a id="button-units" href="{%url 'units:units_list'%}" class="btn btn-sm btn-outline-secondary mx-2" ><span>Jednostki Policji</span></a></li>
             {%if user.is_authenticated%}{%if user.accessmodule.investments_module%}<li class="nav-item my-2 py-2"><a id="button-investments" href="{%url 'investments:make_important_task_investments'%}" class="btn btn-sm btn-outline-secondary mx-2" ><span>Inwestycje</span></a></li>{%endif%}{%endif%}
-            {%if user.is_authenticated%}{%if user.accessmodule.invoices_module%}<li class="nav-item my-2 py-2"><a id="button-invoices" href="{%url 'invoices:menu_invoices'%}" class="btn btn-sm btn-outline-secondary mx-2"><span>Faktury</span></a></li>{%endif%}{%endif%}
-            {%if user.is_authenticated%}{%if user.accessmodule.contractors_module%}<li class="nav-item my-2 py-2"><a id="button-contractors" href="{%url 'contractors:contractorssell_list'%}" class="btn btn-sm btn-outline-secondary mx-2"><span>Kontrahenci</span></a></li>{%endif%}{%endif%}
-            {%if user.is_authenticated%}{%if user.accessmodule.listregister_float_team_module or user.accessmodule.listregister_exploatation_team_module%}<li class="nav-item my-2 py-2"><a id="button-record" href=" {%url 'listregister:make_list_register'%}" class="btn btn-sm btn-outline-secondary mx-2"><span>Ewidencje</span></a></li>{%endif%}{%endif%}
+            {%if user.is_authenticated%}<li class="nav-item my-2 py-2"><a id="button-record" href=" {%url 'main:make_list_register'%}" class="btn btn-sm btn-outline-secondary mx-2"><span>Ewidencje</span></a></li>{%endif%}
             {%if user.is_authenticated%}<li class="nav-item my-2 py-2"><a id="button-cpv" href="{%url 'cpvdict:type_expense_list'%}" class="btn btn-sm btn-outline-secondary mx-2"><span>Rodzajowość WIiR</span></a></li>
             {%else%}
             <li class="nav-item my-2 py-2"><a id="button-cpvnotaut" href="{%url 'cpvdict:cpvlist'%}" class="btn btn-sm btn-outline-secondary mx-2"><span>Słownik CPV</span></a></li>

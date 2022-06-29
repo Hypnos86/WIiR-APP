@@ -6,8 +6,8 @@ from .forms import ContractorsellForm
 
 
 @login_required
-def contractorsell_list(request):
-    contractorsell = Contractor.objects.all().order_by("name")
+def contractor_list(request):
+    contractor = Contractor.objects.all().order_by("name")
 
     try:
         last_date = Contractor.objects.values('change').latest('change')
@@ -16,23 +16,23 @@ def contractorsell_list(request):
 
     query = "Wyczyść"
     search = "Szukaj"
-    consellsum = len(contractorsell)
+    contractor_len = len(contractor)
     q = request.GET.get("q")
 
-    paginator = Paginator(contractorsell, 30)
+    paginator = Paginator(contractor, 30)
     page_number = request.GET.get('page')
-    contractorsell_list = paginator.get_page(page_number)
+    contractor_list = paginator.get_page(page_number)
 
     if q:
-        contractorsell = contractorsell.filter(name__icontains=q) | contractorsell.filter(
-            city__icontains=q) | contractorsell.filter(no_contractor__startswith=q) | contractorsell.filter(
+        contractor = contractor.filter(name__icontains=q) | contractor.filter(
+            city__icontains=q) | contractor.filter(no_contractor__startswith=q) | contractor.filter(
             nip__startswith=q)
         return render(request, 'contractors/contractor_list.html',
-                      {'contractors': contractorsell, "consellsum": consellsum, "query": query, 'last_date': last_date,
+                      {'contractors': contractor, "consellsum": contractor_len, "query": query, 'last_date': last_date,
                        'q': q})
     else:
         return render(request, 'contractors/contractor_list.html',
-                      {'contractors': contractorsell_list, "consellsum": consellsum, "search": search,
+                      {'contractors': contractor_list, "consellsum": contractor_len, "search": search,
                        'last_date': last_date})
 
 
@@ -43,7 +43,7 @@ def show_information(request, id):
 
 
 @login_required
-def new_contractorsell(request):
+def new_contractor(request):
     contractorsell_form = ContractorsellForm(request.POST or None)
 
     if request.method == 'POST':
@@ -52,20 +52,20 @@ def new_contractorsell(request):
             instance.author = request.user
             instance.save()
             contractorsell_form.save()
-            return redirect('contractors:contractorssell_list')
+            return redirect('contractors:contractors_list')
     return render(request, 'contractors/contractor_form.html',
                   {'contractor_form': contractorsell_form, "new": True})
 
 
 @login_required
-def edit_contractorsell(request, id):
-    contractorsell_edit = get_object_or_404(Contractor, pk=id)
-    contractorsell_form = ContractorsellForm(request.POST or None, instance=contractorsell_edit)
+def edit_contractor(request, id):
+    contractor_edit = get_object_or_404(Contractor, pk=id)
+    contractor_form = ContractorsellForm(request.POST or None, instance=contractor_edit)
 
-    context = {'contractor_form': contractorsell_form, 'new': False}
+    context = {'contractor_form': contractor_form, 'new': False}
 
-    if contractorsell_form.is_valid():
-        contractorsell_form.save()
-        return redirect('contractors:contractorssell_list')
+    if contractor_form.is_valid():
+        contractor_form.save()
+        return redirect('contractors:contractor_list')
 
     return render(request, 'contractors/contractor_form.html', context)

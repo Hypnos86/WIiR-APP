@@ -3,9 +3,9 @@
 {% block title %} Ewidencje WIiR {% endblock %}
 {% block content %}
 <div class="container">
+    {%if user.accessmodule.ze_team%}
     <h3 class="text-center m-5">Ewidencje WIiR</h3>
     <div class="col d-flex justify-content-between">
-        {%if user.accessmodule.listregister_exploatation_team_module%}
         <div class="col-md-3 text-center">
             <h5 class="mb-5"><span>Zespół Eksploatacji</span></h5>
             <div class="container col d-flex justify-content-center">
@@ -46,43 +46,69 @@
             </div>
         </div>
         {%endif%}
+        {%if user.accessmodule.zriwt_team%}
         <div class="col-md-3 text-center">
             <h5 class="mb-4"><span>Zespół Wspatcia Technicznego i Nieruchomości</span></h5>
             <div class="col-md-12 d-flex justify-content-center">
                 <div class="col-md-10">
                     <div class="list-group">
+                        {%if user.accessmodule.contractors_module%}
+                        <a class="text-decoration-none" href="{%url 'contractors:contractor_list'%}">
+                            <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
+                                Kontrahenci<span class="badge text-white info badge-pill">0</span>
+                            </button>
+                        </a>
+                        {%endif%}
+                        {%if user.accessmodule.invoices_module%}
+                        <a class="text-decoration-none" href="{%url 'invoices:menu_invoices'%}">
+                            <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
+                                Faktury<span class="badge text-white info badge-pill">0</span>
+                            </button>
+                        </a>
+                        {%endif%}
+                        {%if user.accessmodule.donations_module%}
                         <a class="text-decoration-none" href="{%url 'donations:donations_list'%}">
                             <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
                                 Darowizny<span class="badge text-white info badge-pill">0</span>
                             </button>
                         </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {%if user.accessmodule.contracts_immovables_module%}
-        <div class="col-md-3 text-center">
-            <h5 class="mb-5"><span>Zespół Nieruchomości</span></h5>
-            <div class="col-md-12 d-flex justify-content-center">
-                <div class="col-md-10">
-                    <div class="list-group">
-                        <a class="text-decoration-none" href="{%url 'contracts:menu_contractsimmovables'%}">
+                        {%endif%}
+                        {%if user.accessmodule.contracts_auction_module%}
+                        <a class="text-decoration-none" href="{%url 'contracts:menu_contracts_auction'%}">
                             <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
-                                Umowy<span class="badge text-white info badge-pill">{{con_len}}</span>
+                                Umowy ZZP<span class="badge text-white info badge-pill">0</span>
                             </button>
-                        </a>
+                        </a>{%endif%}
                     </div>
                 </div>
             </div>
         </div>
         {%endif%}
-        {%if user.accessmodule.listregister_float_team_module%}
+        {%if user.accessmodule.zn_team%}
+        <div class="col-md-3 text-center">
+            <h5 class="mb-5"><span>Zespół Nieruchomości</span></h5>
+            <div class="col-md-12 d-flex justify-content-center">
+                <div class="col-md-10">
+                    <div class="list-group">
+                        {%if user.accessmodule.contract_immovables%}
+                        <a class="text-decoration-none" href="{%url 'contracts:menu_contractsimmovables'%}">
+                            <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
+                                Umowy<span class="badge text-white info badge-pill">{{con_len}}</span>
+                            </button>
+                        </a>
+                        {%endif%}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {%endif%}
+        {%if user.accessmodule.zm_team%}
         <div class="col-md-3 text-center">
             <h5 class="mb-5"><span>Zespół Mieszkaniowy</span></h5>
             <div class="col-md-12 d-flex justify-content-center">
                 <div class="col-md-10">
                     <div class="list-group">
-                        <a class="text-decoration-none" href="{% url 'listregister:make_flats_list'%}">
+                        <a class="text-decoration-none" href="{% url 'businessflats:make_flats_list'%}">
                             <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
                                 Mieszkania służbowe<span class="badge text-white info badge-pill">{{count_flats}}</span>
                             </button>
@@ -101,5 +127,7 @@
      document.getElementById("button-cpv").classList.remove("active");
      document.getElementById("button-record").classList.add("active");
      document.getElementById("button-cpv").classList.remove("active");
+
+
 </script>
 {% endblock %}

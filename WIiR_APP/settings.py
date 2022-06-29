@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'donations.apps.DonationsConfig',
     'sourcefinancing.apps.SourcefinancingConfig',
     'cpvdict.apps.CpvdictConfig',
-    'listregister.apps.ListregisterConfig',
+    'businessflats.apps.BusinessflatsConfig',
     'permanentmanagement.apps.PermanentmanagementConfig',
     'gallery.apps.GalleryConfig'
 ]
