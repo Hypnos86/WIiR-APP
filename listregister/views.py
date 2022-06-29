@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from listregister.models import OfficialFlat
+from contracts.models import ContractImmovables
 from listregister.forms import OfficialFlatForm
 from django.core.paginator import Paginator
 
@@ -8,9 +9,11 @@ from django.core.paginator import Paginator
 # Create your views here.
 @login_required
 def make_list_register(request):
+    contracts = ContractImmovables.objects.all().order_by("-date").filter(state=True)
     flats = OfficialFlat.objects.all()
     count_flats = len(flats)
-    context = {'count_flats': count_flats}
+    contract_len = len(contracts)
+    context = {'count_flats': count_flats, 'con_len':contract_len}
     return render(request, 'list_register.html', context)
 
 

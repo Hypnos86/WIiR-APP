@@ -49,8 +49,8 @@
         <tbody>
         {%for flat in flats %}
         <tr class="my-table-tr">
-            <td class="text-center" valign="middle" scope="row"></td>
-            <td align="left" valign="middle" scope="row"><span data-toggle="info" title="Ostatnie zmiany: {{flat.change|date:'d.m.Y'}}&nbsp;r. ({{flat.author.first_name}} {{flat.author.last_name}})">{{flat.address}}</span></td>
+            <td class="text-center" valign="middle" scope="row" data-toggle="info" title="Ostatnie zmiany: {{flat.change|date:'d.m.Y' }}&nbsp;r. ({{flat.author.first_name}} {{flat.author.last_name}})"></td>
+            <td align="left" valign="middle" scope="row"><span>{{flat.address}}</span></td>
             <td align="center" valign="middle"><span>{%if flat.area%}{{flat.area|intcomma}} m<sup>2</sup>{%else%}{{flat.area|default_if_none:'---'}}{%endif%}</span></td>
             <td align="center" class="text-center" valign="middle"><span>{{flat.room_numbers|default_if_none:'---'}}</span></td>
             <td align="center" valign="middle"><span>{{flat.flor|default_if_none:'---'}}</span></td>
@@ -128,7 +128,6 @@
 <script type="text/javascript">
     document.getElementById("button-units").classList.remove("active");
     document.getElementById("button-invoices").classList.remove("active");
-    document.getElementById("button-contracts").classList.remove("active");
     document.getElementById("button-contractors").classList.remove("active");
     document.getElementById("button-cpv").classList.remove("active");
     document.getElementById("button-record").classList.add("active");

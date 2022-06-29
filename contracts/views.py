@@ -22,7 +22,7 @@ def menu_contractsimmovables(request):
 
     query = "Wyczyść"
     search = "Szukaj"
-    contrsum = len(contracts)
+    con_len = len(contracts)
     con_archive_sum = len(contracts_archive)
     q = request.GET.get("q")
 
@@ -35,11 +35,11 @@ def menu_contractsimmovables(request):
             type_of_contract__type__icontains=q) | contracts.filter(unit__county__name__icontains=q) | contracts.filter(
             unit__city__icontains=q)
         return render(request, 'contracts/contract_list.html',
-                      {'contracts': contracts, 'con_archive_sum': con_archive_sum, 'contrsum': contrsum,
+                      {'contracts': contracts, 'con_archive_sum': con_archive_sum, 'con_len': con_len,
                        'query': query, 'last_date': last_date, 'now': now, 'actual': True})
     else:
         return render(request, 'contracts/contract_list.html',
-                      {'contracts': contracts_list, 'contrsum': contrsum, 'con_archive_sum': con_archive_sum,
+                      {'contracts': contracts_list, 'con_len': con_len, 'con_archive_sum': con_archive_sum,
                        'search': search, 'last_date': last_date, 'now': now, 'actual': True})
 
 

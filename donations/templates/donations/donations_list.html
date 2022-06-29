@@ -1,78 +1,77 @@
 {%extends 'base.html'%}
 {%load static%}
 {%load bootstrap%}
-{%block title%} Kontrahenci umów czynszowych{%endblock%}
+{%block title%} Darowizny {{year}}{%endblock%}
 {%block content%}
 <div class="kontrahenci-title justify-content-center align-items-center text-center">
-    <h4>Kontrahenci umów czynszowych WIiR</h4>
+    <h4>Darowizny {{year}} r.</h4>
     {% if last_date %}
     <small>Ostatnia aktualizacja: {{last_date.change|date:"d.m.Y - (H:i)"}}</small>
     {%endif%}
 </div>
-<div class="container">
+<div>
     <div class="row my-3">
         <div class="col-md-3 align-self-end">
-            <span>Liczba kontrahentów: </span><span class="badge text-white info badge-pill">{{consellsum}}</span>
+            <span>Liczba wniosków: </span><span class="badge text-white info badge-pill">{{application_len}}</span>
         </div>
         <div class="col-md-6">
             <section class="w-100 d-flex justify-content-center align-items-center flex-column text_center">
                 <form method="get">
                     <div class="input-group">
-                        <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj kontrahenta"
+                        <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj wniosku"
                                aria-label="Search" aria-describedby="search-addon" value="{%if query%}{{q}}{%endif%}">
                         <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
                     </div>
                 </form>
             </section>
         </div>
-        {%if user.accessmodule.contractors_module_edit%}
-            <div class="col-md-3 moj-button-right align-self-end"><a href="{%url 'contractors:new_contractorsell'%}">
-                <button type="button" class="btn btn-outline-primary my-btn"><span class="bi bi-plus-circle"> Dodaj kontrahenta</span>
+
+            <div class="col-md-3 moj-button-right align-self-end"><a href="">
+                <button type="button" class="btn btn-outline-primary my-btn"><span class="bi bi-plus-circle"> Dodaj wniosek</span>
                 </button>
             </a>
             </div>
-            {%endif%}
+
     </div>
 </div>
-<div class="container">
+<div class="mx-2">
     <table class="table table-hover my-table">
         <thead>
         <tr class="my-table-tr text-center">
             <th align="center" valign="middle" width="50" scope="col">L.p.</th>
-            <th align="center" valign="middle" width="5%" scope="col">Nr. kontrahenta</th>
-            <th align="center" valign="middle" scope="col">Nazwa</th>
-            <th align="center" valign="middle" width="180" scope="col">NIP</th>
-            <th align="center" valign="middle" width="260" scope="col">Adres</th>
-            <th align="center" valign="middle" width="100" scope="col">Kod pocztowy</th>
-            <th align="center" valign="middle" scope="col">Miasto</th>
+            <th align="center" valign="middle" width="5%" scope="col">L.dz. WIiR</th>
+            <th align="center" valign="middle" scope="col">Data wpływu</th>
+            <th align="center" valign="middle" width="180" scope="col">Data zwrotu od Wydz. Fin</th>
+            <th align="center" valign="middle" width="260" scope="col">Nr. wniosku</th>
+            <th align="center" valign="middle" width="100" scope="col">Nr. porozumienia</th>
+            <th align="center" valign="middle" scope="col">Data porozumienia</th>
+            <th align="center" valign="middle" scope="col">Darczyńca</th>
+            <th align="center" valign="middle" scope="col">Powiat</th>
         </tr>
         </thead>
         <tbody>
-        {%for contractor in contractors %}
+        {%for application in applications %}
         <tr class="my-table-tr">
             <td class="text-center" valign="middle" scope="row"></td>
-            {%if contractor.no_contractor%}
-            <td align="center" valign="middle" scope="row">{{contractor.no_contractor}}</td>
-            {%else%}
-            <td align="center" valign="middle" scope="row">---</td>
-            {%endif%}
-            <td valign="middle"><span>{{contractor.name}}</span></td>
-            <td class="text-center" valign="middle"><span>{{contractor.nip|default_if_none:''}}</span></td>
-            <td valign="middle"><span>{{contractor.address}}</span></td>
-            <td class="text-center" valign="middle"><span>{{contractor.zip_code}}</span></td>
-            <td class="text-center" valign="middle"><span>{{contractor.city}}</span></td>
+            <td align="center" valign="middle" scope="row"></td>
+            <td align="center" valign="middle" scope="row"></td>
+            <td valign="middle"><span></span></td>
+            <td class="text-center" valign="middle"><span></span></td>
+            <td valign="middle"><span></span></td>
+            <td class="text-center" valign="middle"><span></span></td>
+            <td class="text-center" valign="middle"><span></span></td>
+            <td class="text-center" valign="middle"><span></span></td>
             <td align="right" valign="middle">
-                {%if contractor.information%}
-                <button data-toggle="info" title="Pokaż" type="button" data-url="{% url 'contractors:show_information' contractor.id %}" class="btn btn-outline-success mx-2" onclick="openModal(this)"><i
+
+                <button data-toggle="info" title="Pokaż" type="button" class="btn btn-outline-success mx-2" onclick="openModal(this)"><i
                         class="bi bi-info-lg my-1"></i>
                 </button>
-                {%endif%}
-                {%if user.accessmodule.contractors_module_edit%}
-                <a class="mx-2 moj-button-right" href="{%url 'contractors:edit_contractorsell' contractor.id%}">
+
+                <a class="mx-2 moj-button-right">
                     <button data-toggle="info" title="Edytuj" type="submit" class="btn btn-outline-primary icon-color my-1"><i class="bi bi-pencil-square"></i>
                     </button>
                 </a>
-                {%endif%}
+
             </td>
         </tr>
         {%endfor%}
@@ -88,14 +87,14 @@
         <ul class="pagination justify-content-center">
             {%if contractors.has_previous%}
             <li class="page-item">
-                <a class="page-link" href="?page={{contractors.previous_page_number}}">Poprzednia</a>
+                <a class="page-link" href="?page={{applications.previous_page_number}}">Poprzednia</a>
             </li>
             {%else%}
             <li class="page-item disabled">
                 <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Poprzednia</a>
             </li>
             {%endif%}
-            {%for i in contractors.paginator.page_range%}
+            {%for i in applications.paginator.page_range%}
             {%if contractors.number == i%}
             <li class="page-item active" aria-current="page">
             <span class="page-link">
@@ -107,9 +106,9 @@
             <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
             {%endif%}
             {%endfor%}
-            {%if contractors.has.next%}
+            {%if applications.has.next%}
             <li class="page-item">
-                <a class="page-link" href="?page={{contractors.next_page_number}}">Następna</a>
+                <a class="page-link" href="?page={{applications.next_page_number}}">Następna</a>
             </li>
             {%else%}
             <li class="page-item disabled">

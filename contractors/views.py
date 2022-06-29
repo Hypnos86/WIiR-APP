@@ -28,7 +28,8 @@ def contractorsell_list(request):
             city__icontains=q) | contractorsell.filter(no_contractor__startswith=q) | contractorsell.filter(
             nip__startswith=q)
         return render(request, 'contractors/contractor_list.html',
-                      {'contractors': contractorsell, "consellsum": consellsum, "query": query, 'last_date': last_date})
+                      {'contractors': contractorsell, "consellsum": consellsum, "query": query, 'last_date': last_date,
+                       'q': q})
     else:
         return render(request, 'contractors/contractor_list.html',
                       {'contractors': contractorsell_list, "consellsum": consellsum, "search": search,

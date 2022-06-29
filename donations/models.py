@@ -44,14 +44,15 @@ class Application(models.Model):
                                        related_name='application')
     presenter = models.ForeignKey(Contractor, on_delete=models.CASCADE, verbose_name='Darczyńca',
                                   related_name='application')
-    sum = models.DecimalField('Kwota', max_digits=10, decimal_places=2)
+    sum = models.DecimalField('Kwota', max_digits=10, decimal_places=2, null=True, blank=True)
     settlement_date = models.DateField('Data rozliczenia')
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE, verbose_name='Jednostka', related_name='application')
-    subject = models.TextField('Przedmiot porozumienia')
-    engagement = models.DecimalField('Zaangażowanie', max_digits=10, decimal_places=2)
-    expenditure = models.DecimalField('Wydatek', max_digits=10, decimal_places=2)
-    information = models.TextField('Informacje')
+    subject = models.TextField('Przedmiot porozumienia', null=True, blank=True)
+    engagement = models.DecimalField('Zaangażowanie', max_digits=10, decimal_places=2, null=True, blank=True)
+    expenditure = models.DecimalField('Wydatek', max_digits=10, decimal_places=2, null=True, blank=True)
+    information = models.TextField('Informacje', null=True, blank=True, default="")
     creation_date = models.DateField(auto_now_add=True)
+    change = models.DateTimeField("Data zmian", auto_now=True)
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE, verbose_name='Autor', related_name='application')
 
     def __str__(self):

@@ -19,13 +19,13 @@
 </div>
 
 <div class="container">
-    <table class="table table-hover my-table mt-2">
+    <table class="table table-hover my-table mt-2"">
         <thead>
         <tr class="my-table-tr text-center">
             <th align="center" valign="middle" width="50" scope="col">l.p.</th>
             <th align="center" valign="middle" width="600" scope="col">Jednostka</th>
             <th align="center" valign="middle" width="80" scope="col">Wydatkowano</th>
-            <th align="center" valign="middle">Informacje</th>
+            <th align="right" valign="middle" width="5%">Informacje</th>
         </tr>
         </thead>
         <tbody>
@@ -36,7 +36,7 @@
             <td align="center" valign="middle" scope="row"></td>
             <td valign="middle">{{unit}}</td>
             <td valign="middle" align="center" title="{% for u in unit.order.all %}{{u|intcomma}}{%endfor%}">{{value|intcomma}} zł.</td>
-            <td valign="middle" align="center">
+            <td valign="middle" align="right">
               <button type="button" data-url="{%url 'cpvdict:show_information_work_object' unit.id%}" class="btn btn-outline-success mx-2" onclick="openModal(this)">
                 <i class="bi bi-info-lg"></i></button>
             </td>
@@ -63,7 +63,6 @@
 <script>
      document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-invoices").classList.remove("active");
-     document.getElementById("button-contracts").classList.remove("active");
      document.getElementById("button-contractors").classList.remove("active");
      document.getElementById("button-cpv").classList.add("active");
        function openModal(button){

@@ -113,7 +113,7 @@
 <script>
      document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-invoices").classList.remove("active");
-     document.getElementById("button-contracts").classList.add("active");
+     document.getElementById("button-record").classList.add("active");
      document.getElementById("button-contractors").classList.remove("active");
 
     // definicja funkcji otwierającej modal
@@ -123,11 +123,8 @@
         $("#annexModal .modal-content").load(url);
         $("#annexModal").modal("show");
     }
-
     function submitForm(){
         $("#submitButton").closest("form").submit();
     }
-
-
 </script>
 {% endblock %}
