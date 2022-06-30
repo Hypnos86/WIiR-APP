@@ -1,40 +1,45 @@
 from django.forms import ModelForm
-from main.models import Team, Telephone, OrganisationTelephone, AccessModule, Command
+from main.models import Team, OrganisationTelephone, AccessModule, Command, Employer
 
 
 class TeamForm(ModelForm):
     class Meta:
         model = Team
-        field = ['team']
-        labels = {'team': "Komrówka Wydziału"}
+        fields = ['team']
+        label = {'team': 'Komrówka Wydziału'}
 
 
-class TelephoneForm(ModelForm):
+class EmployerForm(ModelForm):
     class Meta:
-        model = Telephone
-        field = ['team', 'position', 'fname', 'lname', 'no_tel_room', 'no_tel_private']
-        labels = {'team': 'Zespół', 'position': 'Stanowisko', 'fname': 'Imię', 'lname': 'Nazwisko',
-                  'no_tel_room': 'Nr. telefonu', 'no_tel_private': 'Nr komórkowy'}
+        model = Employer
+        fields = ['team', 'position', 'name', 'last_name', 'industry_specialist', 'industry', 'no_tel_room',
+                  'no_tel_private', 'information']
+        label = {'team': 'Zespół', 'position': 'Stanowisko', 'name': 'Imię', 'last_name': 'Nazwisko',
+                 'industry_specialist': 'Branżysta','industry':'Branża',
+                 'no_tel_room': 'Nr. telefonu', 'no_tel_private': 'Nr komórkowy', 'information':'Informacje'}
 
 
 class OrganisationTelephoneForm(ModelForm):
     class Meta:
         model = OrganisationTelephone
         fields = ['add_date', 'telephone_book']
-        labels = {'telephone_book': 'Książka telefoniczna', 'add_date': 'Data dodania'}
+        label = {'telephone_book': 'Książka telefoniczna'}
+        exclude = ['add_date']
 
 
 class AccessModuleForm(ModelForm):
     class Meta:
         model = AccessModule
         fields = '__all__'
-        labels = {'contractors_module': 'Moduł kontrahenci', 'contracts_module': 'Moduł umowy',
-                  'investments_module': 'Moduł inwestycje', 'invoices_module': 'Moduł faktury',
-                  'listregister_float_team_module': 'Moduł Ewidencja - Mieszkaniówka',
-                  'listregister_exploatation_team_module': 'Moduł Ewidencja - Eksploatacja'}
+        label = {'contractors_module': 'Moduł kontrahenci', 'contracts_module': 'Moduł umowy',
+                 'investments_module': 'Moduł inwestycje', 'invoices_module': 'Moduł faktury',
+                 'listregister_float_team_module': 'Moduł Ewidencja - Mieszkaniówka',
+                 'listregister_exploatation_team_module': 'Moduł Ewidencja - Eksploatacja'}
 
 
 class CommandsForm(ModelForm):
     class Meta:
         model = Command
         fields = ['title', 'content', 'scan', 'create_date']
+        label = {'title': 'Tytuł', 'content': 'Treść'}
+        exclude = ['create_date']

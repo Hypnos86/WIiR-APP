@@ -1,7 +1,8 @@
 import datetime
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
-from main.models import Team, Telephone, OrganisationTelephone, AccessModule, Command, Employer
+from django.shortcuts import render, get_object_or_404, redirect
+from main.models import Team, OrganisationTelephone, AccessModule, Command, Employer
+from main.forms import TeamForm
 from businessflats.models import OfficialFlat
 from contracts.models import ContractImmovables, ContractAuction
 from contractors.models import Contractor
@@ -40,6 +41,26 @@ def show_teams_list(request):
     return render(request, 'main/teams_list.html', {'teams': teams})
 
 
+def add_team_popup(request):
+    team_form = TeamForm(request.POST or None)
+    if request.method == 'POST':
+        if team_form.is_valid():
+            team_form.save()
+            return redirect('main:show_teams_list')
+    return render(request, 'main/team_form_popup.html', {'team_form': team_form, 'new': True})
+
+
+def edit_team_popup(request, id):
+    team = get_object_or_404(Team, pk=id)
+    team_form = TeamForm(request.POST or None, instance=team)
+
+    if request.method == 'POST':
+        if team_form.is_valid():
+            team_form.save()
+            return redirect('main:show_teams_list')
+    return render(request, 'main/team_form_popup.html', {'team_form': team_form, 'new': False, 'id':id})
+
+
 @login_required
 def show_employers_list(request):
     employers = Employer.objects.all()
@@ -55,10 +76,10 @@ def show_command_list(request):
 @login_required
 def telephone_list(request):
     teams = Team.objects.all()
-    tel = Telephone.objects.all()
+    object = Employer.objects.all()
     telephone_book = OrganisationTelephone.objects.all()
 
-    context = {'tel': tel,
+    context = {'tel': object,
                'teams': teams,
                'telephone_book': telephone_book}
     return render(request, 'main/telephones.html', context)

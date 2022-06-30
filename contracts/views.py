@@ -13,7 +13,7 @@ from main.views import now_date
 def menu_contractsimmovables(request):
     contracts = ContractImmovables.objects.all().order_by("-date").filter(state=True)
     contracts_archive = ContractImmovables.objects.all().order_by("-date").filter(state=False)
-    now = now_date()
+    now = now_date
 
     try:
         last_date = ContractImmovables.objects.values('change').latest('change')

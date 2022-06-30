@@ -11,31 +11,58 @@
                 </button>
             </a>
         </div>
-        <div class="list-group col-md-5">
+        <div class="list-group col-md-4">
             <h5 class="text-center mb-5">Komórki Wydziału Inwestycji i Remontów</h5>
             {%for team in teams%}
-            <span class="list-group-item list-group-item-action"><span>{{team}}</span></span>
+            <span class="list-group-item list-group-item-action d-flex justify-content-between">
+                <span class="pt-2">{{team}}</span>
+                <button class="btn btn-sm" type="button" data-url="{% url 'main:edit_team_popup' team.id %}" onclick="openModalEdit(this)">
+                    <span style="font-size: 20px" class="bi bi-pencil-square"></span>
+                </button>
+            </span>
             {%endfor%}
         </div>
         <div class="col-md-2 moj-button-right">
-            <a><button data-toggle="info" title="Dodaj nową komórkę Wydziału" class="btn btn-outline-primary my-btn">
+            <button type="button" data-url="{%url 'main:add_team_popup'%}" data-toggle="info" onclick="openModalAdd()" title="Dodaj nową komórkę Wydziału" class="btn btn-outline-primary my-btn">
                 <span class="bi bi-plus-square"></span>
-                </button>
-            </a>
+            </button>
         </div>
     </div>
 </div>
+<!-- Modal -->
+{%if new%}
+<div class="modal fade" id="addTeamModal" >
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+{%else%}
+<div class="modal fade" id="editTeamModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+{%endif%}
 <script>
      document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-record").classList.remove("active");
      document.getElementById("button-secretariat").classList.add("active");
      document.getElementById("button-cpv").classList.remove("active");
      document.getElementById("button-investments").classList.remove("active");
-     function openModal(button){
-        var url = $(button).data("url");
-        $("#orderInformationModal .modal-content").load(url);
-        $("#orderInformationModal").modal("show");
+     function openModalAdd(){
+        var url = $(addTeamModal).data("url");
+        $("#addTeamModal .modal-content").load(url);
+        $("#addTeamModal").modal("show");
     }
+    function openModalEdit(button){
+        var url = $(button).data("url");
+        $("#editTeamModal .modal-content").load(url);
+        $("#editTeamModal").modal("show");
+        }
     function submitForm(){
         $("#submitButton").closest("form").submit();
     }

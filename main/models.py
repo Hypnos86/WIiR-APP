@@ -7,29 +7,10 @@ class Team(models.Model):
         verbose_name = "Komórka Wydziału"
         verbose_name_plural = "Komórki Wydziału"
 
-    team = models.CharField(max_length=50, verbose_name='Zespół')
+    team = models.CharField(max_length=50, verbose_name='Komórka Wydziału')
 
     def __str__(self):
         return f'{self.team}'
-
-
-class Telephone(models.Model):
-    class Meta:
-        verbose_name = "Telefony"
-        verbose_name_plural = "Telefony"
-        ordering = ['team', 'position']
-
-    team = models.ForeignKey("main.Team", on_delete=models.CASCADE, verbose_name='Zespół')
-    position = models.CharField("Stanowisko", max_length=20, blank=True, default="")
-    fname = models.CharField("Imię", max_length=15, blank=True, default="")
-    lname = models.CharField("Nazwisko", max_length=15, null=True, blank=True, default="")
-    no_room = models.CharField("Nr. pokoju", max_length=2, blank=True, default="")
-    no_tel_room = models.CharField("Nr. telefonu", max_length=6, blank=True, default="")
-    no_tel_private = models.CharField("Nr. komórkowy", max_length=9, null=True, blank=True, default="")
-    information = models.CharField("Informacje", max_length=200, null=True, blank=True)
-
-    def __str__(self):
-        return f'{self.fname} {self.lname} - {self.position}. Tel: {self.no_tel_room}'
 
 
 class OrganisationTelephone(models.Model):
@@ -61,9 +42,14 @@ class Employer(models.Model):
 
     name = models.CharField('Imię', max_length=20)
     last_name = models.CharField('Nazwisko', max_length=25)
-    team = models.ForeignKey(Team, on_delete=models.CASCADE, verbose_name='Zespół')
+    position = models.CharField("Stanowisko", max_length=20, blank=True, default="")
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, verbose_name='Zespół', related_name='employer')
     industry_specialist = models.BooleanField(default=0, verbose_name='Branżysta merytoryczny')
-    industry = models.ForeignKey(IndustryType, on_delete=models.CASCADE, verbose_name='Branża')
+    industry = models.ForeignKey(IndustryType, on_delete=models.CASCADE, verbose_name='Branża', related_name='employer')
+    no_room = models.CharField("Nr. pokoju", max_length=2, blank=True, default="")
+    no_tel_room = models.CharField("Nr. telefonu", max_length=6, blank=True, default="")
+    no_tel_private = models.CharField("Nr. komórkowy", max_length=9, null=True, blank=True, default="")
+    information = models.CharField("Informacje", max_length=200, null=True, blank=True)
 
     def __str__(self):
         return f'{self.name} {self.last_name}'
@@ -100,7 +86,6 @@ class AccessModule(models.Model):
     contract_immovables = models.BooleanField('ZN - Umowy nieruchomości - Podgląd', default=False)
     contract_immovables_edit = models.BooleanField('ZN - Umowy nieruchomości - Edycja', default=False)
     ze_team = models.BooleanField('Ewidencja: Zespół Eksploatacji', default=False)
-
 
     def __str__(self):
         return f'{self.user}'
