@@ -57,7 +57,11 @@
             <td align="center" valign="middle" scope="row">---</td>
             {%endif%}
             <td valign="middle"><span>{{contractor.name}}</span></td>
+            {%if contractor.nip%}
             <td class="text-center" valign="middle"><span>{{contractor.nip|default_if_none:''}}</span></td>
+            {%else%}
+            <td class="text-center" valign="middle"><span>---</span></td>
+            {%endif%}
             <td valign="middle"><span>{{contractor.address}}</span></td>
             <td class="text-center" valign="middle"><span>{{contractor.zip_code}}</span></td>
             <td class="text-center" valign="middle"><span>{{contractor.city}}</span></td>
@@ -130,8 +134,8 @@
 </div>
 <script>
     document.getElementById("button-units").classList.remove("active");
-    document.getElementById("button-invoices").classList.remove("active");
-    document.getElementById("button-contractors").classList.add("active");
+    document.getElementById("button-record").classList.add("active");
+    document.getElementById("button-cpv").classList.remove("active");
     document.getElementById("button-investments").classList.remove("active");
         function openModal(button){
             var url = $(button).data("url");

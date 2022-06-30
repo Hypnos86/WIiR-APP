@@ -77,23 +77,19 @@
 </div>
 {%endif%}
 <script>
-     document.getElementById("button-units").classList.remove("active");
-     document.getElementById("button-invoices").classList.remove("active");
-     document.getElementById("button-contractors").classList.remove("active");
-     document.getElementById("button-investments").classList.add("active");
-     document.getElementById("button-projects").classList.add("active");
-     document.getElementById("button-contractors").classList.remove("active");
-
-    // definicja funkcji otwierającej modal
-        // będzie uruchamiana na event "onclick"
-        function openModal(){
-            var url = $("#projectModal").data("url");
-            $("#projectModal .modal-content").load(url);
-            $("#projectModal").modal("show");
-        }
-
-        function submitForm(){
-            $("#submitButton").closest("form").submit();
-        }
+    document.getElementById("button-units").classList.remove("active");
+    document.getElementById("button-record").classList.remove("active");
+    document.getElementById("button-investments").classList.add("active");
+    document.getElementById("button-contractzzp").classList.remove("active");
+    document.getElementById("button-projects").classList.add("active");
+    document.getElementById("button-cpv").classList.remove("active");
+    function openModal(){
+        var url = $("#projectModal").data("url");
+        $("#projectModal .modal-content").load(url);
+        $("#projectModal").modal("show");
+    }
+    function submitForm(){
+        $("#submitButton").closest("form").submit();
+    }
 </script>
 {%endblock%}

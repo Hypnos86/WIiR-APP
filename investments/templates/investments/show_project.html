@@ -154,20 +154,19 @@
     </div>
 </div>
 <script>
-     document.getElementById("button-units").classList.remove("active");
-     document.getElementById("button-invoices").classList.remove("active");
-     document.getElementById("button-contracts").classList.remove("active");
-     document.getElementById("button-contractors").classList.remove("active");
-     document.getElementById("button-investments").classList.add("active");
-     document.getElementById("button-projects").classList.add("active");
-     document.getElementById("button-contractors").classList.remove("active");
-      function openModal(){
-            var url = $(galleryModal).data("url");
-            $("#galleryModal .modal-content").load(url);
-            $("#galleryModal").modal("show");
-        }
-        function submitForm(){
-            $("#submitButton").closest("form").submit();
-        }
+    document.getElementById("button-units").classList.remove("active");
+    document.getElementById("button-record").classList.remove("active");
+    document.getElementById("button-investments").classList.add("active");
+    document.getElementById("button-contractzzp").classList.remove("active");
+    document.getElementById("button-projects").classList.add("active");
+    document.getElementById("button-cpv").classList.remove("active");
+    function openModal(){
+        var url = $(galleryModal).data("url");
+        $("#galleryModal .modal-content").load(url);
+        $("#galleryModal").modal("show");
+    }
+    function submitForm(){
+        $("#submitButton").closest("form").submit();
+    }
 </script>
 {%endblock%}

@@ -46,16 +46,11 @@
     </div>
 </div>
 <script>
-     document.getElementById("button-units").classList.remove("active");
-     document.getElementById("button-invoices").classList.remove("active");
-     document.getElementById("button-contractors").classList.remove("active");
-     document.getElementById("button-cpv").classList.remove("active");
-     document.getElementById("button-investments").classList.add("active");
-     document.getElementById("button-projects").classList.remove("active");
-     document.getElementById("button-gallery").classList.add("active");
-     document.getElementById("button-cpv").classList.remove("active");
-   // definicja funkcji otwierającej modal
-    // będzie uruchamiana na event "onclick"
+    document.getElementById("button-units").classList.remove("active");
+    document.getElementById("button-record").classList.remove("active");
+    document.getElementById("button-investments").classList.add("active");
+    document.getElementById("button-gallery").classList.add("active");
+    document.getElementById("button-cpv").classList.remove("active");
     function openModal(){
         var url = $("#galleryModal").data("url");
         $("#galleryModal .modal-content").load(url);

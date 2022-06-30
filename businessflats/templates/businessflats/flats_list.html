@@ -26,8 +26,8 @@
                 </form>
             </div>
         </div>
-            {%if user.accessmodule.listregister_float_team_module_edit%}
-            <div class="col-md-3 moj-button-right "><a href="{%url 'listregister:add_new_flat'%}">
+            {%if user.accessmodule.official_flat%}
+            <div class="col-md-3 moj-button-right "><a href="{%url 'businessflats:add_new_flat'%}">
                 <button type="button" class="btn btn-outline-primary my-btn"><span class="bi bi-pin-map"> Dodaj nowy lokal</span></button>
             </a>
             </div>
@@ -61,12 +61,12 @@
             {%endif%}
             <td align="right" valign="middle">
                 {%if flat.information%}
-                <button type="button" data-toggle="info" data-placement="left" title="Pokaż" data-url="{% url 'listregister:show_information' flat.id %}" class="btn btn-outline-success mx-2 tt" onclick="openModal(this)"><i
+                <button type="button" data-toggle="info" data-placement="left" title="Pokaż" data-url="{% url 'businessflats:show_information' flat.id %}" class="btn btn-outline-success mx-2 tt" onclick="openModal(this)"><i
                         class="bi bi-info-lg"></i>
                 </button>
                 {%endif%}
-                {%if user.accessmodule.listregister_float_team_module_edit%}
-                <a class="mx-2" href="{%url 'listregister:edit_flat' flat.id %}">
+                {%if user.accessmodule.official_flat%}
+                <a class="mx-2" href="{%url 'businessflats:edit_flat' flat.id %}">
                     <button type="submit" data-toggle="info" data-placement="right" title="Edytuj" class="btn btn-outline-primary icon-color"><i class="bi bi-pencil-square"></i>
                     </button>
                 </a>
@@ -127,11 +127,9 @@
 </div>
 <script type="text/javascript">
     document.getElementById("button-units").classList.remove("active");
-    document.getElementById("button-invoices").classList.remove("active");
-    document.getElementById("button-contractors").classList.remove("active");
-    document.getElementById("button-cpv").classList.remove("active");
     document.getElementById("button-record").classList.add("active");
     document.getElementById("button-cpv").classList.remove("active");
+    document.getElementById("button-investments").classList.remove("active");
     function openModal(button){
         var url = $(button).data("url");
         $("#informationModal .modal-content").load(url);

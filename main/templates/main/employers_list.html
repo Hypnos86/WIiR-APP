@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} SEKRETARIAT {% endblock %}
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-center row pt-5">
+        <div class="col-md-2">
+            <a href="{%url 'main:make_secretariat_site'%}">
+                <button class="btn btn-outline-primary my-btn">
+                    <span class="bi bi-chevron-compact-left">Cofnij</span>
+                </button>
+            </a>
+        </div>
+        <div class="list-group col-md-5">
+            <h5 class="text-center mb-5">Pracownicy Wydziału</h5>
+            {%for employer in employers%}
+            <span class="list-group-item list-group-item-action">{{employer}}<span></span></span>
+            {%endfor%}
+        </div>
+        <div class="col-md-2 moj-button-right">
+            <a><button data-toggle="info" title="Dodaj nowego pracownika" class="btn btn-outline-success">
+                <span class="bi bi-plus-square"></span>
+                </button>
+            </a>
+        </div>
+    </div>
+</div>
+<script>
+     document.getElementById("button-units").classList.remove("active");
+     document.getElementById("button-record").classList.remove("active");
+     document.getElementById("button-secretariat").classList.add("active");
+     document.getElementById("button-cpv").classList.remove("active");
+     document.getElementById("button-investments").classList.remove("active");
+     function openModal(button){
+        var url = $(button).data("url");
+        $("#orderInformationModal .modal-content").load(url);
+        $("#orderInformationModal").modal("show");
+    }
+    function submitForm(){
+        $("#submitButton").closest("form").submit();
+    }
+    $(function () {
+        $('[data-toggle="info"]').tooltip()
+    })
+</script>
+{% endblock %}

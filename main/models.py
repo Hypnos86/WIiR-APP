@@ -76,6 +76,8 @@ class AccessModule(models.Model):
 
     user = models.OneToOneField('auth.User', on_delete=models.CASCADE, verbose_name='Użytkownik',
                                 related_name='accessmodule')
+    zok_team = models.BooleanField('Ewidencja: Zespoł Obsługi Kancelarynej', default=False)
+    commands = models.BooleanField('ZOPK - Polecenia', default=False)
     zriwt_team = models.BooleanField('Ewidencja: Zespół Rozliczeń i Wsparcia Technicznego', default=False)
     contractors_module = models.BooleanField('ZRiWT - Kontrahenci - Podgląd', default=False)
     contractors_module_edit = models.BooleanField('ZRiWT - Kontrahenci - Edycja', default=False)
@@ -85,19 +87,20 @@ class AccessModule(models.Model):
     donations_module_edit = models.BooleanField('ZRiWT - Darowizny - Edycja', default=False)
     contracts_auction_module = models.BooleanField('ZRiWT - Umowy ZZP - Podgląd', default=False)
     contracts_auction_module_edit = models.BooleanField('ZRiWT - Umowy ZZP - Edycja', default=False)
+    investments_module = models.BooleanField('ZRiWT - Inwestycje - Podgląd', default=False)
+    investments_module_edit = models.BooleanField('ZRiWT - Inwestycje - Edycja', default=False)
+    cpvdict_module = models.BooleanField('ZRiWT - Rodzajowość - Podgląd', default=False)
+    cpvdict_module_edit = models.BooleanField('ZRiWT - Rodzajowość - Edycja', default=False)
+    gallery_module = models.BooleanField('ZRiWT - Galeria - Podgląd', default=False)
+    gallery_module_edit = models.BooleanField('ZRiWT - Galeria - Edycja', default=False)
     zm_team = models.BooleanField('Ewidencja: Zespół Mieszkaniowy', default=False)
     official_flat = models.BooleanField('ZM - Mieszkania służbowe - Podgląd', default=False)
     official_flat_edit = models.BooleanField('ZM - Mieszkania służbowe - Edycja', default=False)
-    ze_team = models.BooleanField('Ewidencja: Zespół Eksploatacji', default=False)
     zn_team = models.BooleanField('Ewidencja: Zespół Nieruchomości', default=False)
     contract_immovables = models.BooleanField('ZN - Umowy nieruchomości - Podgląd', default=False)
     contract_immovables_edit = models.BooleanField('ZN - Umowy nieruchomości - Edycja', default=False)
-    investments_module = models.BooleanField('Inwestycje - Podgląd', default=False)
-    investments_module_edit = models.BooleanField('Inwestycje - Edycja', default=False)
-    cpvdict_module = models.BooleanField('Rodzajowość - Podgląd', default=False)
-    cpvdict_module_edit = models.BooleanField('Rodzajowość - Edycja', default=False)
-    gallery_module = models.BooleanField('Galeria - Podgląd', default=False)
-    gallery_module_edit = models.BooleanField('Galeria - Edycja', default=False)
+    ze_team = models.BooleanField('Ewidencja: Zespół Eksploatacji', default=False)
+
 
     def __str__(self):
         return f'{self.user}'

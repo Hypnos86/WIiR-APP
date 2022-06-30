@@ -5,7 +5,7 @@
 {% block title %}Ewidencja - Mieszkania Służbowe{% endblock %}
 {% block content %}
 <div class="row">
-    <div class="col-md-3"><a href="{% url 'listregister:make_flats_list'%}">
+    <div class="col-md-3"><a href="{% url 'businessflats:make_flats_list'%}">
         <button class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span>
         </button>
     </a></div>
@@ -51,12 +51,8 @@
 </div>
 <script>
     document.getElementById("button-units").classList.remove("active");
-     document.getElementById("button-invoices").classList.remove("active");
-     document.getElementById("button-contracts").classList.remove("active");
-     document.getElementById("button-contractors").classList.remove("active");
-     document.getElementById("button-cpv").classList.remove("active");
-     document.getElementById("button-record").classList.add("active");
-     document.getElementById("button-cpv").classList.remove("active");
-
+    document.getElementById("button-record").classList.add("active");
+    document.getElementById("button-cpv").classList.remove("active");
+    document.getElementById("button-investments").classList.remove("active");
 </script>
 {%endblock%}

@@ -55,7 +55,7 @@
                         {%if user.accessmodule.contractors_module%}
                         <a class="text-decoration-none" href="{%url 'contractors:contractor_list'%}">
                             <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
-                                Kontrahenci<span class="badge text-white info badge-pill">0</span>
+                                Kontrahenci<span class="badge text-white info badge-pill">{{contractors_len}}</span>
                             </button>
                         </a>
                         {%endif%}
@@ -69,16 +69,38 @@
                         {%if user.accessmodule.donations_module%}
                         <a class="text-decoration-none" href="{%url 'donations:donations_list'%}">
                             <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
-                                Darowizny<span class="badge text-white info badge-pill">0</span>
+                                Darowizny<span class="badge text-white info badge-pill">{{application_len}}</span>
                             </button>
                         </a>
                         {%endif%}
                         {%if user.accessmodule.contracts_auction_module%}
                         <a class="text-decoration-none" href="{%url 'contracts:menu_contracts_auction'%}">
                             <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
-                                Umowy ZZP<span class="badge text-white info badge-pill">0</span>
+                                Umowy ZZP<span class="badge text-white info badge-pill">{{contracts_auction_len}}</span>
                             </button>
-                        </a>{%endif%}
+                        </a>
+                        {%endif%}
+                        {%if user.accessmodule.investments_module%}
+                        <a class="text-decoration-none" href="{%url 'investments:investment_projects_list'%}">
+                            <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
+                                Inwestycje<span class="badge text-white info badge-pill">{{projects_len}}</span>
+                            </button>
+                        </a>
+                        {%endif%}
+                        {%if user.accessmodule.cpvdict_module%}
+                        <a class="text-decoration-none" href="{%url 'cpvdict:type_expense_list'%}">
+                            <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
+                                Rodzajowość<span class="badge text-white info badge-pill">{{genres_len}}</span>
+                            </button>
+                        </a>
+                        {%endif%}
+                        {%if user.accessmodule.gallery_module%}
+                        <a class="text-decoration-none" href="{%url 'gallery:gallery_list'%}">
+                            <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
+                                Galeria<span class="badge text-white info badge-pill">{{galleries_len}}</span>
+                            </button>
+                        </a>
+                        {%endif%}
                     </div>
                 </div>
             </div>
@@ -122,12 +144,9 @@
 </div>
 <script>
      document.getElementById("button-units").classList.remove("active");
-     document.getElementById("button-invoices").classList.remove("active");
-     document.getElementById("button-contractors").classList.remove("active");
-     document.getElementById("button-cpv").classList.remove("active");
      document.getElementById("button-record").classList.add("active");
+     document.getElementById("button-secretariat").classList.remove("active");
      document.getElementById("button-cpv").classList.remove("active");
-
-
+     document.getElementById("button-investments").classList.remove("active");
 </script>
 {% endblock %}

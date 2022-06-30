@@ -62,16 +62,17 @@
 </div>
 <script>
      document.getElementById("button-units").classList.remove("active");
-     document.getElementById("button-invoices").classList.remove("active");
-     document.getElementById("button-contractors").classList.remove("active");
+     document.getElementById("button-record").classList.remove("active");
+     document.getElementById("button-secretariat").classList.remove("active");
      document.getElementById("button-cpv").classList.add("active");
-       function openModal(button){
-            var url = $(button).data("url");
-            $("#information_work_object_Modal .modal-content").load(url);
-            $("#information_work_object_Modal").modal("show");
-        }
-        function submitForm(){
-            $("#submitButton").closest("form").submit();
-        }
+     document.getElementById("button-investments").classList.remove("active");
+     function openModal(button){
+        var url = $(button).data("url");
+        $("#information_work_object_Modal .modal-content").load(url);
+        $("#information_work_object_Modal").modal("show");
+     }
+     function submitForm(){
+        $("#submitButton").closest("form").submit();
+     }
 </script>
 {% endblock%}

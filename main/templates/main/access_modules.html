@@ -6,22 +6,34 @@
 <div class="container">
     {%if user.is_authenticated%}
     <div class="row d-flex justify-content-around">
-        <div class="col-md-8">
+        <div class="col-md-7">
             <table class="table">
                 <thead data-toggle="info" title="Dostep do modułów" class="table-dark">
-                <tr class="my-table-tr">
-                    <th align="center" valign="middle" width="200" scope="col">Zespół</th>
-                    <th align="center" valign="middle" width="20" scope="col">Aktywny</th>
-                    <th align="center" valign="middle" width="100" scope="col">Moduł</th>
-                    <th align="center" valign="middle" width="20" scope="col">Podglad</th>
-                    <th align="center" valign="middle" width="20" scope="col">Edycja</th>
+                <tr class="my-table-tr text-center">
+                    <th align="center" valign="middle" width="auto" scope="col">Zespół</th>
+                    <th align="center" valign="middle" width="auto" scope="col">Aktywny</th>
+                    <th align="center" valign="middle" width="auto" scope="col">Moduł</th>
+                    <th align="center" valign="middle" width="auto" scope="col">Podglad</th>
+                    <th align="center" valign="middle" width="auto" scope="col">Edycja</th>
                 </tr>
                 </thead>
                 <tbody>
+                {%if user.accessmodule.zok_team%}
                 <tr>
-                    <td rowspan="4" valign="middle">Ewidencja Zespół Rozliczeń i Wsparcia Technicznego</td>
-                    <td rowspan="4" align="center" valign="middle">{%if user.accessmodule.contractors_module_edit%}<i class="bi bi-check-circle-fill text-success"></i>
+                    <td rowspan="" valign="middle">Zespół Obsługi Kancelaryjnej</td>
+                    <td rowspan="" align="center" valign="middle">{%if user.accessmodule.zok_team%}<i class="bi bi-check-circle-fill text-success"></i>
                     {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
+                    <td>Moduł Polecenia</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.commands%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%}<i class="bi bi-x-circle-fill text-danger"></i> </td>{%endif%}
+                    <td align="center" valign="middle">{%if user.accessmodule.commands%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%}<i class="bi bi-x-circle-fill text-danger"></i> </td>{%endif%}
+                </tr>
+                {%endif%}
+                {%if user.accessmodule.zriwt_team%}
+                <tr>
+                    <td rowspan="7" valign="middle">Zespół Rozliczeń i Wsparcia Technicznego</td>
+                    <td rowspan="7" align="center" valign="middle"><i class="bi bi-check-circle-fill text-success"></i></td>
                     <td>Moduł Kontrahenci</td>
                     <td align="center" valign="middle">{%if user.accessmodule.contractors_module%}<i class="bi bi-check-circle-fill text-success"></i>
                     {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
@@ -29,69 +41,80 @@
                     {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
                 </tr>
                 <tr>
-                    <td>Moduł Faktury</td>
+                    <td valign="middle">Moduł Faktury</td>
                     <td align="center" valign="middle">{%if user.accessmodule.invoices_module%}<i class="bi bi-check-circle-fill text-success"></i>
                     {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
                     <td align="center" valign="middle">{%if user.accessmodule.invoices_module_edit%}<i class="bi bi-check-circle-fill text-success"></i>
                     {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
                 </tr>
                 <tr>
-                    <td>Moduł Darowizny</td>
+                    <td valign="middle">Moduł Darowizny</td>
                     <td align="center" valign="middle">{%if user.accessmodule.donations_module%}<i class="bi bi-check-circle-fill text-success"></i>
                     {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
                     <td align="center" valign="middle">{%if user.accessmodule.donations_module_edit%}<i class="bi bi-check-circle-fill text-success"></i>
                     {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
                 </tr>
                 <tr>
-                    <td>Moduł Umowy ZZP</td>
+                    <td valign="middle">Moduł Umowy ZZP</td>
                     <td align="center" valign="middle">{%if user.accessmodule.contracts_auction_module%}<i class="bi bi-check-circle-fill text-success"></i>
                     {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
                     <td align="center" valign="middle">{%if user.accessmodule.contracts_auction_module_edit%}<i class="bi bi-check-circle-fill text-success"></i>
                     {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
                 </tr>
                 <tr>
-                    <td>Moduł Ewidencje - Zespół Mieszkaniowy</td>
-                    <td align="center" valign="middle">{%if user.accessmodule.listregister_float_team_module%}<i class="bi bi-check-circle-fill text-success"></i>
-                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
-                    <td align="center" valign="middle">{%if user.accessmodule.listregister_float_team_module_edit%}<i class="bi bi-check-circle-fill text-success"></i>
-                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
-                </tr>
-                <tr>
-                    <td>Moduł Ewidencje - Zespół Nieruchomości</td>
-                    <td align="center" valign="middle">{%if user.accessmodule.contracts_immovables_module%}<i class="bi bi-check-circle-fill text-success"></i>
-                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
-                    <td align="center" valign="middle">{%if user.accessmodule.contracts_immovables_module_edit%}<i class="bi bi-check-circle-fill text-success"></i>
-                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
-                </tr>
-                <tr>
-                    <td>Moduł Ewidencje - Zespół Eksploatacji</td>
-                    <td align="center" valign="middle">{%if user.accessmodule.listregister_exploatation_team_module%}<i class="bi bi-check-circle-fill text-success"></i>
-                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i>
-                    {%endif%}</td>
-                    <td align="center" valign="middle">BRAK</td>
-                </tr>
-                <tr>
-                    <td>Moduł Inwestycje</td>
+                    <td valign="middle">Moduł Inwestycje</td>
                     <td align="center" valign="middle">{%if user.accessmodule.investments_module%}<i class="bi bi-check-circle-fill text-success"></i>
                     {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
                     <td align="center" valign="middle">{%if user.accessmodule.investments_module_edit%}<i class="bi bi-check-circle-fill text-success"></i>
                     {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
                 </tr>
                  <tr>
-                    <td>Moduł Rodzajowość WIiR</td>
+                    <td valign="middle">Moduł Rodzajowość</td>
                     <td align="center" valign="middle">{%if user.accessmodule.cpvdict_module%}<i class="bi bi-check-circle-fill text-success"></i>
                     {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
                     <td align="center" valign="middle">{%if user.accessmodule.cpvdict_module_edit%}<i class="bi bi-check-circle-fill text-success"></i>
                     {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
                 </tr>
                 <tr>
-                    <td>Moduł Galeria</td>
+                    <td valign="middle">Moduł Galeria</td>
                     <td align="center" valign="middle">{%if user.accessmodule.gallery_module%}<i class="bi bi-check-circle-fill text-success"></i>
                     {%else%} <i class="bi bi-x-circle-fill text-danger"></i>
                     {%endif%}</td>
                     <td align="center" valign="middle">{%if user.accessmodule.gallery_module_edit%}<i class="bi bi-check-circle-fill text-success"></i>
                     {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
                 </tr>
+                {%endif%}
+                {%if user.accessmodule.zm_team%}
+                <tr>
+                    <td valign="middle">Zespół Mieszkaniowy</td>
+                    <td align="center" valign="middle"><i class="bi bi-check-circle-fill text-success"></i></td>
+                    <td>Moduł Lokale Służbowe</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.official_flat%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.official_flat_edit%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
+                </tr>
+                {%endif%}
+                {%if user.accessmodule.zn_team%}
+                <tr>
+                    <td valign="middle">Zespół Nieruchomości</td>
+                    <td align="center" valign="middle"><i class="bi bi-check-circle-fill text-success"></i></td>
+                    <td>Moduł Umowy</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.contract_immovables%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.contract_immovables_edit%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
+                </tr>
+                {%endif%}
+                {%if user.accessmodule.ze_team%}
+                <tr>
+                    <td valign="middle">Zespół Eksploatacji</td>
+                    <td align="center" valign="middle"><i class="bi bi-check-circle-fill text-success"></i></td>
+                    <td align="center" valign="middle">BRAK</td>
+                    <td align="center" valign="middle">BRAK</td>
+                    <td align="center" valign="middle">BRAK</td>
+                </tr>
+                {%endif%}
                 </tbody>
             </table>
             </div>

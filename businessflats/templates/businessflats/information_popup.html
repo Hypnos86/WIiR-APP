@@ -2,7 +2,7 @@
 {%load bootstrap%}
 {%block content%}
 <div class="container ">
-<form class="m-2 p-4" method="get" action="{% url 'listregister:show_information' id %}">
+<form class="m-2 p-4" method="get" action="{% url 'businessflats:show_information' id %}">
     {%csrf_token%}
     <div class="container">
         <h3 class="bi bi-pin-map text-center"></h3>
