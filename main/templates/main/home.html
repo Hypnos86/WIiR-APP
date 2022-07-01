@@ -4,8 +4,9 @@
 {%block content%}
 <div class="row">
     <div class="col-md-4">
-        <div class="list-group col-md-10">
-            {%for head_command in commands%}
+        {%for head_command in commands%}
+        <div class="list-group col-md-10 my-2">
+
             <a href="/media/{{head_command.scan}}" target="_blank"
                class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
@@ -14,9 +15,8 @@
                 </div>
                 <small class="text-muted">{{head_command.content}}</small>
             </a>
-            {%endfor%}
         </div>
-
+        {%endfor%}
     </div>
     <div class="text-center col-md-8 ">
         <div class="col-md-6 mb-5">

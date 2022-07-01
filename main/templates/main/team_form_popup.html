@@ -1,13 +1,15 @@
 {%load static%}
 {%load bootstrap%}
 {%block content%}
-<div class="container ">
-    <form class="m-2 p-4" method="POST" {%if new%}  action="{%url 'main:add_team_popup'%}"{%else%} action="{%url 'main:edit_team_popup' id%}" {%endif%}>
+<div class="container">
+    <form class="m-2 p-4" method="POST" {%if new%} action="{%url 'main:add_team_popup'%}" {%else%} action="{%url 'main:edit_team_popup' id%}" {%endif%}>
         {%csrf_token%}
         {{team_form|bootstrap}}
-            <div class="mt-4 moj-button-right">
-                <button type="submit" class="btn btn-outline-primary my-btn">{%if new%}<span class="bi bi-save2"> Dodaj</span>{%else%}Zapisz zmiany{%endif%}</button>
-            </div>
+        <div class="mt-4 moj-button-right">
+            <button type="submit" class="btn btn-outline-primary my-btn">{%if new%}<span
+                    class="bi bi-save2"> Dodaj</span>{%else%}Zapisz zmiany{%endif%}
+            </button>
+        </div>
     </form>
 </div>
 {%endblock%}

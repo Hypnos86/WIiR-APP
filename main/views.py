@@ -23,7 +23,7 @@ def now_date():
 # Create your views here.
 @login_required
 def welcome(request):
-    commands = Command.objects.all().order_by('create_date')[:4]
+    commands = Command.objects.all().order_by('create_date')[:6]
     date = datetime.date.today().today()
     context = {'date': date,
                'commands': commands}
@@ -43,6 +43,8 @@ def show_teams_list(request):
 
 def add_team_popup(request):
     team_form = TeamForm(request.POST or None)
+    team_form.fields['team'].label = 'Nowa komórka Wydziału'
+
     if request.method == 'POST':
         if team_form.is_valid():
             team_form.save()
@@ -58,7 +60,7 @@ def edit_team_popup(request, id):
         if team_form.is_valid():
             team_form.save()
             return redirect('main:show_teams_list')
-    return render(request, 'main/team_form_popup.html', {'team_form': team_form, 'new': False, 'id':id})
+    return render(request, 'main/team_form_popup.html', {'team_form': team_form, 'new': False, 'id': id})
 
 
 @login_required
@@ -97,8 +99,8 @@ def give_access_to_modules(request):
 
 @login_required
 def show_command(request):
-    commands = Command.objects.all()
-    return render(request, 'main/command.html', {'commands': commands})
+    commands_all = Command.objects.all()
+    return render(request, 'main/command.html', {'commands': commands_all, 'secretariat': True})
 
 
 @login_required

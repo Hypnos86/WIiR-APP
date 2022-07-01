@@ -252,3 +252,12 @@ hr {
     margin-left: auto;
     margin-right: auto;
 }
+
+.modal_style{
+   position: absolute;
+   right: 100px;
+   margin-top: 10rem;
+   z-index: 10040;
+   overflow: auto;
+   overflow-y: auto;"
+}

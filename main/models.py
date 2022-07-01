@@ -63,7 +63,7 @@ class AccessModule(models.Model):
     user = models.OneToOneField('auth.User', on_delete=models.CASCADE, verbose_name='Użytkownik',
                                 related_name='accessmodule')
     zok_team = models.BooleanField('Ewidencja: Zespoł Obsługi Kancelarynej', default=False)
-    commands = models.BooleanField('ZOPK - Polecenia', default=False)
+    commands = models.BooleanField('ZOK - Polecenia', default=False)
     zriwt_team = models.BooleanField('Ewidencja: Zespół Rozliczeń i Wsparcia Technicznego', default=False)
     contractors_module = models.BooleanField('ZRiWT - Kontrahenci - Podgląd', default=False)
     contractors_module_edit = models.BooleanField('ZRiWT - Kontrahenci - Edycja', default=False)
@@ -99,7 +99,7 @@ class Command(models.Model):
 
     title = models.CharField('Nazwa', max_length=120)
     content = models.TextField('Treść')
-    scan = models.FileField(upload_to='commands/%Y/%m/', verbose_name='Skan polecenia')
+    scan = models.FileField(upload_to='commands/%Y/', verbose_name='Skan polecenia')
     create_date = models.DateField("Data dodania", auto_now_add=True)
 
     def __str__(self):

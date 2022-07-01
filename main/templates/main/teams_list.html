@@ -16,29 +16,27 @@
             {%for team in teams%}
             <span class="list-group-item list-group-item-action d-flex justify-content-between">
                 <span class="pt-2">{{team}}</span>
-                <button class="btn btn-sm" type="button" data-url="{% url 'main:edit_team_popup' team.id %}" onclick="openModalEdit(this)">
+                <button data-toggle="info" title="Edytuj" class="btn btn-sm" type="button" data-url="{% url 'main:edit_team_popup' team.id %}" onclick="openModalEdit(this)">
                     <span style="font-size: 20px" class="bi bi-pencil-square"></span>
                 </button>
             </span>
             {%endfor%}
         </div>
         <div class="col-md-2 moj-button-right">
-            <button type="button" data-url="{%url 'main:add_team_popup'%}" data-toggle="info" onclick="openModalAdd()" title="Dodaj nową komórkę Wydziału" class="btn btn-outline-primary my-btn">
+            <button type="button" data-toggle="info" onclick="openModalAdd()" title="Dodaj nową komórkę Wydziału" class="btn btn-outline-primary my-btn">
                 <span class="bi bi-plus-square"></span>
             </button>
         </div>
     </div>
 </div>
 <!-- Modal -->
-{%if new%}
-<div class="modal fade" id="addTeamModal" >
+<div class="modal fade modal_style" id="addTeamModal"  data-url="{%url 'main:add_team_popup'%}">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
 
         </div>
     </div>
 </div>
-{%else%}
 <div class="modal fade" id="editTeamModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -46,7 +44,6 @@
         </div>
     </div>
 </div>
-{%endif%}
 <script>
      document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-record").classList.remove("active");
