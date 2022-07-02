@@ -78,12 +78,9 @@ def show_command_list(request):
 @login_required
 def telephone_list(request):
     teams = Team.objects.all()
-    object = Employer.objects.all()
     telephone_book = OrganisationTelephone.objects.all()
 
-    context = {'tel': object,
-               'teams': teams,
-               'telephone_book': telephone_book}
+    context = {'teams': teams, 'telephone_book': telephone_book}
     return render(request, 'main/telephones.html', context)
 
 

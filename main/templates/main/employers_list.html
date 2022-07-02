@@ -3,7 +3,7 @@
 {% block title %} SEKRETARIAT {% endblock %}
 {% block content %}
 <div class="container">
-    <div class="d-flex justify-content-center row pt-5">
+    <div class="row pt-5">
         <div class="col-md-2">
             <a href="{%url 'main:make_secretariat_site'%}">
                 <button class="btn btn-outline-primary my-btn">
@@ -11,18 +11,47 @@
                 </button>
             </a>
         </div>
-        <div class="list-group col-md-5">
-            <h5 class="text-center mb-5">Pracownicy Wydziału</h5>
-            {%for employer in employers%}
-            <span class="list-group-item list-group-item-action">{{employer}}<span></span></span>
-            {%endfor%}
+        <div class="col-md-8">
+            <h5 class="text-center">Pracownicy Wydziału</h5>
         </div>
         <div class="col-md-2 moj-button-right">
-            <a><button data-toggle="info" title="Dodaj nowego pracownika" class="btn btn-outline-success">
-                <span class="bi bi-plus-square"></span>
-                </button>
-            </a>
+            <a><h3 class="bi bi-person-plus"></h3></a>
         </div>
+    </div>
+    <div class="mt-4">
+        <table class="table table-sm">
+            <thead class="table-dark">
+            <tr class="my-table-tr">
+                <th align="center" valign="middle" width="60px" scope="col" class="text-center">L.p.</th>
+                <th align="center" valign="middle" width="" scope="col">Stanowisko</th>
+                <th align="center" valign="middle" width="" scope="col">Imię i nazwisko</th>
+                <th align="center" valign="middle" width="" scope="col" class="text-center">Zespół</th>
+                <th colspan="2" align="center" valign="middle" width="" scope="col" class="text-center">Branża</th>
+                <th align="center" valign="middle" width="" scope="col" class="text-center">Nr.pokoju</th>
+                <th align="center" valign="middle" width="" scope="col" class="text-center">Nr.tel</th>
+                <th align="center" valign="middle" width="" scope="col" class="text-center">Komórka</th>
+                <th colspan="3" align="center" valign="middle" width="" scope="col" class="text-center"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {%for employer in employers%}
+            <tr class="my-table-tr">
+                <td align="center" valign="middle" class="text-center" scope="row" width=""></td>
+                <td align="left" valign="middle">{{employer.position}}</td>
+                <td align="left" valign="middle">{{employer.name}} {{employer.last_name}}</td>
+                <td align="center" valign="middle">{{employer.team}}</td>
+                <td align="center" valign="middle">{{employer.industry}} {{employer.industry_specialist}}</td>
+                <td align="center" valign="middle">{{employer.no_room}}</td>
+                <td align="center" valign="middle">{{employer.no_tel_room}}</td>
+                <td align="center" valign="middle">{{employer.no_tel_private}}</td>
+                <td align="center" valign="middle"></td>
+                <td data-toggle="info" align="center" valign="middle" title="Informacja"><i class="bi bi-info-circle"></i></td>
+                <td data-toggle="info" align="center" valign="middle" title="Edytuj"><i class="bi bi-pencil-square"></i></td>
+                <td data-toggle="info" align="center" valign="middle" title="Usuń"><i class="bi bi-trash"></i></td>
+            </tr>
+            {%endfor%}
+            </tbody>
+        </table>
     </div>
 </div>
 <script>
@@ -42,5 +71,9 @@
     $(function () {
         $('[data-toggle="info"]').tooltip()
     })
+
+
+
+
 </script>
 {% endblock %}
