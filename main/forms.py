@@ -5,18 +5,20 @@ from main.models import Team, OrganisationTelephone, AccessModule, Command, Empl
 class TeamForm(ModelForm):
     class Meta:
         model = Team
-        fields = ['team']
-        label = {'team': 'Komrówka Wydziału'}
+        fields = ['team', 'active']
+        label = {'team': 'Komrówka Wydziału', 'active': 'Aktywny'}
 
 
 class EmployerForm(ModelForm):
     class Meta:
         model = Employer
         fields = ['team', 'position', 'name', 'last_name', 'industry_specialist', 'industry', 'no_tel_room',
-                  'no_tel_private', 'information']
+                  'no_tel_private', 'information', 'deleted']
         label = {'team': 'Zespół', 'position': 'Stanowisko', 'name': 'Imię', 'last_name': 'Nazwisko',
-                 'industry_specialist': 'Branżysta','industry':'Branża',
-                 'no_tel_room': 'Nr. telefonu', 'no_tel_private': 'Nr komórkowy', 'information':'Informacje'}
+                 'industry_specialist': 'Branżysta', 'industry': 'Branża',
+                 'no_tel_room': 'Nr. telefonu', 'no_tel_private': 'Nr komórkowy', 'information': 'Informacje',
+                 'deleted': 'Usuń'}
+        exclude = ['deleted']
 
 
 class OrganisationTelephoneForm(ModelForm):

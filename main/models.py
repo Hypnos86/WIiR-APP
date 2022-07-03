@@ -8,6 +8,7 @@ class Team(models.Model):
         verbose_name_plural = "Komórki Wydziału"
 
     team = models.CharField(max_length=50, verbose_name='Komórka Wydziału')
+    active = models.BooleanField('Aktywny', default=True)
 
     def __str__(self):
         return f'{self.team}'
@@ -48,8 +49,12 @@ class Employer(models.Model):
     industry = models.ForeignKey(IndustryType, on_delete=models.CASCADE, verbose_name='Branża', related_name='employer')
     no_room = models.CharField("Nr. pokoju", max_length=2, blank=True, default="")
     no_tel_room = models.CharField("Nr. telefonu", max_length=6, blank=True, default="")
-    no_tel_private = models.CharField("Nr. komórkowy", max_length=9, null=True, blank=True, default="")
+    no_tel_private = models.CharField("Nr. komórkowy", max_length=9, blank=True, default="")
     information = models.CharField("Informacje", max_length=200, null=True, blank=True)
+    deleted = models.BooleanField('Usunięty', default=False)
+    creation_date = models.DateTimeField(auto_now_add=True)
+    change = models.DateTimeField('Zmiany', auto_now=True)
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.name} {self.last_name}'

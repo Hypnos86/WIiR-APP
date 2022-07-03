@@ -44,17 +44,16 @@ def show_information(request, id):
 
 @login_required
 def new_contractor(request):
-    contractorsell_form = ContractorsellForm(request.POST or None)
+    contractor_form = ContractorsellForm(request.POST or None)
 
     if request.method == 'POST':
-        if contractorsell_form.is_valid():
-            instance = contractorsell_form.save(commit=False)
+        if contractor_form.is_valid():
+            instance = contractor_form.save(commit=False)
             instance.author = request.user
             instance.save()
-            contractorsell_form.save()
-            return redirect('contractors:contractors_list')
+            return redirect('contractors:contractor_list')
     return render(request, 'contractors/contractor_form.html',
-                  {'contractor_form': contractorsell_form, "new": True})
+                  {'contractor_form': contractor_form, "new": True})
 
 
 @login_required

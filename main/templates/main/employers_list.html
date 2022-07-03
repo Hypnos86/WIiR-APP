@@ -15,7 +15,10 @@
             <h5 class="text-center">Pracownicy Wydziału</h5>
         </div>
         <div class="col-md-2 moj-button-right">
-            <a><h3 class="bi bi-person-plus"></h3></a>
+            <button class="btn btn-outline-primary my-btn" type="button" onclick="openModalEmployerAdd()" data-toggle="info" title="Dodaj nowego pracownika">
+                <span class="bi bi-person-plus h4" >
+                </span>
+            </button>
         </div>
     </div>
     <div class="mt-4">
@@ -23,13 +26,13 @@
             <thead class="table-dark">
             <tr class="my-table-tr">
                 <th align="center" valign="middle" width="60px" scope="col" class="text-center">L.p.</th>
-                <th align="center" valign="middle" width="" scope="col">Stanowisko</th>
-                <th align="center" valign="middle" width="" scope="col">Imię i nazwisko</th>
-                <th align="center" valign="middle" width="" scope="col" class="text-center">Zespół</th>
-                <th colspan="2" align="center" valign="middle" width="" scope="col" class="text-center">Branża</th>
-                <th align="center" valign="middle" width="" scope="col" class="text-center">Nr.pokoju</th>
-                <th align="center" valign="middle" width="" scope="col" class="text-center">Nr.tel</th>
-                <th align="center" valign="middle" width="" scope="col" class="text-center">Komórka</th>
+                <th align="center" valign="middle" width="120" scope="col">Stanowisko</th>
+                <th align="center" valign="middle" width="220" scope="col">Imię i nazwisko</th>
+                <th align="center" valign="middle" width="220" scope="col" class="text-center">Zespół</th>
+                <th align="center" valign="middle" width="250" scope="col" class="text-center">Branża</th>
+                <th align="center" valign="middle" width="10" scope="col" class="text-center">Nr.pokoju</th>
+                <th align="center" valign="middle" width="100" scope="col" class="text-center">Nr.tel</th>
+                <th align="center" valign="middle" width="120" scope="col" class="text-center">Nr.komórkowy</th>
                 <th colspan="3" align="center" valign="middle" width="" scope="col" class="text-center"></th>
             </tr>
             </thead>
@@ -40,40 +43,59 @@
                 <td align="left" valign="middle">{{employer.position}}</td>
                 <td align="left" valign="middle">{{employer.name}} {{employer.last_name}}</td>
                 <td align="center" valign="middle">{{employer.team}}</td>
-                <td align="center" valign="middle">{{employer.industry}} {{employer.industry_specialist}}</td>
+                <td align="center" valign="middle">{{employer.industry}} {%if employer.industry_specialist%}<span data-toggle="info" title="Branżysta merytoryczny" class="bi bi-hammer"></span>{%else%}<span data-toggle="info" title="Branżysta finansowy" class="bi bi-cash-coin"></span>{%endif%}</td>
                 <td align="center" valign="middle">{{employer.no_room}}</td>
                 <td align="center" valign="middle">{{employer.no_tel_room}}</td>
                 <td align="center" valign="middle">{{employer.no_tel_private}}</td>
                 <td align="center" valign="middle"></td>
-                <td data-toggle="info" align="center" valign="middle" title="Informacja"><i class="bi bi-info-circle"></i></td>
-                <td data-toggle="info" align="center" valign="middle" title="Edytuj"><i class="bi bi-pencil-square"></i></td>
-                <td data-toggle="info" align="center" valign="middle" title="Usuń"><i class="bi bi-trash"></i></td>
+                <td align="center" valign="middle"> <button type="button" class="btn" data-toggle="info"  title="Informacja"><i class="bi bi-info-circle"></i></button></td>
+                <td data-toggle="info" align="center" valign="middle" title="Edytuj">
+                    <button class="btn btn-outline-primary my-btn" data-url="{% url 'main:edit_employer_popup' employer.id %}" onclick="openModalEmployerEdit(this)">
+                        <i class="bi bi-pencil-square"></i>
+                    </button>
+                </td>
             </tr>
             {%endfor%}
             </tbody>
         </table>
     </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="addEmployerModal"  data-url="{%url 'main:add_employer_popup'%}">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="editEmployerModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
 <script>
-     document.getElementById("button-units").classList.remove("active");
-     document.getElementById("button-record").classList.remove("active");
-     document.getElementById("button-secretariat").classList.add("active");
-     document.getElementById("button-cpv").classList.remove("active");
-     document.getElementById("button-investments").classList.remove("active");
-     function openModal(button){
-        var url = $(button).data("url");
-        $("#orderInformationModal .modal-content").load(url);
-        $("#orderInformationModal").modal("show");
+    document.getElementById("button-units").classList.remove("active");
+    document.getElementById("button-record").classList.remove("active");
+    document.getElementById("button-secretariat").classList.add("active");
+    document.getElementById("button-cpv").classList.remove("active");
+    document.getElementById("button-investments").classList.remove("active");
+     function openModalEmployerAdd(){
+        var url = $("#addEmployerModal").data("url");
+        $("#addEmployerModal .modal-content").load(url);
+        $("#addEmployerModal").modal("show");
     }
+    function openModalEmployerEdit(button){
+        var url = $(button).data("url");
+        $("#editEmployerModal .modal-content").load(url);
+        $("#editEmployerModal").modal("show");
+        }
     function submitForm(){
         $("#submitButton").closest("form").submit();
     }
     $(function () {
         $('[data-toggle="info"]').tooltip()
     })
-
-
-
-
 </script>
 {% endblock %}

@@ -2,7 +2,7 @@ import datetime
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from main.models import Team, OrganisationTelephone, AccessModule, Command, Employer
-from main.forms import TeamForm
+from main.forms import TeamForm, EmployerForm
 from businessflats.models import OfficialFlat
 from contracts.models import ContractImmovables, ContractAuction
 from contractors.models import Contractor
@@ -37,7 +37,7 @@ def make_secretariat_site(request):
 
 @login_required
 def show_teams_list(request):
-    teams = Team.objects.all()
+    teams = Team.objects.all().filter(active=True)
     return render(request, 'main/teams_list.html', {'teams': teams})
 
 
@@ -65,8 +65,34 @@ def edit_team_popup(request, id):
 
 @login_required
 def show_employers_list(request):
-    employers = Employer.objects.all()
+    employers = Employer.objects.all().filter(deleted=False)
     return render(request, 'main/employers_list.html', {'employers': employers})
+
+
+@login_required
+def add_employer_popup(request):
+    employer_form = EmployerForm(request.POST or None)
+    if request.method == ' POST':
+        if employer_form.is_valid():
+            instance = employer_form.save(commit=False)
+            instance.author = request.user
+            instance.save()
+            return redirect('main:show_employers_list')
+    return render(request, 'main/employer_form_popup.html', {'employer_form': employer_form, 'new': True})
+
+
+@login_required
+def edit_employer_popup(request, id):
+    employer = get_object_or_404(Employer, pk=id)
+    employer_form = EmployerForm(request.POST or None, instance=employer)
+
+    if request.method == 'POST':
+        if employer_form.is_valid():
+            instance = employer_form.save(commit=False)
+            instance.author = request.user
+            instance.save()
+            return redirect('main:show_employers_list')
+    return render(request, 'main/employer_form_popup.html', {'employer_form':employer_form,'id': id, 'new': False})
 
 
 @login_required
@@ -77,9 +103,8 @@ def show_command_list(request):
 
 @login_required
 def telephone_list(request):
-    teams = Team.objects.all()
+    teams = Team.objects.all().filter(active=True)
     telephone_book = OrganisationTelephone.objects.all()
-
     context = {'teams': teams, 'telephone_book': telephone_book}
     return render(request, 'main/telephones.html', context)
 

@@ -23,8 +23,8 @@
             {%endfor%}
         </div>
         <div class="col-md-2 moj-button-right">
-            <button type="button" data-toggle="info" onclick="openModalAdd()" title="Dodaj nową komórkę Wydziału" class="btn btn-outline-primary my-btn">
-                <span class="bi bi-plus-square"></span>
+            <button class="btn btn-outline-primary my-btn" type="button" data-toggle="info" onclick="openModalAdd()" title="Dodaj nową komórkę Wydziału">
+                <span class="bi bi-node-plus h3"></span>
             </button>
         </div>
     </div>
@@ -37,7 +37,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="editTeamModal">
+<div class="modal fade modal_style" id="editTeamModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
 
@@ -51,7 +51,7 @@
      document.getElementById("button-cpv").classList.remove("active");
      document.getElementById("button-investments").classList.remove("active");
      function openModalAdd(){
-        var url = $(addTeamModal).data("url");
+        var url = $("#addTeamModal").data("url");
         $("#addTeamModal .modal-content").load(url);
         $("#addTeamModal").modal("show");
     }

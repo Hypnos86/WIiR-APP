@@ -9,11 +9,13 @@ from main.models import Team, OrganisationTelephone, Employer, IndustryType, Acc
 admin.site.site_title = "Admin WIiR-APP"
 admin.site.index_title = "Witaj w aplikacji WIiR-APP"
 
-admin.site.register(Team)
+
+@admin.register(Team)
+class TeamAdmin(admin.ModelAdmin):
+    list_display = ['team', 'active']
+
+
 admin.site.register(IndustryType)
-
-
-
 
 
 @admin.register(OrganisationTelephone)
@@ -35,7 +37,7 @@ class EmployerResource(resources.ModelResource):
 
 @admin.register(Employer)
 class EmployerAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['id', 'name', 'last_name', 'team', 'industry_specialist', 'industry']
+    list_display = ['id', 'name', 'last_name', 'team', 'industry_specialist', 'industry','deleted']
     list_display_links = ['name']
     search_fields = ['name']
 

@@ -20,7 +20,10 @@
                     <div class="input-group">
                         <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj kontrahenta"
                                aria-label="Search" aria-describedby="search-addon" value="{%if query%}{{q}}{%endif%}">
-                        <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
+<!--                        <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>-->
+                        <button id="searchButton" {%if query%}style="display:none;"{%endif%} type="submit" class="btn btn-outline-primary my-btn">Szukaj</button>
+                        <button id="cleanButton" {%if not query%}style="display:none;"{%endif%} type="button" class="btn btn-outline-primary my-btn" onclick="cleanSearch()">Wyczysc</button>
+
                     </div>
                 </form>
             </section>
@@ -137,17 +140,27 @@
     document.getElementById("button-record").classList.add("active");
     document.getElementById("button-cpv").classList.remove("active");
     document.getElementById("button-investments").classList.remove("active");
+
         function openModal(button){
             var url = $(button).data("url");
             $("#informationModal .modal-content").load(url);
             $("#informationModal").modal("show");
         }
+
         function submitForm(){
             $("#submitButton").closest("form").submit();
         }
+
         $(function () {
             $('[data-toggle="info"]').tooltip()
         })
+
+        function cleanSearch(){
+            $("#q").val("");
+            //$("#cleanButton").hide();
+            //$("#searchButton").show();
+            $("form").submit();
+        }
 </script>
 {%endblock%}
 
