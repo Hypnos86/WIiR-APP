@@ -50,7 +50,7 @@ class Employer(models.Model):
     no_room = models.CharField("Nr. pokoju", max_length=2, blank=True, default="")
     no_tel_room = models.CharField("Nr. telefonu", max_length=6, blank=True, default="")
     no_tel_private = models.CharField("Nr. komórkowy", max_length=9, blank=True, default="")
-    information = models.CharField("Informacje", max_length=200, null=True, blank=True)
+    information = models.TextField("Informacje", max_length=200, null=True, blank=True)
     deleted = models.BooleanField('Usunięty', default=False)
     creation_date = models.DateTimeField(auto_now_add=True)
     change = models.DateTimeField('Zmiany', auto_now=True)

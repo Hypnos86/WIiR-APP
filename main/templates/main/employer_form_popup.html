@@ -4,7 +4,31 @@
 <div class="container">
     <form class="m-2 p-4" method="POST" {%if new%} action="{%url 'main:add_employer_popup'%}" {%else%} action="{%url 'main:edit_employer_popup' id%}" {%endif%}>
         {%csrf_token%}
-        <div>{{employer_form|bootstrap}}</div>
+        {%if new%}<h6 class="text-center mb-3">Dodawanie nowego pracownika</h6>{%else%}<h6 class="text-center mb-3">Edytuj dane pracownia</h6>{%endif%}
+        <div class="row">
+            <div class="col-md-4 mb-3">{{employer_form.name|bootstrap}}</div>
+            <div class="col-md-4 mb-3">{{employer_form.last_name|bootstrap}}</div>
+            <div class="col-md-4 mb-3">{{employer_form.position|bootstrap}}</div>
+            <div class="col-md-12 mb-3">{{employer_form.team|bootstrap}}</div>
+            <div class="col-md-4 mb-3">{{employer_form.no_room|bootstrap}}</div>
+            <div class="col-md-4 mb-3">{{employer_form.no_tel_room|bootstrap}}</div>
+            <div class="col-md-4 mb-3">{{employer_form.no_tel_private|bootstrap}}</div>
+            <div class="col-md-6 mb-3">{{employer_form.industry|bootstrap}}</div>
+            <div class="col-md-6 mb-3 text-center">
+                <div class="form-group">
+                    <label class="control-label">Branżysta merytoryczny</label>
+                <div class="checkbox">
+                    <label class="pt-2">
+                        <input type="checkbox" name="industry_specialist" id="id_industry_specialist"><span>Tak</span>
+                    </label>
+                </div>
+               </div>
+            </div>
+            <div class="col-md-12 mb-3">{{employer_form.information|bootstrap}}</div>
+            {%if new == False%}
+            <div class="col-md-4" data-toggle="info" title="Zaznacz aby usunać">{{employer_form.deleted|bootstrap}}</div>
+            {%endif%}
+        </div>
         <div class="my-3"></div>
         <div class="mt-4 moj-button-right">
             <button type="submit" class="btn btn-outline-primary my-btn">{%if new%}<span
@@ -13,5 +37,10 @@
         </div>
     </form>
 </div>
+<script>
+    $(function () {
+        $('[data-toggle="info"]').tooltip()
+    })
+</script>
 {%endblock%}
 

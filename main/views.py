@@ -85,6 +85,7 @@ def add_employer_popup(request):
 def edit_employer_popup(request, id):
     employer = get_object_or_404(Employer, pk=id)
     employer_form = EmployerForm(request.POST or None, instance=employer)
+    employer_form.fields['deleted'].label = 'Usuń pracownika'
 
     if request.method == 'POST':
         if employer_form.is_valid():
