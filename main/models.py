@@ -54,7 +54,7 @@ class Employer(models.Model):
     deleted = models.BooleanField('Usunięty', default=False)
     creation_date = models.DateTimeField(auto_now_add=True)
     change = models.DateTimeField('Zmiany', auto_now=True)
-    author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='employer')
 
     def __str__(self):
         return f'{self.name} {self.last_name}'

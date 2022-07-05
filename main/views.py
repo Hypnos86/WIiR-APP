@@ -79,7 +79,7 @@ def add_employer_popup(request):
         if employer_form.is_valid():
             instance = employer_form.save(commit=False)
             instance.author = request.user
-            instance.save()
+            employer_form.save()
             return redirect('main:show_employers_list')
     return render(request, 'main/employer_form_popup.html', {'employer_form': employer_form, 'new': True})
 
