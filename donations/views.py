@@ -1,10 +1,14 @@
-from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect, get_object_or_404
 from donations.models import Application
+from donations.forms import ApplicationForm
 from main.views import now_date, current_year
 from django.core.paginator import Paginator
 
 
 # Create your views here.
+
+@login_required
 def donations_list(request):
     applications = Application.objects.all().filter(date_receipt__year=current_year()).order_by('-date_receipt')
     query = "Wyczyść"
@@ -25,3 +29,34 @@ def donations_list(request):
     return render(request, 'donations/donations_list.html',
                   {'application_len': application_len, 'search': search, 'year': year,
                    'applications': application_paginator, 'last_date': last_date})
+
+
+@login_required
+def add_donation(request):
+    donation_form = ApplicationForm(request.POST or None)
+    if request.method == 'POST':
+        if donation_form.is_valid():
+            instance = donation_form.save(commit=False)
+            instance.author = request.user
+            instance.save()
+            return redirect('donations:donations_list')
+    return render(request, 'donations/donation_form.html', {'new': True, 'donation_form': donation_form})
+
+
+@login_required
+def edit_donation(request, id):
+    donation_edit = get_object_or_404(Application, pk=id)
+    donation_form = ApplicationForm(request.POST or None, instance=donation_edit)
+    if request.method == 'POST':
+        if donation_form:
+            instance = donation_form.save(commit=False)
+            instance.author = request.user
+            instance.save()
+            return redirect('donation:donations_list')
+    return render(request, 'donations/donation_form.html', {'new': False, 'donation_form': donation_form})
+
+
+@login_required
+def show_information_popup(request, id):
+    donation = get_object_or_404(Application, pk=id)
+    return render(request, 'donation/information_popup.html', {'donation': donation})

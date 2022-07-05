@@ -152,14 +152,17 @@
     document.getElementById("button-invoices").classList.add("active");
     document.getElementById("button-contracts").classList.remove("active");
     document.getElementById("button-contractors").classList.remove("active");
+
     function openModal(button){
         var url = $(button).data("url");
         $("#info_note_Modal .modal-content").load(url);
         $("#info_note_Modal").modal("show");
     }
+
     function submitForm(){
         $("#submitButton").closest("form").submit();
     }
+
     $(function () {
         $('[data-toggle="info"]').tooltip()
     })

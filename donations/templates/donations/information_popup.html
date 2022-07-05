@@ -1,0 +1,16 @@
+{%load static%}
+{%load bootstrap%}
+{%block content%}
+<div class="container ">
+<form class="m-2 p-4" method="get" action="">
+    {%csrf_token%}
+    <div class="container">
+        <div><span class="text-muted">Kontrahent: </span><span></span></div>
+        <div class="my-4"><span class="text-muted">NIP: </span></div>
+        <div><span class="text-muted">Informacje: </span><p></p></div>
+
+    </div>
+</form>
+</div>
+{%endblock%}
+

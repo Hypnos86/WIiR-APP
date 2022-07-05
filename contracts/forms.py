@@ -1,5 +1,4 @@
-import django_filters
-from django.forms import ModelForm, DateInput, Textarea, widgets, DecimalField
+from django.forms import ModelForm, DateInput, Textarea
 from contracts.models import ContractImmovables, AnnexImmovables, ContractAuction, AnnexContractAuction
 
 

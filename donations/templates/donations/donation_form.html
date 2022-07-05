@@ -1,0 +1,49 @@
+{%extends 'base.html'%}
+{%load static%}
+{%load bootstrap%}
+{%block title%}{%if new%}Nowy wniosek{%else%}Edycja wniosku{%endif%}{%endblock%}
+{%block content%}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <a href="{%url 'donations:donations_list'%}">
+                <button class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span>
+                </button>
+            </a>
+        </div>
+        <div class="col-md-6">
+            <h4 class="text-center">{%if new%}Nowy wniosek{%else%}Edycja wniosku{%endif%}</h4>
+        </div>
+    </div>
+    <div class="container px-5 pb-5 col-md-8">
+        <form method="post">
+            {%csrf_token%}
+            <div class="row">
+                <div class="col-md-8 my-2">{{donation_form|bootstrap}}</div>
+                <div class="col-md-4 my-2"></div>
+                <div class="col-md-9 my-2"></div>
+                <div class="col-md-3 my-2"></div>
+                <div class="col-md-6 my-2"></div>
+                <div class="col-md-6 my-2"></div>
+                <div class="col-md-12 my-2"></div>
+                <div class="col-md-12 moj-button-right my-4">
+                    <button type="submit" class="btn btn-outline-primary my-btn">
+                        {%if new%}
+                        <span class="bi bi-save2"> Dodaj wniosek</span>
+                        {%else%}
+                        <span class="bi bi-save2"> Zapisz zmiany</span>
+                        {%endif%}
+                    </button>
+                </div>
+            </div>
+        </form>
+</div>
+</div>
+<script>
+    document.getElementById("button-units").classList.remove("active");
+    document.getElementById("button-record").classList.add("active");
+    document.getElementById("button-secretariat").classList.remove("active");
+    document.getElementById("button-cpv").classList.remove("active");
+    document.getElementById("button-investments").classList.remove("active");
+</script>
+{%endblock%}

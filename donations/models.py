@@ -36,7 +36,7 @@ class Application(models.Model):
     date_receipt = models.DateField("Data wpływu")
     date_return = models.DateField('Data zwrotu od Wydz. Finansów')
     no_application = models.CharField('Nr. wniosku', max_length=10)
-    no_agreement = models.CharField('Nr. porozumienia', max_length=25)
+    no_agreement = models.CharField('Nr. porozumienia', max_length=25, null=True, blank=True)
     date_agreement = models.DateField('Data porozumienia')
     donation_type = models.ForeignKey(TypeDonation, on_delete=models.CASCADE, verbose_name='Rodzaj darowizny',
                                       related_name='application')
@@ -48,10 +48,8 @@ class Application(models.Model):
     settlement_date = models.DateField('Data rozliczenia')
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE, verbose_name='Jednostka', related_name='application')
     subject = models.TextField('Przedmiot porozumienia', null=True, blank=True)
-    engagement = models.DecimalField('Zaangażowanie', max_digits=10, decimal_places=2, null=True, blank=True)
-    expenditure = models.DecimalField('Wydatek', max_digits=10, decimal_places=2, null=True, blank=True)
     information = models.TextField('Informacje', null=True, blank=True, default="")
-    creation_date = models.DateField(auto_now_add=True)
+    creation_date = models.DateTimeField(auto_now_add=True)
     change = models.DateTimeField("Data zmian", auto_now=True)
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE, verbose_name='Autor', related_name='application')
 

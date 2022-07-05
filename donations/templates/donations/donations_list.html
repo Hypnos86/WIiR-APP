@@ -32,7 +32,7 @@
                 </a>
             </div>
             <div class="mt-2">
-                <a href="">
+                <a href="{%url 'donations:add_donation'%}">
                     <button type="button" class="btn btn-outline-primary my-btn">
                         <span class="bi bi-plus-circle"> Dodaj wniosek</span>
                 </button>
@@ -43,7 +43,7 @@
     </div>
 </div>
 <div class="mx-2">
-    <table class="table table-hover my-table">
+    <table class="table table-sm my-table">
         <thead>
         <tr class="my-table-tr text-center">
             <th align="center" valign="middle" width="50" scope="col">L.p.</th>
@@ -54,7 +54,6 @@
             <th align="center" valign="middle" width="auto" scope="col">Kwota</th>
             <th align="center" valign="middle" width="auto" scope="col">Nr. porozumienia</th>
             <th align="center" valign="middle" width="auto" scope="col">Data porozumienia</th>
-            <th align="center" valign="middle" width="auto" scope="col">Data rozliczenia</th>
             <th align="center" valign="middle" width="auto" scope="col">Darczyńca</th>
             <th align="center" valign="middle" width="auto" scope="col">Powiat</th>
         </tr>
@@ -63,14 +62,13 @@
         {%for application in applications %}
         <tr class="my-table-tr">
             <td class="text-center" valign="middle" scope="row" data-toggle="donations_info" title="Ostatnie zmiany: ({{user.first_name}} {{user.last_name}})"></td>
-            <td align="center" valign="middle" scope="row" ><span>{{application.character}}</span></td>
+            <td align="center" valign="middle" scope="row" ><small>{{application.character}}</small></td>
             <td align="center" valign="middle" scope="row" data-toggle="donations_info" title="Data wpływu do WIiR">{%if application.date_receipt%}<span>{{application.date_receipt}}&nbsp.r</span>{%else%}<span>---</span>{%endif%}</td>
             <td align="center" valign="middle" data-toggle="donations_info" title="Data zwrotu od WF">{%if application.date_return%}<span>{{application.date_return}}&nbsp.r</span>{%else%}<span>---</span>{%endif%}</td>
             <td class="text-center" valign="middle" data-toggle="donations_info" title="Rodzaj darowizny: {{application.donation_type}}">{%if application.no_application%}<span>{{application.no_application}}</span>{%else%}<span>---</span>{%endif%}</td>
             <td class="text-center" valign="middle" data-toggle="donations_info" title="Rodzaj środków: {{application.financial_type}}">{%if application.sum%}<span>{{application.sum}}&nbspzł.</span>{%else%}<span>---</span>{%endif%}</td>
             <td class="text-center" valign="middle" data-toggle="donations_info" title="">{%if application.no_agreement%}<span>{{application.no_agreement}}</span>{%else%}<span>---</span>{%endif%}</td>
             <td class="text-center" valign="middle">{%if application.date_agreement%}<span>{{application.date_agreement}}&nbsp.r</span>{%else%}<span>---</span>{%endif%}</td>
-            <td class="text-center" valign="middle">{%if application.settlement_date%}<span>{{application.settlement_date}}&nbsp.r</span>{%else%}<span>---</span>{%endif%}</td>
             <td class="text-center" valign="middle"><span>{{application.presenter.name}}</span></td>
             <td class="text-center" valign="middle" data-toggle="donations_info" title="{{application.unit.type.type_short}} {{application.unit.city}}"><span>{{application.unit.county.name}}</span></td>
             <td align="right" valign="middle">
@@ -78,8 +76,8 @@
                         class="bi bi-info-lg my-1"></i>
                 </button>
 
-                <a class="mx-2 moj-button-right">
-                    <button data-toggle="donations_info" title="Edytuj" type="submit" class="btn btn-outline-primary icon-color my-1"><i class="bi bi-pencil-square"></i>
+                <a class="mx-2 moj-button-right" href="{%url 'donations:edit_donation' application.id%}">
+                    <button data-toggle="donations_info" title="Edytuj" type="button" class="btn btn-outline-primary icon-color my-1"><i class="bi bi-pencil-square"></i>
                     </button>
                 </a>
 
@@ -140,12 +138,16 @@
 </div>
 <script>
     document.getElementById("button-units").classList.remove("active");
+    document.getElementById("button-record").classList.add("active");
+    document.getElementById("button-secretariat").classList.remove("active");
+    document.getElementById("button-cpv").classList.remove("active");
     document.getElementById("button-investments").classList.remove("active");
     function openModal(button){
         var url = $(button).data("url");
         $("#informationModal .modal-content").load(url);
         $("#informationModal").modal("show");
     }
+
     function submitForm(){
         $("#submitButton").closest("form").submit();
     }

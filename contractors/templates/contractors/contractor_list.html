@@ -141,26 +141,26 @@
     document.getElementById("button-cpv").classList.remove("active");
     document.getElementById("button-investments").classList.remove("active");
 
-        function openModal(button){
-            var url = $(button).data("url");
-            $("#informationModal .modal-content").load(url);
-            $("#informationModal").modal("show");
-        }
+    function openModal(button){
+        var url = $(button).data("url");
+        $("#informationModal .modal-content").load(url);
+        $("#informationModal").modal("show");
+    }
 
-        function submitForm(){
-            $("#submitButton").closest("form").submit();
-        }
+    function submitForm(){
+        $("#submitButton").closest("form").submit();
+    }
 
-        $(function () {
-            $('[data-toggle="info"]').tooltip()
-        })
+    $(function () {
+        $('[data-toggle="info"]').tooltip()
+    })
 
-        function cleanSearch(){
-            $("#q").val("");
-            //$("#cleanButton").hide();
-            //$("#searchButton").show();
-            $("form").submit();
-        }
+    function cleanSearch(){
+        $("#q").val("");
+        //$("#cleanButton").hide();
+        //$("#searchButton").show();
+        $("form").submit();
+    }
 </script>
 {%endblock%}
 

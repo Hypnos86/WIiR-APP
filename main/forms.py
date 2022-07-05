@@ -1,5 +1,9 @@
-from django.forms import ModelForm, Textarea
+from django.forms import ModelForm, DateInput, Textarea
 from main.models import Team, OrganisationTelephone, AccessModule, Command, Employer
+
+
+class DateField(DateInput):
+    input_type = "date"
 
 
 class TeamForm(ModelForm):
@@ -12,10 +16,10 @@ class TeamForm(ModelForm):
 class EmployerForm(ModelForm):
     class Meta:
         model = Employer
-        fields = ['team', 'position', 'name', 'last_name', 'industry_specialist', 'no_room','industry', 'no_tel_room',
+        fields = ['team', 'position', 'name', 'last_name', 'industry_specialist', 'no_room', 'industry', 'no_tel_room',
                   'no_tel_private', 'information', 'creation_date', 'change', 'author', 'deleted']
         label = {'team': 'Zespół', 'position': 'Stanowisko', 'name': 'Imię', 'last_name': 'Nazwisko',
-                 'industry_specialist': 'Branżysta', 'industry': 'Branża','no_room':'Nr.pokoju',
+                 'industry_specialist': 'Branżysta', 'industry': 'Branża', 'no_room': 'Nr.pokoju',
                  'no_tel_room': 'Nr. telefonu', 'no_tel_private': 'Nr komórkowy', 'information': 'Informacje',
                  'deleted': 'Usuń'}
         exclude = ['creation_date', 'change', 'author']
