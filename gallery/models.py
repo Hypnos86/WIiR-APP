@@ -1,9 +1,13 @@
 from django.db import models
 from investments.models import Project
+import os
 
 
 def upload_gallery(instance, filename):
-    return f'investments/{instance.gallery.project.project_title}/gallery/{instance.gallery.name}/{filename}'
+    # return f'investments/{instance.gallery.project.project_title}/gallery/{instance.gallery.name}/{filename}'
+    extension = os.path.splitext(filename)
+    new_filename = f'{instance.gallery.project.unit.city}_{instance.id}{extension}'
+    return f'investments/{instance.gallery.project.project_title}/gallery/{instance.gallery.name}/{new_filename}'
 
 
 # Create your models here.

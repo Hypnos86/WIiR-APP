@@ -6,6 +6,7 @@ class Contractor(models.Model):
         verbose_name = 'Kontrahenci'
         verbose_name_plural = 'Kontrahenci'
         ordering = ['name']
+        unique_together = ['no_contractor', 'nip']
 
     no_contractor = models.IntegerField('Nr. kontrahenta', null=True, blank=True, unique=True)
     name = models.CharField('Nazwa', max_length=100, null=True)

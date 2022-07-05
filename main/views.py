@@ -75,7 +75,7 @@ def show_employers_list(request):
 def add_employer_popup(request):
     employer_form = EmployerForm(request.POST or None)
 
-    if request.method == ' POST':
+    if request.method == 'POST':
         if employer_form.is_valid():
             instance = employer_form.save(commit=False)
             instance.author = request.user
