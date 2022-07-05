@@ -43,9 +43,10 @@
         <th align="center" valign="middle" width="40" scope="col" class="text-center">L.p.</th>
         <th align="center" valign="middle" width="120" scope="col" class="text-center">Data</th>
         <th align="center" valign="middle" width="220" scope="col" class="text-center">Nr. dokumentu</th>
-        <th align="center" valign="middle" width="120" scope="col" class="text-center">Szacowana kwota</th>
-        <th align="center" valign="middle" width="120" scope="col" class="text-center">ID rodzajowości</th>
-        <th align="center" valign="middle" width="120" scope="col" class="text-center">Awaria</th>
+        <th align="center" valign="middle" width="250" scope="col" class="text-center">Wykonawca</th>
+        <th align="center" valign="middle" width="auto" scope="col" class="text-center">Szacowana kwota</th>
+        <th align="center" valign="middle" width="auto" scope="col" class="text-center">ID rodzajowości</th>
+        <th align="center" valign="middle" width="auto" scope="col" class="text-center">Awaria</th>
         <th align="center" valign="middle" width="420" scope="col" class="text-center">Jednostka</th>
     </tr>
     </thead>
@@ -55,7 +56,8 @@
         <td align="center" valign="middle" class="text-center" scope="row"></td>
         <td align="center" valign="middle" class="text-center">{{order.date|date:"d.m.Y"}} r.</td>
         <td align="center" valign="middle" class="text-center" title="{{order.worker}}">{{order.no_order|default_if_none:'---'}}</td>
-        <td align="right" valign="middle">{{order.sum|intcomma}} zł.</td>
+        <td align="center" valign="middle" class="text-center">{{order.contractor.name}}</td>
+        <td align="right" valign="middle">{{order.sum|intcomma}}&nbspzł.</td>
         <td align="center" valign="middle" class="text-center" title="{{order.typeorder}}">{{order.genre.name_id}}</td>
         <td align="center" valign="middle" class="text-center">{% if order.brakedown  %} <i class="bi bi-check2-circle text-success icon-check"></i> {%else%} --- {%endif%}</td>
         <td valign="middle"><span>{{order.unit.type.type_full}} - {{order.unit.city}}<br><small>{{order.unit.address}}, {{order.unit.zip_code}} {{order.unit.city}}</small></span></td>

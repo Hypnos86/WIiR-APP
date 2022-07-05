@@ -62,7 +62,7 @@ class Order(models.Model):
         ordering = ['date']
 
     date = models.DateField("Data")
-    no_order = models.CharField("Nr zlecenia", max_length=15)
+    no_order = models.CharField("Nr zlecenia", max_length=15, blank=True,default="", unique=True)
     sum = models.DecimalField("Szacowana kwota", max_digits=8, decimal_places=2, null=True, blank=True)
     typeorder = models.ForeignKey(TypeOrder, on_delete=models.CASCADE, verbose_name="Rodzaj zamówienia",
                                   related_name="order")
