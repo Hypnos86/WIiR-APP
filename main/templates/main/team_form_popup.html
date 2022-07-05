@@ -5,16 +5,25 @@
     <form class="m-2 p-4" method="POST" {%if new%} action="{%url 'main:add_team_popup'%}" {%else%} action="{%url 'main:edit_team_popup' id%}" {%endif%}>
         {%csrf_token%}
         <div>{{team_form.team|bootstrap}}</div>
-        {%if new == False%}
 
+        {%if new == False%}
         <div class="my-3">{{team_form.active|bootstrap}}</div>
         {%endif%}
         <div class="mt-4 moj-button-right">
-            <button type="submit" class="btn btn-outline-primary my-btn">{%if new%}<span
-                    class="bi bi-save2"> Dodaj</span>{%else%}Zapisz zmiany{%endif%}
+            <button type="submit" class="btn btn-outline-primary my-btn">
+                {%if new%}
+                <span class="bi bi-save2"> Dodaj</span>
+                {%else%}
+                <span class="bi bi-save2"> Zapisz zmiany</span>
+                {%endif%}
             </button>
         </div>
     </form>
 </div>
+<script>
+    $(function () {
+        $('[data-toggle="info"]').tooltip()
+    })
+</script>
 {%endblock%}
 

@@ -47,7 +47,9 @@ def add_team_popup(request):
 
     if request.method == 'POST':
         if team_form.is_valid():
-            team_form.save()
+            instance = team_form.save(commit=False)
+            instance.active = True
+            instance.save()
             return redirect('main:show_teams_list')
     return render(request, 'main/team_form_popup.html', {'team_form': team_form, 'new': True})
 
@@ -72,6 +74,7 @@ def show_employers_list(request):
 @login_required
 def add_employer_popup(request):
     employer_form = EmployerForm(request.POST or None)
+
     if request.method == ' POST':
         if employer_form.is_valid():
             instance = employer_form.save(commit=False)
@@ -93,7 +96,7 @@ def edit_employer_popup(request, id):
             instance.author = request.user
             instance.save()
             return redirect('main:show_employers_list')
-    return render(request, 'main/employer_form_popup.html', {'employer_form':employer_form,'id': id, 'new': False})
+    return render(request, 'main/employer_form_popup.html', {'employer_form': employer_form, 'id': id, 'new': False})
 
 
 @login_required

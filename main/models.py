@@ -8,7 +8,7 @@ class Team(models.Model):
         verbose_name_plural = "Komórki Wydziału"
 
     team = models.CharField(max_length=50, verbose_name='Komórka Wydziału')
-    active = models.BooleanField('Aktywny', default=True)
+    active = models.BooleanField('Aktywny')
 
     def __str__(self):
         return f'{self.team}'

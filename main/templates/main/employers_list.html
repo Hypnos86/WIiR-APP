@@ -15,9 +15,8 @@
             <h5 class="text-center">Pracownicy Wydziału</h5>
         </div>
         <div class="col-md-2 moj-button-right">
-            <button class="btn btn-outline-primary my-btn" type="button" onclick="openModalEmployerAdd()" data-toggle="info" title="Dodaj nowego pracownika">
-                <span class="bi bi-person-plus h4" >
-                </span>
+            <button class="btn btn-outline-primary my-btn" type="button" data-toggle="info" onclick="openModalEmployerAdd()" title="Dodaj nowego pracownika">
+                <span class="bi bi-person-plus h4" ></span>
             </button>
         </div>
     </div>
@@ -61,7 +60,7 @@
     </div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="addEmployerModal"  data-url="{%url 'main:add_employer_popup'%}">
+<div class="modal fade modal-style" id="addEmployerModal"  data-url="{%url 'main:add_employer_popup'%}">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
 
@@ -81,11 +80,13 @@
     document.getElementById("button-secretariat").classList.add("active");
     document.getElementById("button-cpv").classList.remove("active");
     document.getElementById("button-investments").classList.remove("active");
-     function openModalEmployerAdd(){
+
+    function openModalEmployerAdd(){
         var url = $("#addEmployerModal").data("url");
         $("#addEmployerModal .modal-content").load(url);
         $("#addEmployerModal").modal("show");
     }
+
     function openModalEmployerEdit(button){
         var url = $(button).data("url");
         $("#editEmployerModal .modal-content").load(url);
@@ -94,6 +95,7 @@
     function submitForm(){
         $("#submitButton").closest("form").submit();
     }
+
     $(function () {
         $('[data-toggle="info"]').tooltip()
     })
