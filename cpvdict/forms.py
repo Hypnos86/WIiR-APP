@@ -1,9 +1,7 @@
 from django.forms import ModelForm, DateInput
+from main.forms import DateField
 from cpvdict.models import Typecpv, OrderLimit, Order
 
-
-class DateField(DateInput):
-    input_type = "date"
 
 
 class TypecpvForm(ModelForm):

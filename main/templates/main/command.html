@@ -14,15 +14,45 @@
         </div>
         <div class="col-md-8"><h5 class="text-center">Polecenia Naczelnika</h5></div>
     </div>
-    <div class="d-flex justify-content-center">
-        <div class="list-group">
+    <div class="container list-group col-md-6">
             {%for command in commands%}
-            <a class="list-group-item list-group-item-action" href="/media/{{command.scan}}" target="_blank"><span data-toggle="info" title="{{command.content}}" class="bi bi-calendar-plus"> Data dodania: {{command.create_date}} r. - {{command}}</span></a>
+            <a class="list-group-item list-group-item-action" href="/media/{{command.scan}}" target="_blank">
+                <div class="d-flex justify-content-between">
+                    <span class="bi bi-calendar-plus pt-2" data-toggle="info" title="Data dodania: {{command.create_date}} r."></span>
+                    <span class="pt-2" data-toggle="info" title="{{command.content}}">{{command}}</span>
+                    <button class="btn btn-outline" data-url="" onclick="openModalEditCommand(this)">
+                        <i class="bi bi-pencil-square"></i>
+                    </button>
+                </div>
+            </a>
             {%endfor%}
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade modal-style" id="openModalEditCommand"  data-url="">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
         </div>
     </div>
 </div>
 <script>
+<!--    function openModalEmployerAdd(){-->
+<!--        var url = $("#addEmployerModal").data("url");-->
+<!--        $("#addEmployerModal .modal-content").load(url);-->
+<!--        $("#addEmployerModal").modal("show");-->
+<!--    }-->
+
+<!--    function $(button){-->
+<!--        var url = $(button).data("url");-->
+<!--        $("#editEmployerModal .modal-content").load(url);-->
+<!--        $("#editEmployerModal").modal("show");-->
+<!--    }-->
+
+<!--    function submitForm(){-->
+<!--        $("#submitButton").closest("form").submit();-->
+<!--    }-->
+
     $(function () {
         $('[data-toggle="info"]').tooltip()
     })

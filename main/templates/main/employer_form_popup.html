@@ -14,7 +14,13 @@
             <div class="col-md-4 mb-3">{{employer_form.no_tel_room|bootstrap}}</div>
             <div class="col-md-4 mb-3">{{employer_form.no_tel_private|bootstrap}}</div>
             <div class="col-md-6 mb-3">{{employer_form.industry|bootstrap}}</div>
-            <div class="col-md-6 mb-3 text-center">{{employer_form.industry_specialist|bootstrap}}
+            <div class="col-md-6 mb-3 text-center">
+                <div class="col-md-6">
+                    <div class="list-group">
+                        <label class="" for="industry_specialist">Pracownik</label>
+                        <div class="form-control" id="industry_specialist" data-toggle="info" title="Zaznacz jeśli nie dotyczy finansów i księgowości">{{employer_form.industry_specialist|bootstrap}}</div>
+                    </div>
+                </div>
             </div>
             <div class="col-md-12 mb-3">{{employer_form.information|bootstrap}}</div>
             {%if new == False%}

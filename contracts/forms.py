@@ -1,9 +1,6 @@
 from django.forms import ModelForm, DateInput, Textarea
+from main.forms import DateField
 from contracts.models import ContractImmovables, AnnexImmovables, ContractAuction, AnnexContractAuction
-
-
-class DateField(DateInput):
-    input_type = "date"
 
 
 class ContractImmovablesForm(ModelForm):

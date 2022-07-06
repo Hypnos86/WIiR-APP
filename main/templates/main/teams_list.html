@@ -15,7 +15,7 @@
             <h5 class="text-center mb-5">Komórki Wydziału Inwestycji i Remontów</h5>
             {%for team in teams%}
             <span class="list-group-item list-group-item-action d-flex justify-content-between">
-                <span class="pt-2" data-toggle="info" title="Kolejność wyświetlania: {{team.priority}}">{{team}}</span>
+                <span class="pt-2" data-toggle="info" title="Kolejność wyświetlania: {{team.priority}}">{{team.priority}}. {{team}}</span>
                 <button data-toggle="info" title="Edytuj" class="btn btn-sm" type="button" data-url="{% url 'main:edit_team_popup' team.id %}" onclick="openModalEdit(this)">
                     <span style="font-size: 20px" class="bi bi-pencil-square"></span>
                 </button>

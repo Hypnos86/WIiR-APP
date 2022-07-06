@@ -29,12 +29,12 @@
                 <li class="list-group-item"><span class="text-muted">Okres gwarancji: </span><span>{{contract.guarantee_period}}</span></li>
                 <li class="list-group-item"><span class="text-muted">Okres rękojmi: </span><span>{{contract.warranty_period}}</span></li>
                 {%if contract.security_percent%}
-                <li class="list-group-item"><span class="text-muted">Procent zabezpieczenia: </span><span>{{contract.security_percent}} %</span></li>
+                <li class="list-group-item"><span class="text-muted">Procent zabezpieczenia: </span><span>{{contract.security_percent}}%</span></li>
                 {%endif%}
                 {%if contract.security_sum%}
                 <li class="list-group-item"><span class="text-muted">Kwota zabezpieczenia: </span><span>{{contract.security_sum}}</span></li>
                 {%endif%}
-                <li class="list-group-item"><span class="text-muted">Branżysta: </span>{%for worker in contract.worker.all%}<span> {{worker}}</span>{%endfor%}</li>
+                <li class="list-group-item"><span class="text-muted">Branżysta: </span><ul>{%for worker in contract.worker.all%}<li> {{worker}} - {{worker.industry}}</li>{%endfor%}</ul></li>
                 {%if contract.report%}
                 <li class="list-group-item"><span class="text-muted">Raportowanie do Zaspołu Zamówień Publicznych: </span><span>{{contract.report}}</span></li>
                 {%endif%}

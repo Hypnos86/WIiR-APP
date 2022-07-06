@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 from units.models import Unit
 from main.models import Employer
 from contractors.models import Contractor
@@ -161,7 +163,7 @@ class ContractAuction(models.Model):
                                          related_name='contract_auction')
     warranty_period = models.ForeignKey(WarrantyPeriod, on_delete=models.CASCADE, verbose_name='Okres rękojmi',
                                         related_name='contract_auction')
-    security_percent = models.SmallIntegerField('Procent zabezpiecznia')
+    security_percent = models.DecimalField('Procent zabezpiecznia', max_digits=2, decimal_places=0)
     security_sum = models.DecimalField('Kwota zabezpiecznia', max_digits=10, decimal_places=2, null=True,
                                        blank=True)
     worker = models.ManyToManyField(Employer, verbose_name='Inspektor', related_name='contract_auction')
@@ -175,6 +177,14 @@ class ContractAuction(models.Model):
 
     def __str__(self):
         return f'{self.no_contract} z dnia {self.date}'
+
+
+@receiver(pre_save, sender=ContractAuction)
+def calculate_security_sum(sender, instance, **kwargs):
+    print(instance.security_percent)
+    print(type(instance.security_percent))
+    instance.security_sum = instance.price * instance.security_percent
+    print(instance.security_sum)
 
 
 def up_load_annex_contract_auction(instance, filename):

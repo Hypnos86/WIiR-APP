@@ -6,7 +6,7 @@ class UnitForm(ModelForm):
 
     class Meta:
         model = Unit
-        fields = ['county', 'type', 'address', 'zip_code', 'city', 'information', 'status']
+        fields = ('county', 'type', 'address', 'zip_code', 'city', 'information', 'status','change')
         labels = {'county': 'Powiat',
                   'type': 'Rodzaj jednostki',
                   'address': 'Adres',
@@ -14,3 +14,4 @@ class UnitForm(ModelForm):
                   'city': 'Miasto',
                   'information': 'Informacje',
                   'status': 'Status'}
+        exclude = ('change',)

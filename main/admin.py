@@ -56,7 +56,7 @@ class CommandResource(resources.ModelResource):
 
     class Meta:
         model = Command
-        export_order = ('title', 'content', 'create_date')
+        export_order = ('title', 'create_date')
 
 
 @admin.register(Command)

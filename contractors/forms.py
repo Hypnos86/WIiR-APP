@@ -10,7 +10,7 @@ class ContractorsellForm(ModelForm):
         exclude = ['creation_date', 'author']
         labels = {'no_contractor': 'Nr. kontrahenta',
                   'name': 'Kontrahent',
-                  "nip": 'NIP',
+                  'nip': 'NIP',
                   'address': 'Adres',
                   'zuo_code': 'Kod pocztowy',
                   'city': 'Miasto',
@@ -24,5 +24,5 @@ class ContractorsellForm(ModelForm):
                    'information': Textarea(attrs={'rows': 5}),
                    'nip': widgets.TextInput(attrs={'pattern': '^[0-9]{10}$', 'placeholder': '0123456789'}),
                    'zip_code': widgets.TextInput(attrs={'pattern': '^[0-9]{2}-[0-9]{3}$', 'placeholder': '00-000'}),
-                   'citye': widgets.TextInput(attrs={'placeholder': 'Miasto'})
+                   'city': widgets.TextInput(attrs={'placeholder': 'Miasto'})
                    }

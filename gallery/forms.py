@@ -1,20 +1,17 @@
 from django.forms import ModelForm, DateInput
 from gallery.models import Gallery, Photo
-
-
-class DataFiled(DateInput):
-    input_type = 'date'
+from main.forms import DateField
 
 
 class GalleryForm(ModelForm):
     class Meta:
         model = Gallery
-        fields = ['project', 'name', 'add_date', 'author']
+        fields = ('project', 'name', 'add_date', 'author')
         labels = {'project': 'Nazwa i lokalizacja inwestycji', 'name': 'Data galerii', 'add_date': 'Data utworzenia',
                   'author': 'Autor'}
         exclude = ['add_date', 'author']
         widgets = {
-            'name': DataFiled()}
+            'name': DateField()}
 
 
 class PhotoForm(ModelForm):

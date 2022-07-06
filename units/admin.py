@@ -12,13 +12,14 @@ class CountyResource(resources.ModelResource):
 
     class Meta:
         model = County
-        fields = ('swop_id', 'name')
+        fields = ( 'swop_id', 'name')
         export_order = ('swop_id', 'name')
 
 
 @admin.register(County)
 class CountyAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['swop_id', 'name']
+    list_display = ['id', 'swop_id', 'name']
+    list_display_links = ('name',)
     resource_class = CountyResource
 
 
@@ -47,4 +48,3 @@ class UnitAdmin(ExportMixin, admin.ModelAdmin):
 @admin.register(TypeUnit)
 class TypeUnitAdmin(admin.ModelAdmin):
     list_display = ['type_short', 'type_full']
-

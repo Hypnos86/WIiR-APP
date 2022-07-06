@@ -50,10 +50,8 @@
                 <td align="center" valign="middle">{{employer.no_room}}</td>
                 <td align="center" valign="middle">{{employer.no_tel_room}}</td>
                 <td align="center" valign="middle">{{employer.no_tel_private}}</td>
-                <td align="center" valign="middle"></td>
-                <td align="center" valign="middle"> <button type="button" class="btn" data-toggle="info"  title="Informacja"><i class="bi bi-info-circle"></i></button></td>
                 <td data-toggle="info" align="center" valign="middle" title="Edytuj">
-                    <button class="btn btn-outline-primary my-btn" data-url="{% url 'main:edit_employer_popup' employer.id %}" onclick="openModalEmployerEdit(this)">
+                    <button class="btn btn-outline" data-url="{% url 'main:edit_employer_popup' employer.id %}" onclick="openModalEmployerEdit(this)">
                         <i class="bi bi-pencil-square"></i>
                     </button>
                 </td>
