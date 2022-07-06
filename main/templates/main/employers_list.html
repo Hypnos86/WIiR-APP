@@ -42,7 +42,11 @@
                 <td align="left" valign="middle">{{employer.position}}</td>
                 <td align="left" valign="middle">{{employer.name}} {{employer.last_name}}</td>
                 <td align="center" valign="middle">{{employer.team}}</td>
+                {%if employer.industry%}
                 <td align="center" valign="middle">{{employer.industry}} {%if employer.industry_specialist%}<span data-toggle="info" title="Branżysta merytoryczny" class="bi bi-hammer"></span>{%else%}<span data-toggle="info" title="Branżysta finansowy" class="bi bi-cash-coin"></span>{%endif%}</td>
+                {%else%}
+                <td align="center" valign="middle">---</td>
+                {%endif%}
                 <td align="center" valign="middle">{{employer.no_room}}</td>
                 <td align="center" valign="middle">{{employer.no_tel_room}}</td>
                 <td align="center" valign="middle">{{employer.no_tel_private}}</td>

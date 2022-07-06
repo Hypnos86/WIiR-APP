@@ -5,8 +5,8 @@ from contractors.models import Contractor
 class ContractorsellForm(ModelForm):
     class Meta:
         model = Contractor
-        fields = ['no_contractor', 'name', 'nip', 'address', 'zip_code', 'city', 'information', 'creation_date',
-                  'author']
+        fields = ('no_contractor', 'name', 'nip', 'address', 'zip_code', 'city', 'information', 'creation_date',
+                  'author')
         exclude = ['creation_date', 'author']
         labels = {'no_contractor': 'Nr. kontrahenta',
                   'name': 'Kontrahent',

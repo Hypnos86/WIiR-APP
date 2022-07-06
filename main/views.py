@@ -37,7 +37,7 @@ def make_secretariat_site(request):
 
 @login_required
 def show_teams_list(request):
-    teams = Team.objects.all().filter(active=True)
+    teams = Team.objects.all().filter(active=True).order_by('priority')
     return render(request, 'main/teams_list.html', {'teams': teams})
 
 
@@ -67,7 +67,7 @@ def edit_team_popup(request, id):
 
 @login_required
 def show_employers_list(request):
-    employers = Employer.objects.all().filter(deleted=False)
+    employers = Employer.objects.all().filter(deleted=False).order_by('team__priority')
     return render(request, 'main/employers_list.html', {'employers': employers})
 
 
@@ -107,7 +107,7 @@ def show_command_list(request):
 
 @login_required
 def telephone_list(request):
-    teams = Team.objects.all().filter(active=True)
+    teams = Team.objects.all().filter(active=True).order_by('priority')
     telephone_book = OrganisationTelephone.objects.all()
     context = {'teams': teams, 'telephone_book': telephone_book}
     return render(request, 'main/telephones.html', context)

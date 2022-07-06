@@ -12,7 +12,7 @@ admin.site.index_title = "Witaj w aplikacji WIiR-APP"
 
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
-    list_display = ['team', 'active']
+    list_display = ['team', 'priority','active']
 
 
 admin.site.register(IndustryType)
