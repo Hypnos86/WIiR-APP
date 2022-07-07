@@ -13,22 +13,31 @@
             {%endif%}
         </div>
         <div class="col-md-8"><h5 class="text-center">Polecenia Naczelnika</h5></div>
+        <button class="btn bi bi-file-earmark-plus h3"></button>
     </div>
-    <div class="container list-group col-md-6">
+    <div class="container list-group col-md-5">
             {%for command in commands%}
-            <a class="list-group-item list-group-item-action" href="/media/{{command.scan}}" target="_blank">
-                <div class="d-flex justify-content-between">
+                <div class="list-group-item list-group-item-action d-flex justify-content-between">
                     <span class="bi bi-calendar-plus pt-2" data-toggle="info" title="Data dodania: {{command.create_date}} r."></span>
                     <span class="pt-2" data-toggle="info" title="{{command.content}}">{{command}}</span>
-                    <button class="btn btn-outline" data-url="" onclick="openModalEditCommand(this)">
-                        <i class="bi bi-pencil-square"></i>
-                    </button>
+                    <div>
+                        <a href="/media/{{command.scan}}" target="_blank"><button class="btn bi bi-link-45deg"></button></a>
+                        <button class="btn btn-outline" data-url="" onclick="openModalEditCommand(this)">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                    </div>
                 </div>
-            </a>
             {%endfor%}
     </div>
 </div>
 <!-- Modal -->
+<div class="modal fade modal-style" id="openModalAddCommand"  data-url="">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
 <div class="modal fade modal-style" id="openModalEditCommand"  data-url="">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

@@ -29,12 +29,12 @@
         </form>
     </div>
 </div>
-{%if last_date%}
-    <h4 class="units-title" title="Ostatnia aktualizacja: {{last_date.change|date:' d.m.Y - (H:i)'}}">{%if actual_units == True %} Ewidencja lokalizacji jednostek Policji {%else%} Ewidencja zarchiwizowanych lokalizacji jednostek Policji
-    {%endif%}</h4>
-{%else%}
+<div>
     <h4 class="units-title">{% if actual_units == True %} Ewidencja lokalizacji jednostek Policji {%else%} Ewidencja zarchiwizowanych lokalizacji jednostek Policji {%endif%}</h4>
-{%endif%}
+    {%if last_date%}
+        <small>Ostatnia aktualizacja: {{last_date.change|date:' d.m.Y - (H:i)'}}</small>
+    {%endif%}
+</div>
 
 <div class="row">
     <div class="col-md-3">

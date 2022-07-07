@@ -1,0 +1,29 @@
+{%load static%}
+{%load bootstrap%}
+{%block content%}
+<div class="container">
+    <form class=" col m-2 p-4" method="POST"  action="{%if new%} {%url 'main:add_command_popup'%}{%endif%}">
+        {%csrf_token%}
+        <div class="row">
+        <div class="col-md-12"></div>
+        <div class="col-md-3 mt-3"></div>
+
+        </div>
+        <div class="mt-4 moj-button-right">
+            <button type="submit" class="btn btn-outline-primary my-btn">
+                {%if new%}
+                <span class="bi bi-save2"> Dodaj</span>
+                {%else%}
+                <span class="bi bi-save2"> Zapisz zmiany</span>
+                {%endif%}
+            </button>
+        </div>
+    </form>
+</div>
+<script>
+    $(function () {
+        $('[data-toggle="info"]').tooltip()
+    })
+</script>
+{%endblock%}
+

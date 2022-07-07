@@ -2,7 +2,7 @@ import datetime
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from main.models import Team, OrganisationTelephone, AccessModule, Command, Employer
-from main.forms import TeamForm, EmployerForm
+from main.forms import TeamForm, EmployerForm, CommandsForm
 from businessflats.models import OfficialFlat
 from contracts.models import ContractImmovables, ContractAuction
 from contractors.models import Contractor
@@ -102,7 +102,13 @@ def edit_employer_popup(request, id):
 @login_required
 def show_command_list(request):
     commands = Command.objects.all()
-    return render(request, 'main/commands_list.html', {'commands': commands})
+    return render(request, 'main/commands_list_all.html', {'commands': commands})
+
+
+@login_required
+def add_command_popup(request):
+    command_form = CommandsForm(request.POST or None)
+    return render(request, 'main/commanf_form.html', {'command_form': command_form, 'new': True})
 
 
 @login_required

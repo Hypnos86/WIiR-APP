@@ -15,7 +15,7 @@
         <h4>Zlecenia za {{year}} rok</h4>
     </div>
 </div>
-<div class="container mt-3">
+<div class="mt-3">
     <div class="row">
         <div class="col-md-3 align-self-end">
             <p class=""><span>Liczba zleceń: </span><span class="badge text-white info badge-pill">{{ordersum}}</span></p>
@@ -37,29 +37,29 @@
             {%endif%}
     </div>
 </div>
-<table class="container table table-hover my-table mt-2">
+<table class="table table-hover my-table mt-2">
     <thead>
     <tr class="my-table-tr">
         <th align="center" valign="middle" width="40" scope="col" class="text-center">L.p.</th>
-        <th align="center" valign="middle" width="120" scope="col" class="text-center">Data</th>
-        <th align="center" valign="middle" width="220" scope="col" class="text-center">Nr. dokumentu</th>
-        <th align="center" valign="middle" width="250" scope="col" class="text-center">Wykonawca</th>
-        <th align="center" valign="middle" width="auto" scope="col" class="text-center">Szacowana kwota</th>
-        <th align="center" valign="middle" width="auto" scope="col" class="text-center">ID rodzajowości</th>
-        <th align="center" valign="middle" width="auto" scope="col" class="text-center">Awaria</th>
-        <th align="center" valign="middle" width="420" scope="col" class="text-center">Jednostka</th>
+        <th align="center" valign="middle" width="150" scope="col" class="text-center">Data</th>
+        <th align="center" valign="middle" width="150" scope="col" class="text-center">Nr. dokumentu</th>
+        <th align="center" valign="middle" width="320" scope="col" class="text-center">Wykonawca</th>
+        <th align="center" valign="middle" width="200" scope="col" class="text-center">Szacowana kwota</th>
+        <th align="center" valign="middle" width="200" scope="col" class="text-center">ID rodzajowości</th>
+        <th align="center" valign="middle" width="100" scope="col" class="text-center">Awaria</th>
+        <th align="center" valign="middle" width="450" scope="col" class="text-center">Jednostka</th>
     </tr>
     </thead>
     <tbody>
     {%for order in orders %}
     <tr class="my-table-tr">
-        <td align="center" valign="middle" class="text-center" scope="row"></td>
-        <td align="center" valign="middle" class="text-center">{{order.date|date:"d.m.Y"}} r.</td>
-        <td align="center" valign="middle" class="text-center" title="{{order.worker}}">{{order.no_order|default_if_none:'---'}}</td>
-        <td align="center" valign="middle" class="text-center">{{order.contractor.name}}</td>
+        <td align="center" valign="middle" scope="row"></td>
+        <td align="center" valign="middle">{{order.date|date:"d.m.Y"}} r.</td>
+        <td align="left" valign="middle" title="{{order.worker}}">{{order.no_order|default_if_none:'---'}}</td>
+        <td align="left" valign="middle"><span>{{order.contractor.name}}</span><br><small>{{order.contractor.address}}, {{order.contractor.zip_code}} {{order.contractor.city}}</small></td>
         <td align="right" valign="middle">{{order.sum|intcomma}}&nbspzł.</td>
-        <td align="center" valign="middle" class="text-center" title="{{order.typeorder}}">{{order.genre.name_id}}</td>
-        <td align="center" valign="middle" class="text-center">{% if order.brakedown  %} <i class="bi bi-check2-circle text-success icon-check"></i> {%else%} --- {%endif%}</td>
+        <td align="center" valign="middle" title="{{order.typeorder}}">{{order.genre.name_id}}</td>
+        <td align="center" valign="middle">{% if order.brakedown  %} <i class="bi bi-check2-circle text-success icon-check"></i> {%else%} --- {%endif%}</td>
         <td valign="middle"><span>{{order.unit.type.type_full}} - {{order.unit.city}}<br><small>{{order.unit.address}}, {{order.unit.zip_code}} {{order.unit.city}}</small></span></td>
         <td align="right" valign="middle">
         {%if order.content%}

@@ -2,7 +2,6 @@
 {% load static %}
 {% block title %} SEKRETARIAT {% endblock %}
 {% block content %}
-<div class="container">
     <div class="d-flex justify-content-center row pt-5">
         <div class="col-md-2">
             <a href="{%url 'main:make_secretariat_site'%}">
@@ -11,20 +10,15 @@
                 </button>
             </a>
         </div>
-        <div class="list-group col-md-5">
+        <div class="list-group col-md-3">
             <h5 class="text-center mb-5">Polecenia</h5>
             {%for command in commands%}
             <span class="list-group-item list-group-item-action">{{command}}<span></span></span>
             {%endfor%}
         </div>
-        <div class="col-md-2 moj-button-right">
-            <a><button data-toggle="info" title="Dodaj nowego pracownika" class="btn btn-outline-success">
-                <span class="bi bi-plus-square"></span>
-                </button>
-            </a>
-        </div>
+        <div class="col-md-2"></div>
     </div>
-</div>
+
 <script>
      document.getElementById("button-units").classList.remove("active");
      document.getElementById("button-record").classList.remove("active");
