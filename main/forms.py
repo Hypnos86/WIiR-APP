@@ -1,4 +1,4 @@
-from django.forms import ModelForm, DateInput, Textarea
+from django.forms import ModelForm, DateInput, Textarea, widgets
 from main.models import Team, OrganisationTelephone, AccessModule, Command, Employer
 
 
@@ -49,6 +49,7 @@ class AccessModuleForm(ModelForm):
 class CommandsForm(ModelForm):
     class Meta:
         model = Command
-        fields = ('title', 'content', 'scan', 'create_date')
+        fields = ('title', 'content', 'scan', 'change', 'create_date')
         labels = {'title': 'Tytuł', 'content': 'Treść'}
-        exclude = ['create_date']
+        exclude = ['change', 'create_date']
+        widgets = {'content': Textarea(attrs={'rows': 3})}

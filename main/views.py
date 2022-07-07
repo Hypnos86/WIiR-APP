@@ -101,14 +101,42 @@ def edit_employer_popup(request, id):
 
 @login_required
 def show_command_list(request):
-    commands = Command.objects.all()
-    return render(request, 'main/commands_list_all.html', {'commands': commands})
+    commands = Command.objects.all().order_by('-create_date')
+    commands_len = len(commands)
+    try:
+        last_date = Command.objects.values('change').latest('change')
+    except Command.DoesNotExist:
+        last_date = None
+    return render(request, 'main/command.html',
+                  {'commands': commands, 'last_date': last_date, 'commands_len': commands_len, 'secretariat': True})
 
 
 @login_required
 def add_command_popup(request):
-    command_form = CommandsForm(request.POST or None)
-    return render(request, 'main/commanf_form.html', {'command_form': command_form, 'new': True})
+    command_form = CommandsForm(request.POST or None, request.FILES or None)
+    if request.method == 'POST':
+        if command_form.is_valid():
+            command_form.save()
+            return redirect('main:show_command_list')
+    return render(request, 'main/command_form_popup.html', {'command_form': command_form, 'new': True})
+
+
+@login_required
+def edit_command_popup(request, id):
+    command_edit = get_object_or_404(Command, pk=id)
+    command_form = CommandsForm(request.POST or None, request.FILES or None, instance=command_edit)
+    if request.method == 'POST':
+        if command_form.is_valid():
+            command_form.save()
+            return redirect('main:show_command_list')
+    return render(request, 'main/command_form_popup.html', {'command_form': command_form, 'id': id, 'new': False})
+
+
+@login_required
+def delete_command_popup(request, id):
+    command = get_object_or_404(Command, pk=id)
+    command.delete()
+    return redirect('main:show_command_list')
 
 
 @login_required
@@ -127,12 +155,6 @@ def give_access_to_modules(request):
     context = {'access': access,
                'commands': commands}
     return render(request, 'main/access_modules.html', context)
-
-
-@login_required
-def show_command(request):
-    commands_all = Command.objects.all()
-    return render(request, 'main/command.html', {'commands': commands_all, 'secretariat': True})
 
 
 @login_required

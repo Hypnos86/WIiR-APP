@@ -5,6 +5,7 @@ from units.models import Unit
 from main.models import Employer
 from contractors.models import Contractor
 from investments.models import Project
+from decimal import Decimal
 
 
 class TypeOfContract(models.Model):
@@ -181,10 +182,7 @@ class ContractAuction(models.Model):
 
 @receiver(pre_save, sender=ContractAuction)
 def calculate_security_sum(sender, instance, **kwargs):
-    print(instance.security_percent)
-    print(type(instance.security_percent))
-    instance.security_sum = instance.price * instance.security_percent
-    print(instance.security_sum)
+    instance.security_sum = instance.price * instance.security_percent * Decimal(0.01)
 
 
 def up_load_annex_contract_auction(instance, filename):

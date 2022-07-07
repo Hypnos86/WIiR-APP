@@ -2,11 +2,14 @@
 {%load bootstrap%}
 {%block content%}
 <div class="container">
-    <form class=" col m-2 p-4" method="POST"  action="{%if new%} {%url 'main:add_command_popup'%}{%endif%}">
+    <form class=" col m-2 p-4" method="POST" enctype="multipart/form-data" action="{%if new%} {%url 'main:add_command_popup'%} {%else%}{%url 'main:edit_command_popup' id%} {%endif%}">
         {%csrf_token%}
         <div class="row">
-        <div class="col-md-12"></div>
-        <div class="col-md-3 mt-3"></div>
+            <div class="col-md-12" data-toggle="info" title="np: Polecenie nr 5 z dnia 01.01.2022 r.">
+                {{command_form.title|bootstrap}}
+            </div>
+            <div class="col-md-12 mt-3">{{command_form.content|bootstrap}}</div>
+            <div class="col-md-6 mt-3">{{command_form.scan|bootstrap}}</div>
 
         </div>
         <div class="mt-4 moj-button-right">

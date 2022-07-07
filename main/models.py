@@ -1,4 +1,5 @@
 from django.db import models
+import os
 
 
 # Create your models here.
@@ -48,14 +49,15 @@ class Employer(models.Model):
     position = models.CharField("Stanowisko", max_length=20, blank=True, default="")
     team = models.ForeignKey(Team, on_delete=models.CASCADE, verbose_name='Zespół', related_name='employer')
     industry_specialist = models.BooleanField(default=0, verbose_name='Branżysta merytoryczny')
-    industry = models.ForeignKey(IndustryType, on_delete=models.CASCADE, null=True,blank=True,  verbose_name='Branża', related_name='employer')
+    industry = models.ForeignKey(IndustryType, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Branża',
+                                 related_name='employer')
     no_room = models.CharField("Nr. pokoju", max_length=2, blank=True, default="")
     no_tel_room = models.CharField("Nr. telefonu", max_length=6, blank=True, default="")
     no_tel_private = models.CharField("Nr. komórkowy", max_length=9, blank=True, default="")
     information = models.TextField("Informacje", max_length=200, null=True, blank=True)
     deleted = models.BooleanField('Usunięty', default=False)
     creation_date = models.DateTimeField(auto_now_add=True)
-    change = models.DateTimeField('Zmiany', auto_now=True)
+    change = models.DateTimeField('Data zmian', auto_now=True)
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='employer')
 
     def __str__(self):
@@ -98,6 +100,12 @@ class AccessModule(models.Model):
         return f'{self.user}'
 
 
+def upload_scan(instance, filename):
+    extension = os.path.splitext(filename)[1]
+    name_file = f'{instance.title}{extension}'
+    return f'commands/{name_file}'
+
+
 class Command(models.Model):
     class Meta:
         verbose_name = 'Polecenie'
@@ -106,7 +114,8 @@ class Command(models.Model):
 
     title = models.CharField('Nazwa', max_length=120)
     content = models.TextField('Treść')
-    scan = models.FileField(upload_to='commands/%Y/', verbose_name='Skan polecenia')
+    scan = models.FileField(upload_to=upload_scan, verbose_name='Skan polecenia')
+    change = models.DateTimeField("Data zmian", auto_now=True)
     create_date = models.DateField("Data dodania", auto_now_add=True)
 
     def __str__(self):

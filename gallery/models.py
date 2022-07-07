@@ -7,8 +7,7 @@ import os
 
 def upload_gallery(instance, filename):
     # return f'investments/{instance.gallery.project.project_title}/gallery/{instance.gallery.name}/{filename}'
-    extension = os.path.splitext(filename)
-    new_filename = f'{instance.gallery.project.unit.city}_{instance.id}{extension}'
+    new_filename = create_name_photo(instance, filename)
     return f'investments/{instance.gallery.project.project_title}/gallery/{instance.gallery.name}/{new_filename}'
 
 
@@ -40,3 +39,10 @@ class Photo(models.Model):
 
     def __str__(self):
         return f'Zdjecie dodane {self.add_date}'
+
+
+# @receiver(pre_save, sender=Photo)
+def create_name_photo(instance, filename):
+    extension = os.path.splitext(filename)
+    new_filename = f'{instance.gallery.project.unit.city}_{instance.id}{extension}'
+    return new_filename

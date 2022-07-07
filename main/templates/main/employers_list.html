@@ -13,10 +13,11 @@
         </div>
         <div class="col-md-8">
             <h5 class="text-center">Pracownicy Wydziału</h5>
+            <small>Ostatnia aktualizacja:</small>
         </div>
         <div class="col-md-2 moj-button-right">
             <button class="btn btn-outline-primary my-btn" type="button" data-toggle="info" onclick="openModalEmployerAdd()" title="Dodaj nowego pracownika">
-                <span class="bi bi-person-plus h4" ></span>
+                <span class="bi bi-person-plus h4"></span>
             </button>
         </div>
     </div>
@@ -51,6 +52,7 @@
                 <td align="center" valign="middle">{{employer.no_tel_room}}</td>
                 <td align="center" valign="middle">{{employer.no_tel_private}}</td>
                 <td data-toggle="info" align="center" valign="middle" title="Edytuj">
+
                     <button class="btn btn-outline" data-url="{% url 'main:edit_employer_popup' employer.id %}" onclick="openModalEmployerEdit(this)">
                         <i class="bi bi-pencil-square"></i>
                     </button>
@@ -94,6 +96,7 @@
         $("#editEmployerModal .modal-content").load(url);
         $("#editEmployerModal").modal("show");
         }
+
     function submitForm(){
         $("#submitButton").closest("form").submit();
     }

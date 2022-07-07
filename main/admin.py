@@ -12,7 +12,7 @@ admin.site.index_title = "Witaj w aplikacji WIiR-APP"
 
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
-    list_display = ['team', 'priority','active']
+    list_display = ['team', 'priority', 'active']
 
 
 admin.site.register(IndustryType)
@@ -37,7 +37,7 @@ class EmployerResource(resources.ModelResource):
 
 @admin.register(Employer)
 class EmployerAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['id', 'name', 'last_name', 'team', 'industry_specialist', 'industry','deleted']
+    list_display = ['id', 'name', 'last_name', 'team', 'industry_specialist', 'industry', 'deleted']
     list_display_links = ['name']
     search_fields = ['name']
 
@@ -61,4 +61,5 @@ class CommandResource(resources.ModelResource):
 
 @admin.register(Command)
 class CommandAdmin(admin.ModelAdmin):
-    list_display = ['title', 'content', 'create_date']
+    list_display = ['id', 'title', 'change', 'create_date']
+    list_display_links = ('title',)
