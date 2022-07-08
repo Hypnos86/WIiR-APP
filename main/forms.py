@@ -1,5 +1,5 @@
 from django.forms import ModelForm, DateInput, Textarea, widgets
-from main.models import Team, OrganisationTelephone, AccessModule, Command, Employer
+from main.models import Team, OrganisationTelephone, AccessModule, Command, Employer, SecretariatTelephone
 
 
 class DateField(DateInput):
@@ -53,3 +53,15 @@ class CommandsForm(ModelForm):
         labels = {'title': 'Tytuł', 'content': 'Treść'}
         exclude = ['change', 'create_date']
         widgets = {'content': Textarea(attrs={'rows': 3})}
+
+
+class SecretariatTelephoneForm(ModelForm):
+    class Meta:
+        model = SecretariatTelephone
+        fields = ('code', 'fax_number', 'secretariat_number', 'information', 'create')
+        labels = {'code': 'Nr. kierunkowy', 'fax_number': 'Nr. faxu', 'secretariat_number': 'Nr. do sekretariatu',
+                  'information': 'Informacje', 'create': 'Data utworzenia'}
+        exclude = ['create']
+        widgets = {'fax_number': widgets.TextInput(attrs={'pattern': '^[0-9]{3}-[0-9]{2}$', 'placeholder': '00-000'}),
+                   'Nr. faxu': widgets.TextInput(attrs={'pattern': '^[0-9]{3}-[0-9]{2}$', 'placeholder': '00-000'})
+                   }

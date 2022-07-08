@@ -1,11 +1,15 @@
 from django.urls import path
 from main.views import make_list_register, welcome, make_secretariat_site, show_employers_list, show_command_list, \
     give_access_to_modules, telephone_list, show_teams_list, add_team_popup, edit_team_popup, \
-    add_employer_popup, edit_employer_popup, add_command_popup, edit_command_popup, delete_command_popup
+    add_employer_popup, edit_employer_popup, add_command_popup, edit_command_popup, delete_command_popup, \
+    add_secretariat_number, edit_secretariat_number, delete_secretariat_number
 
 app_name = 'main'
 urlpatterns = [
     path('secretariat/', make_secretariat_site, name='make_secretariat_site'),
+    path('add_secretariat', add_secretariat_number, name='add_secretariat_number'),
+    path('edit_secretariat/<int:id>', edit_secretariat_number, name='edit_secretariat_number'),
+    path('delete_secretariat/<int:id>', delete_secretariat_number, name='delete_secretariat_number'),
     path('teams/', show_teams_list, name='show_teams_list'),
     path('add_team/', add_team_popup, name='add_team_popup'),
     path('edit_team/<int:id>', edit_team_popup, name='edit_team_popup'),

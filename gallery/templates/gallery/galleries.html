@@ -5,9 +5,7 @@
 {%block investmentsmenu%}
 
 <div class="row">
-    <div class="col-md-2">
-
-    </div>
+    <div class="col-md-2"></div>
     <div class="col-md-8">
         <h5 class="text-center"><span>Galeria zdjęć zadań inwestycyjnych ({{gallery_count}})</span></h5>
     </div>
@@ -27,7 +25,7 @@
                 <img class="card-img-top" src={{im.url}} alt="">
                 {%endthumbnail%}
                 <div class=" text-center my-2">
-                    <small class="card-title"><b>{{gallery.name}} r.</b></small>
+                    <small class="card-title" data-toggle="info" title="{{gallery.project.project_title}}"><b>{{gallery.name}} r.</b></small>
                 </div>
                 <div class="card-footer text-center">
                     <a href="{%url 'gallery:gallery_details' gallery.id%}" class="btn btn-outline-primary my-btn"
@@ -60,5 +58,8 @@
     function submitForm(){
         $("#submitButton").closest("form").submit();
     }
+    $(function () {
+        $('[data-toggle="info"]').tooltip()
+    })
 </script>
 {%endblock%}

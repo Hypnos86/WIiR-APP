@@ -11,15 +11,35 @@
                 </button>
             </a>
         </div>
-        <div class="col-md-8">
-            <h5 class="text-center">Pracownicy Wydziału</h5>
-            <small>Ostatnia aktualizacja:</small>
+        <div class="col-md-8 text-center">
+            <h5>Pracownicy Wydziału</h5>
+            {%if last_date%}
+            <small>Ostatnia aktualizacja: {{last_date.change|date:'m.d.Y - (H:i)'}}</small>
+            {%endif%}
         </div>
         <div class="col-md-2 moj-button-right">
+            {%if secretariat%}
+            <button class="btn btn-outline-primary my-btn" type="button" data-toggle="info" onclick="openModalEditSecretariat()" title="Edytuj numery do sekretariatu">
+                <span class="bi bi-telephone h4"></span>
+            </button>
+            {%else%}
+            <button class="btn btn-outline-primary my-btn" type="button" data-toggle="info" onclick="openModalAddSecretariat()" title="Dodaj numery do sekretariatu">
+                <span class="bi bi-telephone h4"></span>
+            </button>
+
+            {%endif%}
             <button class="btn btn-outline-primary my-btn" type="button" data-toggle="info" onclick="openModalEmployerAdd()" title="Dodaj nowego pracownika">
                 <span class="bi bi-person-plus h4"></span>
             </button>
         </div>
+        {%if secretariat%}
+         <div>
+             <span class="text-muted">Nr. kierunkowy:</span>&nbsp;<span>{{secretariat.code}}</span><br>
+             <span class="text-muted">Nr. do sekretariatu:</span>&nbsp;<span>{{secretariat.secretariat_number}}</span><br>
+             <span class="text-muted">Nr. Fax do WIiR:</span>&nbsp;<span>{{secretariat.fax_number}}</span><br>
+             <span class="text-muted" data-toggle="info" title="Informacja ukazująca się w spisie telefonów">Informacja:</span>&nbsp;<span>{{secretariat.information}}</span><br>
+        </div>
+        {%endif%}
     </div>
     <div class="mt-4">
         <table class="table table-sm">
@@ -44,7 +64,14 @@
                 <td align="left" valign="middle">{{employer.name}} {{employer.last_name}}</td>
                 <td align="center" valign="middle">{{employer.team}}</td>
                 {%if employer.industry%}
-                <td align="center" valign="middle">{{employer.industry}} {%if employer.industry_specialist%}<span data-toggle="info" title="Branżysta merytoryczny" class="bi bi-hammer"></span>{%else%}<span data-toggle="info" title="Branżysta finansowy" class="bi bi-cash-coin"></span>{%endif%}</td>
+                <td align="center" valign="middle">
+                    <span>{{employer.industry}}</span>
+                    {%if employer.industry_specialist%}
+                    <span data-toggle="info" title="Branżysta merytoryczny" class="bi bi-hammer"></span>
+                    {%else%}
+                    <span data-toggle="info" title="Branżysta finansowy" class="bi bi-cash-coin"></span>
+                    {%endif%}
+                </td>
                 {%else%}
                 <td align="center" valign="middle">---</td>
                 {%endif%}
@@ -64,6 +91,22 @@
     </div>
 </div>
 <!-- Modal -->
+<div class="modal fade modal-style" id="addSecretariatModal" data-url="{%url 'main:add_secretariat_number'%}">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+{%if secretariat%}
+<div class="modal fade modal-style" id="editSecretariatModal" data-url="{%url 'main:edit_secretariat_number' secretariat.id%}">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+{%endif%}
 <div class="modal fade modal-style" id="addEmployerModal"  data-url="{%url 'main:add_employer_popup'%}">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -84,6 +127,18 @@
     document.getElementById("button-secretariat").classList.add("active");
     document.getElementById("button-cpv").classList.remove("active");
     document.getElementById("button-investments").classList.remove("active");
+
+    function openModalAddSecretariat(){
+        var url = $("#addSecretariatModal").data("url");
+        $("#addSecretariatModal .modal-content").load(url);
+        $("#addSecretariatModal").modal("show");
+    }
+
+    function openModalEditSecretariat(){
+        var url = $("#editSecretariatModal").data("url");
+        $("#editSecretariatModal .modal-content").load(url);
+        $("#editSecretariatModal").modal("show");
+    }
 
     function openModalEmployerAdd(){
         var url = $("#addEmployerModal").data("url");

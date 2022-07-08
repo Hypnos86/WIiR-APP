@@ -33,13 +33,23 @@
 <h3 class="text-center mt-5 mb-5"><span>Spis telefontów Wydziału Inwestycji i Remontów KWP w Poznaniu</span></h3>
 
 <div class="container">
+    {%if secretariat.information%}
     <p class="text-center">
-            <span>Przed numerem resortowym Policji dla wybierania numerów z
-            sieci publicznej należy wybrać dodatkowo „47 XXXXXX”.</span>
+            <span>{{secretariat.information}}</span>
     </p>
+    {%endif%}
     <div class="row">
-        <div class="col-md-3 moj-button-left">
-            <span><b>Faks WIiR: 140-44</b></span>
+        <div class="d-flex justify-content-between">
+            <div class="moj-button-left">
+                {%if secretariat.fax_number%}
+                <span><b>Faks WIiR: {{secretariat.fax_number}}</b></span>
+                {%endif%}
+            </div>
+            <div class="moj-button-right">
+                {%if secretariat.secretariat_number%}
+                <span><b>Selretariat WIiR: {{secretariat.secretariat_number}}</b></span>
+                {%endif%}
+            </div>
         </div>
         <div class="col-md-9 moj-button-right">
             {% if telephone_book %}
@@ -66,7 +76,7 @@
                 <th class="text-center" valign="middle" width="130px" scope="col">Stanowisko</th>
                 <th class="text-center" valign="middle" width="220px" scope="col">Imię i Nazwisko</th>
                 <th class="text-center" valign="middle" width="80px" scope="col">Nr. pokoju</th>
-                <th class="text-center" valign="middle" width="80px" scope="col">Nr. telefonu<br>(77)</th>
+                <th class="text-center" valign="middle" width="80px" scope="col">Nr. telefonu<br>{{secretariat.code}}</th>
                 <th class="text-center" valign="middle" width="80px" scope="col">Nr. komórkowy</th>
                 <th class="text-center" valign="middle" width="250px" scope="col">Informacje</th>
             </tr>

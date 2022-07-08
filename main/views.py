@@ -1,8 +1,8 @@
 import datetime
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
-from main.models import Team, OrganisationTelephone, AccessModule, Command, Employer
-from main.forms import TeamForm, EmployerForm, CommandsForm
+from main.models import Team, OrganisationTelephone, AccessModule, Command, Employer, SecretariatTelephone
+from main.forms import TeamForm, EmployerForm, CommandsForm, SecretariatTelephoneForm
 from businessflats.models import OfficialFlat
 from contracts.models import ContractImmovables, ContractAuction
 from contractors.models import Contractor
@@ -68,7 +68,14 @@ def edit_team_popup(request, id):
 @login_required
 def show_employers_list(request):
     employers = Employer.objects.all().filter(deleted=False).order_by('team__priority')
-    return render(request, 'main/employers_list.html', {'employers': employers})
+    try:
+        last_date = Employer.objects.values('change').latest('change')
+    except Employer.DoesNotExist:
+        last_date = None
+
+    secretariat = SecretariatTelephone.objects.last()
+    context = {'employers': employers, 'last_date': last_date, 'secretariat': secretariat}
+    return render(request, 'main/employers_list.html', context)
 
 
 @login_required
@@ -143,17 +150,45 @@ def delete_command_popup(request, id):
 def telephone_list(request):
     teams = Team.objects.all().filter(active=True).order_by('priority')
     telephone_book = OrganisationTelephone.objects.all()
-    context = {'teams': teams, 'telephone_book': telephone_book}
+    secretariat = SecretariatTelephone.objects.last()
+    context = {'teams': teams, 'telephone_book': telephone_book, 'secretariat': secretariat}
     return render(request, 'main/telephones.html', context)
+
+
+@login_required
+def add_secretariat_number(request):
+    secretariat_form = SecretariatTelephoneForm(request.POST or None)
+    if request.method == 'POST':
+        if secretariat_form.is_valid():
+            secretariat_form.save()
+            return redirect('main:show_employers_list')
+    return render(request, 'main/secretariat_form_popup.html', {'secretariat_form': secretariat_form, 'new': True})
+
+
+@login_required
+def edit_secretariat_number(request, id):
+    secretariat_edit = get_object_or_404(SecretariatTelephone, pk=id)
+    secretariat_form = SecretariatTelephoneForm(request.POST or None, instance=secretariat_edit)
+    if request.method == 'POST':
+        if secretariat_form.is_valid():
+            secretariat_form.save()
+            return redirect('main:show_employers_list')
+    return render(request, 'main/secretariat_form_popup.html',
+                  {'secretariat_form': secretariat_form, 'new': False, 'id': id})
+
+
+@login_required
+def delete_secretariat_number(request, id):
+    instance = get_object_or_404(SecretariatTelephone, pk=id)
+    instance.delete()
+    return redirect('main:show_employers_list')
 
 
 @login_required
 def give_access_to_modules(request):
     access = AccessModule.objects.all()
     commands = Command.objects.all()
-
-    context = {'access': access,
-               'commands': commands}
+    context = {'access': access, 'commands': commands}
     return render(request, 'main/access_modules.html', context)
 
 

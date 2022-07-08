@@ -39,7 +39,7 @@ class UnitResource(resources.ModelResource):
 @admin.register(Unit)
 class UnitAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ['county', 'type', 'address', 'zip_code', 'city', 'status']
-    search_fields = ['address', 'city']
+    search_fields = ['address', 'city', 'type__type_full']
     list_filter = ['county']
     list_display_links = ['address']
     resource_class = UnitResource
@@ -47,4 +47,4 @@ class UnitAdmin(ExportMixin, admin.ModelAdmin):
 
 @admin.register(TypeUnit)
 class TypeUnitAdmin(admin.ModelAdmin):
-    list_display = ['type_short', 'type_full']
+    list_display = ['id', 'type_short', 'type_full']

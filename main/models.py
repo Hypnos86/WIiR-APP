@@ -17,6 +17,21 @@ class Team(models.Model):
         return f'{self.team}'
 
 
+class SecretariatTelephone(models.Model):
+    class Meta:
+        verbose_name = 'Telefon do sekretariatu'
+        verbose_name_plural = 'Telefony do sekretariatu'
+
+    code = models.IntegerField('Nr. kierunkowy', null=True, blank=True)
+    fax_number = models.CharField('Nr. faxu', max_length=6, null=True, blank=True, default="")
+    secretariat_number = models.CharField('Nr. do sekretariatu', max_length=6, null=True, blank=True, default="")
+    information = models.TextField('Informacje', null=True, blank=True)
+    create = models.DateTimeField('Data utworzenia', auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.code} {self.secretariat_number}'
+
+
 class OrganisationTelephone(models.Model):
     class Meta:
         verbose_name = "Książka telefoniczna KWP w Poznaniu"

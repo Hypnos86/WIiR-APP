@@ -2,7 +2,7 @@ from django.contrib import admin
 from import_export import resources
 from import_export.admin import ExportMixin
 from import_export.fields import Field
-from main.models import Team, OrganisationTelephone, Employer, IndustryType, AccessModule, Command
+from main.models import Team, OrganisationTelephone, Employer, IndustryType, AccessModule, Command, SecretariatTelephone
 
 # Register your models here.
 # admin.site.site_header ="WIiR-APP"
@@ -15,7 +15,16 @@ class TeamAdmin(admin.ModelAdmin):
     list_display = ['team', 'priority', 'active']
 
 
-admin.site.register(IndustryType)
+@admin.register(SecretariatTelephone)
+class SecretariatTelephoneAdmin(admin.ModelAdmin):
+    list_display = ['id', 'code', 'fax_number', 'secretariat_number', 'information', 'create']
+    list_display_links = ('secretariat_number',)
+
+
+@admin.register(IndustryType)
+class IndustryTypeAdmin(admin.ModelAdmin):
+    list_display = ['id', 'industry']
+    list_display_links = ('industry',)
 
 
 @admin.register(OrganisationTelephone)
