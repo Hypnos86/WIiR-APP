@@ -20,9 +20,23 @@
                 <tbody>
                 {%if user.accessmodule.zok_team%}
                 <tr>
-                    <td rowspan="" valign="middle">Zespół Obsługi Kancelaryjnej</td>
-                    <td rowspan="" align="center" valign="middle">{%if user.accessmodule.zok_team%}<i class="bi bi-check-circle-fill text-success"></i>
+                    <td rowspan="3" valign="middle">Zespół Obsługi Kancelaryjnej</td>
+                    <td rowspan="3" align="center" valign="middle">{%if user.accessmodule.zok_team%}<i class="bi bi-check-circle-fill text-success"></i>
                     {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
+                    <td>Moduł Zespoły</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.teams%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%}<i class="bi bi-x-circle-fill text-danger"></i> </td>{%endif%}
+                    <td align="center" valign="middle">{%if user.accessmodule.teams%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%}<i class="bi bi-x-circle-fill text-danger"></i> </td>{%endif%}
+                </tr>
+                <tr>
+                    <td>Moduł Pracownicy</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.employers%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%}<i class="bi bi-x-circle-fill text-danger"></i> </td>{%endif%}
+                    <td align="center" valign="middle">{%if user.accessmodule.employers%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%}<i class="bi bi-x-circle-fill text-danger"></i> </td>{%endif%}
+                </tr>
+                <tr>
                     <td>Moduł Polecenia</td>
                     <td align="center" valign="middle">{%if user.accessmodule.commands%}<i class="bi bi-check-circle-fill text-success"></i>
                     {%else%}<i class="bi bi-x-circle-fill text-danger"></i> </td>{%endif%}

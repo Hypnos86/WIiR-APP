@@ -14,19 +14,18 @@
         <div class="col-md-8 text-center">
             <h5>Pracownicy Wydziału</h5>
             {%if last_date%}
-            <small>Ostatnia aktualizacja: {{last_date.change|date:'m.d.Y - (H:i)'}}</small>
+            <small>Ostatnia aktualizacja: {{last_date.change|date:'m.d.Y (H:i)'}}</small>
             {%endif%}
         </div>
         <div class="col-md-2 moj-button-right">
             {%if secretariat%}
-            <button class="btn btn-outline-primary my-btn" type="button" data-toggle="info" onclick="openModalEditSecretariat()" title="Edytuj numery do sekretariatu">
+            <button class="btn btn-outline-primary my-btn" type="button" data-toggle="info" onclick="openModalEditSecretariat()" title="Edytuj numery sekretariatu">
                 <span class="bi bi-telephone h4"></span>
             </button>
             {%else%}
-            <button class="btn btn-outline-primary my-btn" type="button" data-toggle="info" onclick="openModalAddSecretariat()" title="Dodaj numery do sekretariatu">
+            <button class="btn btn-outline-primary my-btn" type="button" data-toggle="info" onclick="openModalAddSecretariat()" title="Dodaj numery sekretariatu">
                 <span class="bi bi-telephone h4"></span>
             </button>
-
             {%endif%}
             <button class="btn btn-outline-primary my-btn" type="button" data-toggle="info" onclick="openModalEmployerAdd()" title="Dodaj nowego pracownika">
                 <span class="bi bi-person-plus h4"></span>

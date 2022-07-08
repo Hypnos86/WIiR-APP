@@ -87,7 +87,9 @@ class AccessModule(models.Model):
     user = models.OneToOneField('auth.User', on_delete=models.CASCADE, verbose_name='Użytkownik',
                                 related_name='accessmodule')
     zok_team = models.BooleanField('Ewidencja: Zespoł Obsługi Kancelarynej', default=False)
+    teams = models.BooleanField('ZOK - Zespoły', default=False)
     commands = models.BooleanField('ZOK - Polecenia', default=False)
+    employers = models.BooleanField('ZOK - Pracownicy', default=False)
     zriwt_team = models.BooleanField('Ewidencja: Zespół Rozliczeń i Wsparcia Technicznego', default=False)
     contractors_module = models.BooleanField('ZRiWT - Kontrahenci - Podgląd', default=False)
     contractors_module_edit = models.BooleanField('ZRiWT - Kontrahenci - Edycja', default=False)
