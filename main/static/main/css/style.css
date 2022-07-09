@@ -261,3 +261,9 @@ hr {
    overflow: auto;
    overflow-y: auto;"
 }
+
+.tooltip-inner{
+    min-width: auto !important;
+    /* If max-width does not work, try using width instead */
+    width: auto !important;
+}

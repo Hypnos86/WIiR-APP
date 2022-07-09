@@ -3,7 +3,7 @@ from import_export import fields, resources
 from import_export.widgets import ManyToManyWidget
 from import_export.admin import ExportMixin
 from import_export.fields import Field
-from cpvdict.models import Typecpv, Genre, OrderLimit, Order, TypeOrder
+from cpvdict.models import Typecpv, Genre, OrderLimit, Order, TypeOrder, Tax
 
 
 # Register your models here.
@@ -45,7 +45,9 @@ class OrderingObjectAdmin(ExportMixin, admin.ModelAdmin):
 class OrderResource(resources.ModelResource):
     date = Field(attribute='date', column_name='Data')
     no_order = Field(attribute='no_order', column_name='Zlecenie')
-    sum = Field(attribute='sum', column_name='Szacowana kwota')
+    sum_netto = Field(attribute='sum_netto', column_name='Kwota netto')
+    # vat = Field(attribute='vat', column_name='vat')
+    sum_brutto = Field(attribute='sum_brutto', column_name='Kwota brutto')
     typeorder = Field(attribute='typeorder', column_name='Rodzaj zamówienia')
     genre = Field(attribute='genre', column_name='ID rodzajowości')
     unit = Field(attribute='unit', column_name='Jednostka')
@@ -55,21 +57,30 @@ class OrderResource(resources.ModelResource):
 
     class Meta:
         model = Order
-        export_order = ('date', 'no_order', 'sum', 'typeorder', 'genre', 'unit', 'brakedown', 'content', 'author')
+        export_order = (
+            'date', 'no_order', 'sum_netto', 'sum_brutto', 'typeorder', 'genre', 'unit', 'brakedown', 'content',
+            'author')
 
 
 @admin.register(Order)
 class OrderAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['date', 'no_order', 'sum', 'typeorder', 'genre', 'brakedown', 'content']
-    search_fields = ['no_cpv', 'name']
+    list_display = ['date', 'no_order', 'sum_netto', 'sum_brutto', 'typeorder', 'genre', 'brakedown', 'content']
+    search_fields = ['no_order', 'no_cpv', 'name', 'typeorder__type']
+    list_display_links = ('no_order',)
     resource_class = OrderResource
 
 
 @admin.register(OrderLimit)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['limit']
+    list_display = ['year', 'euro_exchange_rate', 'limit_euro', 'limit_netto', 'limit_brutto']
 
 
 @admin.register(TypeOrder)
 class TypeOrderAdmin(admin.ModelAdmin):
     list_display = ['type']
+
+
+@admin.register(Tax)
+class TaxAdmin(admin.ModelAdmin):
+    list_display = ['id', 'vat']
+    list_display_links = ('vat',)

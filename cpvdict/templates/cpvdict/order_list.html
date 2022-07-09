@@ -44,7 +44,7 @@
         <th align="center" valign="middle" width="150" scope="col" class="text-center">Data</th>
         <th align="center" valign="middle" width="150" scope="col" class="text-center">Nr. dokumentu</th>
         <th align="center" valign="middle" width="320" scope="col" class="text-center">Wykonawca</th>
-        <th align="center" valign="middle" width="200" scope="col" class="text-center">Szacowana kwota</th>
+        <th align="center" valign="middle" width="200" scope="col" class="text-center">Kwota brutto</th>
         <th align="center" valign="middle" width="200" scope="col" class="text-center">ID rodzajowości</th>
         <th align="center" valign="middle" width="100" scope="col" class="text-center">Awaria</th>
         <th align="center" valign="middle" width="450" scope="col" class="text-center">Jednostka</th>
@@ -57,7 +57,7 @@
         <td align="center" valign="middle">{{order.date|date:"d.m.Y"}} r.</td>
         <td align="left" valign="middle" title="{{order.worker}}">{{order.no_order|default_if_none:'---'}}</td>
         <td align="left" valign="middle"><span>{{order.contractor.name}}</span><br><small>{{order.contractor.address}}, {{order.contractor.zip_code}} {{order.contractor.city}}</small></td>
-        <td align="right" valign="middle">{{order.sum|intcomma}}&nbspzł.</td>
+        <td align="right" valign="middle"><span data-toggle="info" title="Kwota netto: {{order.sum_netto|intcomma}}&nbsp;zł.&#010;(vat: {{order.vat}})">{{order.sum_brutto|intcomma}}&nbspzł.</span></td>
         <td align="center" valign="middle" title="{{order.typeorder}}">{{order.genre.name_id}}</td>
         <td align="center" valign="middle">{% if order.brakedown  %} <i class="bi bi-check2-circle text-success icon-check"></i> {%else%} --- {%endif%}</td>
         <td valign="middle"><span>{{order.unit.type.type_full}} - {{order.unit.city}}<br><small>{{order.unit.address}}, {{order.unit.zip_code}} {{order.unit.city}}</small></span></td>

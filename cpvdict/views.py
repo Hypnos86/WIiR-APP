@@ -35,21 +35,21 @@ def cpvlist(request):
 def type_expense_list(request):
     objects = Genre.objects.all().exclude(name_id="RB")
     limit = OrderLimit.objects.first()
-    limit_item = round(limit.limit * Decimal(1.23), 2)
+    limit_item = round(limit.limit_netto * Decimal(1.23), 2)
 
     for object in objects:
         order_genre = Order.objects.all().filter(genre=object).filter(date__year=current_year()).filter(brakedown=False)
         sum = 0
         for order in order_genre:
-            sum += order.sum
+            sum += order.sum_netto
 
-        object.sum = Decimal(sum)
-        object.remain = round(limit_item - object.sum, 2)
+        object.sum_netto = Decimal(sum)
+        object.remain = round(limit_item - object.sum_netto, 2)
 
     year = current_year()
 
     context = {'objects': objects,
-               'limit': limit.limit,
+               'limit': limit.limit_netto,
                'limit_item': limit_item,
                'year': year}
     return render(request, 'cpvdict/genre_list.html', context)
@@ -65,11 +65,11 @@ def type_work_list(request):
         orders = Order.objects.all().filter(genre__name_id='RB').filter(unit=unit).filter(date__year=current_year())
         sum = 0
         for order in orders:
-            sum += order.sum
+            sum += order.sum_netto
         sum_rb[unit] = sum
 
     year = current_year()
-    item = round(float(limit.limit) * 1.23, 2)
+    item = round(float(limit.limit_netto) * 1.23, 2)
 
     context = {'units': units, 'limit': limit, 'item': item, 'year': year, 'sum_rb': sum_rb}
     return render(request, 'cpvdict/genre_work_list.html', context)

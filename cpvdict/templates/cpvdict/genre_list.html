@@ -3,36 +3,43 @@
 {% load static%}
 {% block title%} Rodzajowość wydatków WIiR {%endblock%}
 {% block content%}
-<div class="row">
-    <div class="col-md-3">
-    {%if user.accessmodule.cpvdict_module%}
-    <div class="col-md-12  m-2"><a href="{%url 'cpvdict:order_list'%}">
-        <button class="btn btn-outline-primary button-choise-contracts my-btn">Zlecenia</button>
-    </a></div>
-    <div class="col-md-12 m-2 "><a href="{%url 'cpvdict:type_work_list'%}">
-        <button class="btn btn-outline-primary button-choise-contracts my-btn">Roboty budowlane</button>
-    </a></div>
-    <div class="col-md-12 m-2 "><a href="{%url 'cpvdict:cpvlist'%}">
-        <button class="btn btn-outline-primary button-choise-contracts my-btn">Słownik CPV</button>
-    </a></div>
-    {%else%}
-    <div class="col-md-12 m-2 "><a href="{%url 'cpvdict:type_work_list'%}">
-        <button class="btn btn-outline-primary button-choise-contracts my-btn">Roboty budowlane</button>
-    </a></div>
-    <div class="col-md-12 m-2 "><a href="{%url 'cpvdict:cpvlist'%}">
-        <button class="btn btn-outline-primary button-choise-contracts my-btn">Słownik CPV</button>
-    </a></div>
-    {%endif%}
-</div>
-<div class="col-md-6">
-<div class="my-1 text-center">
-    <h4 class="">Klasyfikacja rodzajowa WIiR</h4>
-    <span>Usługi i dostawy:</span><small class="m-2">{{year}} rok</small>
-    {%if limit != 0 %}
-    <p><span class="text-center">Limit zmówień NETTO: {{limit|intcomma}} zł</span><br>
-        <span class="text-center">Limit zmówień BRUTTO: {{limit_item|intcomma}} zł</span></p>
-    {%endif%}
-</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            {%if user.accessmodule.cpvdict_module%}
+            <div class="col-md-12  m-2"><a href="{%url 'cpvdict:order_list'%}">
+                <button class="btn btn-outline-primary button-choise-contracts my-btn">Zlecenia</button>
+            </a></div>
+            <div class="col-md-12 m-2 "><a href="{%url 'cpvdict:type_work_list'%}">
+                <button class="btn btn-outline-primary button-choise-contracts my-btn">Roboty budowlane</button>
+            </a></div>
+            <div class="col-md-12 m-2 "><a href="{%url 'cpvdict:cpvlist'%}">
+                <button class="btn btn-outline-primary button-choise-contracts my-btn">Słownik CPV</button>
+            </a></div>
+                {%else%}
+            <div class="col-md-12 m-2 "><a href="{%url 'cpvdict:type_work_list'%}">
+                <button class="btn btn-outline-primary button-choise-contracts my-btn">Roboty budowlane</button>
+            </a></div>
+            <div class="col-md-12 m-2 "><a href="{%url 'cpvdict:cpvlist'%}">
+                <button class="btn btn-outline-primary button-choise-contracts my-btn">Słownik CPV</button>
+            </a></div>
+            {%endif%}
+        </div>
+        <div class="col-md-6">
+            <div class="my-1 text-center">
+                <h4 class="">Klasyfikacja rodzajowa WIiR</h4>
+                <span>Usługi i dostawy:</span><small class="m-2">{{year}} rok</small>
+                {%if limit != 0 %}
+                <p><span class="text-center">Limit zmówień NETTO: {{limit|intcomma}} zł</span><br><span class="text-center">Limit zmówień BRUTTO: {{limit_item|intcomma}} zł</span></p>
+                {%endif%}
+            </div>
+        </div>
+        <div class="col-md-3 moj-button-right">
+            <div class="col-md-12  m-2"><a href="">
+                <button class="btn btn-outline-info">Archiwum</button>
+            </a>
+            </div>
+        </div>
     </div>
 </div>
 <div class="container">
@@ -45,8 +52,8 @@
                 rodzajowym
             </th>
             <th align="center" valign="middle" width="450" scope="col">Kod CPV obejmuje ten sam rodzaj zamówienia</th>
-            <th align="center" valign="middle" width="120" scope="col">Wydatkowano</th>
-            <th align="center" valign="middle" width="120" scope="col">Pozostało</th>
+            <th align="center" valign="middle" width="150" scope="col">Wydatkowano</th>
+            <th align="center" valign="middle" width="150" scope="col">Pozostało</th>
         </tr>
         </thead>
         <tbody>
@@ -55,10 +62,10 @@
             <td class="text-center" valign="middle" scope="row"></td>
             <td align="center" valign="middle" scope="row">{{object.name_id}}</td>
             <td valign="middle"><span>{{object.name}}</span></td>
-            <td valign="middle">{% for cpv in object.cpv.all%}<span class="tag-cpv m-1" title="{{cpv.name}}"> {{cpv}} </span>{%endfor%}
+            <td valign="middle">{% for cpv in object.cpv.all%}<span class="tag-cpv m-1" data-toggle="info" title="{{cpv.name}}"> {{cpv}} </span>{%endfor%}
             </td>
-            <td valign="middle"><span>{{object.sum|intcomma}} zł.</span></td>
-            <td class="text-center" valign="middle"><span>{{object.remain|intcomma}} zł.</span></td>
+            <td align="right" valign="middle">{%if object.sum_netto%}<span>{{object.sum_netto|intcomma}} zł.</span>{%else%}<span>---</span>{%endif%}</td>
+            <td align="right" valign="middle"><span>{{object.remain|intcomma}} zł.</span></td>
         </tr>
         {%endfor%}
         </tbody>
@@ -69,12 +76,15 @@
         </tfoot>
     </table>
 </div>
-
 <script>
-     document.getElementById("button-units").classList.remove("active");
-     document.getElementById("button-record").classList.remove("active");
-     document.getElementById("button-secretariat").classList.remove("active");
-     document.getElementById("button-cpv").classList.add("active");
-     document.getElementById("button-investments").classList.remove("active");
+    document.getElementById("button-units").classList.remove("active");
+    document.getElementById("button-record").classList.remove("active");
+    document.getElementById("button-secretariat").classList.remove("active");
+    document.getElementById("button-cpv").classList.add("active");
+    document.getElementById("button-investments").classList.remove("active");
+
+    $(function () {
+        $('[data-toggle="info"]').tooltip()
+    })
 </script>
 {%endblock%}

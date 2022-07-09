@@ -34,7 +34,7 @@ class Project(models.Model):
                                        verbose_name='Rozliczenie inwestycyjne')
     realized = models.BooleanField('Zrealizowane', default=False)
     creation_date = models.DateTimeField('Data utworzenia', auto_now_add=True)
-    change = models.DateField('Zmiana', auto_now=True)
+    change = models.DateTimeField('Zmiana', auto_now=True)
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='project', verbose_name='Autor')
 
     def __str__(self):

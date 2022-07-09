@@ -1,11 +1,8 @@
 from django.db import models
-from django.db.models.signals import pre_save
-from django.dispatch import receiver
 from units.models import Unit
 from main.models import Employer
 from contractors.models import Contractor
 from investments.models import Project
-from decimal import Decimal
 
 
 class TypeOfContract(models.Model):
@@ -178,11 +175,6 @@ class ContractAuction(models.Model):
 
     def __str__(self):
         return f'{self.no_contract} z dnia {self.date}'
-
-
-@receiver(pre_save, sender=ContractAuction)
-def calculate_security_sum(sender, instance, **kwargs):
-    instance.security_sum = instance.price * instance.security_percent * Decimal(0.01)
 
 
 def up_load_annex_contract_auction(instance, filename):

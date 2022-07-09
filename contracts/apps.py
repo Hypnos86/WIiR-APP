@@ -5,3 +5,6 @@ class ContractsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'contracts'
     verbose_name = "4. Umowy"
+
+    def ready(self):
+        import contracts.signals

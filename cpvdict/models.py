@@ -44,15 +44,30 @@ class Genre(models.Model):
         return f'({self.name_id}) {self.name}'
 
 
+class Tax(models.Model):
+    class Meta:
+        verbose_name = 'Podatek Vat'
+        verbose_name_plural = 'Rodzaje podatków vat'
+
+    vat = models.SmallIntegerField('Podatek [%]', default=0)
+
+    def __str__(self):
+        return f'{self.vat}%'
+
+
 class OrderLimit(models.Model):
     class Meta:
         verbose_name = "Limit zamówień"
         verbose_name_plural = "Limit zamówień"
 
-    limit = models.DecimalField('Limit zamówień', max_digits=8, decimal_places=2)
+    year = models.IntegerField('Rok')
+    euro_exchange_rate = models.DecimalField('Kurs euro', max_digits=5, decimal_places=4)
+    limit_euro = models.DecimalField('Limit euro', max_digits=10, decimal_places=2)
+    limit_netto = models.DecimalField('Limit zamówień netto', max_digits=10, decimal_places=2)
+    limit_brutto = models.DecimalField('Limit zamowień brutto', max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return f'{self.limit}'
+        return f'{self.year} - {self.euro_exchange_rate} ({self.limit_euro}) - {self.limit_netto}zł.'
 
 
 class Order(models.Model):
@@ -61,9 +76,11 @@ class Order(models.Model):
         verbose_name_plural = "Zamówienia"
         ordering = ['date']
 
-    date = models.DateField("Data")
-    no_order = models.CharField("Nr zlecenia", max_length=15, blank=True,default="", unique=True)
-    sum = models.DecimalField("Szacowana kwota", max_digits=8, decimal_places=2, null=True, blank=True)
+    date = models.DateField('Data')
+    no_order = models.CharField('Nr zlecenia', max_length=15, blank=True, default="", unique=True)
+    sum_netto = models.DecimalField('Kwota netto', max_digits=8, decimal_places=2)
+    vat = models.ForeignKey(Tax, on_delete=models.CASCADE, verbose_name='Podatek', related_name='order')
+    sum_brutto = models.DecimalField('Kwota brutto', max_digits=10, decimal_places=2, null=True, blank=True)
     typeorder = models.ForeignKey(TypeOrder, on_delete=models.CASCADE, verbose_name="Rodzaj zamówienia",
                                   related_name="order")
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE, related_name="order", verbose_name="ID rodzajowości")

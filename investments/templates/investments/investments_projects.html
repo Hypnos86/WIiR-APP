@@ -6,7 +6,7 @@
 <div class="text-center">
     <h4>Ewidencja zadań inwestycyjnych</h4>
     {% if last_date %}
-    <small>Ostatnia aktualizacja: {{last_date.change|date:"d.m.Y"}} r.</small>
+    <small>Ostatnia aktualizacja: {{last_date.change|date:"d.m.Y - (H:i)"}}</small>
     {%endif%}
 </div>
 <div class="row my-3">
@@ -39,7 +39,7 @@
             <th align="center" valign="middle" width="15" scope="col">L.p.</th>
             <th align="center" valign="middle" width="15%" scope="col">Okres realizacji</th>
             <th align="center" valign="middle" width="35%" scope="col">Nazwa zadania</th>
-            <th align="center" valign="middle" width="auto" scope="col">WKI</th>
+            <th align="center" valign="middle" width="auto" scope="col" data-toggle="info" title="Wartość Kosztorysowa Inwestycji">WKI</th>
             <th align="center" valign="middle" width="auto" scope="col">Jednostka</th>
         </tr>
         </thead>
@@ -113,6 +113,7 @@
     document.getElementById("button-investments").classList.add("active");
     document.getElementById("button-projects").classList.add("active");
     document.getElementById("button-cpv").classList.remove("active");
+
     $(function () {
         $('[data-toggle="info"]').tooltip()
     })

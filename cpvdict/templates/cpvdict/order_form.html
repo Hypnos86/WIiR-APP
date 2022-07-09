@@ -16,11 +16,20 @@
     <form method="post">
         {%csrf_token%}
         <div class="row">
-            <div class="col-md-4 px-2 my-1">{{ order_form.date|bootstrap }}</div>
-            <div class="col-md-4 px-2 my-1">{{ order_form.no_order|bootstrap }}</div>
-            <div class="col-md-4 px-2 my-1">{{ order_form.sum|bootstrap }}</div>
-            <div class="col-md-4 px-2 my-1">{{ order_form.typeorder|bootstrap }}</div>
-            <div class="col-md-4 px-2 my-1">{{ order_form.genre|bootstrap }}</div>
+            <div class="col-md-3 px-2 my-1">{{ order_form.date|bootstrap }}</div>
+            <div class="col-md-3 px-2 my-1">{{ order_form.no_order|bootstrap }}</div>
+            <div class="col-md-3 px-2 my-1">{{ order_form.sum_netto|bootstrap }}</div>
+            <div class="col-md-3 px-2 my-1">{{ order_form.vat|bootstrap }}</div>
+            <div class="col-md-3 px-2 my-1">
+                <div class="form-group">
+                    <label class="control-label  " for="id_sum_brutto">kwota brutto</label>
+                    <div class=" ">
+                        <input type="number" name="sum_brutto" step="0.01" class=" form-control" required="" id="id_sum_brutto" value="{{order_form.sum_brutto.value}}" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 px-2 my-1">{{ order_form.typeorder|bootstrap }}</div>
+            <div class="col-md-6 px-2 my-1">{{ order_form.genre|bootstrap }}</div>
             <div class="col-md-4 px-2 my-1">{{ order_form.worker|bootstrap }}</div>
             <div class="col-md-12 px-2 my-1">{{ order_form.contractor|bootstrap }}</div>
             <div class="col-md-12 p-2">

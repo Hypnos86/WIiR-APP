@@ -10,16 +10,15 @@
     <div class="col-md-6 text-center">
         <h4 class="">Klasyfikacja rodzajowa WIiR</h4>
         <h5 class="">Roboty budowlane</h5>
-        <span class="m-2">({{year}} rok)</span>
+        <span class="m-2">Roboty budowlane <small><b>{{year}}</b> rok</small></span>
         {%if limit != 0 %}
-        <p><span class="text-center">Limit zmówień: {{limit|intcomma}} zł (netto)</span><br>
-        <span class="text-center">Limit zmówień: {{item|intcomma}} zł (brutto)</span></p>
+        <p><span class="text-center">Limit zmówień: {{limit.limit_netto|intcomma}} zł (netto)</span></p>
         {%endif%}
     </div>
 </div>
 
 <div class="container">
-    <table class="table table-hover my-table mt-2"">
+    <table class="table table-hover my-table mt-2">
         <thead>
         <tr class="my-table-tr text-center">
             <th align="center" valign="middle" width="50" scope="col">l.p.</th>
