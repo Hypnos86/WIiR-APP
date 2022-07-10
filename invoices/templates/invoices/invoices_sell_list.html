@@ -58,7 +58,7 @@
     </div>
     <div class="col-md-3 align-self-end moj-button-right">
         <div>
-            <a href="{%url 'invoices:make_pdf_from_invoices_sell'%}"><button data-toggle="info" title="Zapis do PDF" name="q" id="t" class="btn btn-outline-primary my-btn mb-1 bi bi-file-earmark-pdf h5"></button></a>
+            <button onclick="generatePdf(this)" data-url="{%url 'invoices:make_pdf_from_invoices_sell'%}" data-toggle="info" type="button" title="Zapis do PDF" name="generate_pdf" id="generate_pdf" class="btn btn-outline-primary my-btn mb-1 bi bi-file-earmark-pdf h5"></button>
         </div>
         {%if user.accessmodule.invoices_module_edit%}
         <div>
@@ -168,9 +168,7 @@
 </div>
 <script>
     document.getElementById("button-units").classList.remove("active");
-    document.getElementById("button-invoices").classList.add("active");
-    document.getElementById("button-contracts").classList.remove("active");
-    document.getElementById("button-contractors").classList.remove("active");
+
     function openModal(button){
         var url = $(button).data("url");
         $("#info_sell_Modal .modal-content").load(url);
@@ -182,5 +180,15 @@
     $(function () {
         $('[data-toggle="info"]').tooltip()
     })
+
+    function generatePdf(button){
+        var url = $(button).data("url");
+        var date_from = $("#from").val();
+        var date_to = $("#to").val();
+        var q = $("#q").val();
+        var urlParams = "?q=" + q + "&from=" + date_from + "&to=" + date_to;
+        console.log(url + urlParams);
+        window.open(url + urlParams, '_blank').focus();
+    }
 </script>
 {%endblock%}

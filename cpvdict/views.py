@@ -98,7 +98,7 @@ def order_list(request):
         orders = orders.filter(date__startswith=q) | orders.filter(no_order__icontains=q) | orders.filter(
             typeorder__type__icontains=q) | orders.filter(genre__name_id__icontains=q) | orders.filter(
             unit__county__name__icontains=q) | orders.filter(unit__city__icontains=q) | orders.filter(
-            unit__address__icontains=q)|orders.filter(contractor__name__icontains=q)
+            unit__address__icontains=q) | orders.filter(contractor__name__icontains=q)
         return render(request, 'cpvdict/order_list.html',
                       {'orders': orders, 'year': year, 'ordersum': ordersum, 'query': query
                        })
@@ -137,6 +137,7 @@ def edit_order(request, id):
     order_form = OrderForm(request.POST or None, request.FILES or None, instance=order_edit)
     order_form.fields['worker'].queryset = Employer.objects.all().filter(industry_specialist=True)
     units = Unit.objects.all()
+    unit_edit = order_edit.unit
 
     if request.method == "POST":
         if order_form.is_valid():
@@ -144,4 +145,5 @@ def edit_order(request, id):
             order.author = request.user
             order_form.save()
             return redirect('cpvdict:order_list')
-    return render(request, 'cpvdict/order_form.html', {'order_form': order_form, 'new': False, 'units': units})
+    return render(request, 'cpvdict/order_form.html',
+                  {'order_form': order_form, 'unit_edit': unit_edit, 'new': False, 'units': units})

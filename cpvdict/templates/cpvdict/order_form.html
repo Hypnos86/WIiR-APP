@@ -33,6 +33,7 @@
             <div class="col-md-4 px-2 my-1">{{ order_form.worker|bootstrap }}</div>
             <div class="col-md-12 px-2 my-1">{{ order_form.contractor|bootstrap }}</div>
             <div class="col-md-12 p-2">
+
                 <div class="form-group">
                     <label class="control-label" for="id_unit">Jednostka</label>
                     <div class="">
@@ -42,7 +43,7 @@
                             {% for county in county_list %}
                             <optgroup label="{{county.grouper}}">
                                 {% for unit in county.list %}
-                                {% if order_form.unit.value == unit.id %}
+                                {% if unit_edit.id == unit.id %}
                                 <option value="{{unit.id}}" selected>{{unit}}</option>
                                 {% else %}
                                 <option value="{{unit.id}}">{{unit}}</option>

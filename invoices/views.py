@@ -491,9 +491,9 @@ def make_pdf_from_invoices_sell(request):
     invoices_sell_sum = round(invoices_sell_sum_dict['sum__sum'], 2)
     year = current_year()
     now = now_date()
-    q = request.GET.get('q')
-    date_from = request.GET.get('from')
-    date_to = request.GET.get('to')
+    q = request.GET.get('q', '')
+    date_from = request.GET.get('from', None)
+    date_to = request.GET.get('to', None)
 
     if q or date_from or date_to:
         if q:
@@ -541,8 +541,7 @@ def make_pdf_from_invoices_sell(request):
     html = template.render(context)
 
     # create a pdf
-    pisa_status = pisa.CreatePDF(
-        html, dest=response)
+    pisa_status = pisa.CreatePDF(html, dest=response, encoding='utf-8', path='/main/static/fonts/arial.ttf')
 
     # if error then show some funny view
     if pisa_status.err:
