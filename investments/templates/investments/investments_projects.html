@@ -48,9 +48,9 @@
         <tr class="my-table-tr">
             <td class="text-center" valign="middle" scope="row"></td>
             {%if project.realized%}
-            <td align="center" valign="middle" scope="row" data-toggle="info" title="Zrealizowane"><span>{{project.date_of_acceptance|date:'m.Y'}} r. {%if project.date_of_settlement%} - {{project.date_of_settlement|date:'m.Y'}} r.{%endif%}</span></td>
+            <td align="center" valign="middle" scope="row" data-toggle="info" title="Zrealizowane"><span>{{project.date_of_acceptance|date:'m.Y'}}&nbsp;r. {%if project.date_of_settlement%} - {{project.date_of_settlement|date:'m.Y'}}&nbsp;r.{%endif%}</span></td>
             {%else%}
-            <td align="center" valign="middle" scope="row" data-toggle="info" title="W trakcie realizacji"><span>{{project.date_of_acceptance|date:'m.Y'}} r.</span></td>
+            <td align="center" valign="middle" scope="row" data-toggle="info" title="W trakcie realizacji"><span>{{project.date_of_acceptance|date:'m.Y'}}&nbsp;r.</span></td>
             {%endif%}
             <td valign="middle"><span>{{project.project_title}}</span></td>
             <td align="right" valign="middle">{%if project.investment_cost_estimate_value%}<span class="pe-3">{{project.investment_cost_estimate_value|intcomma}}&nbspzł.</span>{%endif%}</td>

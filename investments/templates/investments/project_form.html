@@ -44,22 +44,28 @@
                 </div>
             </div>
             <div class="col-md-2">
+                {%if new == False%}
                 <div class="list-group">
                     <small>Stan zadania</small>
                     <div class="list-group-item">{{project_form.realized|bootstrap}}</div>
                 </div>
-                {%if new == False%}
+
                 <div class="list-group mt-2">
-                <button type="button" class="btn btn-outline-primary my-btn" onclick="openModal()"><span class="bi bi-folder-plus"> Podepni umowę</span>
-                </button>
+                    <button type="button" class="btn btn-outline-primary my-btn" onclick="openModal()">
+                        <span class="bi bi-folder-plus"> Podepni umowę</span>
+                    </button>
                 </div>
-                {%endif%}
+
             </div>
             <div class="col-md-2">{{project_form.date_of_settlement|bootstrap}}</div>
             <div class="col-md-8">{{project_form.settlement_scan|bootstrap}}</div>
+            {%endif%}
             <div class="col-md-2 moj-button-right my-4">
-                <button type="submit" class="btn btn-outline-primary my-btn">{%if new%}<span class="bi bi-save2"> Dodaj zadanie</span>{%else%}<span
-                        class="bi bi-save2"> Zapisz zmiany</span>
+                <button type="submit" class="btn btn-outline-primary my-btn">
+                    {%if new%}
+                    <span class="bi bi-save2"> Dodaj zadanie</span>
+                    {%else%}
+                    <span class="bi bi-save2"> Zapisz zmiany</span>
                     {%endif%}
                 </button>
             </div>
@@ -83,11 +89,17 @@
     document.getElementById("button-contractzzp").classList.remove("active");
     document.getElementById("button-projects").classList.add("active");
     document.getElementById("button-cpv").classList.remove("active");
+
     function openModal(){
         var url = $("#projectModal").data("url");
         $("#projectModal .modal-content").load(url);
         $("#projectModal").modal("show");
     }
+
+    $(document).ready(function(){
+        $("#id_worker").select2({placeholder:'Dodaj pracownika'});
+    })
+
     function submitForm(){
         $("#submitButton").closest("form").submit();
     }

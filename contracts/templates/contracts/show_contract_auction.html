@@ -19,7 +19,7 @@
                 <li class="list-group-item"><span class="text-muted">Wykonawca: </span>{{contract.contractor}}</li>
                 <li class="list-group-item"><span class="text-muted">Wartość umowy: </span><span>{{contract.price|intcomma}} zł.</span></li>
                 <li class="list-group-item"><span class="text-muted">Zakres umowy: </span>{{contract.work_scope}}</li>
-                <li class="list-group-item"><span class="text-muted">Tryb zamówienia: </span><span title="{{contract.legal_basic.act}} - {{contract.legal_basic_legal_basic_text}}">{{contract.legal_basic}}</span></li>
+                <li class="list-group-item"><span class="text-muted">Tryb zamówienia: </span><span data-toggle="info" title="{{contract.legal_basic.act}} - {{contract.legal_basic_legal_basic_text}}">{{contract.legal_basic}}</span></li>
                 <li class="list-group-item"><span class="text-muted">Termin realizacji: </span><span>{{contract.end_date}} r.</span></li>
                 <li class="list-group-item"><span class="text-muted">Jednostka: </span><span>{{contract.unit}}</span></li>
                 <li class="list-group-item"><span class="text-muted">Gwarancja: </span><span>{{contract.guarantee}}</span></li>
@@ -32,7 +32,7 @@
                 <li class="list-group-item"><span class="text-muted">Procent zabezpieczenia: </span><span>{{contract.security_percent}}%</span></li>
                 {%endif%}
                 {%if contract.security_sum%}
-                <li class="list-group-item"><span class="text-muted">Kwota zabezpieczenia: </span><span>{{contract.security_sum}}</span></li>
+                <li class="list-group-item"><span class="text-muted">Kwota zabezpieczenia: </span><span>{{contract.security_sum|intcomma}}&nbsp;zł.</span></li>
                 {%endif%}
                 <li class="list-group-item"><span class="text-muted">Branżysta: </span><ul>{%for worker in contract.worker.all%}<li> {{worker}} - {{worker.industry}}</li>{%endfor%}</ul></li>
                 {%if contract.report%}
@@ -64,8 +64,9 @@
     document.getElementById("button-units").classList.remove("active");
     document.getElementById("button-record").classList.remove("active");
     document.getElementById("button-investments").classList.add("active");
-    document.getElementById("button-contractzzp").classList.add("active");
-    document.getElementById("button-projects").classList.remove("active");
     document.getElementById("button-cpv").classList.remove("active");
+    $(function () {
+        $('[data-toggle="info"]').tooltip()
+    })
 </script>
 {%endblock%}
