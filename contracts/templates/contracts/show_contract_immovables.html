@@ -41,13 +41,14 @@
                     {% if contract.garbage_cost %} <span class="color-dirty">Śmieci</span> {%endif%}
                     {% if contract.garbage_tax_cost %} <span class="color-slategrey">Podatek śmieciowy</span> {%endif%}
                     {% if contract.property_cost %} <span class="color-teal">Podatek od nieruchomości</span> {%endif%}
-                </li><li class="list-group-item"><span class="text-muted">Jednostka: </span><span> {{contract.unit}}</span></li>
+                </li>
+                <li class="list-group-item"><span class="text-muted">Jednostka: </span><span> {{contract.unit}}</span></li>
                 <li class="list-group-item"><span class="text-muted">Stan umowy: </span>{%if contract.state %}<span class="text-success">Aktualna</span>{%else%}<span class="text-danger">Rozwiązana</span> {%endif%}
                 </li>
                 {%if contract.information%}
                 <li class="list-group-item"><span class="text-muted">Informacje: </span>{{contract.information}}</li>
                 {%endif%}
-                <li class="list-group-item"><small class="text-muted">Data dodania umowy: {{contract.creation_date|date:"d.m.Y"}} r.</small></li>
+                <li class="list-group-item"><small class="text-muted">Data dodania: {{contract.creation_date|date:"d.m.Y (H:i)"}}</small></li>
                 <li class="list-group-item"><small class="text-muted">Użytkownik: {{contract.author}}</small></li>
             </ul>
 
