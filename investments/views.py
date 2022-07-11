@@ -17,7 +17,7 @@ def make_important_task_investments(request):
 
 @login_required()
 def investment_projects_list(request):
-    projects = Project.objects.all()
+    projects = Project.objects.all().order_by('-date_of_acceptance')
     projects_sum = len(projects)
     query = 'Wyczyść'
     search = 'Szukaj'
@@ -57,20 +57,20 @@ def investment_projects_list(request):
 
 @login_required
 def add_new_project(request):
-    project = ProjectForm(request.POST or None, request.FILES or None)
-    project.fields['worker'].queryset = Employer.objects.filter(industry_specialist=True)
+    project_form = ProjectForm(request.POST or None, request.FILES or None)
+    project_form.fields['worker'].queryset = Employer.objects.filter(industry_specialist=True)
     units = Unit.objects.all()
 
-    context = {'project_form': project,
+    context = {'project_form': project_form,
                'units': units,
                'new': True
                }
 
     if request.method == 'POST':
-        if project.is_valid():
-            instance = project.save(commit=False)
+        if project_form.is_valid():
+            instance = project_form.save(commit=False)
             instance.author = request.user
-            instance.save()
+            project_form.save()
             return redirect('investments:investment_projects_list')
     return render(request, 'investments/project_form.html', context)
 
@@ -87,13 +87,12 @@ def edit_project(request, id):
                'project': project_edit,
                'new': False}
 
-    if project_form.is_valid():
-        instance = project_form.save(commit=False)
-        instance.author = request.user
-        print(instance.worker)
-        instance.save()
-        print(instance.worker)
-        return redirect('investments:investment_projects_list')
+    if request.method == 'POST':
+        if project_form.is_valid():
+            instance = project_form.save(commit=False)
+            instance.author = request.user
+            project_form.save()
+            return redirect('investments:investment_projects_list')
     return render(request, 'investments/project_form.html', context)
 
 

@@ -55,7 +55,7 @@ class ContractAuctionForm(ModelForm):
                   'last_report_date': 'Data ostatniego protokołu', 'guarantee': 'Rodzaj gwarancji',
                   'guarantee_period': 'Okres gwarancji', 'warranty_period': 'Okres rękojmi',
                   'security_percent': 'Procent zabezpieczenia',
-                  'security_sum': 'Kwota zabezpieczenia', 'worker': 'Pracownik', 'information': 'Informacje',
+                  'security_sum': 'Kwota zabezpieczenia', 'worker': 'Branżysta', 'information': 'Informacje',
                   'report': 'Raportowanie do ZZP',
                   'scan': 'Skan umowy'}
         exclude = ['creation_date', 'change', 'author']

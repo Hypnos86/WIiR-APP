@@ -180,7 +180,7 @@ def new_contract_auction(request):
         if contract_auction_form.is_valid():
             instance = contract_auction_form.save(commit=False)
             instance.author = request.user
-            instance.save()
+            contract_auction_form.save()
             return redirect('contracts:menu_contracts_auction')
     return render(request, 'contracts/contract_auction_form.html', context)
 
@@ -207,11 +207,12 @@ def edit_contract_auction(request, id):
                'contract': contract_auction_edit,
                'new': False}
 
-    if contract_auction_form.is_valid():
-        contract = contract_auction_form.save(commit=False)
-        contract.author = request.user
-        contract_auction_form.save()
-        return redirect('contracts:menu_contracts_auction')
+    if request.method == 'POST':
+        if contract_auction_form.is_valid():
+            contract = contract_auction_form.save(commit=False)
+            contract.author = request.user
+            contract_auction_form.save()
+            return redirect('contracts:menu_contracts_auction')
     return render(request, 'contracts/contract_auction_form.html', context)
 
 

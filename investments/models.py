@@ -28,11 +28,11 @@ class Project(models.Model):
                                   verbose_name='Paragraf')
     source_financing = models.TextField('Opis źródła finansowania', null=True, blank=True)
     information = models.TextField('Informacje', null=True, blank=True)
-    worker = models.ManyToManyField(Employer, related_name='project', verbose_name='Branżysta')
     date_of_settlement = models.DateField('Data rozliczenia', null=True, blank=True)
     settlement_scan = models.FileField(upload_to=upload_scan, null=True, blank=True,
                                        verbose_name='Rozliczenie inwestycyjne')
     realized = models.BooleanField('Zrealizowane', default=False)
+    worker = models.ManyToManyField(Employer, verbose_name='Inspektor', related_name='project')
     creation_date = models.DateTimeField('Data utworzenia', auto_now_add=True)
     change = models.DateTimeField('Zmiana', auto_now=True)
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='project', verbose_name='Autor')

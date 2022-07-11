@@ -35,8 +35,9 @@ class ProjectResources(resources.ModelResource):
 
 @admin.register(Project)
 class ProjectAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['date_of_acceptance', 'project_title', 'investment_cost_estimate_value', 'unit', 'realized', 'creation_date', 'change', 'author']
-    list_display_links = ['project_title']
+    list_display = ['date_of_acceptance', 'project_title', 'investment_cost_estimate_value', 'unit', 'realized',
+                    'creation_date', 'change', 'author']
     filter_horizontal = ['worker']
     autocomplete_fields = ['worker']
+    list_display_links = ('project_title',)
     resource_class = ProjectResources
