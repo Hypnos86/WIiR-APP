@@ -96,12 +96,12 @@
         $("#projectModal").modal("show");
     }
 
-    $(document).ready(function(){
-        $("#id_worker").select2({placeholder:'Dodaj pracownika'});
-    })
-
     function submitForm(){
         $("#submitButton").closest("form").submit();
     }
+
+    $(document).ready(function(){
+        $("#id_worker").select2({placeholder:'Dodaj pracownika'});
+    })
 </script>
 {%endblock%}

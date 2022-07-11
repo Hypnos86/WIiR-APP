@@ -71,7 +71,6 @@ def add_new_project(request):
             instance = project.save(commit=False)
             instance.author = request.user
             instance.save()
-            project.save()
             return redirect('investments:investment_projects_list')
     return render(request, 'investments/project_form.html', context)
 
@@ -91,8 +90,9 @@ def edit_project(request, id):
     if project_form.is_valid():
         instance = project_form.save(commit=False)
         instance.author = request.user
+        print(instance.worker)
         instance.save()
-        project_edit.save()
+        print(instance.worker)
         return redirect('investments:investment_projects_list')
     return render(request, 'investments/project_form.html', context)
 
