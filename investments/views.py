@@ -33,12 +33,6 @@ def investment_projects_list(request):
     except Project.DoesNotExist:
         last_date = None
 
-    context = {'projects': projects,
-               'query': query,
-               'search': search,
-               'last_date': last_date,
-               'projects_sum': projects_sum
-               }
     if q:
         projects = projects.filter(project_title__icontains=q) | projects.filter(
             unit__county__name__icontains=q) | projects.filter(unit__type__type_full__icontains=q) | projects.filter(
@@ -126,14 +120,9 @@ def add_contract_to_project(request, id):
                'project_id': id}
 
     if request.method == 'POST':
-        print(c)
         if c:
-            print(request)
-            print(c)
-            instance = add_contract.get(pk=c)
-            print(instance)
-            instance = project
-            instance.save()
+            add_contract.get(pk=c)
+            add_contract.save()
         return redirect('investments:investment_projects_list')
 
     if request.method == 'GET':

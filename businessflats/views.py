@@ -50,7 +50,7 @@ def add_new_flat(request):
         if new_flat_form.is_valid():
             instance = new_flat_form.save(commit=False)
             instance.author = request.user
-            instance.save()
+            new_flat_form.save()
             return redirect('businessflats:make_flats_list')
     return render(request, 'businessflats/flat_form.html', {'flat_form': new_flat_form, 'new': True})
 

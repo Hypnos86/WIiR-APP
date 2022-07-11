@@ -1,5 +1,6 @@
 {%extends 'base.html'%}
 {%load static%}
+{%load humanize%}
 {%load bootstrap%}
 {%block title%} Darowizny {{year}}{%endblock%}
 {%block content%}
@@ -47,30 +48,28 @@
         <thead>
         <tr class="my-table-tr text-center">
             <th align="center" valign="middle" width="50" scope="col">L.p.</th>
-            <th align="center" valign="middle" width="auto" scope="col">L.dz. WIiR</th>
-            <th align="center" valign="middle" width="auto" scope="col">Data</th>
-            <th align="center" valign="middle" width="auto" scope="col">Data zwrotu</th>
-            <th align="center" valign="middle" width="auto" scope="col">Nr. wniosku</th>
-            <th align="center" valign="middle" width="auto" scope="col">Kwota</th>
-            <th align="center" valign="middle" width="auto" scope="col">Nr. porozumienia</th>
-            <th align="center" valign="middle" width="auto" scope="col">Data porozumienia</th>
-            <th align="center" valign="middle" width="auto" scope="col">Darczyńca</th>
-            <th align="center" valign="middle" width="auto" scope="col">Powiat</th>
+            <th align="center" valign="middle" width="180" scope="col">Wpływ</th>
+            <th align="center" valign="middle" width="200" scope="col">L.dz. WIiR</th>
+            <th align="center" valign="middle" width="180" scope="col">Zwrot</th>
+            <th align="center" valign="middle" width="180" scope="col">Nr. wniosku</th>
+            <th align="center" valign="middle" width="200" scope="col">Kwota</th>
+            <th align="center" valign="middle" width="180" scope="col">Data porozumienia</th>
+            <th align="center" valign="middle" width="320" scope="col">Darczyńca</th>
+            <th align="center" valign="middle" width="200" scope="col">Powiat</th>
         </tr>
         </thead>
         <tbody>
         {%for application in applications %}
         <tr class="my-table-tr">
             <td class="text-center" valign="middle" scope="row" data-toggle="donations_info" title="Ostatnie zmiany: ({{user.first_name}} {{user.last_name}})"></td>
-            <td align="center" valign="middle" scope="row" ><small>{{application.character}}</small></td>
-            <td align="center" valign="middle" scope="row" data-toggle="donations_info" title="Data wpływu do WIiR">{%if application.date_receipt%}<span>{{application.date_receipt}}&nbsp.r</span>{%else%}<span>---</span>{%endif%}</td>
-            <td align="center" valign="middle" data-toggle="donations_info" title="Data zwrotu od WF">{%if application.date_return%}<span>{{application.date_return}}&nbsp.r</span>{%else%}<span>---</span>{%endif%}</td>
-            <td class="text-center" valign="middle" data-toggle="donations_info" title="Rodzaj darowizny: {{application.donation_type}}">{%if application.no_application%}<span>{{application.no_application}}</span>{%else%}<span>---</span>{%endif%}</td>
-            <td class="text-center" valign="middle" data-toggle="donations_info" title="Rodzaj środków: {{application.financial_type}}">{%if application.sum%}<span>{{application.sum}}&nbspzł.</span>{%else%}<span>---</span>{%endif%}</td>
-            <td class="text-center" valign="middle" data-toggle="donations_info" title="">{%if application.no_agreement%}<span>{{application.no_agreement}}</span>{%else%}<span>---</span>{%endif%}</td>
-            <td class="text-center" valign="middle">{%if application.date_agreement%}<span>{{application.date_agreement}}&nbsp.r</span>{%else%}<span>---</span>{%endif%}</td>
-            <td class="text-center" valign="middle"><span>{{application.presenter.name}}</span></td>
-            <td class="text-center" valign="middle" data-toggle="donations_info" title="{{application.unit.type.type_short}} {{application.unit.city}}"><span>{{application.unit.county.name}}</span></td>
+            <td align="center" valign="middle" scope="row" data-toggle="donations_info" title="Data wpływu do WIiR">{%if application.date_receipt%}<span>{{application.date_receipt}}&nbsp;.r</span>{%else%}<span>---</span>{%endif%}</td>
+            <td align="center" valign="middle" scope="row"><small>{{application.character}}</small></td>
+            <td align="center" valign="middle" data-toggle="info" title="Data zwrotu od Wydz. Finansów">{%if application.date_return%}<span>{{application.date_return}}&nbsp;.r</span>{%else%}<span>---</span>{%endif%}</td>
+            <td class="text-center" valign="middle" data-toggle="info" title="Rodzaj darowizny: {{application.donation_type}}">{%if application.no_application%}<span>{{application.no_application}}</span>{%else%}<span>---</span>{%endif%}</td>
+            <td class="text-center" valign="middle" data-toggle="info" title="Rodzaj środków: {%if application.financial_type%} {{application.financial_type}} {%else%} nie wybrano {%endif%}">{%if application.sum%}<span>{{application.sum|intcomma}}&nbspzł.</span>{%else%}<span>---</span>{%endif%}</td>
+            <td class="text-center" valign="middle" data-toggle="info" title="{%if application.no_agreement%}Nr:&nbsp;{{application.no_agreement}}{%endif%}">{%if application.date_agreement%}<span>{{application.date_agreement}}&nbsp;.r</span>{%else%}<span>---</span>{%endif%}</td>
+            <td align="left" valign="middle"><span>{{application.presenter.name}}</span></td>
+            <td class="text-center" valign="middle" data-toggle="info" title="{{application.unit.type.type_short}} {{application.unit.city}}"><span>{{application.unit.county.name}}</span></td>
             <td align="right" valign="middle">
                 <button data-toggle="donations_info" title="Pokaż" type="button" class="btn btn-outline-success mx-2" onclick="openModal(this)"><i
                         class="bi bi-info-lg my-1"></i>
@@ -153,7 +152,7 @@
     }
 
     $(function() {
-        $('[data-toggle="donations_info"]').tooltip()
+        $('[data-toggle="info"]').tooltip()
     })
 </script>
 {%endblock%}

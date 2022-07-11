@@ -100,7 +100,7 @@ def new_invoice_buy(request):
         if invoice_buy_form.is_valid():
             instance = invoice_buy_form.save(commit=False)
             instance.author = request.user
-            instance.save()
+            invoice_buy_form.save()
             return redirect('invoices:buy_invoices_list')
     return render(request, 'invoices/invoice_buy_form.html', context)
 
@@ -117,7 +117,7 @@ def edit_invoice_buy(request, id):
     if invoice_buy_form.is_valid():
         instance = invoice_buy_form.save(commit=False)
         instance.author = request.user
-        instance.save()
+        invoice_buy_form.save()
         return redirect('invoices:buy_invoices_list')
     return render(request, 'invoices/invoice_buy_form.html', context)
 
@@ -136,7 +136,7 @@ def edit_invoice_buy_archive(request, id):
     if invoice_buy_form.is_valid():
         instance = invoice_buy_form.save(commit=False)
         instance.author = request.user
-        instance.save()
+        invoice_buy_form.save()
         return redirect(reverse('invoices:buy_invoices_list', kwargs={'year': year}))
     return render(request, 'invoices/invoice_buy_form.html', context)
 
@@ -166,7 +166,7 @@ def sell_invoices_list(request):
                 contractor__no_contractor__startswith=q) | invoicessell.filter(
                 county__name__icontains=q) | invoicessell.filter(
                 creator__creator__icontains=q) | invoicessell.filter(
-                information__icontains=q)| invoicessell.filter(doc_types__type__icontains=q)
+                information__icontains=q) | invoicessell.filter(doc_types__type__icontains=q)
 
         if date_from:
             invoicessell = invoicessell.filter(date__gte=date_from)
@@ -222,7 +222,7 @@ def sell_invoices_list_archive(request, year):
                 contractor__no_contractor__startswith=q) | invoices_sell.filter(
                 county__name__icontains=q) | invoices_sell.filter(
                 creator__creator__icontains=q) | invoices_sell.filter(
-                information__icontains=q)|invoices_sell.filter(doc_types__type__icontains=q)
+                information__icontains=q) | invoices_sell.filter(doc_types__type__icontains=q)
 
         if date_from:
             invoices_sell = invoices_sell.filter(date__gte=date_from)
@@ -259,7 +259,7 @@ def new_invoice_sell(request):
         if invoice_sell_form.is_valid():
             instance = invoice_sell_form.save(commit=False)
             instance.author = request.user
-            instance.save()
+            invoice_sell_form.save()
             return redirect('invoices:sell_invoices_list')
     return render(request, 'invoices/invoice_sell_form.html', context)
 
@@ -276,7 +276,7 @@ def edit_invoice_sell(request, id):
     if invoice_sell_form.is_valid():
         instance = invoice_sell_form.save(commit=False)
         instance.author = request.user
-        instance.save()
+        invoice_sell_form.save()
         return redirect('invoices:sell_invoices_list')
     return render(request, 'invoices/invoice_sell_form.html', context)
 
@@ -295,7 +295,7 @@ def edit_invoice_sell_archive(request, id):
     if invoice_sell_form.is_valid():
         instance = invoice_sell_form.save(commit=False)
         instance.author = request.user
-        instance.save()
+        invoice_sell_form.save()
         return redirect(reverse('invoices:sell_invoices_list_archive', kwargs={'year': year}))
 
     return render(request, 'invoices/invoice_sell_archive_form.html', context)
@@ -416,7 +416,7 @@ def edit_note(request, id):
     if note_form.is_valid():
         instance = note_form.save(commit=False)
         instance.author = request.user
-        instance.save()
+        note_form.save()
         return redirect('invoices:corrective_note_list')
     return render(request, 'invoices/corrective_note_form.html', context)
 
@@ -432,7 +432,7 @@ def edit_note_archive(request, id):
     if note_form.is_valid():
         instance = note_form.save(commit=False)
         instance.author = request.user
-        instance.save()
+        note_form.save()
         return redirect(reverse('invoices:corrective_note_list_archive', kwargs={'year': year}))
     return render(request, 'invoices/corrective_note_archive_form.html', context)
 
@@ -461,12 +461,6 @@ def make_verification(request):
         invoices_buy_sum = len(invoices_buy_list)
         verification_all_dict = invoices_buy_list.aggregate(Sum('sum'))
         verification_all = round(verification_all_dict['sum__sum'], 2)
-
-        #     # for dates in invoices_buy_list:
-        #     #     sum = 0
-        #     #     len_list = 0
-        #     #     for object in dates:
-        #     #         sum += object.sum
 
         return render(request, 'invoices/verification.html', {'invoices': invoices_buy_list,
                                                               'invoices_buy_sum': invoices_buy_sum,

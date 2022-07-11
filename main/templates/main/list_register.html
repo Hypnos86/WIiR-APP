@@ -62,7 +62,12 @@
                         {%if user.accessmodule.invoices_module%}
                         <a class="text-decoration-none" href="{%url 'invoices:menu_invoices'%}">
                             <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
-                                Faktury<span class="badge text-white info badge-pill">0</span>
+                                Faktury
+                                <span>
+                                    <span class="badge text-white info badge-pill" data-toggle="info" title="Sprzedaż {{now_year}}">{{invoices_sell_len}}</span>
+                                    <span class="badge text-white info badge-pill" data-toggle="info" title="Noty {{now_year}}">{{corrective_note_len}}</span>
+                                    <span class="badge text-white info badge-pill" data-toggle="info" title="Wydatki {{now_year}}">{{invoices_buy_len}}</span>
+                                </span>
                             </button>
                         </a>
                         {%endif%}
@@ -137,7 +142,7 @@
                     <div class="list-group">
                         <a class="text-decoration-none" href="{% url 'businessflats:make_flats_list'%}">
                             <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
-                                Mieszkania służbowe<span class="badge text-white info badge-pill">{{count_flats}}</span>
+                                Lokale służbowe<span class="badge text-white info badge-pill">{{count_flats}}</span>
                             </button>
                         </a>
                     </div>
@@ -148,10 +153,14 @@
     </div>
 </div>
 <script>
-     document.getElementById("button-units").classList.remove("active");
-     document.getElementById("button-record").classList.add("active");
-     document.getElementById("button-secretariat").classList.remove("active");
-     document.getElementById("button-cpv").classList.remove("active");
-     document.getElementById("button-investments").classList.remove("active");
+    document.getElementById("button-units").classList.remove("active");
+    document.getElementById("button-record").classList.add("active");
+    document.getElementById("button-secretariat").classList.remove("active");
+    document.getElementById("button-cpv").classList.remove("active");
+    document.getElementById("button-investments").classList.remove("active");
+
+    $(function() {
+        $('[data-toggle="info"]').tooltip()
+        })
 </script>
 {% endblock %}

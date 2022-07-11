@@ -26,7 +26,7 @@ def menu_contractsimmovables(request):
     con_archive_sum = len(contracts_archive)
     q = request.GET.get("q")
 
-    paginator = Paginator(contracts, 40)
+    paginator = Paginator(contracts, 50)
     page_number = request.GET.get('page')
     contracts_list = paginator.get_page(page_number)
     # print(contracts.period_of_validity)
@@ -54,7 +54,7 @@ def menu_contractsimmovables_archive(request):
     con_archive_sum = len(contracts_archive)
     q = request.GET.get("q")
 
-    paginator = Paginator(contracts_archive, 40)
+    paginator = Paginator(contracts_archive, 50)
     page_number = request.GET.get('page')
     contracts_list = paginator.get_page(page_number)
 
@@ -81,7 +81,7 @@ def new_contractsimmovables(request):
         if contract_form.is_valid():
             instance = contract_form.save(commit=False)
             instance.author = request.user
-            instance.save()
+            contract_form.save()
             return redirect('contracts:menu_contractsimmovables')
 
     return render(request, 'contracts/contract_form.html', context)
@@ -121,7 +121,7 @@ def add_annex_immovables(request, id):
             instance = add_annex_form.save(commit=False)
             instance.author = request.user
             instance.contract_immovables = contractsimmovables_edit
-            instance.save()
+            contractsimmovables_edit.save()
 
         return redirect('contracts:menu_contractsimmovables')
 
@@ -228,7 +228,7 @@ def add_annex_contract_auction(request, id):
             instance = add_annex_form.save(commit=False)
             instance.author = request.user
             instance.contract_auction = contract_edit
-            instance.save()
+            contract_edit.save()
 
         return redirect('contracts:menu_contracts_auction')
 

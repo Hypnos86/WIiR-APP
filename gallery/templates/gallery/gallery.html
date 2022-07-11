@@ -43,8 +43,8 @@
             <h4 class="text-center"> {{gallery.project.project_title}} - {{gallery.name}} r. ({{photocount}})</h4>
         </div>
         <div class="col-md-2">
-                <button type="button" class="btn btn-outline-danger" onclick="top.close()"><span class="bi bi-x-lg" ></span>
-                </button>
+            <button type="button" class="btn btn-outline-danger" onclick="top.close()"><span class="bi bi-x-lg"></span>
+            </button>
         </div>
     </div>
     <div class="row">
@@ -76,10 +76,9 @@
             <!-- Section: CTA -->
             {%if user.is_authenticated%}
             <section class="">
-                <p class="d-flex justify-content-center align-items-center"><a class="text-decoration-none link-light"
-                                                                               href="{%url 'main:telephone_list'%}"
-                                                                               target="_blank"><span>Spis telefonów</span></a>
-                </p>
+                <span class="d-flex justify-content-center align-items-center"><a
+                        class="text-decoration-none link-light" href="{%url 'main:telephone_list'%}"
+                        target="_blank"><span>Spis telefonów</span></a></span>
             </section>
             {%endif%}
             <!-- Section: CTA -->

@@ -10,6 +10,7 @@ from donations.models import Application
 from gallery.models import Gallery
 from investments.models import Project
 from cpvdict.models import Genre
+from invoices.models import InvoiceBuy, InvoiceSell, CorrectiveNote
 
 
 def current_year():
@@ -49,7 +50,7 @@ def add_team_popup(request):
         if team_form.is_valid():
             instance = team_form.save(commit=False)
             instance.active = True
-            instance.save()
+            team_form.save()
             return redirect('main:show_teams_list')
     return render(request, 'main/team_form_popup.html', {'team_form': team_form, 'new': True})
 
@@ -101,7 +102,7 @@ def edit_employer_popup(request, id):
         if employer_form.is_valid():
             instance = employer_form.save(commit=False)
             instance.author = request.user
-            instance.save()
+            employer_form.save()
             return redirect('main:show_employers_list')
     return render(request, 'main/employer_form_popup.html', {'employer_form': employer_form, 'id': id, 'new': False})
 
@@ -194,6 +195,7 @@ def give_access_to_modules(request):
 
 @login_required
 def make_list_register(request):
+    now_year = current_year()
     contracts = ContractImmovables.objects.all().filter(state=True)
     contract_len = len(contracts)
 
@@ -218,7 +220,18 @@ def make_list_register(request):
     genres = Genre.objects.all().exclude(name_id='RB')
     genres_len = len(genres)
 
+    invoices_sell = InvoiceSell.objects.all().filter(date__year=current_year())
+    invoices_sell_len = len(invoices_sell)
+
+    invoices_buy = InvoiceBuy.objects.all().filter(date_receipt__year=current_year())
+    invoices_buy_len = len(invoices_buy)
+
+    corrective_note = CorrectiveNote.objects.all().filter(date__year=current_year())
+    corrective_note_len = len(corrective_note)
+
     context = {'count_flats': count_flats, 'con_len': contract_len, 'contractors_len': contractors_len,
                'application_len': application_len, 'contracts_auction_len': contracts_auction_len,
-               'galleries_len': galleries_len, 'projects_len': projects_len, 'genres_len': genres_len}
+               'galleries_len': galleries_len, 'projects_len': projects_len, 'genres_len': genres_len,
+               'invoices_sell_len': invoices_sell_len, 'invoices_buy_len': invoices_buy_len,
+               'corrective_note_len': corrective_note_len, 'now_year':now_year}
     return render(request, 'main/list_register.html', context)

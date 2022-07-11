@@ -50,7 +50,7 @@ def new_contractor(request):
         if contractor_form.is_valid():
             instance = contractor_form.save(commit=False)
             instance.author = request.user
-            instance.save()
+            contractor_form.save()
             return redirect('contractors:contractor_list')
     return render(request, 'contractors/contractor_form.html',
                   {'contractor_form': contractor_form, "new": True})
