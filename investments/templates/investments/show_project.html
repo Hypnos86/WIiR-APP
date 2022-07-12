@@ -119,6 +119,10 @@
                 </div>
             </div>
         </div>
+        <div class="mt-3">
+            <small class="text-muted">Data dodania: {{project_form.creation_date|date:'d.m.Y (H:i)'}}</small><br>
+            <small class="text-muted">Zmiany: {{project_form.change|date:'d.m.Y (H:i)'}} - {{project_form.author}}</small>
+        </div>
     </div>
     <div class="col-md-2 text-center d-flex align-content-between flex-wrap">
         <div class="col-md-12">

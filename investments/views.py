@@ -41,7 +41,7 @@ def investment_projects_list(request):
         return render(request, 'investments/investments_projects.html', {'projects': projects,
                                                                          'query': query,
                                                                          'last_date': last_date,
-                                                                         'projects_sum': projects_sum})
+                                                                         'projects_sum': projects_sum, 'q':q})
     else:
         return render(request, 'investments/investments_projects.html', {'projects': projects_lis,
                                                                          'search': search,

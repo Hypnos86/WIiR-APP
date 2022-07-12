@@ -48,8 +48,8 @@
                 {%if contract.information%}
                 <li class="list-group-item"><span class="text-muted">Informacje: </span>{{contract.information}}</li>
                 {%endif%}
-                <li class="list-group-item"><small class="text-muted">Data dodania: {{contract.creation_date|date:"d.m.Y (H:i)"}}</small></li>
-                <li class="list-group-item"><small class="text-muted">Użytkownik: {{contract.author}}</small></li>
+                <li class="list-group-item"><small class="text-muted">Data dodania: {{contract.creation_date|date:'d.m.Y (H:i)'}}</small></li>
+                <li class="list-group-item"><small class="text-muted">Zmiany: {{contract.change|date:'d.m.Y (H:i)'}} - {{contract.author}}</small></li>
             </ul>
 
         </div>

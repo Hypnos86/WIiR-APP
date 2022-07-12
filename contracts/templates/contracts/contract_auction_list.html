@@ -19,9 +19,9 @@
             <div>
                 <form method="get">
                     <div class="input-group">
-                        <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj umowy"
-                               aria-label="Search" aria-describedby="search-addon">
-                        <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
+                        <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj darowizny" aria-label="Search" aria-describedby="search-addon" value="{%if query%}{{q}}{%endif%}">
+                        <button id="searchButton" style="{%if query%}display:none;{%endif%}" type="submit" class="btn btn-outline-primary my-btn">Szukaj</button>
+                        <button id="cleanButton"  style="{%if not query%}display:none;{%endif%}" type="button" class="btn btn-outline-primary my-btn" onclick="cleanSearch()">Wyczyść</button>
                     </div>
                 </form>
             </div>
@@ -69,8 +69,8 @@
         <td align="center" valign="middle" class="text-center">
             <span>{%if contract.end_date%}{{contract.end_date|date:"d.m.Y"}} r.{%else%}{{contract.end_date|default_if_none:'---'}}{%endif%}</span>
         </td>
-        <td valign="middle">
-            <span>{{contract.unit.type.type_full}} - {{contract.unit.city}}<br>
+        <td valign="middle" data-toggle="info" title="Powiat: {{contract.unit.county.name}}">
+            <span >{{contract.unit.type.type_full}} - {{contract.unit.city}}<br>
                 <small>{{contract.unit.address}}, {{contract.unit.zip_code}} {{contract.unit.city}}</small>
             </span>
         </td>
@@ -139,8 +139,16 @@
     document.getElementById("button-contractzzp").classList.add("active");
     document.getElementById("button-projects").classList.remove("active");
     document.getElementById("button-cpv").classList.remove("active");
+
     $(function () {
         $('[data-toggle="info"]').tooltip()
-    })
+        })
+
+    function cleanSearch(){
+        $("#q").val("");
+        //$("#cleanButton").hide();
+        //$("#searchButton").show();
+        $("form").submit();
+        }
 </script>
 {%endblock%}

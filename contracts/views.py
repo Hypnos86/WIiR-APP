@@ -157,10 +157,17 @@ def menu_contracts_auction(request):
         last_date = None
 
     if q:
-        contracts_auctions = contracts_auctions.filter(no_contract__icontains=q)
+        contracts_auctions = contracts_auctions.filter(no_contract__icontains=q) \
+                             | contracts_auctions.filter(contractor__name__icontains=q) \
+                             | contracts_auctions.filter(unit__county__name__icontains=q) \
+                             | contracts_auctions.filter(unit__city__icontains=q) \
+                             | contracts_auctions.filter(work_scope__icontains=q) \
+                             | contracts_auctions.filter(worker__name__icontains=q) \
+                             | contracts_auctions.filter(worker__last_name__icontains=q)
         return render(request, 'contracts/contract_auction_list.html',
                       {'contracts_auctions_list': contracts_auctions,
-                       'contracts_auctions_sum': contracts_auctions_sum, 'last_date': last_date, 'query': query})
+                       'contracts_auctions_sum': contracts_auctions_sum, 'last_date': last_date, 'query': query,
+                       'q': q})
     else:
         return render(request, 'contracts/contract_auction_list.html',
                       {'contracts_auctions_list': contracts_auctions_list,
