@@ -24,9 +24,10 @@ def contractor_list(request):
     contractor_list = paginator.get_page(page_number)
 
     if q:
-        contractor = contractor.filter(name__icontains=q) | contractor.filter(
-            city__icontains=q) | contractor.filter(no_contractor__startswith=q) | contractor.filter(
-            nip__startswith=q)
+        contractor = contractor.filter(name__icontains=q) \
+                     | contractor.filter(city__icontains=q) \
+                     | contractor.filter(no_contractor__startswith=q) \
+                     | contractor.filter(nip__startswith=q)
         return render(request, 'contractors/contractor_list.html',
                       {'contractors': contractor, "consellsum": contractor_len, "query": query, 'last_date': last_date,
                        'q': q})

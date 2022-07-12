@@ -55,7 +55,7 @@ class Application(models.Model):
     presenter = models.ForeignKey(Contractor, on_delete=models.CASCADE, verbose_name='Darczyńca',
                                   related_name='application')
     sum = models.DecimalField('Kwota darowizny', max_digits=10, decimal_places=2, null=True, blank=True)
-    settlement_date = models.DateField('Data rozliczenia')
+    settlement_date = models.DateField('Data rozliczenia', null=True, blank=True)
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE, verbose_name='Jednostka', related_name='application')
     subject = models.TextField('Przedmiot porozumienia', null=True, blank=True)
     information = models.TextField('Informacje', null=True, blank=True, default="")

@@ -18,12 +18,9 @@
             <section class="w-100 d-flex justify-content-center align-items-center flex-column text_center">
                 <form method="get">
                     <div class="input-group">
-                        <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj kontrahenta"
-                               aria-label="Search" aria-describedby="search-addon" value="{%if query%}{{q}}{%endif%}">
-<!--                        <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>-->
-                        <button id="searchButton" {%if query%}style="display:none;"{%endif%} type="submit" class="btn btn-outline-primary my-btn">Szukaj</button>
-                        <button id="cleanButton" {%if not query%}style="display:none;"{%endif%} type="button" class="btn btn-outline-primary my-btn" onclick="cleanSearch()">Wyczyść</button>
-
+                        <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj kontrahenta" aria-label="Search" aria-describedby="search-addon" value="{%if query%}{{q}}{%endif%}">
+                        <button id="searchButton" style="{%if query%}display:none;{%endif%}" type="submit" class="btn btn-outline-primary my-btn">Szukaj</button>
+                        <button id="cleanButton"  style="{%if not query%}display:none;{%endif%}" type="button" class="btn btn-outline-primary my-btn" onclick="cleanSearch()">Wyczyść</button>
                     </div>
                 </form>
             </section>

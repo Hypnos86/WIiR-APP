@@ -19,9 +19,9 @@
             <section class="w-100 d-flex justify-content-center align-items-center flex-column text_center">
                 <form method="get">
                     <div class="input-group">
-                        <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj wniosku"
-                               aria-label="Search" aria-describedby="search-addon" value="{%if query%}{{q}}{%endif%}">
-                        <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
+                        <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj darowizny" aria-label="Search" aria-describedby="search-addon" value="{%if query%}{{q}}{%endif%}">
+                        <button id="searchButton" style="{%if query%}display:none;{%endif%}" type="submit" class="btn btn-outline-primary my-btn">Szukaj</button>
+                        <button id="cleanButton"  style="{%if not query%}display:none;{%endif%}" type="button" class="btn btn-outline-primary my-btn" onclick="cleanSearch()">Wyczyść</button>
                     </div>
                 </form>
             </section>
@@ -33,11 +33,12 @@
                 </a>
             </div>
             <div class="mt-2">
+                 {%if user.accessmodule.donations_module_edit%}
                 <a href="{%url 'donations:add_donation'%}">
                     <button type="button" class="btn btn-outline-primary my-btn">
                         <span class="bi bi-plus-circle"> Dodaj wniosek</span>
-                </button>
-                </a>
+                </button></a>
+                {%endif%}
             </div>
         </div>
 
@@ -51,10 +52,10 @@
             <th align="center" valign="middle" width="180" scope="col">Wpływ</th>
             <th align="center" valign="middle" width="200" scope="col">L.dz. WIiR</th>
             <th align="center" valign="middle" width="180" scope="col">Zwrot</th>
-            <th align="center" valign="middle" width="180" scope="col">Nr. wniosku</th>
+            <th align="center" valign="middle" width="150" scope="col">Nr. wniosku</th>
             <th align="center" valign="middle" width="200" scope="col">Kwota</th>
             <th align="center" valign="middle" width="180" scope="col">Data porozumienia</th>
-            <th align="center" valign="middle" width="320" scope="col">Darczyńca</th>
+            <th align="center" valign="middle" width="280" scope="col">Darczyńca</th>
             <th align="center" valign="middle" width="200" scope="col">Powiat</th>
         </tr>
         </thead>
@@ -62,24 +63,44 @@
         {%for application in applications %}
         <tr class="my-table-tr">
             <td class="text-center" valign="middle" scope="row" data-toggle="donations_info" title="Ostatnie zmiany: ({{user.first_name}} {{user.last_name}})"></td>
-            <td align="center" valign="middle" scope="row" data-toggle="donations_info" title="Data wpływu do WIiR">{%if application.date_receipt%}<span>{{application.date_receipt}}&nbsp;.r</span>{%else%}<span>---</span>{%endif%}</td>
-            <td align="center" valign="middle" scope="row"><small>{{application.character}}</small></td>
-            <td align="center" valign="middle" data-toggle="info" title="Data zwrotu od Wydz. Finansów">{%if application.date_return%}<span>{{application.date_return}}&nbsp;.r</span>{%else%}<span>---</span>{%endif%}</td>
+            <td align="center" valign="middle" scope="row" data-toggle="donations_info" title="Data wpływu do WIiR">
+                {%if application.date_receipt%}
+                <span>{{application.date_receipt}}&nbsp;.r</span>
+                {%else%}
+                <span>---</span>
+                {%endif%}
+            </td>
+            <td align="center" valign="middle" scope="row">
+                <small>{{application.character}}</small>
+            </td>
+            <td align="center" valign="middle" data-toggle="info" title="Data zwrotu od Wydz. Finansów">
+                {%if application.date_return%}
+                <span>{{application.date_return}}&nbsp;.r</span>
+                {%else%}
+                <span>---</span>
+                {%endif%}
+            </td>
             <td class="text-center" valign="middle" data-toggle="info" title="Rodzaj darowizny: {{application.donation_type}}">{%if application.no_application%}<span>{{application.no_application}}</span>{%else%}<span>---</span>{%endif%}</td>
             <td class="text-center" valign="middle" data-toggle="info" title="Rodzaj środków: {%if application.financial_type%} {{application.financial_type}} {%else%} nie wybrano {%endif%}">{%if application.sum%}<span>{{application.sum|intcomma}}&nbspzł.</span>{%else%}<span>---</span>{%endif%}</td>
             <td class="text-center" valign="middle" data-toggle="info" title="{%if application.no_agreement%}Nr:&nbsp;{{application.no_agreement}}{%endif%}">{%if application.date_agreement%}<span>{{application.date_agreement}}&nbsp;.r</span>{%else%}<span>---</span>{%endif%}</td>
             <td align="left" valign="middle"><span>{{application.presenter.name}}</span></td>
             <td class="text-center" valign="middle" data-toggle="info" title="{{application.unit.type.type_short}} {{application.unit.city}}"><span>{{application.unit.county.name}}</span></td>
             <td align="right" valign="middle">
-                <button data-toggle="donations_info" title="Pokaż" type="button" class="btn btn-outline-success mx-2" onclick="openModal(this)"><i
-                        class="bi bi-info-lg my-1"></i>
+                <button data-toggle="info" title="Informacje" type="button" class="btn btn-outline-success mx-2" onclick="openInfoModal(this)" data-url="{%url 'donations:show_information_popup' application.id %}">
+                    <i class="bi bi-info-lg my-1"></i>
                 </button>
-
+                {%if application.donation_scan%}
+                <a class="mx-2 moj-button-right" href="/media/{{application.donation_scan}}" target="_blank">
+                    <button data-toggle="info" title="Podgląd dokumentu" type="button" class="btn btn-outline-primary icon-color my-1">
+                        <i class="bi bi-file-text"></i>
+                    </button></a>
+                {%endif%}
+                {%if user.accessmodule.donations_module_edit%}
                 <a class="mx-2 moj-button-right" href="{%url 'donations:edit_donation' application.id%}">
-                    <button data-toggle="donations_info" title="Edytuj" type="button" class="btn btn-outline-primary icon-color my-1"><i class="bi bi-pencil-square"></i>
-                    </button>
-                </a>
-
+                    <button data-toggle="info" title="Edytuj" type="button" class="btn btn-outline-primary icon-color my-1">
+                        <i class="bi bi-pencil-square"></i>
+                    </button></a>
+                {%endif%}
             </td>
         </tr>
         {%endfor%}
@@ -129,7 +150,7 @@
 </div>
 <!-- Modal -->
 <div class="modal fade" id="informationModal">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
 
         </div>
@@ -141,19 +162,27 @@
     document.getElementById("button-secretariat").classList.remove("active");
     document.getElementById("button-cpv").classList.remove("active");
     document.getElementById("button-investments").classList.remove("active");
-    function openModal(button){
+
+    function openInfoModal(button){
         var url = $(button).data("url");
         $("#informationModal .modal-content").load(url);
         $("#informationModal").modal("show");
-    }
+        }
 
     function submitForm(){
         $("#submitButton").closest("form").submit();
-    }
+        }
 
     $(function() {
         $('[data-toggle="info"]').tooltip()
-    })
+        })
+
+    function cleanSearch(){
+        $("#q").val("");
+        //$("#cleanButton").hide();
+        //$("#searchButton").show();
+        $("form").submit();
+    }
 </script>
 {%endblock%}
 

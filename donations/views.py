@@ -27,9 +27,23 @@ def donations_list(request):
     except Application.DoesNotExist:
         last_date = None
 
-    return render(request, 'donations/donations_list.html',
-                  {'application_len': application_len, 'search': search, 'year': year,
-                   'applications': application_paginator, 'last_date': last_date})
+    if q:
+        applications = applications.filter(character__icontains=q) \
+                       | applications.filter(no_application__icontains=q) \
+                       | applications.filter(donation_type__type_name__icontains=q) \
+                       | applications.filter(financial_type__type_name__icontains=q) \
+                       | applications.filter(sum__startswith=q) \
+                       | applications.filter(unit__county__name__icontains=q) \
+                       | applications.filter(unit__city__icontains=q) \
+                       | applications.filter(presenter__name__icontains=q)
+
+        return render(request, 'donations/donations_list.html',
+                      {'application_len': application_len, 'query': query, 'year': year,
+                       'applications': applications, 'last_date': last_date, 'q':q})
+    else:
+        return render(request, 'donations/donations_list.html',
+                      {'application_len': application_len, 'search': search, 'year': year,
+                       'applications': application_paginator, 'last_date': last_date})
 
 
 @login_required
@@ -63,4 +77,4 @@ def edit_donation(request, id):
 @login_required
 def show_information_popup(request, id):
     donation = get_object_or_404(Application, pk=id)
-    return render(request, 'donations/information_popup.html', {'donation': donation})
+    return render(request, 'donations/information_popup.html', {'donation': donation, 'id': id})
