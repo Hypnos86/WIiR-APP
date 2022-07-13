@@ -150,24 +150,37 @@ def menu_contracts_auction(request):
     contracts_auctions_list = paginator.get_page(page_number)
 
     q = request.GET.get("q")
+    date_from = request.GET.get('from')
+    date_to = request.GET.get('to')
 
     try:
         last_date = ContractAuction.objects.values('change').latest('change')
     except ContractAuction.DoesNotExist:
         last_date = None
 
-    if q:
-        contracts_auctions = contracts_auctions.filter(no_contract__icontains=q) \
-                             | contracts_auctions.filter(contractor__name__icontains=q) \
-                             | contracts_auctions.filter(unit__county__name__icontains=q) \
-                             | contracts_auctions.filter(unit__city__icontains=q) \
-                             | contracts_auctions.filter(work_scope__icontains=q) \
-                             | contracts_auctions.filter(worker__name__icontains=q) \
-                             | contracts_auctions.filter(worker__last_name__icontains=q)
+    if q or date_from or date_to:
+        if q:
+            contracts_auctions = contracts_auctions.filter(no_contract__icontains=q) \
+                                 | contracts_auctions.filter(contractor__name__icontains=q) \
+                                 | contracts_auctions.filter(unit__county__name__icontains=q) \
+                                 | contracts_auctions.filter(unit__city__icontains=q) \
+                                 | contracts_auctions.filter(work_scope__icontains=q) \
+                                 | contracts_auctions.filter(worker__name__icontains=q) \
+                                 | contracts_auctions.filter(worker__last_name__icontains=q)
+
+        if date_from:
+            contracts_auctions = contracts_auctions.filter(date__gte=date_from)
+
+        if date_to:
+            contracts_auctions = contracts_auctions.filter(date__lte=date_to)
+
+        contracts_auctions_sum = len(contracts_auctions)
+
         return render(request, 'contracts/contract_auction_list.html',
                       {'contracts_auctions_list': contracts_auctions,
                        'contracts_auctions_sum': contracts_auctions_sum, 'last_date': last_date, 'query': query,
-                       'q': q})
+                       'q': q, 'date_from': date_from, 'date_to': date_to})
+
     else:
         return render(request, 'contracts/contract_auction_list.html',
                       {'contracts_auctions_list': contracts_auctions_list,

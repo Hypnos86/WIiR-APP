@@ -176,6 +176,7 @@ def sell_invoices_list(request):
 
         invoices_sell_filter_sum = len(invoicessell)
         invoices_sell_sum_dict = invoicessell.aggregate(Sum('sum'))
+
         try:
             invoices_sell_sum = round(invoices_sell_sum_dict['sum__sum'], 2)
         except TypeError:
@@ -216,13 +217,15 @@ def sell_invoices_list_archive(request, year):
 
     if q or date_from or date_to:
         if q:
-            invoices_sell = invoices_sell.filter(no_invoice__icontains=q) | invoices_sell.filter(
-                sum__startswith=q) | invoices_sell.filter(date__startswith=q) | invoices_sell.filter(
-                contractor__name__icontains=q) | invoices_sell.filter(
-                contractor__no_contractor__startswith=q) | invoices_sell.filter(
-                county__name__icontains=q) | invoices_sell.filter(
-                creator__creator__icontains=q) | invoices_sell.filter(
-                information__icontains=q) | invoices_sell.filter(doc_types__type__icontains=q)
+            invoices_sell = invoices_sell.filter(no_invoice__icontains=q) \
+                            | invoices_sell.filter(sum__startswith=q) \
+                            | invoices_sell.filter(date__startswith=q) \
+                            | invoices_sell.filter(contractor__name__icontains=q) \
+                            | invoices_sell.filter(contractor__no_contractor__startswith=q) \
+                            | invoices_sell.filter(county__name__icontains=q) \
+                            | invoices_sell.filter(creator__creator__icontains=q) \
+                            | invoices_sell.filter(information__icontains=q) \
+                            | invoices_sell.filter(doc_types__type__icontains=q)
 
         if date_from:
             invoices_sell = invoices_sell.filter(date__gte=date_from)
@@ -330,8 +333,9 @@ def corrective_note_list(request):
 
     if q or date_from or date_to:
         if q:
-            notes = notes.filter(no_note__icontains=q) | notes.filter(contractor__name__icontains=q) | notes.filter(
-                corrective_invoice__icontains=q)
+            notes = notes.filter(no_note__icontains=q) \
+                    | notes.filter(contractor__name__icontains=q) \
+                    | notes.filter(corrective_invoice__icontains=q)
 
         if date_from:
             notes = notes.filter(date__gte=date_from)
@@ -373,8 +377,9 @@ def corrective_note_list_archive(request, year):
     note_list = paginator.get_page(page_number)
     if q or date_from or date_to:
         if q:
-            notes = notes.filter(no_note__icontains=q) | notes.filter(contractor__name__icontains=q) | notes.filter(
-                corrective_invoice__icontains=q)
+            notes = notes.filter(no_note__icontains=q) \
+                    | notes.filter(contractor__name__icontains=q) \
+                    | notes.filter(corrective_invoice__icontains=q)
 
         if date_from:
             notes = notes.filter(date__gte=date_from)
@@ -491,13 +496,14 @@ def make_pdf_from_invoices_sell(request):
 
     if q or date_from or date_to:
         if q:
-            invoicessell = invoicessell.filter(no_invoice__icontains=q) | invoicessell.filter(
-                sum__startswith=q) | invoicessell.filter(date__startswith=q) | invoicessell.filter(
-                contractor__name__icontains=q) | invoicessell.filter(
-                contractor__no_contractor__startswith=q) | invoicessell.filter(
-                county__name__icontains=q) | invoicessell.filter(
-                creator__creator__icontains=q) | invoicessell.filter(
-                information__icontains=q)
+            invoicessell = invoicessell.filter(no_invoice__icontains=q) \
+                           | invoicessell.filter(sum__startswith=q) \
+                           | invoicessell.filter(date__startswith=q) \
+                           | invoicessell.filter(contractor__name__icontains=q) \
+                           | invoicessell.filter(contractor__no_contractor__startswith=q) \
+                           | invoicessell.filter(county__name__icontains=q) \
+                           | invoicessell.filter(creator__creator__icontains=q) \
+                           | invoicessell.filter(information__icontains=q)
 
         if date_from:
             invoicessell = invoicessell.filter(date__gte=date_from)

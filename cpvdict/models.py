@@ -74,7 +74,7 @@ class Order(models.Model):
     class Meta:
         verbose_name = "Zamówienie"
         verbose_name_plural = "Zamówienia"
-        ordering = ['date']
+        ordering = ['-date']
 
     date = models.DateField('Data')
     no_order = models.CharField('Nr zlecenia', max_length=15, blank=True, default="", unique=True)

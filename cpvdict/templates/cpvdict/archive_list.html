@@ -1,0 +1,30 @@
+{%extends 'base.html'%}
+{% load humanize %}
+{% load static%}
+{% block title%} Archiwum zleceń WIiR {%endblock%}
+{%block content%}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 moj-button-left">
+         <a href="{%url 'cpvdict:type_expense_list'%}">
+            <button type="button" class="btn btn-outline-primary my-btn">
+                <span class="bi bi-chevron-compact-left">Cofnij</span>
+            </button>
+         </a>
+     </div>
+        <div class="col-md-6">
+            <h5 class="text-center">Archiwum zleceń</h5>
+        </div>
+    </div>
+    <div class="col-md-12 mt-3">
+        <section class="container my-div-style py-5">
+            <div class="text-center">
+                {%for year in year_order_list%}
+                <a href=""><button type="button" class="btn btn-outline-dark m-2">Rok: {{year}}</button></a>
+                {%endfor%}
+            </div>
+        </section>
+    </div>
+
+</div>
+{%endblock%}

@@ -17,8 +17,8 @@
                     <a href="{%url 'invoices:sell_invoices_list_archive' year %}"><button type="button" class="btn btn-outline-dark m-2" data-toggle="info" title="Rok wystawienia">{{year}}</button></a>
                     {%endfor%}
                 </div>
-                </section>
-            </div>
+            </section>
+        </div>
         <div class="col-md-4">
             <section class="container my-div-style py-5">
             <div class="chose-invoices mb-5">
@@ -50,6 +50,7 @@
     document.getElementById("button-invoices").classList.add("active");
     document.getElementById("button-contracts").classList.remove("active");
     document.getElementById("button-contractors").classList.remove("active");
+
     $(function () {
         $('[data-toggle="info"]').tooltip()
     })
