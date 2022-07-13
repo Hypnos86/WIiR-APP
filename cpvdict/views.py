@@ -33,9 +33,10 @@ def cpvlist(request):
 
 @login_required
 def type_expense_list(request):
+    year = current_year()
     objects = Genre.objects.all().exclude(name_id="RB")
     limit = OrderLimit.objects.first()
-    limit_item = round(limit.limit_netto * Decimal(1.23), 2)
+    limit_item = round(limit.limit_netto, 2)
 
     for object in objects:
         order_genre = Order.objects.all().filter(genre=object).filter(date__year=current_year()).filter(brakedown=False)
