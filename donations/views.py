@@ -77,4 +77,4 @@ def edit_donation(request, id):
 @login_required
 def show_information_popup(request, id):
     donation = get_object_or_404(Application, pk=id)
-    return render(request, 'donations/information_popup.html', {'donation': donation, 'id': id})
+    return render(request, 'donations/information_work_popup.html', {'donation': donation, 'id': id})

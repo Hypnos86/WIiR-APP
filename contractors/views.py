@@ -40,7 +40,7 @@ def contractor_list(request):
 @login_required
 def show_information(request, id):
     contractor = get_object_or_404(Contractor, pk=id)
-    return render(request, 'contractors/information_popup.html', {'contractor': contractor, 'id': id})
+    return render(request, 'contractors/information_work_popup.html', {'contractor': contractor, 'id': id})
 
 
 @login_required

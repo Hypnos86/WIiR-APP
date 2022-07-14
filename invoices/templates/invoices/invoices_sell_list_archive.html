@@ -63,13 +63,6 @@
                 </button>
             </a>
         </span>
-        {%if user.accessmodule.invoices_module_edit%}
-        <span class="d-block">
-            <a id="button-nowa-umowa" href="{%url 'invoices:new_invoice_sell'%}">
-                <button class="btn btn-outline-primary my-btn mt-1">Nowa faktura</button>
-            </a>
-        </span>
-        {%endif%}
     </div>
 </div>
 <div>
@@ -82,8 +75,8 @@
             <th align="center" valign="middle" width="50" scope="col">Typ dokumentu</th>
             <th align="center" valign="middle" width="120" scope="col">Kwota</th>
             <th align="center" valign="middle" width="40" scope="col">Data płatności</th>
-            <th align="center" valign="middle" width="120" scope="col">Okres</th>
-            <th align="center" valign="middle" width="250" scope="col">Kontrahent</th>
+            <th align="center" valign="middle" width="150" scope="col">Okres</th>
+            <th align="center" valign="middle" width="300" scope="col">Kontrahent</th>
             <th align="center" valign="middle" width="150" scope="col">Powiat</th>
         </tr>
         </thead>
@@ -105,12 +98,6 @@
                 <button type="button" data-url="{% url 'invoices:show_info_sell' invoice.id archive=True %}" class="btn btn-outline-success mx-2" onclick="openModal(this)"><i
                         class="bi bi-info-lg"></i>
                 </button>
-                {%endif%}
-                {%if user.accessmodule.invoices_module_edit%}
-                <a class="mx-2" href="{%url 'invoices:edit_invoice_sell_archive' invoice.id %}">
-                    <button type="submit" class="btn btn-outline-primary icon-color mx-1 "><i
-                            class="bi bi-pencil-square"></i></button>
-                </a>
                 {%endif%}
             </td>
         </tr>

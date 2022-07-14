@@ -60,11 +60,10 @@ class OrderLimit(models.Model):
         verbose_name = "Limit zamówień"
         verbose_name_plural = "Limit zamówień"
 
-    year = models.IntegerField('Rok')
+    year = models.IntegerField('Rok', unique=True)
     euro_exchange_rate = models.DecimalField('Kurs euro', max_digits=5, decimal_places=4)
     limit_euro = models.DecimalField('Limit euro', max_digits=10, decimal_places=2)
     limit_netto = models.DecimalField('Limit zamówień netto', max_digits=10, decimal_places=2)
-    limit_brutto = models.DecimalField('Limit zamowień brutto', max_digits=10, decimal_places=2)
 
     def __str__(self):
         return f'{self.year} - {self.euro_exchange_rate} ({self.limit_euro}) - {self.limit_netto}zł.'

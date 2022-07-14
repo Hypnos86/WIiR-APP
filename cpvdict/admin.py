@@ -46,7 +46,7 @@ class OrderResource(resources.ModelResource):
     date = Field(attribute='date', column_name='Data')
     no_order = Field(attribute='no_order', column_name='Zlecenie')
     sum_netto = Field(attribute='sum_netto', column_name='Kwota netto')
-    # vat = Field(attribute='vat', column_name='vat')
+    vat = Field(attribute='vat', column_name='vat')
     sum_brutto = Field(attribute='sum_brutto', column_name='Kwota brutto')
     typeorder = Field(attribute='typeorder', column_name='Rodzaj zamówienia')
     genre = Field(attribute='genre', column_name='ID rodzajowości')
@@ -58,7 +58,7 @@ class OrderResource(resources.ModelResource):
     class Meta:
         model = Order
         export_order = (
-            'date', 'no_order', 'sum_netto', 'sum_brutto', 'typeorder', 'genre', 'unit', 'brakedown', 'content',
+            'date', 'no_order', 'sum_netto','vat', 'sum_brutto', 'typeorder', 'genre', 'unit', 'brakedown', 'content',
             'author')
 
 
@@ -72,7 +72,7 @@ class OrderAdmin(ExportMixin, admin.ModelAdmin):
 
 @admin.register(OrderLimit)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['year', 'euro_exchange_rate', 'limit_euro', 'limit_netto', 'limit_brutto']
+    list_display = ['year', 'euro_exchange_rate', 'limit_euro', 'limit_netto']
 
 
 @admin.register(TypeOrder)

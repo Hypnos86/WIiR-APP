@@ -13,9 +13,8 @@ class TypecpvForm(ModelForm):
 class OrderLimitForm(ModelForm):
     class Meta:
         model = OrderLimit
-        fields = ['year', 'euro_exchange_rate', 'limit_euro', 'limit_netto', 'limit_brutto']
-        labels = {'year': 'Rok', 'euro_exchange_rate': 'Kurs euro', 'limit_netto': 'Limit zamówień netto',
-                  'limit_brutto': 'limit_brutto'}
+        fields = ['year', 'euro_exchange_rate', 'limit_euro', 'limit_netto']
+        labels = {'year': 'Rok', 'euro_exchange_rate': 'Kurs euro', 'limit_netto': 'Limit zamówień netto'}
 
 
 class TaxForm(ModelForm):

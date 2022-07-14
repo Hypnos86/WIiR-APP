@@ -7,10 +7,6 @@ from cpvdict.forms import OrderForm
 from main.views import current_year
 from units.models import Unit
 from main.models import Employer
-import datetime
-
-
-# Create your views here.
 
 
 def cpvlist(request):
@@ -35,8 +31,10 @@ def cpvlist(request):
 def type_expense_list(request):
     year = current_year()
     objects = Genre.objects.all().exclude(name_id="RB")
-    limit = OrderLimit.objects.first()
+    limit = OrderLimit.objects.get(year=year)
     limit_item = round(limit.limit_netto, 2)
+
+    # Obsługa błędu jesli nie ma year!!!!!
 
     for object in objects:
         order_genre = Order.objects.all().filter(genre=object).filter(date__year=current_year()).filter(brakedown=False)
@@ -47,8 +45,6 @@ def type_expense_list(request):
         object.sum_netto = Decimal(sum)
         object.remain = round(limit_item - object.sum_netto, 2)
 
-    year = current_year()
-
     context = {'objects': objects,
                'limit': limit.limit_netto,
                'limit_item': limit_item,
@@ -58,8 +54,9 @@ def type_expense_list(request):
 
 @login_required
 def type_work_list(request):
+    year = current_year()
     units = Unit.objects.all()
-    limit = OrderLimit.objects.first()
+    limit = OrderLimit.objects.get(year=year)
 
     sum_rb = {}
     for unit in units:
@@ -78,8 +75,11 @@ def type_work_list(request):
 
 @login_required
 def show_information_work_object(request, id):
+    year = current_year()
     work_object = get_object_or_404(Unit, pk=id)
-    return render(request, 'cpvdict/information_popup.html', {'work_object': work_object, 'id': id})
+    orders = Order.objects.all().filter(date__year=year).filter(unit_id=id).order_by('date')
+    return render(request, 'cpvdict/information_work_popup.html',
+                  {'work_object': work_object, 'orders': orders, 'id': id, 'year': year})
 
 
 @login_required
@@ -158,4 +158,11 @@ def make_archive_year_list(request):
     year_order_set = set([year['date__year'] for year in all_year_order])
     year_order_list = sorted(year_order_set, reverse=False)
 
-    return render(request, 'cpvdict/archive_list.html', {'now_year': now_year, 'year_order_list':year_order_list})
+    return render(request, 'cpvdict/archive_list.html', {'now_year': now_year, 'year_order_list': year_order_list})
+
+
+@login_required
+def create_order_archive(request, year):
+
+    orders = Order.objects.all().filter(date__year=year)
+    return render(request, 'cpvdict/archive_order_list.html', {'year': year})

@@ -20,7 +20,7 @@
         <section class="container my-div-style py-5">
             <div class="text-center">
                 {%for year in year_order_list%}
-                <a href=""><button type="button" class="btn btn-outline-dark m-2">Rok: {{year}}</button></a>
+                <a href="{%url 'cpvdict:create_order_archive' year%}"><button type="button" class="btn btn-outline-dark m-2">Rok: {{year}}</button></a>
                 {%endfor%}
             </div>
         </section>

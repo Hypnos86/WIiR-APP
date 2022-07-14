@@ -5,11 +5,11 @@
 <form class="m-2 p-4" method="get" action="{% url 'contractors:show_information' id %}">
     {%csrf_token%}
     <div class="">
-        <div class=""><span class="text-muted">Zlecenie: </span>{{order.no_order}} z dnia {{order.date}} r.</div>
+        <div class="mb-3"><span class="text-muted">Zlecenie: </span>{{order.no_order}} z dnia {{order.date}} r.</div>
         <div class=""><span class="text-muted">Jednostka: </span>{{order.unit.type.type_full}} - {{order.unit.city}}</div>
-        <div class=""><span class="text-muted">Adres: </span><small>{{order.unit.address}}, {{order.unit.zip_code}} {{order.unit.city}}</small></div>
+        <div class=""><small class="text-muted">Adres: </small><small>{{order.unit.address}}, {{order.unit.zip_code}} {{order.unit.city}}</small></div>
         <div class="my-2"><span class="text-muted">Rodzaj zamówienia: </span>{{order.typeorder}} {%if order.brakedown%}<span class="breakdown">Awaria</span>{%endif%}</div>
-        <div class="my-2"><span class="text-muted">Branzysta: </span><span>{{order.worker}}</span></div>
+        <div class="my-2"><span class="text-muted">Branżysta: </span><span>{{order.worker}}</span></div>
         <div><span class="text-muted">Zakres prac: </span><p>{{order.content}}</p></div>
 
     </div>
