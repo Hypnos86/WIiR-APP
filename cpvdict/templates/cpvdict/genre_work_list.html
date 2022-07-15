@@ -11,9 +11,9 @@
         <div class="col-md-6 text-center">
             <h4 class="">Klasyfikacja rodzajowa WIiR</h4>
             <h5 class="">Roboty budowlane</h5>
-            <span class="m-2">Roboty budowlane <small><b>{{year}}</b> rok</small></span>
+            <span class="m-2">Roboty budowlane <b>{{year}}</b> rok</span>
             {%if limit != 0 %}
-            <p><span class="text-center">Limit zmówień: {{limit.limit_netto|intcomma}} zł (netto)</span></p>
+            <p><span class="text-center">Limit zmówień: <span class="color-info">{{limit.limit_netto|intcomma}} zł. (netto)</span></span></p>
             {%endif%}
         </div>
     </div>
@@ -37,7 +37,7 @@
             <td valign="middle">{{unit}}</td>
             <td valign="middle" align="center" title="{% for u in unit.order.all %}{{u|intcomma}}{%endfor%}">{{value|intcomma}} zł.</td>
             <td valign="middle" align="right">
-              <button type="button" data-url="{%url 'cpvdict:show_information_work_object' unit.id%}" class="btn btn-outline-success mx-2" onclick="openModal(this)">
+              <button type="button" data-url="{%url 'cpvdict:show_information_work_object' unit.id year%}" class="btn btn-outline-success mx-2" onclick="openModal(this)">
                 <i class="bi bi-info-lg"></i></button>
             </td>
             {% endif %}

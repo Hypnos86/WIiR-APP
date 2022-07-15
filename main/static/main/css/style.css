@@ -164,6 +164,24 @@
     border-radius: 3px;
 }
 
+.color-info{
+    color: white;
+    background-color: #0a4275;
+    border-color:white;
+    padding: 4px;
+    margin: 0 3px;
+    border-radius: 3px;
+}
+
+.color-info-warning{
+    color: white;
+    background-color: #FF6347;
+    border-color:white;
+    padding: 4px;
+    margin: 0 3px;
+    border-radius: 3px;
+}
+
 .breakdown{
     color: white;
     background-color: #df3545;

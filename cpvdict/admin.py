@@ -58,13 +58,13 @@ class OrderResource(resources.ModelResource):
     class Meta:
         model = Order
         export_order = (
-            'date', 'no_order', 'sum_netto','vat', 'sum_brutto', 'typeorder', 'genre', 'unit', 'brakedown', 'content',
+            'date', 'no_order', 'sum_netto', 'vat', 'sum_brutto', 'typeorder', 'genre', 'unit', 'brakedown', 'content',
             'author')
 
 
 @admin.register(Order)
 class OrderAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['date', 'no_order', 'sum_netto', 'sum_brutto', 'typeorder', 'genre', 'brakedown', 'content']
+    list_display = ['date', 'no_order', 'sum_netto', 'sum_brutto', 'typeorder', 'genre', 'brakedown']
     search_fields = ['no_order', 'no_cpv', 'name', 'typeorder__type']
     list_display_links = ('no_order',)
     resource_class = OrderResource

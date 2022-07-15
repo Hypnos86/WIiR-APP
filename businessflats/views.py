@@ -39,7 +39,7 @@ def make_flats_list(request):
 @login_required
 def show_information(request, id):
     flat = get_object_or_404(OfficialFlat, pk=id)
-    return render(request, 'businessflats/information_work_popup.html', {'flat': flat, 'id': id})
+    return render(request, 'businessflats/info_work_popup.html', {'flat': flat, 'id': id})
 
 
 @login_required

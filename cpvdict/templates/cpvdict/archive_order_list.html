@@ -61,7 +61,7 @@
         <td align="left" valign="middle" title="{{order.worker}}">{{order.no_order|default_if_none:'---'}}</td>
         <td align="left" valign="middle"><span>{{order.contractor.name}}</span><br><small>{{order.contractor.address}}, {{order.contractor.zip_code}} {{order.contractor.city}}</small></td>
         <td align="right" valign="middle"><span data-toggle="info" title="Kwota netto: {{order.sum_netto|intcomma}}&nbsp;zł.&#010;(vat: {{order.vat}})">{{order.sum_brutto|intcomma}}&nbspzł.</span></td>
-        <td align="center" valign="middle" title="{{order.typeorder}}">{{order.genre.name_id}}</td>
+        <td align="center" valign="middle"><span data-toggle="info" title="{{order.typeorder}}">{{order.genre.name_id}}</span></td>
         <td align="center" valign="middle">{% if order.brakedown  %} <i class="bi bi-check2-circle text-success icon-check"></i> {%else%} --- {%endif%}</td>
         <td valign="middle"><span>{{order.unit.type.type_full}} - {{order.unit.city}}<br><small>{{order.unit.address}}, {{order.unit.zip_code}} {{order.unit.city}}</small></span></td>
         <td align="right" valign="middle">

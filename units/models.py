@@ -34,15 +34,15 @@ class Unit(models.Model):
         verbose_name_plural = 'Jednostki'
         ordering = ['county']
 
-    county = models.ForeignKey(County, on_delete=models.CASCADE, related_name='unit')
-    type = models.ForeignKey(TypeUnit, on_delete=models.CASCADE, related_name='unit')
-    address = models.CharField(max_length=30)
-    zip_code = models.CharField(max_length=6)
-    city = models.CharField(max_length=20)
-    information = models.TextField(blank=True)
-    manager = models.CharField(max_length=50)
-    status = models.BooleanField('Status', null=False, default=0)
-    change = models.DateTimeField('Zmiany', auto_now=True)
+    county = models.ForeignKey(County, on_delete=models.CASCADE, related_name='unit', verbose_name='Powiat')
+    type = models.ForeignKey(TypeUnit, on_delete=models.CASCADE, related_name='unit', verbose_name='Rodzaj jednostki')
+    address = models.CharField(max_length=30, verbose_name='Adres')
+    zip_code = models.CharField(max_length=6, verbose_name='Kod pocztowy')
+    city = models.CharField(max_length=20, verbose_name='Miasto')
+    information = models.TextField(blank=True, verbose_name='Informacje')
+    manager = models.CharField(max_length=50, verbose_name='Trwały zarząd')
+    status = models.BooleanField(null=False, default=0, verbose_name='Status')
+    change = models.DateTimeField(auto_now=True, verbose_name='Zmiany')
 
     def __str__(self):
         return f'{self.information} - {self.city}, {self.address}'
