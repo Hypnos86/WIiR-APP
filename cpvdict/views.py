@@ -156,13 +156,51 @@ def make_archive_year_list(request):
     # Filtrowanie faktur sprzedażowych
     all_year_order = Order.objects.all().values('date__year').exclude(date__year=now_year)
     year_order_set = set([year['date__year'] for year in all_year_order])
-    year_order_list = sorted(year_order_set, reverse=False)
+    year_order_list = sorted(year_order_set, reverse=True)
 
     return render(request, 'cpvdict/archive_list.html', {'now_year': now_year, 'year_order_list': year_order_list})
 
 
 @login_required
 def create_order_archive(request, year):
+    orders = Order.objects.all().order_by("-date").filter(date__year=year)
+    ordersum = len(orders)
+    query = "Wyczyść"
+    search = "Szukaj"
+    q = request.GET.get("q")
 
-    orders = Order.objects.all().filter(date__year=year)
-    return render(request, 'cpvdict/archive_order_list.html', {'year': year})
+    paginator = Paginator(orders, 30)
+    page_number = request.GET.get('page')
+    order_list = paginator.get_page(page_number)
+
+    if q:
+        orders = orders.filter(date__startswith=q) | orders.filter(no_order__icontains=q) | orders.filter(
+            typeorder__type__icontains=q) | orders.filter(genre__name_id__icontains=q) | orders.filter(
+            unit__county__name__icontains=q) | orders.filter(unit__city__icontains=q) | orders.filter(
+            unit__address__icontains=q) | orders.filter(contractor__name__icontains=q)
+        return render(request, 'cpvdict/archive_order_list.html',
+                      {'orders': orders, 'year': year, 'ordersum': ordersum, 'query': query
+                       })
+    else:
+        return render(request, 'cpvdict/archive_order_list.html',
+                      {'orders': order_list, 'year': year, 'ordersum': ordersum, 'search': search
+                       })
+
+
+@login_required
+def create_type_work_list_archive(request, year):
+    units = Unit.objects.all()
+    limit = OrderLimit.objects.get(year=year)
+
+    sum_rb = {}
+    for unit in units:
+        orders = Order.objects.all().filter(genre__name_id='RB').filter(unit=unit).filter(date__year=year)
+        sum = 0
+        for order in orders:
+            sum += order.sum_netto
+        sum_rb[unit] = sum
+
+    item = round(float(limit.limit_netto) * 1.23, 2)
+
+    context = {'units': units, 'limit': limit, 'item': item, 'year': year, 'sum_rb': sum_rb}
+    return render(request, 'cpvdict/archive_genre_work_list.html', context)

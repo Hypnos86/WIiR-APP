@@ -1,0 +1,80 @@
+{% extends 'base.html'%}
+{% load humanize %}
+{% load static %}
+{% block title %} Rodzajowość wydatków WIiR - Roboty budowlane {% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <a href="{%url 'cpvdict:create_order_archive' year%}"><button type="button" class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span></button></a>
+        </div>
+        <div class="col-md-6 text-center">
+            <h4 class="">Klasyfikacja rodzajowa WIiR</h4>
+            <h5 class="">Roboty budowlane</h5>
+            <span class="m-2">Roboty budowlane <small><b>{{year}}</b> rok</small></span>
+            {%if limit != 0 %}
+            <p><span class="text-center">Limit zmówień: {{limit.limit_netto|intcomma}} zł (netto)</span></p>
+            {%endif%}
+        </div>
+    </div>
+</div>
+<div class="container">
+    <table class="table table-hover my-table mt-2">
+        <thead>
+        <tr class="my-table-tr text-center">
+            <th align="center" valign="middle" width="50" scope="col">l.p.</th>
+            <th align="center" valign="middle" width="600" scope="col">Jednostka</th>
+            <th align="center" valign="middle" width="80" scope="col">Wydatkowano</th>
+            <th align="right" valign="middle" width="5%">Informacje</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for unit in units %}
+        {% for key, value in sum_rb.items %}
+        {% if key == unit and value > 0 %}
+        <tr class="my-table-tr">
+            <td align="center" valign="middle" scope="row"></td>
+            <td valign="middle">{{unit}}</td>
+            <td valign="middle" align="center">{{value|intcomma}} zł.</td>
+            <td valign="middle" align="right">
+              <button type="button" data-url="{%url 'cpvdict:show_information_work_object' unit.id%}" class="btn btn-outline-success mx-2" onclick="openModal(this)">
+                <i class="bi bi-info-lg"></i></button>
+            </td>
+            {% endif %}
+            {% endfor %}
+            {% endfor %}
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <th colspan="5">Wydział Inwestycji i Remontów KWP w Poznaniu</th>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="informationModal">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+<script>
+     document.getElementById("button-units").classList.remove("active");
+     document.getElementById("button-record").classList.remove("active");
+     document.getElementById("button-secretariat").classList.remove("active");
+     document.getElementById("button-cpv").classList.add("active");
+     document.getElementById("button-investments").classList.remove("active");
+
+     function openModal(button){
+        var url = $(button).data("url");
+        $("#informationModal .modal-content").load(url);
+        $("#informationModal").modal("show");
+        }
+
+     function submitForm(){
+        $("#submitButton").closest("form").submit();
+        }
+</script>
+{% endblock%}

@@ -16,9 +16,9 @@
             <h5 class="text-center">Archiwum zleceń</h5>
         </div>
     </div>
-    <div class="col-md-12 mt-3">
-        <section class="container my-div-style py-5">
-            <div class="text-center">
+    <div class="container mt-3">
+        <section class=" my-div-style py-5">
+            <div class="d-flex justify-content-center">
                 {%for year in year_order_list%}
                 <a href="{%url 'cpvdict:create_order_archive' year%}"><button type="button" class="btn btn-outline-dark m-2">Rok: {{year}}</button></a>
                 {%endfor%}
@@ -27,4 +27,11 @@
     </div>
 
 </div>
+<script>
+    document.getElementById("button-units").classList.remove("active");
+    document.getElementById("button-record").classList.remove("active");
+    document.getElementById("button-secretariat").classList.remove("active");
+    document.getElementById("button-cpv").classList.add("active");
+    document.getElementById("button-investments").classList.remove("active");
+</script>
 {%endblock%}

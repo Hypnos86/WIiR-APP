@@ -59,6 +59,7 @@ class OrderLimit(models.Model):
     class Meta:
         verbose_name = "Limit zamówień"
         verbose_name_plural = "Limit zamówień"
+        ordering = ['-year']
 
     year = models.IntegerField('Rok', unique=True)
     euro_exchange_rate = models.DecimalField('Kurs euro', max_digits=5, decimal_places=4)
