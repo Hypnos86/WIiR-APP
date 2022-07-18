@@ -30,28 +30,31 @@
     <div class="col-md-6">
         <section class="w-100 d-flex justify-content-center align-items-center flex-column">
             <form method="get">
-                <div class="row mb-3">
-                    <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-3">
                         <div class="">
-                            <label class="control-label" for="from">Data wystawienia od</label>
+                            <label class="control-label" for="cleanFrom">Data umowy od</label>
                             <div class=" ">
-                                <input type="date" name="from" class="form-control" id="from">
+                        {%if search%}<input type="date" style="{%if query%}display:none;{%endif%}" name="from" class="form-control" id="searchFrom">{%endif%}
+                        {%if query%}<input type="date" style="{%if not query%}display:none;{%endif%}" name="from" class="form-control" id="cleanFrom" value="{{date_from}}">{%endif%}
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="">
-                            <label class="control-label" for="to">Data wystawienia do</label>
+                            <label class="control-label" for="cleanTo">Data umowy do</label>
                             <div class=" ">
-                                <input type="date" name="to" class="form-control" id="to">
+                                {%if search%}<input type="date" style="{%if query%}display:none;{%endif%}" name="to" class="form-control" id="searchTo">{%endif%}
+                                {%if query%}<input type="date" style="{%if not query%}display:none;{%endif%}" name="to" class="form-control" id="cleanTo" value="{{date_to}}">{%endif%}
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="input-group">
-                    <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj dokumentu"
-                           aria-label="Search" aria-describedby="search-addon">
-                    <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
+                    <div class="col-md-5 d-flex align-items-end">
+                        <div class="input-group">
+                            <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj dokumentu" aria-label="Search" aria-describedby="search-addon">
+                            <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
+                        </div>
+                    </div>
                 </div>
             </form>
         </section>
@@ -63,7 +66,7 @@
         {%if user.accessmodule.invoices_module_edit%}
         <div>
             <a id="button-nowa-umowa" href="{%url 'invoices:new_invoice_sell'%}">
-                <button class="btn btn-outline-primary my-btn my-3">Nowa faktura</button>
+                <button class="btn btn-outline-primary my-btn mt-2">Nowa faktura</button>
             </a>
         </div>
         {%endif%}

@@ -28,7 +28,7 @@
         <div class="col-md-6">
             <div class="my-1 text-center">
                 <h4 class="">Klasyfikacja rodzajowa WIiR</h4>
-                <span>Usługi i dostawy:</span><small class="m-2">{{year}} rok</small><br>
+                <span>Usługi i dostawy:</span><b class="m-2">{{year}} rok</b><br>
                 {%if limit != 0 %}
                 <span class="text-center">Limit zmówień NETTO: <span class="color-info">{{limit|intcomma}} zł.</span></span>
                 {%endif%}
@@ -36,7 +36,7 @@
         </div>
         <div class="col-md-3 moj-button-right">
             <div class="col-md-12  m-2">
-                <a href="{%url 'cpvdict:make_archive_year_list'%}"><button class="btn btn-outline-danger">Archiwum</button></a>
+                <button class="btn btn-outline-danger" data-url="{%url 'cpvdict:make_archive_year_list'%}" onclick="openArchiveModal(this)">Archiwum</button>
             </div>
         </div>
     </div>
@@ -51,7 +51,7 @@
                 rodzajowym
             </th>
             <th align="center" valign="middle" width="450" scope="col">Kod CPV obejmuje ten sam rodzaj zamówienia</th>
-            <th align="center" valign="middle" width="150" scope="col">Wydatkowano</th>
+            <th align="center" valign="middle" width="150" scope="col"><span>Wydatkowano&nbsp;</span><span>[netto]</span></th>
             <th align="center" valign="middle" width="150" scope="col">Pozostało</th>
         </tr>
         </thead>
@@ -75,6 +75,14 @@
         </tfoot>
     </table>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="archiveInfoModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
 <script>
     document.getElementById("button-units").classList.remove("active");
     document.getElementById("button-record").classList.remove("active");
@@ -82,8 +90,18 @@
     document.getElementById("button-cpv").classList.add("active");
     document.getElementById("button-investments").classList.remove("active");
 
+    function openArchiveModal(button){
+        var url = $(button).data("url");
+        $("#archiveInfoModal .modal-content").load(url);
+        $("#archiveInfoModal").modal("show");
+        }
+
+    function submitForm(){
+        $("#submitButton").closest("form").submit();
+        }
+
     $(function () {
         $('[data-toggle="info"]').tooltip()
-    })
+        })
 </script>
 {%endblock%}

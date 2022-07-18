@@ -14,7 +14,7 @@
         {%endif%}
         <ol>
         {%for order in orders%}
-            <li><span>{{order.no_order}} z dnia {{order.date}} r. Wartość zlecenia: <b>{{order.sum_netto|intcomma}} zł.</b> - Branżysta: {{order.worker}}</span></li>
+            <li><span>{{order.no_order}} z dnia {{order.date}} r. Wartość zlecenia: <b>{{order.sum_netto|intcomma}} zł. netto</b> - Branżysta: {{order.worker}}</span></li>
         {%endfor%}
         </ol>
     </div>

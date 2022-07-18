@@ -1,0 +1,76 @@
+{% extends 'base.html'%}
+{% load humanize %}
+{% load static%}
+{% block title%} Rodzajowość wydatków WIiR {%endblock%}
+{% block content%}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <a href="{%url 'cpvdict:create_order_archive' year%}"><button type="button" class="btn btn-outline-primary my-btn">
+                <span class="bi bi-chevron-compact-left">Cofnij</span>
+            </button></a>
+        </div>
+        <div class="col-md-6">
+            <div class="my-1 text-center">
+                <h4 class="">Klasyfikacja rodzajowa WIiR</h4>
+                <span>Usługi i dostawy:<b class="m-2">{{year}} rok</b></span>
+                <p>
+                    {%if limit == 0 %}
+                    <span class="text-center">Limit zmówień: </span>
+                    {%if limit.limit_netto%}
+                    <span class="color-info">{{limit.limit_netto|intcomma}} zł. (netto)</span>
+                    {%else%}
+                    <span class="color-info-warning" data-toggle="info" title="Skontaktuj się z administratorem">UZUPEŁNIJ LIMITY</span>
+                    {%endif%}
+                    {%endif%}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <table class="table table-hover my-table">
+        <thead>
+        <tr class="my-table-tr text-center">
+            <th align="center" valign="middle" width="50" scope="col">L.p.</th>
+            <th align="center" valign="middle" width="80" scope="col">ID</th>
+            <th align="center" valign="middle" width="450" scope="col">Ogólna nazwa przedmiotu zamówienia w ujęciu
+                rodzajowym
+            </th>
+            <th align="center" valign="middle" width="450" scope="col">Kod CPV obejmuje ten sam rodzaj zamówienia</th>
+            <th align="center" valign="middle" width="150" scope="col"><span>Wydatkowano&nbsp;</span><span>[netto]</span></th>
+            <th align="center" valign="middle" width="150" scope="col">Pozostało</th>
+        </tr>
+        </thead>
+        <tbody>
+        {%for object in objects %}
+        <tr class="my-table-tr">
+            <td class="text-center" valign="middle" scope="row"></td>
+            <td align="center" valign="middle" scope="row">{{object.name_id}}</td>
+            <td valign="middle"><span>{{object.name}}</span></td>
+            <td valign="middle">{% for cpv in object.cpv.all%}<span class="tag-cpv m-1" data-toggle="info" title="{{cpv.name}}"> {{cpv}} </span>{%endfor%}
+            </td>
+            <td align="right" valign="middle">{%if object.sum_netto%}<span>{{object.sum_netto|intcomma}} zł.</span>{%else%}<span>---</span>{%endif%}</td>
+            <td align="right" valign="middle"><span>{{object.remain|intcomma}} zł.</span></td>
+        </tr>
+        {%endfor%}
+        </tbody>
+        <tfoot>
+        <tr>
+            <th colspan="7">Wydział Inwestycji i Remontów KWP w Poznaniu</th>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+<script>
+    document.getElementById("button-units").classList.remove("active");
+    document.getElementById("button-record").classList.remove("active");
+    document.getElementById("button-secretariat").classList.remove("active");
+    document.getElementById("button-cpv").classList.add("active");
+    document.getElementById("button-investments").classList.remove("active");
+
+    $(function () {
+        $('[data-toggle="info"]').tooltip()
+    })
+</script>
+{%endblock%}

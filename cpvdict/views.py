@@ -35,8 +35,6 @@ def type_expense_list(request):
     limit = OrderLimit.objects.get(year=year)
     limit_item = round(limit.limit_netto, 2)
 
-    # Obsługa błędu jesli nie ma year!!!!!
-
     for object in objects:
         order_genre = Order.objects.all().filter(genre=object).filter(date__year=current_year()).filter(brakedown=False)
         sum = 0
@@ -50,7 +48,7 @@ def type_expense_list(request):
                'limit': limit.limit_netto,
                'limit_item': limit_item,
                'year': year}
-    return render(request, 'cpvdict/genre_list.html', context)
+    return render(request, 'cpvdict/genre_tree.html', context)
 
 
 @login_required
@@ -90,18 +88,28 @@ def order_list(request):
     query = "Wyczyść"
     search = "Szukaj"
     q = request.GET.get("q")
+    date_from = request.GET.get('from', None)
+    date_to = request.GET.get('to', None)
 
     paginator = Paginator(orders, 30)
     page_number = request.GET.get('page')
     order_list = paginator.get_page(page_number)
 
-    if q:
-        orders = orders.filter(date__startswith=q) | orders.filter(no_order__icontains=q) | orders.filter(
-            typeorder__type__icontains=q) | orders.filter(genre__name_id__icontains=q) | orders.filter(
-            unit__county__name__icontains=q) | orders.filter(unit__city__icontains=q) | orders.filter(
-            unit__address__icontains=q) | orders.filter(contractor__name__icontains=q)
+    if q or date_from or date_to:
+        if q:
+            orders = orders.filter(date__startswith=q) | orders.filter(no_order__icontains=q) | orders.filter(
+                typeorder__type__icontains=q) | orders.filter(genre__name_id__icontains=q) | orders.filter(
+                unit__county__name__icontains=q) | orders.filter(unit__city__icontains=q) | orders.filter(
+                unit__address__icontains=q) | orders.filter(contractor__name__icontains=q)
+
+        if date_from:
+            orders = orders.filter(date__gte=date_from)
+        if date_to:
+            order = orders.filter(date__lte=date_to)
+
         return render(request, 'cpvdict/order_list.html',
-                      {'orders': orders, 'year': year, 'ordersum': ordersum, 'query': query
+                      {'orders': orders, 'year': year, 'ordersum': ordersum, 'query': query, 'q': q,
+                       'date_from': date_from, 'date_to': date_to
                        })
     else:
         return render(request, 'cpvdict/order_list.html',
@@ -158,7 +166,8 @@ def make_archive_year_list(request):
     year_order_set = set([year['date__year'] for year in all_year_order])
     year_order_list = sorted(year_order_set, reverse=True)
 
-    return render(request, 'cpvdict/archive_list.html', {'now_year': now_year, 'year_order_list': year_order_list})
+    return render(request, 'cpvdict/archive_list_year_order_popup.html',
+                  {'now_year': now_year, 'year_order_list': year_order_list})
 
 
 @login_required
@@ -168,18 +177,27 @@ def create_order_archive(request, year):
     query = "Wyczyść"
     search = "Szukaj"
     q = request.GET.get("q")
+    date_from = request.GET.get('from', None)
+    date_to = request.GET.get('to', None)
 
     paginator = Paginator(orders, 30)
     page_number = request.GET.get('page')
     order_list = paginator.get_page(page_number)
 
-    if q:
-        orders = orders.filter(date__startswith=q) | orders.filter(no_order__icontains=q) | orders.filter(
-            typeorder__type__icontains=q) | orders.filter(genre__name_id__icontains=q) | orders.filter(
-            unit__county__name__icontains=q) | orders.filter(unit__city__icontains=q) | orders.filter(
-            unit__address__icontains=q) | orders.filter(contractor__name__icontains=q)
+    if q or date_from or date_to:
+        if q:
+            orders = orders.filter(date__startswith=q) | orders.filter(no_order__icontains=q) | orders.filter(
+                typeorder__type__icontains=q) | orders.filter(genre__name_id__icontains=q) | orders.filter(
+                unit__county__name__icontains=q) | orders.filter(unit__city__icontains=q) | orders.filter(
+                unit__address__icontains=q) | orders.filter(contractor__name__icontains=q)
+
+        if date_from:
+            orders = orders.filter(date__gte=date_from)
+        if date_to:
+            order = orders.filter(date__lte=date_to)
         return render(request, 'cpvdict/archive_order_list.html',
-                      {'orders': orders, 'year': year, 'ordersum': ordersum, 'query': query
+                      {'orders': orders, 'year': year, 'ordersum': ordersum, 'query': query, 'q': q,
+                       'date_from': date_from, 'date_to': date_to
                        })
     else:
         return render(request, 'cpvdict/archive_order_list.html',
@@ -190,7 +208,6 @@ def create_order_archive(request, year):
 @login_required
 def create_type_work_list_archive(request, year):
     units = Unit.objects.all()
-
     sum_rb = {}
     for unit in units:
         orders = Order.objects.all().filter(genre__name_id='RB').filter(unit=unit).filter(date__year=year)
@@ -207,3 +224,33 @@ def create_type_work_list_archive(request, year):
 
     context = {'units': units, 'limit': limit, 'year': year, 'sum_rb': sum_rb}
     return render(request, 'cpvdict/archive_genre_work_list.html', context)
+
+
+@login_required
+def create_genre_archive(request, year):
+    objects = Genre.objects.all().exclude(name_id="RB")
+
+    try:
+        limit = OrderLimit.objects.get(year=year)
+        limit_netto = limit.limit_netto
+        limit_item = round(limit_netto, 2)
+    except ObjectDoesNotExist:
+        limit_netto = 0
+        limit_item = round(limit_netto, 2)
+
+    for object in objects:
+        order_genre = Order.objects.all().filter(genre=object).filter(date__year=year).filter(brakedown=False)
+        sum = 0
+        for order in order_genre:
+            sum += order.sum_netto
+
+        object.sum_netto = Decimal(sum)
+        try:
+            object.remain = round(limit_item - object.sum_netto, 2)
+        except UnboundLocalError:
+            object.remain = round(object.sum_netto, 2)
+
+    context = {'objects': objects,
+               'limit': limit_netto,
+               'year': year}
+    return render(request, 'cpvdict/archive_genre_tree.html', context)

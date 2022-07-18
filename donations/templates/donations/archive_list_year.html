@@ -1,0 +1,16 @@
+{%load static%}
+{%block content%}
+<div class=container">
+    <h5 class="text-center py-3">Archiwum Darowizn</h5>
+    <div class="col m-2">
+        {%if year_order_list%}
+        {%for year in year_order_list%}
+        <a href="{%url 'cpvdict:create_order_archive' year%}"><button type="button" class="btn btn-outline-dark m-2">Rok: {{year}}</button></a>
+        {%endfor%}
+        {%else%}
+        <h6 class="text-center m-3">BRAK DAROWIZN Z INNYCH LAT</h6>
+        {%endif%}
+    </div>
+</div>
+{%endblock%}
+

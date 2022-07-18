@@ -518,11 +518,6 @@ def make_pdf_from_invoices_sell(request):
         except TypeError:
             invoices_sell_sum = 0
 
-        try:
-            invoices_sell_filter_sum = len(invoicessell)
-        except TypeError:
-            invoices_sell_filter_sum = 0
-
     objects = range(1, len(invoicessell) + 1)
     invoicessell = zip(objects, invoicessell)
 
