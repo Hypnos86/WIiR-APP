@@ -109,6 +109,8 @@ class AccessModule(models.Model):
     official_flat = models.BooleanField('ZM - Mieszkania służbowe - Podgląd', default=False)
     official_flat_edit = models.BooleanField('ZM - Mieszkania służbowe - Edycja', default=False)
     zn_team = models.BooleanField('Ewidencja: Zespół Nieruchomości', default=False)
+    units = models.BooleanField('ZN - Jednostki - Podgląd', default=False)
+    units_edit = models.BooleanField('ZN - Jednostki - Edycja', default=False)
     contract_immovables = models.BooleanField('ZN - Umowy nieruchomości - Podgląd', default=False)
     contract_immovables_edit = models.BooleanField('ZN - Umowy nieruchomości - Edycja', default=False)
     ze_team = models.BooleanField('Ewidencja: Zespół Eksploatacji', default=False)

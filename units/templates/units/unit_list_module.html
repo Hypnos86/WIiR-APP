@@ -2,16 +2,14 @@
 {% load static %}
 {% block title %} Jednostki Policji w Województwie Wielkopolskim {% endblock %}
 {% block content %}
-<div class="row">
-    <div class="col-md-3">
-        <h4 class="units-title">
-            {% if actual_units == True %} Ewidencja lokalizacji jednostek Policji {%else%} Ewidencja zarchiwizowanych lokalizacji jednostek Policji {%endif%}
-        </h4>
-        {%if last_date%}
+<div class="units-title text-center">
+    <h4 class="">{% if actual_units == True %} Ewidencja lokalizacji jednostek Policji {%else%} Ewidencja zarchiwizowanych lokalizacji jednostek Policji {%endif%}</h4>
+    {%if last_date%}
         <small>Ostatnia aktualizacja: {{last_date.change|date:'d.m.Y (H:i)'}}</small>
-        {%endif%}
-    </div>
-    <div class="col-md-6 text-center">
+    {%endif%}
+</div>
+<div class="row mt-3">
+    <div class="text-center">
         <form>
             <div class="d-inline-block mx-4 md-2 text-center">
                 <label for="county" class="county">Powiat</label>
@@ -19,6 +17,15 @@
                     <option value="">--wybierz--</option>
                     {%for district in county%}
                     <option value={{district.id}}>{{district}}</option>
+                    {%endfor%}
+                </select>
+            </div>
+            <div class="d-inline-block mx-4 md-2 text-center">
+                <label for="city" class="county">Miasto</label>
+                <select id="city" name="c" class="form-control" aria-label="Default select example">
+                    <option value="">--wybierz--</option>
+                    {%for city in cities%}
+                    <option value={{city}}>{{city}}</option>
                     {%endfor%}
                 </select>
             </div>
@@ -36,17 +43,6 @@
             </div>
         </form>
     </div>
-    <div class="col-md-3 moj-button-right align-self-end">
-        {%if actual_units == True%}
-        <a href="{% url 'units:archive_units_list'%}">
-            <button class="btn btn-outline-danger">Archiwum</button>
-        </a>
-        {%else%}
-        <a href="{% url 'units:units_list'%}">
-            <button class="btn btn-outline-primary">Aktualne</button>
-        </a>
-        {%endif%}
-    </div>
 </div>
 
 <div class="row">
@@ -59,7 +55,19 @@
         </p>
         {%endif%}
     </div>
+    <div class="col-md-9 moj-button-right my-9">
+        {%if actual_units == True%}
+        <a href="{% url 'units:archive_units_list'%}">
+            <button class="btn btn-outline-danger">Archiwum</button>
+        </a>
+        {%else%}
+        <a href="{% url 'units:units_list'%}">
+            <button class="btn btn-outline-primary">Aktualne</button>
+        </a>
+        {%endif%}
+    </div>
 </div>
+
 <table class="table table-hover my-table">
     <thead>
     <tr class="my-table-tr">
@@ -137,8 +145,8 @@
     </tfoot>
 </table>
 <script>
-    document.getElementById("button-units").classList.add("active");
-    document.getElementById("button-record").classList.remove("active");
+    document.getElementById("button-units").classList.remove("active");
+    document.getElementById("button-record").classList.add("active");
     document.getElementById("button-investments").classList.remove("active");
     document.getElementById("button-secretariat").classList.remove("active");
 

@@ -41,6 +41,7 @@ class Unit(models.Model):
     city = models.CharField(max_length=20, verbose_name='Miasto')
     information = models.TextField(blank=True, verbose_name='Informacje')
     manager = models.CharField(max_length=50, verbose_name='Trwały zarząd')
+    comments = models.TextField(blank=True, verbose_name='Uwagi')
     status = models.BooleanField(null=False, default=0, verbose_name='Status')
     change = models.DateTimeField(auto_now=True, verbose_name='Zmiany')
 

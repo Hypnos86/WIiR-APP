@@ -118,17 +118,26 @@
                 <div class="col-md-10">
                     <div class="list-group">
                         {%if user.accessmodule.contract_immovables%}
+                        {%if user.accessmodule.units%}
+                        <a class="text-decoration-none" href="{%url 'units:create_units_list_editable'%}">
+                            <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
+                                Jednostki<span class="badge text-white info badge-pill">{{units_len}}</span>
+                            </button>
+                        </a>
+                        {%endif%}
+                        {%if user.accessmodule.contract_immovables%}
                         <a class="text-decoration-none" href="{%url 'contracts:menu_contractsimmovables'%}">
                             <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
                                 Umowy<span class="badge text-white info badge-pill">{{con_len}}</span>
                             </button>
                         </a>
                         {%endif%}
-                          <a class="text-decoration-none" href="">
-                            <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
-                                Trwały zarząd<span class="badge text-white info badge-pill">brak</span>
-                            </button>
+                        <a class="text-decoration-none" href="">
+                        <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
+                            Trwały zarząd<span class="badge text-white info badge-pill">brak</span>
+                        </button>
                         </a>
+                        {%endif%}
                     </div>
                 </div>
             </div>

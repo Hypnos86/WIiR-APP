@@ -111,8 +111,15 @@
                 {%endif%}
                 {%if user.accessmodule.zn_team%}
                 <tr>
-                    <td valign="middle">Zespół Nieruchomości</td>
-                    <td align="center" valign="middle"><i class="bi bi-check-circle-fill text-success"></i></td>
+                    <td rowspan="2" valign="middle">Zespół Nieruchomości</td>
+                    <td rowspan="2" align="center" valign="middle"><i class="bi bi-check-circle-fill text-success"></i></td>
+                    <td>Moduł Jednostki</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.units%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.units_edit%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
+                </tr>
+                <tr>
                     <td>Moduł Umowy</td>
                     <td align="center" valign="middle">{%if user.accessmodule.contract_immovables%}<i class="bi bi-check-circle-fill text-success"></i>
                     {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>

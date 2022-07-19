@@ -6,7 +6,9 @@
 <form class="m-2 p-4" method="get" action="{%url 'donations:show_information_popup' id%}">
     {%csrf_token%}
     {%if donation.no_application%}
-    <h5 class="text-center">{{donation.no_application}} {%if donation.date_agreement%} | {{donation.no_agreement}}{%endif%}</h5>
+    <h5 class="text-center">{{donation.no_application}} {%if donation.no_agreement%} | {{donation.no_agreement}} {%endif%}</h5>
+    {%else%}
+    <h5 class="text-center">{{donation.no_application}}</h5>
     {%endif%}
     <div class="container">
         <div class="my-2"><span class="text-muted">Data wpływu wniosku do Wydz. Inwestycji i Remontów: </span><span>{{donation.date_receipt|date:'d.m.Y'}}&nbsp;r.</span></div>
@@ -26,7 +28,7 @@
         {%endif%}
         <div class="my-2"><span class="text-muted">Kwota darowizny: </span><span><b>{{donation.sum|intcomma}}&nbsp;zł.</b></span></div>
         {%if donation.settlement_date%}
-        <div class="my-2"><span class="text-muted">Data rozliczenia: </span><span>{{donation.settlement_date|date:'d.m.Y'}}</span></div>
+        <div class="my-2"><span class="text-muted">Data rozliczenia: </span><span class="color-info-warning">{{donation.settlement_date|date:'d.m.Y'}}&nbsp;r.</span></div>
         {%endif%}
         {%if donation.subject%}
         <div class="my-2"><span class="text-muted">Przedmiot porozumienia: </span><span>{{donation.subject}}</span></div>

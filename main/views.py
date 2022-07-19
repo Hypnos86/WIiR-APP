@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from main.models import Team, OrganisationTelephone, AccessModule, Command, Employer, SecretariatTelephone
 from main.forms import TeamForm, EmployerForm, CommandsForm, SecretariatTelephoneForm
 from businessflats.models import OfficialFlat
+from units.models import Unit
 from contracts.models import ContractImmovables, ContractAuction
 from contractors.models import Contractor
 from donations.models import Application
@@ -196,12 +197,17 @@ def give_access_to_modules(request):
 @login_required
 def make_list_register(request):
     now_year = current_year()
+    # Zespół Nieruchomości
     contracts = ContractImmovables.objects.all().filter(state=True)
     contract_len = len(contracts)
 
+    units_len = len(Unit.objects.all().filter(status=True))
+
+    # Zespół Mieszkaniowy
     flats = OfficialFlat.objects.all()
     count_flats = len(flats)
 
+    # Zespół Rozliczeń i Wsparcia technicznego
     contractors = Contractor.objects.all()
     contractors_len = len(contractors)
 
@@ -229,9 +235,9 @@ def make_list_register(request):
     corrective_note = CorrectiveNote.objects.all().filter(date__year=current_year())
     corrective_note_len = len(corrective_note)
 
-    context = {'count_flats': count_flats, 'con_len': contract_len, 'contractors_len': contractors_len,
-               'application_len': application_len, 'contracts_auction_len': contracts_auction_len,
-               'galleries_len': galleries_len, 'projects_len': projects_len, 'genres_len': genres_len,
-               'invoices_sell_len': invoices_sell_len, 'invoices_buy_len': invoices_buy_len,
-               'corrective_note_len': corrective_note_len, 'now_year':now_year}
+    context = {'units_len': units_len, 'count_flats': count_flats, 'con_len': contract_len,
+               'contractors_len': contractors_len, 'application_len': application_len,
+               'contracts_auction_len': contracts_auction_len, 'galleries_len': galleries_len,
+               'projects_len': projects_len, 'genres_len': genres_len, 'invoices_sell_len': invoices_sell_len,
+               'invoices_buy_len': invoices_buy_len, 'corrective_note_len': corrective_note_len, 'now_year': now_year}
     return render(request, 'main/list_register.html', context)
