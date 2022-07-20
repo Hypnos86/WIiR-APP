@@ -121,7 +121,7 @@ def add_annex_immovables(request, id):
             instance = add_annex_form.save(commit=False)
             instance.author = request.user
             instance.contract_immovables = contractsimmovables_edit
-            contractsimmovables_edit.save()
+            add_annex_form.save()
 
         return redirect('contracts:menu_contractsimmovables')
 

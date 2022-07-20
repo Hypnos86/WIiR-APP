@@ -1,6 +1,6 @@
 ''' Units render view '''
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from units.models import Unit, County, TypeUnit
 from units.forms import UnitForm
 
@@ -69,7 +69,7 @@ def units_list(request):
 
 @login_required
 def create_units_list_editable(request):
-    units_active = Unit.objects.filter(status=1).order_by('county')
+    units_active = Unit.objects.order_by('county')
 
     county = County.objects.all().order_by("swop_id")
 
@@ -92,45 +92,17 @@ def create_units_list_editable(request):
     p = request.GET.get("p")
     c = request.GET.get("c")
 
-    if p and c and r:
-        units_active = units_active.filter(county__exact=p, cities__exact=c, type__exact=r)
-        unit_sum_search = len(units_active)
-        return render(request, "units/unit_list_module.html", {'units': units_active,
-                                                               'county': county,
-                                                               'cities': cities,
-                                                               'type_unit': type_unit,
-                                                               'unit_sum': unit_sum,
-                                                               'query': query,
-                                                               'unit_sum_search': unit_sum_search,
-                                                               'last_date': last_date,
-                                                               'actual_units': True, 'p': p, 'c': c, 'r': r})
-    elif p and not c and not r:
-        units_active = units_active.filter(county__exact=p)
-        unit_sum_search = len(units_active)
-        return render(request, "units/unit_list_module.html", {'units': units_active,
-                                                               'county': county,
-                                                               'cities': cities,
-                                                               'type_unit': type_unit,
-                                                               'unit_sum': unit_sum,
-                                                               'query': query,
-                                                               'unit_sum_search': unit_sum_search,
-                                                               'last_date': last_date,
-                                                               'actual_units': True, 'p': p})
-    elif c and not p and not r:
-        units_active = units_active.filter(city__exact=c)
-        unit_sum_search = len(units_active)
-        return render(request, "units/unit_list_module.html", {'units': units_active,
-                                                               'county': county,
-                                                               'cities': cities,
-                                                               'type_unit': type_unit,
-                                                               'unit_sum': unit_sum,
-                                                               'query': query,
-                                                               'unit_sum_search': unit_sum_search,
-                                                               'last_date': last_date,
-                                                               'actual_units': True, 'c': c})
+    if p or c or r:
 
-    elif r and not c and not p:
-        units_active = units_active.filter(type__exact=r)
+        if p:
+            units_active = units_active.filter(county__exact=p)
+
+        if c:
+            units_active = units_active.filter(city__icontains=c)
+
+        if r:
+            units_active = units_active.filter(type__exact=r)
+
         unit_sum_search = len(units_active)
         return render(request, "units/unit_list_module.html", {'units': units_active,
                                                                'county': county,
@@ -161,7 +133,20 @@ def add_unit(request):
         if unit_form.is_valid():
             unit_form.save()
             return redirect('units:units_list')
-    return render(request, "units/unit_form.html", {"unit_form": unit_form})
+    return render(request, 'units/unit_form.html', {'unit_form': unit_form, 'new': True})
+
+
+@login_required
+def edit_unit(request, id):
+    unit_edit = get_object_or_404(Unit, pk=id)
+    unit_form = UnitForm(request.POST or None, instance=unit_edit)
+
+    if request.method == ' POST':
+        if unit_form.is_valid():
+            instance = unit_edit.save(commit=False)
+            instance.author = request.user
+            unit_form.save()
+    return render(request, 'units/unit_form.html', {'unit_form': unit_form, 'new': False})
 
 
 def archive_units_list(request):

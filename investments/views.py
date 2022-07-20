@@ -34,10 +34,13 @@ def investment_projects_list(request):
         last_date = None
 
     if q:
-        projects = projects.filter(project_title__icontains=q) | projects.filter(
-            unit__county__name__icontains=q) | projects.filter(unit__type__type_full__icontains=q) | projects.filter(
-            unit__city__icontains=q) | projects.filter(section__section__startswith=q) | projects.filter(
-            source_financing__icontains=q)
+        projects = projects.filter(project_title__icontains=q) \
+                   | projects.filter(unit__county__name__icontains=q) \
+                   | projects.filter(unit__type__type_full__icontains=q) \
+                   | projects.filter(unit__city__icontains=q) \
+                   | projects.filter(section__section__startswith=q) \
+                   | projects.filter(source_financing__icontains=q) \
+                   | projects.filter(date_of_acceptance__year=q)
         return render(request, 'investments/investments_projects.html', {'projects': projects,
                                                                          'query': query,
                                                                          'last_date': last_date,

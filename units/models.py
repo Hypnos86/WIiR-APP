@@ -44,6 +44,7 @@ class Unit(models.Model):
     comments = models.TextField(blank=True, verbose_name='Uwagi')
     status = models.BooleanField(null=False, default=0, verbose_name='Status')
     change = models.DateTimeField(auto_now=True, verbose_name='Zmiany')
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name="Autor")
 
     def __str__(self):
         return f'{self.information} - {self.city}, {self.address}'

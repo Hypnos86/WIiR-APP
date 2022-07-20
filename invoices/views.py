@@ -464,8 +464,11 @@ def make_verification(request):
     if date_from and date_to:
         invoices_buy_list = invoices_buy.filter(date_of_payment__range=[date_from, date_to])
         invoices_buy_sum = len(invoices_buy_list)
-        verification_all_dict = invoices_buy_list.aggregate(Sum('sum'))
-        verification_all = round(verification_all_dict['sum__sum'], 2)
+        try:
+            verification_all_dict = invoices_buy_list.aggregate(Sum('sum'))
+            verification_all = round(verification_all_dict['sum__sum'], 2)
+        except TypeError:
+            verification_all = 0
 
         return render(request, 'invoices/verification.html', {'invoices': invoices_buy_list,
                                                               'invoices_buy_sum': invoices_buy_sum,

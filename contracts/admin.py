@@ -42,7 +42,7 @@ class ContractAdmin(ExportMixin, admin.ModelAdmin):
                     'usable_area', 'unit', 'state', 'creation_date',
                     'change', 'author']
     search_fields = ['contractor__name', 'contractor__no_contractor', 'no_contract', 'unit__county__name',
-                     'unit__city', 'unit__type_short']
+                     'unit__city', 'unit__type__type_short', 'type_of_contract__type']
     list_filter = ['state']
     preserve_filters = True
     resource_class = ContractImmovablesResource

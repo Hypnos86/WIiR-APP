@@ -85,7 +85,11 @@
         <td align="center" valign="middle" class="text-center">---</td>
         {%endif%}
         <td align="center" valign="middle" class="text-center">{{contract.type_of_contract}}</td>
-        <td valign="middle"><span>{{contract.unit.type.type_full}} - {{contract.unit.city}}<br><small>{{contract.unit.address}}, {{contract.unit.zip_code}} {{contract.unit.city}}</small></span></td>
+        <td valign="middle" data-toggle="info" title="Powiat: {{contract.unit.county.name}}">
+            <span>{{contract.unit.type.type_full}} - {{contract.unit.city}}<br>
+                <small>{{contract.unit.address}}, {{contract.unit.zip_code}} {{contract.unit.city}}</small>
+            </span>
+        </td>
         <td align="right" valign="middle">
             <a class="m-2" href="{% url 'contracts:show_contractsimmovables' contract.id %}">
                 <button data-toggle="info" title="Pokaż" type="button" class="btn btn-outline-primary icon-color my-1">

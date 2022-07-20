@@ -65,7 +65,7 @@ class WarrantyPeriod(models.Model):
 
 
 def upload_scan_contract_immovables(instance, filename):
-    return f'contracts_immovables/{instance.no_contract}/{filename}'
+    return f'contracts_immovables/Umowa z dnia {instance.date}/{filename}'
 
 
 class ContractImmovables(models.Model):

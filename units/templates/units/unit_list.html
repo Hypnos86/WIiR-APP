@@ -3,7 +3,7 @@
 {% block title %} Jednostki Policji w Województwie Wielkopolskim {% endblock %}
 {% block content %}
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-4">
         <h4 class="units-title">
             {% if actual_units == True %} Ewidencja lokalizacji jednostek Policji {%else%} Ewidencja zarchiwizowanych lokalizacji jednostek Policji {%endif%}
         </h4>
@@ -11,7 +11,7 @@
         <small>Ostatnia aktualizacja: {{last_date.change|date:'d.m.Y (H:i)'}}</small>
         {%endif%}
     </div>
-    <div class="col-md-6 text-center">
+    <div class="col-md-5 text-center">
         <form>
             <div class="d-inline-block mx-4 md-2 text-center">
                 <label for="county" class="county">Powiat</label>

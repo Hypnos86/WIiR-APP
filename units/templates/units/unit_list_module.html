@@ -2,16 +2,27 @@
 {% load static %}
 {% block title %} Jednostki Policji w Województwie Wielkopolskim {% endblock %}
 {% block content %}
-<div class="units-title text-center">
+
+
+<div class="text-center">
     <h4 class="">{% if actual_units == True %} Ewidencja lokalizacji jednostek Policji {%else%} Ewidencja zarchiwizowanych lokalizacji jednostek Policji {%endif%}</h4>
     {%if last_date%}
         <small>Ostatnia aktualizacja: {{last_date.change|date:'d.m.Y (H:i)'}}</small>
     {%endif%}
 </div>
-<div class="row mt-3">
-    <div class="text-center">
+<div class="row m-3">
+    <div class="col-md-2 align-self-end">
+        {% if search%}
+        <div><span>Liczba obiektów: <span class="badge text-white info badge-pill">{{unit_sum}}</span></span></div>
+        {%endif%}
+        {%if query%}
+        <div><span>Znaleziono <span class="badge text-white info badge-pill">{{unit_sum_search}}</span> obiektów</span>
+        </div>
+        {%endif%}
+    </div>
+    <div class="col-md-8 text-center align-self-end">
         <form>
-            <div class="d-inline-block mx-4 md-2 text-center">
+            <div class="d-inline-block mx-2 md-2 text-center">
                 <label for="county" class="county">Powiat</label>
                 <select id="county" name="p" class="form-control" aria-label="Default select example">
                     <option value="">--wybierz--</option>
@@ -20,7 +31,7 @@
                     {%endfor%}
                 </select>
             </div>
-            <div class="d-inline-block mx-4 md-2 text-center">
+            <div class="d-inline-block mx-2 md-2 text-center">
                 <label for="city" class="county">Miasto</label>
                 <select id="city" name="c" class="form-control" aria-label="Default select example">
                     <option value="">--wybierz--</option>
@@ -29,7 +40,7 @@
                     {%endfor%}
                 </select>
             </div>
-            <div class="d-inline-block mx-4 text-center">
+            <div class="d-inline-block mx-2 text-center">
                 <label for="type" class="type">Rodzaj jednostki</label>
                 <select id="type" name="r" class="form-control" aria-label="Default select example">
                     <option value="">--wybierz--</option>
@@ -43,19 +54,10 @@
             </div>
         </form>
     </div>
-</div>
-
-<div class="row">
-    <div class="col-md-3">
-        {% if search%}
-        <p><span>Liczba obiektów: <span class="badge text-white info badge-pill">{{unit_sum}}</span></span></p>
-        {%endif%}
-        {%if query%}
-        <p><span>Znaleziono <span class="badge text-white info badge-pill">{{unit_sum_search}}</span> obiektów</span>
-        </p>
-        {%endif%}
-    </div>
-    <div class="col-md-9 moj-button-right my-9">
+    <div class="col-md-2 moj-button-right align-self-end">
+        <a href="{% url 'units:add_unit'%}">
+            <button class="btn btn-outline-primary my-btn mb-2">Dodaj jednostkę</button>
+        </a>
         {%if actual_units == True%}
         <a href="{% url 'units:archive_units_list'%}">
             <button class="btn btn-outline-danger">Archiwum</button>
@@ -67,7 +69,6 @@
         {%endif%}
     </div>
 </div>
-
 <table class="table table-hover my-table">
     <thead>
     <tr class="my-table-tr">

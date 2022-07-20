@@ -20,19 +20,17 @@
                     <div class="row">
                         <div class="col-md-3">
                             <div class="">
-                                <label class="control-label" for="cleanFrom">Data umowy od</label>
+                                <label class="control-label" for="date_from">Data umowy od</label>
                                 <div class=" ">
-                                    {%if search%}<input type="date" style="{%if query%}display:none;{%endif%}" name="from" class="form-control" id="searchFrom">{%endif%}
-                                    {%if query%}<input type="date" style="{%if not query%}display:none;{%endif%}" name="from" class="form-control" id="cleanFrom" value="{{date_from}}">{%endif%}
+                                    <input type="date" name="from" class="form-control" id="date_from" value="{{date_from}}">
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="">
-                                <label class="control-label" for="cleanTo">Data umowy do</label>
+                                <label class="control-label" for="date_to">Data umowy do</label>
                                 <div class=" ">
-                                    {%if search%}<input type="date" style="{%if query%}display:none;{%endif%}" name="to" class="form-control" id="searchTo">{%endif%}
-                                    {%if query%}<input type="date" style="{%if not query%}display:none;{%endif%}" name="to" class="form-control" id="cleanTo" value="{{date_to}}">{%endif%}
+                                    <input type="date" name="to" class="form-control" id="date_to" value="{{date_to}}">
                                 </div>
                             </div>
                         </div>
@@ -166,8 +164,8 @@
 
     function cleanSearch(){
         $("#q").val("");
-        //$("#cleanButton").hide();
-        //$("#searchButton").show();
+        $("#date_from").val("");
+        $("#date_to").val("");
         $("form").submit();
         }
 </script>

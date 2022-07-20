@@ -155,13 +155,12 @@ def edit_order(request, id):
             order_form.save()
             return redirect('cpvdict:order_list')
     return render(request, 'cpvdict/order_form.html',
-                  {'order_form': order_form, 'unit_edit': unit_edit, 'new': False, 'units': units})
+                  {'order_form': order_form, 'unit_edit': unit_edit,'order_edit':order_edit, 'new': False, 'units': units})
 
 
 @login_required
 def make_archive_year_list(request):
     now_year = current_year()
-    # Filtrowanie faktur sprzedażowych
     all_year_order = Order.objects.all().values('date__year').exclude(date__year=now_year)
     year_order_set = set([year['date__year'] for year in all_year_order])
     year_order_list = sorted(year_order_set, reverse=True)

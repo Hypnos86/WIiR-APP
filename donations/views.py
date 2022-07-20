@@ -93,7 +93,6 @@ def show_information_popup(request, id):
 def show_archive_year_list(request):
     now_year = current_year()
     # Filtrowanie wniosków
-
     all_year_order = Application.objects.all().values('date_receipt__year').exclude(date_receipt__year=now_year)
     year_order_set = set([year['date_receipt__year'] for year in all_year_order])
     year_order_list = sorted(year_order_set, reverse=True)

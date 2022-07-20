@@ -10,7 +10,7 @@
     {%endif%}
 </div>
 <div class="row my-3">
-    <div class="col-md-3">
+    <div class="col-md-3 align-self-end">
         <span>Liczba zadań: </span>
         <span class="badge text-white info badge-pill">{{projects_sum}}</span>
     </div>
@@ -25,7 +25,7 @@
             </form>
         </div>
     </div>
-        <div class="col-md-3 moj-button-right ">
+        <div class="col-md-3 moj-button-right align-self-end">
             <a href="{% url 'investments:add_new_project'%}">
                 <button type="button" class="btn btn-outline-primary my-btn ">
                     <span class="bi bi-plus-circle"> Dodaj zadanie</span>
@@ -54,7 +54,7 @@
             {%endif%}
             <td valign="middle"><span>{{project.project_title}}</span></td>
             <td align="right" valign="middle">{%if project.investment_cost_estimate_value%}<span class="pe-3">{{project.investment_cost_estimate_value|intcomma}}&nbspzł.</span>{%endif%}</td>
-            <td class="left" valign="middle" data-toggle="info" title="Powiat: {{project.unit.county.name}}"><span class="ps-4">{{project.unit.type.type_full}} - {{project.unit.city}}<br><small class="ps-4">{{project.unit.address}}, {{project.unit.zip_code}} {{project.unit.city}}</small></span></td>
+            <td class="left" valign="middle" data-toggle="info" title="Powiat: {{project.unit.county.name}}"><span>{{project.unit.type.type_full}} - {{project.unit.city}}<br><small>{{project.unit.address}}, {{project.unit.zip_code}} {{project.unit.city}}</small></span></td>
             <td align="right"  valign="middle">
                 <a class="m-2" href="{%url 'investments:show_project' project.id%}"><button data-toggle="info" title="Pokaż" type="button" class="btn btn-outline-primary icon-color my-1"><i class="bi bi-eye"></i></button></a>
                 <a class="m-2" href="{%url 'investments:edit_project' project.id%}"><button data-toggle="info" title="Edytuj" type="submit" class="btn btn-outline-primary icon-color my-1"><i class="bi bi-pencil-square"></i></button></a>

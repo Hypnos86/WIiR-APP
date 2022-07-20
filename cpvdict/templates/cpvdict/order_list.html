@@ -18,38 +18,36 @@
 <div class="mt-3">
     <div class="row">
         <div class="col-md-3 align-self-end">
-            <p class=""><span>Liczba zleceń: </span><span class="badge text-white info badge-pill">{{ordersum}}</span></p>
+            <div class=""><span>Liczba zleceń: </span><span class="badge text-white info badge-pill">{{ordersum}}</span></div>
         </div>
         <div class="col-md-6">
             <section class="w-100 pb-4 d-flex justify-content-center align-items-center flex-column">
                     <form method="get">
                         <div class="row">
-                        <div class="col-md-3">
-                            <div class="">
-                                <label class="control-label" for="cleanFrom">Data zlecenia od</label>
-                                <div class=" ">
-                            {%if search%}<input type="date" style="{%if query%}display:none;{%endif%}" name="from" class="form-control" id="searchFrom">{%endif%}
-                            {%if query%}<input type="date" style="{%if not query%}display:none;{%endif%}" name="from" class="form-control" id="cleanFrom" value="{{date_from}}">{%endif%}
+                            <div class="col-md-3">
+                                <div>
+                                    <label class="control-label" for="date_from">Data zlecenia od</label>
+                                    <div>
+                                        <input type="date" name="from" class="form-control" id="date_from" value="{{date_from}}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                            <div>
+                                <label class="control-label" for="date_to">Data zlecenia do</label>
+                                <div>
+                                    <input type="date" name="to" class="form-control" id="date_to" value="{{date_to}}">
+                                </div>
+                            </div>
+                            </div>
+                            <div class="col-md-5 d-flex align-items-end">
+                                <div class="input-group">
+                                    <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj zlecenia" aria-label="Search" aria-describedby="search-addon" value="{%if query%}{{q}}{%endif%}">
+                                    <button id="searchButton" style="{%if query%}display:none;{%endif%}" type="submit" class="btn btn-outline-primary my-btn">Szukaj</button>
+                                    <button id="cleanButton"  style="{%if not query%}display:none;{%endif%}" type="button" class="btn btn-outline-primary my-btn" onclick="cleanSearch()">Wyczyść</button>
                                 </div>
                             </div>
                         </div>
-                    <div class="col-md-3">
-                        <div class="">
-                            <label class="control-label" for="cleanTo">Data zlecenia do</label>
-                            <div class=" ">
-                                {%if search%}<input type="date" style="{%if query%}display:none;{%endif%}" name="to" class="form-control" id="searchTo">{%endif%}
-                                {%if query%}<input type="date" style="{%if not query%}display:none;{%endif%}" name="to" class="form-control" id="cleanTo" value="{{date_to}}">{%endif%}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-5 d-flex align-items-end">
-                        <div class="input-group">
-                            <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj zlecenia" aria-label="Search" aria-describedby="search-addon" value="{%if query%}{{q}}{%endif%}">
-                        <button id="searchButton" style="{%if query%}display:none;{%endif%}" type="submit" class="btn btn-outline-primary my-btn">Szukaj</button>
-                        <button id="cleanButton"  style="{%if not query%}display:none;{%endif%}" type="button" class="btn btn-outline-primary my-btn" onclick="cleanSearch()">Wyczyść</button>
-                        </div>
-                    </div>
-                    </div>
                     </form>
             </section>
         </div>
@@ -167,8 +165,8 @@
 
     function cleanSearch(){
         $("#q").val("");
-        //$("#cleanButton").hide();
-        //$("#searchButton").show();
+        $("#date_from").val("");
+        $("#date_to").val("");
         $("form").submit();
         }
 </script>
