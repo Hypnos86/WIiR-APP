@@ -347,7 +347,8 @@ def corrective_note_list(request):
 
         return render(request, "invoices/corrective_note_list.html", {'notes': notes,
                                                                       'notes_len': notes_len,
-                                                                      'query': query, 'year': year})
+                                                                      'query': query, 'year': year, 'q': q,
+                                                                      'date_from': date_from, 'date_to': date_to})
     else:
         return render(request, 'invoices/corrective_note_list.html', {'notes': note_list,
                                                                       'notes_len': notes_len,
@@ -391,7 +392,9 @@ def corrective_note_list_archive(request, year):
 
         return render(request, "invoices/corrective_note_list_archive.html", {'notes': notes,
                                                                               'note_len': notes_len,
-                                                                              'query': query, 'year': year})
+                                                                              'query': query, 'year': year, 'q': q,
+                                                                              'date_from': date_from,
+                                                                              'date_to': date_to})
     else:
         return render(request, 'invoices/corrective_note_list_archive.html',
                       {'notes': note_list, 'notes_len': notes_len, 'year': year, 'search': search})

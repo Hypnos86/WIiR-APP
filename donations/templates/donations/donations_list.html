@@ -37,7 +37,7 @@
                     </div>
                     <div class="col-md-5 d-flex align-items-end">
                         <div class="input-group">
-                            <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj darowizny" aria-label="Search" aria-describedby="search-addon" value="{%if query%}{{q}}{%endif%}">
+                            <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj darowizny" aria-label="Search" aria-describedby="search-addon" value="{{q}}">
                         <button id="searchButton" style="{%if query%}display:none;{%endif%}" type="submit" class="btn btn-outline-primary my-btn">Szukaj</button>
                         <button id="cleanButton"  style="{%if not query%}display:none;{%endif%}" type="button" class="btn btn-outline-primary my-btn" onclick="cleanSearch()">Wyczyść</button>
                         </div>
