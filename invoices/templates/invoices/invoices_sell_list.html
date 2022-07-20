@@ -32,27 +32,26 @@
             <form method="get">
                 <div class="row">
                     <div class="col-md-3">
-                        <div class="">
-                            <label class="control-label" for="cleanFrom">Data umowy od</label>
+                        <div>
+                            <label class="control-label" for="date_from">Data faktury od</label>
                             <div class=" ">
-                        {%if search%}<input type="date" style="{%if query%}display:none;{%endif%}" name="from" class="form-control" id="searchFrom">{%endif%}
-                        {%if query%}<input type="date" style="{%if not query%}display:none;{%endif%}" name="from" class="form-control" id="cleanFrom" value="{{date_from}}">{%endif%}
+                                <input type="date" name="from" class="form-control" id="date_from" value="{{date_from}}">
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="">
-                            <label class="control-label" for="cleanTo">Data umowy do</label>
+                        <div>
+                            <label class="control-label" for="date_to">Data faktury do</label>
                             <div class=" ">
-                                {%if search%}<input type="date" style="{%if query%}display:none;{%endif%}" name="to" class="form-control" id="searchTo">{%endif%}
-                                {%if query%}<input type="date" style="{%if not query%}display:none;{%endif%}" name="to" class="form-control" id="cleanTo" value="{{date_to}}">{%endif%}
+                                <input type="date" name="to" class="form-control" id="date_to" value="{{date_to}}">
                             </div>
                         </div>
                     </div>
                     <div class="col-md-5 d-flex align-items-end">
                         <div class="input-group">
-                            <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj dokumentu" aria-label="Search" aria-describedby="search-addon">
-                            <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
+                            <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj dokumentu" aria-label="Search" aria-describedby="search-addon" value="{{q}}">
+                            <button id="searchButton" style="{%if query%}display:none;{%endif%}" type="submit" class="btn btn-outline-primary my-btn">Szukaj</button>
+                            <button id="cleanButton"  style="{%if not query%}display:none;{%endif%}" type="button" class="btn btn-outline-primary my-btn" onclick="cleanSearch()">Wyczyść</button>
                         </div>
                     </div>
                 </div>
@@ -177,12 +176,14 @@
         $("#info_sell_Modal .modal-content").load(url);
         $("#info_sell_Modal").modal("show");
         }
+
     function submitForm(){
         $("#submitButton").closest("form").submit();
         }
+
     $(function () {
         $('[data-toggle="info"]').tooltip()
-    })
+        })
 
     function generatePdf(button){
         var url = $(button).data("url");
@@ -192,6 +193,13 @@
         var urlParams = "?q=" + q + "&from=" + date_from + "&to=" + date_to;
         console.log(url + urlParams);
         window.open(url + urlParams, '_blank').focus();
-    }
+        }
+
+    function cleanSearch(){
+        $("#q").val("");
+        $("#date_from").val("");
+        $("#date_to").val("");
+        $("form").submit();
+        }
 </script>
 {%endblock%}

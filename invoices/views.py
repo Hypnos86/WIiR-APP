@@ -47,20 +47,33 @@ def buy_invoices_list(request):
     invoices_buy_sum = len(invoices_buy)
     year = current_year()
     q = request.GET.get("q")
+    date_from = request.GET.get('from')
+    date_to = request.GET.get('to')
 
     paginator = Paginator(invoices_buy, 40)
     page_number = request.GET.get('page')
     invoices_buy_list = paginator.get_page(page_number)
 
-    if q:
-        invoicesbuy = invoices_buy.filter(no_invoice__icontains=q) | invoices_buy.filter(
-            sum__startswith=q) | invoices_buy.filter(contractor__name__icontains=q) | invoices_buy.filter(
-            contractor__no_contractor__startswith=q) | invoices_buy.filter(
-            invoiceitems__county__name__icontains=q)
+    if q or date_from or date_to:
+        if q:
+            invoicesbuy = invoices_buy.filter(no_invoice__icontains=q) \
+                          | invoices_buy.filter(sum__startswith=q) \
+                          | invoices_buy.filter(contractor__name__icontains=q) \
+                          | invoices_buy.filter(contractor__no_contractor__startswith=q) \
+                          | invoices_buy.filter(invoiceitems__county__name__icontains=q)
+
+        if date_from:
+            invoicesbuy = invoices_buy.filter(date_receipt__gte=date_from)
+
+        if date_to:
+            invoicesbuy = invoices_buy.filter(date_receipt__lte=date_to)
+
         invoices_buy_filter_sum = len(invoicesbuy)
-        return render(request, 'invoices/invoices_buy_list.html', {"invoices": invoicesbuy,
-                                                                   "invoices_buy_sum": invoices_buy_filter_sum,
-                                                                   "query": query, "year": year,
+        return render(request, 'invoices/invoices_buy_list.html', {'invoices': invoicesbuy,
+                                                                   'invoices_buy_sum': invoices_buy_filter_sum,
+                                                                   'query': query, 'year': year, 'q': q,
+                                                                   'date_from': date_from,
+                                                                   'date_to': date_to
                                                                    })
     else:
         return render(request, 'invoices/invoices_buy_list.html', {"invoices": invoices_buy_list,
@@ -78,16 +91,43 @@ def show_info_buy(request, id):
 @login_required
 def buy_invoices_list_archive(request, year):
     invoices_buy = InvoiceBuy.objects.all().filter(date_receipt__year=year).order_by("-date_receipt")
-    invoices_buy_sum = len(invoices_buy)
     query = "Wyczyść"
     search = "Szukaj"
     invoices_buy_sum = len(invoices_buy)
     q = request.GET.get("q")
+    date_from = request.GET.get('from')
+    date_to = request.GET.get('to')
 
-    context = {'invoices': invoices_buy,
-               'year': year,
-               'invoices_buy_sum': invoices_buy_sum}
-    return render(request, 'invoices/invoices_buy_list_archive.html', context)
+    paginator = Paginator(invoices_buy, 40)
+    page_number = request.GET.get('page')
+    invoices_buy_list = paginator.get_page(page_number)
+
+    if q or date_from or date_to:
+        if q:
+            invoicesbuy = invoices_buy.filter(no_invoice__icontains=q) \
+                          | invoices_buy.filter(sum__startswith=q) \
+                          | invoices_buy.filter(contractor__name__icontains=q) \
+                          | invoices_buy.filter(contractor__no_contractor__startswith=q) \
+                          | invoices_buy.filter(invoiceitems__county__name__icontains=q)
+
+        if date_from:
+            invoicesbuy = invoices_buy.filter(date_receipt__gte=date_from)
+
+        if date_to:
+            invoicesbuy = invoices_buy.filter(date_receipt__lte=date_to)
+
+        invoices_buy_filter_sum = len(invoicesbuy)
+        return render(request, 'invoices/invoices_buy_list_archive.html', {'invoices': invoicesbuy,
+                                                                           'invoices_buy_sum': invoices_buy_filter_sum,
+                                                                           'query': query, 'year': year, 'q': q,
+                                                                           'date_from': date_from,
+                                                                           'date_to': date_to
+                                                                           })
+    else:
+        return render(request, 'invoices/invoices_buy_list_archive.html', {"invoices": invoices_buy_list,
+                                                                           "invoices_buy_sum": invoices_buy_sum,
+                                                                           "search": search, "year": year,
+                                                                           })
 
 
 @login_required
@@ -185,7 +225,8 @@ def sell_invoices_list(request):
         return render(request, "invoices/invoices_sell_list.html", {'invoices': invoicessell,
                                                                     'invoices_sell_len': invoices_sell_filter_sum,
                                                                     'invoices_sell_sum': invoices_sell_sum,
-                                                                    'query': query, 'year': year})
+                                                                    'query': query, 'year': year, 'q': q,
+                                                                    'date_from': date_from, 'date_to': date_to})
     else:
         return render(request, "invoices/invoices_sell_list.html", {'invoices': invoicessell_list,
                                                                     'invoices_sell_len': invoices_sell_len,
@@ -243,7 +284,8 @@ def sell_invoices_list_archive(request, year):
         return render(request, 'invoices/invoices_sell_list_archive.html', {'invoices': invoices_sell,
                                                                             'invoices_sell_len': invoices_sell_filter_sum,
                                                                             'invoices_sell_sum': invoices_sell_sum,
-                                                                            'query': query, 'year': year})
+                                                                            'query': query, 'year': year, 'q': q,
+                                                                            'date_from': date_from, 'date_to': date_to})
     else:
         return render(request, 'invoices/invoices_sell_list_archive.html', {'invoices': invoicessell_list,
                                                                             'invoices_sell_len': invoices_sell_len,
