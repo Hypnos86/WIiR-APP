@@ -14,6 +14,6 @@ class UnitForm(ModelForm):
                   'city': 'Miasto',
                   'information': 'Informacje',
                   'remarks': 'Uwagi',
-                  'status': 'Status'}
+                  'status': 'Aktualna'}
         exclude = ('change', 'author')
         widgets = {'information': Textarea(attrs={'rows': 3})}

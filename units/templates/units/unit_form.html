@@ -6,8 +6,8 @@
 <div class="row">
     <div class="col-md-3">
         <a href="{%url 'units:create_units_list_editable'%}">
-                <button class="btn btn-outline-primary"><span class="bi bi-chevron-compact-left">Cofnij</span></button>
-            </a>
+            <button class="btn btn-outline-primary"><span class="bi bi-chevron-compact-left">Cofnij</span></button>
+        </a>
     </div>
     <div class="col-md-6">
         <h4 class="text-center">{%if new%}Dodawanie nowej jednostki{%else%}Edytowanie jednostki{%endif%}</h4>
@@ -23,10 +23,16 @@
             <div class="col-md-4 my-2">{{unit_form.zip_code|bootstrap}}</div>
             <div class="col-md-4 my-2">{{unit_form.city|bootstrap}}</div>
             <div class="col-md-12 my-2">{{unit_form.information|bootstrap}}</div>
-        </div>
-        <div>
-            <div class="moj-button-right my-4">
-                <button type="submit" class="btn btn-outline-primary pr-3">Zapisz</button>
+            <div class="ol-md-12 my-2">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="id_state">Stan jednostki</label>
+                        <div class="list-group-item" id="id_state">{{unit_form.status|bootstrap}}</div>
+                    </div>
+                    <div class="col-md-9 align-self-end moj-button-right">
+                        <button type="submit" class="btn btn-outline-primary">Zapisz</button>
+                    </div>
+                </div>
             </div>
         </div>
     </form>

@@ -81,6 +81,7 @@
         <th align="center" valign="middle" width="400" scope="col" class="text-center">Informacje</th>
         <th align="center" valign="middle" width="200" scope="col" class="text-center">Zarządca</th>
         <th align="center" valign="middle" width="50px" scope="col" class="text-center">Stan</th>
+        <th align="center" valign="middle" width="50px" scope="col" class="text-center"></th>
     </tr>
     </thead>
     <tbody>
@@ -107,6 +108,12 @@
         {%else%}
         <td data-toggle="info" align="center" valign="middle" title="Zdany"><i class="bi bi-x-circle-fill text-danger"></i></td>
         {%endif%}
+        <td><a class="m-2" href="{% url 'units:edit_unit' unit.id %}">
+                <button data-toggle="info" title="Edytuj" type="submit" class="btn btn-outline-primary icon-color my-1">
+                    <i class="bi bi-pencil-square"></i>
+                </button>
+            </a>
+        </td>
     </tr>
     {%endfor%}
 
