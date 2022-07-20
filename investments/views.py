@@ -1,10 +1,11 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.core.paginator import Paginator
 from investments.models import Project
 from investments.forms import ProjectForm
 from units.models import Unit
 from contracts.models import ContractAuction
+from contracts.forms import ContractAuctionForm
 from main.models import Employer
 from gallery.models import Gallery
 
@@ -44,7 +45,7 @@ def investment_projects_list(request):
         return render(request, 'investments/investments_projects.html', {'projects': projects,
                                                                          'query': query,
                                                                          'last_date': last_date,
-                                                                         'projects_sum': projects_sum, 'q':q})
+                                                                         'projects_sum': projects_sum, 'q': q})
     else:
         return render(request, 'investments/investments_projects.html', {'projects': projects_lis,
                                                                          'search': search,
@@ -117,16 +118,15 @@ def show_galleries_popup(request, id):
 @login_required
 def add_contract_to_project(request, id):
     project = get_object_or_404(Project, pk=id)
-    add_contract = ContractAuction.objects.all().filter(investments_project=None)
-    c = request.GET.get("q")
-    context = {'add_contract': add_contract,
-               'project_id': id}
+    contracts = ContractAuction.objects.all().filter(investments_project=None)
 
     if request.method == 'POST':
-        if c:
-            add_contract.get(pk=c)
-            add_contract.save()
-        return redirect('investments:investment_projects_list')
+        selected_contract = request.POST.get('choice')
+        if selected_contract:
+            contract = get_object_or_404(ContractAuction, pk=selected_contract)
+            contract.investments_project = project
+            contract.save()
+        return redirect(reverse('investments:edit_project', kwargs={'id': id}))
 
-    if request.method == 'GET':
-        return render(request, 'investments/add_contract_to_project_form.html', context)
+    return render(request, 'investments/add_contract_to_project_form.html', {'contracts': contracts,
+                                                                             'project_id': id})

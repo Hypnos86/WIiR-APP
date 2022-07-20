@@ -2,30 +2,29 @@
 {% load static %}
 {% block content %}
 <div class="container ">
-    <form class="m-2 p-5" method="post" action="{% url 'investments:add_contract_to_project' project_id %}"
-          enctype="multipart/form-data">
+    <form class="m-2 p-5" method="POST" action="{% url 'investments:add_contract_to_project' project_id %}">
         {%csrf_token%}
         <label for="contract">Umowy</label>
-        <select id="contract" name="q" class="form-select" aria-label="Default select example">
-            <option selected>--wybierz umowę--</option>
-            {%for contract in add_contract%}
+        <select id="contract" name="choice" class="form-control" aria-label="Default select example">
+            <option>--wybierz umowę--</option>
+            {%for contract in contracts%}
             <option value="{{contract.id}}">{{contract}}</option>
             {%endfor%}
         </select>
         <div class="row">
             <div class="col-md-12 moj-button-right mt-3">
-                <button id="submitButton" type="submit" class="btn btn-outline-primary my-btn"><span
-                        class="bi bi-save2"> Przypisz</span></button>
+                <button type="submit" class="btn btn-outline-primary my-btn">
+                    <span class="bi bi-save2"> Przypisz</span>
+                </button>
             </div>
         </div>
     </form>
 </div>
 <script>
     document.getElementById("button-units").classList.remove("active");
-    document.getElementById("button-invoices").classList.remove("active");
-    document.getElementById("button-contractors").classList.remove("active");
-    document.getElementById("button-cpv").classList.remove("active");
+    document.getElementById("button-record").classList.remove("active");
     document.getElementById("button-investments").classList.add("active");
+    document.getElementById("button-contractzzp").classList.remove("active");
     document.getElementById("button-projects").classList.add("active");
     document.getElementById("button-cpv").classList.remove("active");
 </script>
