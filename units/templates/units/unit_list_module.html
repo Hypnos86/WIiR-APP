@@ -55,18 +55,7 @@
         </form>
     </div>
     <div class="col-md-2 moj-button-right align-self-end">
-        <a href="{% url 'units:add_unit'%}">
-            <button class="btn btn-outline-primary my-btn mb-2">Dodaj jednostkę</button>
-        </a>
-        {%if actual_units == True%}
-        <a href="{% url 'units:archive_units_list'%}">
-            <button class="btn btn-outline-danger">Archiwum</button>
-        </a>
-        {%else%}
-        <a href="{% url 'units:units_list'%}">
-            <button class="btn btn-outline-primary">Aktualne</button>
-        </a>
-        {%endif%}
+        <a href="{% url 'units:add_unit'%}"><button class="btn btn-outline-primary my-btn mb-2">Dodaj jednostkę</button></a>
     </div>
 </div>
 <table class="table table-hover my-table">
@@ -78,7 +67,7 @@
         <th align="center" valign="middle" width="300" scope="col" class="text-center">Adres</th>
         <th align="center" valign="middle" width="150" scope="col" class="text-center">Kod pocztowy</th>
         <th align="center" valign="middle" width="250" scope="col" class="text-center">Miasto</th>
-        <th align="center" valign="middle" width="400" scope="col" class="text-center">Informacje</th>
+        <th align="center" valign="middle" width="400" scope="col" class="text-center">Obiekt</th>
         <th align="center" valign="middle" width="200" scope="col" class="text-center">Zarządca</th>
         <th align="center" valign="middle" width="50px" scope="col" class="text-center">Stan</th>
         <th align="center" valign="middle" width="50px" scope="col" class="text-center"></th>

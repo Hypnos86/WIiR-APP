@@ -201,3 +201,23 @@ class AnnexContractAuction(models.Model):
 
     def __str__(self):
         return f'Aneks z dnia {self.date} {self.scan}'
+
+
+class MediaType(models.Model):
+    class Meta:
+        verbose_name = 'Media'
+        verbose_name_plural = 'Rodzaje Mediów'
+
+    type = models.CharField('Media', max_length=25)
+
+    def __str__(self):
+        return f'{self.type}'
+
+
+class ContractMedia(models.Model):
+    class Meta:
+        verbose_name = 'Umowa na media'
+        verbose_name_plural = 'Umowy na media'
+
+    date = models.DateField('Data umowy')
+    pass

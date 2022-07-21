@@ -38,9 +38,8 @@ class ContractImmovablesResource(resources.ModelResource):
 
 @admin.register(ContractImmovables)
 class ContractAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['date', 'no_contract', 'contractor', 'period_of_validity', 'type_of_contract',
-                    'usable_area', 'unit', 'state', 'creation_date',
-                    'change', 'author']
+    list_display = ['date', 'no_contract', 'contractor', 'period_of_validity', 'type_of_contract', 'unit', 'state',
+                    'creation_date', 'change', 'author']
     search_fields = ['contractor__name', 'contractor__no_contractor', 'no_contract', 'unit__county__name',
                      'unit__city', 'unit__type__type_short', 'type_of_contract__type']
     list_filter = ['state']
@@ -81,9 +80,9 @@ class ContractAuctionResource(resources.ModelResource):
 
 
 @admin.register(ContractAuction)
-class ContractAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['date', 'no_contract', 'contractor', 'price', 'work_scope', 'unit', 'guarantee',
-                    'creation_date', 'change', 'author']
+class ContractAuctionAdmin(ExportMixin, admin.ModelAdmin):
+    list_display = ['date', 'no_contract', 'contractor', 'price', 'work_scope', 'unit', 'creation_date', 'change',
+                    'author']
     search_fields = ['contractor__name', 'no_contract', 'unit__county__name', 'unit__type__type_short', 'unit__city',
                      'worker__name', 'worker__last_name']
     filter_horizontal = ['worker']

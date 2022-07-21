@@ -5,8 +5,8 @@
 {% load thumbnail%}
 {% block title %} {{project_form.project_title}} {% endblock %}
 {% block content %}
-<div class="row">
-    <div class="row col-md-10">
+<div class="row d-flex justify-content-center">
+    <div class="row col-md-9">
         <div class="col-md-2 moj-button-left"><a href="{%url 'investments:investment_projects_list'%}">
             <button class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span>
             </button>
@@ -19,8 +19,8 @@
         <div class="container">
             <div class="row my-3">
                 <div class="d-flex justify-content-between">
-                    <div class="container col-md-3 mx-1">
-                        <div class="card col-md-12">
+                    <div class="container col-md-auto mx-1">
+                        <div class="card">
                             <div class="card-body">
                                 <h6 class="card-title bi bi-building pb-2 ">{%if project_form.unit.type.type_full == 'Inne'%} {%else%} {{project_form.unit.type.type_full}} {%endif%}
                                     {{project_form.unit.city}}</h6>
@@ -32,11 +32,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="container col-md-3 mx-1">
-                        <div class="card col-md-12">
+                    <div class="container col-md-auto mx-1">
+                        <div class="card">
                             <div class="card-body">
                                 <h6 class="card-title bi bi-journal-check pb-2">Program inwestycji</h6>
-                                <h6 class="card-subtitle mb-2 text-muted">Data akceptacji programu:
+                                <h6 class="card-subtitle mb-2 text-muted">Data akceptacji:
                                     {{project_form.date_of_acceptance}} r.</h6>
                                 <h6 class="card-subtitle mb-2 text-muted">L.dz.:
                                     {{project_form.no_acceptance_document}}</h6>
@@ -56,8 +56,8 @@
                         </div>
                     </div>
                     {%if project_form.realized%}
-                    <div class="container col-md-3 mx-1">
-                        <div class="card col-md-12 ">
+                    <div class="container col-md-auto mx-1">
+                        <div class="card">
                             <div class="card-body">
                                 <h6 class="card-title bi bi-journal-bookmark pb-2">Rozliczenie</h6>
                                 {%if project_form.date_of_settlement%}
@@ -78,12 +78,12 @@
                         </div>
                     </div>
                     {%endif%}
-                    <div class="container col-md-3 mx-1">
-                        <div class="card col-md-12">
+                    <div class="container col-md-auto mx-1">
+                        <div class="card">
                             <div class="card-body">
                                 <h6 class="card-title bi bi-person-lines-fill pb-2">Majster</h6>
                                 {%for worker in project_form.worker.all%}
-                                <h6 class="card-subtitle mb-2 text-muted">{{worker.name}} {{worker.last_name}} - <small>{{worker.industry}}</small>
+                                <h6 class="card-subtitle mb-2 text-muted"><span data-toggle="info" title="{{worker.industry}}">{{worker.name}} {{worker.last_name}}</span>
                                 </h6>{%endfor%}
                             </div>
                         </div>
@@ -123,10 +123,11 @@
             <small class="text-muted">Zmiany: {{project_form.change|date:'d.m.Y (H:i)'}} - {{project_form.author}}</small>
         </div>
     </div>
-    <div class="col-md-2 text-center d-flex align-content-between flex-wrap">
+    <div class="col-md-3 text-center d-flex align-content-between flex-wrap">
         <div class="col-md-12">
             <h6 class="bi bi-folder text-center"> Umowy realizujące zadanie</h6>
             {%for contract in contracts%}
+                {%if contract.scan%}
                 <div class="my-4">
                     <a href="/media/{{contract.scan}}" target="_blank">
                         <button class="btn btn-outline-primary button-chose-invoices my-btn">
@@ -136,6 +137,15 @@
                         </button>
                     </a>
                 </div>
+                {%else%}
+                <div class="my-4">
+                    <button class="btn btn-outline-primary button-chose-invoices my-btn" data-toggle="info" title="BRAK SKANU">
+                        <i class="bi bi-arrow-return-right">
+                            <span> {{contract.no_contract}} z dnia {{contract.date|date:"d.m.Y"}}</span>
+                        </i>
+                    </button>
+                </div>
+                {%endif%}
             {%endfor%}
         </div>
         {%if user.accessmodule.gallery_module_edit%}
@@ -160,8 +170,6 @@
     document.getElementById("button-units").classList.remove("active");
     document.getElementById("button-record").classList.remove("active");
     document.getElementById("button-investments").classList.add("active");
-    document.getElementById("button-contractzzp").classList.remove("active");
-    document.getElementById("button-projects").classList.add("active");
     document.getElementById("button-cpv").classList.remove("active");
 
     function openModal(){
@@ -173,5 +181,9 @@
     function submitForm(){
         $("#submitButton").closest("form").submit();
         }
+
+    $(function () {
+        $('[data-toggle="info"]').tooltip()
+    })
 </script>
 {%endblock%}

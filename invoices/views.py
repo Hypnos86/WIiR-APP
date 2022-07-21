@@ -508,7 +508,13 @@ def make_verification(request):
 
     if date_from and date_to:
         invoices_buy_list = invoices_buy.filter(date_of_payment__range=[date_from, date_to])
+
+        for invoice in invoices_buy_list.values('date_of_payment'):
+            print(invoice)
+            # invoice_sum = invoice.aggregate(Sum('sum'))
+
         invoices_buy_sum = len(invoices_buy_list)
+
         try:
             verification_all_dict = invoices_buy_list.aggregate(Sum('sum'))
             verification_all = round(verification_all_dict['sum__sum'], 2)
@@ -518,8 +524,8 @@ def make_verification(request):
         return render(request, 'invoices/verification.html', {'invoices': invoices_buy_list,
                                                               'invoices_buy_sum': invoices_buy_sum,
                                                               'query': query, 'year': year,
-                                                              'date_from': date_from_obj,
-                                                              'date_to': date_to_obj,
+                                                              'date_from': date_from,
+                                                              'date_to': date_to,
                                                               'verification_all': verification_all})
     else:
         invoices_buy_sum = 0

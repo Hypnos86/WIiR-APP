@@ -131,8 +131,10 @@ def add_unit(request):
 
     if request.method == 'POST':
         if unit_form.is_valid():
+            instance = unit_form.save(commit=False)
+            instance.author = request.user
             unit_form.save()
-            return redirect('units:units_list')
+            return redirect('units:create_units_list_editable')
     return render(request, 'units/unit_form.html', {'unit_form': unit_form, 'new': True})
 
 
@@ -141,11 +143,12 @@ def edit_unit(request, id):
     unit_edit = get_object_or_404(Unit, pk=id)
     unit_form = UnitForm(request.POST or None, instance=unit_edit)
 
-    if request.method == ' POST':
+    if request.method == 'POST':
         if unit_form.is_valid():
-            instance = unit_edit.save(commit=False)
+            instance = unit_form.save(commit=False)
             instance.author = request.user
             unit_form.save()
+            return redirect('units:create_units_list_editable')
     return render(request, 'units/unit_form.html', {'unit_form': unit_form, 'new': False})
 
 

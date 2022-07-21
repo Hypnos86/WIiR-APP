@@ -4,7 +4,7 @@
 {%block title%}{%if new%}Nowe zadanie{%else%}Edycja zadania{%endif%}{%endblock%}
 {%block investmentsmenu%}
 <div class="container">
-    <h3 class="text-center m-4">Nowe zadanie inwestycyjne</h3>
+    <h3 class="text-center m-4">{%if new%}Nowe zadanie inwestycyjne{%else%}Edycja zadania inwestycyjnego{%endif%}</h3>
     <form method="post" enctype="multipart/form-data">
         {%csrf_token%}
         <div class="row">

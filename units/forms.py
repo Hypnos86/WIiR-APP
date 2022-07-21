@@ -12,7 +12,7 @@ class UnitForm(ModelForm):
                   'address': 'Adres',
                   'zip_code': 'kod pocztowy',
                   'city': 'Miasto',
-                  'information': 'Informacje',
+                  'information': 'Obiekt',
                   'remarks': 'Uwagi',
                   'status': 'Aktualna'}
         exclude = ('change', 'author')

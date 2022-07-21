@@ -14,24 +14,22 @@
     </div>
 </div>
 <div class="container col-md-6">
-    <form method="post">
+    <form method="POST">
         {%csrf_token%}
         <div class="row col">
             <div class="col-md-6 my-2">{{unit_form.county|bootstrap}}</div>
             <div class="col-md-6 my-2">{{unit_form.type|bootstrap}}</div>
             <div class="col-md-4 my-2">{{unit_form.address|bootstrap}}</div>
-            <div class="col-md-4 my-2">{{unit_form.zip_code|bootstrap}}</div>
-            <div class="col-md-4 my-2">{{unit_form.city|bootstrap}}</div>
+            <div class="col-md-2 my-2">{{unit_form.zip_code|bootstrap}}</div>
+            <div class="col-md-3 my-2">{{unit_form.city|bootstrap}}</div>
+            <div class="col-md-3 my-2">
+                        <label for="id_state">Stan jednostki</label>
+                        <div class=form-control id="id_state">{{unit_form.status|bootstrap}}</div>
+                    </div>
             <div class="col-md-12 my-2">{{unit_form.information|bootstrap}}</div>
             <div class="ol-md-12 my-2">
-                <div class="row">
-                    <div class="col-md-3">
-                        <label for="id_state">Stan jednostki</label>
-                        <div class="list-group-item" id="id_state">{{unit_form.status|bootstrap}}</div>
-                    </div>
-                    <div class="col-md-9 align-self-end moj-button-right">
-                        <button type="submit" class="btn btn-outline-primary">Zapisz</button>
-                    </div>
+                <div class="col align-self-end moj-button-right">
+                    <button type="submit" class="btn btn-outline-primary">Zapisz</button>
                 </div>
             </div>
         </div>
