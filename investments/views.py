@@ -79,10 +79,12 @@ def edit_project(request, id):
     project_form = ProjectForm(request.POST or None, request.FILES or None, instance=project_edit)
     project_form.fields['worker'].queryset = Employer.objects.all().filter(industry_specialist=True)
     units = Unit.objects.all()
+    unit_edit = project_edit.unit
 
     context = {'project_form': project_form,
                'units': units,
                'project': project_edit,
+               'unit_edit': unit_edit,
                'new': False}
 
     if request.method == 'POST':

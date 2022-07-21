@@ -1,4 +1,5 @@
 from django.db import models
+from tinymce import models as tinymce_models
 from units.models import Unit
 from sourcefinancing.models import Section, Group, Paragraph
 from main.models import Employer
@@ -26,8 +27,10 @@ class Project(models.Model):
     group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='project', verbose_name='Grupa')
     paragraph = models.ForeignKey(Paragraph, on_delete=models.CASCADE, related_name='project',
                                   verbose_name='Paragraf')
-    source_financing = models.TextField('Opis źródła finansowania', null=True, blank=True)
-    information = models.TextField('Informacje', null=True, blank=True)
+    # source_financing = models.TextField('Opis źródła finansowania', null=True, blank=True)
+    source_financing = tinymce_models.HTMLField('Źródło finansowania', null=True, blank=True)
+    # information = models.TextField('Informacje', null=True, blank=True)
+    information = tinymce_models.HTMLField('Informacje', null=True, blank=True)
     date_of_settlement = models.DateField('Data rozliczenia', null=True, blank=True)
     settlement_scan = models.FileField(upload_to=upload_scan, null=True, blank=True,
                                        verbose_name='Rozliczenie inwestycyjne')

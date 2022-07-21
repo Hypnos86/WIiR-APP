@@ -39,7 +39,7 @@
                             {% for county in county_list %}
                             <optgroup label="{{county.grouper}}">
                                 {% for unit in county.list %}
-                                {% if contract_form.unit.value == unit.id %}
+                                {% if unit_edit.id == unit.id %}
                                 <option value="{{unit.id}}" selected>{{unit}}</option>
                                 {% else %}
                                 <option value="{{unit.id}}">{{unit}}</option>
@@ -74,19 +74,19 @@
                     </div>
                 </fieldset>
             </div>
-            <div class="row">
+            <div class="d-flex justify-content-between">
                 <div class="col-md-9">{{contract_form.information|bootstrap}}</div>
-                <div class="col-md-3">{{contract_form.scan|bootstrap}}</div>
+                <div class="col-md-2">
+                    <label for="id_state">Stan umowy</label>
+                    <div class="form-control" id="id_state">{{contract_form.state|bootstrap}}</div>
+                </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-2 my-3">
-                <div class="list-group">
-                    <label for="id_state">Stan umowy</label>
-                    <div class="list-group-item" id="id_state">{{contract_form.state|bootstrap}}</div>
-                </div>
+            <div class="col-md-8 my-3">
+                <div class="col-md-3">{{contract_form.scan|bootstrap}}</div>
             </div>
-            <div class="col-md-10 my-3 py-3">
+            <div class="col-md-4 my-3 py-3">
                 {%if new == False%}
                 <div class="moj-button-right">
                     <button type="submit" class="btn btn-outline-primary my-btn"><span class="bi bi-save2"> Zapisz zmiany</span></button>

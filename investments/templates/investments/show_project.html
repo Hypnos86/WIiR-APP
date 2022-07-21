@@ -5,6 +5,8 @@
 {% load thumbnail%}
 {% block title %} {{project_form.project_title}} {% endblock %}
 {% block content %}
+{%block additional_scripts%}
+{{project_form.media}}
 <div class="row d-flex justify-content-center">
     <div class="row col-md-9">
         <div class="col-md-2 moj-button-left"><a href="{%url 'investments:investment_projects_list'%}">
@@ -101,7 +103,7 @@
                                 <small class="card-subtitle text-muted">Rozdział: <b>{{project_form.section}}</b></small>
                                 <small class="card-subtitle text-muted">Paragraf: <b>{{project_form.group}}
                                     {{project_form.paragraph}}</b></small><br>
-                                <small class="card-subtitle text-muted">{{project_form.source_financing}}</small>
+                                <small class="card-subtitle text-muted">{{project_form.source_financing|safe}}</small>
                             </div>
                         </div>
                     </div>
@@ -110,7 +112,7 @@
                         <div class="card col-md-auto">
                             <div class="card-body mx-1">
                                 <h6 class="card-title bi bi-info-square">Informacje</h6>
-                                <small class="card-subtitle text-muted">{{project_form.information}}</small>
+                                <small class="card-subtitle text-muted">{{project_form.information|safe}}</small>
                             </div>
                         </div>
                     </div>
@@ -186,4 +188,5 @@
         $('[data-toggle="info"]').tooltip()
     })
 </script>
+{%endblock%}
 {%endblock%}

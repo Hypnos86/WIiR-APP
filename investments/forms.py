@@ -1,6 +1,7 @@
 from django.forms import ModelForm, ModelMultipleChoiceField, DateInput, Textarea
 from main.forms import DateField
 from investments.models import Project
+from tinymce.widgets import TinyMCE
 from django.contrib.admin.widgets import AutocompleteSelectMultiple
 from django.contrib import admin
 from main.models import Employer
@@ -18,12 +19,12 @@ class ProjectForm(ModelForm):
                   'no_acceptance_document': 'L.dz.',
                   'investment_program': 'Program inwestycyjny',
                   'project_title': 'Tytuł zadania',
-                  'investment_cost_estimate_value': 'Wartość kosztorysowa zadania',
+                  'investment_cost_estimate_value': 'WKI',
                   'unit': 'Jednostka',
                   'section': 'Rozdział',
                   'group': 'Grupa',
                   'paragraph': 'Paragraf',
-                  'source_financing': 'Źródło finansowania',
+                  'source_financing': 'Opis źródła finansowania',
                   'information': 'Informacje',
                   'date_of_settlement': 'Data rozliczenia',
                   'settlement_scan': 'Skan rozliczenia',
@@ -36,6 +37,6 @@ class ProjectForm(ModelForm):
         widgets = {
             'date_of_acceptance': DateField(),
             'date_of_settlement': DateField(),
-            'source_financing': Textarea(attrs={'rows': 3}),
-            'information': Textarea(attrs={'rows': 3})
+            'source_financing': TinyMCE(attrs={'cols': 5, 'rows': 3}),
+            'information': TinyMCE(attrs={'cols': 5, 'rows': 3})
         }

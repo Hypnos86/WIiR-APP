@@ -3,6 +3,8 @@
 {%load bootstrap%}
 {%block title%}{%if new%}Nowe zadanie{%else%}Edycja zadania{%endif%}{%endblock%}
 {%block investmentsmenu%}
+{%block additional_scripts%}
+{{project_form.media}}
 <div class="container">
     <h3 class="text-center m-4">{%if new%}Nowe zadanie inwestycyjne{%else%}Edycja zadania inwestycyjnego{%endif%}</h3>
     <form method="post" enctype="multipart/form-data">
@@ -22,7 +24,7 @@
                         {% for county in county_list %}
                         <optgroup label="{{county.grouper}}">
                             {% for unit in county.list %}
-                            {% if project_form.unit.value == unit.id %}
+                            {% if unit_edit.id == unit.id %}
                             <option value="{{unit.id}}" selected>{{unit}}</option>
                             {% else %}
                             <option value="{{unit.id}}">{{unit}}</option>
@@ -39,7 +41,9 @@
             <div class="col-md-6 mb-3">{{project_form.worker|bootstrap}}</div>
             <div class="col-md-10 mb-3">
                 <div class="row mb-3">
+                    {{project_form.media}}
                     <div class="col-md-6">{{project_form.source_financing|bootstrap}}</div>
+
                     <div class="col-md-6">{{project_form.information|bootstrap}}</div>
                 </div>
             </div>
@@ -104,4 +108,5 @@
         $("#id_worker").select2({placeholder:'Dodaj pracownika'});
     })
 </script>
+{%endblock%}
 {%endblock%}

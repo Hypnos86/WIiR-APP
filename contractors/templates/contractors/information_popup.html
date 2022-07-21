@@ -6,11 +6,13 @@
     {%csrf_token%}
     <div class="container">
         <div><span class="text-muted">Kontrahent: </span><span>{{contractor.name}}</span></div>
+        <div><span class="text-muted">Adres: </span><span>{{contractor.address}}, {{contractor.zip_code}} {{contractor.city}}</span></div>
         <div><span class="text-muted">SWOP ID: </span><span>{{contractor.no_contractor}}</span></div>
         <div class="my-4"><span class="text-muted">NIP: </span>{{contractor.nip|default_if_none:'---'}}</div>
         <div><span class="text-muted">Informacje: </span><p>{{contractor.information}}</p></div>
-        <div><span class="text-muted">Data dodania: </span><span>{{contractor.creation_date|date:'d.m.Y (H:i)'}}</span></div>
-        <div><span class="text-muted">Zmiany: </span><span>{{contractor.change|date:'d.m.Y (H:i)'}} - {{contractor.author}}</span></div>
+        <div><small class="text-muted">Data dodania: </small><small>{{contractor.creation_date|date:'d.m.Y (H:i)'}}</small></div>
+        <div><small class="text-muted">Zmiany: </small><small>{{contractor.change|date:'d.m.Y (H:i)'}} - {{contractor.author}}</small></div>
+
 
     </div>
 </form>

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django_filters',
     'bootstrapform',
     'sorl.thumbnail',
+    'tinymce',
     'units.apps.UnitsConfig',
     'investments.apps.InvestmentsConfig',
     'contracts.apps.ContractsConfig',
@@ -151,3 +152,16 @@ LOGOUT_REDIRECT_URL = 'login'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+TINYMCE_DEFAULT_CONFIG = {
+    "height": "320px",
+    "width": "auto",
+    "menubar": "file edit tools table help",
+    "plugins": "advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code "
+               "fullscreen insertdatetime media table paste code help wordcount spellchecker",
+    "toolbar": "undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft "
+               "aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor "
+               "backcolor casechange permanentpen formatpainter removeformat | pagebreak",
+    "custom_undo_redo_levels": 5,
+    "language": "pl_PL",  # To force a specific language instead of the Django current language.
+}

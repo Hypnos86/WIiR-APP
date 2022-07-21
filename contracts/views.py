@@ -94,10 +94,12 @@ def edit_contractsimmovables(request, id):
                                                       instance=contractsimmovables_edit)
 
     units = Unit.objects.all()
+    unit_edit = contractsimmovables_edit
 
     context = {'contract_form': contractsimmovables_form,
                'units': units,
                'contract': contractsimmovables_edit,
+               'unit_edit':unit_edit,
                'new': False}
     if request.method == 'POST':
         if contractsimmovables_form.is_valid():
@@ -221,10 +223,12 @@ def edit_contract_auction(request, id):
                                                 instance=contract_auction_edit)
     contract_auction_form.fields['worker'].queryset = Employer.objects.all().filter(industry_specialist=True)
     units = Unit.objects.all()
+    unit_edit = contract_auction_edit
 
     context = {'contract_auction_form': contract_auction_form,
                'units': units,
                'contract': contract_auction_edit,
+               'unit_edit':unit_edit,
                'new': False}
 
     if request.method == 'POST':

@@ -3,14 +3,16 @@
 {%load bootstrap%}
 {%block title%}{%if new%}Dodanie nowej jednostki{%else%}Edycja jednostki{%endif%}{%endblock%}
 {%block content%}
-<div class="row">
-    <div class="col-md-3">
-        <a href="{%url 'units:create_units_list_editable'%}">
-            <button class="btn btn-outline-primary"><span class="bi bi-chevron-compact-left">Cofnij</span></button>
-        </a>
-    </div>
-    <div class="col-md-6">
-        <h4 class="text-center">{%if new%}Dodawanie nowej jednostki{%else%}Edytowanie jednostki{%endif%}</h4>
+<div class="container col-md-6 mb-4">
+    <div class="row">
+        <div class="col-md-3">
+            <a href="{%url 'units:create_units_list_editable'%}">
+                <button class="btn btn-outline-primary"><span class="bi bi-chevron-compact-left">Cofnij</span></button>
+            </a>
+        </div>
+        <div class="col-md-6">
+            <h4 class="text-center">{%if new%}Dodawanie nowej jednostki{%else%}Edytowanie jednostki{%endif%}</h4>
+        </div>
     </div>
 </div>
 <div class="container col-md-6">
@@ -23,9 +25,9 @@
             <div class="col-md-2 my-2">{{unit_form.zip_code|bootstrap}}</div>
             <div class="col-md-3 my-2">{{unit_form.city|bootstrap}}</div>
             <div class="col-md-3 my-2">
-                        <label for="id_state">Stan jednostki</label>
-                        <div class=form-control id="id_state">{{unit_form.status|bootstrap}}</div>
-                    </div>
+                <label for="id_state">Stan jednostki</label>
+                <div class=form-control id="id_state">{{unit_form.status|bootstrap}}</div>
+            </div>
             <div class="col-md-12 my-2">{{unit_form.information|bootstrap}}</div>
             <div class="ol-md-12 my-2">
                 <div class="col align-self-end moj-button-right">
@@ -35,6 +37,11 @@
         </div>
     </form>
 </div>
-
+<script>
+    document.getElementById("button-units").classList.remove("active");
+    document.getElementById("button-record").classList.add("active");
+    document.getElementById("button-investments").classList.remove("active");
+    document.getElementById("button-secretariat").classList.remove("active");
+</script>
 {%endblock%}
 

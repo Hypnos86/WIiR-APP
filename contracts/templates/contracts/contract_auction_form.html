@@ -34,7 +34,7 @@
                             {% for county in county_list %}
                             <optgroup label="{{county.grouper}}">
                                 {% for unit in county.list %}
-                                {% if contract_auction_form.unit.value == unit.id %}
+                                {% if unit_edit.id == unit.id %}
                                 <option value="{{unit.id}}" selected>{{unit}}</option>
                                 {% else %}
                                 <option value="{{unit.id}}">{{unit}}</option>
