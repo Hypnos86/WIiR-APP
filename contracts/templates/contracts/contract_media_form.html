@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{%load bootstrap%}
+{% load humanize %}
+{% load static %}
+{% block title %}Ewidencja - Umowy Media{% endblock %}
+{% block content %}
+<div class="container col-md-5 mb-4">
+    <div class="row">
+        <div class="col-md-3"><a href="{%url 'contracts:create_contract_media_list'%}">
+            <button class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span>
+            </button>
+        </a></div>
+        <div class="col-md-6">
+            <h4 class="text-center">{%if new%}Nowa umowa {%else%}Edycja umowy{%endif%}</h4>
+        </div>
+    </div>
+</div>
+<div class="container col-md-5">
+    <form method="POST" enctype="multipart/form-data">
+        {%csrf_token%}
+        <div class="row">
+        <div class="col-md-4 mb-3">{{contract_form.date|bootstrap}}</div>
+        <div class="col-md-4 mb-3">{{contract_form.no_contract|bootstrap}}</div>
+        <div class="col-md-4 mb-3">{{contract_form.type|bootstrap}}</div>
+        <div class="col-md-6 mb-3">{{contract_form.content|bootstrap}}</div>
+        <div class="col-md-3 mb-3">{{contract_form.employer|bootstrap}}</div>
+        <div class="col-md-3 mb-3">{{contract_form.period_of_validity|bootstrap}}</div>
+        <div class="col-md-12 mb-3">{{contract_form.contractor|bootstrap}}</div>
+        <div class="col-md-12 mb-3">{{contract_form.unit|bootstrap}}</div>
+        <div class="col-md-12 mb-3">{{contract_form.information|bootstrap}}</div>
+        <div class="col-md-12 mb-3">{{contract_form.scan|bootstrap}}</div>
+        <div class="d-flex justify-content-between">
+            <div class="col-md-3">
+                <div class="moj_button_left">
+                <label for="id_state">Stan umowy</label>
+                <div class="form-control" id="id_state">{{contract_form.state|bootstrap}}</div>
+                </div>
+            </div>
+            <div class="col-md-9 moj-button-right align-self-end">
+                <button type="submit" class="btn btn-outline-primary my-btn">
+                    {%if new%}
+                    <span class="bi bi-save2"> Dodaj umowę</span>
+                    {%else%}
+                    <span class="bi bi-save2"> Zapisz zmiany</span>
+                    {%endif%}
+                </button>
+            </div>
+        </div>
+        </div>
+    </form>
+</div>
+<script>
+    document.getElementById("button-units").classList.remove("active");
+    document.getElementById("button-record").classList.add("active");
+    document.getElementById("button-cpv").classList.remove("active");
+    document.getElementById("button-investments").classList.remove("active");
+</script>
+{%endblock%}

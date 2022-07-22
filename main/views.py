@@ -5,7 +5,7 @@ from main.models import Team, OrganisationTelephone, AccessModule, Command, Empl
 from main.forms import TeamForm, EmployerForm, CommandsForm, SecretariatTelephoneForm
 from businessflats.models import OfficialFlat
 from units.models import Unit
-from contracts.models import ContractImmovables, ContractAuction
+from contracts.models import ContractImmovables, ContractAuction, ContractMedia
 from contractors.models import Contractor
 from donations.models import Application
 from gallery.models import Gallery
@@ -235,9 +235,13 @@ def make_list_register(request):
     corrective_note = CorrectiveNote.objects.all().filter(date__year=current_year())
     corrective_note_len = len(corrective_note)
 
+    contracts_media = ContractMedia.objects.all().filter(state=True)
+    contracts_media_len = len(contracts_media)
+
     context = {'units_len': units_len, 'count_flats': count_flats, 'con_len': contract_len,
                'contractors_len': contractors_len, 'application_len': application_len,
                'contracts_auction_len': contracts_auction_len, 'galleries_len': galleries_len,
                'projects_len': projects_len, 'genres_len': genres_len, 'invoices_sell_len': invoices_sell_len,
-               'invoices_buy_len': invoices_buy_len, 'corrective_note_len': corrective_note_len, 'now_year': now_year}
+               'invoices_buy_len': invoices_buy_len, 'corrective_note_len': corrective_note_len,
+               'contracts_media_len': contracts_media_len, 'now_year': now_year}
     return render(request, 'main/list_register.html', context)

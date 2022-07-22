@@ -114,6 +114,8 @@ class AccessModule(models.Model):
     contract_immovables = models.BooleanField('ZN - Umowy nieruchomości - Podgląd', default=False)
     contract_immovables_edit = models.BooleanField('ZN - Umowy nieruchomości - Edycja', default=False)
     ze_team = models.BooleanField('Ewidencja: Zespół Eksploatacji', default=False)
+    contract_media = models.BooleanField('ZE - Umowy Media - Podgląd', default=False)
+    contract_media_edit = models.BooleanField('ZE - Umowy Media - Edycja', default=False)
 
     def __str__(self):
         return f'{self.user}'

@@ -197,7 +197,8 @@ class AnnexContractAuction(models.Model):
     scan = models.FileField(upload_to=up_load_annex_contract_auction, null=True, blank=True,
                             verbose_name='Skan aneksu')
     creation_date = models.DateTimeField('Data utworzenia', auto_now_add=True)
-    author = models.ForeignKey("auth.User", on_delete=models.CASCADE)
+    author = models.ForeignKey("auth.User", on_delete=models.CASCADE, verbose_name='Autor',
+                               related_name='annexcontractauction')
 
     def __str__(self):
         return f'Aneks z dnia {self.date} {self.scan}'
@@ -207,11 +208,16 @@ class MediaType(models.Model):
     class Meta:
         verbose_name = 'Media'
         verbose_name_plural = 'Rodzaje Mediów'
+        ordering = ['type']
 
     type = models.CharField('Media', max_length=25)
 
     def __str__(self):
         return f'{self.type}'
+
+
+def upload_contract_media(instance, filename):
+    return f'contracts_media/{instance.type.type}/{instance.contractor.name}/{filename}'
 
 
 class ContractMedia(models.Model):
@@ -220,4 +226,23 @@ class ContractMedia(models.Model):
         verbose_name_plural = 'Umowy na media'
 
     date = models.DateField('Data umowy')
-    pass
+    no_contract = models.CharField('Nr.umowy', max_length=30)
+    contractor = models.ForeignKey(Contractor, on_delete=models.CASCADE, verbose_name='Wykonawca',
+                                   related_name='contract_media')
+    type = models.ForeignKey(MediaType, on_delete=models.CASCADE, verbose_name='Rodzaj umowy',
+                             related_name='contractmedia')
+    content = models.CharField('Treść', max_length=100)
+    period_of_validity = models.DateField('Data obowiązywania', null=True, blank=True)
+    unit = models.ManyToManyField(Unit, verbose_name='Jednostka', related_name='contract_media')
+    information = models.TextField('Informacje', blank=True, default='')
+    scan = models.FileField(upload_to=upload_contract_media, verbose_name='Skan', null=True, blank=True)
+    employer = models.ForeignKey(Employer, on_delete=models.CASCADE, verbose_name='Branżysta',
+                                 related_name='contract_media')
+    state = models.BooleanField(default=True, verbose_name='Aktualna')
+    creation_date = models.DateTimeField('Data utworzenia', auto_now_add=True)
+    change_date = models.DateTimeField('Zmiany', auto_now=True)
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE, verbose_name='Autor',
+                               related_name='contract_media')
+
+    def __str__(self):
+        return f'{self.no_contract} z dnia {self.date}'

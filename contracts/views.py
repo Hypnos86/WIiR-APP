@@ -1,8 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
-from contracts.models import ContractImmovables, ContractAuction, AnnexContractAuction
-from contracts.forms import ContractImmovablesForm, ContractAuctionForm, AnnexImmovablesForm, AnnexContractAuctionForm
+from contracts.models import ContractImmovables, ContractAuction, AnnexContractAuction, ContractMedia
+from contracts.forms import ContractImmovablesForm, ContractAuctionForm, AnnexImmovablesForm, AnnexContractAuctionForm, \
+    ContractMediaForm
 from units.models import Unit
 from main.models import Employer
 from main.views import now_date
@@ -99,7 +100,7 @@ def edit_contractsimmovables(request, id):
     context = {'contract_form': contractsimmovables_form,
                'units': units,
                'contract': contractsimmovables_edit,
-               'unit_edit':unit_edit,
+               'unit_edit': unit_edit,
                'new': False}
     if request.method == 'POST':
         if contractsimmovables_form.is_valid():
@@ -228,7 +229,7 @@ def edit_contract_auction(request, id):
     context = {'contract_auction_form': contract_auction_form,
                'units': units,
                'contract': contract_auction_edit,
-               'unit_edit':unit_edit,
+               'unit_edit': unit_edit,
                'new': False}
 
     if request.method == 'POST':
@@ -258,3 +259,68 @@ def add_annex_contract_auction(request, id):
 
     if request.method == 'GET':
         return render(request, 'contracts/new_annex_auction_form.html', context)
+
+
+@login_required
+def new_contract_media(request):
+    contract_form = ContractMediaForm(request.POST or None, request.FILES or None)
+    contract_form.fields['employer'].queryset = Employer.objects.all().filter(industry_specialist=True).filter(
+        team__team='Zespół Ekploatacji')
+    contract_form.fields['unit'].queryset = Unit.objects.all().order_by('county')
+    units = Unit.objects.all()
+
+    if request.method == 'POST':
+        if contract_form.is_valid():
+            instance = contract_form.save(commit=False)
+            instance.author = request.user
+            return redirect('contracts:create_contract_media_list')
+
+    return render(request, 'contracts/contract_media_form.html',
+                  {'contract_form': contract_form, 'new': True, 'units': units})
+
+
+@login_required
+def create_contract_media_list(request):
+    contracts_media = ContractMedia.objects.all().filter(state=True).order_by('-date')
+    contracts_media_len = len(contracts_media)
+    query = "Wyczyść"
+    search = "Szukaj"
+
+    paginator = Paginator(contracts_media, 50)
+    page_number = request.GET.get('page')
+    contracts_media_list = paginator.get_page(page_number)
+
+    q = request.GET.get("q")
+    date_from = request.GET.get('from')
+    date_to = request.GET.get('to')
+
+    try:
+        last_date = ContractMedia.objects.values('change_date').latest('change_date')
+    except ContractMedia.DoesNotExist:
+        last_date = None
+
+    if q or date_from or date_to:
+        if q:
+            contracts_media = contracts_media.filter(no_contract__icontains=q) \
+                              | contracts_media.filter(type__type__icontains=q) \
+                              | contracts_media.filter(contractor__name__icontains=q) \
+                              | contracts_media.filter(unit__city__icontains=q) \
+                              | contracts_media.filter(unit__type__type_short__icontains=q) \
+                              | contracts_media.filter(employer__name__icontains=q) \
+                              | contracts_media.filter(employer__last_name__icontains=q)
+
+        if date_from:
+            contracts_media = contracts_media.filter(date__gte=date_from)
+
+        if date_to:
+            contracts_media = contracts_media.filter(date__lte=date_to)
+
+        contracts_media_len = len(contracts_media)
+
+        return render(request, 'contracts/contracts_media_list.html',
+                      {'actual': True, 'contracts_media': contracts_media, 'contracts_media_len': contracts_media_len,
+                       'q': q, 'date_from': date_from, 'date_to': date_to, 'last_date': last_date, 'query': query})
+    else:
+        return render(request, 'contracts/contracts_media_list.html',
+                      {'contracts_media': contracts_media_list,
+                       'contracts_media_len': contracts_media_len, 'last_date': last_date, 'search': search})

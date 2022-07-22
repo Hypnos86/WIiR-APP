@@ -16,7 +16,7 @@
     </div>
 </div>
 <div class="container mt-4 pb-5 col-md-8">
-    <form method="post" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data">
         {%csrf_token%}
         <div class="row">
             <div class="col-md-3 my-2">{{contract_auction_form.date|bootstrap}}</div>

@@ -1,6 +1,6 @@
 from django.forms import ModelForm, DateInput, Textarea
 from main.forms import DateField
-from contracts.models import ContractImmovables, AnnexImmovables, ContractAuction, AnnexContractAuction
+from contracts.models import ContractImmovables, AnnexImmovables, ContractAuction, AnnexContractAuction, ContractMedia
 
 
 class ContractImmovablesForm(ModelForm):
@@ -72,3 +72,19 @@ class AnnexContractAuctionForm(ModelForm):
                   'scope_changes': 'Zakres zamian', 'scan': 'Skan aneksu'}
         exclude = ['creation_date', 'author']
         widgets = {'date': DateField()}
+
+
+class ContractMediaForm(ModelForm):
+    class Meta:
+        model = ContractMedia
+        fields = ['date', 'no_contract', 'contractor', 'type', 'content', 'period_of_validity', 'unit', 'information',
+                  'scan', 'employer', 'state', 'creation_date', 'change_date', 'author']
+        labels = {'date': 'Data umowy', 'no_contract': 'Nr.umowy', 'contractor': 'Wykonawca', 'type': 'Rodzaj umowy',
+                  'content': 'Treść', 'period_of_validity': 'Okres obowiązywania', 'unit': 'Jednostka',
+                  'information': 'Informacje',
+                  'scan': 'Skan', 'employer': 'Branżysta', 'state': 'Aktualna', 'creation_date': 'Data utworzenia',
+                  'change_date': 'Zmiany', 'author': 'Autor'}
+        exclude = ['creation_date', 'change_date', 'author']
+        widgets = {'date': DateField(),
+                   'period_of_validity': DateField(),
+                   'information': Textarea(attrs={'rows': 3})}

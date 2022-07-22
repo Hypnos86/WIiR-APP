@@ -131,9 +131,11 @@
                 <tr>
                     <td valign="middle">Zespół Eksploatacji</td>
                     <td align="center" valign="middle"><i class="bi bi-check-circle-fill text-success"></i></td>
-                    <td align="center" valign="middle">BRAK</td>
-                    <td align="center" valign="middle">BRAK</td>
-                    <td align="center" valign="middle">BRAK</td>
+                    <td align="left" valign="middle">Moduł Umowy Media</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.contract_media%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.contract_media_edit%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
                 </tr>
                 {%endif%}
                 </tbody>
