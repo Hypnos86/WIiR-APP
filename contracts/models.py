@@ -204,6 +204,15 @@ class AnnexContractAuction(models.Model):
         return f'Aneks z dnia {self.date} {self.scan}'
 
 
+class SettlementContractAuction(models.Model):
+    contract = models.OneToOneField(ContractAuction, on_delete=models.CASCADE,verbose_name='Umowa', related_name='settlementcontractauction')
+    first_part_security_sum = models.DecimalField('Zabezpieczenie 70%', max_digits=8, decimal_places=2)
+    second_part_security_sum = models.DecimalField('Zabezpieczenie 30%', max_digits=8, decimal_places=2)
+
+    def __str__(self):
+        return f'{self.contract}'
+
+
 class MediaType(models.Model):
     class Meta:
         verbose_name = 'Media'

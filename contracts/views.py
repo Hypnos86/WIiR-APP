@@ -280,6 +280,24 @@ def new_contract_media(request):
 
 
 @login_required
+def edit_contract_media(request, id):
+    contract_edit = get_object_or_404(ContractMedia, pk=id)
+    contract_form = ContractMediaForm(request.POST or None, request.FILES or None, instance=contract_edit)
+    contract_form.fields['employer'].queryset = Employer.objects.all().filter(industry_specialist=True).filter(
+        team__team='Zespół Ekploatacji')
+    contract_form.fields['unit'].queryset = Unit.objects.all().order_by('county')
+    units = Unit.objects.all()
+
+    if request.method == 'POST':
+        if contract_form.is_valid():
+            instance = contract_form.save(commit=False)
+            instance.author = request.user
+            return redirect('contracts:create_contract_media_list')
+    return render(request, 'contracts/contract_media_form.html',
+                  {'contract_form': contract_form, 'new': False, 'units': units})
+
+
+@login_required
 def create_contract_media_list(request):
     contracts_media = ContractMedia.objects.all().filter(state=True).order_by('-date')
     contracts_media_len = len(contracts_media)
