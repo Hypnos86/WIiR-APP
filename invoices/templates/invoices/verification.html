@@ -50,13 +50,15 @@
     <div class="row my-5">
         {%if query%}
         <div class="container col-5">
-            <h4 class="mb-4 text-center">Zakres weryfikacji: {{date_from|date:'d.m.Y'}} r. - {{date_to|date:'d.m.Y'}} r.</h4>
+            {%if date_from_obj and date_to_obj%}
+            <h4 class="mb-4 text-center">Zakres weryfikacji: {{date_from_obj|date:'d.m.Y'}} r. - {{date_to_obj|date:'d.m.Y'}} r.</h4>
+            {%endif%}
             <h5>Suma zapotrzebowania: <span>{{verification_all|intcomma}} zł.</span></h5>
             <div>
                 {% regroup invoices by date_of_payment as list_payment %}
                 {% for lista in list_payment %}
                 <div class="col-12 mt-4 mb-1 d-flex justify-content-between">
-                    <strong class="">Płatności na {{lista.grouper}} r.{%if lista.list.sum%} ({{lista.list.sum}} zł.) {%else%} (0 zł.){%endif%}</strong>
+                    <strong class="">Płatności na {{lista.grouper}} r.{%if lista.list.sum%} ({{lista.list.sum}} zł.) {%else%} ({{day_sum}} zł.){%endif%}</strong>
                     <div><span class="badge text-white info badge-pill my-badge-pill">{{lista.list|length}}</span></div>
                 </div>
                 <ul class="list-group">

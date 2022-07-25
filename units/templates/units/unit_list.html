@@ -11,7 +11,7 @@
         <small>Ostatnia aktualizacja: {{last_date.change|date:'d.m.Y (H:i)'}}</small>
         {%endif%}
     </div>
-    <div class="col-md-5 text-center">
+    <div class="col-md-4 text-center">
         <form>
             <div class="d-inline-block mx-4 md-2 text-center">
                 <label for="county" class="county">Powiat</label>
@@ -36,7 +36,7 @@
             </div>
         </form>
     </div>
-    <div class="col-md-3 moj-button-right align-self-end">
+    <div class="col-md-4 moj-button-right align-self-end">
         {%if actual_units == True%}
         <a href="{% url 'units:archive_units_list'%}">
             <button class="btn btn-outline-danger">Archiwum</button>
