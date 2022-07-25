@@ -2,7 +2,7 @@ from django.contrib import admin
 from import_export import resources
 from import_export.fields import Field
 from import_export.admin import ExportMixin
-from invoices.models import InvoiceSell, InvoiceBuy, InvoiceItems, Creator, DocumentTypes, CorrectiveNote
+from invoices.models import InvoiceSell, InvoiceBuy, InvoiceItems, DocumentTypes, CorrectiveNote
 
 
 # Register your models here.
@@ -51,9 +51,6 @@ class CorrectiveNoteAdmin(ExportMixin, admin.ModelAdmin):
     search_fields = ['no_note', 'corrective_invoice']
     list_display_links = ['no_note']
     resource_class = CorrectiveNoteResource
-
-
-admin.site.register(Creator)
 
 
 @admin.register(DocumentTypes)

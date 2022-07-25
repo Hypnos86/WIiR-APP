@@ -4,9 +4,11 @@ from django.core.paginator import Paginator
 from django.db.models import Sum
 from django.shortcuts import render, redirect, get_object_or_404
 from invoices.models import InvoiceSell, InvoiceBuy, InvoiceItems, DocumentTypes, CorrectiveNote
+from main.models import Employer
 from invoices.forms import InvoiceSellForm, InvoiceBuyForm, InvoiceItemsForm, CorrectiveNoteForm
 from main.views import current_year, now_date
 from django.urls import reverse
+from decimal import Decimal
 # xhtml2pdf
 import os
 from django.conf import settings
@@ -188,7 +190,12 @@ def sell_invoices_list(request):
     search = "Szukaj"
     invoices_sell_len = len(invoicessell)
     invoices_sell_sum_dict = invoicessell.aggregate(Sum('sum'))
-    invoices_sell_sum = round(invoices_sell_sum_dict['sum__sum'], 2)
+
+    try:
+        invoices_sell_sum = round(invoices_sell_sum_dict['sum__sum'], 2)
+    except TypeError:
+        invoices_sell_sum = 0
+
     year = current_year()
     q = request.GET.get('q')
     date_from = request.GET.get('from')
@@ -297,6 +304,7 @@ def sell_invoices_list_archive(request, year):
 def new_invoice_sell(request):
     invoice_sell_form = InvoiceSellForm(request.POST or None)
     doc_types = invoice_sell_form.fields['doc_types'].queryset = DocumentTypes.objects.exclude(type='Nota korygująca')
+    invoice_sell_form.fields['creator'].queryset = Employer.objects.all().filter(invoices_issues=True)
 
     context = {'invoice': invoice_sell_form, 'doc_types': doc_types, 'new': True}
 
@@ -314,6 +322,7 @@ def edit_invoice_sell(request, id):
     invoice_sell_edit = get_object_or_404(InvoiceSell, pk=id)
     invoice_sell_form = InvoiceSellForm(request.POST or None, instance=invoice_sell_edit)
     invoice_sell_form.fields['doc_types'].queryset = DocumentTypes.objects.exclude(type='Nota korygująca')
+    invoice_sell_form.fields['creator'].queryset = Employer.objects.all().filter(invoices_issues=True)
 
     context = {'invoice': invoice_sell_form,
                'new': False}
@@ -538,10 +547,13 @@ def make_verification(request):
 @login_required
 def make_pdf_from_invoices_sell(request):
     invoicessell = InvoiceSell.objects.all().order_by("-date").filter(date__year=current_year())
-
-    invoices_sell_len = len(invoicessell)
     invoices_sell_sum_dict = invoicessell.aggregate(Sum('sum'))
-    invoices_sell_sum = round(invoices_sell_sum_dict['sum__sum'], 2)
+
+    try:
+        invoices_sell_sum = round(invoices_sell_sum_dict['sum__sum'], 2)
+    except TypeError:
+        invoices_sell_sum = 0
+
     year = current_year()
     now = now_date()
     q = request.GET.get('q', '')

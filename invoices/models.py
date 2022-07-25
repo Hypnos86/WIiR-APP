@@ -1,6 +1,7 @@
 from django.db import models
 from contractors.models import Contractor
 from units.models import County
+from main.models import Employer
 from sourcefinancing.models import FinanceSource
 
 
@@ -13,17 +14,6 @@ class DocumentTypes(models.Model):
 
     def __str__(self):
         return f'{self.type}'
-
-
-class Creator(models.Model):
-    class Meta:
-        verbose_name = "Pracownik"
-        verbose_name_plural = "Wystawcy faktur - sprzedaż"
-
-    creator = models.CharField("Pracownik", max_length=20)
-
-    def __str__(self):
-        return f'{self.creator}'
 
 
 class InvoiceSell(models.Model):
@@ -43,7 +33,7 @@ class InvoiceSell(models.Model):
     date_of_payment = models.DateField("Termin płatności")
     period_from = models.DateField("Okres od")
     period_to = models.DateField("Okres do")
-    creator = models.ForeignKey(Creator, on_delete=models.CASCADE, verbose_name="Osoba wystawiająca",
+    creator = models.ForeignKey(Employer, on_delete=models.CASCADE, verbose_name="Osoba wystawiająca",
                                 related_name='invoicesell')
     information = models.TextField("Informacje", blank=True, default="")
     creation_date = models.DateTimeField("Data utworzenia", auto_now_add=True)

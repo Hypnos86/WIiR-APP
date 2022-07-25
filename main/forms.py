@@ -16,16 +16,15 @@ class TeamForm(ModelForm):
 class EmployerForm(ModelForm):
     class Meta:
         model = Employer
-        fields = ('team', 'position', 'name', 'last_name', 'industry_specialist', 'no_room', 'industry', 'no_tel_room',
-                  'no_tel_private', 'information', 'creation_date', 'change', 'author', 'deleted')
+        fields = (
+            'team', 'position', 'name', 'last_name', 'invoices_issues', 'industry_specialist', 'no_room', 'industry',
+            'no_tel_room', 'no_tel_private', 'information', 'creation_date', 'change', 'author', 'deleted')
         labels = {'team': 'Zespół', 'position': 'Stanowisko', 'name': 'Imię', 'last_name': 'Nazwisko',
-                  'industry_specialist': 'Branżysta', 'industry': 'Branża', 'no_room': 'Nr.pokoju',
-                  'no_tel_room': 'Nr. telefonu', 'no_tel_private': 'Nr komórkowy', 'information': 'Informacje',
-                  'deleted': 'Usuń'}
+                  'invoices_issues': 'Wystawianie faktur', 'industry_specialist': 'Branżysta merytoryczny',
+                  'industry': 'Branża', 'no_room': 'Nr.pokoju', 'no_tel_room': 'Nr. telefonu',
+                  'no_tel_private': 'Nr komórkowy', 'information': 'Informacje', 'deleted': 'Usuń'}
         exclude = ['creation_date', 'change', 'author']
-
-        widgets = {'information': Textarea(attrs={'rows': 3}),
-                   }
+        widgets = {'information': Textarea(attrs={'rows': 3})}
 
 
 class OrganisationTelephoneForm(ModelForm):

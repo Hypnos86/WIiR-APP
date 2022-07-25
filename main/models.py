@@ -63,7 +63,8 @@ class Employer(models.Model):
     last_name = models.CharField('Nazwisko', max_length=25)
     position = models.CharField("Stanowisko", max_length=20, blank=True, default="")
     team = models.ForeignKey(Team, on_delete=models.CASCADE, verbose_name='Zespół', related_name='employer')
-    industry_specialist = models.BooleanField(default=0, verbose_name='Branżysta merytoryczny')
+    industry_specialist = models.BooleanField(default=0, verbose_name='Branżysta')
+    invoices_issues = models.BooleanField(default=0, verbose_name='Wystawianie faktur')
     industry = models.ForeignKey(IndustryType, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Branża',
                                  related_name='employer')
     no_room = models.CharField("Nr. pokoju", max_length=2, blank=True, default="")

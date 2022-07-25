@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
-from decimal import *
+from decimal import Decimal
 from cpvdict.models import Typecpv, Genre, OrderLimit, Order
 from cpvdict.forms import OrderForm
 from main.views import current_year
