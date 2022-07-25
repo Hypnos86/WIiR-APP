@@ -204,6 +204,21 @@ class AnnexContractAuction(models.Model):
         return f'Aneks z dnia {self.date} {self.scan}'
 
 
+class SettlementContractAuction(models.Model):
+    contract = models.OneToOneField(ContractAuction, on_delete=models.CASCADE,verbose_name='Umowa', related_name='settlementcontractauction')
+    first_part_security_date = models.DateField('Termin')
+    first_part_security_sum = models.DecimalField('Zabezpieczenie 70%', max_digits=8, decimal_places=2)
+    first_part_security_writing = models.CharField('Zabezpieczenie 70%', max_length=50)
+    first_part_security_checkbox = models.BooleanField('Oddano 70%')
+    second_part_security_date = models.DateField('Termin')
+    second_part_security_sum = models.DecimalField('Zabezpieczenie 30%', max_digits=8, decimal_places=2)
+    second_part_security_writing = models.CharField('Zabezpieczenie 30%', max_length=50)
+    second_part_security_checkbox = models.BooleanField('Oddano 30%')
+
+    def __str__(self):
+        return f'{self.contract}'
+
+
 class MediaType(models.Model):
     class Meta:
         verbose_name = 'Media'

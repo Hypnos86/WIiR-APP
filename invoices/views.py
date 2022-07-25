@@ -8,7 +8,11 @@ from main.models import Employer
 from invoices.forms import InvoiceSellForm, InvoiceBuyForm, InvoiceItemsForm, CorrectiveNoteForm
 from main.views import current_year, now_date
 from django.urls import reverse
+<<<<<<< HEAD
 from decimal import Decimal
+=======
+from django.core.exceptions import ValidationError
+>>>>>>> 8fb42745e5d47561d09a4f62f25efc5298175ea3
 # xhtml2pdf
 import os
 from django.conf import settings
@@ -516,9 +520,18 @@ def make_verification(request):
         date_to_obj = ''
 
     if date_from and date_to:
+
         invoices_buy_list = invoices_buy.filter(date_of_payment__range=[date_from, date_to])
 
+        # set([year['date__year'] for year in all_year_sell])
+
+        days = set([days['date_of_payment'] for days in invoices_buy_list.values('date_of_payment', 'sum')])
+
+        for day in days:
+            print(day.aggregate(Sum('sum')))
+
         for invoice in invoices_buy_list.values('date_of_payment'):
+            day_sum = invoices_buy_list.aggregate(Sum('sum'))
             print(invoice)
             # invoice_sum = invoice.aggregate(Sum('sum'))
 
@@ -535,6 +548,9 @@ def make_verification(request):
                                                               'query': query, 'year': year,
                                                               'date_from': date_from,
                                                               'date_to': date_to,
+                                                              'day_sum': day_sum,
+                                                              'date_from_obj': date_from_obj,
+                                                              'date_to_obj': date_to_obj,
                                                               'verification_all': verification_all})
     else:
         invoices_buy_sum = 0

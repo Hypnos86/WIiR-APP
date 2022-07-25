@@ -4,7 +4,7 @@
 {% load static %}
 {% block title %}Ewidencja - Umowy Media{% endblock %}
 {% block content %}
-<div class="container col-md-5 mb-4">
+<div class="container col-md-6 mb-4">
     <div class="row">
         <div class="col-md-3"><a href="{%url 'contracts:create_contract_media_list'%}">
             <button class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span>
@@ -15,7 +15,7 @@
         </div>
     </div>
 </div>
-<div class="container col-md-5">
+<div class="container col-md-6 ">
     <form method="POST" enctype="multipart/form-data">
         {%csrf_token%}
         <div class="row">
