@@ -205,7 +205,13 @@ class AnnexContractAuction(models.Model):
 
 
 class SettlementContractAuction(models.Model):
-    contract = models.OneToOneField(ContractAuction, on_delete=models.CASCADE,verbose_name='Umowa', related_name='settlementcontractauction')
+    class Meta:
+        verbose_name = 'Rozliczenie umowy'
+        verbose_name_plural = 'Rozliczenia umów ZZP'
+        ordering = ['first_part_security_date', 'second_part_security_date']
+
+    contract = models.OneToOneField(ContractAuction, on_delete=models.CASCADE, verbose_name='Umowa',
+                                    related_name='settlementcontractauction')
     first_part_security_date = models.DateField('Termin')
     first_part_security_sum = models.DecimalField('Zabezpieczenie 70%', max_digits=8, decimal_places=2)
     first_part_security_writing = models.CharField('Zabezpieczenie 70%', max_length=50)

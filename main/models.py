@@ -59,6 +59,7 @@ class Employer(models.Model):
         verbose_name_plural = 'Pracownicy'
         ordering = ['team', 'last_name']
 
+    id_swop = models.CharField('ID SWOP', max_length=6, unique=True)
     name = models.CharField('Imię', max_length=20)
     last_name = models.CharField('Nazwisko', max_length=25)
     position = models.CharField("Stanowisko", max_length=20, blank=True, default="")

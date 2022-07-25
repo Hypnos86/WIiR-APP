@@ -6,10 +6,11 @@
         {%csrf_token%}
         {%if new%}<h6 class="text-center mb-3">Dodawanie nowego pracownika</h6>{%else%}<h6 class="text-center mb-3">Edytuj dane pracownia</h6>{%endif%}
         <div class="row">
+            <div class="col-md-4 mb-3">{{employer_form.id_swop|bootstrap}}</div>
             <div class="col-md-4 mb-3">{{employer_form.name|bootstrap}}</div>
             <div class="col-md-4 mb-3">{{employer_form.last_name|bootstrap}}</div>
             <div class="col-md-4 mb-3">{{employer_form.position|bootstrap}}</div>
-            <div class="col-md-12 mb-3">{{employer_form.team|bootstrap}}</div>
+            <div class="col-md-8 mb-3">{{employer_form.team|bootstrap}}</div>
             <div class="col-md-4 mb-3">{{employer_form.no_room|bootstrap}}</div>
             <div class="col-md-4 mb-3">{{employer_form.no_tel_room|bootstrap}}</div>
             <div class="col-md-4 mb-3">{{employer_form.no_tel_private|bootstrap}}</div>

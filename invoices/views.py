@@ -8,11 +8,8 @@ from main.models import Employer
 from invoices.forms import InvoiceSellForm, InvoiceBuyForm, InvoiceItemsForm, CorrectiveNoteForm
 from main.views import current_year, now_date
 from django.urls import reverse
-<<<<<<< HEAD
 from decimal import Decimal
-=======
 from django.core.exceptions import ValidationError
->>>>>>> 8fb42745e5d47561d09a4f62f25efc5298175ea3
 # xhtml2pdf
 import os
 from django.conf import settings
