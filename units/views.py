@@ -33,6 +33,8 @@ def units_list(request):
                                                         'query': query,
                                                         'unit_sum_search': unit_sum_search,
                                                         'last_date': last_date,
+                                                        'p': p,
+                                                        'r': r,
                                                         'actual_units': True})
     elif p and not r:
         units_active = units_active.filter(county__exact=p)
@@ -44,6 +46,7 @@ def units_list(request):
                                                         'query': query,
                                                         'unit_sum_search': unit_sum_search,
                                                         'last_date': last_date,
+                                                        'p': p,
                                                         'actual_units': True})
     elif r and not p:
         units_active = units_active.filter(type__exact=r)
@@ -55,6 +58,7 @@ def units_list(request):
                                                         'query': query,
                                                         'unit_sum_search': unit_sum_search,
                                                         'last_date': last_date,
+                                                        'r': r,
                                                         'actual_units': True})
 
     else:

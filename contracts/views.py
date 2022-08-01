@@ -26,18 +26,30 @@ def menu_contractsimmovables(request):
     con_len = len(contracts)
     con_archive_sum = len(contracts_archive)
     q = request.GET.get("q")
+    date_from = request.GET.get('from')
+    date_to = request.GET.get('to')
 
     paginator = Paginator(contracts, 50)
     page_number = request.GET.get('page')
     contracts_list = paginator.get_page(page_number)
     # print(contracts.period_of_validity)
-    if q:
-        contracts = contracts.filter(contractor__name__icontains=q) | contracts.filter(
-            type_of_contract__type__icontains=q) | contracts.filter(unit__county__name__icontains=q) | contracts.filter(
-            unit__city__icontains=q)
+    if q or date_from or date_to:
+        if q:
+            contracts = contracts.filter(contractor__name__icontains=q) | contracts.filter(
+                type_of_contract__type__icontains=q) | contracts.filter(
+                unit__county__name__icontains=q) | contracts.filter(
+                unit__city__icontains=q)
+
+        if date_from:
+            contracts = contracts.filter(date__gte=date_from)
+
+        if date_to:
+            contracts = contracts.filter(date__lte=date_to)
+
         return render(request, 'contracts/contract_list.html',
                       {'contracts': contracts, 'con_archive_sum': con_archive_sum, 'con_len': con_len,
-                       'query': query, 'last_date': last_date, 'now': now, 'actual': True})
+                       'query': query, 'last_date': last_date, 'now': now, 'q': q, 'date_from': date_from,
+                       'date_to': date_to, 'actual': True})
     else:
         return render(request, 'contracts/contract_list.html',
                       {'contracts': contracts_list, 'con_len': con_len, 'con_archive_sum': con_archive_sum,
@@ -54,16 +66,25 @@ def menu_contractsimmovables_archive(request):
     contrsum = len(contracts)
     con_archive_sum = len(contracts_archive)
     q = request.GET.get("q")
+    date_from = request.GET.get('from')
+    date_to = request.GET.get('to')
 
     paginator = Paginator(contracts_archive, 50)
     page_number = request.GET.get('page')
     contracts_list = paginator.get_page(page_number)
+    if q or date_from or date_to:
+        if q:
+            contracts = contracts_archive.filter(contractor__name__icontains=q)
 
-    if q:
-        contracts = contracts_archive.filter(contractor__name__icontains=q)
+        if date_from:
+            contracts = contracts_archive.filter(date__gte=date_from)
+
+        if date_to:
+            contracts = contracts_archive.filter(date__lte=date_to)
+
         return render(request, 'contracts/contract_list.html',
                       {'contracts_archive': contracts, 'con_archive_sum': con_archive_sum, 'contrsum': contrsum,
-                       'query': query, 'actual': False})
+                       'query': query, 'q': q, 'date_from': date_from, 'date_to': date_to, 'actual': False})
     else:
         return render(request, 'contracts/contract_list.html',
                       {'contracts_archive': contracts_list, 'contrsum': contrsum, 'con_archive_sum': con_archive_sum,
@@ -281,6 +302,7 @@ def new_contract_media(request):
 
 @login_required
 def edit_contract_media(request, id):
+    # TODO zmienić liste zaznaczania jednostek
     contract_edit = get_object_or_404(ContractMedia, pk=id)
     contract_form = ContractMediaForm(request.POST or None, request.FILES or None, instance=contract_edit)
     contract_form.fields['employer'].queryset = Employer.objects.all().filter(industry_specialist=True).filter(
