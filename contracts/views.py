@@ -321,7 +321,7 @@ def edit_contract_media(request, id):
 
 @login_required
 def create_contract_media_list(request):
-    contracts_media = ContractMedia.objects.all().filter(state=True).order_by('-date')
+    contracts_media = ContractMedia.objects.all().filter(state=True).order_by('-date').distinct()
     contracts_media_len = len(contracts_media)
     query = "Wyczyść"
     search = "Szukaj"
