@@ -3,9 +3,10 @@
 {%load static%}
 {% block title %}Umowa z dnia {{contract.date|date:"d.m.Y"}} r. {%endblock%}
 {%block content%}
+
 <div class="row">
     {%if actual%}
-    <div class="col-md-2 moj-button-left"><a href="{%url 'contracts:menu_contractsimmovables'%}">
+    <div class="col-md-2 moj-button-left"><a href="{%url 'contracts:create_contract_media_list'%}">
     <button class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span></button>
 </a>
 </div>
@@ -27,28 +28,26 @@
         <div class="col-md-9">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item"><span class="text-muted">Kontrahent: </span><span>{{contract.contractor}}</span></li>
-                <li class="list-group-item"><span class="text-muted">Podstawa prawna: </span><span title="{{contract.legal_basic.legal_basic_text}}">{{contract.legal_basic}}</span></li>
-                <li class="list-group-item"><span class="text-muted">Rodzaj umowy: </span><span>{{contract.type_of_contract}}</span></li>
-                {%if contract.usable_area%}
-                <li class="list-group-item"><span class="text-muted">Powierzchnia użyczona: </span><span>{{contract.usable_area}} m<sup>2</sup></span></li>
-                {%endif%}
+                <li class="list-group-item"><span class="text-muted">Zakres umowy: </span><span>{{contract.content}}</span></li>
+                <li class="list-group-item"><span class="text-muted">Rodzaj umowy: </span><span>{{contract.type}}</span></li>
                 <li class="list-group-item"><span class="text-muted">Okres obowiązywania: </span><span>{%if contract.period_of_validity%} {{contract.period_of_validity|date:"d.m.Y"}} r.{%else%} --- {%endif%}</span></li>
-                <li class="list-group-item"><span class="text-muted">Koszty: </span>
-                    {% if contract.rent_cost %} <span class="color-maroon">Czynsz</span>{%endif%}
-                    {% if contract.electric_cost %} <span class="color-indygo">Prąd</span> {%endif%}
-                    {% if contract.gas_cost %} <span class="color-gold">Gaz</span> {%endif%}
-                    {% if contract.water_cost %} <span class="color-sky">Woda</span> {%endif%}
-                    {% if contract.central_heating_cost %} <span class="color-cinamon">C.O.</span> {%endif%}
-                    {% if contract.garbage_cost %} <span class="color-dirty">Śmieci</span> {%endif%}
-                    {% if contract.garbage_tax_cost %} <span class="color-slategrey">Podatek śmieciowy</span> {%endif%}
-                    {% if contract.property_cost %} <span class="color-teal">Podatek od nieruchomości</span> {%endif%}
-                </li>
-                <li class="list-group-item"><span class="text-muted">Jednostka: </span><span> {{contract.unit}}</span></li>
+<!--                {%if contract.period_of_validity%}-->
+<!--        {% now 'Y-m-d' as today_date%}-->
+<!--        {%if contract.period_of_validity|date:'Y-m-d' <= today_date%}-->
+<!--        <td align="center" valign="middle" class="text-center bg-danger text-white"><span>{{contract.period_of_validity|date:"d.m.Y"}}&nbsp;r.</span></td>-->
+<!--        {%else%}-->
+<!--        <td align="center" valign="middle" class="text-center">{{contract.period_of_validity|default_if_none:'-&#45;&#45;'|date:"d.m.Y"}}&nbsp;r.</td>-->
+<!--        {%endif%}-->
+<!--        {%else%}-->
+<!--        <td align="center" valign="middle" class="text-center">-&#45;&#45;</td>-->
+<!--        {%endif%}-->
+                <li class="list-group-item"><span class="text-muted">Jednostka: </span><ul>{%for unit in contract.unit.all%}<li><span> {{unit}}</span></li>{%endfor%}</ul></li>
                 <li class="list-group-item"><span class="text-muted">Stan umowy: </span>{%if contract.state %}<span class="text-success">Aktualna</span>{%else%}<span class="text-danger">Rozwiązana</span> {%endif%}
                 </li>
                 {%if contract.information%}
                 <li class="list-group-item"><span class="text-muted">Informacje: </span>{{contract.information}}</li>
                 {%endif%}
+                <li class="list-group-item"><span class="text-muted">Branżysta: </span>{{contract.employer}}</li>
                 <li class="list-group-item"><small class="text-muted">Data dodania: {{contract.creation_date|date:'d.m.Y (H:i)'}}</small></li>
                 <li class="list-group-item"><small class="text-muted">Zmiany: {{contract.change|date:'d.m.Y (H:i)'}} - {{contract.author}}</small></li>
             </ul>

@@ -50,7 +50,8 @@
                 </select>
             </div>
             <div class="d-inline-block mx-2">
-                <button type="submit" class="btn btn-outline-primary my-btn">{{query}}{{search}}</button>
+                 <button id="searchButton" style="{%if query%} display:none; {%endif%}" type="submit" class="btn btn-outline-primary my-btn">Szukaj</button>
+                <button id="cleanButton" style="{%if not query%} display:none; {%endif%}" type="submit" class="btn btn-outline-primary my-btn" onclick="cleanSearch()">Wyczyść</button>
             </div>
         </form>
     </div>
@@ -147,8 +148,14 @@
     document.getElementById("button-investments").classList.remove("active");
     document.getElementById("button-secretariat").classList.remove("active");
 
-    $(function () {
+    $(function() {
         $('[data-toggle="info"]').tooltip()
     })
+
+    function cleanSearch(){
+        $("#p").val("");
+        $("#r").val("");
+        $("form").submit();
+    }
 </script>
 {%endblock%}

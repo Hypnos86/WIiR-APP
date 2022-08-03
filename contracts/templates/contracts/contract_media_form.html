@@ -28,8 +28,13 @@
         <div class="col-md-12 mb-3">{{contract_form.contractor|bootstrap}}</div>
         <div class="col-md-12 mb-3">{{contract_form.unit|bootstrap}}</div>
         <div class="col-md-12 mb-3">{{contract_form.information|bootstrap}}</div>
-        <div class="col-md-12 mb-3">{{contract_form.scan|bootstrap}}</div>
-        <div class="d-flex justify-content-between">
+        <div class="col-md-10 mb-3">{{contract_form.scan|bootstrap}}</div>
+        {%if contract_form.scan%}
+            <div class="col-md-2 moj-button-left align-self-end">
+                <button type="button" class="btn btn-outline-primary my-btn" onclick="openModal()"> Dodaj aneks</button>
+            </div>
+        {%endif%}
+        <div class="d-flex justify-content-between mt-2">
             <div class="col-md-3">
                 <div class="moj_button_left">
                 <label for="id_state">Stan umowy</label>
@@ -49,10 +54,25 @@
         </div>
     </form>
 </div>
+{%if new == False%}
+<!-- Modal -->
+<div class="modal fade" id="annexModal" data-url="{% url 'contracts:add_annex_contract_media' contract_edit.id %}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+{%endif%}
 <script>
     document.getElementById("button-units").classList.remove("active");
     document.getElementById("button-record").classList.add("active");
     document.getElementById("button-cpv").classList.remove("active");
     document.getElementById("button-investments").classList.remove("active");
+
+    function openModal(){
+        var url = $("#annexModal").data("url");
+        $("#annexModal .modal-content").load(url);
+        $("#annexModal").modal("show");
+    }
 </script>
 {%endblock%}

@@ -4,7 +4,7 @@ from import_export.admin import ExportMixin
 from import_export.fields import Field
 from contracts.models import TypeOfContract, LegalBasic, Guarantee, ContractImmovables, \
     AnnexImmovables, ContractAuction, AnnexContractAuction, GuaranteePeriod, WarrantyPeriod, MediaType, ContractMedia, \
-    SettlementContractAuction
+    SettlementContractAuction, AnnexContractMedia
 
 # Register your models here.
 admin.site.register(TypeOfContract)
@@ -115,13 +115,18 @@ class LegalBasicAdmin(admin.ModelAdmin):
 
 @admin.register(MediaType)
 class ContractMediaAdmin(admin.ModelAdmin):
-    list_display = ['id', 'type']
+    list_display = ['id', 'type', 'folders_type']
     list_display_links = ('type',)
 
 
 @admin.register(ContractMedia)
 class ContractMediaAdmin(admin.ModelAdmin):
     list_display = ['date', 'no_contract', 'contractor', 'period_of_validity', 'type', 'state', 'creation_date',
-                    'change_date', 'author']
+                    'change', 'author']
     list_display_links = ('no_contract',)
     filter_horizontal = ['unit']
+
+
+@admin.register(AnnexContractMedia)
+class AnnexContractMediaAdmin(admin.ModelAdmin):
+    list_display = ['contract_media', 'date', 'scope_changes', 'creation_date', 'author']

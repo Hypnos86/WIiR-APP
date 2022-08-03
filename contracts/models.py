@@ -8,7 +8,7 @@ from investments.models import Project
 class TypeOfContract(models.Model):
     class Meta:
         verbose_name = 'Rodzaj umowy'
-        verbose_name_plural = 'Nieruchomości - Rodzaje umów'
+        verbose_name_plural = 'Umowy Nieruchomości - Rodzaje umów'
 
     type = models.CharField(max_length=10)
 
@@ -32,7 +32,7 @@ class LegalBasic(models.Model):
 class Guarantee(models.Model):
     class Meta:
         verbose_name = 'Gwarancja'
-        verbose_name_plural = 'INW - Umowy - Gwarancja'
+        verbose_name_plural = 'Umowy ZZP - Rodzaje Gwarancji'
 
     guarantee = models.CharField('Gwarancja', max_length=50)
 
@@ -43,7 +43,7 @@ class Guarantee(models.Model):
 class GuaranteePeriod(models.Model):
     class Meta:
         verbose_name = "Okres gwarancyjny"
-        verbose_name_plural = "INW - Umowy - Okres gwarancyjne"
+        verbose_name_plural = "Umowy ZZP - Okres gwarancyjny"
         ordering = ['guarantee_period']
 
     guarantee_period = models.SmallIntegerField('Okres gwarancji (mc)')
@@ -55,7 +55,7 @@ class GuaranteePeriod(models.Model):
 class WarrantyPeriod(models.Model):
     class Meta:
         verbose_name = "Okres rękojmi"
-        verbose_name_plural = "INW - Umowy - Okres rękojmi"
+        verbose_name_plural = "Umowy ZZP - Okres rękojmi"
         ordering = ['warranty_period']
 
     warranty_period = models.SmallIntegerField('Okres rękojmi (mc)')
@@ -71,7 +71,7 @@ def upload_scan_contract_immovables(instance, filename):
 class ContractImmovables(models.Model):
     class Meta:
         verbose_name = "Umowa nieruchomosci"
-        verbose_name_plural = "Nieruchomości - Umowy"
+        verbose_name_plural = "Umowy Nieruchomości"
         ordering = ['date']
 
     date = models.DateField("Data")
@@ -112,8 +112,8 @@ def upload_scan_annex_contract_immovables(instance, filename):
 
 class AnnexImmovables(models.Model):
     class Meta:
-        verbose_name = 'Aneks'
-        verbose_name_plural = 'Nieruchomosci - Umowy - Aneksy'
+        verbose_name = 'Aneks na umowę nieruchomości'
+        verbose_name_plural = 'Umowy Nieruchomości - Aneksy'
         ordering = ['contract_immovables', 'date_annex']
 
     contract_immovables = models.ForeignKey(ContractImmovables, on_delete=models.CASCADE,
@@ -135,7 +135,7 @@ def up_load_contract_auction(instance, filename):
 class ContractAuction(models.Model):
     class Meta:
         verbose_name = 'Umowa ZZP'
-        verbose_name_plural = 'INW - Umowy'
+        verbose_name_plural = 'Umowy ZZP'
         ordering = ['date']
 
     investments_project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True,
@@ -183,8 +183,8 @@ def up_load_annex_contract_auction(instance, filename):
 
 class AnnexContractAuction(models.Model):
     class Meta:
-        verbose_name = 'Aneks ZZP'
-        verbose_name_plural = 'INW - Umowy - Aneksy'
+        verbose_name = 'Aneks na umowę ZZP'
+        verbose_name_plural = 'Umowy ZZP - Aneksy'
         ordering = ['contract_auction', 'date']
 
     contract_auction = models.ForeignKey(ContractAuction, on_delete=models.CASCADE,
@@ -201,13 +201,13 @@ class AnnexContractAuction(models.Model):
                                related_name='annexcontractauction')
 
     def __str__(self):
-        return f'Aneks z dnia {self.date} {self.scan}'
+        return f'Aneks z dnia {self.date}'
 
 
 class SettlementContractAuction(models.Model):
     class Meta:
         verbose_name = 'Rozliczenie umowy'
-        verbose_name_plural = 'Rozliczenia umów ZZP'
+        verbose_name_plural = 'Umowy ZZP - Rozliczenia umów'
         ordering = ['first_part_security_date', 'second_part_security_date']
 
     contract = models.OneToOneField(ContractAuction, on_delete=models.CASCADE, verbose_name='Umowa',
@@ -228,23 +228,24 @@ class SettlementContractAuction(models.Model):
 class MediaType(models.Model):
     class Meta:
         verbose_name = 'Media'
-        verbose_name_plural = 'Rodzaje Mediów'
+        verbose_name_plural = 'Umowy Media - Rodzaje Mediów'
         ordering = ['type']
 
     type = models.CharField('Media', max_length=25)
+    folders_type = models.CharField('Nazwa folderu', max_length=30)
 
     def __str__(self):
         return f'{self.type}'
 
 
 def upload_contract_media(instance, filename):
-    return f'contracts_media/{instance.type.type}/{instance.contractor.name}/{filename}'
+    return f'contracts_media/{instance.type.folders_type}/{instance.contractor.name}/{filename}'
 
 
 class ContractMedia(models.Model):
     class Meta:
-        verbose_name = 'Umowa na media'
-        verbose_name_plural = 'Umowy na media'
+        verbose_name = 'Umowa na Media'
+        verbose_name_plural = 'Umowy Media'
 
     date = models.DateField('Data umowy')
     no_contract = models.CharField('Nr.umowy', max_length=30)
@@ -261,9 +262,33 @@ class ContractMedia(models.Model):
                                  related_name='contract_media')
     state = models.BooleanField(default=True, verbose_name='Aktualna')
     creation_date = models.DateTimeField('Data utworzenia', auto_now_add=True)
-    change_date = models.DateTimeField('Zmiany', auto_now=True)
+    change = models.DateTimeField('Zmiany', auto_now=True)
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE, verbose_name='Autor',
                                related_name='contract_media')
 
     def __str__(self):
         return f'{self.no_contract} z dnia {self.date}'
+
+
+def upload_annex_contract_media(instance, filename):
+    return f'contracts_media/{instance.type.folders_type}/{instance.contractor.name}/{filename}'
+
+
+class AnnexContractMedia(models.Model):
+    class Meta:
+        verbose_name = 'Aneks Umowy na media'
+        verbose_name_plural = 'Umowy Media - Aneksy'
+        ordering = ['contract_media', 'date']
+
+    contract_media = models.ForeignKey(ContractMedia, on_delete=models.CASCADE,
+                                       verbose_name='Umowa',
+                                       related_name='annex_contract_media')
+    date = models.DateField('Data aneksu')
+    scope_changes = models.TextField('Zakres zmian', blank=True, default='')
+    scan = models.FileField(upload_to=upload_annex_contract_media, null=True, blank=True, verbose_name='Skan aneksu')
+    creation_date = models.DateTimeField('Data utworzenia', auto_now_add=True)
+    author = models.ForeignKey("auth.User", on_delete=models.CASCADE, verbose_name='Autor',
+                               related_name='annex_contract_media')
+
+    def __str__(self):
+        return f'Aneks z dnia {self.date}'

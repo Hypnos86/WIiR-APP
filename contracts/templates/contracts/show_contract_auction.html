@@ -2,6 +2,7 @@
 {%load bootstrap%}
 {%load humanize%}
 {%load static%}
+{% block title %}Umowa z dnia {{contract.date|date:"d.m.Y"}} r. {%endblock%}
 {%block content%}
 <div class="row">
     <div class="col-md-2 moj-button-left"><a href="{% url 'contracts:menu_contracts_auction' %}">

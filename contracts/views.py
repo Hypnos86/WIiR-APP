@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
 from contracts.models import ContractImmovables, ContractAuction, AnnexContractAuction, ContractMedia
 from contracts.forms import ContractImmovablesForm, ContractAuctionForm, AnnexImmovablesForm, AnnexContractAuctionForm, \
-    ContractMediaForm
+    ContractMediaForm, AnnexContractMediaForm
 from units.models import Unit
 from main.models import Employer
 from main.views import now_date
@@ -128,7 +128,6 @@ def edit_contractsimmovables(request, id):
             contract = contractsimmovables_form.save(commit=False)
             contract.author = request.user
             contractsimmovables_form.save()
-
             return redirect('contracts:menu_contractsimmovables')
     return render(request, 'contracts/contract_form.html', context)
 
@@ -275,9 +274,7 @@ def add_annex_contract_auction(request, id):
             instance.author = request.user
             instance.contract_auction = contract_edit
             contract_edit.save()
-
-        return redirect('contracts:menu_contracts_auction')
-
+            return redirect('contracts:menu_contracts_auction')
     if request.method == 'GET':
         return render(request, 'contracts/new_annex_auction_form.html', context)
 
@@ -286,7 +283,7 @@ def add_annex_contract_auction(request, id):
 def new_contract_media(request):
     contract_form = ContractMediaForm(request.POST or None, request.FILES or None)
     contract_form.fields['employer'].queryset = Employer.objects.all().filter(industry_specialist=True).filter(
-        team__team='Zespół Ekploatacji')
+        team__team='Zespół Eksploatacji')
     contract_form.fields['unit'].queryset = Unit.objects.all().order_by('county')
     units = Unit.objects.all()
 
@@ -294,6 +291,7 @@ def new_contract_media(request):
         if contract_form.is_valid():
             instance = contract_form.save(commit=False)
             instance.author = request.user
+            contract_form.save()
             return redirect('contracts:create_contract_media_list')
 
     return render(request, 'contracts/contract_media_form.html',
@@ -306,7 +304,7 @@ def edit_contract_media(request, id):
     contract_edit = get_object_or_404(ContractMedia, pk=id)
     contract_form = ContractMediaForm(request.POST or None, request.FILES or None, instance=contract_edit)
     contract_form.fields['employer'].queryset = Employer.objects.all().filter(industry_specialist=True).filter(
-        team__team='Zespół Ekploatacji')
+        team__team='Zespół Eksploatacji')
     contract_form.fields['unit'].queryset = Unit.objects.all().order_by('county')
     units = Unit.objects.all()
 
@@ -314,9 +312,10 @@ def edit_contract_media(request, id):
         if contract_form.is_valid():
             instance = contract_form.save(commit=False)
             instance.author = request.user
+            contract_form.save()
             return redirect('contracts:create_contract_media_list')
     return render(request, 'contracts/contract_media_form.html',
-                  {'contract_form': contract_form, 'new': False, 'units': units})
+                  {'contract_form': contract_form, 'new': False, 'units': units, 'contract_edit': contract_edit})
 
 
 @login_required
@@ -335,7 +334,7 @@ def create_contract_media_list(request):
     date_to = request.GET.get('to')
 
     try:
-        last_date = ContractMedia.objects.values('change_date').latest('change_date')
+        last_date = ContractMedia.objects.values('change').latest('change')
     except ContractMedia.DoesNotExist:
         last_date = None
 
@@ -363,4 +362,31 @@ def create_contract_media_list(request):
     else:
         return render(request, 'contracts/contracts_media_list.html',
                       {'contracts_media': contracts_media_list,
-                       'contracts_media_len': contracts_media_len, 'last_date': last_date, 'search': search})
+                       'contracts_media_len': contracts_media_len, 'last_date': last_date, 'search': search,
+                       'actual': True})
+
+
+@login_required
+def show_contract_media(request, id):
+    contract_media = ContractMedia.objects.get(pk=id)
+    annexes = contract_media.annex_contract_media.all()
+    return render(request, 'contracts/show_contract_media.html',
+                  {'contract': contract_media, 'annexes': annexes, 'actual': True})
+
+
+@login_required
+def add_annex_contract_media(request, id):
+    contract_edit = get_object_or_404(ContractMedia, pk=id)
+    add_annex_form = AnnexContractMediaForm(request.POST or None, request.FILES or None)
+    context = {'annex_form': add_annex_form,
+               'contract_id': id}
+
+    if request.method == 'POST':
+        if add_annex_form.is_valid():
+            instance = add_annex_form.save(commit=False)
+            instance.author = request.user
+            instance.contract_media = contract_edit
+            contract_edit.save()
+            return redirect('contracts:create_contract_media_list')
+    if request.method == 'GET':
+        return render(request, 'contracts/new_annex_media_form.html', context)

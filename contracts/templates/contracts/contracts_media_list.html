@@ -6,7 +6,7 @@
 <div class="text-center mb-3">
     <h4>Ewidencja Umów - Media</h4>
     {%if last_date%}
-    <small>Ostatnia aktualizacja: {{last_date.change_date|date:'d.m.Y (H:i)'}}</small>
+    <small>Ostatnia aktualizacja: {{last_date.change|date:'d.m.Y (H:i)'}}</small>
     {%endif%}
 </div>
 <div class="row">
@@ -60,9 +60,9 @@
         <th align="center" valign="middle" width="40" scope="col" class="text-center">L.p.</th>
         <th align="center" valign="middle" width="120" scope="col" class="text-center">Data umowy</th>
         <th align="center" valign="middle" width="300" scope="col" class="text-center">Nr. umowy</th>
-        <th align="center" valign="middle" width="300" scope="col" class="text-center">Wykonawca</th>
+        <th align="center" valign="middle" width="350" scope="col" class="text-center">Wykonawca</th>
         <th align="center" valign="middle" width="150" scope="col" class="text-center">Media</th>
-        <th align="center" valign="middle" width="500" scope="col" class="text-center">Treść</th>
+        <th align="center" valign="middle" width="450" scope="col" class="text-center">Treść</th>
         <th align="center" valign="middle" width="200" scope="col" class="text-center">Branżysta</th>
     </tr>
     </thead>
@@ -90,7 +90,7 @@
             <span>{{contract.employer}}</span>
         </td>
         <td align="right" valign="middle">
-            <a class="col m-2" href="">
+            <a class="col m-2" href="{%url 'contracts:show_contract_media' contract.id%}">
                 <button data-toggle="info" title="Pokaż" type="button" class="btn btn-outline-primary icon-color my-1">
                     <i class="bi bi-eye"></i>
                 </button></a>
