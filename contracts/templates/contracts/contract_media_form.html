@@ -2,20 +2,20 @@
 {%load bootstrap%}
 {% load humanize %}
 {% load static %}
-{% block title %}Ewidencja - Umowy Media{% endblock %}
+{% block title %} Ewidencja - Umowy Media{% endblock %}
 {% block content %}
-<div class="container col-md-6 mb-4">
+<div class="container col-md-8 mb-4">
     <div class="row">
         <div class="col-md-3"><a href="{%url 'contracts:create_contract_media_list'%}">
             <button class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span>
             </button>
         </a></div>
         <div class="col-md-6">
-            <h4 class="text-center">{%if new%}Nowa umowa {%else%}Edycja umowy{%endif%}</h4>
+            <h4 class="text-center">{%if new%} Nowa umowa {%else%}Edycja umowy{%endif%}</h4>
         </div>
     </div>
 </div>
-<div class="container col-md-6 ">
+<div class="container col-md-8 ">
     <form method="POST" enctype="multipart/form-data">
         {%csrf_token%}
         <div class="row">
@@ -29,7 +29,7 @@
         <div class="col-md-12 mb-3">{{contract_form.unit|bootstrap}}</div>
         <div class="col-md-12 mb-3">{{contract_form.information|bootstrap}}</div>
         <div class="col-md-10 mb-3">{{contract_form.scan|bootstrap}}</div>
-        {%if contract_form.scan%}
+        {%if contract_edit.scan%}
             <div class="col-md-2 moj-button-left align-self-end">
                 <button type="button" class="btn btn-outline-primary my-btn" onclick="openModal()"> Dodaj aneks</button>
             </div>

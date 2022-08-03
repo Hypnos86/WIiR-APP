@@ -60,9 +60,9 @@
             {%if annexes%}
             {%for annex in annexes%}
                 <div class="my-3">
-                    <a href="/media/{{annex.scan_annex}}" target="_blank">
+                    <a href="/media/{{annex.scan}}" target="_blank">
                         <button class="btn btn-outline-primary button-chose-invoices my-btn">
-                            <i class="bi bi-arrow-return-right"> Aneks z dnia {{annex.date_annex|date:"d.m.Y"}}&nbsp;r.</i>
+                            <i class="bi bi-arrow-return-right"> Aneks z dnia {{annex.date|date:"d.m.Y"}}&nbsp;r.</i>
                         </button>
                     </a>
                 </div>

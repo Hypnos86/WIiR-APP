@@ -178,7 +178,7 @@ class ContractAuction(models.Model):
 
 
 def up_load_annex_contract_auction(instance, filename):
-    return f'contracts_zzp/{instance.contract_auction.no_contract}/annexes/{filename}'
+    return f'contracts_zzp/{instance.contract_auction.no_contract}/{filename}'
 
 
 class AnnexContractAuction(models.Model):
@@ -271,7 +271,7 @@ class ContractMedia(models.Model):
 
 
 def upload_annex_contract_media(instance, filename):
-    return f'contracts_media/{instance.type.folders_type}/{instance.contractor.name}/{filename}'
+    return f'contracts_media/{instance.contract_media.type.folders_type}/{instance.contract_media.contractor.name}/{filename}'
 
 
 class AnnexContractMedia(models.Model):

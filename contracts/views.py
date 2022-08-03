@@ -273,7 +273,7 @@ def add_annex_contract_auction(request, id):
             instance = add_annex_form.save(commit=False)
             instance.author = request.user
             instance.contract_auction = contract_edit
-            contract_edit.save()
+            add_annex_form.save()
             return redirect('contracts:menu_contracts_auction')
     if request.method == 'GET':
         return render(request, 'contracts/new_annex_auction_form.html', context)
@@ -293,7 +293,6 @@ def new_contract_media(request):
             instance.author = request.user
             contract_form.save()
             return redirect('contracts:create_contract_media_list')
-
     return render(request, 'contracts/contract_media_form.html',
                   {'contract_form': contract_form, 'new': True, 'units': units})
 
@@ -378,6 +377,7 @@ def show_contract_media(request, id):
 def add_annex_contract_media(request, id):
     contract_edit = get_object_or_404(ContractMedia, pk=id)
     add_annex_form = AnnexContractMediaForm(request.POST or None, request.FILES or None)
+
     context = {'annex_form': add_annex_form,
                'contract_id': id}
 
@@ -386,7 +386,7 @@ def add_annex_contract_media(request, id):
             instance = add_annex_form.save(commit=False)
             instance.author = request.user
             instance.contract_media = contract_edit
-            contract_edit.save()
+            add_annex_form.save()
             return redirect('contracts:create_contract_media_list')
     if request.method == 'GET':
         return render(request, 'contracts/new_annex_media_form.html', context)
