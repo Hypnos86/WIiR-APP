@@ -368,9 +368,10 @@ def create_contract_media_list(request):
 @login_required
 def show_contract_media(request, id):
     contract_media = ContractMedia.objects.get(pk=id)
+    units = contract_media.unit.all()
     annexes = contract_media.annex_contract_media.all()
     return render(request, 'contracts/show_contract_media.html',
-                  {'contract': contract_media, 'annexes': annexes, 'actual': True})
+                  {'contract': contract_media, 'annexes': annexes, 'units':units, 'actual': True})
 
 
 @login_required

@@ -32,8 +32,15 @@ def cpvlist(request):
 def type_expense_list(request):
     year = current_year()
     genres = Genre.objects.all().exclude(name_id="RB")
-    limit = OrderLimit.objects.get(year=year)
-    limit_item = round(limit.limit_netto, 2)
+
+    try:
+        limit = OrderLimit.objects.get(year=year)
+        limit_netto = limit.limit_netto
+        limit_item = round(limit_netto, 2)
+    except ObjectDoesNotExist:
+        limit = year
+        limit_netto = 0
+        limit_item = round(limit_netto, 2)
 
     for object in genres:
         order_genre = Order.objects.all().filter(genre=object).filter(date__year=current_year()).filter(brakedown=False)
@@ -45,7 +52,7 @@ def type_expense_list(request):
         object.remain = round(limit_item - object.sum_netto, 2)
 
     context = {'objects': genres,
-               'limit': limit.limit_netto,
+               'limit': limit_netto,
                'limit_item': limit_item,
                'year': year}
     return render(request, 'cpvdict/genre_tree.html', context)
@@ -155,7 +162,8 @@ def edit_order(request, id):
             order_form.save()
             return redirect('cpvdict:order_list')
     return render(request, 'cpvdict/order_form.html',
-                  {'order_form': order_form, 'unit_edit': unit_edit,'order_edit':order_edit, 'new': False, 'units': units})
+                  {'order_form': order_form, 'unit_edit': unit_edit, 'order_edit': order_edit, 'new': False,
+                   'units': units})
 
 
 @login_required
@@ -193,7 +201,8 @@ def create_order_archive(request, year):
         if date_from:
             orders = orders.filter(date__gte=date_from)
         if date_to:
-            order = orders.filter(date__lte=date_to)
+            orders = orders.filter(date__lte=date_to)
+
         return render(request, 'cpvdict/archive_order_list.html',
                       {'orders': orders, 'year': year, 'ordersum': ordersum, 'query': query, 'q': q,
                        'date_from': date_from, 'date_to': date_to
@@ -219,7 +228,6 @@ def create_type_work_list_archive(request, year):
         limit = OrderLimit.objects.get(year=year)
     except ObjectDoesNotExist:
         limit = year
-        # limit = set([year['date__year'] for year in orders.values('date__year')])
 
     context = {'units': units, 'limit': limit, 'year': year, 'sum_rb': sum_rb}
     return render(request, 'cpvdict/archive_genre_work_list.html', context)
