@@ -78,9 +78,11 @@ class AnnexContractAuctionForm(ModelForm):
 class ContractMediaForm(ModelForm):
     class Meta:
         model = ContractMedia
-        fields = ['date', 'no_contract', 'contractor', 'type', 'content', 'period_of_validity', 'unit', 'information',
+        fields = ['date', 'no_contract', 'contractor', 'type', 'legal_basic', 'content', 'period_of_validity', 'unit',
+                  'information',
                   'scan', 'employer', 'state', 'creation_date', 'change_date', 'author']
         labels = {'date': 'Data umowy', 'no_contract': 'Nr.umowy', 'contractor': 'Wykonawca', 'type': 'Rodzaj umowy',
+                  'legal_basic': 'Podstawa prawna',
                   'content': 'Treść', 'period_of_validity': 'Okres obowiązywania', 'unit': 'Jednostka',
                   'information': 'Informacje',
                   'scan': 'Skan', 'employer': 'Branżysta', 'state': 'Aktualna', 'creation_date': 'Data utworzenia',

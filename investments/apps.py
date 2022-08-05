@@ -4,4 +4,4 @@ from django.apps import AppConfig
 class InvestmentsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'investments'
-    verbose_name = '5. Inwestycyjne'
+    verbose_name = '6. Inwestycyjne'

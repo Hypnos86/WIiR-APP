@@ -62,7 +62,12 @@ def type_expense_list(request):
 def type_work_list(request):
     year = current_year()
     units = Unit.objects.all()
-    limit = OrderLimit.objects.get(year=year)
+    try:
+        limit = OrderLimit.objects.get(year=year)
+        limit_netto = limit.limit_netto
+    except ObjectDoesNotExist:
+        limit = year
+        limit_netto = 0
 
     sum_rb = {}
     for unit in units:
@@ -73,7 +78,7 @@ def type_work_list(request):
         sum_rb[unit] = sum
 
     year = current_year()
-    item = round(float(limit.limit_netto) * 1.23, 2)
+    item = round(float(limit_netto) * 1.23, 2)
 
     context = {'units': units, 'limit': limit, 'item': item, 'year': year, 'sum_rb': sum_rb}
     return render(request, 'cpvdict/genre_work_list.html', context)
