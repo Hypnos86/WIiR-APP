@@ -31,8 +31,14 @@
     {% regroup donations by date_receipt|date:'Y' as date_list %}
     <ul class="">
         {% for date_receipt in date_list %}
-        <li class="">{{date_receipt.grouper}}</li>
-        <ul class="list-group">
+        <li class="">{{date_receipt.grouper}} rok.
+            <button class="button-show btn btn-outline" onclick="show(this)">
+                <span class="bi bi-caret-down h5"></span>
+            </button> <button class="hide-on-start button-hide btn btn-outline" onclick="hide(this)">
+                <span class="bi bi-caret-up h5"></span>
+            </button>
+        </li>
+        <ul class="list-group hide-on-start">
             {% for donation in date_receipt.list %}
             <li class="list-group-item list-group-item-action">Nr. darowizny: {{donation}}</li>
             {% endfor %}
@@ -45,8 +51,14 @@
     {% regroup contract_auction by date|date:'Y' as date_list %}
     <ul >
         {% for date in date_list%}
-        <li>{{date.grouper}} r.</li>
-        <ul class="list-group">
+        <li>{{date.grouper}} rok.
+            <button class="button-show btn btn-outline" onclick="show(this)">
+                <span class="bi bi-caret-down h5"></span>
+            </button> <button class="hide-on-start button-hide btn btn-outline" onclick="hide(this)">
+                <span class="bi bi-caret-up h5"></span>
+            </button>
+        </li>
+        <ul class="list-group hide-on-start">
             {% for contract in date.list %}
             <li class="list-group-item list-group-item-action">Nr. umowy: <a href="{% url 'contracts:show_contract_auction' contract.id %}">{{contract}}</a></li>
             {%endfor%}
@@ -60,7 +72,13 @@
     {% regroup projects by date_of_acceptance|date:'Y' as date_list %}
     <ul>
         {% for date_of_acceptance in date_list %}
-        <li>{{date_of_acceptance.grouper}} rok. <button class="button-show" onclick="show(this)">Rozwiń</button> <button class="hide-on-start button-hide" onclick="hide(this)">Zwiń</button></li>
+        <li>{{date_of_acceptance.grouper}} rok.
+            <button class="button-show btn btn-outline" onclick="show(this)">
+                <span class="bi bi-caret-down h5"></span>
+            </button> <button class="hide-on-start button-hide btn btn-outline" onclick="hide(this)">
+                <span class="bi bi-caret-up h5"></span>
+            </button>
+        </li>
         <ul class="list-group hide-on-start">
             {% for project in date_of_acceptance.list %}
             <li class="list-group-item list-group-item-action">Nazwa programu inwestycji:<a href="{% url 'investments:show_project' project.id %}">{{project}}</a></li>
@@ -71,13 +89,17 @@
 </div>
 <div class="mt-5">
     <h5>Zamówienia</h5>
-
     {% regroup orders by date|date:'Y' as date_list %}
     <ul>
         {% for date in date_list %}
-
-        <li>{{date.grouper}} rok. <button class="button-show bi bi-caret-down" onclick="show(this)"></button> <button class="hide-on-start button-hide bi bi-caret-up" onclick="hide(this)"></button></li>
-
+        <li>{{date.grouper}} rok.
+            <button class="button-show btn btn-outline" onclick="show(this)">
+                <span class="bi bi-caret-down h5"></span>
+            </button>
+            <button class="hide-on-start button-hide btn btn-outline" onclick="hide(this)">
+                <span class="bi bi-caret-up h5"></span>
+            </button>
+        </li>
         <ul class="list-group hide-on-start">
             {% for order in date.list %}
             <li class="list-group-item list-group-item-action">Nr. zlecenia: {{order}}</li>
@@ -85,7 +107,6 @@
         </ul>
         {% endfor %}
     </ul>
-
 </div>
 <script>
     document.getElementById("button-units").classList.add("active");
@@ -112,6 +133,5 @@
     $(document).ready(function(){
         $('.hide-on-start').hide(0);
     })
-
 </script>
 {%endblock%}
