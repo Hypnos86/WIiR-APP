@@ -60,8 +60,8 @@
     {% regroup projects by date_of_acceptance|date:'Y' as date_list %}
     <ul>
         {% for date_of_acceptance in date_list %}
-        <li>{{date_of_acceptance.grouper}} rok.</li>
-        <ul class="list-group">
+        <li>{{date_of_acceptance.grouper}} rok. <button class="button-show" onclick="show(this)">Rozwiń</button> <button class="hide-on-start button-hide" onclick="hide(this)">Zwiń</button></li>
+        <ul class="list-group hide-on-start">
             {% for project in date_of_acceptance.list %}
             <li class="list-group-item list-group-item-action">Nazwa programu inwestycji:<a href="{% url 'investments:show_project' project.id %}">{{project}}</a></li>
             {% endfor %}
@@ -75,14 +75,17 @@
     {% regroup orders by date|date:'Y' as date_list %}
     <ul>
         {% for date in date_list %}
-        <li>{{date.grouper}} rok.</li>
-        <ul class="list-group">
+
+        <li>{{date.grouper}} rok. <button class="button-show bi bi-caret-down" onclick="show(this)"></button> <button class="hide-on-start button-hide bi bi-caret-up" onclick="hide(this)"></button></li>
+
+        <ul class="list-group hide-on-start">
             {% for order in date.list %}
             <li class="list-group-item list-group-item-action">Nr. zlecenia: {{order}}</li>
             {% endfor %}
         </ul>
+        {% endfor %}
     </ul>
-    {% endfor %}
+
 </div>
 <script>
     document.getElementById("button-units").classList.add("active");
@@ -92,6 +95,22 @@
 
     $(function () {
         $('[data-toggle="info"]').tooltip()
+    })
+
+    function hide(element){
+        $(element).parent().next().hide(300);
+        $(element).hide(0);
+        $(element).parent().children('.button-show').show(0);
+    }
+
+    function show(element){
+        $(element).parent().next().show(300);
+        $(element).hide(0);
+        $(element).parent().children('.button-hide').show(0);
+    }
+
+    $(document).ready(function(){
+        $('.hide-on-start').hide(0);
     })
 
 </script>
