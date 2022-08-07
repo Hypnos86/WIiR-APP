@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Informacje o {{unit.type.type_short}} {{unit.city}}{% endblock %}
+{% block content %}
+<div class="text-center">
+    <h4 class="">{{unit.type.type_full}} - {{unit.city}}</h4>
+    <h5 class="">{{unit.information}} - {{unit.address}}, {{unit.zip_code}} {{unit.city}}</h5>
+</div>
+<div>
+
+</div>
+<div class="mt-5">
+    <h5>Umowy czynszowe</h5>
+    <ul class="list-group">
+        {% for contract in contract_immovables %}
+        <li class="list-group-item list-group-item-action"><a href="{%url 'contracts:show_contractsimmovables' contract.id%}">{{contract}}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+<div class="mt-5">
+    <h5>Umowy na media</h5>
+    <ul class="list-group">
+        {% for media in contract_media %}
+        <li class="list-group-item list-group-item-action">Nr: umowy: <a href="{%url 'contracts:show_contract_media' media.id%}">{{media}}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+<div class="mt-5">
+    <h5>Darowizny</h5>
+    {% regroup donations by date_receipt|date:'Y' as date_list %}
+    <ul class="">
+        {% for date_receipt in date_list %}
+        <li class="">{{date_receipt.grouper}} rok.
+            <button class="button-show btn btn-outline" onclick="show(this)">
+                <span class="bi bi-caret-down h5"></span>
+            </button> <button class="hide-on-start button-hide btn btn-outline" onclick="hide(this)">
+                <span class="bi bi-caret-up h5"></span>
+            </button>
+        </li>
+        <ul class="list-group hide-on-start">
+            {% for donation in date_receipt.list %}
+            <li class="list-group-item list-group-item-action">Nr. darowizny: {{donation}}</li>
+            {% endfor %}
+        </ul>
+        {% endfor %}
+    </ul>
+</div>
+<div class="mt-5">
+    <h5>Umowy przetargowe</h5>
+    {% regroup contract_auction by date|date:'Y' as date_list %}
+    <ul >
+        {% for date in date_list%}
+        <li>{{date.grouper}} rok.
+            <button class="button-show btn btn-outline" onclick="show(this)">
+                <span class="bi bi-caret-down h5"></span>
+            </button> <button class="hide-on-start button-hide btn btn-outline" onclick="hide(this)">
+                <span class="bi bi-caret-up h5"></span>
+            </button>
+        </li>
+        <ul class="list-group hide-on-start">
+            {% for contract in date.list %}
+            <li class="list-group-item list-group-item-action">Nr. umowy: <a href="{% url 'contracts:show_contract_auction' contract.id %}">{{contract}}</a></li>
+            {%endfor%}
+        </ul>
+        {% endfor %}
+    </ul>
+</div>
+<div class="mt-5">
+    <h5>Inwestycje</h5>
+
+    {% regroup projects by date_of_acceptance|date:'Y' as date_list %}
+    <ul>
+        {% for date_of_acceptance in date_list %}
+        <li>{{date_of_acceptance.grouper}} rok.
+            <button class="button-show btn btn-outline" onclick="show(this)">
+                <span class="bi bi-caret-down h5"></span>
+            </button> <button class="hide-on-start button-hide btn btn-outline" onclick="hide(this)">
+                <span class="bi bi-caret-up h5"></span>
+            </button>
+        </li>
+        <ul class="list-group hide-on-start">
+            {% for project in date_of_acceptance.list %}
+            <li class="list-group-item list-group-item-action">Nazwa programu inwestycji:<a href="{% url 'investments:show_project' project.id %}">{{project}}</a></li>
+            {% endfor %}
+        </ul>
+        {% endfor %}
+    </ul>
+</div>
+<div class="mt-5">
+    <h5>Zamówienia</h5>
+    {% regroup orders by date|date:'Y' as date_list %}
+    <ul>
+        {% for date in date_list %}
+        <li>{{date.grouper}} rok.
+            <button class="button-show btn btn-outline" onclick="show(this)">
+                <span class="bi bi-caret-down h5"></span>
+            </button>
+            <button class="hide-on-start button-hide btn btn-outline" onclick="hide(this)">
+                <span class="bi bi-caret-up h5"></span>
+            </button>
+        </li>
+        <ul class="list-group hide-on-start">
+            {% for order in date.list %}
+            <li class="list-group-item list-group-item-action">Nr. zlecenia: {{order}}</li>
+            {% endfor %}
+        </ul>
+        {% endfor %}
+    </ul>
+</div>
+<script>
+    document.getElementById("button-units").classList.add("active");
+    document.getElementById("button-record").classList.remove("active");
+    document.getElementById("button-investments").classList.remove("active");
+    document.getElementById("button-secretariat").classList.remove("active");
+
+    $(function () {
+        $('[data-toggle="info"]').tooltip()
+    })
+
+    function hide(element){
+        $(element).parent().next().hide(300);
+        $(element).hide(0);
+        $(element).parent().children('.button-show').show(0);
+    }
+
+    function show(element){
+        $(element).parent().next().show(300);
+        $(element).hide(0);
+        $(element).parent().children('.button-hide').show(0);
+    }
+
+    $(document).ready(function(){
+        $('.hide-on-start').hide(0);
+    })
+</script>
+{%endblock%}

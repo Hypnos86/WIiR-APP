@@ -306,6 +306,7 @@ def edit_contract_media(request, id):
         team__team='Zespół Eksploatacji')
     contract_form.fields['unit'].queryset = Unit.objects.all().order_by('county')
     units = Unit.objects.all()
+    selected_units = contract_edit.unit.all()
 
     if request.method == 'POST':
         if contract_form.is_valid():
@@ -314,7 +315,8 @@ def edit_contract_media(request, id):
             contract_form.save()
             return redirect('contracts:create_contract_media_list')
     return render(request, 'contracts/contract_media_form.html',
-                  {'contract_form': contract_form, 'new': False, 'units': units, 'contract_edit': contract_edit})
+                  {'contract_form': contract_form, 'new': False, 'units': units, 'contract_edit': contract_edit,
+                   'selected_units': selected_units})
 
 
 @login_required
@@ -368,9 +370,10 @@ def create_contract_media_list(request):
 @login_required
 def show_contract_media(request, id):
     contract_media = ContractMedia.objects.get(pk=id)
+    units = contract_media.unit.all()
     annexes = contract_media.annex_contract_media.all()
     return render(request, 'contracts/show_contract_media.html',
-                  {'contract': contract_media, 'annexes': annexes, 'actual': True})
+                  {'contract': contract_media, 'annexes': annexes, 'units': units, 'actual': True})
 
 
 @login_required

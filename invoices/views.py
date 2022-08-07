@@ -526,10 +526,10 @@ def make_verification(request):
 
         for day in days:
             print(day.aggregate(Sum('sum')))
-
-        for invoice in invoices_buy_list.values('date_of_payment'):
-            day_sum = invoices_buy_list.aggregate(Sum('sum'))
-            print(invoice)
+        #TODO poprawić kod w dziennym sumowaniu weryfikacji
+        # for invoice in invoices_buy_list.values('date_of_payment'):
+        #     day_sum = invoices_buy_list.aggregate(Sum('sum'))
+        #     print(invoice)
             # invoice_sum = invoice.aggregate(Sum('sum'))
 
         invoices_buy_sum = len(invoices_buy_list)
@@ -545,7 +545,7 @@ def make_verification(request):
                                                               'query': query, 'year': year,
                                                               'date_from': date_from,
                                                               'date_to': date_to,
-                                                              'day_sum': day_sum,
+                                                              # 'day_sum': day_sum, TODO poprawić kod w dziennym sumoaniu weryfikacji
                                                               'date_from_obj': date_from_obj,
                                                               'date_to_obj': date_to_obj,
                                                               'verification_all': verification_all})

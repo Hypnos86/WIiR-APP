@@ -253,6 +253,8 @@ class ContractMedia(models.Model):
                                    related_name='contract_media')
     type = models.ForeignKey(MediaType, on_delete=models.CASCADE, verbose_name='Rodzaj umowy',
                              related_name='contractmedia')
+    legal_basic = models.ForeignKey(LegalBasic, on_delete=models.CASCADE, related_name='contract_media',
+                                    verbose_name='Tryb UPZP')
     content = models.CharField('Treść', max_length=100)
     period_of_validity = models.DateField('Data obowiązywania', null=True, blank=True)
     unit = models.ManyToManyField(Unit, verbose_name='Jednostka', related_name='contract_media')

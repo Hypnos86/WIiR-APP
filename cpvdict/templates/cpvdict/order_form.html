@@ -30,7 +30,6 @@
             </div>
             <div class="col-md-3 px-2 my-1">{{ order_form.typeorder|bootstrap }}</div>
             <div class="col-md-6 px-2 my-1">{{ order_form.genre|bootstrap }}</div>
-            <div class="col-md-4 px-2 my-1">{{ order_form.worker|bootstrap }}</div>
             <div class="col-md-12 px-2 my-1">{{ order_form.contractor|bootstrap }}</div>
             <div class="col-md-12 p-2">
                 <div class="form-group">
@@ -54,7 +53,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-12 px-2 mt-3 text-center ">{{ order_form.content|bootstrap}}</div>
+            <div class="col-md-8 px-2 mt-3 text-center ">{{ order_form.content|bootstrap}}</div>
+            <div class="col-md-4 px-2 mt-3">{{ order_form.worker|bootstrap }}</div>
             </div>
             <div class="d-flex justify-content-between my-4">
                 <div class="col-md-3 list-group-item" title="Zaznacz jeśli zamówienie jest w trybie awaryjnym">{{ order_form.brakedown|bootstrap }}</div>
