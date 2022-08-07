@@ -13,7 +13,7 @@
     <h5>Umowy czynszowe</h5>
     <ul class="list-group">
         {% for contract in contract_immovables %}
-        <li class="list-group-item list-group-item-action"><a href="{%url 'contracts:show_contractsimmovables' contract.id%}">{{contract}}</a>
+        <li class="list-group-item list-group-item-action"><a class="clean-link" href="{%url 'contracts:show_contractsimmovables' contract.id%}">{{contract}}</a>
         </li>
         {% endfor %}
     </ul>
@@ -22,7 +22,7 @@
     <h5>Umowy na media</h5>
     <ul class="list-group">
         {% for media in contract_media %}
-        <li class="list-group-item list-group-item-action">Nr: umowy: <a href="{%url 'contracts:show_contract_media' media.id%}">{{media}}</a></li>
+        <li class="list-group-item list-group-item-action">Nr: umowy: <a class="clean-link" href="{%url 'contracts:show_contract_media' media.id%}">{{media}}</a></li>
         {% endfor %}
     </ul>
 </div>
@@ -39,9 +39,9 @@
             </button>
         </li>
         <ul class="list-group hide-on-start">
-            {% for donation in date_receipt.list %}
-            <li class="list-group-item list-group-item-action">Nr. darowizny: {{donation}}</li>
-            {% endfor %}
+                {% for donation in date_receipt.list %}
+                <li class="list-group-item list-group-item-action">Nr. darowizny: {{donation}}</li>
+                {% endfor %}
         </ul>
         {% endfor %}
     </ul>
@@ -60,7 +60,7 @@
         </li>
         <ul class="list-group hide-on-start">
             {% for contract in date.list %}
-            <li class="list-group-item list-group-item-action">Nr. umowy: <a href="{% url 'contracts:show_contract_auction' contract.id %}">{{contract}}</a></li>
+            <li class="list-group-item list-group-item-action">Nr. umowy: <a class="clean-link" href="{% url 'contracts:show_contract_auction' contract.id %}">{{contract}}</a></li>
             {%endfor%}
         </ul>
         {% endfor %}
@@ -81,7 +81,7 @@
         </li>
         <ul class="list-group hide-on-start">
             {% for project in date_of_acceptance.list %}
-            <li class="list-group-item list-group-item-action">Nazwa programu inwestycji:<a href="{% url 'investments:show_project' project.id %}">{{project}}</a></li>
+            <li class="list-group-item list-group-item-action">Nazwa programu inwestycji:<a class="clean-link" href="{% url 'investments:show_project' project.id %}">{{project}}</a></li>
             {% endfor %}
         </ul>
         {% endfor %}

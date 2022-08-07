@@ -72,7 +72,7 @@
         <th align="center" valign="middle" width="200" scope="col" class="text-center">Kwota brutto</th>
         <th align="center" valign="middle" width="200" scope="col" class="text-center">ID rodzajowości</th>
         <th align="center" valign="middle" width="100" scope="col" class="text-center">Awaria</th>
-        <th align="center" valign="middle" width="450" scope="col" class="text-center">Jednostka</th>
+        <th align="center" valign="middle" width="450" scope="col" class="text-center">Branżysta</th>
     </tr>
     </thead>
     <tbody>
@@ -85,7 +85,7 @@
         <td align="right" valign="middle"><span data-toggle="info" title="Kwota netto: {{order.sum_netto|intcomma}}&nbsp;zł.&#010;(vat: {{order.vat}})">{{order.sum_brutto|intcomma}}&nbspzł.</span></td>
         <td align="center" valign="middle"><span data-toggle="info" title="{{order.typeorder}}">{{order.genre.name_id}}</span></td>
         <td align="center" valign="middle">{% if order.brakedown  %} <i class="bi bi-check2-circle text-success icon-check"></i> {%else%} --- {%endif%}</td>
-        <td valign="middle"><span>{{order.unit.type.type_full}} - {{order.unit.city}}<br><small>{{order.unit.address}}, {{order.unit.zip_code}} {{order.unit.city}}</small></span></td>
+        <td align="center" valign="middle"><span>{{order.worker}}</span></td>
         <td align="right" valign="middle">
         {%if order.content%}
             <button data-toggle="info" title="Pokaż" type="button" data-url="{%url 'cpvdict:show_order_info_popup' order.id%}" class="btn btn-outline-success mx-2" onclick="openModal(this)"><i

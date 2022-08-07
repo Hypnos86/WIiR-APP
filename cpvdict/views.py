@@ -87,7 +87,7 @@ def type_work_list(request):
 @login_required
 def show_information_work_object(request, id, year):
     work_object = get_object_or_404(Unit, pk=id)
-    orders = Order.objects.all().filter(date__year=year).filter(unit_id=id).order_by('date')
+    orders = Order.objects.all().filter(date__year=year).filter(unit__id=id).order_by('date')
     return render(request, 'cpvdict/info_work_popup.html',
                   {'work_object': work_object, 'orders': orders, 'id': id, 'year': year})
 

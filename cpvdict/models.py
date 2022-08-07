@@ -86,8 +86,7 @@ class Order(models.Model):
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE, related_name="order", verbose_name="ID rodzajowości")
     contractor = models.ForeignKey(Contractor, on_delete=models.CASCADE, verbose_name='Kontrahent',
                                    related_name='order')
-    unit = models.ForeignKey(Unit, on_delete=models.CASCADE, null=False, verbose_name="Obiekt",
-                             related_name="order")
+    unit = models.ManyToManyField(Unit, related_name="order", verbose_name="Obiekt")
     brakedown = models.BooleanField("Awaria")
     worker = models.ForeignKey(Employer, on_delete=models.CASCADE, verbose_name='Branżysta', related_name='order')
     content = models.TextField("Zakres", blank=True, default="")

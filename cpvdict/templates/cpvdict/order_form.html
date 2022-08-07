@@ -3,72 +3,139 @@
 {% load static %}
 {% block title %} Zlecenie {% endblock %}
 {% block content%}
-<div class="row">
-    <div class="col-md-3"><a href="{%url 'cpvdict:order_list'%}">
-        <button class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span></button></a>
-    </div>
-    <div class="col-md-6">
-        <h4 class="text-center">{%if new%}Nowe zlecenie{%else%}Edycja zlecenia {{no_order}}{%endif%}</h4>
+<div class="container col-md-6 mb-4">
+    <div class="row">
+        <div class="col-md-3"><a href="{%url 'cpvdict:order_list'%}">
+            <button class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span></button></a>
+        </div>
+        <div class="col-md-6">
+            <h4 class="text-center">{%if new%}Nowe zlecenie{%else%}Edycja zlecenia {{no_order}}{%endif%}</h4>
+        </div>
     </div>
 </div>
-
-<div class="container px-5 pb-5 col-md-6">
+<div class="container  col-md-6">
     <form method="post">
         {%csrf_token%}
         <div class="row">
-            <div class="col-md-3 px-2 my-1">{{ order_form.date|bootstrap }}</div>
-            <div class="col-md-3 px-2 my-1">{{ order_form.no_order|bootstrap }}</div>
+            <div class="col-md-4 px-2 my-1">{{ order_form.date|bootstrap }}</div>
+            <div class="col-md-4 px-2 my-1">{{ order_form.no_order|bootstrap }}</div>
+            <div class="col-md-4 px-2 mt-1">{{ order_form.worker|bootstrap }}</div>
             <div class="col-md-3 px-2 my-1">{{ order_form.sum_netto|bootstrap }}</div>
-            <div class="col-md-3 px-2 my-1">{{ order_form.vat|bootstrap }}</div>
+            <div class="col-md-2 px-2 my-1">{{ order_form.vat|bootstrap }}</div>
             <div class="col-md-3 px-2 my-1">
                 <div class="form-group">
-                    <label class="control-label  " for="id_sum_brutto">kwota brutto</label>
-                    <div class=" ">
+                    <label class="control-label" for="id_sum_brutto">kwota brutto</label>
+                    <div class="">
                         <input type="number" name="sum_brutto" step="0.01" class=" form-control" required="" id="id_sum_brutto" value="{{ order_form.sum_brutto.value}}" readonly>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 px-2 my-1">{{ order_form.typeorder|bootstrap }}</div>
-            <div class="col-md-6 px-2 my-1">{{ order_form.genre|bootstrap }}</div>
-            <div class="col-md-12 px-2 my-1">{{ order_form.contractor|bootstrap }}</div>
-            <div class="col-md-12 p-2">
-                <div class="form-group">
-                    <label class="control-label" for="id_unit">Jednostka</label>
-                    <div class="">
-                        <select name="unit" class="form-control" required id="id_unit">
-                            {% regroup units by county as county_list %}
-                            <option>---------</option>
-                            {% for county in county_list %}
-                            <optgroup label="{{county.grouper}}">
-                                {% for unit in county.list %}
-                                {% if unit_edit.id == unit.id %}
-                                <option value="{{unit.id}}" selected>{{unit}}</option>
-                                {% else %}
-                                <option value="{{unit.id}}">{{unit}}</option>
-                                {% endif %}
-                                {% endfor %}
-                            </optgroup>
-                            {% endfor %}
-                        </select>
+            <div class="col-md-4 my-1 pt-4"  data-toggle="info" title="Zaznacz jeśli zamówienie jest w trybie awaryjnym">
+                <div class="">
+                    <div class=" form-control">
+                        <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="brakedown" id="id_brakedown"> <span>Awaria</span>
+                        </label>
+                    </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-8 px-2 mt-3 text-center ">{{ order_form.content|bootstrap}}</div>
-            <div class="col-md-4 px-2 mt-3">{{ order_form.worker|bootstrap }}</div>
+            <div class="col-md-12 px-2 my-1">{{ order_form.contractor|bootstrap }}</div>
+            <div class="col-md-4 px-2 my-1">{{ order_form.typeorder|bootstrap }}</div>
+            <div class="col-md-8 px-2 my-1">{{ order_form.genre|bootstrap }}</div>
+            <div class="col-md-12 p-2">{{ order_form.unit|bootstrap }}</div>
+            <div class="col-md-12 px-2 mt-3 text-center">{{ order_form.content|bootstrap}}</div>
+                <div class="col-md-12 moj-button-right my-3">
+                    <button type="submit" class="btn btn-outline-primary my-btn">
+                        <span class="bi bi-save2"> Dodaj</span>
+                    </button>
+                </div>
             </div>
-            <div class="d-flex justify-content-between my-4">
-                <div class="col-md-3 list-group-item" title="Zaznacz jeśli zamówienie jest w trybie awaryjnym">{{ order_form.brakedown|bootstrap }}</div>
-                <div class="col-md-3 moj-button-right">
-                    <button type="submit" class="btn btn-outline-primary my-btn"><span class="bi bi-save2"> Dodaj</span></button>
-            </div>
-        </div>
     </form>
 </div>
 <script>
-     document.getElementById("button-units").classList.remove("active");
-     document.getElementById("button-record").classList.remove("active");
-     document.getElementById("button-secretariat").classList.remove("active");
-     document.getElementById("button-cpv").classList.add("active");
-     document.getElementById("button-investments").classList.remove("active");
+<!--     zmienić wartość, jeśli zmieni się id rodzajowości dla robót budowlanych-->
+     genereWorkId = '3';
+
+    function reinitUnits(){
+        $('#id_unit').select2('destroy');
+        if($('#id_typeorder').val() == genereWorkId && $('#id_genre').val() == genereWorkId){
+            $("#id_unit").select2({placeholder:'Dodaj jednostki', multiple: false});
+        } else {
+            $("#id_unit").select2({placeholder:'Dodaj jednostki', multiple: true});
+        }
+    }
+
+    function setGenereValue(){
+        if($('#id_typeorder').val() == genereWorkId){
+            $("#id_genre").unbind("change")
+            $("#id_genre").val(genereWorkId).change();
+            $("#id_genre").change(function(){setTypeOrderValue()})
+        } else if (currentTypeOrderValue == genereWorkId){
+            $("#id_genre").unbind("change")
+            $("#id_genre").val(null).change();
+            $("#id_genre").change(function(){setTypeOrderValue()})
+        }
+        currentTypeOrderValue = $('#id_typeorder').val();
+        currentGenereValue = $('#id_genre').val();
+
+        reinitUnits();
+    }
+
+    function setTypeOrderValue(){
+        if($('#id_genre').val() == genereWorkId){
+                                                                        // żeby uniknąć pętli eventów
+            $("#id_typeorder").unbind("change")                         // odpinamy nasłuchiwanie change dla type order
+            $("#id_typeorder").val(genereWorkId).change();              // ustawiamy wartosc type order (wymaga odpalenia eventu change)
+            $("#id_typeorder").change(function(){setGenereValue();})    // ponownie ustawiamy nasluchiwanie change
+
+        } else if (currentGenereValue == genereWorkId){
+            $("#id_typeorder").unbind("change")
+            $("#id_typeorder").val(null).change();
+            $("#id_typeorder").change(function(){setGenereValue();})
+        }
+        currentTypeOrderValue = $('#id_typeorder').val();
+        currentGenereValue = $('#id_genre').val();
+
+        reinitUnits();
+    }
+
+     $(document).ready(function(){
+
+        document.getElementById("button-units").classList.remove("active");
+        document.getElementById("button-record").classList.remove("active");
+        document.getElementById("button-secretariat").classList.remove("active");
+        document.getElementById("button-cpv").classList.add("active");
+        document.getElementById("button-investments").classList.remove("active");
+
+        //zainicjowanie poprawnego typu selecta dla jednostek
+        if($('#id_typeorder').val() == genereWorkId && $('#id_genre').val() == genereWorkId){
+            $("#id_unit").select2({placeholder:'Dodaj jednostki', multiple: false});
+        } else {
+            $("#id_unit").select2({placeholder:'Dodaj jednostki', multiple: true});
+        }
+
+        // zapisana bieżąca wartość rodzaju zamówienia
+        currentTypeOrderValue = $('#id_typeorder').val();
+
+        // zapisana bieżąca wartość id rodzajowości
+        currentGenereValue = $('#id_genre').val();
+
+        // ustawiamy nasłuchiwanie eventu change dla type order
+        $('#id_typeorder').change(function(){
+            setGenereValue();
+        })
+
+        // ustawiamy nasłuchiwanie eventu change dla genere
+        $('#id_genre').change(function(){
+            setTypeOrderValue();
+        })
+    })
+
+    $(function () {
+        $('[data-toggle="info"]').tooltip()
+    })
+
 </script>
 {% endblock %}

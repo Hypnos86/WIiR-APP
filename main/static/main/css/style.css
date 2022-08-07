@@ -285,3 +285,10 @@ hr {
     /* If max-width does not work, try using width instead */
     width: auto !important;
 }
+
+a.clean-link{
+    color: #2F4F4F;
+    text-decoration: none;
+
+
+}

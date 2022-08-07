@@ -12,7 +12,14 @@
             <h4 class="">Klasyfikacja rodzajowa WIiR</h4>
             <span class="m-2">Roboty budowlane <b>{{year}} rok</b></span>
             {%if limit != 0 %}
-            <p><span class="text-center">Limit zmówień NETTO: <span class="color-info">{{limit.limit_netto|intcomma}} zł.</span></span></p>
+            <div>
+                {%if limit.limit_netto%}
+                <span class="text-center">Limit zmówień NETTO:</span>
+                    <span class="color-info">{{limit.limit_netto|intcomma}} zł.</span>
+                {%else%}
+                    <span class="color-info-warning" data-toggle="info" title="Skontaktuj się z administratorem">BRAK LIMITÓW</span>
+                {%endif%}
+            </div>
             {%endif%}
         </div>
     </div>
@@ -75,5 +82,9 @@
      function submitForm(){
         $("#submitButton").closest("form").submit();
         }
+
+     $(function () {
+        $('[data-toggle="info"]').tooltip()
+     })
 </script>
 {% endblock%}

@@ -32,7 +32,7 @@ class OrderForm(ModelForm):
                   'brakedown', 'worker', 'content']
         exclude = ['author', 'create_date']
         labels = {'date': 'Data', 'no_order': 'Nr zamówienia', 'sum_netto': 'Kwota netto', 'vat': 'vat',
-                  'sum_brutto': 'kwota brutto', 'typeorder': 'Rodzaj zamoówienia', 'genre': 'ID Rodzajowości',
+                  'sum_brutto': 'kwota brutto', 'typeorder': 'Rodzaj zamówienia', 'genre': 'ID Rodzajowości',
                   'unit': 'Jednostka', 'contractor': 'Wykonawca', 'brakedown': 'Awaria', 'content': 'Zakres'}
 
         widgets = {'date': DateField(),
