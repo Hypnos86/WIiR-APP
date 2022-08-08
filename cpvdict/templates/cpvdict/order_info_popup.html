@@ -1,14 +1,23 @@
-{%load static%}
-{%load bootstrap%}
-{%block content%}
+{% load bootstrap %}
+{% load static %}
+{% load humanize %}
+{% block content %}
 <div class=" ">
 <form class="m-2 p-4" method="get" action="{% url 'contractors:show_information' id %}">
     {%csrf_token%}
+    <h5 class="mb-3 text-center"><span class="text-muted">Zlecenie: </span>{{order.no_order}} z dnia {{order.date}} r.</h5>
     <div class="">
-        <div class="mb-3"><span class="text-muted">Zlecenie: </span>{{order.no_order}} z dnia {{order.date}} r.</div>
-        <div class=""><span class="text-muted">Jednostka: </span>{{order.unit.type.type_full}} - {{order.unit.city}}</div>
-        <div class=""><small class="text-muted">Adres: </small><small>{{order.unit.address}}, {{order.unit.zip_code}} {{order.unit.city}}</small></div>
+        <div class=""><span class="text-muted">Jednostka: </span>
+            <ul>
+                {%for unit in order.unit.all%}
+                <li>{{unit.type.type_full}} - {{unit.city}}, {{unit.address}}, {{unit.zip_code}} {{unit.city}}</li>
+                {%endfor%}
+            </ul>
+        </div>
         <div class="my-2"><span class="text-muted">Rodzaj zamówienia: </span>{{order.typeorder}} {%if order.brakedown%}<span class="breakdown">Awaria</span>{%endif%}</div>
+        <div class="my-2"><span class="text-muted">Rodzajowość: </span><span>{{order.genre}}</span></div>
+        <div class="my-2"><span class="text-muted">Kwota: </span><span>{{order.sum_netto|intcomma}} zł. netto -  {{order.sum_brutto|intcomma}} zł. brutto (vat: {{order.vat}})</span></div>
+
         <div class="my-2"><span class="text-muted">Branżysta: </span><span>{{order.worker}}</span></div>
         <div><span class="text-muted">Zakres prac: </span><p>{{order.content}}</p></div>
 

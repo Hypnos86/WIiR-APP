@@ -4,6 +4,7 @@ from import_export.widgets import ManyToManyWidget
 from import_export.admin import ExportMixin
 from import_export.fields import Field
 from cpvdict.models import Typecpv, Genre, OrderLimit, Order, TypeOrder, Tax
+from units.models import Unit
 
 
 # Register your models here.
@@ -50,16 +51,18 @@ class OrderResource(resources.ModelResource):
     sum_brutto = Field(attribute='sum_brutto', column_name='Kwota brutto')
     typeorder = Field(attribute='typeorder', column_name='Rodzaj zamówienia')
     genre = Field(attribute='genre', column_name='ID rodzajowości')
-    unit = Field(attribute='unit', column_name='Jednostka')
+    # TODO dodać signal i zmienic model - dodatkowe pole do nazwy jednostki
+    unit = fields.Field(attribute='unit', column_name='Jednostka', widget=ManyToManyWidget(Unit, ', ', field='full_name'))
     brakedown = Field(attribute='brakedown', column_name='Awaria')
     content = Field(attribute='content', column_name='Zakres')
-    author = Field(attribute='author', column_name='Autor')
+    worker = Field(attribute='worker', column_name='Branżysta')
 
     class Meta:
         model = Order
-        export_order = (
-            'date', 'no_order', 'sum_netto', 'vat', 'sum_brutto', 'typeorder', 'genre', 'unit', 'brakedown', 'content',
-            'author')
+        fields = ['date', 'no_order', 'sum_netto', 'vat', 'sum_brutto', 'typeorder', 'genre', 'unit', 'brakedown',
+                  'content',
+                  'worker']
+        export_order = ('date', 'no_order', 'sum_netto', 'vat', 'sum_brutto', 'typeorder', 'genre', 'unit', 'brakedown', 'content', 'worker')
 
 
 @admin.register(Order)

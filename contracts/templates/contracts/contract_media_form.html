@@ -23,10 +23,33 @@
         <div class="col-md-4 mb-3">{{contract_form.no_contract|bootstrap}}</div>
         <div class="col-md-4 mb-3">{{contract_form.type|bootstrap}}</div>
         <div class="col-md-6 mb-3">{{contract_form.content|bootstrap}}</div>
-        <div class="col-md-3 mb-3">{{contract_form.employer|bootstrap}}</div>
-        <div class="col-md-3 mb-3">{{contract_form.period_of_validity|bootstrap}}</div>
+        <div class="col-md-2 mb-3">{{contract_form.employer|bootstrap}}</div>
+        <div class="col-md-2 mb-3">{{contract_form.period_of_validity|bootstrap}}</div>
+        <div class="col-md-2 mb-3">{{contract_form.legal_basic|bootstrap}}</div>
         <div class="col-md-12 mb-3">{{contract_form.contractor|bootstrap}}</div>
-        <div class="col-md-12 mb-3">{{contract_form.unit|bootstrap}}</div>
+<!--    <div class="col-md-12 mb-3">{{contract_form.unit|bootstrap}}</div>-->
+            <div class="col-md-12 mb-3">
+                <div class="form-group">
+                    <label class="control-label" for="id_unit">Jednostka</label>
+                    <div class="">
+                        <select name="unit" class="form-control select2-style" required id="id_unit">
+                            {% regroup units by county as county_list %}
+                            <option>---------</option>
+                            {% for county in county_list %}
+                            <optgroup label="{{county.grouper}}">
+                                {% for unit in county.list %}
+                                {% if unit in selected_units %}
+                                <option value="{{unit.id}}" selected>{{unit}}</option>
+                                {% else %}
+                                <option value="{{unit.id}}" >{{unit}}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </optgroup>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
         <div class="col-md-12 mb-3">{{contract_form.information|bootstrap}}</div>
         <div class="col-md-10 mb-3">{{contract_form.scan|bootstrap}}</div>
         {%if contract_edit.scan%}
@@ -74,5 +97,18 @@
         $("#annexModal .modal-content").load(url);
         $("#annexModal").modal("show");
     }
+
+    $(document).ready(function(){
+        $(".select2-style").select2(
+            {
+                multiple: true,
+                closeOnSelect: false,
+                tags: true
+            }
+
+        )
+        $(".select2-style").change();
+    })
+
 </script>
 {%endblock%}

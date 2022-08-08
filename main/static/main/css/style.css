@@ -3,10 +3,10 @@
     /*color: #2F4F4F;*/
     /*rgb(33, 36, 53);*/
     /*background-color: hsl(85,67%,96%);*/
-    font-family: arial;
+    font-family: arial !important;
     margin: auto 0;
     padding: 0 30px;
-    color: #2F4F4F;
+    color: #2F4F4F !important;
     }
 .bg-col{
     background-color: #F5F5F5;

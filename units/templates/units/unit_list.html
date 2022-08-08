@@ -79,6 +79,9 @@
         <th align="center" valign="middle" width="400" scope="col" class="text-center">Obiekt</th>
         <th align="center" valign="middle" width="200" scope="col" class="text-center">Zarządca</th>
         <th align="center" valign="middle" width="50px" scope="col" class="text-center">Stan</th>
+        {%if user.is_authenticated%}
+        <th align="center" valign="middle" width="50px" scope="col" class="text-center"></th>
+        {%endif%}
     </tr>
     </thead>
     <tbody>
@@ -104,6 +107,15 @@
         </td>
         {%else%}
         <td data-toggle="info" align="center" valign="middle" title="Zdany"><i class="bi bi-x-circle-fill text-danger"></i></td>
+        {%endif%}
+        {%if user.is_authenticated%}
+        <td data-toggle="info" align="center" valign="middle" >
+            <a class="m-2" href="{%url 'units:show_all_info_unit' unit.id%}">
+                <button data-toggle="info" title="Pokaż" type="submit" class="btn btn-outline-primary my-btn">
+                    <i class="bi bi-info-lg"></i>
+                </button>
+            </a>
+        </td>
         {%endif%}
     </tr>
     {%endfor%}
@@ -132,6 +144,7 @@
         {%else%}
         <td data-toggle="info" align="center" valign="middle" title="Zdany"><i class="bi bi-x-circle-fill text-danger"></i></td>
         {%endif%}
+
     </tr>
     {%endfor%}
 
@@ -154,8 +167,8 @@
     })
 
     function cleanSearch(){
-        $("#p").val("");
-        $("#r").val("");
+        $("#p").val("").change();
+        $("#r").val("").change();
         $("form").submit();
     }
 </script>

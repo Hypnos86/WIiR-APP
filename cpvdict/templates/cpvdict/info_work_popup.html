@@ -7,13 +7,13 @@
     {%csrf_token%}
     <div class="container">
         <h5 class="text-center">{{work_object}}</h5>
-        {%if orders%}
+        {% if orders %}
         <h6 class="mt-4"><b>Zlecenia z {{year}} roku.</b></h6>
-        {%else%}
+        {% else %}
         <h6 class="mt-4"><b>Brak zleceń</b></h6>
         {%endif%}
         <ol>
-        {%for order in orders%}
+        {% for order in orders.all %}
             <li><span>{{order.no_order}} z dnia {{order.date}} r. Wartość zlecenia: <b>{{order.sum_netto|intcomma}} zł. netto</b> - Branżysta: {{order.worker}}</span></li>
         {%endfor%}
         </ol>

@@ -142,7 +142,7 @@
             </li>
             {%endif%}
             {%for i in applications.paginator.page_range%}
-            {%if contractors.number == i%}
+            {%if applications.number == i%}
             <li class="page-item active" aria-current="page">
             <span class="page-link">
                 {{i}}

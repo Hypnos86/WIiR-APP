@@ -306,6 +306,7 @@ def edit_contract_media(request, id):
         team__team='Zespół Eksploatacji')
     contract_form.fields['unit'].queryset = Unit.objects.all().order_by('county')
     units = Unit.objects.all()
+    selected_units = contract_edit.unit.all()
 
     if request.method == 'POST':
         if contract_form.is_valid():
@@ -314,13 +315,15 @@ def edit_contract_media(request, id):
             contract_form.save()
             return redirect('contracts:create_contract_media_list')
     return render(request, 'contracts/contract_media_form.html',
-                  {'contract_form': contract_form, 'new': False, 'units': units, 'contract_edit': contract_edit})
+                  {'contract_form': contract_form, 'new': False, 'units': units, 'contract_edit': contract_edit,
+                   'selected_units': selected_units})
 
 
 @login_required
 def create_contract_media_list(request):
     contracts_media = ContractMedia.objects.all().filter(state=True).order_by('-date').distinct()
     contracts_media_len = len(contracts_media)
+    now = now_date
     query = "Wyczyść"
     search = "Szukaj"
 
@@ -345,7 +348,8 @@ def create_contract_media_list(request):
                               | contracts_media.filter(unit__city__icontains=q) \
                               | contracts_media.filter(unit__type__type_short__icontains=q) \
                               | contracts_media.filter(employer__name__icontains=q) \
-                              | contracts_media.filter(employer__last_name__icontains=q)
+                              | contracts_media.filter(employer__last_name__icontains=q)\
+                              | contracts_media.filter(content__icontains=q)
 
         if date_from:
             contracts_media = contracts_media.filter(date__gte=date_from)
@@ -357,12 +361,13 @@ def create_contract_media_list(request):
 
         return render(request, 'contracts/contracts_media_list.html',
                       {'actual': True, 'contracts_media': contracts_media, 'contracts_media_len': contracts_media_len,
-                       'q': q, 'date_from': date_from, 'date_to': date_to, 'last_date': last_date, 'query': query})
+                       'q': q, 'date_from': date_from, 'date_to': date_to, 'last_date': last_date, 'query': query,
+                       'now': now})
     else:
         return render(request, 'contracts/contracts_media_list.html',
                       {'contracts_media': contracts_media_list,
                        'contracts_media_len': contracts_media_len, 'last_date': last_date, 'search': search,
-                       'actual': True})
+                       'actual': True, 'now': now})
 
 
 @login_required
@@ -371,7 +376,7 @@ def show_contract_media(request, id):
     units = contract_media.unit.all()
     annexes = contract_media.annex_contract_media.all()
     return render(request, 'contracts/show_contract_media.html',
-                  {'contract': contract_media, 'annexes': annexes, 'units':units, 'actual': True})
+                  {'contract': contract_media, 'annexes': annexes, 'units': units, 'actual': True})
 
 
 @login_required

@@ -31,6 +31,8 @@
                 <span>Usługi i dostawy:</span><b class="m-2">{{year}} rok</b><br>
                 {%if limit != 0 %}
                 <span class="text-center">Limit zmówień NETTO: <span class="color-info">{{limit|intcomma}} zł.</span></span>
+                {%else%}
+                <span class="color-info-warning" data-toggle="info" title="Skontaktuj się z administratorem">BRAK LIMITÓW</span>
                 {%endif%}
             </div>
         </div>
