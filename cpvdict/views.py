@@ -87,7 +87,8 @@ def type_work_list(request):
 @login_required
 def show_information_work_object(request, id, year):
     work_object = get_object_or_404(Unit, pk=id)
-    orders = Order.objects.all().filter(date__year=year).filter(unit__id=id).order_by('date')
+    orders = Order.objects.all().filter(date__year=year).filter(genre__name_id='RB').filter(unit__id=id).order_by(
+        'date')
     return render(request, 'cpvdict/info_work_popup.html',
                   {'work_object': work_object, 'orders': orders, 'id': id, 'year': year})
 
@@ -223,17 +224,15 @@ def create_type_work_list_archive(request, year):
     units = Unit.objects.all()
     sum_rb = {}
     for unit in units:
-        orders = Order.objects.all().filter(genre__name_id='RB').filter(unit=unit).filter(date__year=year)
+        orders = Order.objects.all().filter(brakedown=False).filter(genre__name_id='RB').filter(unit=unit).filter(date__year=year)
         sum = 0
         for order in orders:
             sum += order.sum_netto
         sum_rb[unit] = sum
-
     try:
         limit = OrderLimit.objects.get(year=year)
     except ObjectDoesNotExist:
         limit = year
-
     context = {'units': units, 'limit': limit, 'year': year, 'sum_rb': sum_rb}
     return render(request, 'cpvdict/archive_genre_work_list.html', context)
 

@@ -11,7 +11,7 @@ class Section(models.Model):
     name = models.CharField("Nazwa", max_length=20)
 
     def __str__(self):
-        return f'{self.section} ({self.name})'
+        return f"{self.section} ({self.name})"
 
 
 class Group(models.Model):
@@ -23,7 +23,7 @@ class Group(models.Model):
     name = models.CharField("Nazwa", max_length=50)
 
     def __str__(self):
-        return f'gr.{self.group}'
+        return f"gr.{self.group}"
 
 
 class Paragraph(models.Model):
@@ -35,7 +35,7 @@ class Paragraph(models.Model):
     name = models.CharField("Nazwa", max_length=50, null=True)
 
     def __str__(self):
-        return f'§{self.paragraph}'
+        return f"§{self.paragraph}"
 
 
 class Source(models.Model):
@@ -46,7 +46,7 @@ class Source(models.Model):
     source = models.CharField("Źródło", max_length=80, null=True)
 
     def __str__(self):
-        return f'{self.source}'
+        return f"{self.source}"
 
 
 class FinanceSource(models.Model):
@@ -60,4 +60,4 @@ class FinanceSource(models.Model):
     source = models.ForeignKey(Source, on_delete=models.CASCADE, verbose_name="Źródło finansowania")
 
     def __str__(self):
-        return f'{self.section}-{self.group}-{self.paragraph}-{self.source}'
+        return f"{self.section}-{self.group}-{self.paragraph}-{self.source}"

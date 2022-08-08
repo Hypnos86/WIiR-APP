@@ -62,8 +62,10 @@
         <th align="center" valign="middle" width="300" scope="col" class="text-center">Nr. umowy</th>
         <th align="center" valign="middle" width="350" scope="col" class="text-center">Wykonawca</th>
         <th align="center" valign="middle" width="150" scope="col" class="text-center">Media</th>
-        <th align="center" valign="middle" width="450" scope="col" class="text-center">Treść</th>
-        <th align="center" valign="middle" width="200" scope="col" class="text-center">Branżysta</th>
+        <th align="center" valign="middle" width="150" scope="col" class="text-center">Okres obowiązywania</th>
+        <th align="center" valign="middle" width="380" scope="col" class="text-center">Treść</th>
+        <th align="center" valign="middle" width="auto" scope="col" class="text-center">Branżysta</th>
+        <th align="center" valign="middle" width="auto" scope="col" class="text-center"></th>
     </tr>
     </thead>
     <tbody>
@@ -84,9 +86,22 @@
         <td align="center" valign="middle">
             <span>{{contract.type}}</span>
         </td>
+
+        {%if contract.period_of_validity%}
+        {% now 'Y-m-d' as today_date%}
+        {%if contract.period_of_validity|date:'Y-m-d' <= today_date%}
+        <td align="center" valign="middle" class="text-center bg-danger text-white"><span>{{contract.period_of_validity|date:"d.m.Y"}}&nbsp;r.</span></td>
+        {%else%}
+        <td align="center" valign="middle" class="text-center">{{contract.period_of_validity|default_if_none:'---'|date:"d.m.Y"}}&nbsp;r.</td>
+        {%endif%}
+        {%else%}
+        <td align="center" valign="middle" class="text-center">bezterminowa</td>
+        {%endif%}
+
         <td align="left" valign="middle">
             <span>{{contract.content}}</span>
-        </td><td align="center" valign="middle" class="text-center">
+        </td>
+        <td align="center" valign="middle" class="text-center">
             <span>{{contract.employer}}</span>
         </td>
         <td align="right" valign="middle">

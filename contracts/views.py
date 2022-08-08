@@ -323,6 +323,7 @@ def edit_contract_media(request, id):
 def create_contract_media_list(request):
     contracts_media = ContractMedia.objects.all().filter(state=True).order_by('-date').distinct()
     contracts_media_len = len(contracts_media)
+    now = now_date
     query = "Wyczyść"
     search = "Szukaj"
 
@@ -347,7 +348,8 @@ def create_contract_media_list(request):
                               | contracts_media.filter(unit__city__icontains=q) \
                               | contracts_media.filter(unit__type__type_short__icontains=q) \
                               | contracts_media.filter(employer__name__icontains=q) \
-                              | contracts_media.filter(employer__last_name__icontains=q)
+                              | contracts_media.filter(employer__last_name__icontains=q)\
+                              | contracts_media.filter(content__icontains=q)
 
         if date_from:
             contracts_media = contracts_media.filter(date__gte=date_from)
@@ -359,12 +361,13 @@ def create_contract_media_list(request):
 
         return render(request, 'contracts/contracts_media_list.html',
                       {'actual': True, 'contracts_media': contracts_media, 'contracts_media_len': contracts_media_len,
-                       'q': q, 'date_from': date_from, 'date_to': date_to, 'last_date': last_date, 'query': query})
+                       'q': q, 'date_from': date_from, 'date_to': date_to, 'last_date': last_date, 'query': query,
+                       'now': now})
     else:
         return render(request, 'contracts/contracts_media_list.html',
                       {'contracts_media': contracts_media_list,
                        'contracts_media_len': contracts_media_len, 'last_date': last_date, 'search': search,
-                       'actual': True})
+                       'actual': True, 'now': now})
 
 
 @login_required

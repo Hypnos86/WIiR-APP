@@ -162,10 +162,12 @@
             <ul class="list-group hide-on-start">
                 {% for order in date.list %}
                 <li class="list-group-item list-group-item-action">
-                    <button data-toggle="info" title="Pokaż" type="button" data-url="{%url 'cpvdict:show_order_info_popup' order.id%}" class="btn btn-outline-success mx-2" onclick="openModal(this)"><i
-                    class="bi bi-info-lg"></i>
+                    <button data-toggle="info" title="Pokaż" type="button" data-url="{%url 'cpvdict:show_order_info_popup' order.id%}" class="btn btn-outline-success mx-2" onclick="openModal(this)">
+                        <i class="bi bi-info-lg"></i>
                     </button>
-                    <span class="text-muted">Nr. zlecenia: </span>{{order}}</li>
+                    <span class="text-muted">Nr. zlecenia: </span>
+                    <span>{{order}}</span>
+                </li>
                 {% endfor %}
             </ul>
             {% endfor %}
