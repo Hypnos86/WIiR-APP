@@ -83,11 +83,9 @@
         <td align="center" valign="middle">{% if order.brakedown  %} <i class="bi bi-check2-circle text-success icon-check"></i> {%else%} --- {%endif%}</td>
         <td align="center" valign="middle"><span>{{order.worker}}</span></td>
         <td align="right" valign="middle">
-        {%if order.content%}
             <button data-toggle="info" title="Pokaż" type="button" data-url="{%url 'cpvdict:show_order_info_popup' order.id%}" class="btn btn-outline-success mx-2" onclick="openModal(this)"><i
                     class="bi bi-info-lg"></i>
             </button>
-            {%endif%}
         {%if user.accessmodule.cpvdict_module_edit%}
            <a href="{% url 'cpvdict:edit_order' order.id %}"><button data-toggle="info" title="Edytuj" type="button" class="btn btn-outline-primary icon-color mx-2 my-1"><i class="bi bi-pencil-square"></i></button></a>
         {%endif%}
@@ -140,7 +138,7 @@
 {%endif%}
 <!-- Modal -->
 <div class="modal fade" id="orderInformationModal">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
         </div>
     </div>
