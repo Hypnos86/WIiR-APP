@@ -110,7 +110,7 @@
                     <span class="text-muted">Nr. umowy: </span>
                     <a class="link-dark" href="{% url 'contracts:show_contract_auction' contract.id %}">{{contract.no_contract}} z dnia {{contract.date|date:'m.d.Y'}} r.
                         | <span class="text-muted">Wykonawca: </span> {{contract.contractor.name}}
-                        | <span class="text-muted">Wartośc umowy: </span> {{contract.price|intcomma}} zł.
+                        | <span class="text-muted">Wartość umowy: </span> {{contract.price|intcomma}} zł.
                         {% if contract.last_report_date %}
                         | <span class="text-muted"> Data końcowego protokołu: </span> {{contract.last_report_date|date:'m.d.Y'}} r.
                         {% endif %}
