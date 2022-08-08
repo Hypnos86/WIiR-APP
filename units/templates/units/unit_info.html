@@ -16,11 +16,20 @@
             {% for contract in contract_immovables %}
             <li class="list-group-item list-group-item-action">
                 <a class="link-dark" href="{%url 'contracts:show_contractsimmovables' contract.id%}">
-                {%if contract.no_contract%} Nr. umowy: {{contract.no_contract}} z dnia {{contract.date|date:'d.m.Y'}} r. {%else%} Umowa z dnia {{contract.date|date:'d.m.Y'}} r. {%endif%}
-                    | <span class="text-muted">Kontrahent: </span> {{contract.contractor.name}}
-                    {%if contract.period_of_validity%}| <span class="text-muted">Okres obowiązywania:</span> {{contract.period_of_validity|date:'m.d.Y'}} r. {%endif%}
-                    {% if contract.usable_area%}| <span class="text-muted">pow. użytkowa: </span> {{contract.usable_area|intcomma}} m<sup>2</sup>{%endif%}
-
+                {%if contract.no_contract%}
+                    <span>Nr. umowy: {{contract.no_contract}} z dnia {{contract.date|date:'d.m.Y'}} r.</span>
+                    {%else%}<span>Umowa z dnia {{contract.date|date:'d.m.Y'}} r. </span>
+                    {%endif%}
+                    <span class="text-muted">| Kontrahent: </span>
+                    <span>{{contract.contractor.name}}</span>
+                    {%if contract.period_of_validity%}
+                    <span class="text-muted">| Okres obowiązywania:</span>
+                    <span>{{contract.period_of_validity|date:'m.d.Y'}} r. </span>
+                    {%endif%}
+                    {% if contract.usable_area%}
+                    <span class="text-muted">| pow. użytkowa: </span>
+                    <span>{{contract.usable_area|intcomma}} m<sup>2</sup></span>
+                    {%endif%}
                 </a>
             </li>
             {% endfor %}
@@ -45,13 +54,24 @@
                 {%for media in type.list%}
                 <li class="list-group-item list-group-item-action">
                     <a class="link-dark" href="{%url 'contracts:show_contract_media' media.id%}">
-                        {% if media.no_contract %}<span class="text-muted">Nr: umowy: </span> {{media.no_contract}} z dnia {{media.date|date:'m.d.Y'}} r. {% else %} Umowa z dnia {{media.date|date:'m.d.Y'}} r.{% endif %}
-                        {% if media.state %}| <span class="text-muted">Stan umowy: </span><span class="text-success">aktualna</span>{% else %}| <span class="text-muted">Stan umowy: </span> <span class="text-danger">nieaktualna</span>{% endif %}
+                        {% if media.no_contract %}
+                        <span class="text-muted">Nr: umowy: </span>
+                        <span>{{media.no_contract}} z dnia {{media.date|date:'m.d.Y'}} r.</span>
+                        {% else %}
+                        <span>Umowa z dnia {{media.date|date:'m.d.Y'}} r.</span>
+                        {% endif %}
+                        {% if media.state %}
+                        <span class="text-muted">| Stan umowy: </span>
+                        <span class="text-success">aktualna</span>
+                        {% else %}
+                        <span class="text-muted">| Stan umowy: </span>
+                        <span class="text-danger">nieaktualna</span>
+                        {% endif %}
                     </a>
                 </li>
                 {%endfor%}
             </ul>
-                {%endfor%}
+            {%endfor%}
         </ul>
     </div>
     {% endif %}
@@ -78,11 +98,18 @@
                         </button>
                      </div>
                     <span class="text-muted">Nr. wniosku: </span>{{donation.no_application}}
-                    | <span class="text-muted">Nr. sprawy: </span> {{donation.character}}
-                    {% if donation.no_agreement %}| <span class="text-muted">Nr. porozumienia: </span>{{donation.no_agreement}} z dnia {{donation.date_agreement|date:'m.d.Y'}} {% else %} Porozumienia z dnia {{donation.date_agreement|date:'m.d.Y'}}  {% endif %}
-                    | <span class="text-muted">Rodzaj darowizny: </span> {{donation.donation_type}}
-                    {% if donation.sum %}| <span class="text-muted"> Kwota darowizny: </span> {{donation.sum|intcomma}} zł.{% endif %}
-
+                    <span class="text-muted">| Nr. sprawy: </span> {{donation.character}}
+                    {% if donation.no_agreement %}
+                    <span class="text-muted">| Nr. porozumienia: </span>
+                    <span>{{donation.no_agreement}} z dnia {{donation.date_agreement|date:'m.d.Y'}}</span>
+                    {% else %}<span>Porozumienia z dnia {{donation.date_agreement|date:'m.d.Y'}}</span>
+                    {% endif %}
+                    <span class="text-muted">| Rodzaj darowizny: </span>
+                    <span>{{donation.donation_type}}</span>
+                    {% if donation.sum %}
+                    <span class="text-muted">| Kwota darowizny: </span>
+                    <span>{{donation.sum|intcomma}} zł.</span>
+                    {% endif %}
                 </li>
                     {% endfor %}
             </ul>
@@ -108,11 +135,15 @@
                 {% for contract in date.list %}
                 <li class="list-group-item list-group-item-action">
                     <span class="text-muted">Nr. umowy: </span>
-                    <a class="link-dark" href="{% url 'contracts:show_contract_auction' contract.id %}">{{contract.no_contract}} z dnia {{contract.date|date:'m.d.Y'}} r.
-                        | <span class="text-muted">Wykonawca: </span> {{contract.contractor.name}}
-                        | <span class="text-muted">Wartość umowy: </span> {{contract.price|intcomma}} zł.
+                    <a class="link-dark" href="{% url 'contracts:show_contract_auction' contract.id %}">
+                        <span>{{contract.no_contract}} z dnia {{contract.date|date:'m.d.Y'}} r.</span>
+                        <span class="text-muted">| Wykonawca: </span>
+                        <span>{{contract.contractor.name}}</span>
+                        <span class="text-muted">| Wartość umowy: </span>
+                        <span>{{contract.price|intcomma}} zł.</span>
                         {% if contract.last_report_date %}
-                        | <span class="text-muted"> Data końcowego protokołu: </span> {{contract.last_report_date|date:'m.d.Y'}} r.
+                        <span class="text-muted">| Data końcowego protokołu: </span>
+                        <span>{{contract.last_report_date|date:'m.d.Y'}} r.</span>
                         {% endif %}
                     </a>
                 </li>
@@ -132,13 +163,16 @@
             <li>{{date_of_acceptance.grouper}} rok.
                 <button class="button-show btn btn-outline" onclick="show(this)">
                     <span class="bi bi-caret-down h5"></span>
-                </button> <button class="hide-on-start button-hide btn btn-outline" onclick="hide(this)">
+                </button>
+                <button class="hide-on-start button-hide btn btn-outline" onclick="hide(this)">
                     <span class="bi bi-caret-up h5"></span>
                 </button>
             </li>
             <ul class="list-group hide-on-start">
                 {% for project in date_of_acceptance.list %}
-                <li class="list-group-item list-group-item-action">Nazwa programu inwestycji: <a class="link-dark" href="{% url 'investments:show_project' project.id %}">{{project}}</a></li>
+                <li class="list-group-item list-group-item-action"><span>Nazwa programu inwestycji:</span>
+                    <a class="link-dark" href="{% url 'investments:show_project' project.id %}">{{project}}</a>
+                </li>
                 {% endfor %}
             </ul>
             {% endfor %}
@@ -147,7 +181,7 @@
     {%endif%}
     {%if orders%}
     <div class="mt-5">
-        <h5>Zamówienia</h5>
+        <h5>Zlecenia</h5>
         {% regroup orders by date|date:'Y' as date_list %}
         <ul>
             {% for date in date_list %}
@@ -166,7 +200,11 @@
                         <i class="bi bi-info-lg"></i>
                     </button>
                     <span class="text-muted">Nr. zlecenia: </span>
-                    <span>{{order}}</span>
+                    <span>{{order.no_order}} z dnia {{order.date|date:'d.m.Y'}}</span>
+                    <span class="text-muted">| Rodzaj zamówienia: </span>
+                    <span>{{order.typeorder}} {%if order.brakedown%}<span class="breakdown">Awaria</span>{%endif%}</span>
+                    <span class="text-muted">| Branżysta: </span>
+                    <span>{{order.worker}}</span>
                 </li>
                 {% endfor %}
             </ul>
@@ -183,7 +221,6 @@
         </div>
     </div>
 </div>
-
 <div class="modal fade" id="orderInformationModal">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">

@@ -100,7 +100,7 @@ class ContractImmovables(models.Model):
     creation_date = models.DateTimeField("Data utworzenia", auto_now_add=True)
     change = models.DateTimeField("Zmiana", auto_now=True)
     author = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name="contractimmovables",
-                               verbose_name="author")
+                               verbose_name="Autor")
 
     def __str__(self):
         return f"Umowa z dnia {self.date} ({self.contractor})"

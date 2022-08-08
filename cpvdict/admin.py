@@ -52,7 +52,8 @@ class OrderResource(resources.ModelResource):
     typeorder = Field(attribute='typeorder', column_name='Rodzaj zamówienia')
     genre = Field(attribute='genre', column_name='ID rodzajowości')
     # TODO dodać signal i zmienic model - dodatkowe pole do nazwy jednostki
-    unit = fields.Field(attribute='unit', column_name='Jednostka', widget=ManyToManyWidget(Unit, ', ', field='full_name'))
+    unit = fields.Field(attribute='unit', column_name='Jednostka',
+                        widget=ManyToManyWidget(Unit, ', ', field='full_name'))
     brakedown = Field(attribute='brakedown', column_name='Awaria')
     content = Field(attribute='content', column_name='Zakres')
     worker = Field(attribute='worker', column_name='Branżysta')
@@ -62,7 +63,9 @@ class OrderResource(resources.ModelResource):
         fields = ['date', 'no_order', 'sum_netto', 'vat', 'sum_brutto', 'typeorder', 'genre', 'unit', 'brakedown',
                   'content',
                   'worker']
-        export_order = ('date', 'no_order', 'sum_netto', 'vat', 'sum_brutto', 'typeorder', 'genre', 'unit', 'brakedown', 'content', 'worker')
+        export_order = (
+        'date', 'no_order', 'sum_netto', 'vat', 'sum_brutto', 'typeorder', 'genre', 'unit', 'brakedown', 'content',
+        'worker')
 
 
 @admin.register(Order)
@@ -70,6 +73,7 @@ class OrderAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ['date', 'no_order', 'sum_netto', 'sum_brutto', 'typeorder', 'genre', 'brakedown']
     search_fields = ['no_order', 'no_cpv', 'name', 'typeorder__type']
     list_display_links = ('no_order',)
+    filter_horizontal = ('unit',)
     resource_class = OrderResource
 
 
