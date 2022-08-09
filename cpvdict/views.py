@@ -118,7 +118,9 @@ def order_list(request):
         if date_from:
             orders = orders.filter(date__gte=date_from)
         if date_to:
-            order = orders.filter(date__lte=date_to)
+            orders = orders.filter(date__lte=date_to)
+
+        ordersum = len(orders)
 
         return render(request, 'cpvdict/order_list.html',
                       {'orders': orders, 'year': year, 'ordersum': ordersum, 'query': query, 'q': q,
