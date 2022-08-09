@@ -3,27 +3,31 @@
 {%load static%}
 {% block title %}Umowa z dnia {{contract.date|date:"d.m.Y"}} r. {%endblock%}
 {%block content%}
-
-<div class="row">
-    {%if actual%}
-    <div class="col-md-2 moj-button-left"><a href="{%url 'contracts:create_contract_media_list'%}">
-    <button class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span></button>
-</a>
-</div>
-    {%else%}
-    <div class="col-md-2 moj-button-left"><a href="{%url 'contracts:menu_contractsimmovables_archive'%}">
-    <button class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span></button>
-</a>
-</div>
-    {%endif%}
-
-<div class=" col-md-8">
-<h4 class="text-center" title="Ostatnie zmiany na umowie: {{contract.change|date:'d.m.Y - (H:i)'}}">Umowa {%if contract.no_contract%} nr {{contract.no_contract}} {%endif%} z dnia
-    {{contract.date|date:"d.m.Y"}} r.</h4>
+<div class="container col-md-10 mb-3">
+    <div class="row">
+        {%if actual%}
+        <div class="col-md-2 moj-button-left">
+            <a href="{%url 'contracts:create_contract_media_list'%}">
+                <button class="btn btn-outline-primary my-btn">
+                    <span class="bi bi-chevron-compact-left">Cofnij</span>
+                </button>
+            </a>
+        </div>
+        {%else%}
+        <div class="col-md-2 moj-button-left">
+            <a href="{%url 'contracts:menu_contractsimmovables_archive'%}">
+                <button class="btn btn-outline-primary my-btn">
+                    <span class="bi bi-chevron-compact-left">Cofnij</span>
+                </button>
+            </a>
+        </div>
+        {%endif%}
+        <div class=" col-md-8">
+            <h4 class="text-center" title="Ostatnie zmiany na umowie: {{contract.change|date:'d.m.Y - (H:i)'}}">Umowa {%if contract.no_contract%} nr {{contract.no_contract}} {%endif%} z dnia {{contract.date|date:"d.m.Y"}} r.</h4>
+        </div>
     </div>
-
 </div>
-<div class="container px-5 pb-5 col-md-10">
+<div class="container col-md-10">
     <div class="row mt-2">
         <div class="col-md-9">
             <ul class="list-group list-group-flush">
@@ -31,18 +35,18 @@
                 <li class="list-group-item"><span class="text-muted">Zakres umowy: </span><span>{{contract.content}}</span></li>
                 <li class="list-group-item"><span class="text-muted">Tryb zamówienia: </span><span data-toggle="info" title="{{contract.legal_basic.legal_basic_text}}">{{contract.legal_basic}}</span></li>
                 <li class="list-group-item"><span class="text-muted">Rodzaj umowy: </span><span>{{contract.type}}</span></li>
-                <li class="list-group-item"><span class="text-muted">Okres obowiązywania: </span><span>{%if contract.period_of_validity%} {{contract.period_of_validity|date:"d.m.Y"}} r.{%else%} --- {%endif%}</span></li>
-<!--TODO dodać podkreślenie w dacie jesli przekroczy dzień po-->
-                <!--                {%if contract.period_of_validity%}-->
-<!--        {% now 'Y-m-d' as today_date%}-->
-<!--        {%if contract.period_of_validity|date:'Y-m-d' <= today_date%}-->
-<!--        <td align="center" valign="middle" class="text-center bg-danger text-white"><span>{{contract.period_of_validity|date:"d.m.Y"}}&nbsp;r.</span></td>-->
-<!--        {%else%}-->
-<!--        <td align="center" valign="middle" class="text-center">{{contract.period_of_validity|default_if_none:'-&#45;&#45;'|date:"d.m.Y"}}&nbsp;r.</td>-->
-<!--        {%endif%}-->
-<!--        {%else%}-->
-<!--        <td align="center" valign="middle" class="text-center">-&#45;&#45;</td>-->
-<!--        {%endif%}-->
+                <li class="list-group-item"><span class="text-muted">Okres obowiązywania: </span>
+                    {%if contract.period_of_validity%}
+                    {% now 'Y-m-d' as today_date%}
+                    {%if contract.period_of_validity|date:'Y-m-d' <= today_date%}
+                    <span class="text-center color-info-warning">{{contract.period_of_validity|date:"d.m.Y"}}&nbsp;r.</span>
+                    {%else%}
+                    <span class="text-center">{{contract.period_of_validity|default_if_none:'---'|date:"d.m.Y"}}&nbsp;r.</span>
+                    {%endif%}
+                    {%else%}
+                    <span class="text-center">bezderminowa</span>
+                    {%endif%}
+                </li>
                 <li class="list-group-item"><span class="text-muted">Jednostka: </span>
                     {% regroup units by county as unit_list %}
                     <ul class="mt-2">

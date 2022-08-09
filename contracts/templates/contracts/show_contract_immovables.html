@@ -3,26 +3,31 @@
 {%load static%}
 {% block title %}Umowa z dnia {{contract.date|date:"d.m.Y"}} r. {%endblock%}
 {%block content%}
-<div class="row">
-    {%if actual%}
-    <div class="col-md-2 moj-button-left"><a href="{%url 'contracts:menu_contractsimmovables'%}">
-    <button class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span></button>
-</a>
-</div>
-    {%else%}
-    <div class="col-md-2 moj-button-left"><a href="{%url 'contracts:menu_contractsimmovables_archive'%}">
-    <button class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span></button>
-</a>
-</div>
-    {%endif%}
-
-<div class=" col-md-8">
-<h4 class="text-center" title="Ostatnie zmiany na umowie: {{contract.change|date:'d.m.Y - (H:i)'}}">Umowa {%if contract.no_contract%} nr {{contract.no_contract}} {%endif%} z dnia
-    {{contract.date|date:"d.m.Y"}} r.</h4>
+<div class="container col-md-10 mb-3">
+    <div class="row">
+        {%if actual%}
+        <div class="col-md-2 moj-button-left">
+            <a href="{%url 'contracts:menu_contractsimmovables'%}">
+                <button class="btn btn-outline-primary my-btn">
+                    <span class="bi bi-chevron-compact-left">Cofnij</span>
+                </button>
+            </a>
     </div>
-
+        {%else%}
+        <div class="col-md-2 moj-button-left">
+            <a href="{%url 'contracts:menu_contractsimmovables_archive'%}">
+                <button class="btn btn-outline-primary my-btn">
+                    <span class="bi bi-chevron-compact-left">Cofnij</span>
+                </button>
+            </a>
+        </div>
+        {%endif%}
+        <div class=" col-md-8">
+            <h4 class="text-center" title="Ostatnie zmiany na umowie: {{contract.change|date:'d.m.Y - (H:i)'}}">Umowa {%if contract.no_contract%} nr {{contract.no_contract}} {%endif%} z dnia {{contract.date|date:"d.m.Y"}} r.</h4>
+        </div>
+    </div>
 </div>
-<div class="container px-5 pb-5 col-md-10">
+<div class="container col-md-10">
     <div class="row mt-2">
         <div class="col-md-9">
             <ul class="list-group list-group-flush">

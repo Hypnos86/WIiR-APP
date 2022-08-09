@@ -4,56 +4,127 @@
 {%load static%}
 {% block title %}Umowa z dnia {{contract.date|date:"d.m.Y"}} r. {%endblock%}
 {%block content%}
-<div class="row">
-    <div class="col-md-2 moj-button-left"><a href="{% url 'contracts:menu_contracts_auction' %}">
-        <button class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span></button>
-    </a></div>
-    <div class="col-md-8">
-        <h4 class="text-center">Umowa {%if contract.no_contract%} nr {{contract.no_contract}} {%endif%}z dnia
-            {{contract.date|date:"d.m.Y"}}</h4>
+<div class="container mb-3">
+    <div class="row">
+        <div class="col-md-2 moj-button-left">
+            <a href="{% url 'contracts:menu_contracts_auction' %}">
+                <button class="btn btn-outline-primary my-btn">
+                    <span class="bi bi-chevron-compact-left">Cofnij</span>
+                </button>
+            </a>
+        </div>
+        <div class="col-md-8">
+            <h4 class="text-center">Umowa {%if contract.no_contract%} nr {{contract.no_contract}} {%endif%}z dnia
+                {{contract.date|date:"d.m.Y"}}</h4>
+        </div>
     </div>
 </div>
 <div class="container">
-    <div class="row mt-2">
+    <div class="row">
         <div class="col-md-7">
             <ul class="list-group list-group-flush">
-                <li class="list-group-item"><span class="text-muted">Wykonawca: </span>{{contract.contractor}}</li>
-                <li class="list-group-item"><span class="text-muted">Wartość umowy: </span><span>{{contract.price|intcomma}} zł.</span></li>
-                <li class="list-group-item"><span class="text-muted">Zakres umowy: </span>{{contract.work_scope}}</li>
-                <li class="list-group-item"><span class="text-muted">Tryb zamówienia: </span><span data-toggle="info" title="{{contract.legal_basic.act}} - {{contract.legal_basic.legal_basic_text}}">{{contract.legal_basic}}</span></li>
-                <li class="list-group-item"><span class="text-muted">Termin realizacji: </span><span>{{contract.end_date}} r.</span></li>
-                <li class="list-group-item"><span class="text-muted">Jednostka: </span><span>{{contract.unit}}</span></li>
-                <li class="list-group-item"><span class="text-muted">Gwarancja: </span><span>{{contract.guarantee}}</span></li>
+                <li class="list-group-item">
+                    <span class="text-muted">Wykonawca: </span>
+                    <span>{{contract.contractor}}</span>
+                </li>
+                <li class="list-group-item">
+                    <span class="text-muted">Wartość umowy: </span>
+                    <span>{{contract.price|intcomma}} zł.</span>
+                </li>
+                <li class="list-group-item">
+                    <span class="text-muted">Zakres umowy: </span>
+                    <span>{{contract.work_scope}}</span>
+                </li>
+                <li class="list-group-item">
+                    <span class="text-muted">Tryb zamówienia: </span>
+                    <span data-toggle="info" title="{{contract.legal_basic.act}} - {{contract.legal_basic.legal_basic_text}}">{{contract.legal_basic}}</span>
+                </li>
+                <li class="list-group-item">
+                    <span class="text-muted">Termin realizacji: </span>
+                    <span>{{contract.end_date}} r.</span>
+                </li>
+                <li class="list-group-item">
+                    <span class="text-muted">Jednostka: </span>
+                    <span>{{contract.unit}}</span>
+                </li>
+                <li class="list-group-item">
+                    <span class="text-muted">Gwarancja: </span>
+                    <span>{{contract.guarantee}}</span>
+                </li>
                 {%if contract.last_report_date%}
-                <li class="list-group-item"><span class="text-muted">Data ostatniego protokołu: </span>{{contract.last_report_date}} r.</li>
+                <li class="list-group-item">
+                    <span class="text-muted">Data ostatniego protokołu: </span>
+                    <span>{{contract.last_report_date}} r.</span>
+                </li>
                 {%endif%}
-                <li class="list-group-item"><span class="text-muted">Okres gwarancji: </span><span>{{contract.guarantee_period}}</span></li>
-                <li class="list-group-item"><span class="text-muted">Okres rękojmi: </span><span>{{contract.warranty_period}}</span></li>
+                {%if contract.guarantee_period > 0%}
+                <li class="list-group-item">
+                    <span class="text-muted">Okres gwarancji: </span>
+                    <span>{{contract.guarantee_period}} mc</span>
+                </li>
+                {%endif%}
+                {%if contract.warranty_period > 0%}
+                <li class="list-group-item">
+                    <span class="text-muted">Okres rękojmi : </span>
+                    <span>{{contract.warranty_period}} mc</span>
+                </li>
+                {%endif%}
                 {%if contract.security_percent%}
-                <li class="list-group-item"><span class="text-muted">Procent zabezpieczenia: </span><span>{{contract.security_percent}}%</span></li>
+                <li class="list-group-item">
+                    <span class="text-muted">Procent zabezpieczenia: </span>
+                    <span>{{contract.security_percent}}%</span>
+                </li>
                 {%endif%}
                 {%if contract.security_sum%}
-                <li class="list-group-item"><span class="text-muted">Kwota zabezpieczenia: </span><span>{{contract.security_sum|intcomma}}&nbsp;zł.</span></li>
+                <li class="list-group-item">
+                    <span class="text-muted">Kwota zabezpieczenia: </span>
+                    <span>{{contract.security_sum|intcomma}}&nbsp;zł.</span>
+                </li>
                 {%endif%}
-                <li class="list-group-item"><span class="text-muted">Branżysta: </span><ul>{%for worker in contract.worker.all%}<li> {{worker}} - {{worker.industry}}</li>{%endfor%}</ul></li>
+                <li class="list-group-item">
+                    <span class="text-muted">Branżysta: </span>
+                    <ul>
+                        {%for worker in contract.worker.all%}
+                        <li>
+                            <span>{{worker}} - {{worker.industry}}</span>
+                        </li>{%endfor%}
+                    </ul>
+                </li>
                 {%if contract.report%}
-                <li class="list-group-item"><span class="text-muted">Raportowanie do Zaspołu Zamówień Publicznych: </span><span>{{contract.report}}</span></li>
+                <li class="list-group-item">
+                    <span class="text-muted">Raportowanie do Zaspołu Zamówień Publicznych: </span>
+                    <span>{{contract.report}}</span>
+                </li>
                 {%endif%}
                 {%if contract.information%}
-                <li class="list-group-item"><span class="text-muted">Informacje: </span><span>{{contract.information}}</span></li>
+                <li class="list-group-item">
+                    <span class="text-muted">Informacje: </span>
+                    <span>{{contract.information}}</span>
+                </li>
                 {%endif%}
-                <li class="list-group-item"><small class="text-muted">Data dodania: {{contract.creation_date|date:'d.m.Y (H:i)'}}</small></li>
-                <li class="list-group-item"><small class="text-muted">Zmiany: {{contract.change|date:'d.m.Y (H:i)'}} - {{contract.author}}</small></li>
+                <li class="list-group-item">
+                    <small class="text-muted">Data dodania: {{contract.creation_date|date:'d.m.Y (H:i)'}}</small>
+                </li>
+                <li class="list-group-item">
+                    <small class="text-muted">Zmiany: {{contract.change|date:'d.m.Y (H:i)'}} - {{contract.author}}</small>
+                </li>
             </ul>
         </div>
         <div class="col-md-5">
             {%if contract.scan%}
             <div class="text-center mt-2">
-                <a href="/media/{{contract.scan}}" target="_blank"><button class="btn btn-outline-primary button-chose-invoices my-btn"><span class="bi bi-file-text"> Podgląd umowy</span></button></a>
+                <a href="/media/{{contract.scan}}" target="_blank">
+                    <button class="btn btn-outline-primary button-chose-invoices my-btn">
+                        <span class="bi bi-file-text"> Podgląd umowy</span>
+                    </button>
+                </a>
             {%if annexes%}
             {%for annex in annexes%}
             <div class="my-3">
-                <a href="/media/{{annex.scan}}" target="_blank"><button class="btn btn-outline-primary button-chose-invoices my-btn"><i class="bi bi-arrow-return-right"> Aneks z dnia {{annex.date|date:"d.m.Y"}} r.</i></button>
+                <a href="/media/{{annex.scan}}" target="_blank">
+                    <button class="btn btn-outline-primary button-chose-invoices my-btn">
+                        <i class="bi bi-arrow-return-right"> Aneks z dnia {{annex.date|date:"d.m.Y"}} r.</i>
+                    </button>
                 </a>
             </div>
             {%endfor%}
@@ -68,6 +139,7 @@
     document.getElementById("button-record").classList.remove("active");
     document.getElementById("button-investments").classList.add("active");
     document.getElementById("button-cpv").classList.remove("active");
+
     $(function () {
         $('[data-toggle="info"]').tooltip()
     })

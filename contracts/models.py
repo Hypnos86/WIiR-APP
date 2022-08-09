@@ -157,10 +157,8 @@ class ContractAuction(models.Model):
     last_report_date = models.DateField("Data ostatniego protokołu", null=True, blank=True)
     guarantee = models.ForeignKey(Guarantee, on_delete=models.CASCADE, verbose_name="Gwarancja",
                                   related_name="contract_auction")
-    guarantee_period = models.ForeignKey(GuaranteePeriod, on_delete=models.CASCADE, verbose_name="Okres gwarancji",
-                                         related_name="contract_auction")
-    warranty_period = models.ForeignKey(WarrantyPeriod, on_delete=models.CASCADE, verbose_name="Okres rękojmi",
-                                        related_name="contract_auction")
+    guarantee_period = models.IntegerField(verbose_name="Okres gwarancji")
+    warranty_period = models.IntegerField(verbose_name="Okres rękojmi")
     security_percent = models.DecimalField("Procent zabezpiecznia", max_digits=2, decimal_places=0)
     security_sum = models.DecimalField("Kwota zabezpiecznia", max_digits=10, decimal_places=2, null=True,
                                        blank=True)
