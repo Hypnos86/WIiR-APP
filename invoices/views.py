@@ -526,11 +526,11 @@ def make_verification(request):
 
         for day in days:
             print(day.aggregate(Sum('sum')))
-        #TODO poprawić kod w dziennym sumowaniu weryfikacji
+        # TODO poprawić kod w dziennym sumowaniu weryfikacji
         # for invoice in invoices_buy_list.values('date_of_payment'):
         #     day_sum = invoices_buy_list.aggregate(Sum('sum'))
         #     print(invoice)
-            # invoice_sum = invoice.aggregate(Sum('sum'))
+        # invoice_sum = invoice.aggregate(Sum('sum'))
 
         invoices_buy_sum = len(invoices_buy_list)
 
@@ -561,7 +561,7 @@ def make_verification(request):
 def make_pdf_from_invoices_sell(request):
     invoicessell = InvoiceSell.objects.all().order_by("-date").filter(date__year=current_year())
     invoices_sell_sum_dict = invoicessell.aggregate(Sum('sum'))
-
+    # TODO dokończyć tworzenie pdfa
     try:
         invoices_sell_sum = round(invoices_sell_sum_dict['sum__sum'], 2)
     except TypeError:

@@ -90,7 +90,7 @@
         {%if contract.period_of_validity%}
         {% now 'Y-m-d' as today_date%}
         {%if contract.period_of_validity|date:'Y-m-d' <= today_date%}
-        <td align="center" valign="middle" class="text-center bg-danger text-white"><span>{{contract.period_of_validity|date:"d.m.Y"}}&nbsp;r.</span></td>
+        <td align="center" valign="middle" class="text-center bg-secondary text-white"><span>{{contract.period_of_validity|date:"d.m.Y"}}&nbsp;r.</span></td>
         {%else%}
         <td align="center" valign="middle" class="text-center">{{contract.period_of_validity|default_if_none:'---'|date:"d.m.Y"}}&nbsp;r.</td>
         {%endif%}

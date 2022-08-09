@@ -93,16 +93,26 @@
         <td align="center" valign="middle" class="text-center" scope="row"></td>
         <td align="center" valign="middle" class="text-center">{{contract.date|date:"d.m.Y"}}&nbsp;r.</td>
         <td align="center" valign="middle" class="text-center">{{contract.no_contract|default_if_none:'---'}}</td>
-        <td valign="middle"><span>{{contract.contractor.name}}<br><small>{{contract.contractor.address}}, {{contract.contractor.zip_code}} {{contract.contractor.city}}</small></span></td>
+        <td valign="middle">
+            <span>{{contract.contractor.name}}<br>
+                <small>{{contract.contractor.address}}, {{contract.contractor.zip_code}} {{contract.contractor.city}}</small>
+            </span>
+        </td>
         {%if contract.period_of_validity%}
         {% now 'Y-m-d' as today_date%}
         {%if contract.period_of_validity|date:'Y-m-d' <= today_date%}
-        <td align="center" valign="middle" class="text-center bg-danger text-white"><span>{{contract.period_of_validity|date:"d.m.Y"}}&nbsp;r.</span></td>
+        <td align="center" valign="middle" class="text-center bg-secondary text-white">
+            <span>{{contract.period_of_validity|date:"d.m.Y"}}&nbsp;r.</span>
+        </td>
         {%else%}
-        <td align="center" valign="middle" class="text-center">{{contract.period_of_validity|default_if_none:'---'|date:"d.m.Y"}}&nbsp;r.</td>
+        <td align="center" valign="middle" class="text-center">
+            <span>{{contract.period_of_validity|default_if_none:'---'|date:"d.m.Y"}}&nbsp;r.</span>
+        </td>
         {%endif%}
         {%else%}
-        <td align="center" valign="middle" class="text-center">---</td>
+        <td align="center" valign="middle" class="text-center">
+            <span>---</span>
+        </td>
         {%endif%}
         <td align="center" valign="middle" class="text-center">{{contract.type_of_contract}}</td>
         <td valign="middle" data-toggle="info" title="Powiat: {{contract.unit.county.name}}">
@@ -131,18 +141,32 @@
         <td align="center" valign="middle" class="text-center" scope="row"></td>
         <td align="center" valign="middle" class="text-center">{{contract.date|date:"d.m.Y"}}&nbsp;r.</td>
         <td align="center" valign="middle" class="text-center">{{contract.no_contract|default_if_none:'---'}}</td>
-        <td valign="middle"><span>{{contract.contractor.name}}<br><small>{{contract.contractor.address}}, {{contract.contractor.zip_code}} {{contract.contractor.city}}</small></span></td>
+        <td valign="middle">
+            <span>{{contract.contractor.name}}<br>
+                <small>{{contract.contractor.address}}, {{contract.contractor.zip_code}} {{contract.contractor.city}}</small>
+            </span>
+        </td>
         <td align="center" valign="middle" class="text-center">
             {{contract.period_of_validity|default_if_none:'---'|date:"d.m.Y"}}
         </td>
-        <td align="center" valign="middle" class="text-center">{%if contract.usable_area%}
-            {{contract.usable_area|intcomma}} m<sup>2 {%else%} --- {%endif%}</sup></td>
+        <td align="center" valign="middle" class="text-center">
+            {%if contract.usable_area%}
+            <span>{{contract.usable_area|intcomma}} m<sup>2</sup></span>
+            {%else%}
+            <span>---</span>
+            {%endif%}
+        </td>
         <td align="center" valign="middle" class="text-center">{{contract.type_of_contract}}</td>
-        <td valign="middle"><span>{{contract.unit.type.type_full}} - {{contract.unit.city}}<br><small>{{contract.unit.address}}, {{contract.unit.zip_code}} {{contract.unit.city}}</small></span></td>
+        <td valign="middle">
+            <span>{{contract.unit.type.type_full}} - {{contract.unit.city}}<br>
+                <small>{{contract.unit.address}}, {{contract.unit.zip_code}} {{contract.unit.city}}</small>
+            </span>
+        </td>
         <td align="right" valign="middle">
             <a class="m-2" href="{% url 'contracts:show_contractsimmovables' contract.id %}">
                 <button data-toggle="info" title="Pokaż" type="button" class="btn btn-outline-primary icon-color mx-2 my-1">
-                    <i class="bi bi-eye"></i></button>
+                    <i class="bi bi-eye"></i>
+                </button>
             </a>
         </td>
     </tr>
@@ -172,10 +196,10 @@
         {%for i in contracts.paginator.page_range%}
         {%if contracts.number == i%}
         <li class="page-item active" aria-current="page">
-                    <span class="page-link my-btn">
-                        {{i}}
-                        <span class="sr-only"></span>
-                    </span>
+            <span class="page-link my-btn">
+                {{i}}
+                <span class="sr-only"></span>
+            </span>
         </li>
         {%else%}
         <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>

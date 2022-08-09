@@ -28,11 +28,10 @@
                 <label for="id_state">Stan jednostki</label>
                 <div class=form-control id="id_state">{{unit_form.status|bootstrap}}</div>
             </div>
-            <div class="col-md-8 my-2">{{unit_form.information|bootstrap}}</div>
-            <div class="col-md-4 my-2">{{unit_form.manager|bootstrap}}</div>
-            <div class="col-md-6 my-2">{{unit_form.comments|bootstrap}}</div>
-
-            <div class="ol-md-12 my-2">
+            <div class="col-md-7 my-2">{{unit_form.information|bootstrap}}</div>
+            <div class="col-md-5 my-2">{{unit_form.manager|bootstrap}}</div>
+            <div class="d-flex justify-content-between">
+                <div class="col-md-8 my-2">{{unit_form.comments|bootstrap}}</div>
                 <div class="col align-self-end moj-button-right">
                     <button type="submit" class="btn btn-outline-primary">Zapisz</button>
                 </div>
