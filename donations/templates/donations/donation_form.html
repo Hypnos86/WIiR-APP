@@ -4,8 +4,8 @@
 {%load bootstrap%}
 {%block title%}{%if new%}Nowy wniosek{%else%}Edycja wniosku{%endif%}{%endblock%}
 {%block content%}
-<div class="container">
-    <div class="row">
+<div class="container col-md-6 mb-3">
+    <div class="row px-5">
         <div class="col-md-3">
             <a href="{%url 'donations:donations_list'%}">
                 <button class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span>
@@ -16,7 +16,9 @@
             <h4 class="text-center">{%if new%}Nowy wniosek{%else%}Edycja wniosku{%endif%}</h4>
         </div>
     </div>
-    <div class="container px-5 pb-5 col-md-8">
+</div>
+<div class="container col-md-6">
+    <div class="px-5">
         <form method="post" enctype="multipart/form-data">
             {%csrf_token%}
             <div class="row">
@@ -52,10 +54,10 @@
                 <div class="col-md-4 my-2">{{donation_form.date_agreement|bootstrap}}</div>
                 <div class="col-md-4 my-2">{{donation_form.no_agreement|bootstrap}}</div>
                 <div class="col-md-4 my-2">{{donation_form.settlement_date|bootstrap}}</div>
-                <div class="col-md-12 my-2">{{donation_form.subject|bootstrap}}</div>
+                <div class="col-md-6 my-2">{{donation_form.subject|bootstrap}}</div>
+                <div class="col-md-6 my-2">{{donation_form.information|bootstrap}}</div>
                 <div class="col-md-12 my-2">{{donation_form.donation_scan|bootstrap}}</div>
-                <div class="col-md-12 my-2">{{donation_form.information|bootstrap}}</div>
-                <div class="col-md-12 moj-button-right my-4">
+                <div class="col-md-12 moj-button-right mt-2">
                     <button type="submit" class="btn btn-outline-primary my-btn">
                         {%if new%}
                         <span class="bi bi-save2"> Dodaj wniosek</span>
@@ -66,7 +68,7 @@
                 </div>
             </div>
         </form>
-</div>
+    </div>
 </div>
 <script>
     document.getElementById("button-units").classList.remove("active");

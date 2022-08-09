@@ -42,7 +42,10 @@ def investment_projects_list(request):
                    | projects.filter(unit__city__icontains=q) \
                    | projects.filter(section__section__startswith=q) \
                    | projects.filter(source_financing__icontains=q) \
-                   | projects.filter(date_of_acceptance__year=q)
+                   | projects.filter(date_of_acceptance__year__contains=q)
+
+        projects_sum = len(projects)
+
         return render(request, 'investments/investments_projects.html', {'projects': projects,
                                                                          'query': query,
                                                                          'last_date': last_date,

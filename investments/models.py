@@ -20,7 +20,7 @@ class Project(models.Model):
     no_acceptance_document = models.CharField("L.dz. programu", max_length=15, null=True, blank=True)
     investment_program = models.FileField(upload_to=upload_scan, null=True, blank=True,
                                           verbose_name="Program inwestycji")
-    project_title = models.CharField("Pełna nazwa zadania", max_length=250, null=True, blank=True)
+    project_title = models.CharField("Pełna nazwa zadania", max_length=300, null=True, blank=True)
     investment_cost_estimate_value = models.DecimalField("WKI", max_digits=12, decimal_places=2, null=True, blank=True)
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE, related_name="project", verbose_name="Jednostka")
     section = models.ForeignKey(Section, on_delete=models.CASCADE, related_name="project", verbose_name="Rozdział")

@@ -4,17 +4,19 @@
 {% load static %}
 {% block title %}Ewidencja Not księgowych na {{year}} rok{%endblock%}
 {% block content %}
-<div class="row">
-    <div class=" col-md-3 moj-button-left">
-        <a href="{%url 'invoices:menu_invoices'%}">
-            <button type="button" class="btn btn-outline-primary my-btn">
-                <span class="bi bi-chevron-compact-left">Cofnij</span>
-            </button>
-        </a>
-    </div>
-    <div class="col-md-6 text-center">
-        <h4>Ewidencja Not księgowych za {{year}} rok</h4>
-    </div>
+<div class="container mb-3">
+    <div class="row">
+        <div class=" col-md-3 moj-button-left">
+            <a href="{%url 'invoices:menu_invoices'%}">
+                <button type="button" class="btn btn-outline-primary my-btn">
+                    <span class="bi bi-chevron-compact-left">Cofnij</span>
+                </button>
+            </a>
+        </div>
+        <div class="col-md-6 text-center">
+            <h4>Ewidencja Not księgowych za {{year}} rok</h4>
+        </div>
+</div>
 </div>
 <div class="container my-3">
     <div class="row">

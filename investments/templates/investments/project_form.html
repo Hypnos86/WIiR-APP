@@ -5,17 +5,19 @@
 {%block investmentsmenu%}
 {%block additional_scripts%}
 {{project_form.media}}
-<div class="container">
+<div class="mx-5">
     <h3 class="text-center m-4">{%if new%}Nowe zadanie inwestycyjne{%else%}Edycja zadania inwestycyjnego{%endif%}</h3>
     <form method="post" enctype="multipart/form-data">
         {%csrf_token%}
         <div class="row">
             <div class="col-md-2 mb-3">{{project_form.date_of_acceptance|bootstrap}}</div>
-            <div class="col-md-2 mb-3">{{project_form.no_acceptance_document|bootstrap}}</div>
+            <div class="col-md-3 mb-3">{{project_form.no_acceptance_document|bootstrap}}</div>
             <div class="col-md-2 mb-3">{{project_form.investment_cost_estimate_value|bootstrap}}</div>
-            <div class="col-md-6 mb-3">{{project_form.investment_program|bootstrap}}</div>
+            <div class="col-md-2 mb-3">{{project_form.section|bootstrap}}</div>
+            <div class="col-md-1 mb-3">{{project_form.group|bootstrap}}</div>
+            <div class="col-md-2 mb-3">{{project_form.paragraph|bootstrap}}</div>
             <div class="col-md-6 mb-3">{{project_form.project_title|bootstrap}}</div>
-            <div class="col-md-6 mb-3">
+            <div class="col-md-3 mb-3">
                 <label class="control-label" for="id_unit">Jednostka</label>
                 <div class="">
                     <select name="unit" class="form-control" required id="id_unit">
@@ -35,36 +37,34 @@
                     </select>
                 </div>
             </div>
-            <div class="col-md-2 mb-3">{{project_form.section|bootstrap}}</div>
-            <div class="col-md-2 mb-3">{{project_form.group|bootstrap}}</div>
-            <div class="col-md-2 mb-3">{{project_form.paragraph|bootstrap}}</div>
-            <div class="col-md-6 mb-3">{{project_form.worker|bootstrap}}</div>
-            <div class="col-md-10 mb-3">
-                <div class="row mb-3">
-                    {{project_form.media}}
-                    <div class="col-md-6">{{project_form.source_financing|bootstrap}}</div>
-
-                    <div class="col-md-6">{{project_form.information|bootstrap}}</div>
+            <div class="col-md-3 mb-3">{{project_form.worker|bootstrap}}</div>
+            <div class="col-md-6">{{project_form.source_financing|bootstrap}}</div>
+            <div class="col-md-6">{{project_form.information|bootstrap}}</div>
+            <div class="col-md-6 my-3">{{project_form.investment_program|bootstrap}}</div>
+            {%if new == False%}
+            <div class="col-md-6 mt-3">
+                <div class="d-flex justify-content-between">
+                    <div class="col-md-3">
+                        <div class="list-group">
+                            <small>Stan zadania</small>
+                            <div class="list-group-item">{{project_form.realized|bootstrap}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-4">
+                        <div class="list-group">
+                            <button type="button" class="btn btn-outline-primary my-btn" onclick="openModal()">
+                                <span class="bi bi-folder-plus"> Podepni umowę</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-2">
-                {%if new == False%}
-                <div class="list-group">
-                    <small>Stan zadania</small>
-                    <div class="list-group-item">{{project_form.realized|bootstrap}}</div>
-                </div>
-
-                <div class="list-group mt-2">
-                    <button type="button" class="btn btn-outline-primary my-btn" onclick="openModal()">
-                        <span class="bi bi-folder-plus"> Podepni umowę</span>
-                    </button>
-                </div>
-
+            <div class="col-md-6">
+                <div class="col-md-3 mt-2">{{project_form.date_of_settlement|bootstrap}}</div>
+                <div class="col-md-12 mt-2">{{project_form.settlement_scan|bootstrap}}</div>
             </div>
-            <div class="col-md-2">{{project_form.date_of_settlement|bootstrap}}</div>
-            <div class="col-md-8">{{project_form.settlement_scan|bootstrap}}</div>
             {%endif%}
-            <div class="col-md-2 moj-button-right my-4">
+            <div class="col-md-6 moj-button-right my-4">
                 <button type="submit" class="btn btn-outline-primary my-btn">
                     {%if new%}
                     <span class="bi bi-save2"> Dodaj zadanie</span>
@@ -81,7 +81,6 @@
 <div class="modal fade" id="projectModal" data-url="{% url 'investments:add_contract_to_project' project.id %}">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-
         </div>
     </div>
 </div>

@@ -209,6 +209,8 @@ def create_order_archive(request, year):
         if date_to:
             orders = orders.filter(date__lte=date_to)
 
+        ordersum = len(orders)
+
         return render(request, 'cpvdict/archive_order_list.html',
                       {'orders': orders, 'year': year, 'ordersum': ordersum, 'query': query, 'q': q,
                        'date_from': date_from, 'date_to': date_to
@@ -224,7 +226,8 @@ def create_type_work_list_archive(request, year):
     units = Unit.objects.all()
     sum_rb = {}
     for unit in units:
-        orders = Order.objects.all().filter(brakedown=False).filter(genre__name_id='RB').filter(unit=unit).filter(date__year=year)
+        orders = Order.objects.all().filter(brakedown=False).filter(genre__name_id='RB').filter(unit=unit).filter(
+            date__year=year)
         sum = 0
         for order in orders:
             sum += order.sum_netto

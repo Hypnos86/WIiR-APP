@@ -28,6 +28,8 @@ def contractor_list(request):
                      | contractor.filter(city__icontains=q) \
                      | contractor.filter(no_contractor__startswith=q) \
                      | contractor.filter(nip__startswith=q)
+
+        contractor_len = len(contractor)
         return render(request, 'contractors/contractor_list.html',
                       {'contractors': contractor, "consellsum": contractor_len, "query": query, 'last_date': last_date,
                        'q': q})
