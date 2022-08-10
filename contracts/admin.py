@@ -3,14 +3,12 @@ from import_export import resources
 from import_export.admin import ExportMixin
 from import_export.fields import Field
 from contracts.models import TypeOfContract, LegalBasic, Guarantee, ContractImmovables, \
-    AnnexImmovables, ContractAuction, AnnexContractAuction, GuaranteePeriod, WarrantyPeriod, MediaType, ContractMedia, \
-    SettlementContractAuction, AnnexContractMedia
+    AnnexImmovables, ContractAuction, AnnexContractAuction, MediaType, ContractMedia, \
+    GuaranteeSettlement, AnnexContractMedia
 
 # Register your models here.
 admin.site.register(TypeOfContract)
-admin.site.register(SettlementContractAuction)
-admin.site.register(GuaranteePeriod)
-admin.site.register(WarrantyPeriod)
+admin.site.register(GuaranteeSettlement)
 
 
 @admin.register(Guarantee)

@@ -40,30 +40,6 @@ class Guarantee(models.Model):
         return f"{self.guarantee}"
 
 
-class GuaranteePeriod(models.Model):
-    class Meta:
-        verbose_name = "Okres gwarancyjny"
-        verbose_name_plural = "Umowy ZZP - Okres gwarancyjny"
-        ordering = ["guarantee_period"]
-
-    guarantee_period = models.SmallIntegerField("Okres gwarancji (mc)")
-
-    def __str__(self):
-        return f"{self.guarantee_period} mc"
-
-
-class WarrantyPeriod(models.Model):
-    class Meta:
-        verbose_name = "Okres rękojmi"
-        verbose_name_plural = "Umowy ZZP - Okres rękojmi"
-        ordering = ["warranty_period"]
-
-    warranty_period = models.SmallIntegerField("Okres rękojmi (mc)")
-
-    def __str__(self):
-        return f"{self.warranty_period} mc"
-
-
 def upload_scan_contract_immovables(instance, filename):
     return f"contracts_immovables/Umowa z dnia {instance.date}/{filename}"
 
@@ -202,25 +178,21 @@ class AnnexContractAuction(models.Model):
         return f"Aneks z dnia {self.date}"
 
 
-class SettlementContractAuction(models.Model):
+class GuaranteeSettlement(models.Model):
     class Meta:
         verbose_name = "Rozliczenie umowy"
-        verbose_name_plural = "Umowy ZZP - Rozliczenia umów"
-        ordering = ["first_part_security_date", "second_part_security_date"]
+        verbose_name_plural = "Umowy ZZP - Rozliczenia umów: Gwarancje"
+        ordering = ["dedline_settlement"]
 
-    contract = models.OneToOneField(ContractAuction, on_delete=models.CASCADE, verbose_name="Umowa",
-                                    related_name="settlementcontractauction")
-    first_part_security_date = models.DateField("Termin")
-    first_part_security_sum = models.DecimalField("Zabezpieczenie 70%", max_digits=8, decimal_places=2)
-    first_part_security_writing = models.CharField("Zabezpieczenie 70%", max_length=50)
-    first_part_security_checkbox = models.BooleanField("Oddano 70%")
-    second_part_security_date = models.DateField("Termin")
-    second_part_security_sum = models.DecimalField("Zabezpieczenie 30%", max_digits=8, decimal_places=2)
-    second_part_security_writing = models.CharField("Zabezpieczenie 30%", max_length=50)
-    second_part_security_checkbox = models.BooleanField("Oddano 30%")
+    contract = models.ForeignKey(ContractAuction, on_delete=models.CASCADE, verbose_name="Umowa",
+                                 related_name="settlementcontractauction")
+    dedline_settlement = models.DateField("Termin zwrotu")
+    settlement_sum = models.DecimalField("Kwota zwrotu", max_digits=8, decimal_places=2)
+    script = models.CharField(verbose_name="L.dz. Pisma", max_length=50)
+    affirmation_settlement = models.BooleanField("Rozliczono")
 
     def __str__(self):
-        return f"{self.contract}"
+        return f"{self.script} - Rozliczenie umowy {self.contract}"
 
 
 class MediaType(models.Model):

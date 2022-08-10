@@ -67,14 +67,14 @@
         <thead>
         <tr class="my-table-tr text-center">
             <th align="center" valign="middle" width="50" scope="col">L.p.</th>
-            <th align="center" valign="middle" width="180" scope="col">Wpływ</th>
+            <th align="center" valign="middle" width="auto" scope="col">Wpływ</th>
             <th align="center" valign="middle" width="200" scope="col">L.dz. WIiR</th>
-            <th align="center" valign="middle" width="180" scope="col">Zwrot</th>
-            <th align="center" valign="middle" width="150" scope="col">Nr. wniosku</th>
-            <th align="center" valign="middle" width="200" scope="col">Kwota</th>
+            <th align="center" valign="middle" width="auto" scope="col">Zwrot</th>
+            <th align="center" valign="middle" width="auto" scope="col">Nr. wniosku</th>
+            <th align="center" valign="middle" width="auto" scope="col">Kwota</th>
             <th align="center" valign="middle" width="180" scope="col">Data porozumienia</th>
             <th align="center" valign="middle" width="280" scope="col">Darczyńca</th>
-            <th align="center" valign="middle" width="200" scope="col">Powiat</th>
+            <th align="center" valign="middle" width="auto" scope="col">Powiat</th>
         </tr>
         </thead>
         <tbody>
@@ -93,16 +93,38 @@
             </td>
             <td align="center" valign="middle" data-toggle="info" title="Data zwrotu od Wydz. Finansów">
                 {%if application.date_return%}
-                <span>{{application.date_return}}&nbsp;.r</span>
+                <span>{{application.date_return}}&nbspr.</span>
                 {%else%}
                 <span>---</span>
                 {%endif%}
             </td>
-            <td class="text-center" valign="middle" data-toggle="info" title="Rodzaj darowizny: {{application.donation_type}}">{%if application.no_application%}<span>{{application.no_application}}</span>{%else%}<span>---</span>{%endif%}</td>
-            <td class="text-center" valign="middle" data-toggle="info" title="Rodzaj środków: {%if application.financial_type%} {{application.financial_type}} {%else%} nie wybrano {%endif%}">{%if application.sum%}<span>{{application.sum|intcomma}}&nbspzł.</span>{%else%}<span>---</span>{%endif%}</td>
-            <td class="text-center" valign="middle" data-toggle="info" title="{%if application.no_agreement%}Nr:&nbsp;{{application.no_agreement}}{%endif%}">{%if application.date_agreement%}<span>{{application.date_agreement}}&nbsp;.r</span>{%else%}<span>---</span>{%endif%}</td>
-            <td align="left" valign="middle"><span>{{application.presenter.name}}</span></td>
-            <td class="text-center" valign="middle" data-toggle="info" title="{{application.unit.type.type_short}} {{application.unit.city}}"><span>{{application.unit.county.name}}</span></td>
+            <td class="text-center" valign="middle" data-toggle="info" title="Rodzaj darowizny: {{application.donation_type}}">
+                {%if application.no_application%}
+                <span>{{application.no_application}}</span>
+                {%else%}
+                <span>---</span>
+                {%endif%}
+            </td>
+            <td class="text-center" valign="middle" data-toggle="info" title="Rodzaj środków: {%if application.financial_type%} {{application.financial_type}} {%else%} nie wybrano {%endif%}">
+                {%if application.sum%}
+                <span>{{application.sum|intcomma}}&nbspzł.</span>
+                {%else%}
+                <span>---</span>
+                {%endif%}
+            </td>
+            <td class="text-center" valign="middle" data-toggle="info" title="{%if application.no_agreement%}Nr:&nbsp;{{application.no_agreement}}{%endif%}">
+                {%if application.date_agreement%}
+                <span>{{application.date_agreement}}&nbsp;.r</span>
+                {%else%}
+                <span>---</span>
+                {%endif%}
+            </td>
+            <td align="left" valign="middle">
+                <span>{{application.presenter.name}}</span>
+            </td>
+            <td class="text-center" valign="middle" data-toggle="info" title="{{application.unit.type.type_short}} {{application.unit.city}}">
+                <span>{{application.unit.county.name}}</span>
+            </td>
             <td align="right" valign="middle">
                 <button data-toggle="info" title="Informacje" type="button" class="btn btn-outline-success mx-2" onclick="openInfoModal(this)" data-url="{%url 'donations:show_information_popup' application.id %}">
                     <i class="bi bi-info-lg my-1"></i>
@@ -111,13 +133,15 @@
                 <a class="mx-2 moj-button-right" href="/media/{{application.donation_scan}}" target="_blank">
                     <button data-toggle="info" title="Podgląd dokumentu" type="button" class="btn btn-outline-primary icon-color my-1">
                         <i class="bi bi-file-text"></i>
-                    </button></a>
+                    </button>
+                </a>
                 {%endif%}
                 {%if user.accessmodule.donations_module_edit%}
                 <a class="mx-2 moj-button-right" href="{%url 'donations:edit_donation' application.id%}">
                     <button data-toggle="info" title="Edytuj" type="button" class="btn btn-outline-primary icon-color my-1">
                         <i class="bi bi-pencil-square"></i>
-                    </button></a>
+                    </button>
+                </a>
                 {%endif%}
             </td>
         </tr>
@@ -132,7 +156,7 @@
     {%if search%}
     <nav aria-labelledby="Page navigation">
         <ul class="pagination justify-content-center">
-            {%if contractors.has_previous%}
+            {%if applications.has_previous%}
             <li class="page-item">
                 <a class="page-link" href="?page={{applications.previous_page_number}}">Poprzednia</a>
             </li>
