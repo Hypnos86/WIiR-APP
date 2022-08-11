@@ -216,6 +216,7 @@ class ContractMedia(models.Model):
     class Meta:
         verbose_name = "Umowa na Media"
         verbose_name_plural = "Umowy Media"
+        ordering = ["-date"]
 
     date = models.DateField("Data umowy")
     no_contract = models.CharField("Nr.umowy", max_length=30)

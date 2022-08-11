@@ -213,7 +213,7 @@ def show_all_info_unit(request, id):
     orders = unit_info.order.all()
     projects = unit_info.project.all()
     donations = unit_info.application.all()
-    contract_media = unit_info.contract_media.all()
+    contract_media = unit_info.contract_media.all().order_by("-state")
     contract_immovables = unit_info.contractimmovables.all()
     contract_auction = unit_info.contract_auction.all()
     return render(request, 'units/unit_info.html',
