@@ -3,10 +3,13 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
 from contracts.models import ContractImmovables, ContractAuction, AnnexContractAuction, ContractMedia
 from contracts.forms import ContractImmovablesForm, ContractAuctionForm, AnnexImmovablesForm, AnnexContractAuctionForm, \
-    ContractMediaForm, AnnexContractMediaForm
+    ContractMediaForm, AnnexContractMediaForm, GuaranteeSettlement
 from units.models import Unit
 from main.models import Employer
 from main.views import now_date
+from decimal import Decimal
+from datetime import timedelta
+from dateutil.relativedelta import relativedelta
 
 
 # Create your views here.
@@ -257,6 +260,31 @@ def edit_contract_auction(request, id):
             contract = contract_auction_form.save(commit=False)
             contract.author = request.user
             contract_auction_form.save()
+
+            days_30 = timedelta(days=30)
+            sum_30_percent = contract.security_sum * 30 * Decimal(0.01)
+            settlement_30_day = contract.last_report_date + days_30
+
+            months = contract.warranty_period
+            sum_70_percent = contract.security_sum * 70 * Decimal(0.01)
+            settlement_warranty_period = contract.last_report_date + relativedelta(months=months)
+
+            settlement_period = [settlement_30_day, settlement_warranty_period]
+            settlement_sum = [sum_30_percent, sum_70_percent]
+
+            settlements = zip(settlement_period, settlement_sum)
+
+            if contract.last_report_date != 0:
+                if contract.guarantee.id == 2:
+                    for date, sum in settlements:
+                        settlement_guarantee = GuaranteeSettlement.objects.create(contract=contract_auction_edit,
+                                                                                  dedline_settlement=date,
+                                                                                  settlement_sum=sum)
+                else:
+
+                    settlement_guarantee = GuaranteeSettlement.objects.create(contract=contract_auction_edit,
+                                                                              dedline_settlement=settlement_30_day,
+                                                                              settlement_sum=contract.security_sum)
             return redirect('contracts:menu_contracts_auction')
     return render(request, 'contracts/contract_auction_form.html', context)
 
@@ -348,7 +376,7 @@ def create_contract_media_list(request):
                               | contracts_media.filter(unit__city__icontains=q) \
                               | contracts_media.filter(unit__type__type_short__icontains=q) \
                               | contracts_media.filter(employer__name__icontains=q) \
-                              | contracts_media.filter(employer__last_name__icontains=q)\
+                              | contracts_media.filter(employer__last_name__icontains=q) \
                               | contracts_media.filter(content__icontains=q)
 
         if date_from:

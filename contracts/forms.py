@@ -1,7 +1,7 @@
 from django.forms import ModelForm, DateInput, Textarea, widgets
 from main.forms import DateField
 from contracts.models import ContractImmovables, AnnexImmovables, ContractAuction, AnnexContractAuction, ContractMedia, \
-    AnnexContractMedia
+    AnnexContractMedia, GuaranteeSettlement
 
 
 class ContractImmovablesForm(ModelForm):
@@ -74,6 +74,15 @@ class AnnexContractAuctionForm(ModelForm):
         labels = {'date': 'Data aneksu', 'price_change': 'Zmiana wartości umowy', 'price_after_change': 'Kwota aneksu',
                   'scope_changes': 'Zakres zamian', 'scan': 'Skan aneksu'}
         exclude = ['creation_date', 'author']
+        widgets = {'date': DateField()}
+
+
+class GuaranteeSettlementForm(ModelForm):
+    class Meta:
+        model: GuaranteeSettlement
+        fields = ["dedline_settlement", "settlement_sum", "script", "affirmation_settlement"]
+        labels = {"dedline_settlement": "Termin", "settlement_sum": "Kwota", "script": "Pismo",
+                  "affirmation_settlement": "Rozliczono"}
         widgets = {'date': DateField()}
 
 

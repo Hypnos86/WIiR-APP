@@ -1,16 +1,32 @@
 {% extends 'base_investments.html' %}
 {% load bootstrap %}
+{% load humanize%}
 {% load static%}
 {% block investmentsmenu %}
 
-{%for object in settelments%}
-{{object}}
-{%endfor%}
+<div class="list-group">
+    <div class="row">
+        {%for object in settelments%}
+        <div class="col-md-3 my-3">
+            <a href="#" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                    <h6 class="mb-1 fw-bolder">Umowa {{object.contract.no_contract}} z dnia {{object.contract.date|date:"d.m.Y"}}&nbsp;r.</h6>
 
+                </div>
+                <small class="text-muted">Wykonawca: </small><small>{{object.contract.contractor.name}}</small><br>
+                <small class="text-muted">Zakres prac: </small><small>{{object.contract.work_scope}}</small>
+                <p class="mb-1">Zbliża się data rozliczenia gwarancji -<span class="color-info-warning">{{object.dedline_settlement|date:"d.m.Y"}}&nbsp;r.</span></p>
+                <small class="text-muted">Kwota: {{object.settlement_sum|intcomma}}&nbsp;zł.</small>
+            </a>
+        </div>
+        {%endfor%}
+    </div>
+</div>
 <script>
     document.getElementById("button-units").classList.remove("active");
     document.getElementById("button-record").classList.remove("active");
     document.getElementById("button-investments").classList.add("active");
     document.getElementById("button-cpv").classList.remove("active");
+
 </script>
 {% endblock %}

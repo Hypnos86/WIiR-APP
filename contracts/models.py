@@ -33,6 +33,7 @@ class Guarantee(models.Model):
     class Meta:
         verbose_name = "Gwarancja"
         verbose_name_plural = "Umowy ZZP - Rodzaje Gwarancji"
+        ordering = ["guarantee"]
 
     guarantee = models.CharField("Gwarancja", max_length=50)
 
@@ -185,11 +186,11 @@ class GuaranteeSettlement(models.Model):
         ordering = ["dedline_settlement"]
 
     contract = models.ForeignKey(ContractAuction, on_delete=models.CASCADE, verbose_name="Umowa",
-                                 related_name="settlementcontractauction")
+                                 related_name="guarantee_settlement")
     dedline_settlement = models.DateField("Termin zwrotu")
-    settlement_sum = models.DecimalField("Kwota zwrotu", max_digits=8, decimal_places=2)
-    script = models.CharField(verbose_name="L.dz. Pisma", max_length=50)
-    affirmation_settlement = models.BooleanField("Rozliczono")
+    settlement_sum = models.DecimalField("Kwota zwrotu", max_digits=8, decimal_places=2, null=True, blank=True)
+    script = models.CharField(verbose_name="L.dz. Pisma", max_length=50, null=True, blank=True)
+    affirmation_settlement = models.BooleanField(verbose_name="Rozliczono", default=False)
 
     def __str__(self):
         return f"{self.script} - Rozliczenie umowy {self.contract}"
