@@ -30,29 +30,30 @@
             <div class="col-md-3 my-2">{{invoice.date_of_payment|bootstrap}}</div>
             <div class="col-md-3 my-2">
                 <div class="form-group">
-                    <label class="control-label" for="id_sum">Kwota [zł]</label>
+                    <label class="control-label" for="id_sum">Kwota brutto [zł]</label>
                     <div>
                         <input type="number" name="sum" step="0.01" class=" form-control" id="id_sum" readonly>
                     </div>
                 </div>
             </div>
-            <div class="col-md-12 p-2">{{invoice.information|bootstrap}}</div>
-            <div class="col-md-12 p-2 ">
-                <div class="row mt-2">
-                    <div class="col-md-6 moj-button-left">
-                        <a>
-                            <button type="button" data-url="{%url 'invoices:make_invoice_elements' %}" class="btn btn-outline-primary my-btn"><span
-                                    class="bi bi-plus-circle"> Elementy</span>
-                            </button>
-                        </a>
-                    </div>
-                    <div class="col-md-6 moj-button-right">
-                        <button type="submit" class="btn btn-outline-primary my-btn"><span
-                                class="bi bi-save2"> Zapisz zmiany</span></button>
-                    </div>
+            <div class="d-flex justify-content-between">
+                <div class="col-md-6 ">{{invoice.information|bootstrap}}</div>
+                <div class="col-md-6 moj-button-right align-self-center">
+                    <button type="button" data-url="{%url 'invoices:add_invoice_items' %}" class="btn btn-outline-primary my-btn" onclick="openItemsModal(this)">
+                        <span class="bi bi-plus-circle"> Elementy</span>
+                    </button>
                 </div>
             </div>
-
+            <div class="col-md-12 moj-button-right">
+                <button type="submit" class="btn btn-outline-primary my-btn">
+                    <span class="bi bi-save2"> Zapisz zmiany</span>
+                </button>
+            </div>
+            <div>
+                <ul>
+                    <li></li>
+                </ul>
+            </div>
         </div>
     </form>
 </div>
@@ -63,11 +64,12 @@
     </div>
 </div>
 <script>
-     function openModal(button){
+     function openItemsModal(button){
             var url = $(button).data("url");
             $("#elementsModal .modal-content").load(url);
             $("#elementsModal").modal("show");
         }
+
         function submitForm(){
             $("#submitButton").closest("form").submit();
         }

@@ -73,15 +73,15 @@ class InvoiceItems(models.Model):
     class Meta:
         verbose_name = "Element faktury"
         verbose_name_plural = "Elementy faktury"
+        ordering = ["invoice_id"]
 
     invoice_id = models.ForeignKey(InvoiceBuy, on_delete=models.CASCADE, verbose_name="ID Faktury",
-                                   related_name="invoiceitems")
-
+                                   related_name="invoice_items")
     account = models.ForeignKey(FinanceSource, on_delete=models.CASCADE, verbose_name="Konto",
-                                related_name="invoiceitems")
+                                related_name="invoice_items")
     county = models.ForeignKey(County, on_delete=models.CASCADE, verbose_name="Powiat",
-                               related_name="invoiceitems")
-    sum = models.DecimalField("Kwota [zł]", max_digits=10, decimal_places=2, null=True, blank=True)
+                               related_name="invoice_items")
+    sum = models.DecimalField("Kwota brutto [zł]", max_digits=10, decimal_places=2, null=True, blank=True)
 
     def __str__(self):
         return f"{self.account} - {self.county} - {self.sum} zł."
