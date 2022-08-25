@@ -16,6 +16,8 @@ urlpatterns = [
                   path('businessflats/', include('businessflats.urls')),
                   path('cpv/', include('cpvdict.urls')),
                   path('donations/', include('donations.urls')),
+                  path('construction_inspections/', include('constructioninspections.urls')),
+                  path('fixed_asset /', include('fixedasset.urls')),
                   path('gallery/', include('gallery.urls')),
                   path('login/', auth_views.LoginView.as_view(), name='login'),
                   path('logout/', auth_views.LogoutView.as_view(), name='logout'),

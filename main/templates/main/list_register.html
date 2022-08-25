@@ -55,6 +55,16 @@
                             </button>
                         </a>
                         {%endif%}
+                        <a class="text-decoration-none" href="{%url 'fixedasset:fixed_asset_list'%}">
+                            <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
+                                Środki trwałe - budynki<span class="badge text-white info badge-pill">Test</span>
+                            </button>
+                        </a>
+                        <a class="text-decoration-none" href="{%url 'constructioninspections:contraction_inspection_menu'%}">
+                            <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
+                                Przeglądy<span class="badge text-white info badge-pill">W trkacie realizacji</span>
+                            </button>
+                        </a>
                         {%if user.accessmodule.contracts_auction_module%}
                         <a class="text-decoration-none" href="{%url 'contracts:menu_contracts_auction'%}">
                             <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
@@ -109,11 +119,6 @@
                             </button>
                         </a>
                         {%endif%}
-<!--                        <a class="text-decoration-none" href="">-->
-<!--                        <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">-->
-<!--                            Trwały zarząd<span class="badge text-white info badge-pill">brak</span>-->
-<!--                        </button>-->
-<!--                        </a>-->
                         {%endif%}
                     </div>
                 </div>

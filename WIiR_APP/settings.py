@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     'cpvdict.apps.CpvdictConfig',
     'businessflats.apps.BusinessflatsConfig',
     'permanentmanagement.apps.PermanentmanagementConfig',
+    'fixedasset.apps.FixedassetConfig',
+    'constructioninspections.apps.ConstructioninspectionsConfig',
     'gallery.apps.GalleryConfig'
 ]
 
