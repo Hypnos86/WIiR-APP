@@ -4,6 +4,76 @@
 <h4 class="text-center mb-3">Środki trwałe</h4>
 <h5 class="text-center mb-3">Budynki</h5>
 
+<div class="row my-3">
+    <div class="col-md-3 align-self-end">
+        <span>Liczba budynków: </span>
+        <span class="badge text-white info badge-pill">{{buildings_sum}}</span>
+    </div>
+    <div class="col-md-6">
+        <div class="w-100 pb-4 d-flex justify-content-center align-items-center flex-column text_center">
+            <form method="get">
+                <div class="input-group">
+                    <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj budynku" aria-label="Search" aria-describedby="search-addon" value="{%if query%}{{q}}{%endif%}">
+                        <button id="searchButton" style="{%if query%}display:none;{%endif%}" type="submit" class="btn btn-outline-primary my-btn">Szukaj</button>
+                        <button id="cleanButton"  style="{%if not query%}display:none;{%endif%}" type="button" class="btn btn-outline-primary my-btn" onclick="cleanSearch()">Wyczyść</button>
+                </div>
+            </form>
+        </div>
+    </div>
+        <div class="col-md-3 moj-button-right align-self-end">
+            <a href="">
+                <button type="button" class="btn btn-outline-primary my-btn ">
+                    <span class="bi bi-plus-circle"> Dodaj budynek</span>
+                </button></a>
+        </div>
+</div>
+
+
+<div class="container">
+    <table class="table table-hover my-table">
+        <thead>
+        <tr class="my-table-tr text-center">
+            <th align="center" valign="middle" width="50" scope="col">L.p.</th>
+            <th align="center" valign="middle" width="120" scope="col">Powiat</th>
+            <th align="center" valign="middle" width="450" scope="col">Jednostka</th>
+            <th align="center" valign="middle" width="200" scope="col">Typ budynku</th>
+            <th align="center" valign="middle" width="180" scope="col">Nazwa budynku</th>
+            <th align="center" valign="middle" width="150" scope="col">Nr.inwentarzowy</th>
+            <th align="center" valign="middle" width="auto" scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {%for building in buildings %}
+        <tr class="my-table-tr">
+            <td class="text-center" valign="middle" scope="row"></td>
+            <td align="center" valign="middle" scope="row">{{building.unit.county.name}}</td>
+            <td align="left" valign="middle" scope="row">{{building.unit}}</td>
+            <td class="text-center" valign="middle" scope="row">{{building.kind}}</td>
+            <td class="text-center" valign="middle" scope="row">{{building.building_name}}</td>
+            <td class="text-center" valign="middle" scope="row">{{building.no_inventory}}</td>
+            <td align="right" valign="middle">
+                <button data-toggle="info" title="Pokaż" type="button" data-url="" class="btn btn-outline-success mx-2" onclick="openModal(this)">
+                    <i class="bi bi-info-lg my-1"></i>
+                </button>
+
+                {%if user.accessmodule.contractors_module_edit%}
+                <a class="mx-2 moj-button-right" href="">
+                    <button data-toggle="info" title="Edytuj" type="submit" class="btn btn-outline-primary icon-color my-1">
+                        <i class="bi bi-pencil-square"></i>
+                    </button>
+                </a>
+                {%endif%}
+            </td>
+        </tr>
+        {%endfor%}
+        </tbody>
+        <tfoot>
+        <tr>
+            <th colspan="7">Wydział Inwestycji i Remontów KWP w Poznaniu</th>
+        </tr>
+        </tfoot>
+    </table>
+</div>
 <script>
     document.getElementById("button-units").classList.remove("active");
     document.getElementById("button-record").classList.add("active");

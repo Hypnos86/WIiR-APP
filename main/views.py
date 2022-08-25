@@ -12,6 +12,7 @@ from gallery.models import Gallery
 from investments.models import Project
 from cpvdict.models import Genre
 from invoices.models import InvoiceBuy, InvoiceSell, CorrectiveNote
+from fixedasset.models import Building
 
 
 def current_year():
@@ -238,10 +239,13 @@ def make_list_register(request):
     contracts_media = ContractMedia.objects.all().filter(state=True)
     contracts_media_len = len(contracts_media)
 
+    buildings = Building.objects.all().filter(state=True)
+    buildings_len = len(buildings)
+
     context = {'units_len': units_len, 'count_flats': count_flats, 'con_len': contract_len,
                'contractors_len': contractors_len, 'application_len': application_len,
                'contracts_auction_len': contracts_auction_len, 'galleries_len': galleries_len,
                'projects_len': projects_len, 'genres_len': genres_len, 'invoices_sell_len': invoices_sell_len,
                'invoices_buy_len': invoices_buy_len, 'corrective_note_len': corrective_note_len,
-               'contracts_media_len': contracts_media_len, 'now_year': now_year}
+               'contracts_media_len': contracts_media_len, 'buildings_len': buildings_len, 'now_year': now_year}
     return render(request, 'main/list_register.html', context)
