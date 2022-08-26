@@ -7,12 +7,62 @@
     <h4 class="">{{unit.type.type_full}} - {{unit.city}}</h4>
     <h5 class="">{{unit.information}} - {{unit.address}}, {{unit.zip_code}} {{unit.city}}</h5>
 </div>
-<div><span class="text-muted">Trwały zarząd: </span><span>{{unit.manager}}</span></div>
+<div>
+    <span class="text-muted">Trwały zarząd: </span>
+    <span>{{unit.manager}}</span>
+</div>
+<div class="mt-3">
+    {%if buildings%}
+        <div>
+            <h5 class="d-inline">Budynki</h5>
+            <button class="button-show btn btn-outline" onclick="show(this)">
+                <span class="bi bi-caret-down h5"></span>
+            </button>
+            <button class="hide-on-start button-hide btn btn-outline" onclick="hide(this)">
+                <span class="bi bi-caret-up h5"></span>
+            </button>
+        </div>
+        <ul class="list-group hide-on-start">
+         {% for building in buildings %}
+            <li class="list-group-item list-group-item-action">
+                <span class="text-muted">Nr. inwentarzowy: </span>
+                <span>{{building.no_inventory}}</span>
+                <span class="text-muted">| Nazwa budynku: </span>
+                <span>{{building.building_name}} </span>
+                <span class="text-muted">| Rodzaj budynku: </span>
+                <span>{{building.kind}} </span>
+                {%if building.usable_area%}
+                <span class="text-muted">| Powierrzchnia użytkowa:</span>
+                <span>{{building.usable_area|intcomma}} m<sup>2</sup></span>
+                {%endif%}
+                {%if building.volume%}
+                <span class="text-muted">| Kubatura: </span>
+                <span>{{building.volume|intcomma}} m<sup>3</sup></span>
+                {%endif%}
+                <span class="text-muted">| Stan: </span>
+                {%if state%}
+                <span class="text-danger">Usunięty</span>
+                {%else%}
+                <span class="text-success">Aktywny</span>
+                {%endif%}
+            </li>
+            {% endfor %}
+        </ul>
+        {%endif%}
+</div>
+<div class="mx-3">
 {%if contract_immovables%}
-<div class="container">
     <div class="mt-5">
-        <h5>Umowy czynszowe</h5>
-        <ul class="list-group">
+        <div>
+            <h5 class="d-inline">Umowy czynszowe</h5>
+            <button class="button-show btn btn-outline" onclick="show(this)">
+                <span class="bi bi-caret-down h5"></span>
+            </button>
+            <button class="hide-on-start button-hide btn btn-outline" onclick="hide(this)">
+                <span class="bi bi-caret-up h5"></span>
+            </button>
+        </div>
+        <ul class="list-group hide-on-start">
             {% for contract in contract_immovables %}
             <li class="list-group-item list-group-item-action">
                 <a class="link-dark" href="{%url 'contracts:show_contractsimmovables' contract.id%}">
@@ -62,10 +112,10 @@
                         {% endif %}
                         {% if media.state %}
                         <span class="text-muted">| Stan umowy: </span>
-                        <span class="text-success">aktualna</span>
+                        <span class="text-success">Aktualna</span>
                         {% else %}
                         <span class="text-muted">| Stan umowy: </span>
-                        <span class="text-danger">nieaktualna</span>
+                        <span class="text-danger">Nieaktualna</span>
                         {% endif %}
                     </a>
                 </li>
@@ -261,7 +311,7 @@
     }
 
     $(document).ready(function(){
-        $('.hide-on-start').hide(0);
+        $('.hide-on-start').hide(2);
     })
 
     function openInfoModal(button){

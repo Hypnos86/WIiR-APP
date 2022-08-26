@@ -28,7 +28,7 @@ class Building(models.Model):
     usable_area = models.DecimalField("Powierzchnia użytkowa", max_digits=6, decimal_places=2, null=True, blank=True)
     volume = models.DecimalField("Kubatura", max_digits=8, decimal_places=2, null=True, blank=True)
     information = models.TextField("Informacje", null=True, blank=True, default="")
-    state = models.BooleanField("Stan", default=True)
+    state = models.BooleanField("Aktywny", default=True)
     creation_date = models.DateTimeField("Data utworzenia", auto_now_add=True)
     change = models.DateTimeField("Data zmian", auto_now=True)
     author = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name="building",

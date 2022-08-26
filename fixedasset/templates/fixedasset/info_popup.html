@@ -1,0 +1,61 @@
+{%load static%}
+{%load bootstrap%}
+{%block content%}
+<div class="container ">
+    <form class="m-2 p-4" method="get" action="{% url 'fixedasset:show_information' id %}">
+        {%csrf_token%}
+        <div class="container">
+            <h5 class="text-center mb-2">Nr. inwentarzowy: {{building.no_inventory}}</h5>
+            <div class="my-2">
+                <span class="text-muted">Nazwa budynku: </span>
+                <span>{{building.building_name}}</span>
+            </div>
+            <div class="my-2">
+                <span class="text-muted">Rodzaj budynku: </span>
+                <span>{{building.kind}}</span>
+            </div>
+            <div class="my-2">
+                <span class="text-muted">Adres: </span>
+                <span>{{building.unit}}</span>
+            </div>
+            {%if building.usable_area%}
+            <div class="my-2">
+                <span class="text-muted">Powierzchnia użytkowa: </span>
+                <span>{{building.usable_area}} m<sup>2</sup></span>
+            </div>
+            {%endif%}
+            {%if building.volume%}
+            <div class="my-2">
+                <span class="text-muted">Kubatura: </span>
+                <span>{{building.volume}} m<sup>3</sup></span>
+            </div>
+            {%endif%}
+            <div class="my-2">
+                <span class="text-muted">Status: </span>
+                {%if state%}
+                <span>Usuniety</span>
+                {%else%}
+                <span>Aktywny</span>
+                {%endif%}
+            </div>
+            {%if building.information%}
+            <div class="my-2">
+                <span class="text-muted">Informacje: </span>
+                <span>{{building.information}}</span>
+            </div>
+            {%endif%}
+            <hr>
+            <ul class="list-group">
+                <li class="list-group">
+                    <small class="text-muted">Data dodania: {{building.creation_date|date:'d.m.Y (H:i)'}}</small>
+                </li>
+                <li class="list-group">
+                    <small class="text-muted">Zmiany: {{building.change|date:'d.m.Y (H:i)'}} -
+                        {{building.author}}</small>
+                </li>
+            </ul>
+        </div>
+    </form>
+</div>
+{%endblock%}
+

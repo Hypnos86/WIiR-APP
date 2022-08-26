@@ -1,34 +1,33 @@
 {%extends 'base.html'%}
 {%load static%}
 {%block content%}
-<h4 class="text-center mb-3">Środki trwałe</h4>
-<h5 class="text-center mb-3">Budynki</h5>
-
-<div class="row my-3">
-    <div class="col-md-3 align-self-end">
-        <span>Liczba budynków: </span>
-        <span class="badge text-white info badge-pill">{{buildings_sum}}</span>
-    </div>
-    <div class="col-md-6">
-        <div class="w-100 pb-4 d-flex justify-content-center align-items-center flex-column text_center">
-            <form method="get">
-                <div class="input-group">
-                    <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj budynku" aria-label="Search" aria-describedby="search-addon" value="{%if query%}{{q}}{%endif%}">
-                        <button id="searchButton" style="{%if query%}display:none;{%endif%}" type="submit" class="btn btn-outline-primary my-btn">Szukaj</button>
-                        <button id="cleanButton"  style="{%if not query%}display:none;{%endif%}" type="button" class="btn btn-outline-primary my-btn" onclick="cleanSearch()">Wyczyść</button>
-                </div>
-            </form>
+<div class="container">
+    <h4 class="text-center mb-3">Środki trwałe</h4>
+    <h5 class="text-center mb-3">Budynki</h5>
+    <div class="row my-3">
+        <div class="col-md-3 align-self-end">
+            <span>Liczba budynków: </span>
+            <span class="badge text-white info badge-pill">{{buildings_sum}}</span>
         </div>
-    </div>
-        <div class="col-md-3 moj-button-right align-self-end">
-            <a href="">
-                <button type="button" class="btn btn-outline-primary my-btn ">
-                    <span class="bi bi-plus-circle"> Dodaj budynek</span>
-                </button></a>
+        <div class="col-md-6">
+            <div class="w-100 pb-4 d-flex justify-content-center align-items-center flex-column text_center">
+                <form method="get">
+                    <div class="input-group">
+                        <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj budynku" aria-label="Search" aria-describedby="search-addon" value="{%if query%}{{q}}{%endif%}">
+                            <button id="searchButton" style="{%if query%}display:none;{%endif%}" type="submit" class="btn btn-outline-primary my-btn">Szukaj</button>
+                            <button id="cleanButton"  style="{%if not query%}display:none;{%endif%}" type="button" class="btn btn-outline-primary my-btn" onclick="cleanSearch()">Wyczyść</button>
+                    </div>
+                </form>
+            </div>
         </div>
+            <div class="col-md-3 moj-button-right align-self-end">
+                <a href="">
+                    <button type="button" class="btn btn-outline-primary my-btn ">
+                        <span class="bi bi-plus-circle"> Dodaj budynek</span>
+                    </button></a>
+            </div>
+    </div>
 </div>
-
-
 <div class="container">
     <table class="table table-hover my-table">
         <thead>
@@ -52,7 +51,7 @@
             <td class="text-center" valign="middle" scope="row">{{building.building_name}}</td>
             <td class="text-center" valign="middle" scope="row">{{building.no_inventory}}</td>
             <td align="right" valign="middle">
-                <button data-toggle="info" title="Pokaż" type="button" data-url="" class="btn btn-outline-success mx-2" onclick="openModal(this)">
+                <button data-toggle="info" title="Pokaż" type="button" data-url="{% url 'fixedasset:show_information' building.id %}" class="btn btn-outline-success mx-2" onclick="openModal(this)">
                     <i class="bi bi-info-lg my-1"></i>
                 </button>
 
@@ -73,6 +72,50 @@
         </tr>
         </tfoot>
     </table>
+
+    {%if search%}
+    <nav aria-labelledby="Page navigation">
+        <ul class="pagination justify-content-center">
+            {%if buildings.has_previous%}
+            <li class="page-item">
+                <a class="page-link" href="?page={{buildings.previous_page_number}}">Poprzednia</a>
+            </li>
+            {%else%}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Poprzednia</a>
+            </li>
+            {%endif%}
+            {%for i in buildings.paginator.page_range%}
+            {%if buildings.number == i%}
+            <li class="page-item active" aria-current="page">
+            <span class="page-link">
+                {{i}}
+                <span class="sr-only"></span>
+            </span>
+            </li>
+            {%else%}
+            <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+            {%endif%}
+            {%endfor%}
+            {%if buildings.has.next%}
+            <li class="page-item">
+                <a class="page-link" href="?page={{buildings.next_page_number}}">Następna</a>
+            </li>
+            {%else%}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Następna</a>
+            </li>
+            {%endif%}
+        </ul>
+    </nav>
+    {%endif%}
+</div>
+<!--Modal-->
+<div class="modal fade" id="informationModal">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
 </div>
 <script>
     document.getElementById("button-units").classList.remove("active");
@@ -80,6 +123,27 @@
     document.getElementById("button-secretariat").classList.remove("active");
     document.getElementById("button-cpv").classList.remove("active");
     document.getElementById("button-investments").classList.remove("active");
+
+    function openModal(button){
+        var url = $(button).data("url");
+        $("#informationModal .modal-content").load(url);
+        $("#informationModal").modal("show");
+    }
+
+    function submitForm(){
+        $("#submitButton").closest("form").submit();
+    }
+
+
+    $(function () {
+        $('[data-toggle="info"]').tooltip()
+    })
+
+
+    function cleanSearch(){
+        $("#q").val("");
+        $("form").submit();
+    }
 </script>
 {%endblock%}
 
