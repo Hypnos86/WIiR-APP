@@ -1,0 +1,79 @@
+{%extends 'base.html'%}
+{%load static%}
+{%load bootstrap%}
+{%block title%}{%if new%}Nowy budynek{%else%}Edycja budynku{%endif%}{%endblock%}
+{%block content%}
+<div class="container px-5 mb-3 col-md-8">
+    <div class="row">
+        <div class="col-md-3">
+            <a href="{%url 'fixedasset:fixed_asset_list'%}">
+                <button class="btn btn-outline-primary my-btn">
+                    <span class="bi bi-chevron-compact-left">Cofnij</span>
+                </button>
+            </a>
+        </div>
+        <div class="col-md-6">
+            <h4 class="text-center">{%if new%}Nowy budynek{%else%}Edycja budynku{%endif%}</h4>
+        </div>
+    </div>
+</div>
+<div class="container px-5 pb-5 col-md-8">
+    <form method="post">
+        {%csrf_token%}
+        <div class="row">
+            <div class="col-md-7 my-2">
+                <div class="form-group">
+                    <label class="control-label" for="id_unit">Jednostka</label>
+                    <div class="">
+                        <select name="unit" class="form-control" required id="id_unit">
+                            {% regroup units by county as county_list %}
+                            <option>---------</option>
+                            {% for county in county_list %}
+                            <optgroup label="{{county.grouper}}">
+                                {% for unit in county.list %}
+                                {% if unit_edit.id == unit.id %}
+                                <option value="{{unit.id}}" selected>{{unit}}</option>
+                                {% else %}
+                                <option value="{{unit.id}}">{{unit}}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </optgroup>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5 my-2">{{building_form.no_inventory|bootstrap}}</div>
+            <div class="col-md-7 my-2">{{building_form.building_name|bootstrap}}</div>
+            <div class="col-md-5 my-2">{{building_form.kind|bootstrap}}</div>
+            <div class="col-md-3 my-2">{{building_form.usable_area|bootstrap}}</div>
+            <div class="col-md-3 my-2">{{building_form.volume|bootstrap}}</div>
+            <div class="col-md-6 my-2">
+                <div class="d-flex justify-content-end">
+                    <div class="form-group ">
+                        <label class="control-label"> Stan budynku</label>
+                        <div class="form-control">{{building_form.state|bootstrap}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 my-2">{{building_form.information|bootstrap}}</div>
+            <div class="col-md-12 moj-button-right my-4">
+                <button type="submit" class="btn btn-outline-primary my-btn">
+                    {%if new%}
+                    <span class="bi bi-save2"> Dodaj budynek</span>
+                    {%else%}
+                    <span class="bi bi-save2"> Zapisz zmiany</span>
+                    {%endif%}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    document.getElementById("button-units").classList.remove("active");
+    document.getElementById("button-record").classList.add("active");
+    document.getElementById("button-investments").classList.remove("active");
+    document.getElementById("button-secretariat").classList.remove("active");
+
+</script>
+{%endblock%}

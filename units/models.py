@@ -42,7 +42,7 @@ class Unit(models.Model):
     information = models.CharField(max_length=200, blank=True, verbose_name="Obiekt")
     manager = models.CharField(max_length=150, verbose_name="Trwały zarząd", default="Policja")
     comments = models.TextField(blank=True, verbose_name="Uwagi")
-    status = models.BooleanField(null=False, default=0, verbose_name="Aktualna")
+    status = models.BooleanField(default=True, verbose_name="Aktualna")
     full_name = models.CharField(max_length=250, verbose_name="Pełna nazwa jednostki", null=True, blank=True)
     change = models.DateTimeField(auto_now=True, verbose_name="Zmiany")
     author = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name="unit", verbose_name="Autor")

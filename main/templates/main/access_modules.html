@@ -46,8 +46,8 @@
                 {%endif%}
                 {%if user.accessmodule.zriwt_team%}
                 <tr>
-                    <td rowspan="7" valign="middle">Zespół Rozliczeń i Wsparcia Technicznego</td>
-                    <td rowspan="7" align="center" valign="middle"><i class="bi bi-check-circle-fill text-success"></i></td>
+                    <td rowspan="9" valign="middle">Zespół Rozliczeń i Wsparcia Technicznego</td>
+                    <td rowspan="9" align="center" valign="middle"><i class="bi bi-check-circle-fill text-success"></i></td>
                     <td>Moduł Kontrahenci</td>
                     <td align="center" valign="middle">{%if user.accessmodule.contractors_module%}<i class="bi bi-check-circle-fill text-success"></i>
                     {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
@@ -66,6 +66,20 @@
                     <td align="center" valign="middle">{%if user.accessmodule.donations_module%}<i class="bi bi-check-circle-fill text-success"></i>
                     {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
                     <td align="center" valign="middle">{%if user.accessmodule.donations_module_edit%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
+                </tr>
+                <tr>
+                    <td valign="middle">Moduł Środki trwałe</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.buildings_module%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.buildings_module_edit%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
+                </tr>
+                <tr>
+                    <td valign="middle">Moduł Przeglądy</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.inspections_module%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.inspections_module_edit%}<i class="bi bi-check-circle-fill text-success"></i>
                     {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
                 </tr>
                 <tr>
@@ -102,7 +116,7 @@
                 <tr>
                     <td valign="middle">Zespół Mieszkaniowy</td>
                     <td align="center" valign="middle"><i class="bi bi-check-circle-fill text-success"></i></td>
-                    <td>Moduł Lokale Służbowe</td>
+                    <td>Moduł Lokale służbowe</td>
                     <td align="center" valign="middle">{%if user.accessmodule.official_flat%}<i class="bi bi-check-circle-fill text-success"></i>
                     {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
                     <td align="center" valign="middle">{%if user.accessmodule.official_flat_edit%}<i class="bi bi-check-circle-fill text-success"></i>

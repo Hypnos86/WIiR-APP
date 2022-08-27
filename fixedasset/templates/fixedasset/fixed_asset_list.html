@@ -5,12 +5,24 @@
     <h4 class="text-center mb-3">Środki trwałe</h4>
     <h5 class="text-center mb-3">Budynki</h5>
     <div class="row my-3">
-        <div class="col-md-3 align-self-end">
-            <span>Liczba budynków: </span>
-            <span class="badge text-white info badge-pill">{{buildings_sum}}</span>
+        <div class="col-md-3 align-self-start">
+             <div>
+                <span>Wszystkie budynki: </span>
+                <span class="badge text-white info badge-pill">{{buildings_sum_all}}</span>
+            </div>
+            <div>
+                <span>Aktywne budynki: </span>
+                <span class="badge text-white info badge-pill">{{buildings_sum}}</span>
+            </div>
+            <div>
+                {%if buildings_search%}
+                <span>Wyszukane budynki: </span>
+                <span class="badge text-white info badge-pill">{{buildings_search}}</span>
+                {%endif%}
+            </div>
         </div>
         <div class="col-md-6">
-            <div class="w-100 pb-4 d-flex justify-content-center align-items-center flex-column text_center">
+            <div class="w-100 py-4 d-flex justify-content-center align-items-center flex-column text_center">
                 <form method="get">
                     <div class="input-group">
                         <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj budynku" aria-label="Search" aria-describedby="search-addon" value="{%if query%}{{q}}{%endif%}">
@@ -20,8 +32,8 @@
                 </form>
             </div>
         </div>
-            <div class="col-md-3 moj-button-right align-self-end">
-                <a href="">
+            <div class="col-md-3 py-4 moj-button-right align-self-end">
+                <a href="{%url 'fixedasset:add_new_building'%}">
                     <button type="button" class="btn btn-outline-primary my-btn ">
                         <span class="bi bi-plus-circle"> Dodaj budynek</span>
                     </button></a>
@@ -34,10 +46,11 @@
         <tr class="my-table-tr text-center">
             <th align="center" valign="middle" width="50" scope="col">L.p.</th>
             <th align="center" valign="middle" width="120" scope="col">Powiat</th>
-            <th align="center" valign="middle" width="450" scope="col">Jednostka</th>
+            <th align="center" valign="middle" width="auto" scope="col">Jednostka</th>
             <th align="center" valign="middle" width="200" scope="col">Typ budynku</th>
             <th align="center" valign="middle" width="180" scope="col">Nazwa budynku</th>
-            <th align="center" valign="middle" width="150" scope="col">Nr.inwentarzowy</th>
+            <th align="center" valign="middle" width="auto" scope="col">Nr.inwentarzowy</th>
+            <th align="center" valign="middle" width="auto" scope="col">Status</th>
             <th align="center" valign="middle" width="auto" scope="col"></th>
         </tr>
         </thead>
@@ -45,18 +58,27 @@
         {%for building in buildings %}
         <tr class="my-table-tr">
             <td class="text-center" valign="middle" scope="row"></td>
-            <td align="center" valign="middle" scope="row">{{building.unit.county.name}}</td>
-            <td align="left" valign="middle" scope="row">{{building.unit}}</td>
-            <td class="text-center" valign="middle" scope="row">{{building.kind}}</td>
-            <td class="text-center" valign="middle" scope="row">{{building.building_name}}</td>
-            <td class="text-center" valign="middle" scope="row">{{building.no_inventory}}</td>
+            <td align="center" valign="middle" scope="row"><span>{{building.unit.county.name}}</span></td>
+            <td align="left" valign="middle" scope="row"><span data-toggle="info" title="{{building.unit.address}}, {{building.unit.zip_code}} {{building.unit.city}}">{{building.unit.type.type_full}} - {{building.unit.city}}</span></td>
+            <td class="text-center" valign="middle" scope="row"><span>{{building.kind}}</span></td>
+            <td class="text-center" valign="middle" scope="row"><span>{{building.building_name}}</span></td>
+            <td class="text-center" valign="middle" scope="row"><span>{{building.no_inventory}}</span></td>
+            {%if building.state == True%}
+            <td data-toggle="info" align="center" valign="middle" title="Aktywny">
+                <i class="bi bi-circle-fill text-success"></i>
+            </td>
+            {%else%}
+            <td data-toggle="info" align="center" valign="middle" title="Usunięty">
+                <i class="bi bi-x-circle-fill text-danger"></i>
+            </td>
+            {%endif%}
             <td align="right" valign="middle">
                 <button data-toggle="info" title="Pokaż" type="button" data-url="{% url 'fixedasset:show_information' building.id %}" class="btn btn-outline-success mx-2" onclick="openModal(this)">
                     <i class="bi bi-info-lg my-1"></i>
                 </button>
 
                 {%if user.accessmodule.contractors_module_edit%}
-                <a class="mx-2 moj-button-right" href="">
+                <a class="mx-2 moj-button-right" href="{%url 'fixedasset:edit_building' building.id%}">
                     <button data-toggle="info" title="Edytuj" type="submit" class="btn btn-outline-primary icon-color my-1">
                         <i class="bi bi-pencil-square"></i>
                     </button>

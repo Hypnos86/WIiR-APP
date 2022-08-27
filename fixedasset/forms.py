@@ -9,7 +9,7 @@ class BuildingForm(ModelForm):
                   "creation_date", "change", "author")
         labels = {"unit": "Jednostka", "no_inventory": "Nr. inwentarzowy", "building_name": "Nazwa budynku",
                   "kind": "Typ budynku", "usable_area": "Powierzchnia użytkowa", "volume": "Kubatura",
-                  "information": "Informacje", "state": "Stan"}
+                  "information": "Informacje", "state": "Aktywny"}
         exclude = ["creation_date", "change", "author"]
         widgets = {
             "information": Textarea(attrs={"rows": 3})
