@@ -9,7 +9,7 @@ from units.models import Unit
 # Create your views here.
 @login_required
 def fixed_asset_list(request):
-    buildings_all = Building.objects.all()
+    buildings_all = Building.objects.all().order_by("-unit__county__name")
     buildings_actual = Building.objects.all().filter(state=True)
     buildings_sum = len(buildings_actual)
     buildings_sum_all = len(buildings_all)

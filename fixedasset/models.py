@@ -19,6 +19,7 @@ class Building(models.Model):
     class Meta:
         verbose_name = "Budynek"
         verbose_name_plural = "Budynki"
+        ordering = ["unit"]
 
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE, verbose_name="Jednostka", related_name="building")
     no_inventory = models.CharField("Nr. inwentarzowy", max_length=20, unique=True)
@@ -35,4 +36,4 @@ class Building(models.Model):
                                verbose_name="Autor")
 
     def __str__(self):
-        return f"{self.no_inventory} - {self.kind}"
+        return f"{self.no_inventory} - {self.kind} - {self.unit.county.name}"
