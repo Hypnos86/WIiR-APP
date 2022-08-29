@@ -1,6 +1,7 @@
 from django.contrib import admin
 from constructioninspections.models import TechnicalCondition, TypeInspection, BuildingInspectionOneYear, \
-    ChimneyInspection
+    BuildingInspectionFiveYear, ChimneyInspection, ElectricalInspection, FireInspection, HeatingBoilerInspection, \
+    AirConditionerInspection
 
 # Register your models here.
 admin.site.register(TechnicalCondition)
@@ -18,4 +19,9 @@ class BuildingInspectionOneYearAdmin(admin.ModelAdmin):
     autocomplete_fields = ["no_inventory"]
 
 
+admin.site.register(BuildingInspectionFiveYear)
 admin.site.register(ChimneyInspection)
+admin.site.register(ElectricalInspection)
+admin.site.register(FireInspection)
+admin.site.register(HeatingBoilerInspection)
+admin.site.register(AirConditionerInspection)

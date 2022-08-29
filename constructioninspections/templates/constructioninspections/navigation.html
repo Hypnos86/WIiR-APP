@@ -46,7 +46,12 @@
             </li>
     </ul>
 <hr>
-
+{%for objects_all in objects%}
+    {%for object in objects_all%}
+    <div><span>{{object.inspection_name}}</span></div>
+    <div><span>{{object}}</span></div>
+    {%endfor%}
+{%endfor%}
 <div class="container list-group col-md-3 my-4">
     <a href="#" class="list-group-item list-group-item-action list-group-item-light d-flex justify-content-between align-items-center">Zbliżające przeglądy budynków 1 roczne <span class="badge text-white info badge-pill">1</span></a>
     <a href="#" class="list-group-item list-group-item-action list-group-item-light d-flex justify-content-between align-items-center">Zbliżające przeglądy budynków 5 letnie<span class="badge text-white info badge-pill">1</span></a>

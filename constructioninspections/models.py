@@ -29,6 +29,9 @@ class TechnicalCondition(models.Model):
 
 
 class PatternInspections(PolymorphicModel):
+    class Meta:
+        ordering = ["date_protocol"]
+
     no_inventory = models.ForeignKey(Building, on_delete=models.CASCADE, verbose_name="Obiekt",
                                      related_name="patterninspections")
     inspection_name = models.ForeignKey(TypeInspection, on_delete=models.CASCADE, verbose_name="Rodzaj przeglądu",
@@ -45,8 +48,7 @@ class PatternInspections(PolymorphicModel):
 class BuildingInspectionOneYear(PatternInspections):
     class Meta:
         verbose_name = "Przedląd budynku tehcniczny - roczny"
-        verbose_name_plural = "Przeglądy budynków - roczne"
-        ordering = []
+        verbose_name_plural = "Przeglądy budynków - roczny"
 
     def __str__(self):
         return f"{self.date_protocol} - {self.no_inventory}"
@@ -56,7 +58,6 @@ class BuildingInspectionFiveYear(PatternInspections):
     class Meta:
         verbose_name = "Przedląd budynku tehcniczny - pięcioletni"
         verbose_name_plural = "Przeglądy budynków - pięcioletni"
-        ordering = []
 
     def __str__(self):
         return f'{self.date_protocol} - {self.no_inventory}'
@@ -66,7 +67,42 @@ class ChimneyInspection(PatternInspections):
     class Meta:
         verbose_name = "Przedląd komina"
         verbose_name_plural = "Przeglądy kominów"
-        ordering = []
+
+    def __str__(self):
+        return f'{self.date_protocol} - {self.no_inventory}'
+
+
+class ElectricalInspection(PatternInspections):
+    class Meta:
+        verbose_name = "Przedląd elektryczny"
+        verbose_name_plural = "Przeglądy elektryczne"
+
+    def __str__(self):
+        return f'{self.date_protocol} - {self.no_inventory}'
+
+
+class HeatingBoilerInspection(PatternInspections):
+    class Meta:
+        verbose_name = "Przedląd kotła grzewczego"
+        verbose_name_plural = "Przeglądy kotłów grzewczych"
+
+    def __str__(self):
+        return f'{self.date_protocol} - {self.no_inventory}'
+
+
+class AirConditionerInspection(PatternInspections):
+    class Meta:
+        verbose_name = "Przedląd klimatyzatora"
+        verbose_name_plural = "Przeglądy klimatyzatorów"
+
+    def __str__(self):
+        return f'{self.date_protocol} - {self.no_inventory}'
+
+
+class FireInspection(PatternInspections):
+    class Meta:
+        verbose_name = "Przedląd przeciwpożarowy"
+        verbose_name_plural = "Przeglądy przeciwpożarowe"
 
     def __str__(self):
         return f'{self.date_protocol} - {self.no_inventory}'

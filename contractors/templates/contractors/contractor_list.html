@@ -1,10 +1,11 @@
 {%extends 'base.html'%}
 {%load static%}
 {%load bootstrap%}
-{%block title%} Kontrahenci umów czynszowych{%endblock%}
+{%block title%} Kontrahenci {%endblock%}
 {%block content%}
+{%if user.is_authenticated and user.accessmodule.contractors_module%}
 <div class="kontrahenci-title justify-content-center align-items-center text-center">
-    <h4>Kontrahenci umów czynszowych WIiR</h4>
+    <h4>Kontrahenci WIiR</h4>
     {% if last_date %}
     <small>Ostatnia aktualizacja: {{last_date.change|date:"d.m.Y (H:i)"}}</small>
     {%endif%}
@@ -161,5 +162,6 @@
         $("form").submit();
     }
 </script>
+{%endif%}
 {%endblock%}
 
