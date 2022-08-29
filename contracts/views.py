@@ -190,6 +190,7 @@ def menu_contracts_auction(request):
                                  | contracts_auctions.filter(contractor__name__icontains=q) \
                                  | contracts_auctions.filter(unit__county__name__icontains=q) \
                                  | contracts_auctions.filter(unit__city__icontains=q) \
+                                 | contracts_auctions.filter(unit__address__icontains=q) \
                                  | contracts_auctions.filter(work_scope__icontains=q) \
                                  | contracts_auctions.filter(worker__name__icontains=q) \
                                  | contracts_auctions.filter(worker__last_name__icontains=q)

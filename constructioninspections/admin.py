@@ -13,9 +13,9 @@ class BuildingInspectionOneYearAdmin(admin.ModelAdmin):
     list_display_links = ["no_inventory"]
     search_fields = ["no_inventory__no_inventory", "no_inventory__building_name", "no_inventory__kind__kind",
                      "no_inventory__unit__county__name", "no_inventory__unit__full_name"]
+    list_filter = ["date_protocol"]
     search_help_text = "Szukaj za pomocą: Nr. inwentarzaowego, nazwy budynku, typu budynku, powiatu, nazwy jednostki wraz z adresem"
     autocomplete_fields = ["no_inventory"]
-
 
 
 admin.site.register(ChimneyInspection)
