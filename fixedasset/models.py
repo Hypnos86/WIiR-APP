@@ -36,4 +36,4 @@ class Building(models.Model):
                                verbose_name="Autor")
 
     def __str__(self):
-        return f"{self.no_inventory} - {self.kind} - {self.unit.county.name}"
+        return f"{self.unit.county.name} - {self.unit} - Nazwa: {self.building_name} - Typ: {self.kind} - Nr. inwentarzowy: {self.no_inventory}"

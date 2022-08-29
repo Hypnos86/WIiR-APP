@@ -9,10 +9,10 @@ class TypeInspection(models.Model):
         verbose_name = "Rodzaj przeglądu"
         verbose_name_plural = "Rodzaje przeglądu"
 
-    inspection_nane = models.CharField("Przegląd", max_length=50)
+    inspection_name = models.CharField("Rodzaj przeglądu", max_length=50)
 
     def __str__(self):
-        return f"{self.inspection_nane}"
+        return f"{self.inspection_name}"
 
 
 class TechnicalCondition(models.Model):
@@ -29,8 +29,10 @@ class TechnicalCondition(models.Model):
 
 
 class PatternInspections(PolymorphicModel):
-    no_inventory = models.ForeignKey(Building, on_delete=models.CASCADE, verbose_name="Nr. inwentarzowy",
+    no_inventory = models.ForeignKey(Building, on_delete=models.CASCADE, verbose_name="Obiekt",
                                      related_name="patterninspections")
+    inspection_name = models.ForeignKey(TypeInspection, on_delete=models.CASCADE, verbose_name="Rodzaj przeglądu",
+                                        related_name="patterninspections")
     date_protocol = models.DateField("Data protokołu")
     conclusions = models.TextField("Wnioski")
     date_next_inspection = models.DateField("Data kolejnego przeglądu")
@@ -40,10 +42,30 @@ class PatternInspections(PolymorphicModel):
                                verbose_name="Autor")
 
 
-class BuildingInspection(PatternInspections):
+class BuildingInspectionOneYear(PatternInspections):
     class Meta:
-        verbose_name = "Przedląd budynku tehcniczny"
-        verbose_name_plural = "Przeglądy budynków"
+        verbose_name = "Przedląd budynku tehcniczny - roczny"
+        verbose_name_plural = "Przeglądy budynków - roczne"
+        ordering = []
+
+    def __str__(self):
+        return f"{self.date_protocol} - {self.no_inventory}"
+
+
+class BuildingInspectionFiveYear(PatternInspections):
+    class Meta:
+        verbose_name = "Przedląd budynku tehcniczny - pięcioletni"
+        verbose_name_plural = "Przeglądy budynków - pięcioletni"
+        ordering = []
+
+    def __str__(self):
+        return f'{self.date_protocol} - {self.no_inventory}'
+
+
+class ChimneyInspection(PatternInspections):
+    class Meta:
+        verbose_name = "Przedląd komina"
+        verbose_name_plural = "Przeglądy kominów"
         ordering = []
 
     def __str__(self):

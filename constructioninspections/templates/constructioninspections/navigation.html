@@ -2,25 +2,61 @@
 {%load static%}
 {%block content%}
 <h4 class="text-center mb-3">Przeglądy</h4>
-    <div class="row">
-        <div class="container list-group col-md-2">
-            <a href="#" class="list-group-item list-group-item-action list-group-item-light">Przeglądu budynków</a>
-            <a href="#" class="list-group-item list-group-item-action list-group-item-light">Przeglądy kominowe</a>
-            <a href="#" class="list-group-item list-group-item-action list-group-item-light">Przeglądy przeciw pożarowe</a>
-            <a href="#" class="list-group-item list-group-item-action list-group-item-light">Przeglądy kotłów grzeczwych</a>
-            <a href="#" class="list-group-item list-group-item-action list-group-item-light">Przeglądy elektryczne</a>
-            <a href="#" class="list-group-item list-group-item-action list-group-item-light">Przeglądy klimatyzatorów</a>
-        </div>
-        <div class="container list-group col-md-3">
-            <a href="#" class="list-group-item list-group-item-action list-group-item-light d-flex justify-content-between align-items-center">Zbliżające przeglądy budynków 1 roczne <span class="badge text-white info badge-pill">1</span></a>
-            <a href="#" class="list-group-item list-group-item-action list-group-item-light d-flex justify-content-between align-items-center">Zbliżające przeglądy budynków 5 letnie<span class="badge text-white info badge-pill">1</span></a>
-            <a href="#" class="list-group-item list-group-item-action list-group-item-light d-flex justify-content-between align-items-center">Zbliżające przeglądy kominowe <span class="badge text-white info badge-pill">1</span></a>
-            <a href="#" class="list-group-item list-group-item-action list-group-item-light d-flex justify-content-between align-items-center">Zbliżające przeglądy przeciw pożarowe <span class="badge text-white info badge-pill">1</span></a>
-            <a href="#" class="list-group-item list-group-item-action list-group-item-light d-flex justify-content-between align-items-center">Zbliżające przeglądy kotłów grzewczych<span class="badge text-white info badge-pill">1</span></a>
-            <a href="#" class="list-group-item list-group-item-action list-group-item-light d-flex justify-content-between align-items-center">Zbliżające przeglądy elektryczne<span class="badge text-white info badge-pill">1</span></a>
-            <a href="#" class="list-group-item list-group-item-action list-group-item-light d-flex justify-content-between align-items-center">Zbliżające przeglądy klimatyzacyjne<span class="badge text-white info badge-pill">1</span></a>
-        </div>
-    </div>
+<ul class="nav nav-pills justify-content-around">
+            <li class="nav-item my-2">
+                <a href="">
+                    <button class="btn btn-outline-primary my-btn ">
+                        <span class="bi bi-chevron-double-right"> Przeglądy budynków</span>
+                    </button>
+                </a>
+            </li>
+            <li class="nav-item my-2">
+                <a href="">
+                    <button class="btn btn-outline-primary my-btn">
+                        <span class="bi bi-chevron-double-right"> Przeglądy kominowe</span>
+                    </button>
+                </a>
+            </li>
+            <li class="nav-item my-2">
+                <a href="">
+                    <button class="btn btn-outline-primary my-btn">
+                        <span class="bi bi-chevron-double-right"> Przeglądy elektryczne</span>
+                    </button>
+                </a>
+            </li>
+            <li class="nav-item my-2">
+                <a href="">
+                    <button class="btn btn-outline-primary my-btn">
+                        <span class="bi bi-chevron-double-right"> Przeglądy kotłów grzeczwych</span>
+                    </button>
+                </a>
+            </li>
+            <li class="nav-item my-2">
+                <a href="">
+                <button class="btn btn-outline-primary my-btn">
+                    <span class="bi bi-chevron-double-right"> Przeglądy klimatyzatorów</span>
+                </button></a>
+            </li>
+            <li class="nav-item my-2">
+                <a href="">
+                    <button class="btn btn-outline-primary my-btn">
+                        <span class="bi bi-chevron-double-right"> Przeglądy przeciw pożarowe</span>
+                    </button>
+                </a>
+            </li>
+    </ul>
+<hr>
+
+<div class="container list-group col-md-3 my-4">
+    <a href="#" class="list-group-item list-group-item-action list-group-item-light d-flex justify-content-between align-items-center">Zbliżające przeglądy budynków 1 roczne <span class="badge text-white info badge-pill">1</span></a>
+    <a href="#" class="list-group-item list-group-item-action list-group-item-light d-flex justify-content-between align-items-center">Zbliżające przeglądy budynków 5 letnie<span class="badge text-white info badge-pill">1</span></a>
+    <a href="#" class="list-group-item list-group-item-action list-group-item-light d-flex justify-content-between align-items-center">Zbliżające przeglądy kominowe <span class="badge text-white info badge-pill">1</span></a>
+    <a href="#" class="list-group-item list-group-item-action list-group-item-light d-flex justify-content-between align-items-center">Zbliżające przeglądy przeciw pożarowe <span class="badge text-white info badge-pill">1</span></a>
+    <a href="#" class="list-group-item list-group-item-action list-group-item-light d-flex justify-content-between align-items-center">Zbliżające przeglądy kotłów grzewczych<span class="badge text-white info badge-pill">1</span></a>
+    <a href="#" class="list-group-item list-group-item-action list-group-item-light d-flex justify-content-between align-items-center">Zbliżające przeglądy elektryczne<span class="badge text-white info badge-pill">1</span></a>
+    <a href="#" class="list-group-item list-group-item-action list-group-item-light d-flex justify-content-between align-items-center">Zbliżające przeglądy klimatyzacyjne<span class="badge text-white info badge-pill">1</span></a>
+</div>
+
 <script>
     document.getElementById("button-units").classList.remove("active");
     document.getElementById("button-record").classList.add("active");
