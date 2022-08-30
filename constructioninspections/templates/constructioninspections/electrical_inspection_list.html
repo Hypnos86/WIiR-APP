@@ -1,10 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{%extends 'base.html'%}
+{%load static%}
+{%block content%}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <a href="{%url 'constructioninspections:contraction_inspection_menu'%}">
+                <button type="button" class="btn btn-outline-primary my-btn">
+                    <span class="bi bi-chevron-compact-left">Cofnij</span>
+                </button>
+            </a>
+        </div>
+        <div class="col-md-6 text-center">
+            <h4 class="">Przeglądy instalacji elektrycznej</h4>
+        </div>
+    </div>
+</div>
 
-</body>
-</html>
+<script>
+    document.getElementById("button-units").classList.remove("active");
+    document.getElementById("button-record").classList.add("active");
+    document.getElementById("button-secretariat").classList.remove("active");
+    document.getElementById("button-cpv").classList.remove("active");
+    document.getElementById("button-investments").classList.remove("active");
+
+
+</script>
+{%endblock%}
+

@@ -94,7 +94,7 @@ class ContractMediaForm(ModelForm):
                   'scan', 'employer', 'state', 'creation_date', 'change_date', 'author']
         labels = {'date': 'Data umowy', 'no_contract': 'Nr.umowy', 'contractor': 'Wykonawca', 'type': 'Rodzaj umowy',
                   'legal_basic': 'Podstawa prawna',
-                  'content': 'Treść', 'period_of_validity': 'Okres obowiązywania', 'unit': 'Jednostka',
+                  'content': 'Zakres', 'period_of_validity': 'Okres obowiązywania', 'unit': 'Jednostka',
                   'information': 'Informacje',
                   'scan': 'Skan', 'employer': 'Branżysta', 'state': 'Aktualna', 'creation_date': 'Data utworzenia',
                   'change_date': 'Zmiany', 'author': 'Autor'}

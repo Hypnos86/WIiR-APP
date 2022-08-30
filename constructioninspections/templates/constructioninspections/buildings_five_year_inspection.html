@@ -1,21 +1,20 @@
 {%extends 'base.html'%}
 {%load static%}
 {%block content%}
-<div class="container">
+<div class="">
     <div class="row">
         <div class="col-md-3">
-            <a href="{%url 'constructioninspections:contraction_inspection_menu'%}">
+            <a href="{%url 'constructioninspections:create_buildings_inspections_choise'%}">
                 <button type="button" class="btn btn-outline-primary my-btn">
                     <span class="bi bi-chevron-compact-left">Cofnij</span>
                 </button>
             </a>
         </div>
         <div class="col-md-6 text-center">
-            <h4 class="">Przeglądy kominów</h4>
+            <h4 class="">Przeglądy pięcioletnie budynków</h4>
         </div>
     </div>
 </div>
-
 <script>
     document.getElementById("button-units").classList.remove("active");
     document.getElementById("button-record").classList.add("active");

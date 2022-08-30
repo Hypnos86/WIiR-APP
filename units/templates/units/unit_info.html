@@ -11,7 +11,21 @@
     <span class="text-muted">Trwały zarząd: </span>
     <span>{{unit.manager}}</span>
 </div>
-<div class="m-3">
+<div class="m-3 mb-4">
+    {%if unit.comments%}
+    <div>
+        <h5 class="d-inline">Informacje</h5>
+        <button class="button-show btn btn-outline" onclick="show(this)">
+            <span class="bi bi-caret-down h5"></span>
+        </button>
+        <button class="hide-on-start button-hide btn btn-outline" onclick="hide(this)">
+            <span class="bi bi-caret-up h5"></span>
+        </button>
+    </div>
+    <p class="list-group hide-on-start px-5">{{unit.comments}}</p>
+    {%endif%}
+</div>
+<div class="mx-3 mb-2">
     {%if buildings%}
         <div>
             <h5 class="d-inline">Budynki</h5>

@@ -1,7 +1,7 @@
 {%extends 'base.html'%}
 {%load static%}
 {%block content%}
-<div class="container">
+<div class="">
     <div class="row">
         <div class="col-md-3">
             <a href="{%url 'constructioninspections:contraction_inspection_menu'%}">
@@ -11,11 +11,24 @@
             </a>
         </div>
         <div class="col-md-6 text-center">
-            <h4 class="">Przeglądy kominów</h4>
+            <h4 class="">Przeglądy budynków</h4>
         </div>
     </div>
 </div>
-
+<ul class="nav nav-pills justify-content-around">
+    <li class="nav-item my-2">
+        <a href="{%url 'constructioninspections:create_buildings_one_year_inspections'%}">
+            <button class="btn btn-outline-primary my-btn "><span class="bi bi-1-circle-fill">Jednoroczne</span>
+            </button>
+        </a>
+    </li>
+    <li class="nav-item my-2">
+        <a href="{%url 'constructioninspections:create_buildings_five_year_inspections'%}">
+            <button class="btn btn-outline-primary my-btn"><span class="bi bi-5-square"> Pięcioletnie</span>
+            </button>
+        </a>
+    </li>
+</ul>
 <script>
     document.getElementById("button-units").classList.remove("active");
     document.getElementById("button-record").classList.add("active");
