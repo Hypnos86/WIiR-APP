@@ -77,9 +77,15 @@
             <span data-toggle="info" title="{{contract.work_scope}}">{{contract.no_contract|default_if_none:'---'}}</span>
         </td>
         <td valign="middle">
-            <span title="SWOP ID: {{contract.contractor.no_contractor}}">{{contract.contractor.name}}<br>
+            {%if contract.contractor.no_contractor%}
+            <span  data-toggle="info" title="SWOP ID: {{contract.contractor.no_contractor}}">{{contract.contractor.name}}<br>
                 <small>{{contract.contractor.address}}, {{contract.contractor.zip_code}} {{contract.contractor.city}}</small>
             </span>
+            {%else%}
+            <span>{{contract.contractor.name}}<br>
+                <small>{{contract.contractor.address}}, {{contract.contractor.zip_code}} {{contract.contractor.city}}</small>
+            </span>
+            {%endif%}
         </td>
         <td align="center" valign="middle">
             <span>{{contract.price|intcomma}}&nbsp;zł.</span>

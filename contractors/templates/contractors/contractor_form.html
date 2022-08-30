@@ -3,6 +3,7 @@
 {%load bootstrap%}
 {%block title%}{%if new%}Nowy kontrahent{%else%}Edycja kontrahenta{%endif%}{%endblock%}
 {%block content%}
+{%if user.is_authenticated and user.accessmodule.contractors_module%}
 <div class="container px-5 mb-3 col-md-8">
     <div class="row">
         <div class="col-md-3">
@@ -41,4 +42,5 @@
     document.getElementById("button-investments").classList.remove("active");
     document.getElementById("button-secretariat").classList.remove("active");
 </script>
+{%endif%}
 {%endblock%}

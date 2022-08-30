@@ -4,6 +4,7 @@
 {%load bootstrap%}
 {%block title%} Darowizny {{year}}{%endblock%}
 {%block content%}
+{%if user.is_authenticated and user.accessmodule.donations_module%}
 <div class="kontrahenci-title justify-content-center align-items-center text-center">
     <h4>Darowizny {{year}} r.</h4>
     {% if last_date %}
@@ -239,5 +240,6 @@
         $("form").submit();
     }
 </script>
+{%endif%}
 {%endblock%}
 

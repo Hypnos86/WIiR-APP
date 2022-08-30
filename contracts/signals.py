@@ -6,7 +6,10 @@ from decimal import Decimal
 
 @receiver(pre_save, sender=ContractAuction)
 def calculate_security_sum(sender, instance, **kwargs):
-    instance.security_sum = instance.price * instance.security_percent * Decimal(0.01)
+    try:
+        instance.security_sum = instance.price * instance.security_percent * Decimal(0.01)
+    except TypeError:
+        instance.security_sum = None
 
 # TODO usunąć po zrobieniu view contract
 # @receiver(post_save, sender=ContractAuction)

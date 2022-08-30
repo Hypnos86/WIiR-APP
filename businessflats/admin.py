@@ -25,7 +25,7 @@ class OfficialFlatResource(resources.ModelResource):
 
 @admin.register(OfficialFlat)
 class CountyAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['address', 'area', 'room_numbers', 'flor', 'information', 'state', 'creation_date', 'change', 'author']
+    list_display = ['address', 'area', 'room_numbers', 'flor', 'information', 'state', 'author', 'creation_date', 'change']
     search_fields = ['address', 'area', 'room_numbers', 'flor', 'information']
     list_filter = ['state', 'flor', 'room_numbers']
     resource_class = OfficialFlatResource

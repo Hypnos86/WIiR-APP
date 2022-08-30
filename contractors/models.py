@@ -8,7 +8,7 @@ class Contractor(models.Model):
         ordering = ["name"]
         unique_together = ["no_contractor", "nip"]
 
-    no_contractor = models.IntegerField("Nr. kontrahenta", null=True, blank=True, unique=True)
+    no_contractor = models.IntegerField("Nr. kontrahenta", null=True, blank=True, unique=True, default="")
     name = models.CharField("Nazwa", max_length=100, null=True)
     nip = models.CharField("NIP", max_length=10, null=True, blank=True, unique=True)
     address = models.CharField("Adres", max_length=30, null=True)
