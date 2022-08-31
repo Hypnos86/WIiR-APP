@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %} Zadania Inwestycyjne Wielkopolskiej Policji{% endblock %}
+{% block title %} Przeglądy {% endblock %}
 {% block content %}
+<h5 class="text-center mb-3">Przeglądy</h5>
 <nav class="justify-content-center mb-4 row text-center">
     <ul class="nav nav-pills col-md-4 justify-content-around" >
         {%if user.accessmodule.contracts_auction_module%}
@@ -26,13 +27,20 @@
     </ul>
 </nav>
 <hr class="mb-4">
-{% block investmentsmenu %}
+{% block inspectionsmenu %}
 
 {% endblock %}
 <script>
     document.getElementById("button-units").classList.remove("active");
-    document.getElementById("button-record").classList.remove("active");
-    document.getElementById("button-investments").classList.add("active");
+    document.getElementById("button-record").classList.add("active");
+    document.getElementById("button-secretariat").classList.remove("active");
     document.getElementById("button-cpv").classList.remove("active");
+    document.getElementById("button-investments").classList.remove("active");
+
+    $(function () {
+        $('[data-toggle="info"]').tooltip()
+    })
+
 </script>
 {% endblock %}
+
