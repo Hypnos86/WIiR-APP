@@ -330,7 +330,6 @@ def new_contract_media(request):
 
 @login_required
 def edit_contract_media(request, id):
-    # TODO zmienić liste zaznaczania jednostek
     contract_edit = get_object_or_404(ContractMedia, pk=id)
     contract_form = ContractMediaForm(request.POST or None, request.FILES or None, instance=contract_edit)
     contract_form.fields['employer'].queryset = Employer.objects.all().filter(industry_specialist=True).filter(

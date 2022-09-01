@@ -1,14 +1,11 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from constructioninspections.models import BuildingInspectionOneYear, BuildingInspectionFiveYear, ChimneyInspection, \
-    ElectricalInspection, HeatingBoilerInspection, AirConditionerInspection, FireInspection
+    ElectricalInspection, HeatingBoilerInspection, AirConditionerInspection, FireInspection, TypeInspection
+from constructioninspections.forms import AirConditionerInspectionForm
 
 
 # Create your views here
-@login_required
-def contraction_inspection_menu(request):
-    return render(request, "constructioninspections/base_inspections.html", {})
-
 
 @login_required
 def important_inspections(request):
@@ -26,49 +23,60 @@ def important_inspections(request):
                "air_conditioners_inspection": air_conditioners_inspection,
                "heating_boiler_inspections": heating_boiler_inspections,
                "fire_inspections": fire_inspections}
-    return render(request, "constructioninspections/inspections.html", context)
+    return render(request, "construction_inspections/priority_inspections.html", context)
 
 
 @login_required
-def create_buildings_inspections_choise(request):
-    return render(request, "constructioninspections/buildings_inspection_all_list.html", {})
+def buildings_inspections_choise(request):
+    return render(request, "construction_inspections/buildings_choise_popup.html", {})
 
 
 @login_required
 def create_buildings_one_year_inspections(request):
-    return render(request, "constructioninspections/buildings_one_year_inspection.html")
+    return render(request, "construction_inspections/buildings_one_year_inspection.html")
 
 
 @login_required
 def create_buildings_five_year_inspections(request):
-    return render(request, "constructioninspections/buildings_five_year_inspection.html")
+    return render(request, "construction_inspections/buildings_five_year_inspection.html")
 
 
 @login_required
 def create_chimney_inspection_list(request):
     objects = ChimneyInspection.objects.all()
-    return render(request, "constructioninspections/chimneys_inspection_list.html", {"objects": objects})
+    return render(request, "construction_inspections/chimneys_inspection_list.html", {"objects": objects})
 
 
 @login_required
 def create_electrical_inspection_list(request):
     objects = ElectricalInspection.objects.all()
-    return render(request, "constructioninspections/electrical_inspection_list.html", {"objects": objects})
+    return render(request, "construction_inspections/electrical_inspection_list.html", {"objects": objects})
 
 
 @login_required
 def create_heating_boilers_inspection_list(request):
     objects = HeatingBoilerInspection.objects.all()
-    return render(request, "constructioninspections/heating_boilers_inspection_list.html", {"objects": objects})
+    return render(request, "construction_inspections/heating_boilers_inspection_list.html", {"objects": objects})
 
 
 @login_required
 def create_air_conditioners_inspection_list(request):
     objects = AirConditionerInspection.objects.all()
-    return render(request, "constructioninspections/air_conditioners_inspection_list.html", {"objects": objects})
+    return render(request, "construction_inspections/air_conditioners_inspection_list.html", {"objects": objects})
 
 
 @login_required
 def create_fire_inspection_list(request):
     objects = FireInspection.objects.all()
-    return render(request, "constructioninspections/fire_inspection_list.html", {"objects": objects})
+    return render(request, "construction_inspections/fire_inspection_list.html", {"objects": objects})
+
+
+# @login_required
+# def add_new_protocol(request, typeInspectinos):
+#     buildings_one_year = get_object_or_404(create_buildings_one_year_inspections)
+#     buildings_one_year.fields['inspection_name'].queryset = TypeInspection.objects.all().filter(inspection_name="aa")
+#
+#     form = InspectionForms(request.POST or None)
+#     if request.method == "POST":
+#         if form.is_valid():
+#             pass

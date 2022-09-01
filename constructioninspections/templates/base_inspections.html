@@ -2,34 +2,60 @@
 {% load static %}
 {% block title %} Przeglądy {% endblock %}
 {% block content %}
-<h5 class="text-center mb-3">Przeglądy</h5>
-<nav class="justify-content-center mb-4 row text-center">
-    <ul class="nav nav-pills col-md-4 justify-content-around" >
-        {%if user.accessmodule.contracts_auction_module%}
-        <li class="nav-item">
-            <a id="button-contractzzp" href="{%url 'contracts:menu_contracts_auction'%}" class="btn btn-sm btn-outline-primary mx-2 my-btn" >
-                <span>Umowy ZZP</span>
-            </a>
-        </li>
-        {%endif%}
-        <li class="nav-item">
-            <a id="button-projects" href="{%url 'investments:investment_projects_list'%}" class="btn btn-sm btn-outline-primary mx-2 my-btn" >
-                <span>Zadania Inwestycyjne</span>
-            </a>
-        </li>
-        {%if user.accessmodule.gallery_module%}
-        <li class="nav-item">
-            <a id="button-gallery" href="{%url 'gallery:gallery_list'%}" class="btn btn-sm btn-outline-primary mx-2 my-btn">
-                <span>Galeria</span>
-            </a>
-        </li>
-        {%endif%}
-    </ul>
-</nav>
-<hr class="mb-4">
-{% block inspectionsmenu %}
+<h4 class="text-center mb-3">Przeglądy</h4>
+<ul class="nav nav-pills justify-content-around">
+            <li class="nav-item my-2">
+                <button class="btn btn-outline-primary my-btn" data-url="{% url 'constructioninspections:buildings_inspections_choise' %}" onclick="openModal(this)">
+                    <span class="bi bi-chevron-double-right"> Przeglądy budynków</span>
+                </button>
 
+            </li>
+            <li class="nav-item my-2">
+                <a href="{% url 'constructioninspections:create_chimney_inspection_list' %}">
+                    <button class="btn btn-outline-primary my-btn">
+                        <span class="bi bi-chevron-double-right"> Przeglądy kominowe</span>
+                    </button>
+                </a>
+            </li>
+            <li class="nav-item my-2">
+                <a href="{% url 'constructioninspections:create_electrical_inspection_list' %}">
+                    <button class="btn btn-outline-primary my-btn">
+                        <span class="bi bi-chevron-double-right"> Przeglądy elektryczne</span>
+                    </button>
+                </a>
+            </li>
+            <li class="nav-item my-2">
+                <a href="{% url 'constructioninspections:create_heating_boilers_inspection_list' %}">
+                    <button class="btn btn-outline-primary my-btn">
+                        <span class="bi bi-chevron-double-right"> Przeglądy kotłów grzeczwych</span>
+                    </button>
+                </a>
+            </li>
+            <li class="nav-item my-2">
+                <a href="{% url 'constructioninspections:create_air_conditioners_inspection_list' %}">
+                <button class="btn btn-outline-primary my-btn">
+                    <span class="bi bi-chevron-double-right"> Przeglądy klimatyzatorów</span>
+                </button></a>
+            </li>
+            <li class="nav-item my-2">
+                <a href="{% url 'constructioninspections:create_fire_inspection_list' %}">
+                    <button class="btn btn-outline-primary my-btn">
+                        <span class="bi bi-chevron-double-right"> Przeglądy przeciw pożarowe</span>
+                    </button>
+                </a>
+            </li>
+    </ul>
+<hr>
+{% block inspections %}
 {% endblock %}
+<!-- Modal -->
+<div class="modal fade" id="informationModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
 <script>
     document.getElementById("button-units").classList.remove("active");
     document.getElementById("button-record").classList.add("active");
@@ -37,10 +63,15 @@
     document.getElementById("button-cpv").classList.remove("active");
     document.getElementById("button-investments").classList.remove("active");
 
-    $(function () {
-        $('[data-toggle="info"]').tooltip()
-    })
+    function openModal(button){
+        var url = $(button).data("url");
+        $("#informationModal .modal-content").load(url);
+        $("#informationModal").modal("show");
+    }
 
+    function submitForm(){
+        $("#submitButton").closest("form").submit();
+    }
 </script>
 {% endblock %}
 
