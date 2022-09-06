@@ -12,10 +12,12 @@ from fixedasset.models import Building
 
 @login_required
 def important_inspections(request):
+
     next_date = date.today() + relativedelta(months=+2)
     print(next_date)
 
     buildings_inspections_one_year = []
+
     buildings_inspections_five_year = []
     chimneys_inspections = []
     electricial_inspections = []
@@ -23,27 +25,21 @@ def important_inspections(request):
     air_conditioners_inspection = []
     fire_inspections = []
 
-    buildings_inspections_one_year_len = len(buildings_inspections_one_year)
+
 
     buildings = Building.objects.all()
     for building in buildings:
         print(building, end="\n")
-        protocol = building.patterninspections.filter(date_next_inspection__range=[date.today(), next_date]).order_by("date_next_inspection").last()
-        print(protocol)
+        protocol = building.patterninspections.filter(inspection_name=1).order_by("date_next_inspection").last()
+        if protocol != None:
+            buildings_inspections_one_year.append(protocol)
+            print(protocol.date_next_inspection)
 
-
-
-
-    #     BuildingInspectionOneYear.objects.all().order_by("date_next_inspection")[:3]
-    # buildings_inspections_one_year_date = BuildingInspectionOneYear.objects.all().order_by(
-    #     "date_next_inspection").filter(date_next_inspection__range=[datetime.datetime.today(),next_date])
-    # lenbuildings = len(buildings_inspections_one_year_date)
-    # print(lenbuildings)
-
-    # for next_building_inspection in buildings_inspections_one_year_date:
-    #     print(next_building_inspection)
-    #     # if next_building_inspection.date_next_inspection > next_date:
-    #     #     print(list(next_building_inspection))
+    #     print(protocol)
+    #
+    # print(buildings_inspections_one_year)
+    # print(len(buildings_inspections_one_year))
+    buildings_inspections_one_year_len = len(buildings_inspections_one_year)
 
     buildings_inspections_five_year = BuildingInspectionFiveYear.objects.all().order_by("date_protocol")[:3]
     chimneys_inspections = ChimneyInspection.objects.all().order_by("date_protocol")[:3]
@@ -52,7 +48,8 @@ def important_inspections(request):
     air_conditioners_inspection = AirConditionerInspection.objects.all().order_by("date_protocol")[:3]
     fire_inspections = FireInspection.objects.all().order_by("date_protocol")[:3]
 
-    context = {"buildings_inspections_one_year": buildings_inspections_one_year,
+    context = {"buildings_inspections_one_year": buildings_inspections_one_year[:3],
+               "buildings_inspections_one_year_len": buildings_inspections_one_year_len,
                "buildings_inspections_five_year": buildings_inspections_five_year,
                "chimneys_inspections": chimneys_inspections, "electricial_inspections": electricial_inspections,
                "air_conditioners_inspection": air_conditioners_inspection,

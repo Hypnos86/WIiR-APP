@@ -17,12 +17,12 @@ class TypeInspection(models.Model):
 
 class TechnicalCondition(models.Model):
     class Meta:
-        verbose_name = "Stan tehcniczny"
+        verbose_name = "Stan techniczny"
         verbose_name_plural = "Rodzaje stanów technicznych"
         ordering = ["ordinal_number"]
 
     ordinal_number = models.SmallIntegerField("Liczba porządkowa", unique=True)
-    condition = models.CharField("Stan tehcniczny", max_length=30)
+    condition = models.CharField("Stan techniczny", max_length=30)
 
     def __str__(self):
         return {self.condition}
@@ -34,6 +34,8 @@ class PatternInspections(PolymorphicModel):
 
     no_inventory = models.ForeignKey(Building, on_delete=models.CASCADE, verbose_name="Obiekt",
                                      related_name="patterninspections")
+    inspection_name = models.ForeignKey(TypeInspection, on_delete=models.CASCADE, verbose_name="Rodzaj przeglądu",
+                                        related_name="patterninspections")
     date_protocol = models.DateField("Data protokołu")
     conclusions = models.TextField("Wnioski")
     date_next_inspection = models.DateField("Data kolejnego przeglądu")
@@ -45,12 +47,8 @@ class PatternInspections(PolymorphicModel):
 
 class BuildingInspectionOneYear(PatternInspections):
     class Meta:
-        verbose_name = "Przedląd budynku tehcniczny - roczny"
+        verbose_name = "Przegląd budynku techniczny - roczny"
         verbose_name_plural = "Przeglądy budynków - roczny"
-
-    inspection_name = models.ForeignKey(TypeInspection, on_delete=models.CASCADE, verbose_name="Rodzaj przeglądu",
-                                        related_name="BuildingInspectionOneYear",
-                                        default="Przegląd budynku - jednoroczny")
 
     def __str__(self):
         return f"{self.date_protocol} - {self.no_inventory}"
@@ -58,12 +56,8 @@ class BuildingInspectionOneYear(PatternInspections):
 
 class BuildingInspectionFiveYear(PatternInspections):
     class Meta:
-        verbose_name = "Przedląd budynku tehcniczny - pięcioletni"
+        verbose_name = "Przegląd budynku techniczny - pięcioletni"
         verbose_name_plural = "Przeglądy budynków - pięcioletni"
-
-    inspection_name = models.ForeignKey(TypeInspection, on_delete=models.CASCADE, verbose_name="Rodzaj przeglądu",
-                                        related_name="BuildingInspectionFiveYear",
-                                        default="Przegląd budynku - pięcioletni")
 
     def __str__(self):
         return f'{self.date_protocol} - {self.no_inventory}'
@@ -71,11 +65,8 @@ class BuildingInspectionFiveYear(PatternInspections):
 
 class ChimneyInspection(PatternInspections):
     class Meta:
-        verbose_name = "Przedląd komina"
+        verbose_name = "Przegląd komina"
         verbose_name_plural = "Przeglądy kominów"
-
-    inspection_name = models.ForeignKey(TypeInspection, on_delete=models.CASCADE, verbose_name="Rodzaj przeglądu",
-                                        related_name="ChimneyInspection", default="Przegląd komina")
 
     def __str__(self):
         return f'{self.date_protocol} - {self.no_inventory}'
@@ -86,20 +77,14 @@ class ElectricalInspection(PatternInspections):
         verbose_name = "Przedląd elektryczny"
         verbose_name_plural = "Przeglądy elektryczne"
 
-    inspection_name = models.ForeignKey(TypeInspection, on_delete=models.CASCADE, verbose_name="Rodzaj przeglądu",
-                                        related_name="ElectricalInspection", default="Przegląd elektryczny")
-
     def __str__(self):
         return f'{self.date_protocol} - {self.no_inventory}'
 
 
 class HeatingBoilerInspection(PatternInspections):
     class Meta:
-        verbose_name = "Przedląd kotła grzewczego"
+        verbose_name = "Przegląd kotła grzewczego"
         verbose_name_plural = "Przeglądy kotłów grzewczych"
-
-    inspection_name = models.ForeignKey(TypeInspection, on_delete=models.CASCADE, verbose_name="Rodzaj przeglądu",
-                                        related_name="HeatingBoilerInspection", default="Przegląd kotła grzewczego")
 
     def __str__(self):
         return f'{self.date_protocol} - {self.no_inventory}'
@@ -107,11 +92,8 @@ class HeatingBoilerInspection(PatternInspections):
 
 class AirConditionerInspection(PatternInspections):
     class Meta:
-        verbose_name = "Przedląd klimatyzatora"
+        verbose_name = "Przegląd klimatyzatora"
         verbose_name_plural = "Przeglądy klimatyzatorów"
-
-    inspection_name = models.ForeignKey(TypeInspection, on_delete=models.CASCADE, verbose_name="Rodzaj przeglądu",
-                                        related_name="AirConditionerInspection", default="Przegląd klimatyzatora")
 
     def __str__(self):
         return f'{self.date_protocol} - {self.no_inventory}'
@@ -119,11 +101,8 @@ class AirConditionerInspection(PatternInspections):
 
 class FireInspection(PatternInspections):
     class Meta:
-        verbose_name = "Przedląd przeciwpożarowy"
+        verbose_name = "Przegląd przeciwpożarowy"
         verbose_name_plural = "Przeglądy przeciwpożarowe"
-
-    inspection_name = models.ForeignKey(TypeInspection, on_delete=models.CASCADE, verbose_name="Rodzaj przeglądu",
-                                        related_name="FireInspection", default="Przegląd p.poż")
 
     def __str__(self):
         return f'{self.date_protocol} - {self.no_inventory}'
