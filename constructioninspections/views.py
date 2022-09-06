@@ -1,4 +1,8 @@
+import datetime
+
 from django.contrib.auth.decorators import login_required
+from dateutil.relativedelta import relativedelta
+from datetime import date
 from django.shortcuts import render, get_object_or_404
 from constructioninspections.models import BuildingInspectionOneYear, BuildingInspectionFiveYear, ChimneyInspection, \
     ElectricalInspection, HeatingBoilerInspection, AirConditionerInspection, FireInspection, TypeInspection
@@ -9,7 +13,20 @@ from constructioninspections.forms import AirConditionerInspectionForm
 
 @login_required
 def important_inspections(request):
-    buildings_inspections_one_year = BuildingInspectionOneYear.objects.all().order_by("date_protocol")[:3]
+    next_date = date.today() + relativedelta(months=+2)
+    print(next_date)
+
+    buildings_inspections_one_year = BuildingInspectionOneYear.objects.all().order_by("date_next_inspection")[:3]
+    buildings_inspections_one_year_date = BuildingInspectionOneYear.objects.all().order_by(
+        "date_next_inspection").filter(date_next_inspection__range=[datetime.datetime.today(),next_date])
+    lenbuildings = len(buildings_inspections_one_year_date)
+    print(lenbuildings)
+
+    # for next_building_inspection in buildings_inspections_one_year_date:
+    #     print(next_building_inspection)
+    #     # if next_building_inspection.date_next_inspection > next_date:
+    #     #     print(list(next_building_inspection))
+
     buildings_inspections_five_year = BuildingInspectionFiveYear.objects.all().order_by("date_protocol")[:3]
     chimneys_inspections = ChimneyInspection.objects.all().order_by("date_protocol")[:3]
     electricial_inspections = ElectricalInspection.objects.all().order_by("date_protocol")[:3]
@@ -69,7 +86,6 @@ def create_air_conditioners_inspection_list(request):
 def create_fire_inspection_list(request):
     objects = FireInspection.objects.all()
     return render(request, "construction_inspections/fire_inspection_list.html", {"objects": objects})
-
 
 # @login_required
 # def add_new_protocol(request, typeInspectinos):
