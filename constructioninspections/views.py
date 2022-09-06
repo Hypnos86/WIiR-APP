@@ -1,12 +1,11 @@
-import datetime
-
 from django.contrib.auth.decorators import login_required
 from dateutil.relativedelta import relativedelta
 from datetime import date
 from django.shortcuts import render, get_object_or_404
 from constructioninspections.models import BuildingInspectionOneYear, BuildingInspectionFiveYear, ChimneyInspection, \
     ElectricalInspection, HeatingBoilerInspection, AirConditionerInspection, FireInspection, TypeInspection
-from constructioninspections.forms import AirConditionerInspectionForm
+# from constructioninspections.forms import AirConditionerInspectionForm
+from fixedasset.models import Building
 
 
 # Create your views here
@@ -16,11 +15,30 @@ def important_inspections(request):
     next_date = date.today() + relativedelta(months=+2)
     print(next_date)
 
-    buildings_inspections_one_year = BuildingInspectionOneYear.objects.all().order_by("date_next_inspection")[:3]
-    buildings_inspections_one_year_date = BuildingInspectionOneYear.objects.all().order_by(
-        "date_next_inspection").filter(date_next_inspection__range=[datetime.datetime.today(),next_date])
-    lenbuildings = len(buildings_inspections_one_year_date)
-    print(lenbuildings)
+    buildings_inspections_one_year = []
+    buildings_inspections_five_year = []
+    chimneys_inspections = []
+    electricial_inspections = []
+    heating_boiler_inspections = []
+    air_conditioners_inspection = []
+    fire_inspections = []
+
+    buildings_inspections_one_year_len = len(buildings_inspections_one_year)
+
+    buildings = Building.objects.all()
+    for building in buildings:
+        print(building, end="\n")
+        protocol = building.patterninspections.filter(date_next_inspection__range=[date.today(), next_date]).order_by("date_next_inspection").last()
+        print(protocol)
+
+
+
+
+    #     BuildingInspectionOneYear.objects.all().order_by("date_next_inspection")[:3]
+    # buildings_inspections_one_year_date = BuildingInspectionOneYear.objects.all().order_by(
+    #     "date_next_inspection").filter(date_next_inspection__range=[datetime.datetime.today(),next_date])
+    # lenbuildings = len(buildings_inspections_one_year_date)
+    # print(lenbuildings)
 
     # for next_building_inspection in buildings_inspections_one_year_date:
     #     print(next_building_inspection)
