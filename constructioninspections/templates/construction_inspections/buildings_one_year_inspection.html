@@ -13,7 +13,48 @@
         <div class="col-md-6 text-center">
             <h4 class="">Przeglądy jednoroczne budynków</h4>
         </div>
+        <div class="col-md-3 moj-button-right align-self-end">
+            <a href="">
+                <button type="button" class="btn btn-outline-primary my-btn">
+                    <span class="bi bi-plus-circle"> Dodaj protokół</span>
+                </button>
+            </a>
+        </div>
     </div>
+</div>
+<div>
+    <div class="col-md-12 p-2">
+        {% regroup units by county as county_list %}
+        <ul>
+            {% for county in county_list %}
+            <li>{{county.grouper}}
+                <ul>
+                    {% for unit in county.list %}
+                    <li>{{unit}}</li>
+                    <ul>
+                        {% for building in unit.building.all %}
+                        <li>{{building}}</li>
+                        <ul>
+                            {% for protocol in building.patterninspections.all|dictsort:"date_next_inspection" reversed %}
+                            {% if protocol.inspection_name.id == 1 %}
+                            <li><span>Protokuł z dnia {{protocol.date_protocol|date:"d.m.Y"}}&nbsp;r.</span> | <small>Data następnego przeglądu {{protocol.date_next_inspection|date:"d.m.Y"}}&nbsp;r.</small>
+                            {%if forloop.first%}
+                            <span> - AKTUALNY</span>
+                            {%endif%}
+                            </li>
+                            {% endif %}
+                            {%endfor%}
+                        </ul>
+                        {% endfor%}
+                    </ul>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% endfor %}
+        </ul>
+
+    </div>
+
 </div>
 <script>
     document.getElementById("button-units").classList.remove("active");
@@ -21,6 +62,8 @@
     document.getElementById("button-secretariat").classList.remove("active");
     document.getElementById("button-cpv").classList.remove("active");
     document.getElementById("button-investments").classList.remove("active");
+
+
 
 
 </script>
