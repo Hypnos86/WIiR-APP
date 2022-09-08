@@ -32,7 +32,7 @@
 <div class="row my-5">
     <div class="mb-3">
         <span><b>Przeglądy budynków - pięcioletnie</b></span>
-        <span class="badge text-white info badge-pill">test1</span>
+        <span class="badge text-white info badge-pill">{{buildings_inspections_five_year_len}}</span>
     </div>
         {%for object in buildings_inspections_five_year%}
     <div class="list-group col-md-3">
@@ -56,7 +56,7 @@
 <div class="row my-5">
     <div class="mb-3">
         <span><b>Przeglądy kominowe</b></span>
-        <span class="badge text-white info badge-pill">test1</span>
+        <span class="badge text-white info badge-pill">{{chimneys_inspections_len}}</span>
     </div>
         {%for object in chimneys_inspections%}
     <div class="list-group col-md-3">
@@ -75,38 +75,14 @@
     {%endfor%}
 </div>
 {%endif%}
-{%if electricial_inspections%}
+{%if electrical_inspections%}
 <hr>
 <div class="row my-5">
     <div class="mb-3">
         <span><b>Przeglądy instalacji elektrycznej</b></span>
-        <span class="badge text-white info badge-pill">test1</span>
+        <span class="badge text-white info badge-pill">{{electrical_inspections_len}}</span>
     </div>
-        {%for object in electricial_inspections%}
-    <div class="list-group col-md-3">
-        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-            <div class="d-flex w-100 justify-content-between">
-                <h6 class="mb-1"><b>Data protokołu: {{object.date_protocol|date:"d.m.Y"}}&nbsp;r.</b></h6>
-            </div>
-            <span class="mb-0 text-muted">Jednostka: </span>
-            <span data-toggle="info" title="{{object.no_inventory.unit.address}}, {{object.no_inventory.unit.zip_code}} {{object.no_inventory.unit.city}}">{{object.no_inventory.unit.type.type_short}} {{object.no_inventory.unit.city}} - {{object.no_inventory.unit.information}}</span>
-            <span class="mb-1 text-muted">Budynek: </span><span>{{object.no_inventory.kind}}</span><br>
-            <span class="text-muted mb-1">Nazwa: </span><span>{{object.no_inventory.building_name}}</span><br>
-            <span class="text-muted">Nr.inwentarzowy: </span><span>{{object.no_inventory.no_inventory}}</span><br>
-            <small>Kolejny przegląd: </small><small class="color-teal"> {{object.date_next_inspection|date:"d.m.Y"}}&nbsp;r.</small>
-        </a>
-    </div>
-    {%endfor%}
-</div>
-{%endif%}
-{%if electricial_inspections%}
-<hr>
-<div class="row my-5">
-    <div class="mb-3">
-        <span><b>Przeglądy instalacji elektrycznej</b></span>
-        <span class="badge text-white info badge-pill">test1</span>
-    </div>
-        {%for object in electricial_inspections%}
+        {%for object in electrical_inspections%}
     <div class="list-group col-md-3">
         <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
             <div class="d-flex w-100 justify-content-between">

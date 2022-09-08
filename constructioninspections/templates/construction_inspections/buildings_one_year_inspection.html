@@ -23,23 +23,42 @@
     </div>
 </div>
 <div>
-    <div class="col-md-12 p-2">
+    <div class="container col-md-12 p-2 mt-2">
         {% regroup units by county as county_list %}
-        <ul>
             {% for county in county_list %}
-            <li>{{county.grouper}}
-                <ul>
-                    {% for unit in county.list %}
-                    <li>{{unit}}</li>
-                    <ul>
+            <div class="my-4">
+                <div class="text-center" >
+                    <h5 class="color-info d-inline-block">{{county.grouper}}</h5>
+                </div>
+                {% for unit in county.list %}
+                <div class="my-2">
+                    <span><b>{{unit}}</b></span>
+                    <button class="button-show btn btn-outline" onclick="show(this)">
+                        <span class="bi bi-caret-down h5"></span>
+                    </button>
+                    <button class="hide-on-start button-hide btn btn-outline" onclick="hide(this)">
+                        <span class="bi bi-caret-up h5"></span>
+                    </button>
+                </div>
+<!--                hide-on-start-->
+                    <ul class="list-group mb-3 hide-on-start">
                         {% for building in unit.building.all %}
-                        <li>{{building}}</li>
-                        <ul>
+                        <li class="list-group-item">
+                            <span>{{building}}</span>
+                            <button class="button-show btn btn-outline" onclick="show(this)">
+                                <span class="bi bi-caret-down h5"></span>
+                            </button>
+                            <button class="hide-on-start button-hide btn btn-outline" onclick="hide(this)">
+                                <span class="bi bi-caret-up h5"></span>
+                            </button>
+                        </li>
+                        <ul class="list-group list-group-flush hide-on-start">
                             {% for protocol in building.patterninspections.all|dictsort:"date_next_inspection" reversed %}
                             {% if protocol.inspection_name.id == 1 %}
-                            <li><span>Protokuł z dnia {{protocol.date_protocol|date:"d.m.Y"}}&nbsp;r.</span> | <small>Data następnego przeglądu {{protocol.date_next_inspection|date:"d.m.Y"}}&nbsp;r.</small>
+                            <li class="list-group-item">
+                                <span class="">Protokuł przeglądu z dnia {{protocol.date_protocol|date:"d.m.Y"}}&nbsp;r.</span> | <small>Data następnego przeglądu {{protocol.date_next_inspection|date:"d.m.Y"}}&nbsp;r.</small>
                             {%if forloop.first%}
-                            <span> - AKTUALNY</span>
+                            <span class="color-teal">AKTUALNY</span>
                             {%endif%}
                             </li>
                             {% endif %}
@@ -48,10 +67,10 @@
                         {% endfor%}
                     </ul>
                     {% endfor %}
-                </ul>
-            </li>
+
+            </div>
             {% endfor %}
-        </ul>
+
 
     </div>
 
@@ -63,8 +82,41 @@
     document.getElementById("button-cpv").classList.remove("active");
     document.getElementById("button-investments").classList.remove("active");
 
+    $(function () {
+        $('[data-toggle="info"]').tooltip()
+    })
 
+    function hide(element){
+        $(element).parent().next().hide(300);
+        $(element).hide(0);
+        $(element).parent().children('.button-show').show(0);
+    }
 
+    function show(element){
+        $(element).parent().next().show(300);
+        $(element).hide(0);
+        $(element).parent().children('.button-hide').show(0);
+    }
+
+    $(document).ready(function(){
+        $('.hide-on-start').hide(2);
+    })
+
+    function openInfoModal(button){
+        var url = $(button).data("url");
+        $("#infoDonationModal .modal-content").load(url);
+        $("#infoDonationModal").modal("show");
+        }
+
+    function openModal(button){
+        var url = $(button).data("url");
+        $("#orderInformationModal .modal-content").load(url);
+        $("#orderInformationModal").modal("show");
+    }
+
+    function submitForm(){
+        $("#submitButton").closest("form").submit();
+        }
 
 </script>
 {%endblock%}

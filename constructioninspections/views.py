@@ -78,7 +78,7 @@ def important_inspections(request):
                "buildings_inspections_five_year": buildings_inspections_five_year[:3],
                "buildings_inspections_five_year_len": buildings_inspections_five_year_len,
                "chimneys_inspections": chimneys_inspections, "chimneys_inspections_len": chimneys_inspections_len,
-               "electricial_inspections": electrical_inspections[:3],
+               "electrical_inspections": electrical_inspections[:3],
                "electrical_inspections_len": electrical_inspections_len,
                "air_conditioners_inspection": air_conditioners_inspection[:3],
                "air_conditioners_inspection_len": air_conditioners_inspection_len,
@@ -112,9 +112,9 @@ def create_chimney_inspection_list(request):
 
 
 @login_required
-def create_electrical_inspection_list(request):
+def create_electrical_inspection_one_year_list(request):
     objects = ElectricalInspection.objects.all()
-    return render(request, "construction_inspections/electrical_inspection_list.html", {"objects": objects})
+    return render(request, "construction_inspections/electrical_inspection_one_year_list.html", {"objects": objects})
 
 
 @login_required
