@@ -4,8 +4,8 @@ from django.core.paginator import Paginator
 from investments.models import Project
 from investments.forms import ProjectForm
 from units.models import Unit
-from contracts.models import ContractAuction, GuaranteeSettlement
-from contracts.forms import ContractAuctionForm
+from contracts.models import ContractAuction
+from contracts.models import GuaranteeSettlement
 from main.models import Employer
 from gallery.models import Gallery
 
@@ -13,8 +13,8 @@ from gallery.models import Gallery
 # Create your views here.
 @login_required
 def make_important_task_investments(request):
-    settelments = GuaranteeSettlement.objects.all()
-    return render(request, "investments/investments_main.html", {"settelments": settelments})
+    settlements = GuaranteeSettlement.objects.all()
+    return render(request, "investments/investments_main.html", {"settlements": settlements})
 
 
 @login_required()

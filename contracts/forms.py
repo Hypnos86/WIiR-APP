@@ -79,11 +79,12 @@ class AnnexContractAuctionForm(ModelForm):
 
 class GuaranteeSettlementForm(ModelForm):
     class Meta:
-        model: GuaranteeSettlement
-        fields = ["dedline_settlement", "settlement_sum", "script", "affirmation_settlement"]
-        labels = {"dedline_settlement": "Termin", "settlement_sum": "Kwota", "script": "Pismo",
+        model = GuaranteeSettlement
+
+        fields = ["deadline_settlement", "settlement_sum", "script", "affirmation_settlement"]
+        labels = {"deadline_settlement": "Termin", "settlement_sum": "Kwota", "script": "Pismo",
                   "affirmation_settlement": "Rozliczono"}
-        widgets = {'date': DateField()}
+        widgets = {'deadline_settlement': DateField()}
 
 
 class ContractMediaForm(ModelForm):

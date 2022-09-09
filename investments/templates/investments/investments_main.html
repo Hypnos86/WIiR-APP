@@ -6,27 +6,45 @@
 
 <div class="list-group">
     <div class="row">
-        {%for object in settelments%}
+        {%for object in settlements%}
         <div class="col-md-3 my-3">
-            <a href="#" class="list-group-item list-group-item-action">
+            <button class="list-group-item list-group-item-action" data-url="{% url 'contracts:edit_settlement' object.id %}" onclick="openModal(this)">
                 <div class="d-flex w-100 justify-content-between">
                     <h6 class="mb-1 fw-bolder">Umowa {{object.contract.no_contract}} z dnia {{object.contract.date|date:"d.m.Y"}}&nbsp;r.</h6>
-
                 </div>
                 <small class="text-muted">Wykonawca: </small><small>{{object.contract.contractor.name}}</small><br>
-                <small class="text-muted">Zakres prac: </small><small>{{object.contract.work_scope}}</small>
-                <p class="mb-1">Zbliża się data rozliczenia gwarancji -<span class="color-info-warning">{{object.dedline_settlement|date:"d.m.Y"}}&nbsp;r.</span></p>
+                <small class="text-muted">Zakres umowy: </small><small>{{object.contract.work_scope}}</small><br>
+                <span class="mb-1">Data rozliczenia gwarancji: <span class="color-info-warning">{{object.deadline_settlement|date:"d.m.Y"}}&nbsp;r.</span></span><br>
                 <small class="text-muted">Kwota: {{object.settlement_sum|intcomma}}&nbsp;zł.</small>
-            </a>
+            </button>
         </div>
         {%endfor%}
     </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="settlementModal">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
 <script>
+
     document.getElementById("button-units").classList.remove("active");
     document.getElementById("button-record").classList.remove("active");
     document.getElementById("button-investments").classList.add("active");
     document.getElementById("button-cpv").classList.remove("active");
+
+    function openModal(button){
+        var url = $(button).data("url");
+        $("#settlementModal .modal-content").load(url);
+        $("#settlementModal").modal("show");
+    }
+
+    function submitForm(){
+        $("#submitButton").closest("form").submit();
+    }
 
 </script>
 {% endblock %}

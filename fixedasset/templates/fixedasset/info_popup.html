@@ -1,5 +1,6 @@
 {%load static%}
 {%load bootstrap%}
+{%load humanize%}
 {%block content%}
 <div class="container ">
     <form class="m-2 p-4" method="get" action="{% url 'fixedasset:show_information' id %}">
@@ -25,13 +26,13 @@
             {%if building.usable_area%}
             <div class="my-2">
                 <span class="text-muted">Powierzchnia użytkowa: </span>
-                <span>{{building.usable_area}} m<sup>2</sup></span>
+                <span>{{building.usable_area|intcomma}} m<sup>2</sup></span>
             </div>
             {%endif%}
             {%if building.volume%}
             <div class="my-2">
                 <span class="text-muted">Kubatura: </span>
-                <span>{{building.volume}} m<sup>3</sup></span>
+                <span>{{building.volume|intcomma}} m<sup>3</sup></span>
             </div>
             {%endif%}
             <div class="my-2">

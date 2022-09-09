@@ -1,9 +1,10 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
-from contracts.models import ContractImmovables, ContractAuction, AnnexContractAuction, ContractMedia
+from contracts.models import ContractImmovables, ContractAuction, AnnexContractAuction, ContractMedia, \
+    GuaranteeSettlement
 from contracts.forms import ContractImmovablesForm, ContractAuctionForm, AnnexImmovablesForm, AnnexContractAuctionForm, \
-    ContractMediaForm, AnnexContractMediaForm, GuaranteeSettlement
+    ContractMediaForm, AnnexContractMediaForm, GuaranteeSettlementForm
 from units.models import Unit
 from main.models import Employer
 from main.views import now_date
@@ -274,21 +275,28 @@ def edit_contract_auction(request, id):
                 settlement_sum = [sum_30_percent, sum_70_percent]
 
                 settlements = zip(settlement_period, settlement_sum)
+                print(contract.last_report_date != 0)
+                print(contract.guarantee.id == 2)
 
                 if contract.last_report_date != 0:
                     if contract.guarantee.id == 2:
                         for date, sum in settlements:
                             settlement_guarantee = GuaranteeSettlement.objects.create(contract=contract_auction_edit,
-                                                                                      dedline_settlement=date,
+                                                                                      deadline_settlement=date,
                                                                                       settlement_sum=sum)
+
                     else:
 
-                        settlement_guarantee = GuaranteeSettlement.objects.create(contract=contract_auction_edit,
-                                                                                  dedline_settlement=settlement_30_day,
+                        settlement_guarantee = GuaranteeSettlement.objects.create(contract=contract_auction_edit.id,
+                                                                                  deadline_settlement=settlement_30_day,
                                                                                   settlement_sum=contract.security_sum)
+                        print("bleblelbe")
+
                     return redirect('contracts:menu_contracts_auction')
+
             except TypeError:
                 return redirect('contracts:menu_contracts_auction')
+
     return render(request, 'contracts/contract_auction_form.html', context)
 
 
@@ -426,3 +434,17 @@ def add_annex_contract_media(request, id):
             return redirect('contracts:create_contract_media_list')
     if request.method == 'GET':
         return render(request, 'contracts/new_annex_media_form.html', context)
+
+
+@login_required
+def edit_settlement(request, id):
+    settlement_model = get_object_or_404(GuaranteeSettlement, pk=id)
+    settlement_form = GuaranteeSettlementForm(request.POST or None, instance=settlement_model)
+
+    if request.method == "POST":
+        if settlement_form.is_valid():
+            settlement_form.save()
+            return redirect("investments:make_important_task_investments")
+
+    return render(request, "contracts/settlement_form.html",
+                  {"settlement_form": settlement_form, "settlement_model": settlement_model, "id": id})

@@ -11,4 +11,5 @@ urlpatterns = [
     path("project_gallery/<int:id>", show_galleries_popup, name="show_galleries_popup"),
     path("add_contract_to_project/<int:id>", add_contract_to_project, name="add_contract_to_project"),
     path("", make_important_task_investments, name="make_important_task_investments")
+
 ]
