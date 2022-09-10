@@ -7,12 +7,30 @@
     {%csrf_token%}
     <div class="container">
         <h6 class="text-center"><b>Umowa {{settlement_model.contract.no_contract}} z dnia {{settlement_model.contract.date|date:"d.m.Y"}}&nbsp;r.</b></h6>
-        <div><span class="text-muted">Kontrahent: </span><span>{{settlement_model.contract.contractor.name}} - {{settlement_model.contract.contractor.city}} (NIP: {{settlement_model.contract.contractor.nip}})</span></div>
-        <div><span class="text-muted">Przedmiot umowy: </span><span>{{settlement_model.contract.work_scope}}</span></div>
-        <div><span class="text-muted">Wartość umowy: </span><span>{{settlement_model.contract.price|intcomma}}&nbsp;zł.</span></div>
-        <div><span class="text-muted">Data końcowego protokołu: </span><span>{{settlement_model.contract.end_date|date:"m.d.Y"}}&nbsp;r.</span></div>
-        <div><span class="text-muted">Data zwrotu gwarancji: </span><span class="color-info-warning">{{settlement_model.deadline_settlement|date:"m.d.Y"}}&nbsp;r.</span></div>
-        <div><span class="text-muted">Rodzaj gwarancji: </span><span>{{settlement_model.contract.guarantee}}</span></div>
+        <div>
+            <span class="text-muted">Kontrahent: </span>
+            <span>{{settlement_model.contract.contractor.name}} - {{settlement_model.contract.contractor.city}} {%if settlement_model.contract.contractor.nip%} (NIP: {{settlement_model.contract.contractor.nip}}) {%endif%}</span>
+        </div>
+        <div>
+            <span class="text-muted">Przedmiot umowy: </span>
+            <span>{{settlement_model.contract.work_scope}}</span>
+        </div>
+        <div>
+            <span class="text-muted">Wartość umowy: </span>
+            <span>{{settlement_model.contract.price|intcomma}}&nbsp;zł.</span>
+        </div>
+        <div>
+            <span class="text-muted">Data końcowego protokołu: </span>
+            <span>{{settlement_model.contract.end_date|date:"m.d.Y"}}&nbsp;r.</span>
+        </div>
+        <div>
+            <span class="text-muted">Data zwrotu gwarancji: </span>
+            <span class="color-info-warning">{{settlement_model.deadline_settlement|date:"m.d.Y"}}&nbsp;r.</span>
+        </div>
+        <div>
+            <span class="text-muted">Rodzaj gwarancji: </span>
+            <span>{{settlement_model.contract.guarantee}}</span>
+        </div>
         {{settlement_form|bootstrap}}
 
 
