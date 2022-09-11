@@ -3,6 +3,7 @@
 {% load static %}
 {% block title %} Umowy ZN - WIiR {% endblock %}
 {% block content %}
+{%if user.is_authenticated and user.accessmodule.contract_immovables%}
 <div class="kontrahenci-title">
     <div class="row mb-3">
         <div class="col-md-2">
@@ -272,4 +273,5 @@
         $("form").submit();
     }
 </script>
+{%endif%}
 {%endblock%}

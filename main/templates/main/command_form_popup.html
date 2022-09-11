@@ -1,6 +1,7 @@
 {%load static%}
 {%load bootstrap%}
 {%block content%}
+{%if user.is_authenticated and user.accessmodule.zok_team%}
 <div class="container">
     <form class=" col m-2 p-4" method="POST" enctype="multipart/form-data" action="{%if new%} {%url 'main:add_command_popup'%} {%else%}{%url 'main:edit_command_popup' id%} {%endif%}">
         {%csrf_token%}
@@ -28,5 +29,7 @@
         $('[data-toggle="info"]').tooltip()
     })
 </script>
+{%endif%}
 {%endblock%}
+
 

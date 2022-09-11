@@ -3,6 +3,7 @@
 {%load bootstrap%}
 {%block title%}{%endblock%}
 {%block content%}
+{%if user.is_authenticated and user.accessmodule.zok_team%}
 <div class="container" xmlns="http://www.w3.org/1999/html">
     <div class="d-flex justify-content-center">
         <div class="row col-md-6 mb-2">
@@ -95,4 +96,5 @@
         $('[data-toggle="info"]').tooltip()
     })
 </script>
+{%endif%}
 {%endblock%}

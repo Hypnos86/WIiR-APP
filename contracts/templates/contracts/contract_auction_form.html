@@ -4,6 +4,7 @@
 {% load static %}
 {% block title %}Dodaj Umowę {%endblock%}
 {% block content %}
+{%if user.is_authenticated and user.accessmodule.contracts_auction_module_edit%}
 <div class="container col-md-8 mb-3">
     <div class="row">
         <div class="col-md-3">
@@ -126,4 +127,5 @@
         $("#id_worker").select2({placeholder:'Dodaj pracownika'});
     })
 </script>
+{%endif%}
 {% endblock %}

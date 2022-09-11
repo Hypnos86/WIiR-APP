@@ -4,6 +4,7 @@
 {% load static %}
 {% block title %}Ewidencja Not księgowych na {{year}} rok{%endblock%}
 {% block content %}
+{%if user.is_authenticated and user.accessmodule.invoices_module%}
 <div class="container mb-3">
     <div class="row">
         <div class=" col-md-3 moj-button-left">
@@ -178,4 +179,5 @@
         $("form").submit();
     }
 </script>
+{%endif%}
 {%endblock%}

@@ -4,6 +4,7 @@
 {%load static%}
 {% block title %}Umowa z dnia {{contract.date|date:"d.m.Y"}} r. {%endblock%}
 {%block content%}
+{%if user.is_authenticated and user.accessmodule.contracts_auction_module%}
 <div class="container mb-3">
     <div class="row">
         <div class="col-md-2 moj-button-left">
@@ -144,4 +145,5 @@
         $('[data-toggle="info"]').tooltip()
     })
 </script>
+{%endif%}
 {%endblock%}

@@ -4,6 +4,7 @@
 {% load static %}
 {% block title %}Ewidencja - Lokale Służbowe{% endblock %}
 {% block content %}
+{%if user.is_authenticated and user.accessmodule.official_flat%}
 <div class="kontrahenci-title justify-content-center align-items-center text-center">
     <h4>Lokale służbowe</h4>
     {% if last_date %}
@@ -145,4 +146,5 @@
         $('[data-toggle="info"]').tooltip()
         })
 </script>
+{%endif%}
 {%endblock%}

@@ -2,6 +2,7 @@
 {%load bootstrap%}
 {%load humanize%}
 {%block content%}
+{%if user.is_authenticated and user.accessmodule.donations_module%}
 <div class="container ">
 <form class="m-2 p-4" method="get" action="{%url 'donations:show_information_popup' id%}">
     {%csrf_token%}
@@ -39,5 +40,6 @@
     </div>
 </form>
 </div>
+{%endif%}
 {%endblock%}
 

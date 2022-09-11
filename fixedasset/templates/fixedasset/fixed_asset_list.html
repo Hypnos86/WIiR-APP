@@ -1,6 +1,7 @@
 {%extends 'base.html'%}
 {%load static%}
 {%block content%}
+{%if user.is_authenticated and user.accessmodule.buildings_module%}
 <div class="container">
     <h4 class="text-center mb-3">Środki trwałe</h4>
     <h5 class="text-center mb-3">Budynki</h5>
@@ -167,5 +168,6 @@
         $("form").submit();
     }
 </script>
+{%endif%}
 {%endblock%}
 

@@ -2,6 +2,7 @@
 {% load static %}
 {% block title %} SEKRETARIAT {% endblock %}
 {% block content %}
+{%if user.is_authenticated and user.accessmodule.zok_team%}
 <div class="container">
     <div class="d-flex justify-content-center row pt-5">
         <div class="col-md-2">
@@ -71,4 +72,5 @@
         $('[data-toggle="info"]').tooltip()
     })
 </script>
+{%endif%}
 {% endblock %}

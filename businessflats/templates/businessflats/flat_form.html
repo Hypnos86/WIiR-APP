@@ -4,6 +4,7 @@
 {% load static %}
 {% block title %}Ewidencja - Lokale Służbowe{% endblock %}
 {% block content %}
+{%if user.is_authenticated and user.accessmodule.official_flat_edit%}
 <div class="row">
     <div class="col-md-3"><a href="{% url 'businessflats:make_flats_list'%}">
         <button class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span>
@@ -59,4 +60,5 @@
     document.getElementById("button-cpv").classList.remove("active");
     document.getElementById("button-investments").classList.remove("active");
 </script>
+{%endif%}
 {%endblock%}

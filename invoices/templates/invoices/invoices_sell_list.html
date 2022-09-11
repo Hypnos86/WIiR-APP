@@ -4,6 +4,7 @@
 {% load static %}
 {% block title %}Ewidencja faktur - sprzedaż{%endblock%}
 {% block content %}
+{%if user.is_authenticated and user.accessmodule.invoices_module%}
 <div class="row">
     <div class="col-md-3 moj-button-left">
         <a href="{%url 'invoices:menu_invoices'%}">
@@ -202,4 +203,5 @@
         $("form").submit();
         }
 </script>
+{%endif%}
 {%endblock%}
