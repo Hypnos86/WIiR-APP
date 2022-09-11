@@ -32,19 +32,26 @@
                 <span>{{settlement_model.contract.guarantee}}</span>
             </div>
             <div>
-                <span class="text-muted">Kwota: </span>
-                <span>{{settlement_model.settlement_sum|intcomma}}&nbsp;zł.</span>
+                <label class="text-muted" for="id_settlement_sum">Kwota: </label>
+                <input type="number" name="settlement_sum" value="{{settlement_model.settlement_sum}}" step="0.01" id="id_settlement_sum" readonly>
             </div>
-            <div>
-                <span class="text-muted">Nr pisma zwracanego zabezpieczenia: </span>
-                <span>{{settlement_form.script}}</span>
-            </div><div>
-                <span class="text-muted">Rozliczono </span>
-                <span>{{settlement_form.affirmation_settlement}}</span>
+
+            <div class="form-group my-3">
+                <label class="control-label" for="id_script">Nr. pisma zwracanego zabezpieczenia</label>
+                <input type="text" name="script" maxlength="50" class="form-control" id="id_script">
             </div>
-            {{settlement_form|bootstrap}}
 
-
+            {{settlement_form.deadline_settlement|bootstrap}}
+            {{settlement_form.settlement_sum|bootstrap}}
+            {{settlement_form.script|bootstrap}}
+            <div class="row">
+                <div class="col-md-6">
+                    {{settlement_form.affirmation_settlement|bootstrap}}
+                </div>
+                <div class="col-md-6 moj-button-right align-self-end">
+                    <button type="submit" class="btn btn-outline-primary my-btn" onclick="openModal()"> Dodaj pismo i rozlicz gwarancje</button>
+                </div>
+            </div>
         </div>
     </form>
 </div>

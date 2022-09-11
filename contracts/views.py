@@ -290,7 +290,6 @@ def edit_contract_auction(request, id):
                         settlement_guarantee = GuaranteeSettlement.objects.create(contract=contract_auction_edit.id,
                                                                                   deadline_settlement=settlement_30_day,
                                                                                   settlement_sum=contract.security_sum)
-                        print("bleblelbe")
 
                     return redirect('contracts:menu_contracts_auction')
 
@@ -443,6 +442,7 @@ def edit_settlement(request, id):
 
     if request.method == "POST":
         if settlement_form.is_valid():
+            # instance = settlement_form.save(commit=False)
             settlement_form.save()
             return redirect("investments:make_important_task_investments")
 
