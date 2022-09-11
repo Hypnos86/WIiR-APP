@@ -1,4 +1,4 @@
-from django.forms import ModelForm, DateInput, Textarea, widgets
+from django.forms import ModelForm, DateInput, Textarea, widgets, TextInput
 from main.forms import DateField
 from contracts.models import ContractImmovables, AnnexImmovables, ContractAuction, AnnexContractAuction, ContractMedia, \
     AnnexContractMedia, GuaranteeSettlement

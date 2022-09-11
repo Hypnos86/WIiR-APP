@@ -32,18 +32,16 @@
                 <span>{{settlement_model.contract.guarantee}}</span>
             </div>
             <div>
-                <label class="text-muted" for="id_settlement_sum">Kwota: </label>
-                <input type="number" name="settlement_sum" value="{{settlement_model.settlement_sum}}" step="0.01" id="id_settlement_sum" readonly>
+                <span class="text-muted">Kwota: </span>
+                <span>{{settlement_model.settlement_sum|intcomma}}&nbsp;zł.</span>
             </div>
 
             <div class="form-group my-3">
-                <label class="control-label" for="id_script">Nr. pisma zwracanego zabezpieczenia</label>
-                <input type="text" name="script" maxlength="50" class="form-control" id="id_script">
+                <label class="control-label" for="id_script">L.dz. pisma zwracanego zabezpieczenia: </label>
+                <div class="d-inline-block">
+                    <input type="text" name="script" maxlength="50" class="form-control" id="id_script">
+                </div>
             </div>
-
-            {{settlement_form.deadline_settlement|bootstrap}}
-            {{settlement_form.settlement_sum|bootstrap}}
-            {{settlement_form.script|bootstrap}}
             <div class="row">
                 <div class="col-md-6">
                     {{settlement_form.affirmation_settlement|bootstrap}}

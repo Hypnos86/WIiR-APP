@@ -442,7 +442,12 @@ def edit_settlement(request, id):
 
     if request.method == "POST":
         if settlement_form.is_valid():
-            # instance = settlement_form.save(commit=False)
+            instance = settlement_form.save(commit=False)
+            instance.data["settlement_sum"] = settlement_model.settlement_sum
+            print(settlement_form.data["settlement_sum"])
+            instance.data["deadline_settlement"] = settlement_model.deadline_settlement
+            print(settlement_form.data["deadline_settlement"])
+
             settlement_form.save()
             return redirect("investments:make_important_task_investments")
 
