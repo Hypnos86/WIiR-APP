@@ -13,7 +13,7 @@ from gallery.models import Gallery
 # Create your views here.
 @login_required
 def make_important_task_investments(request):
-    settlements = GuaranteeSettlement.objects.all()
+    settlements = GuaranteeSettlement.objects.all().filter(affirmation_settlement=False)
     return render(request, "investments/investments_main.html", {"settlements": settlements})
 
 

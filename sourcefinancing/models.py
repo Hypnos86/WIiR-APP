@@ -6,8 +6,9 @@ class Section(models.Model):
     class Meta:
         verbose_name = "Rozdział"
         verbose_name_plural = "Rozdziały"
+        ordering = ["section"]
 
-    section = models.CharField("Rozdział", max_length=5)
+    section = models.CharField("Rozdział", max_length=5, unique=True)
     name = models.CharField("Nazwa", max_length=20)
 
     def __str__(self):

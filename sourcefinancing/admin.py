@@ -11,7 +11,7 @@ admin.site.register(Section)
 @admin.register(Group)
 class GroupAdmin(admin.ModelAdmin):
     list_display = ['group', 'name']
-    
+
 
 admin.site.register(Paragraph)
 admin.site.register(Source)

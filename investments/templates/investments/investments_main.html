@@ -9,9 +9,9 @@
         {%for object in settlements%}
         <div class="col-md-3 my-3">
             <button class="list-group-item list-group-item-action" data-url="{% url 'contracts:edit_settlement' object.id %}" onclick="openModal(this)">
-                <div class="d-flex w-100 justify-content-between">
-                    <h6 class="mb-1 fw-bolder">Umowa {{object.contract.no_contract}} z dnia {{object.contract.date|date:"d.m.Y"}}&nbsp;r.</h6>
-                </div>
+                <span class="d-flex w-100 justify-content-between">
+                    <span class="mb-1 fw-bolder">Umowa {{object.contract.no_contract}} z dnia {{object.contract.date|date:"d.m.Y"}}&nbsp;r.</span>
+                </span>
                 <small class="text-muted">Wykonawca: </small><small>{{object.contract.contractor.name}}</small><br>
                 <small class="text-muted">Zakres umowy: </small><small>{{object.contract.work_scope}}</small><br>
                 <span class="mb-1">Data rozliczenia gwarancji: <span class="color-info-warning">{{object.deadline_settlement|date:"d.m.Y"}}&nbsp;r.</span></span><br>

@@ -8,11 +8,16 @@ from contracts.models import TypeOfContract, LegalBasic, Guarantee, ContractImmo
 
 # Register your models here.
 admin.site.register(TypeOfContract)
-admin.site.register(GuaranteeSettlement)
+@admin.register(GuaranteeSettlement)
+class GuaranteeSettlementAdmin(admin.ModelAdmin):
+    list_display = ["contract", "deadline_settlement", "settlement_sum", "script", "affirmation_settlement"]
+    list_display_links = ["contract"]
+    search_fields = ["contract__no_contract", "script"]
+
 
 
 @admin.register(Guarantee)
-class ContractAdmin(admin.ModelAdmin):
+class GuaranteeAdmin(admin.ModelAdmin):
     list_display = ["id", "guarantee"]
     list_display_links = ["guarantee"]
 
