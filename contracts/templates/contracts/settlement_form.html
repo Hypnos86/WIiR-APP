@@ -3,7 +3,6 @@
 {%load humanize%}
 {%block content%}
 <div class="container ">
-<<<<<<< HEAD
 <form class="m-2 p-4" method="POST" action="{% url 'contracts:edit_settlement' id %}">
     {%csrf_token%}
     <div class="container">
@@ -46,57 +45,6 @@
         </div>
     </div>
 </form>
-=======
-    <form class="m-2 p-4" method="POST" action="{% url 'contracts:edit_settlement' id %}">
-        {%csrf_token%}
-        <div class="container">
-            <h6 class="text-center"><b>Umowa {{settlement_model.contract.no_contract}} z dnia {{settlement_model.contract.date|date:"d.m.Y"}}&nbsp;r.</b></h6>
-            <div>
-                <span class="text-muted">Kontrahent: </span>
-                <span>{{settlement_model.contract.contractor.name}} - {{settlement_model.contract.contractor.city}} {%if settlement_model.contract.contractor.nip%} (NIP: {{settlement_model.contract.contractor.nip}}) {%endif%}</span>
-            </div>
-            <div>
-                <span class="text-muted">Przedmiot umowy: </span>
-                <span>{{settlement_model.contract.work_scope}}</span>
-            </div>
-            <div>
-                <span class="text-muted">Wartość umowy: </span>
-                <span>{{settlement_model.contract.price|intcomma}}&nbsp;zł.</span>
-            </div>
-            <div>
-                <span class="text-muted">Data końcowego protokołu: </span>
-                <span>{{settlement_model.contract.end_date|date:"m.d.Y"}}&nbsp;r.</span>
-            </div>
-            <div>
-                <span class="text-muted">Data zwrotu gwarancji: </span>
-                <span class="color-info-warning">{{settlement_model.deadline_settlement|date:"m.d.Y"}}&nbsp;r.</span>
-            </div>
-            <div>
-                <span class="text-muted">Rodzaj gwarancji: </span>
-                <span>{{settlement_model.contract.guarantee}}</span>
-            </div>
-            <div>
-                <span class="text-muted">Kwota: </span>
-                <span>{{settlement_model.settlement_sum|intcomma}}&nbsp;zł.</span>
-            </div>
-
-            <div class="form-group my-3">
-                <label class="control-label" for="id_script">L.dz. pisma zwracanego zabezpieczenia: </label>
-                <div class="d-inline-block">
-                    <input type="text" name="script" maxlength="50" class="form-control" id="id_script">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    {{settlement_form.affirmation_settlement|bootstrap}}
-                </div>
-                <div class="col-md-6 moj-button-right align-self-end">
-                    <button type="submit" class="btn btn-outline-primary my-btn" onclick="openModal()"> Dodaj pismo i rozlicz gwarancje</button>
-                </div>
-            </div>
-        </div>
-    </form>
->>>>>>> 6a35e7416c3220265af73e4d59875b9413868681
 </div>
 {%endblock%}
 

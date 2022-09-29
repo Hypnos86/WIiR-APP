@@ -444,9 +444,7 @@ def edit_settlement(request, id):
         if settlement_form.is_valid():
             instance = settlement_form.save(commit=False)
             instance.settlement_sum = settlement_model.settlement_sum
-            print(settlement_form.settlement_sum)
             instance.deadline_settlement = settlement_model.deadline_settlement
-            print(settlement_form.deadline_settlement)
             instance.save()
 
         return redirect("investments:make_important_task_investments")
