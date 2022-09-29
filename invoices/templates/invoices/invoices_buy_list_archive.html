@@ -3,7 +3,7 @@
 {%load static%}
 {%block title%}Ewidencja faktur gr.6 - zobowiązania{%endblock%}
 {%block content%}
-
+{%if user.is_authenticated and user.accessmodule.invoices_module%}
 <div class="row mb-3">
     <div class="col-md-2">
         <a href="{%url 'invoices:menu_invoices'%}">
@@ -170,4 +170,5 @@
         $("form").submit();
         }
 </script>
+{%endif%}
 {%endblock%}

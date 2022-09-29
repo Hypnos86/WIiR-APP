@@ -4,6 +4,7 @@
 {% load static %}
 {% block title %} Ewidencja - Umowy Media{% endblock %}
 {% block content %}
+{%if user.is_authenticated and user.accessmodule.contract_media_edit%}
 <div class="container col-md-8 mb-4">
     <div class="row">
         <div class="col-md-3"><a href="{%url 'contracts:create_contract_media_list'%}">
@@ -92,4 +93,5 @@
         $("#id_unit").select2({placeholder:'Dodaj jednostkę'});
     })
 </script>
+{%endif%}
 {%endblock%}

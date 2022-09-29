@@ -290,7 +290,6 @@ def edit_contract_auction(request, id):
                         settlement_guarantee = GuaranteeSettlement.objects.create(contract=contract_auction_edit.id,
                                                                                   deadline_settlement=settlement_30_day,
                                                                                   settlement_sum=contract.security_sum)
-                        print("bleblelbe")
 
                     return redirect('contracts:menu_contracts_auction')
 
@@ -443,8 +442,14 @@ def edit_settlement(request, id):
 
     if request.method == "POST":
         if settlement_form.is_valid():
-            settlement_form.save()
-            return redirect("investments:make_important_task_investments")
+            instance = settlement_form.save(commit=False)
+            instance.settlement_sum = settlement_model.settlement_sum
+            print(settlement_form.settlement_sum)
+            instance.deadline_settlement = settlement_model.deadline_settlement
+            print(settlement_form.deadline_settlement)
+            instance.save()
+
+        return redirect("investments:make_important_task_investments")
 
     return render(request, "contracts/settlement_form.html",
                   {"settlement_form": settlement_form, "settlement_model": settlement_model, "id": id})

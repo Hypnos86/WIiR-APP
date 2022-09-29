@@ -4,7 +4,7 @@
 {%load bootstrap%}
 {%block title%}{%if new%}Nowy wniosek{%else%}Edycja wniosku{%endif%}{%endblock%}
 {%block content%}
-{%if user.is_authenticated and user.accessmodule.donations_module%}
+{%if user.is_authenticated and user.accessmodule.donations_module_edit%}
 <div class="container col-md-6 mb-3">
     <div class="row px-5">
         <div class="col-md-3">
