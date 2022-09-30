@@ -451,3 +451,9 @@ def edit_settlement(request, id):
 
     return render(request, "contracts/settlement_form.html",
                   {"settlement_form": settlement_form, "settlement_model": settlement_model, "id": id})
+
+
+@login_required
+def show_information_settlement(request, id):
+    settlement = get_object_or_404(GuaranteeSettlement, pk=id)
+    return render(request, "contracts/settlement_popup.html", {"settlement": settlement, "id": id})

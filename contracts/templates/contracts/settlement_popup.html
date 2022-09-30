@@ -1,0 +1,33 @@
+{%load static%}
+{%load bootstrap%}
+{%load humanize%}
+{%block content%}
+<div class="container ">
+<form class="m-2 p-4" method="get" action="{% url 'contracts:show_information_settlement' id %}">
+    {%csrf_token%}
+<div class="container">
+        <div class="my-2">
+            <span class="text-muted">Umowa: </span><span><b>{{settlement.contract.no_contract}} z dnia {{settlement.contract.date|date:"d.m.Y"}}&nbsp;r.</b></span>
+        </div>
+        <div class="my-2">
+            <span class="text-muted">Wartość umowy: </span><span>{{settlement.contract.price|intcomma}}&nbsp;zł.</span>
+        </div>
+        <div class="my-2">
+            <span class="text-muted">Data końcowego protokołu: </span><span>{{settlement.contract.end_date|date:"m.d.Y"}}&nbsp;r.</span>
+        </div>
+        <div class="my-2">
+            <span class="text-muted">Data zwrotu gwarancji: </span><span class="color-info-warning">{{settlement.deadline_settlement|date:"m.d.Y"}}&nbsp;r.</span>
+        </div>
+        <div class="my-2">
+            <span class="text-muted">Rodzaj gwarancji: </span><span>{{settlement.contract.guarantee}}</span>
+        </div>
+        <div class="my-2">
+            <span class="text-muted">Rozliczona kwota: </span><span>{{settlement.settlement_sum|intcomma}}zł.</span>
+        </div><div class="my-2">
+            <span class="text-muted">Nr pisma rozliczenia: </span><span>{{settlement.script}}</span>
+        </div>
+</div>
+</form>
+</div>
+{%endblock%}
+

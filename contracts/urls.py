@@ -2,7 +2,7 @@ from django.urls import path
 from contracts.views import menu_contractsimmovables, menu_contractsimmovables_archive, new_contractsimmovables, \
     edit_contractsimmovables, show_contractsimmovables, menu_contracts_auction, new_contract_auction, \
     show_contract_auction, edit_contract_auction, add_annex_immovables, add_annex_contract_auction, \
-    create_contract_media_list, new_contract_media, edit_contract_media, show_contract_media, add_annex_contract_media, edit_settlement
+    create_contract_media_list, new_contract_media, edit_contract_media, show_contract_media, add_annex_contract_media, edit_settlement, show_information_settlement
 
 app_name = "contracts"
 urlpatterns = [
@@ -22,5 +22,6 @@ urlpatterns = [
     path("edit_contract_media/<int:id>", edit_contract_media, name="edit_contract_media"),
     path("contract_media/<int:id>", show_contract_media, name="show_contract_media"),
     path("add_annex_media/<int:id>", add_annex_contract_media, name="add_annex_contract_media"),
-    path("settlement_form/<int:id>", edit_settlement, name="edit_settlement")
+    path("settlement_form/<int:id>", edit_settlement, name="edit_settlement"),
+    path("settlement_popup/<int:id>", show_information_settlement, name="show_information_settlement")
 ]

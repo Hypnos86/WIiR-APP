@@ -103,6 +103,16 @@
                     <span>{{contract.information}}</span>
                 </li>
                 {%endif%}
+
+                <li class="list-group-item">
+                    <span class="text-muted">Rozliczenie gwarancji:</span>
+                    {%for settlement in contract.guarantee_settlement.all%}
+                    {%if settlement.affirmation_settlement%}
+                    <button class="btn btn-outline-primary my-btn mx-3" onclick="openSettlementModal(this)" data-url="{% url 'contracts:show_information_settlement' settlement.id%}">{{settlement.script}}</button>
+                    {%endif%}
+                    {%endfor%}
+                </li>
+
                 <li class="list-group-item">
                     <small class="text-muted">Data dodania: {{contract.creation_date|date:'d.m.Y (H:i)'}}</small>
                 </li>
@@ -135,6 +145,13 @@
         </div>
     </div>
 </div>
+<!--Modal-->
+<div class="modal fade" id="informationModal">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
 <script>
     document.getElementById("button-units").classList.remove("active");
     document.getElementById("button-record").classList.remove("active");
@@ -144,6 +161,17 @@
     $(function () {
         $('[data-toggle="info"]').tooltip()
     })
+
+    function openSettlementModal(button){
+        var url = $(button).data("url");
+        $("#informationModal .modal-content").load(url);
+        $("#informationModal").modal("show");
+    }
+
+    function submitForm(){
+        $("#submitButton").closest("form").submit();
+    }
+
 </script>
 {%endif%}
 {%endblock%}

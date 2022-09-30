@@ -1,3 +1,4 @@
+from dateutil.relativedelta import relativedelta
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.core.paginator import Paginator
@@ -8,12 +9,27 @@ from contracts.models import ContractAuction
 from contracts.models import GuaranteeSettlement
 from main.models import Employer
 from gallery.models import Gallery
+from main.views import now_date
 
 
 # Create your views here.
 @login_required
 def make_important_task_investments(request):
-    settlements = GuaranteeSettlement.objects.all().filter(affirmation_settlement=False)
+    settlements_all = GuaranteeSettlement.objects.all().filter(affirmation_settlement=False)
+    settlements = []
+
+    future_date = now_date() + relativedelta(months=1)
+    print(future_date)
+    settlemen = settlements_all.values("deadline_settlement").strftime("%Y-%M-%D")
+    print(settlemen)
+
+    if settlements_all.values("deadline_settlement") < future_date:
+        print("tak")
+    # for settelment in settlements_all:
+    #     if settelment.deadline_settlement <= future_date:
+    #         print(settelment.deadline_settlement)
+    #         settlements.append(settelment)
+
     return render(request, "investments/investments_main.html", {"settlements": settlements})
 
 
