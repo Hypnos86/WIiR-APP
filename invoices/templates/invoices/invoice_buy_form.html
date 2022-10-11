@@ -2,9 +2,8 @@
 {%load static%}
 {%load bootstrap%}
 {%block title%}{%if new%}Nowa faktura{%else%}Edycja faktury{%endif%}{%endblock%}
-
 {%block content%}
-<div class="container col-md-6 mb-3">
+<div class="container col-md-7 mb-3">
     <div class="row">
         <div class="col-md-3">
             <a href="{%url 'invoices:buy_invoices_list'%}">
@@ -18,7 +17,7 @@
         </div>
     </div>
 </div>
-<div class="container col-md-6">
+<div class="container col-md-7">
     <form class="" method="post">
         {%csrf_token%}
         <div class="row">
@@ -37,41 +36,14 @@
                 </div>
             </div>
             <div class="d-flex justify-content-between">
-                <div class="col-md-6 ">{{invoice.information|bootstrap}}</div>
-                <div class="col-md-6 moj-button-right align-self-center">
-                    <button type="button" data-url="{%url 'invoices:add_invoice_items' %}" class="btn btn-outline-primary my-btn" onclick="openItemsModal(this)">
-                        <span class="bi bi-plus-circle"> Elementy</span>
-                    </button>
-                </div>
+                <div class="col-md-12 ">{{invoice.information|bootstrap}}</div>
             </div>
-            <div class="col-md-12 moj-button-right">
+            <div class="col-md-12 mt-4 moj-button-right">
                 <button type="submit" class="btn btn-outline-primary my-btn">
-                    <span class="bi bi-save2"> Zapisz zmiany</span>
+                    <span class="bi bi-plus-circle"> Dodaj Elementy</span>
                 </button>
-            </div>
-            <div>
-                <ul>
-                    <li></li>
-                </ul>
             </div>
         </div>
     </form>
 </div>
-<div class="modal fade" id="elementsModal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-        </div>
-    </div>
-</div>
-<script>
-     function openItemsModal(button){
-            var url = $(button).data("url");
-            $("#elementsModal .modal-content").load(url);
-            $("#elementsModal").modal("show");
-        }
-
-        function submitForm(){
-            $("#submitButton").closest("form").submit();
-        }
-</script>
 {%endblock%}

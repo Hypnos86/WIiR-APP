@@ -144,24 +144,23 @@ def new_invoice_buy(request):
             instance = invoice_buy_form.save(commit=False)
             instance.author = request.user
             invoice_buy_form.save()
-            return redirect("invoices:buy_invoices_list")
+            return redirect(reverse("invoices:add_invoice_items", kwargs={"id": instance.id}))
     return render(request, "invoices/invoice_buy_form.html", context)
 
 
 @login_required
-def add_invoice_items(request):
-    # invoice_edit = get_object_or_404(InvoiceBuy, pk=id)
+def add_invoice_items(request, id):
+    invoice_edit = get_object_or_404(InvoiceBuy, pk=id)
     invoice_item = InvoiceItemsForm(request.POST or None)
 
-    context = {"invoice_item": invoice_item, "new": True}
+    context = {"invoice_item": invoice_item, "invoice": invoice_edit, "new": True}
 
     if request.method == "POST":
         if invoice_item.is_valid():
-            instance = invoice_item.save(commit=False)
+            invoice_item.save(commit=False)
             invoice_item.save()
             return redirect("invoices:buy_invoices_list")
-            # return redirect(reverse("invoices:buy_invoices_list", kwargs={"id": id}))
-    return render(request, "invoices/invoice_items_popup.html", context)
+    return render(request, "invoices/invoice_items.html", context)
 
 
 @login_required
@@ -177,7 +176,7 @@ def edit_invoice_buy(request, id):
         instance = invoice_buy_form.save(commit=False)
         instance.author = request.user
         invoice_buy_form.save()
-        return redirect("invoices:buy_invoices_list")
+        return redirect(reverse("invoices:add_invoice_items", kwargs={"id": instance.id}))
     return render(request, "invoices/invoice_buy_form.html", context)
 
 
