@@ -15,23 +15,11 @@ from main.views import now_date
 # Create your views here.
 @login_required
 def make_important_task_investments(request):
-    future_datetime = now_date() + relativedelta(months=1)
+    future_datetime = now_date() + relativedelta(months=2)
     future_date = future_datetime.date()
 
-    settlements_all = GuaranteeSettlement.objects.all().filter(affirmation_settlement=False).filter(deadline_settlement__lt = future_date)
-
-    # settlements = []
-    #
-    # settlements_alls = settlements_all.values("deadline_settlement")
-    #
-    # for settlement in settlements_alls:
-    #     print(settlement["deadline_settlement"])
-    #     print(type(settlement["deadline_settlement"]))
-    #
-    #     if settlement["deadline_settlement"] < future_date:
-    #         print(f'dodaj {settlement}')
-    #         settlements.append(settlement)
-
+    settlements_all = GuaranteeSettlement.objects.all().filter(affirmation_settlement=False).filter(
+        deadline_settlement__lt=future_date)
     return render(request, "investments/investments_main.html", {"settlements": settlements_all})
 
 

@@ -60,8 +60,9 @@ class DocumentTypesAdmin(admin.ModelAdmin):
 
 @admin.register(InvoiceItems)
 class InvoiceItemsAdmin(admin.ModelAdmin):
-    ordering = ['account', 'county', 'sum']
-    list_display = ['account', 'county', 'sum']
+    ordering = ['invoice_id', 'account', 'county', 'sum']
+    list_display = ['invoice_id', 'id', 'account', 'county', 'sum']
+    search_fields = ["invoice_id__no_invoice", "county__name", "account__section__section" ]
 
 
 @admin.register(InvoiceBuy)

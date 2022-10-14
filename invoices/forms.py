@@ -44,8 +44,8 @@ class InvoiceBuyForm(ModelForm):
 class InvoiceItemsForm(ModelForm):
     class Meta:
         model = InvoiceItems
-        fields = '__all__'
-        label = {'invoice_id': 'Faktura', 'account': 'Konto', 'county': 'Powiat', 'sum': 'Kwota'}
+        fields = ["account", "county", "sum"]
+        label = {"account": "Konto", "county": "Powiat", "sum": "Kwota"}
 
 
 class CorrectiveNoteForm(ModelForm):

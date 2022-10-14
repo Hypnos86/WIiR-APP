@@ -66,7 +66,7 @@ class InvoiceBuy(models.Model):
     author = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name="invoicebuy")
 
     def __str__(self):
-        return f"Faktura nr. {self.no_invoice} z dnia {self.date_issue}"
+        return f"{self.no_invoice} z dnia {self.date_issue}"
 
 
 class InvoiceItems(models.Model):

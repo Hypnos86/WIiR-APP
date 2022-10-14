@@ -1,0 +1,57 @@
+{%extends 'base.html'%}
+{%load static%}
+{%load bootstrap%}
+{%block title%}{%if new%}Nowa faktura{%else%}Edycja faktury{%endif%}{%endblock%}
+{%block content%}
+<div class="container col-md-7 mb-3">
+    <div class="row">
+        <div class="col-md-3">
+            <a href="{%url 'invoices:edit_invoice_buy' invoice.id %}">
+                <button class="btn btn-outline-primary my-btn">
+                    <span class="bi bi-chevron-compact-left">Cofnij</span>
+                </button>
+            </a>
+        </div>
+        <div class="col-md-6">
+            <h4 class="text-center">{%if new%} {{invoice.doc_types}}&nbsp;nr. {{invoice.no_invoice}} z dnia {{invoice.date_issue|date:"d.m.Y"}}&nbsp;r.{%else%}Edycja faktury{%endif%}</h4>
+        </div>
+    </div>
+    <div class="mt-5">
+        <div class="p-1">
+            <span class="text-muted">Kontahent: </span><span>{{invoice.contractor}}</span>
+        </div>
+        <div class="p-1">
+            <span class="text-muted">Data płanotści: </span><span><b>{{invoice.date_of_payment|date:"d.m.Y"}}&nbsp;r.</b></span>
+        </div>
+        <div class="p-1">
+            <span class="text-muted">Kwota faktury: </span><span><b>{% if invoice.sum != None%}{{invoice.sum}} {%else%}0{%endif%}&nbsp;zł.</b></span>
+        </div>
+        {%if invoice.information%}
+        <div class="p-1">
+            <p>{{invoice.information}}</p>
+        </div>
+        {%endif%}
+    </div>
+    <form class="mt-3" method="POST">
+        {%csrf_token%}
+        <div class="row">
+            <div class="col-md-4">
+                {{invoice_item.account|bootstrap}}
+            </div>
+            <div class="col-md-3">
+                {{invoice_item.county|bootstrap}}
+            </div>
+            <div class="col-md-3">
+                {{invoice_item.sum|bootstrap}}
+            </div>
+            <div class="col-md-2 mt-4">
+                <button type="submit" class="btn btn-outline-primary my-btn">
+                    <span class="bi bi-save2"> Dodaj</span>
+                </button>
+            </div>
+        </div>
+    </form>
+
+</div>
+{%endblock%}
+

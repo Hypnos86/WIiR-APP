@@ -1,4 +1,5 @@
 from django.db import models
+import datetime
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from investments.models import Project
@@ -6,9 +7,12 @@ import os
 
 
 def upload_gallery(instance, filename):
-    # return f"investments/{instance.gallery.project.project_title}/gallery/{instance.gallery.name}/{filename}"
     new_filename = create_name_photo(instance, filename)
+    # TODO obsługa błędów jesli pliki nie benda w .jpg
+    print(new_filename)
     return f"investments/{instance.gallery.project.project_title}/gallery/{instance.gallery.name}/{new_filename}"
+
+
 
 
 # Create your models here.
@@ -40,9 +44,17 @@ class Photo(models.Model):
     def __str__(self):
         return f"Zdjecie dodane {self.add_date}"
 
-
+def now_date():
+    return datetime.datetime.now()
 # @receiver(pre_save, sender=Photo)
 def create_name_photo(instance, filename):
-    extension = os.path.splitext(filename)
-    new_filename = f"{instance.gallery.project.unit.city}_{instance.id}{extension}"
+    extension = filename.split(".")[-1]
+    datetime = now_date()
+    date = datetime.strftime("%Y-%m-%d_(%H:%M:%S:%f)")
+    file = os.path.splitext(filename)
+    print(file)
+    print(filename)
+    new_filename = f"{instance.gallery.project.unit.city}_{date}.{extension}"
+    print(f'new_file: {new_filename}')
+
     return new_filename

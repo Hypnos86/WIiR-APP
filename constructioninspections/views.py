@@ -14,7 +14,6 @@ from units.models import Unit
 @login_required
 def important_inspections(request):
     next_date = date.today() + relativedelta(months=+3)
-    print(f"Data za miesiac: {next_date}")
 
     buildings_inspections_one_year = []
     buildings_inspections_one_year.sort()
