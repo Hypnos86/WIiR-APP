@@ -151,19 +151,28 @@ def new_invoice_buy(request):
 @login_required
 def add_items_invoice_buy(request, id):
     invoice_edit = get_object_or_404(InvoiceBuy, pk=id)
-    invoice_item = InvoiceItemsForm(request.POST or None)
+    invoice_item_form = InvoiceItemsForm(request.POST or None)
+    invoice_items = InvoiceItems.objects.all()
 
-    context = {"invoice_item": invoice_item, "invoice": invoice_edit, "new": True}
+    context = {"invoice_item": invoice_item_form, "invoice": invoice_edit, "invoice_items": invoice_items, "new": True}
 
     if request.method == "POST":
 
-        print(invoice_item.is_valid())
-        if invoice_item.is_valid():
-            instance = invoice_item.save(commit=False)
+        print(invoice_item_form.is_valid())
+        if invoice_item_form.is_valid():
+            instance = invoice_item_form.save(commit=False)
             instance.invoice_id = invoice_edit
-            invoice_item.save()
-            return redirect("invoices:buy_invoices_list")
+            invoice_item_form.save()
+            return redirect(reverse("invoices:add_items_invoice_buy", kwargs={"id": invoice_edit.id}))
     return render(request, "invoices/invoice_items.html", context)
+
+
+@login_required
+def delete_items_invoice_buy(request, id, invoice_id):
+    item = get_object_or_404(InvoiceItems, pk=id)
+    item.delete()
+    invoice = get_object_or_404(InvoiceBuy, pk=invoice_id)
+    return redirect(reverse("invoices:add_items_invoice_buy", kwargs={"id": invoice.id}))
 
 
 @login_required

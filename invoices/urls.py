@@ -2,7 +2,7 @@ from django.urls import path
 from .views import menu_invoices, buy_invoices_list, buy_invoices_list_archive, new_invoice_buy, sell_invoices_list,\
     sell_invoices_list_archive, new_invoice_sell, edit_invoice_sell, edit_invoice_sell_archive,edit_invoice_buy, make_verification, show_info_buy, \
     show_info_sell, make_invoice_elements, corrective_note_list, corrective_note_list_archive, show_info_note, new_note, \
-    edit_note, edit_note_archive, make_pdf_from_invoices_sell, add_items_invoice_buy
+    edit_note, edit_note_archive, make_pdf_from_invoices_sell, add_items_invoice_buy, delete_items_invoice_buy
 
 app_name = 'invoices'
 urlpatterns = [
@@ -13,6 +13,7 @@ urlpatterns = [
     path('nowa_fv_wydatek/', new_invoice_buy, name="new_invoice_buy"),
     path('edycja_fv_kupno/<int:id>', edit_invoice_buy, name='edit_invoice_buy'),
     path('add_invoice_item/<int:id>', add_items_invoice_buy, name='add_items_invoice_buy'),
+    path('delete_item/<int:id>/<int:invoice_id>', delete_items_invoice_buy, name='delete_items_invoice_buy'),
     path('elementy/', make_invoice_elements, name='make_invoice_elements'),
     path('ewidencja_fv_sprzedaz/', sell_invoices_list, name="sell_invoices_list"),
     path('info_sell/<int:id>/', show_info_sell, name="show_info_sell"),
