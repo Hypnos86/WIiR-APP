@@ -15,6 +15,13 @@
         <div class="col-md-6">
             <h4 class="text-center">{%if new%} {{invoice.doc_types}}&nbsp;nr. {{invoice.no_invoice}} z dnia {{invoice.date_issue|date:"d.m.Y"}}&nbsp;r.{%else%}Edycja faktury{%endif%}</h4>
         </div>
+        <div class="col-md-3">
+            <a href="{%url 'invoices:edit_invoice_buy' invoice.id %}">
+                <button class="btn btn-outline-primary my-btn">
+                    <span class="bi bi-chevron-compact-left">Zapisz</span>
+                </button>
+            </a>
+        </div>
     </div>
     <div class="mt-5">
         <div class="p-1">
@@ -51,14 +58,13 @@
             </div>
         </div>
     </form>
-
     <div class="col-md-10 mt-5">
         <h5>Elementy faktury</h5>
         <ul class="list-group">
             {%for item in invoice_items%}
             <li class="list-group-item">
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-8 pt-2">
                         <span>{{item}}</span>
                     </div>
                     <div class="col-md-4 moj-button-right">
@@ -73,7 +79,6 @@
             {%endfor%}
         </ul>
     </div>
-
 </div>
 {%endblock%}
 

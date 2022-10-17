@@ -7,10 +7,10 @@
     <div class="row">
         <div class="col-md-3">
             <a href="{%url 'invoices:buy_invoices_list'%}">
-            <button class="btn btn-outline-primary my-btn">
-                <span class="bi bi-chevron-compact-left">Cofnij</span>
-            </button>
-        </a>
+                <button class="btn btn-outline-primary my-btn">
+                    <span class="bi bi-chevron-compact-left">Cofnij</span>
+                </button>
+            </a>
         </div>
         <div class="col-md-6">
             <h4 class="text-center">{%if new%}Nowa faktura{%else%}Edycja faktury{%endif%}</h4>
@@ -38,12 +38,41 @@
             <div class="d-flex justify-content-between">
                 <div class="col-md-12 ">{{invoice.information|bootstrap}}</div>
             </div>
-            <div class="col-md-12 mt-4 moj-button-right">
+        </div>
+        <div class="row mt-4">
+            <div>{{invoice.id}}</div>
+            {%if new%}
+            <div class="col-md-12 moj-button-right">
                 <button type="submit" class="btn btn-outline-primary my-btn">
                     <span class="bi bi-plus-circle"> Dodaj Elementy</span>
                 </button>
             </div>
+            {%else%}
+            <div class="col-md-6 moj-button-left">
+                <a href="{% url 'invoices:delete_invoice_buy' invoice.id %}">
+                    <button type="button" class="btn btn-outline-danger mx-1" data-toggle="info" title="Usuń fakturę">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </a>
+            </div>
+
+            <div class="col-md-6 moj-button-right">
+                <button type="submit" class="btn btn-outline-primary my-btn">
+                    <span class="bi bi-plus-circle"> Dodaj Elementy</span>
+                </button>
+            </div>
+            {%endif%}
         </div>
     </form>
 </div>
+<script>
+   $(function () {
+        $('[data-toggle="info"]').tooltip()
+    })
+
+
+
+
+
+</script>
 {%endblock%}

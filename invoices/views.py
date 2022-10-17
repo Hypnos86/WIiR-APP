@@ -157,8 +157,6 @@ def add_items_invoice_buy(request, id):
     context = {"invoice_item": invoice_item_form, "invoice": invoice_edit, "invoice_items": invoice_items, "new": True}
 
     if request.method == "POST":
-
-        print(invoice_item_form.is_valid())
         if invoice_item_form.is_valid():
             instance = invoice_item_form.save(commit=False)
             instance.invoice_id = invoice_edit
@@ -180,7 +178,6 @@ def edit_invoice_buy(request, id):
     invoice_buy_edit = get_object_or_404(InvoiceBuy, pk=id)
     invoice_buy_form = InvoiceBuyForm(request.POST or None, instance=invoice_buy_edit)
     invoice_buy_form.fields["doc_types"].queryset = DocumentTypes.objects.exclude(type="Nota korygująca")
-
     context = {"invoice": invoice_buy_form,
                "new": False}
 
@@ -190,6 +187,13 @@ def edit_invoice_buy(request, id):
         invoice_buy_form.save()
         return redirect(reverse("invoices:add_items_invoice_buy", kwargs={"id": instance.id}))
     return render(request, "invoices/invoice_buy_form.html", context)
+
+
+@login_required
+def delete_invoice_buy(request, id):
+    invoice = get_object_or_404(InvoiceBuy, pk=id)
+    invoice.delete()
+    return redirect("invoices:buy_invoices_list")
 
 
 @login_required
