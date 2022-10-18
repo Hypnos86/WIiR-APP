@@ -179,6 +179,7 @@ def edit_invoice_buy(request, id):
     invoice_buy_form = InvoiceBuyForm(request.POST or None, instance=invoice_buy_edit)
     invoice_buy_form.fields["doc_types"].queryset = DocumentTypes.objects.exclude(type="Nota korygująca")
     context = {"invoice": invoice_buy_form,
+               "invoice_id": invoice_buy_edit,
                "new": False}
 
     if invoice_buy_form.is_valid():

@@ -3,6 +3,7 @@ from contractors.models import Contractor
 from units.models import County
 from main.models import Employer
 from sourcefinancing.models import FinanceSource
+import datetime
 
 
 class DocumentTypes(models.Model):
@@ -66,7 +67,8 @@ class InvoiceBuy(models.Model):
     author = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name="invoicebuy")
 
     def __str__(self):
-        return f"{self.no_invoice} z dnia {self.date_issue}"
+
+        return f"{self.no_invoice} z dnia {self.date_issue.strftime('%d.%m.%Y')} r."
 
 
 class InvoiceItems(models.Model):
@@ -75,7 +77,7 @@ class InvoiceItems(models.Model):
         verbose_name_plural = "Elementy faktury"
         ordering = ["invoice_id"]
 
-    invoice_id = models.ForeignKey(InvoiceBuy, on_delete=models.CASCADE, verbose_name="ID Faktury",
+    invoice_id = models.ForeignKey(InvoiceBuy, on_delete=models.CASCADE, verbose_name="Faktura",
                                    related_name="invoice_items")
     account = models.ForeignKey(FinanceSource, on_delete=models.CASCADE, verbose_name="Konto",
                                 related_name="invoice_items")

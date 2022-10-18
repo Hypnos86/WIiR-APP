@@ -5,9 +5,9 @@
 {%block content%}
 <div class="container col-md-7 mb-3">
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-3 moj-button-left">
             <a href="{%url 'invoices:edit_invoice_buy' invoice.id %}">
-                <button class="btn btn-outline-primary my-btn">
+                <button class="btn btn-outline-primary my-btn ">
                     <span class="bi bi-chevron-compact-left">Cofnij</span>
                 </button>
             </a>
@@ -15,10 +15,10 @@
         <div class="col-md-6">
             <h4 class="text-center">{%if new%} {{invoice.doc_types}}&nbsp;nr. {{invoice.no_invoice}} z dnia {{invoice.date_issue|date:"d.m.Y"}}&nbsp;r.{%else%}Edycja faktury{%endif%}</h4>
         </div>
-        <div class="col-md-3">
-            <a href="{%url 'invoices:edit_invoice_buy' invoice.id %}">
+        <div class="col-md-3 moj-button-right">
+            <a href="{%url 'invoices:buy_invoices_list' %}">
                 <button class="btn btn-outline-primary my-btn">
-                    <span class="bi bi-chevron-compact-left">Zapisz</span>
+                    <span>Zapisz <i class="bi bi-chevron-compact-right"></i></span>
                 </button>
             </a>
         </div>
@@ -51,7 +51,7 @@
             <div class="col-md-3">
                 {{invoice_item.sum|bootstrap}}
             </div>
-            <div class="col-md-2 mt-4">
+            <div class="col-md-2 mt-4 moj-button-right">
                 <button type="submit" class="btn btn-outline-primary my-btn">
                     <span class="bi bi-save2"> Dodaj</span>
                 </button>
@@ -69,7 +69,7 @@
                     </div>
                     <div class="col-md-4 moj-button-right">
                         <a href="{%url 'invoices:delete_items_invoice_buy' item.id invoice.id%}">
-                            <button class="btn btn-outline-danger mx-1">
+                            <button class="btn btn-outline-danger mx-1" data-toggle="info" title="Usuń element">
                                 <i class="bi bi-trash"></i>
                             </button>
                         </a>
@@ -80,5 +80,10 @@
         </ul>
     </div>
 </div>
+<script>
+    $(function () {
+    $('[data-toggle="info"]').tooltip()
+    })
+</script>
 {%endblock%}
 

@@ -29,6 +29,7 @@ class InvoiceSellAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ['date', 'no_invoice', 'contractor', 'sum', 'period_from', 'period_to', 'county',
                     'creator', 'information', 'author']
     search_fields = ['no_invoice', 'contractor', 'county']
+    list_display_links = ['no_invoice']
     preserve_filters = True
     resource_class = InvoiceSellResource
 
@@ -49,6 +50,7 @@ class CorrectiveNoteResource(resources.ModelResource):
 class CorrectiveNoteAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ['date', 'no_note', 'contractor', 'corrective_invoice']
     search_fields = ['no_note', 'corrective_invoice']
+    search_help_text = "Mozliwość szukania: nr. noty, korygowana faktura"
     list_display_links = ['no_note']
     resource_class = CorrectiveNoteResource
 
@@ -69,3 +71,6 @@ class InvoiceItemsAdmin(admin.ModelAdmin):
 class InvoiceBuyAdmin(admin.ModelAdmin):
     list_display = ['date_receipt', 'date_issue', 'no_invoice', 'sum', 'contractor', 'creation_date',
                     'author']
+    list_display_links = ['no_invoice']
+    search_fields = ['no_invoice', 'contractor__name', 'contractor__nip']
+    search_help_text = "Możliwość szukania: nr. faktury, nazwa kontrahenta, NIP"

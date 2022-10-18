@@ -49,7 +49,7 @@
             </div>
             {%else%}
             <div class="col-md-6 moj-button-left">
-                <a href="{% url 'invoices:delete_invoice_buy' invoice.id %}">
+                <a href="{%url 'invoices:delete_invoice_buy' invoice_id.id%}">
                     <button type="button" class="btn btn-outline-danger mx-1" data-toggle="info" title="Usuń fakturę">
                         <i class="bi bi-trash"></i>
                     </button>
