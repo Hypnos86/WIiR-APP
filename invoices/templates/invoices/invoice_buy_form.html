@@ -24,14 +24,29 @@
             <div class="col-md-3 my-2">{{invoice.date_receipt|bootstrap}}</div>
             <div class="col-md-3 my-2">{{invoice.date_issue|bootstrap}}</div>
             <div class="col-md-3 my-2">{{invoice.no_invoice|bootstrap}}</div>
-            <div class="col-md-3 my-2">{{invoice.doc_types|bootstrap}}</div>
+            <div class="col-md-3 my-2">
+                {%if new%}
+                <div class="form-group">
+                    <label class="control-label  " for="id_doc_types">Rodzaj dokumentu</label>
+                    <div class=" ">
+                        <select name="doc_types" class=" form-control" required="" id="id_doc_types">
+                           {%for doc in doc_types%}
+                            <option value="{{doc.id}}">{{doc}}</option>
+                            {%endfor%}
+                        </select>
+                    </div>
+                </div>
+                {%else%}
+                {{invoice.doc_types|bootstrap}}
+                {%endif%}
+            </div>
             <div class="col-md-6 my-2">{{invoice.contractor|bootstrap}}</div>
             <div class="col-md-3 my-2">{{invoice.date_of_payment|bootstrap}}</div>
             <div class="col-md-3 my-2">
                 <div class="form-group">
                     <label class="control-label" for="id_sum">Kwota brutto [zł]</label>
                     <div>
-                        <input type="number" name="sum" step="0.01" class="form-control" id="id_sum" readonly>
+                        <input type="number" name="sum" step="0.01" class="form-control" id="id_sum" readonly value="{{invoice_id.sum}}">
                     </div>
                 </div>
             </div>

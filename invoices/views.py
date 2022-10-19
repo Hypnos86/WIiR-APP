@@ -63,7 +63,7 @@ def buy_invoices_list(request):
                           | invoices_buy.filter(sum__startswith=q) \
                           | invoices_buy.filter(contractor__name__icontains=q) \
                           | invoices_buy.filter(contractor__no_contractor__startswith=q) \
-                          | invoices_buy.filter(invoiceitems__county__name__icontains=q)
+                          | invoices_buy.filter(invoice_items__county__name__icontains=q)
 
         if date_from:
             invoicesbuy = invoices_buy.filter(date_receipt__gte=date_from)
@@ -136,8 +136,9 @@ def buy_invoices_list_archive(request, year):
 @login_required
 def new_invoice_buy(request):
     invoice_buy_form = InvoiceBuyForm(request.POST or None)
+    doc_types = invoice_buy_form.fields["doc_types"].queryset = DocumentTypes.objects.exclude(type="Nota korygująca")
     invoice_buy_form.fields["doc_types"].queryset = DocumentTypes.objects.exclude(type="Nota korygująca")
-    context = {"invoice": invoice_buy_form, "new": True}
+    context = {"invoice": invoice_buy_form, "doc_types": doc_types, "new": True}
 
     if request.method == "POST":
         if invoice_buy_form.is_valid():
@@ -155,12 +156,12 @@ def add_items_invoice_buy(request, id):
     invoice_items = InvoiceItems.objects.all()
 
     context = {"invoice_item": invoice_item_form, "invoice": invoice_edit, "invoice_items": invoice_items, "new": True}
-
     if request.method == "POST":
         if invoice_item_form.is_valid():
             instance = invoice_item_form.save(commit=False)
             instance.invoice_id = invoice_edit
             invoice_item_form.save()
+
             return redirect(reverse("invoices:add_items_invoice_buy", kwargs={"id": invoice_edit.id}))
     return render(request, "invoices/invoice_items.html", context)
 
@@ -240,13 +241,14 @@ def sell_invoices_list(request):
 
     if q or date_from or date_to:
         if q:
-            invoicessell = invoicessell.filter(no_invoice__icontains=q) | invoicessell.filter(
-                sum__startswith=q) | invoicessell.filter(date__startswith=q) | invoicessell.filter(
-                contractor__name__icontains=q) | invoicessell.filter(
-                contractor__no_contractor__startswith=q) | invoicessell.filter(
-                county__name__icontains=q) | invoicessell.filter(
-                creator__creator__icontains=q) | invoicessell.filter(
-                information__icontains=q) | invoicessell.filter(doc_types__type__icontains=q)
+            invoicessell = invoicessell.filter(no_invoice__icontains=q) \
+                           | invoicessell.filter(sum__startswith=q) \
+                           | invoicessell.filter(date__startswith=q) \
+                           | invoicessell.filter(contractor__name__icontains=q) \
+                           | invoicessell.filter(contractor__no_contractor__startswith=q) \
+                           | invoicessell.filter(county__name__icontains=q) \
+                           | invoicessell.filter(information__icontains=q) \
+                           | invoicessell.filter(doc_types__type__icontains=q)
 
         if date_from:
             invoicessell = invoicessell.filter(date__gte=date_from)
@@ -304,7 +306,6 @@ def sell_invoices_list_archive(request, year):
                             | invoices_sell.filter(contractor__name__icontains=q) \
                             | invoices_sell.filter(contractor__no_contractor__startswith=q) \
                             | invoices_sell.filter(county__name__icontains=q) \
-                            | invoices_sell.filter(creator__creator__icontains=q) \
                             | invoices_sell.filter(information__icontains=q) \
                             | invoices_sell.filter(doc_types__type__icontains=q)
 
@@ -386,17 +387,6 @@ def edit_invoice_sell_archive(request, id):
         return redirect(reverse("invoices:sell_invoices_list_archive", kwargs={"year": year}))
 
     return render(request, "invoices/invoice_sell_archive_form.html", context)
-
-
-@login_required
-def make_invoice_elements(request):
-    element_form = InvoiceItemsForm(request.POST or None)
-    context = {"element_form": element_form}
-
-    if request.methot == "POST":
-        if element_form.is_valid():
-            element_form.save()
-    return render(request, "invoices/elements_popup.html", context)
 
 
 @login_required
@@ -556,8 +546,8 @@ def make_verification(request):
 
         days = set([days["date_of_payment"] for days in invoices_buy_list.values("date_of_payment", "sum")])
 
-        for day in days:
-            print(day.aggregate(Sum("sum")))
+        # for day in days:
+            # print(day.aggregate(Sum("sum")))
         # TODO poprawić kod w dziennym sumowaniu weryfikacji
         # for invoice in invoices_buy_list.values("date_of_payment"):
         #     day_sum = invoices_buy_list.aggregate(Sum("sum"))

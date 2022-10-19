@@ -8,7 +8,6 @@ import os
 
 def upload_gallery(instance, filename):
     new_filename = create_name_photo(instance, filename)
-    # TODO obsługa błędów jesli pliki nie benda w .jpg
     print(new_filename)
     return f"investments/{instance.gallery.project.project_title}/gallery/{instance.gallery.name}/{new_filename}"
 

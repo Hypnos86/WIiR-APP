@@ -74,7 +74,7 @@
             <th align="center" valign="middle" width="40" scope="col">L.p.</th>
             <th align="center" valign="middle" width="40" scope="col">Data wpływu</th>
             <th align="center" valign="middle" width="40" scope="col">Data wystawienia</th>
-            <th align="center" valign="middle" width="120" scope="col">Nr. faktury</th>
+            <th align="center" valign="middle" width="120" scope="col">Nr. dokumentu</th>
             <th align="center" valign="middle" width="250" scope="col">Kontrahent</th>
             <th align="center" valign="middle" width="100" scope="col">Kwota</th>
             <th align="center" valign="middle" width="40" scope="col">Data płatności</th>
@@ -86,9 +86,9 @@
             <td align="center" valign="middle" scope="row" data-toggle="info" title="Zapisujący: {{invoice.author.first_name}} {{invoice.author.last_name}}"><span class="text-center"></span></td>
             <td align="center" valign="middle"><span>{{invoice.date_receipt|date:"d.m.Y"}} r.</span></td>
             <td align="center" valign="middle"><span>{{invoice.date_issue|date:"d.m.Y"}} r.</span></td>
-            <td align="left" valign="middle"><span>{{invoice.no_invoice|default_if_none:''}}</span></td>
+            <td align="left" valign="middle"><span data-toggle="info" title="{{invoice.doc_types}}">{{invoice.no_invoice|default_if_none:''}}</span></td>
             <td valign="middle"><span title="SWOP ID: {{invoice.contractor.no_contractor}}">{{invoice.contractor.name}}. <br><small>Adres: {{invoice.contractor.address}}, {{invoice.contractor.zip_code}} {{invoice.contractor.city}}</small></span></td>
-            <td align="center" valign="middle"><span>{%if invoice.sum%}{{invoice.sum|intcomma}} zł. {%else%} {{invoice.sum|default_if_none:'---'}} {%endif%}</span></td>
+            <td align="center" valign="middle"><span>{%if invoice.sum%} {{invoice.sum|intcomma}}&nbsp;zł. {%else%} {{invoice.sum|default_if_none:'---'}}&nbsp;zł. {%endif%}</span></td>
             <td align="center" valign="middle"><span>{{invoice.date_of_payment|date:"d.m.Y"}} r.</span></td>
             <td align="right" width="100">
                 <button  data-toggle="info" title="Pokaż" type="button" data-url="{% url 'invoices:show_info_buy' invoice.id %}" class="btn btn-outline-success mx-2 my-1" onclick="openModal(this) ">

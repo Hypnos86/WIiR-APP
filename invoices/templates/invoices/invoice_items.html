@@ -58,26 +58,39 @@
             </div>
         </div>
     </form>
-    <div class="col-md-10 mt-5">
+    <div class="col-md-12 mt-5">
         <h5>Elementy faktury</h5>
-        <ul class="list-group">
+        <table class="table table-hover my-table">
+            <thead>
+                <tr class="text-center">
+                    <th><span>Rozdział</span></th>
+                    <th><span>Grupa</span></th>
+                    <th><span>Paragraf</span></th>
+                    <th><span>Źródło finansowania</span></th>
+                    <th><span>Jednostka</span></th>
+                    <th><span>Kwota</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
             {%for item in invoice_items%}
-            <li class="list-group-item">
-                <div class="row">
-                    <div class="col-md-8 pt-2">
-                        <span>{{item}}</span>
-                    </div>
-                    <div class="col-md-4 moj-button-right">
-                        <a href="{%url 'invoices:delete_items_invoice_buy' item.id invoice.id%}">
+            <tr>
+                <td align="center" valign="middle"><span>{{item.account.section.section}}</span></td>
+                <td align="center" valign="middle"><span>{{item.account.group}}</span></td>
+                <td align="center" valign="middle"><span>{{item.account.paragraph}}</span></td>
+                <td align="center" valign="middle"><span>{{item.account.source}}</span></td>
+                <td align="center" valign="middle"><span>{{item.county}}</span></td>
+                <td align="center" valign="middle"><span>{{item.sum}}</span></td>
+                <td align="center" valign="middle"><a href="{%url 'invoices:delete_items_invoice_buy' item.id invoice.id%}">
                             <button class="btn btn-outline-danger mx-1" data-toggle="info" title="Usuń element">
                                 <i class="bi bi-trash"></i>
                             </button>
                         </a>
-                    </div>
-                </div>
-            </li>
+                </td>
+            </tr>
             {%endfor%}
-        </ul>
+            </tbody>
+        </table>
     </div>
 </div>
 <script>

@@ -79,10 +79,9 @@
             <th align="center" valign="middle" width="40" scope="col">L.p.</th>
             <th align="center" valign="middle" width="40" scope="col">Data wystawienia</th>
             <th align="center" valign="middle" width="120" scope="col">Nr. dokumentu</th>
-            <th align="center" valign="middle" width="50" scope="col">Typ dokumentu</th>
             <th align="center" valign="middle" width="120" scope="col">Kwota</th>
             <th align="center" valign="middle" width="40" scope="col">Data płatności</th>
-            <th align="center" valign="middle" width="110" scope="col">Okres</th>
+            <th align="center" valign="middle" width="120" scope="col">Okres</th>
             <th align="center" valign="middle" width="200" scope="col">Kontrahent</th>
             <th align="center" valign="middle" width="120" scope="col">Powiat</th>
         </tr>
@@ -90,27 +89,40 @@
         <tbody>
         {% for invoice in invoices %}
         <tr class="my-table-tr">
-            <td align="center" valign="middle" scope="row" data-toggle="info" data-placement="auto" title="Zapisujący: {{invoice.author.first_name}} {{invoice.author.last_name}}"><span class="text-center"></span></td>
-            <td align="center" valign="middle"><span>{{invoice.date|date:"d.m.Y"}}&nbspr.</span></td>
-            <td align="center" valign="middle"><span title="{{invoice.creator}}">{{invoice.no_invoice|default_if_none:''}}</span></td>
-            <td align="center" valign="middle"><span>{{invoice.doc_types}}</span></td>
-            <td align="center" valign="middle"><span>{{invoice.sum|intcomma}}&nbspzł</span></td>
-            <td align="center" valign="middle"><span>{{invoice.date_of_payment|date:"d.m.Y"}}&nbspr.</span></td>
-            <td align="center" valign="middle"><span>{{invoice.period_from|date:"m.Y"}}&nbspr. - {{invoice.period_to|date:"m.Y"}}&nbspr.</span>
+            <td align="center" valign="middle" scope="row" data-toggle="info" data-placement="auto" title="Zapisujący: {{invoice.author.first_name}} {{invoice.author.last_name}}">
+                <span class="text-center"></span>
             </td>
-            <td valign="middle"><span>{{invoice.contractor.name}}. <br><small>Adres: {{invoice.contractor.address}}, {{invoice.contractor.zip_code}} {{invoice.contractor.city}}</small></span></td>
-            <td align="center" valign="middle">{{invoice.county}}</td>
+            <td align="center" valign="middle">
+                <span>{{invoice.date|date:"d.m.Y"}}&nbspr.</span>
+            </td>
+            <td align="center" valign="middle">
+                <span data-toggle="info" title="{{invoice.doc_types}}">{{invoice.no_invoice|default_if_none:''}}</span>
+            </td>
+            <td align="center" valign="middle">
+                <span>{{invoice.sum|intcomma}}&nbspzł.</span>
+            </td>
+            <td align="center" valign="middle">
+                <span>{{invoice.date_of_payment|date:"d.m.Y"}}&nbspr.</span>
+            </td>
+            <td align="center" valign="middle">
+                <span>{{invoice.period_from|date:"m.Y"}}&nbspr. - {{invoice.period_to|date:"m.Y"}}&nbspr.</span>
+            </td>
+            <td valign="middle">
+                <span>{{invoice.contractor.name}}. <br><small>Adres: {{invoice.contractor.address}}, {{invoice.contractor.zip_code}} {{invoice.contractor.city}}</small></span>
+            </td>
+            <td align="center" valign="middle">
+                <span>{{invoice.county}}</span>
+            </td>
             <td align="right" width="120">
-                {%if invoice.information%}
                 <button data-toggle="info" title="Pokaż" type="button" data-url="{% url 'invoices:show_info_sell' invoice.id %}"
-                        class="btn btn-outline-success mx-2" onclick="openModal(this)"><i
-                        class="bi bi-info-lg"></i>
+                        class="btn btn-outline-success mx-2" onclick="openModal(this)">
+                    <i class="bi bi-info-lg"></i>
                 </button>
-                {%endif%}
                 {%if user.accessmodule.invoices_module_edit%}
                 <a class="mx-2" href="{%url 'invoices:edit_invoice_sell' invoice.id %}">
-                    <button data-toggle="info" title="Edytuj" type="submit" class="btn btn-outline-primary icon-color mx-1 "><i
-                            class="bi bi-pencil-square"></i></button>
+                    <button data-toggle="info" title="Edytuj" type="submit" class="btn btn-outline-primary icon-color mx-1 ">
+                        <i class="bi bi-pencil-square"></i>
+                    </button>
                 </a>
                 {%endif%}
             </td>
