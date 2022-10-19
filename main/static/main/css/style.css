@@ -285,3 +285,8 @@ hr {
     /* If max-width does not work, try using width instead */
     width: auto !important;
 }
+
+.page-item.active .page-link{
+    background-color: #0a4275!important;
+    border-color: white!important;
+}

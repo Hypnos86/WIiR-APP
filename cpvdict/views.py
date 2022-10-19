@@ -104,7 +104,7 @@ def order_list(request):
     date_from = request.GET.get('from', None)
     date_to = request.GET.get('to', None)
 
-    paginator = Paginator(orders, 30)
+    paginator = Paginator(orders, 2)
     page_number = request.GET.get('page')
     order_list = paginator.get_page(page_number)
 

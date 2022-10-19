@@ -125,7 +125,7 @@
         <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
         {%endif%}
         {%endfor%}
-        {%if orders.has.next%}
+        {%if orders.has_next%}
         <li class="page-item">
             <a class="page-link" href="?page={{orders.next_page_number}}">Następna</a>
         </li>

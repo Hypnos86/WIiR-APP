@@ -39,7 +39,7 @@
                     <div class="col-md-3">
                         <div>
                             <label class="control-label" for="date_from">Data umowy od</label>
-                            <div class=" ">
+                            <div>
                                 <input type="date" name="from" class="form-control" id="date_from" value="{{date_from}}">
                             </div>
                         </div>
@@ -264,14 +264,14 @@
 
     $(function () {
         $('[data-toggle="info"]').tooltip()
-    })
+        })
 
     function cleanSearch(){
         $("#q").val("");
         $("#date_from").val("");
         $("#date_to").val("");
         $("form").submit();
-    }
+        }
 </script>
 {%endif%}
 {%endblock%}
