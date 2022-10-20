@@ -38,7 +38,7 @@ class PatternInspections(PolymorphicModel):
                                         related_name="patterninspections")
     date_protocol = models.DateField("Data protokołu")
     conclusions = models.TextField("Wnioski")
-    date_next_inspection = models.DateField("Data kolejnego przeglądu")
+    date_next_inspection = models.DateField("Data kolejnego przeglądu", null=True, blank=True)
     creation_date = models.DateTimeField("Data utworzenia", auto_now_add=True)
     change = models.DateTimeField("Data zmian", auto_now=True)
     author = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name="patterninspections",
@@ -72,10 +72,19 @@ class ChimneyInspection(PatternInspections):
         return f'{self.date_protocol} - {self.no_inventory}'
 
 
-class ElectricalInspection(PatternInspections):
+class ElectricalInspectionOneYear(PatternInspections):
     class Meta:
-        verbose_name = "Przedląd elektryczny"
-        verbose_name_plural = "Przeglądy elektryczne"
+        verbose_name = "Przedląd elektryczny - roczny"
+        verbose_name_plural = "Przeglądy elektryczne - roczny"
+
+    def __str__(self):
+        return f'{self.date_protocol} - {self.no_inventory}'
+
+
+class ElectricalInspectionFiveYear(PatternInspections):
+    class Meta:
+        verbose_name = "Przedląd elektryczny - pięcioletni"
+        verbose_name_plural = "Przeglądy elektryczne - pięcioletni"
 
     def __str__(self):
         return f'{self.date_protocol} - {self.no_inventory}'

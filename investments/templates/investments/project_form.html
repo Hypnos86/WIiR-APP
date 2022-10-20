@@ -5,7 +5,6 @@
 {%block investmentsmenu%}
 {%if user.is_authenticated and user.accessmodule.investments_module_edit%}
 {%block additional_scripts%}
-{{project_form.media}}
 <div class="mx-5">
     <h3 class="text-center m-4">{%if new%}Nowe zadanie inwestycyjne{%else%}Edycja zadania inwestycyjnego{%endif%}</h3>
     <form method="post" enctype="multipart/form-data">
@@ -107,6 +106,7 @@
     $(document).ready(function(){
         $("#id_worker").select2({placeholder:'Dodaj pracownika'});
     })
+
 </script>
 {%endblock%}
 {%endif%}

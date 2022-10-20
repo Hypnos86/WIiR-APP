@@ -12,12 +12,13 @@
     </div>
         {%for object in buildings_inspections_one_year%}
     <div class="list-group col-md-3">
-        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+        <a class="list-group-item list-group-item-action flex-column align-items-start">
+<!--    TODO        data-url="" onclick="openModal(this)"-->
             <div class="d-flex w-100 justify-content-between">
                 <h6 class="mb-1"><b>Data protokołu: {{object.date_protocol|date:"d.m.Y"}}&nbsp;r.</b></h6>
             </div>
             <span class="mb-0 text-muted">Jednostka: </span>
-            <span data-toggle="info" title="{{object.no_inventory.unit.address}}, {{object.no_inventory.unit.zip_code}} {{object.no_inventory.unit.city}}">{{object.no_inventory.unit.type.type_short}} {{object.no_inventory.unit.city}} - {{object.no_inventory.unit.information}}</span>
+            <span data-toggle="info" title="{{object.no_inventory.unit.address}}, {{object.no_inventory.unit.zip_code}} {{object.no_inventory.unit.city}}">{{object.no_inventory.unit.type.type_short}} {{object.no_inventory.unit.city}} - {{object.no_inventory.unit.information}}</span><br>
             <span class="mb-1 text-muted">Budynek: </span><span>{{object.no_inventory.kind}}</span><br>
             <span class="text-muted mb-1">Nazwa: </span><span>{{object.no_inventory.building_name}}</span><br>
             <span class="text-muted">Nr.inwentarzowy: </span><span>{{object.no_inventory.no_inventory}}</span><br>
@@ -41,7 +42,7 @@
                 <h6 class="mb-1"><b>Data protokołu: {{object.date_protocol|date:"d.m.Y"}}&nbsp;r.</b></h6>
             </div>
             <span class="mb-0 text-muted">Jednostka: </span>
-            <span data-toggle="info" title="{{object.no_inventory.unit.address}}, {{object.no_inventory.unit.zip_code}} {{object.no_inventory.unit.city}}">{{object.no_inventory.unit.type.type_short}} {{object.no_inventory.unit.city}} - {{object.no_inventory.unit.information}}</span>
+            <span data-toggle="info" title="{{object.no_inventory.unit.address}}, {{object.no_inventory.unit.zip_code}} {{object.no_inventory.unit.city}}">{{object.no_inventory.unit.type.type_short}} {{object.no_inventory.unit.city}} - {{object.no_inventory.unit.information}}</span><br>
             <span class="mb-1 text-muted">Budynek: </span><span>{{object.no_inventory.kind}}</span><br>
             <span class="text-muted mb-1">Nazwa: </span><span>{{object.no_inventory.building_name}}</span><br>
             <span class="text-muted">Nr.inwentarzowy: </span><span>{{object.no_inventory.no_inventory}}</span><br>
@@ -65,7 +66,7 @@
                 <h6 class="mb-1"><b>Data protokołu: {{object.date_protocol|date:"d.m.Y"}}&nbsp;r.</b></h6>
             </div>
             <span class="mb-0 text-muted">Jednostka: </span>
-            <span data-toggle="info" title="{{object.no_inventory.unit.address}}, {{object.no_inventory.unit.zip_code}} {{object.no_inventory.unit.city}}">{{object.no_inventory.unit.type.type_short}} {{object.no_inventory.unit.city}} - {{object.no_inventory.unit.information}}</span>
+            <span data-toggle="info" title="{{object.no_inventory.unit.address}}, {{object.no_inventory.unit.zip_code}} {{object.no_inventory.unit.city}}">{{object.no_inventory.unit.type.type_short}} {{object.no_inventory.unit.city}} - {{object.no_inventory.unit.information}}</span><br>
             <span class="mb-1 text-muted">Budynek: </span><span>{{object.no_inventory.kind}}</span><br>
             <span class="text-muted mb-1">Nazwa: </span><span>{{object.no_inventory.building_name}}</span><br>
             <span class="text-muted">Nr.inwentarzowy: </span><span>{{object.no_inventory.no_inventory}}</span><br>
@@ -75,21 +76,21 @@
     {%endfor%}
 </div>
 {%endif%}
-{%if electrical_inspections%}
+{%if electrical_inspections_one_year%}
 <hr>
 <div class="row my-5">
     <div class="mb-3">
-        <span><b>Przeglądy instalacji elektrycznej</b></span>
-        <span class="badge text-white info badge-pill">{{electrical_inspections_len}}</span>
+        <span><b>Przeglądy instalacji elektrycznej - roczne</b></span>
+        <span class="badge text-white info badge-pill">{{electrical_inspections_one_len}}</span>
     </div>
-        {%for object in electrical_inspections%}
+        {%for object in electrical_inspections_one_year%}
     <div class="list-group col-md-3">
         <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
             <div class="d-flex w-100 justify-content-between">
                 <h6 class="mb-1"><b>Data protokołu: {{object.date_protocol|date:"d.m.Y"}}&nbsp;r.</b></h6>
             </div>
             <span class="mb-0 text-muted">Jednostka: </span>
-            <span data-toggle="info" title="{{object.no_inventory.unit.address}}, {{object.no_inventory.unit.zip_code}} {{object.no_inventory.unit.city}}">{{object.no_inventory.unit.type.type_short}} {{object.no_inventory.unit.city}} - {{object.no_inventory.unit.information}}</span>
+            <span data-toggle="info" title="{{object.no_inventory.unit.address}}, {{object.no_inventory.unit.zip_code}} {{object.no_inventory.unit.city}}">{{object.no_inventory.unit.type.type_short}} {{object.no_inventory.unit.city}} - {{object.no_inventory.unit.information}}</span><br>
             <span class="mb-1 text-muted">Budynek: </span><span>{{object.no_inventory.kind}}</span><br>
             <span class="text-muted mb-1">Nazwa: </span><span>{{object.no_inventory.building_name}}</span><br>
             <span class="text-muted">Nr.inwentarzowy: </span><span>{{object.no_inventory.no_inventory}}</span><br>
@@ -99,6 +100,32 @@
     {%endfor%}
 </div>
 {%endif%}
+
+{%if electrical_inspections_five_year%}
+<hr>
+<div class="row my-5">
+    <div class="mb-3">
+        <span><b>Przeglądy instalacji elektrycznej - pięcioletnie</b></span>
+        <span class="badge text-white info badge-pill">{{electrical_inspections_five_len}}</span>
+    </div>
+        {%for object in electrical_inspections_one_year%}
+    <div class="list-group col-md-3">
+        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                <h6 class="mb-1"><b>Data protokołu: {{object.date_protocol|date:"d.m.Y"}}&nbsp;r.</b></h6>
+            </div>
+            <span class="mb-0 text-muted">Jednostka: </span>
+            <span data-toggle="info" title="{{object.no_inventory.unit.address}}, {{object.no_inventory.unit.zip_code}} {{object.no_inventory.unit.city}}">{{object.no_inventory.unit.type.type_short}} {{object.no_inventory.unit.city}} - {{object.no_inventory.unit.information}}</span><br>
+            <span class="mb-1 text-muted">Budynek: </span><span>{{object.no_inventory.kind}}</span><br>
+            <span class="text-muted mb-1">Nazwa: </span><span>{{object.no_inventory.building_name}}</span><br>
+            <span class="text-muted">Nr.inwentarzowy: </span><span>{{object.no_inventory.no_inventory}}</span><br>
+            <small>Kolejny przegląd: </small><small class="color-teal"> {{object.date_next_inspection|date:"d.m.Y"}}&nbsp;r.</small>
+        </a>
+    </div>
+    {%endfor%}
+</div>
+{%endif%}
+
 {%if air_conditioners_inspection%}
 <hr>
 <div class="row my-5">
@@ -113,7 +140,7 @@
                 <h6 class="mb-1"><b>Data protokołu: {{object.date_protocol|date:"d.m.Y"}}&nbsp;r.</b></h6>
             </div>
             <span class="mb-0 text-muted">Jednostka: </span>
-            <span data-toggle="info" title="{{object.no_inventory.unit.address}}, {{object.no_inventory.unit.zip_code}} {{object.no_inventory.unit.city}}">{{object.no_inventory.unit.type.type_short}} {{object.no_inventory.unit.city}} - {{object.no_inventory.unit.information}}</span>
+            <span data-toggle="info" title="{{object.no_inventory.unit.address}}, {{object.no_inventory.unit.zip_code}} {{object.no_inventory.unit.city}}">{{object.no_inventory.unit.type.type_short}} {{object.no_inventory.unit.city}} - {{object.no_inventory.unit.information}}</span><br>
             <span class="mb-1 text-muted">Budynek: </span><span>{{object.no_inventory.kind}}</span><br>
             <span class="text-muted mb-1">Nazwa: </span><span>{{object.no_inventory.building_name}}</span><br>
             <span class="text-muted">Nr.inwentarzowy: </span><span>{{object.no_inventory.no_inventory}}</span><br>
@@ -137,7 +164,7 @@
                 <h6 class="mb-1"><b>Data protokołu: {{object.date_protocol|date:"d.m.Y"}}&nbsp;r.</b></h6>
             </div>
             <span class="mb-0 text-muted">Jednostka: </span>
-            <span data-toggle="info" title="{{object.no_inventory.unit.address}}, {{object.no_inventory.unit.zip_code}} {{object.no_inventory.unit.city}}">{{object.no_inventory.unit.type.type_short}} {{object.no_inventory.unit.city}} - {{object.no_inventory.unit.information}}</span>
+            <span data-toggle="info" title="{{object.no_inventory.unit.address}}, {{object.no_inventory.unit.zip_code}} {{object.no_inventory.unit.city}}">{{object.no_inventory.unit.type.type_short}} {{object.no_inventory.unit.city}} - {{object.no_inventory.unit.information}}</span><br>
             <span class="mb-1 text-muted">Budynek: </span><span>{{object.no_inventory.kind}}</span><br>
             <span class="text-muted mb-1">Nazwa: </span><span>{{object.no_inventory.building_name}}</span><br>
             <span class="text-muted">Nr.inwentarzowy: </span><span>{{object.no_inventory.no_inventory}}</span><br>
@@ -161,7 +188,7 @@
                 <h6 class="mb-1"><b>Data protokołu: {{object.date_protocol|date:"d.m.Y"}}&nbsp;r.</b></h6>
             </div>
             <span class="mb-0 text-muted">Jednostka: </span>
-            <span data-toggle="info" title="{{object.no_inventory.unit.address}}, {{object.no_inventory.unit.zip_code}} {{object.no_inventory.unit.city}}">{{object.no_inventory.unit.type.type_short}} {{object.no_inventory.unit.city}} - {{object.no_inventory.unit.information}}</span>
+            <span data-toggle="info" title="{{object.no_inventory.unit.address}}, {{object.no_inventory.unit.zip_code}} {{object.no_inventory.unit.city}}">{{object.no_inventory.unit.type.type_short}} {{object.no_inventory.unit.city}} - {{object.no_inventory.unit.information}}</span><br>
             <span class="mb-1 text-muted">Budynek: </span><span>{{object.no_inventory.kind}}</span><br>
             <span class="text-muted mb-1">Nazwa: </span><span>{{object.no_inventory.building_name}}</span><br>
             <span class="text-muted">Nr.inwentarzowy: </span><span>{{object.no_inventory.no_inventory}}</span><br>
@@ -171,12 +198,29 @@
     {%endfor%}
 </div>
 {%endif%}
+<!--MODAL-->
+<div class="modal fade" id="protocolModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
 <script>
     document.getElementById("button-units").classList.remove("active");
     document.getElementById("button-record").classList.add("active");
     document.getElementById("button-secretariat").classList.remove("active");
     document.getElementById("button-cpv").classList.remove("active");
     document.getElementById("button-investments").classList.remove("active");
+
+    function openModal(button){
+        var url = $(button).data("url");
+        $("#protocolModal .modal-content").load(url);
+        $("#protocolModal").modal("show");
+    }
+
+    function submitForm(){
+        $("#submitButton").closest("form").submit();
+        }
 
     $(function () {
         $('[data-toggle="info"]').tooltip()

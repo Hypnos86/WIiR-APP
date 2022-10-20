@@ -2,17 +2,17 @@
 {%load bootstrap%}
 {%block content%}
 <div>
-    <form class="m-2 p-4" method="get" action="{% url 'constructioninspections:buildings_inspections_choise' %}">
+    <form class="m-2 p-4" method="get" action="{% url 'constructioninspections:buildings_inspections_choice' %}">
         {%csrf_token%}
         <div class="container">
-            <h5 class="text-center">Przeglądy budynków</h5>
+            <h5 class="text-center">Przeglądy elektryczne</h5>
             <div class="text-center my-4">
-                <a class="btn btn-outline-primary my-btn" href="{%url 'constructioninspections:create_buildings_one_year_inspections'%}">
+                <a class="btn btn-outline-primary my-btn" href="#">
                     <span class="bi bi-chevron-double-right"> Jednoroczne</span>
                 </a>
             </div>
             <div class="text-center my-4">
-                <a class="btn btn-outline-primary my-btn" href="{%url 'constructioninspections:create_buildings_five_year_inspections'%}">
+                <a class="btn btn-outline-primary my-btn" href="#">
                     <span class="bi bi-chevron-double-right"> Pięcioletnie</span>
                 </a>
             </div>
