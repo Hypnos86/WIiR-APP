@@ -120,62 +120,85 @@ def electrical_inspections_choice(request):
 @login_required
 def create_buildings_one_year_inspections_list(request):
     units = Unit.objects.all()
-    context = {"units": units}
+    context = {"units": units, "overview": "overview_buildings_one_year"}
     return render(request, "construction_inspections/buildings_one_year_inspection.html", context)
 
 
 @login_required
 def create_buildings_five_year_inspections_list(request):
-    return render(request, "construction_inspections/buildings_five_year_inspection.html")
+    context = {"overview": "overview_buildings_five_year"}
+    return render(request, "construction_inspections/buildings_five_year_inspection.html", context)
 
 
 @login_required
 def create_chimney_inspection_list(request):
     objects = ChimneyInspection.objects.all()
-    return render(request, "construction_inspections/chimneys_inspection_list.html", {"objects": objects})
+    context = {"objects": objects, "overview": "overview_chimney"}
+    return render(request, "construction_inspections/chimneys_inspection_list.html", context)
 
 
 @login_required
 def create_electrical_inspection_one_year_list(request):
     objects = ElectricalInspectionOneYear.objects.all()
-    return render(request, "construction_inspections/electrical_inspection_one_year_list.html", {"objects": objects})
+    context = {"objects": objects, "overview": "overview_electrical_one_year"}
+    return render(request, "construction_inspections/electrical_inspection_one_year_list.html", context)
 
 
 @login_required
 def create_electrical_inspection_five_year_list(request):
     objects = ElectricalInspectionFiveYear.objects.all()
-    return render(request, "construction_inspections/electrical_inspection_five_year_list.html", {"objects": objects})
+    context = {"objects": objects, "overview": "overview_electrical_five_year"}
+    return render(request, "construction_inspections/electrical_inspection_five_year_list.html", context)
 
 
 @login_required
 def create_heating_boilers_inspection_list(request):
     objects = HeatingBoilerInspection.objects.all()
-    return render(request, "construction_inspections/heating_boilers_inspection_list.html", {"objects": objects})
+    context = {"objects": objects, "overview": "overview_heating_boilers"}
+    return render(request, "construction_inspections/heating_boilers_inspection_list.html", context)
 
 
 @login_required
 def create_air_conditioners_inspection_list(request):
     objects = AirConditionerInspection.objects.all()
-    return render(request, "construction_inspections/air_conditioners_inspection_list.html", {"objects": objects})
+    context = {"objects": objects, "overview": "overview_air_conditioners"}
+    return render(request, "construction_inspections/air_conditioners_inspection_list.html", context)
 
 
 @login_required
 def create_fire_inspection_list(request):
     objects = FireInspection.objects.all()
-    return render(request, "construction_inspections/fire_inspection_list.html", {"objects": objects})
+    context = {"objects": objects, "overview": "overview_fire_inspection"}
+    return render(request, "construction_inspections/fire_inspection_list.html", context)
 
 
 @login_required
-def add_protocol_buildings_inspections_one_year(request):
+def add_protocol(request, typeInspection):
     protocol_form = BuildingInspectionOneYearForm(request.POST or None)
-    type = TypeInspection.objects.get(pk=1)
+    if typeInspection == "overview_buildings_one_year":
+        typeProtocol = TypeInspection.objects.get(pk=1)
+    elif typeInspection == "overview_buildings_five_year":
+        typeProtocol = TypeInspection.objects.get(pk=2)
+    elif typeInspection == "overview_chimney":
+        typeProtocol = TypeInspection.objects.get(pk=3)
+    elif typeInspection == "overview_electrical_one_year":
+        typeProtocol = TypeInspection.objects.get(pk=4)
+    elif typeInspection == "overview_electrical_five_year":
+        typeProtocol = TypeInspection.objects.get(pk=5)
+    elif typeInspection == "overview_heating_boilers":
+        typeProtocol = TypeInspection.objects.get(pk=6)
+    elif typeInspection == "overview_air_conditioners":
+        typeProtocol = TypeInspection.objects.get(pk=7)
+    elif typeInspection == "overview_fire_inspection":
+        typeProtocol = TypeInspection.objects.get(pk=8)
+
+    print(typeProtocol)
 
     if request.method == "POST":
-        print(protocol_form.is_valid())
         if protocol_form.is_valid():
             instance = protocol_form.save(commit=False)
             instance.author = request.user
             protocol_form.save()
             return redirect("constructioninspections:create_buildings_one_year_inspections_list")
-    return render(request, "construction_inspections/protocol_buildings_one_year_form.html",
-                  {"form": protocol_form, "new": True, "type": type})
+    return render(request, "construction_inspections/protocol_inspection_form.html",
+                  {"form": protocol_form, "new": True, "typeProtocol": typeProtocol})

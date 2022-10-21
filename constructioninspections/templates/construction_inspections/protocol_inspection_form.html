@@ -5,6 +5,7 @@
 {% block title %}Ewidencja - Lokale Służbowe{% endblock %}
 {% block content %}
 {%if user.is_authenticated and user.accessmodule.official_flat_edit%}
+<!--TODO do poprawy autentykacja-->
 
 <div class="container col-md-6">
     <div class="row mb-5">
@@ -17,26 +18,27 @@
         </div>
         <div class="col-md-6">
             <h4 class="text-center">{%if new%}Nowy protokół {%else%}Edycja protokołu{%endif%}</h4>
+            <h5 class="text-center">{{typeProtocol}}</h5>
         </div>
     </div>
     <div>
         <form class="row" method="post">
             {%csrf_token%}
             <div class="col-md-12 my-2">{{form.no_inventory|bootstrap}}</div>
-            <div class="col-md-6 my-2">
+            <div class="col-md-6 my-2" hidden>
                 <div class="form-group">
                     <label class="control-label" for="id_inspection_name">Rodzaj przeglądu</label>
                     <div>
                         <select name="inspection_name" class=" form-control" required="" id="id_inspection_name" aria-readonly="true">
-                            <option value="{{type.id}}">{{type}}</option>
+                            <option value="{{typeProtocol.id}}">{{typeProtocol}}</option>
                         </select>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 my-2">{{form.date_protocol|bootstrap}}</div>
             <div class="col-md-12 my-2">{{form.conclusions|bootstrap}}</div>
-            <div class="col-md-12 my-2 moj-button-right">
-                <button type="submit" class="btn btn-outline-primary my-btn">
+            <div class="col-md-6 my-2">{{form.date_protocol|bootstrap}}</div>
+            <div class="col-md-6 my-2 moj-button-right">
+                <button type="submit" class="btn btn-outline-primary my-btn mt-4">
                     <span class="bi bi-save2"> Dodaj protokół</span>
                 </button>
             </div>

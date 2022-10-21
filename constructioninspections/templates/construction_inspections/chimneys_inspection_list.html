@@ -14,7 +14,7 @@
             <h4 class="">Przeglądy kominów</h4>
         </div>
         <div class="col-md-3 moj-button-right align-self-end">
-            <a href="">
+            <a href="{%url 'constructioninspections:add_protocol' overview%}">
                 <button type="button" class="btn btn-outline-primary my-btn">
                     <span class="bi bi-plus-circle"> Dodaj protokół</span>
                 </button>
@@ -22,14 +22,12 @@
         </div>
     </div>
 </div>
-
 <script>
     document.getElementById("button-units").classList.remove("active");
     document.getElementById("button-record").classList.add("active");
     document.getElementById("button-secretariat").classList.remove("active");
     document.getElementById("button-cpv").classList.remove("active");
     document.getElementById("button-investments").classList.remove("active");
-
 
 </script>
 {%endblock%}
