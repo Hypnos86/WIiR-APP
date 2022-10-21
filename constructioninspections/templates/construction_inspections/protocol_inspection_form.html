@@ -29,7 +29,8 @@
                 <div class="form-group">
                     <label class="control-label" for="id_inspection_name">Rodzaj przeglądu</label>
                     <div>
-                        <select name="inspection_name" class=" form-control" required="" id="id_inspection_name" aria-readonly="true">
+                        <select name="inspection_name" class=" form-control" required="" id="id_inspection_name"
+                                aria-readonly="true">
                             <option value="{{typeProtocol.id}}">{{typeProtocol}}</option>
                         </select>
                     </div>
@@ -54,10 +55,6 @@
     $(document).ready(function(){
         $("#id_no_inventory").select2({placeholder:'Szukaj budynku'});
     })
-
-
-
-
 
 </script>
 {%endif%}
