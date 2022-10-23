@@ -6,12 +6,22 @@ from constructioninspections.models import BuildingInspectionOneYear, BuildingIn
     ElectricalInspectionOneYear, HeatingBoilerInspection, AirConditionerInspection, FireInspection, TypeInspection, \
     ElectricalInspectionFiveYear
 from constructioninspections.forms import BuildingInspectionOneYearForm
-
+from enum import Enum
 from fixedasset.models import Building
 from units.models import Unit
 
 
 # Create your views here
+class ProtocolType(Enum):
+    overview_buildings_one_year = 1
+    overview_buildings_five_year = 2
+    overview_chimney = 3
+    overview_electrical_one_year = 4
+    overview_electrical_five_year = 5
+    overview_heating_boilers = 6
+    overview_air_conditioners = 7
+    overview_fire_inspection = 8
+
 
 @login_required
 def important_inspections(request):
@@ -120,7 +130,7 @@ def electrical_inspections_choice(request):
 @login_required
 def create_buildings_one_year_inspections_list(request):
     units = Unit.objects.all()
-    context = {"units": units, "overview": "overview_buildings_one_year"}
+    context = {"units": units, "overview": ProtocolType.overview_buildings_one_year}
     return render(request, "construction_inspections/buildings_one_year_inspection.html", context)
 
 
@@ -175,8 +185,8 @@ def create_fire_inspection_list(request):
 @login_required
 def add_protocol(request, typeInspection):
     protocol_form = BuildingInspectionOneYearForm(request.POST or None)
-    if typeInspection == "overview_buildings_one_year":
-        typeProtocol = TypeInspection.objects.get(pk=1)
+    if typeInspection == ProtocolType.overview_buildings_one_year.name:
+        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.overview_buildings_one_year.value)
     elif typeInspection == "overview_buildings_five_year":
         typeProtocol = TypeInspection.objects.get(pk=2)
     elif typeInspection == "overview_chimney":
