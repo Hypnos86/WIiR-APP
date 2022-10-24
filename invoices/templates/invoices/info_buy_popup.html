@@ -6,13 +6,35 @@
     <form class="m-2 p-4" method="get" action="{% url 'invoices:show_info_buy' id %}">
         {%csrf_token%}
         <div class="container">
-            <div class="mb-4"><span class="text-muted">{{invoice.doc_types}} nr: </span><span>{{invoice.no_invoice}} z dnia {{invoice.date_issue|date:'d.m.Y'}}&nbsp;r.</span></div>
-            <div class="my-1"><span class="text-muted">Kontrahent: </span><span>{{invoice.contractor}}</span></div>
-            <div class="my-1"><span class="text-muted">Kwota: </span><span>{{invoice.sum}}&nbsp;zł.</span></div>
-<!--            TODO lista powiatów z faktury-->
-            <div class="my-1"><span class="text-muted">Powiaty: </span><span>{{invoice.county}}</span></div>
-            <div class="my-1"><span class="text-muted">Termin płatności: </span><span>{{invoice.date_of_payment}}&nbsp;r.</span></div>
-            <div class="my-1"><span class="text-muted">Informacje: </span><p>{%if invoice.information%} {{invoice.information}} {%else%} brak {%endif%}</p></div>
+            <div class="mb-4">
+                <span class="text-muted">{{invoice.doc_types}} nr: </span>
+                <span>{{invoice.no_invoice}} z dnia {{invoice.date_issue|date:'d.m.Y'}}&nbsp;r.</span>
+            </div>
+            <div class="my-1">
+                <span class="text-muted">Kontrahent: </span>
+                <span>{{invoice.contractor}}</span>
+            </div>
+            <div class="my-1">
+                <span class="text-muted">Kwota: </span>
+                <span>{{invoice.sum}}&nbsp;zł.</span>
+            </div>
+
+            <div class="my-1">
+                <span class="text-muted">Termin płatności: </span>
+                <span>{{invoice.date_of_payment}}&nbsp;r.</span>
+            </div>
+            <div class="my-1">
+                <span class="text-muted">Informacje: </span>
+                <p>{%if invoice.information%} {{invoice.information}} {%else%} --brak-- {%endif%}</p></div>
+            <hr>
+            <div class="my-1"><span class="text-muted">Powiaty: </span>
+                <ul class="list-group">
+                {%for item in items%}
+                <li style="list-style-type: none;">{{item.county}} - {{item.sum}}&nbsp;zł.</li>
+                {%endfor%}
+                    </ul>
+            </div>
+            <hr>
             <div class="my-1"><span class="text-muted">Ewidencja: </span><span>{{invoice.creation_date|date:"d.m.Y"}}&nbsp;r. ({{invoice.author}})</span></div>
         </div>
     </form>

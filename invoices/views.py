@@ -88,7 +88,8 @@ def buy_invoices_list(request):
 @login_required
 def show_info_buy(request, id):
     invoice = get_object_or_404(InvoiceBuy, pk=id)
-    return render(request, "invoices/info_buy_popup.html", {"invoice": invoice, "id": id})
+    items = InvoiceItems.objects.filter(invoice_id=invoice)
+    return render(request, "invoices/info_buy_popup.html", {"invoice": invoice, "items":items, "id": id})
 
 
 @login_required
@@ -153,7 +154,7 @@ def new_invoice_buy(request):
 def add_items_invoice_buy(request, id):
     invoice_edit = get_object_or_404(InvoiceBuy, pk=id)
     invoice_item_form = InvoiceItemsForm(request.POST or None)
-    invoice_items = InvoiceItems.objects.all()
+    invoice_items = InvoiceItems.objects.filter(invoice_id=invoice_edit)
 
     context = {"invoice_item": invoice_item_form, "invoice": invoice_edit, "invoice_items": invoice_items, "new": True}
     if request.method == "POST":
