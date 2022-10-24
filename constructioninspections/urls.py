@@ -3,7 +3,7 @@ from constructioninspections.views import create_buildings_one_year_inspections_
     create_buildings_five_year_inspections_list, create_chimney_inspection_list, \
     create_electrical_inspection_one_year_list, create_heating_boilers_inspection_list, \
     create_air_conditioners_inspection_list, create_fire_inspection_list, important_inspections, \
-    create_electrical_inspection_five_year_list, electrical_inspections_choice, add_protocol
+    create_electrical_inspection_five_year_list, electrical_inspections_choice, add_protocol, show_information
 
 app_name = "constructioninspections"
 urlpatterns = [
@@ -39,5 +39,7 @@ urlpatterns = [
          name="create_air_conditioners_inspection_list"),
     # Przeglądy p.poż
     path("create_fire_inspections/", create_fire_inspection_list, name="create_fire_inspection_list"),
+    # Popup informacyjny
+    path("show_info/<int:id>", show_information, name="show_information")
 
 ]

@@ -212,3 +212,10 @@ def add_protocol(request, typeInspection):
             return redirect("constructioninspections:create_buildings_one_year_inspections_list")
     return render(request, "construction_inspections/protocol_inspection_form.html",
                   {"form": protocol_form, "new": True, "typeProtocol": typeProtocol})
+
+
+@login_required
+def show_information(request, id):
+
+    context = {}
+    return render(request, "construction_inspections/info.popup.html", context)
