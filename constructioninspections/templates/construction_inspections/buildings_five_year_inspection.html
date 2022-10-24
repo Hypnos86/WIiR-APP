@@ -1,6 +1,7 @@
 {%extends 'base.html'%}
 {%load static%}
 {%block content%}
+{%if user.accessmodule.inspections_module%}
 {%block additional_scripts%}
 <div class="">
     <div class="row">
@@ -14,13 +15,15 @@
         <div class="col-md-6 text-center">
             <h4 class="">Przeglądy pięcioletnie budynków</h4>
         </div>
+        {%if user.accessmodule.inspections_module_edit%}
         <div class="col-md-3 moj-button-right align-self-end">
-            <a href="{%url 'constructioninspections:add_protocol' overview%}">
+            <a href="{%url 'constructioninspections:add_protocol' overview.name%}">
                 <button type="button" class="btn btn-outline-primary my-btn">
                     <span class="bi bi-plus-circle"> Dodaj protokół</span>
                 </button>
             </a>
         </div>
+        {%endif%}
     </div>
 </div>
 <script>
@@ -32,4 +35,5 @@
 
 </script>
 {%endblock%}
+{%endif%}
 {%endblock%}

@@ -136,49 +136,49 @@ def create_buildings_one_year_inspections_list(request):
 
 @login_required
 def create_buildings_five_year_inspections_list(request):
-    context = {"overview": "overview_buildings_five_year"}
+    context = {"overview": ProtocolType.overview_buildings_five_year}
     return render(request, "construction_inspections/buildings_five_year_inspection.html", context)
 
 
 @login_required
 def create_chimney_inspection_list(request):
     objects = ChimneyInspection.objects.all()
-    context = {"objects": objects, "overview": "overview_chimney"}
+    context = {"objects": objects, "overview": ProtocolType.overview_chimney}
     return render(request, "construction_inspections/chimneys_inspection_list.html", context)
 
 
 @login_required
 def create_electrical_inspection_one_year_list(request):
     objects = ElectricalInspectionOneYear.objects.all()
-    context = {"objects": objects, "overview": "overview_electrical_one_year"}
+    context = {"objects": objects, "overview": ProtocolType.overview_electrical_one_year}
     return render(request, "construction_inspections/electrical_inspection_one_year_list.html", context)
 
 
 @login_required
 def create_electrical_inspection_five_year_list(request):
     objects = ElectricalInspectionFiveYear.objects.all()
-    context = {"objects": objects, "overview": "overview_electrical_five_year"}
+    context = {"objects": objects, "overview": ProtocolType.overview_electrical_five_year}
     return render(request, "construction_inspections/electrical_inspection_five_year_list.html", context)
 
 
 @login_required
 def create_heating_boilers_inspection_list(request):
     objects = HeatingBoilerInspection.objects.all()
-    context = {"objects": objects, "overview": "overview_heating_boilers"}
+    context = {"objects": objects, "overview": ProtocolType.overview_heating_boilers}
     return render(request, "construction_inspections/heating_boilers_inspection_list.html", context)
 
 
 @login_required
 def create_air_conditioners_inspection_list(request):
     objects = AirConditionerInspection.objects.all()
-    context = {"objects": objects, "overview": "overview_air_conditioners"}
+    context = {"objects": objects, "overview": ProtocolType.overview_air_conditioners}
     return render(request, "construction_inspections/air_conditioners_inspection_list.html", context)
 
 
 @login_required
 def create_fire_inspection_list(request):
     objects = FireInspection.objects.all()
-    context = {"objects": objects, "overview": "overview_fire_inspection"}
+    context = {"objects": objects, "overview": ProtocolType.overview_fire_inspection}
     return render(request, "construction_inspections/fire_inspection_list.html", context)
 
 
