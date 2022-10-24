@@ -149,7 +149,7 @@ class ContractAuction(models.Model):
                                verbose_name="Autor")
 
     def __str__(self):
-        return f"{self.no_contract} z dnia {self.date}"
+        return f"{self.no_contract} z dnia {self.date.strftime('%d.%m.%Y')} r."
 
 
 def up_load_annex_contract_auction(instance, filename):

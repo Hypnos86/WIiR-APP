@@ -192,7 +192,7 @@ def add_protocol(request, typeInspection):
     elif typeInspection == "overview_chimney":
         typeProtocol = TypeInspection.objects.get(pk=ProtocolType.overview_chimney.value)
     elif typeInspection == "overview_electrical_one_year":
-        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.overview_electrical_one_year)
+        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.overview_electrical_one_year.value)
     elif typeInspection == "overview_electrical_five_year":
         typeProtocol = TypeInspection.objects.get(pk=ProtocolType.overview_electrical_five_year.value)
     elif typeInspection == "overview_heating_boilers":
@@ -202,7 +202,7 @@ def add_protocol(request, typeInspection):
     elif typeInspection == "overview_fire_inspection":
         typeProtocol = TypeInspection.objects.get(pk=ProtocolType.overview_fire_inspection.value)
 
-    print(typeProtocol)
+    print(typeProtocol.id)
 
     if request.method == "POST":
         if protocol_form.is_valid():

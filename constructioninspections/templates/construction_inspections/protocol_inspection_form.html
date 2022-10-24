@@ -10,7 +10,24 @@
 <div class="container col-md-6">
     <div class="row mb-5">
         <div class="col-md-3">
-            <a href="{% url 'constructioninspections:create_buildings_one_year_inspections_list'%}">
+            <a {% if typeProtocol.id == 1%}
+               href="{% url 'constructioninspections:create_buildings_one_year_inspections_list'%}"
+               {%elif typeProtocol.id == 2%}
+               href="{% url 'constructioninspections:create_buildings_five_year_inspections_list'%}"
+               {%elif typeProtocol.id == 3%}
+               href="{% url 'constructioninspections:create_chimney_inspection_list'%}"
+               {%elif typeProtocol.id == 4%}
+               href="{% url 'constructioninspections:create_electrical_inspection_one_year_list'%}"
+               {%elif typeProtocol.id == 5%}
+               href="{% url 'constructioninspections:create_electrical_inspection_five_year_list'%}"
+               {%elif typeProtocol.id == 6%}
+               href="{% url 'constructioninspections:create_heating_boilers_inspection_list'%}"
+               {%elif typeProtocol.id == 7%}
+               href="{% url 'constructioninspections:create_air_conditioners_inspection_list'%}"
+               {%elif typeProtocol.id == 8%}
+               href="{% url 'constructioninspections:create_fire_inspection_list'%}"
+               {%endif%}
+            >
                 <button class="btn btn-outline-primary my-btn">
                     <span class="bi bi-chevron-compact-left">Cofnij</span>
                 </button>
@@ -55,6 +72,7 @@
     $(document).ready(function(){
         $("#id_no_inventory").select2({placeholder:'Szukaj budynku'});
     })
+
 
 </script>
 {%endif%}
