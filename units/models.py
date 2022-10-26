@@ -8,8 +8,8 @@ class County(models.Model):
         verbose_name_plural = "Powiaty"
         ordering = ["swop_id"]
 
-    swop_id = models.CharField(max_length=4, unique=True, verbose_name="ID SWOP")
-    name = models.CharField(max_length=15, null=False, verbose_name="Powiat")
+    swop_id = models.CharField(max_length=4, verbose_name="ID SWOP")
+    name = models.CharField(max_length=15, null=False, verbose_name="Powiat", unique=True)
 
     def __str__(self):
         return f"{self.name}"

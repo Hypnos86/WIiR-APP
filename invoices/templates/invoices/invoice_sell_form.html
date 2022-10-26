@@ -24,6 +24,7 @@
         <div class="row">
             <div class="col-md-3 my-2">{{invoice.date|bootstrap}}</div>
             <div class="col-md-3 my-2">{{invoice.no_invoice|bootstrap}}</div>
+             <div class="col-md-3 my-2">{{invoice.sum|bootstrap}}</div>
             <div class="col-md-3 my-2">
                 {%if new%}
                 <div class="form-group">
@@ -40,7 +41,6 @@
                 {{invoice.doc_types|bootstrap}}
                 {%endif%}
             </div>
-            <div class="col-md-3 my-2">{{invoice.sum|bootstrap}}</div>
             <div class="col-md-8 my-2">{{invoice.contractor|bootstrap}}</div>
             <div class="col-md-4 my-2">{{invoice.date_of_payment|bootstrap}}</div>
             <div class=" col-md-6 my-2">

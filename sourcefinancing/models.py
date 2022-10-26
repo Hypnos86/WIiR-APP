@@ -20,7 +20,7 @@ class Group(models.Model):
         verbose_name = "Grupa"
         verbose_name_plural = "Grupy"
 
-    group = models.CharField("Grupa", max_length=2)
+    group = models.CharField("Grupa", max_length=2, unique=True)
     name = models.CharField("Nazwa", max_length=50)
 
     def __str__(self):
@@ -32,11 +32,11 @@ class Paragraph(models.Model):
         verbose_name = "Paragraf i pozycja"
         verbose_name_plural = "Paragrafy i pozycje"
 
-    paragraph = models.CharField("Paragraf", max_length=7)
-    name = models.CharField("Nazwa", max_length=50, null=True)
+    paragraph = models.CharField("Paragraf", max_length=7, unique=True)
+    name = models.CharField("Nazwa", max_length=50)
 
     def __str__(self):
-        return f"§ {self.paragraph}"
+        return f"{self.paragraph}"
 
 
 class Source(models.Model):
@@ -44,7 +44,7 @@ class Source(models.Model):
         verbose_name = "Źródło finansowania"
         verbose_name_plural = "Źródła finansowania"
 
-    source = models.CharField("Źródło", max_length=80, null=True)
+    source = models.CharField("Źródło", max_length=80, null=True, unique=True)
 
     def __str__(self):
         return f"{self.source}"
@@ -61,4 +61,4 @@ class FinanceSource(models.Model):
     source = models.ForeignKey(Source, on_delete=models.CASCADE, verbose_name="Źródło finansowania")
 
     def __str__(self):
-        return f"{self.section.section} - {self.group.group} - {self.paragraph} - {self.source}"
+        return f"{self.section.section}-{self.group.group}-{self.paragraph}-{self.source}"

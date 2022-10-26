@@ -63,7 +63,10 @@ def buy_invoices_list(request):
                           | invoices_buy.filter(sum__startswith=q) \
                           | invoices_buy.filter(contractor__name__icontains=q) \
                           | invoices_buy.filter(contractor__no_contractor__startswith=q) \
-                          | invoices_buy.filter(invoice_items__county__name__icontains=q)
+                          | invoices_buy.filter(invoice_items__county__name__icontains=q) \
+                          | invoices_buy.filter(invoice_items__account__section__section__icontains=q) \
+                          | invoices_buy.filter(invoice_items__account__paragraph__paragraph__icontains=q) \
+                          | invoices_buy.filter(invoice_items__account__source__source__icontains=q)
 
         if date_from:
             invoicesbuy = invoices_buy.filter(date_receipt__gte=date_from)
@@ -72,7 +75,7 @@ def buy_invoices_list(request):
             invoicesbuy = invoices_buy.filter(date_receipt__lte=date_to)
 
         invoices_buy_filter_sum = len(invoicesbuy)
-        return render(request, "invoices/invoices_buy_list.html", {"invoices": invoicesbuy,
+        return render(request, "invoices/invoices_buy_list.html", {"invoices": set(invoicesbuy),
                                                                    "invoices_buy_sum": invoices_buy_filter_sum,
                                                                    "query": query, "year": year, "q": q,
                                                                    "date_from": date_from,
@@ -89,7 +92,7 @@ def buy_invoices_list(request):
 def show_info_buy(request, id):
     invoice = get_object_or_404(InvoiceBuy, pk=id)
     items = InvoiceItems.objects.filter(invoice_id=invoice)
-    return render(request, "invoices/info_buy_popup.html", {"invoice": invoice, "items":items, "id": id})
+    return render(request, "invoices/info_buy_popup.html", {"invoice": invoice, "items": items, "id": id})
 
 
 @login_required
@@ -548,7 +551,7 @@ def make_verification(request):
         days = set([days["date_of_payment"] for days in invoices_buy_list.values("date_of_payment", "sum")])
 
         # for day in days:
-            # print(day.aggregate(Sum("sum")))
+        # print(day.aggregate(Sum("sum")))
         # TODO poprawić kod w dziennym sumowaniu weryfikacji
         # for invoice in invoices_buy_list.values("date_of_payment"):
         #     day_sum = invoices_buy_list.aggregate(Sum("sum"))

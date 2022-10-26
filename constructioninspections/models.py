@@ -49,6 +49,7 @@ class BuildingInspectionOneYear(PatternInspections):
     class Meta:
         verbose_name = "Przegląd budynku techniczny - roczny"
         verbose_name_plural = "Przeglądy budynków - roczny"
+        ordering = ["no_inventory__unit__county__swop_id"]
 
     def __str__(self):
         return f"{self.date_protocol} - {self.no_inventory}"
