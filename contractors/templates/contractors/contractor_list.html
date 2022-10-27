@@ -20,21 +20,26 @@
             <section class="w-100 d-flex justify-content-center align-items-center flex-column text_center">
                 <form method="get">
                     <div class="input-group">
-                        <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj kontrahenta" aria-label="Search" aria-describedby="search-addon" value="{%if query%}{{q}}{%endif%}">
-                        <button id="searchButton" style="{%if query%}display:none;{%endif%}" type="submit" class="btn btn-outline-primary my-btn">Szukaj</button>
-                        <button id="cleanButton"  style="{%if not query%}display:none;{%endif%}" type="button" class="btn btn-outline-primary my-btn" onclick="cleanSearch()">Wyczyść</button>
+                        <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj kontrahenta"
+                               aria-label="Search" aria-describedby="search-addon" value="{%if query%}{{q}}{%endif%}">
+                        <button id="searchButton" style="{%if query%}display:none;{%endif%}" type="submit"
+                                class="btn btn-outline-primary my-btn">Szukaj
+                        </button>
+                        <button id="cleanButton" style="{%if not query%}display:none;{%endif%}" type="button"
+                                class="btn btn-outline-primary my-btn" onclick="cleanSearch()">Wyczyść
+                        </button>
                     </div>
                 </form>
             </section>
         </div>
         {%if user.accessmodule.contractors_module_edit%}
-            <div class="col-md-3 moj-button-right align-self-end">
-                <a href="{%url 'contractors:new_contractor'%}">
-                    <button type="button" class="btn btn-outline-primary my-btn">
-                        <span class="bi bi-plus-circle"> Dodaj kontrahenta</span>
-                    </button>
-                </a>
-            </div>
+        <div class="col-md-3 moj-button-right align-self-end">
+            <a href="{%url 'contractors:new_contractor'%}">
+                <button type="button" class="btn btn-outline-primary my-btn">
+                    <span class="bi bi-plus-circle"> Dodaj kontrahenta</span>
+                </button>
+            </a>
+        </div>
         {%endif%}
     </div>
 </div>
@@ -72,13 +77,16 @@
             <td class="text-center" valign="middle"><span>{{contractor.city}}</span></td>
             <td align="right" valign="middle">
                 {%if contractor.information%}
-                <button data-toggle="info" title="Pokaż" type="button" data-url="{% url 'contractors:show_information' contractor.id %}" class="btn btn-outline-success mx-2" onclick="openModal(this)">
+                <button data-toggle="info" title="Pokaż" type="button"
+                        data-url="{% url 'contractors:show_information' contractor.id %}"
+                        class="btn btn-outline-success mx-2" onclick="openModal(this)">
                     <i class="bi bi-info-lg my-1"></i>
                 </button>
                 {%endif%}
                 {%if user.accessmodule.contractors_module_edit%}
                 <a class="mx-2 moj-button-right" href="{%url 'contractors:edit_contractor' contractor.id%}">
-                    <button data-toggle="info" title="Edytuj" type="submit" class="btn btn-outline-primary icon-color my-1">
+                    <button data-toggle="info" title="Edytuj" type="submit"
+                            class="btn btn-outline-primary icon-color my-1">
                         <i class="bi bi-pencil-square"></i>
                     </button>
                 </a>
@@ -164,6 +172,7 @@
         //$("#searchButton").show();
         $("form").submit();
     }
+
 </script>
 {%endif%}
 {%endblock%}

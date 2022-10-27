@@ -18,7 +18,7 @@ class CountyResource(resources.ModelResource):
 
 @admin.register(County)
 class CountyAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['id', 'swop_id', 'name']
+    list_display = ['id', 'swop_id', 'id_order', 'name']
     list_display_links = ('name',)
     resource_class = CountyResource
 

@@ -301,3 +301,7 @@ hr {
 .expand-collapse{
     width: 10%;
 }
+
+.list-group-radius{
+    border-radius: 0px;
+}

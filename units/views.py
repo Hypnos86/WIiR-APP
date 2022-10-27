@@ -9,7 +9,7 @@ from units.models import Unit, County, TypeUnit
 def units_list(request):
     units_active = Unit.objects.filter(status=1).order_by("county")
 
-    county = County.objects.all().order_by("swop_id")
+    county = County.objects.all().order_by("id_order")
     type_unit = TypeUnit.objects.all()
 
     try:

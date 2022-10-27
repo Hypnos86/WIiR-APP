@@ -6,10 +6,11 @@ class County(models.Model):
     class Meta:
         verbose_name = "Powiat"
         verbose_name_plural = "Powiaty"
-        ordering = ["swop_id"]
+        ordering = ["id_order"]
 
     swop_id = models.CharField(max_length=4, verbose_name="ID SWOP")
     name = models.CharField(max_length=15, null=False, verbose_name="Powiat", unique=True)
+    id_order = models.IntegerField("Kolejność", unique=True, null=True)
 
     def __str__(self):
         return f"{self.name}"
@@ -32,7 +33,7 @@ class Unit(models.Model):
     class Meta:
         verbose_name = "Jednostka"
         verbose_name_plural = "Jednostki"
-        ordering = ["county"]
+        ordering = ["county__name", "type"]
 
     county = models.ForeignKey(County, on_delete=models.CASCADE, related_name="unit", verbose_name="Powiat")
     type = models.ForeignKey(TypeUnit, on_delete=models.CASCADE, related_name="unit", verbose_name="Rodzaj jednostki")

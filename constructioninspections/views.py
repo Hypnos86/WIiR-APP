@@ -129,7 +129,7 @@ def electrical_inspections_choice(request):
 
 @login_required
 def create_buildings_one_year_inspections_list(request):
-    units = Unit.objects.all()
+    units = Unit.objects.all().order_by("county__id_order")
     context = {"units": units, "overview": ProtocolType.overview_buildings_one_year}
     return render(request, "construction_inspections/buildings_one_year_inspection.html", context)
 
