@@ -49,7 +49,7 @@ def show_information(request, id):
 @login_required
 def add_new_building(request):
     building_form = BuildingForm(request.POST or None)
-    units = Unit.objects.all()
+    units = Unit.objects.all().order_by("county__id_order")
 
     if request.method == "POST":
         if building_form.is_valid():

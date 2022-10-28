@@ -67,7 +67,7 @@ def investment_projects_list(request):
 def add_new_project(request):
     project_form = ProjectForm(request.POST or None, request.FILES or None)
     project_form.fields["worker"].queryset = Employer.objects.filter(industry_specialist=True)
-    units = Unit.objects.all()
+    units = Unit.objects.all().order_by("county__id_order")
 
     context = {"project_form": project_form,
                "units": units,
@@ -88,7 +88,7 @@ def edit_project(request, id):
     project_edit = get_object_or_404(Project, pk=id)
     project_form = ProjectForm(request.POST or None, request.FILES or None, instance=project_edit)
     project_form.fields["worker"].queryset = Employer.objects.all().filter(industry_specialist=True)
-    units = Unit.objects.all()
+    units = Unit.objects.all().order_by("county__id_order")
     unit_edit = project_edit.unit
 
     context = {"project_form": project_form,

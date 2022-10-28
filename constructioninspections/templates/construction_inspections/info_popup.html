@@ -2,9 +2,10 @@
 {%load bootstrap%}
 {%block content%}
 <div class="container ">
-<form class="m-2 p-4" method="get" action="{% url 'constructioninspections:show_information' id %}">
+<form class="m-2 p-4" method="get" action="{% url 'constructioninspections:show_information' typeInspection id %}">
     {%csrf_token%}
     <div class="container">
+        <div>{{protocol}}</div>
 
     </div>
 </form>

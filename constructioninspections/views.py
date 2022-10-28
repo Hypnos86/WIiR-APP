@@ -187,19 +187,19 @@ def add_protocol(request, typeInspection):
     protocol_form = BuildingInspectionOneYearForm(request.POST or None)
     if typeInspection == ProtocolType.overview_buildings_one_year.name:
         typeProtocol = TypeInspection.objects.get(pk=ProtocolType.overview_buildings_one_year.value)
-    elif typeInspection == "overview_buildings_five_year":
+    elif typeInspection == ProtocolType.overview_buildings_five_year.name:
         typeProtocol = TypeInspection.objects.get(pk=ProtocolType.overview_buildings_five_year.value)
-    elif typeInspection == "overview_chimney":
+    elif typeInspection == ProtocolType.overview_chimney.name:
         typeProtocol = TypeInspection.objects.get(pk=ProtocolType.overview_chimney.value)
-    elif typeInspection == "overview_electrical_one_year":
+    elif typeInspection == ProtocolType.overview_electrical_one_year.name:
         typeProtocol = TypeInspection.objects.get(pk=ProtocolType.overview_electrical_one_year.value)
-    elif typeInspection == "overview_electrical_five_year":
+    elif typeInspection == ProtocolType.overview_electrical_five_year.name:
         typeProtocol = TypeInspection.objects.get(pk=ProtocolType.overview_electrical_five_year.value)
-    elif typeInspection == "overview_heating_boilers":
+    elif typeInspection == ProtocolType.overview_heating_boilers.name:
         typeProtocol = TypeInspection.objects.get(pk=ProtocolType.overview_heating_boilers.value)
-    elif typeInspection == "overview_air_conditioners":
+    elif typeInspection == ProtocolType.overview_air_conditioners.name:
         typeProtocol = TypeInspection.objects.get(pk=ProtocolType.overview_air_conditioners.value)
-    elif typeInspection == "overview_fire_inspection":
+    elif typeInspection == ProtocolType.overview_fire_inspection:
         typeProtocol = TypeInspection.objects.get(pk=ProtocolType.overview_fire_inspection.value)
 
     print(typeProtocol.id)
@@ -215,7 +215,23 @@ def add_protocol(request, typeInspection):
 
 
 @login_required
-def show_information(request, id):
+def show_information(request, typeInspection, id):
+    if typeInspection == ProtocolType.overview_buildings_one_year.value:
+        protocol = BuildingInspectionOneYear.objects.get(pk=id)
+    elif typeInspection == ProtocolType.overview_buildings_five_year.value:
+        protocol = BuildingInspectionFiveYear.objects.get(pk=id)
+    elif typeInspection == ProtocolType.overview_chimney.value:
+        protocol = ChimneyInspection.objects.get(pk=id)
+    elif typeInspection == ProtocolType.overview_electrical_one_year.value:
+        protocol = ElectricalInspectionOneYear.objects.get(pk=id)
+    elif typeInspection == ProtocolType.overview_electrical_five_year.value:
+        protocol = ElectricalInspectionFiveYear.objects.get(pk=id)
+    elif typeInspection == ProtocolType.overview_heating_boilers.value:
+        protocol = HeatingBoilerInspection.objects.get(pk=id)
+    elif typeInspection == ProtocolType.overview_air_conditioners.value:
+        protocol = AirConditionerInspection.objects.get(pk=id)
+    elif typeInspection == ProtocolType.overview_fire_inspection.value:
+        protocol = FireInspection.objects.get(pk=id)
 
-    context = {}
-    return render(request, "construction_inspections/info.popup.html", context)
+    context = {"typeInspection": typeInspection, "id": id, "protocol": protocol}
+    return render(request, "construction_inspections/info_popup.html", context)

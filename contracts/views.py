@@ -98,7 +98,7 @@ def menu_contractsimmovables_archive(request):
 @login_required
 def new_contractsimmovables(request):
     contract_form = ContractImmovablesForm(request.POST or None, request.FILES or None)
-    units = Unit.objects.all()
+    units = Unit.objects.all().order_by("county__id_order")
     context = {'contract_form': contract_form,
                'units': units,
                'new': True}
@@ -119,7 +119,7 @@ def edit_contractsimmovables(request, id):
     contractsimmovables_form = ContractImmovablesForm(request.POST or None, request.FILES or None,
                                                       instance=contractsimmovables_edit)
 
-    units = Unit.objects.all()
+    units = Unit.objects.all().order_by("county__id_order")
     unit_edit = contractsimmovables_edit
 
     context = {'contract_form': contractsimmovables_form,
@@ -219,7 +219,7 @@ def menu_contracts_auction(request):
 def new_contract_auction(request):
     contract_auction_form = ContractAuctionForm(request.POST or None, request.FILES or None)
     contract_auction_form.fields['worker'].queryset = Employer.objects.all().filter(industry_specialist=True)
-    units = Unit.objects.all()
+    units = Unit.objects.all().order_by("county__id_order")
     context = {'contract_auction_form': contract_auction_form,
                'units': units,
                'new': True}
@@ -248,7 +248,7 @@ def edit_contract_auction(request, id):
     contract_auction_form = ContractAuctionForm(request.POST or None, request.FILES or None,
                                                 instance=contract_auction_edit)
     contract_auction_form.fields['worker'].queryset = Employer.objects.all().filter(industry_specialist=True)
-    units = Unit.objects.all()
+    units = Unit.objects.all().order_by("county__id_order")
     unit_edit = contract_auction_edit
 
     context = {'contract_auction_form': contract_auction_form,
@@ -322,7 +322,7 @@ def new_contract_media(request):
     contract_form = ContractMediaForm(request.POST or None, request.FILES or None)
     contract_form.fields['employer'].queryset = Employer.objects.all().filter(industry_specialist=True).filter(
         team__team='Zespół Eksploatacji')
-    contract_form.fields['unit'].queryset = Unit.objects.all().order_by('county')
+    contract_form.fields['unit'].queryset = Unit.objects.all().order_by("county__id_order")
     units = Unit.objects.all()
 
     if request.method == 'POST':

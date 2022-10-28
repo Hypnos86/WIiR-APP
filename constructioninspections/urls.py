@@ -40,6 +40,6 @@ urlpatterns = [
     # Przeglądy p.poż
     path("create_fire_inspections/", create_fire_inspection_list, name="create_fire_inspection_list"),
     # Popup informacyjny
-    path("show_info/<int:id>", show_information, name="show_information")
+    path("show_info/<int:typeInspection>/<int:id>", show_information, name="show_information")
 
 ]

@@ -12,8 +12,8 @@
     </div>
         {%for object in buildings_inspections_one_year%}
     <div class="list-group col-md-3">
-        <a class="list-group-item list-group-item-action flex-column align-items-start" data-url="{%url 'constructioninspections:show_information' object.id%}" onclick="openModal(this)">
-<!--    TODO        data-url="" onclick="openModal(this)"-->
+        <a class="list-group-item list-group-item-action flex-column align-items-start" data-url="{%url 'constructioninspections:show_information' object.inspection_name.id object.id%}" onclick="openModal(this)">
+
             <div class="d-flex w-100 justify-content-between">
                 <h6 class="mb-1"><b>Data protokołu: {{object.date_protocol|date:"d.m.Y"}}&nbsp;r.</b></h6>
             </div>
@@ -37,7 +37,7 @@
     </div>
         {%for object in buildings_inspections_five_year%}
     <div class="list-group col-md-3">
-        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+        <a class="list-group-item list-group-item-action flex-column align-items-start" data-url="{%url 'constructioninspections:show_information' object.inspection_name.id object.id%}" onclick="openModal(this)">
             <div class="d-flex w-100 justify-content-between">
                 <h6 class="mb-1"><b>Data protokołu: {{object.date_protocol|date:"d.m.Y"}}&nbsp;r.</b></h6>
             </div>
@@ -61,7 +61,7 @@
     </div>
         {%for object in chimneys_inspections%}
     <div class="list-group col-md-3">
-        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+        <a class="list-group-item list-group-item-action flex-column align-items-start" data-url="{%url 'constructioninspections:show_information' object.inspection_name.id object.id%}" onclick="openModal(this)">
             <div class="d-flex w-100 justify-content-between">
                 <h6 class="mb-1"><b>Data protokołu: {{object.date_protocol|date:"d.m.Y"}}&nbsp;r.</b></h6>
             </div>
@@ -85,7 +85,7 @@
     </div>
         {%for object in electrical_inspections_one_year%}
     <div class="list-group col-md-3">
-        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+        <a class="list-group-item list-group-item-action flex-column align-items-start" data-url="{%url 'constructioninspections:show_information' object.inspection_name.id object.id%}" onclick="openModal(this)">
             <div class="d-flex w-100 justify-content-between">
                 <h6 class="mb-1"><b>Data protokołu: {{object.date_protocol|date:"d.m.Y"}}&nbsp;r.</b></h6>
             </div>
@@ -110,7 +110,7 @@
     </div>
         {%for object in electrical_inspections_one_year%}
     <div class="list-group col-md-3">
-        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+        <a class="list-group-item list-group-item-action flex-column align-items-start" data-url="{%url 'constructioninspections:show_information' object.inspection_name.id object.id%}" onclick="openModal(this)">
             <div class="d-flex w-100 justify-content-between">
                 <h6 class="mb-1"><b>Data protokołu: {{object.date_protocol|date:"d.m.Y"}}&nbsp;r.</b></h6>
             </div>
@@ -135,7 +135,7 @@
     </div>
         {%for object in air_conditioners_inspection%}
     <div class="list-group col-md-3">
-        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+        <a class="list-group-item list-group-item-action flex-column align-items-start" data-url="{%url 'constructioninspections:show_information' object.inspection_name.id object.id%}" onclick="openModal(this)">
             <div class="d-flex w-100 justify-content-between">
                 <h6 class="mb-1"><b>Data protokołu: {{object.date_protocol|date:"d.m.Y"}}&nbsp;r.</b></h6>
             </div>
@@ -159,7 +159,7 @@
     </div>
         {%for object in heating_boiler_inspections%}
     <div class="list-group col-md-3">
-        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+        <a class="list-group-item list-group-item-action flex-column align-items-start" data-url="{%url 'constructioninspections:show_information' object.inspection_name.id object.id%}" onclick="openModal(this)">
             <div class="d-flex w-100 justify-content-between">
                 <h6 class="mb-1"><b>Data protokołu: {{object.date_protocol|date:"d.m.Y"}}&nbsp;r.</b></h6>
             </div>
@@ -183,7 +183,7 @@
     </div>
         {%for object in fire_inspections%}
     <div class="list-group col-md-3">
-        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+        <a class="list-group-item list-group-item-action flex-column align-items-start" data-url="{%url 'constructioninspections:show_information' object.inspection_name.id object.id%}" onclick="openModal(this)">
             <div class="d-flex w-100 justify-content-between">
                 <h6 class="mb-1"><b>Data protokołu: {{object.date_protocol|date:"d.m.Y"}}&nbsp;r.</b></h6>
             </div>
