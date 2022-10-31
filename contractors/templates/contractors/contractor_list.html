@@ -18,7 +18,7 @@
         </div>
         <div class="col-md-6">
             <section class="w-100 d-flex justify-content-center align-items-center flex-column text_center">
-                <form method="get">
+                <form id="form-search" method="get">
                     <div class="input-group">
                         <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj kontrahenta"
                                aria-label="Search" aria-describedby="search-addon" value="{%if query%}{{q}}{%endif%}">
@@ -170,7 +170,7 @@
         $("#q").val("");
         //$("#cleanButton").hide();
         //$("#searchButton").show();
-        $("form").submit();
+        $("#form-search").submit();
     }
 
 </script>

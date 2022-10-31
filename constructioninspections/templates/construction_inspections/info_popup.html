@@ -2,13 +2,21 @@
 {%load bootstrap%}
 {%block content%}
 <div class="container ">
-<form class="m-2 p-4" method="get" action="{% url 'constructioninspections:show_information' typeInspection id %}">
-    {%csrf_token%}
-    <div class="container">
-        <div>{{protocol}}</div>
+    <form class="m-2 p-4" method="get" action="{% url 'constructioninspections:show_information' typeInspection id %}">
+        {%csrf_token%}
+        <div class="container">
+            <div>{{protocol}}</div>
 
-    </div>
-</form>
+        </div>
+        <div class="col-md-3 moj-button-right align-self-end">
+            <a href="{%url 'constructioninspections:add_protocol' overview%}">
+                <button type="button" class="btn btn-outline-primary my-btn">
+                    <span class="bi bi-plus-circle"> Dodaj protokół</span>
+                </button>
+            </a>
+        </div>
+    </form>
+
 </div>
 {%endblock%}
 

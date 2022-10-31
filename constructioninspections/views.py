@@ -216,22 +216,31 @@ def add_protocol(request, typeInspection):
 
 @login_required
 def show_information(request, typeInspection, id):
+    print(typeInspection)
     if typeInspection == ProtocolType.overview_buildings_one_year.value:
         protocol = BuildingInspectionOneYear.objects.get(pk=id)
+        overview = ProtocolType.overview_buildings_one_year.name
     elif typeInspection == ProtocolType.overview_buildings_five_year.value:
         protocol = BuildingInspectionFiveYear.objects.get(pk=id)
+        overview = ProtocolType.overview_buildings_five_year.name
     elif typeInspection == ProtocolType.overview_chimney.value:
         protocol = ChimneyInspection.objects.get(pk=id)
+        overview = ProtocolType.overview_chimney.name
     elif typeInspection == ProtocolType.overview_electrical_one_year.value:
         protocol = ElectricalInspectionOneYear.objects.get(pk=id)
+        overview = ProtocolType.overview_electrical_one_year.name
     elif typeInspection == ProtocolType.overview_electrical_five_year.value:
         protocol = ElectricalInspectionFiveYear.objects.get(pk=id)
+        overview = ProtocolType.overview_electrical_five_year.name
     elif typeInspection == ProtocolType.overview_heating_boilers.value:
         protocol = HeatingBoilerInspection.objects.get(pk=id)
+        overview = ProtocolType.overview_heating_boilers.name
     elif typeInspection == ProtocolType.overview_air_conditioners.value:
         protocol = AirConditionerInspection.objects.get(pk=id)
+        overview = ProtocolType.overview_air_conditioners.name
     elif typeInspection == ProtocolType.overview_fire_inspection.value:
         protocol = FireInspection.objects.get(pk=id)
+        overview = ProtocolType.overview_fire_inspection.name
 
-    context = {"typeInspection": typeInspection, "id": id, "protocol": protocol}
+    context = {"typeInspection": typeInspection, "id": id, "protocol": protocol, "overview": overview}
     return render(request, "construction_inspections/info_popup.html", context)

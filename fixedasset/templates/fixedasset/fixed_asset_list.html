@@ -24,7 +24,7 @@
         </div>
         <div class="col-md-6">
             <div class="w-100 py-4 d-flex justify-content-center align-items-center flex-column text_center">
-                <form method="get">
+                <form id="form-search" method="get">
                     <div class="input-group">
                         <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj budynku" aria-label="Search" aria-describedby="search-addon" value="{%if query%}{{q}}{%endif%}">
                             <button id="searchButton" style="{%if query%}display:none;{%endif%}" type="submit" class="btn btn-outline-primary my-btn">Szukaj</button>
@@ -165,7 +165,7 @@
 
     function cleanSearch(){
         $("#q").val("");
-        $("form").submit();
+        $("#form-search").submit();
     }
 </script>
 {%endif%}

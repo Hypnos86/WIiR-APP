@@ -3,9 +3,19 @@
 {% load humanize %}
 {% block title %}Informacje o {{unit.type.type_short}} {{unit.city}}{% endblock %}
 {% block content %}
-<div class="text-center">
-    <h4 class="">{{unit.type.type_full}} - {{unit.city}}</h4>
-    <h5 class="">{{unit.information}} - {{unit.address}}, {{unit.zip_code}} {{unit.city}}</h5>
+<div class="row">
+     <div class="col-md-2 moj-button-left">
+            <a href="{%url 'contracts:create_contract_media_list'%}">
+                <button class="btn btn-outline-primary my-btn">
+                    <span class="bi bi-chevron-compact-left">Cofnij</span>
+                </button>
+            </a>
+        </div>
+    <div class="col-md-8 text-center">
+        <h4 class="">{{unit.type.type_full}} - {{unit.city}}</h4>
+        <h5 class="">{{unit.information}} - {{unit.address}}, {{unit.zip_code}} {{unit.city}}</h5>
+    </div>
+
 </div>
 <div>
     <span class="text-muted">Trwały zarząd: </span>

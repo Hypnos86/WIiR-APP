@@ -64,13 +64,15 @@
             <ul style="display: none;" class="list-group list-group-flush hide-on-start mb-3">
                 {% for protocol in building.patterninspections.all|dictsort:"date_next_inspection" reversed %}
                 {% if protocol.inspection_name.id == 1 %}
-                <li class="list-group-item list-group-item-action list-group-item-light">
-                    <span class="">Protokuł przeglądu z dnia {{protocol.date_protocol|date:"d.m.Y"}}&nbsp;r.</span>
-                    | <small>Data następnego przeglądu
-                    {{protocol.date_next_inspection|date:"d.m.Y"}}&nbsp;r.</small>
-                    {%if forloop.first%}
-                    <span class="color-teal">AKTUALNY</span>
-                    {%endif%}
+                <li class="list-group-item list-group-item-action list-group-item-light style-row-protocol">
+                    <a data-url="{%url 'constructioninspections:show_information' protocol.inspection_name.id protocol.id%}" class="btn btn-outline-success mx-2 tt" onclick="openModal(this)">
+                        <span class="">Protokuł przeglądu z dnia {{protocol.date_protocol|date:"d.m.Y"}}&nbsp;r.</span>
+                        | <small>Data następnego przeglądu
+                        {{protocol.date_next_inspection|date:"d.m.Y"}}&nbsp;r.</small>
+                        {%if forloop.first%}
+                        <span class="color-teal">AKTUALNY</span>
+                        {%endif%}
+                    </a>
                 </li>
                 {% endif %}
                 {%endfor%}
@@ -78,13 +80,16 @@
             {% endfor%}
         </ul>
         {% endfor %}
-
     </div>
     {% endfor %}
-
-
 </div>
-
+<!--MODAL-->
+<div class="modal fade" id="protocolInfoModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
 <script>
     document.getElementById("button-units").classList.remove("active");
     document.getElementById("button-record").classList.add("active");
@@ -108,34 +113,15 @@
         $(element).parent().children('.button-hide').show(0);
     }
 
-<!--    $(document).ready(function(){-->
-<!--        $('.hide-on-start').hide(0);-->
-<!--    })-->
-
-    function openInfoModal(button){
-        var url = $(button).data("url");
-        $("#infoDonationModal .modal-content").load(url);
-        $("#infoDonationModal").modal("show");
-        }
-
     function openModal(button){
         var url = $(button).data("url");
-        $("#orderInformationModal .modal-content").load(url);
-        $("#orderInformationModal").modal("show");
-    }
+        $("#protocolInfoModal .modal-content").load(url);
+        $("#protocolInfoModal").modal("show");
+        }
 
     function submitForm(){
         $("#submitButton").closest("form").submit();
         }
-
-
-
-
-
-
-
-
-
 
 </script>
 {%endif%}

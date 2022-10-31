@@ -18,7 +18,7 @@
         </div>
         <div class="col-md-6">
             <section class="w-100 d-flex justify-content-center align-items-center flex-column text_center">
-                <form method="get">
+                <form id="form-search" method="get">
                     <div class="row">
                     <div class="col-md-3">
                         <div class="">
@@ -237,7 +237,7 @@
         $("#q").val("");
         $("#date_from").val("");
         $("#date_to").val("");
-        $("form").submit();
+        $("#form-search").submit();
     }
 </script>
 {%endif%}

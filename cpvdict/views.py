@@ -110,10 +110,14 @@ def order_list(request):
 
     if q or date_from or date_to:
         if q:
-            orders = orders.filter(date__startswith=q) | orders.filter(no_order__icontains=q) | orders.filter(
-                typeorder__type__icontains=q) | orders.filter(genre__name_id__icontains=q) | orders.filter(
-                unit__county__name__icontains=q) | orders.filter(unit__city__icontains=q) | orders.filter(
-                unit__address__icontains=q) | orders.filter(contractor__name__icontains=q)
+            orders = orders.filter(date__startswith=q) \
+                     | orders.filter(no_order__icontains=q) \
+                     | orders.filter(typeorder__type__icontains=q) \
+                     | orders.filter(genre__name_id__icontains=q) \
+                     | orders.filter(unit__county__name__icontains=q) \
+                     | orders.filter(unit__city__icontains=q) \
+                     | orders.filter(unit__address__icontains=q) \
+                     | orders.filter(contractor__name__icontains=q)
 
         if date_from:
             orders = orders.filter(date__gte=date_from)
@@ -123,7 +127,7 @@ def order_list(request):
         ordersum = len(orders)
 
         return render(request, 'cpvdict/order_list.html',
-                      {'orders': orders, 'year': year, 'ordersum': ordersum, 'query': query, 'q': q,
+                      {'orders': set(orders), 'year': year, 'ordersum': ordersum, 'query': query, 'q': q,
                        'date_from': date_from, 'date_to': date_to
                        })
     else:
@@ -201,10 +205,14 @@ def create_order_archive(request, year):
 
     if q or date_from or date_to:
         if q:
-            orders = orders.filter(date__startswith=q) | orders.filter(no_order__icontains=q) | orders.filter(
-                typeorder__type__icontains=q) | orders.filter(genre__name_id__icontains=q) | orders.filter(
-                unit__county__name__icontains=q) | orders.filter(unit__city__icontains=q) | orders.filter(
-                unit__address__icontains=q) | orders.filter(contractor__name__icontains=q)
+            orders = orders.filter(date__startswith=q) \
+                     | orders.filter(no_order__icontains=q) \
+                     | orders.filter(typeorder__type__icontains=q) \
+                     | orders.filter(genre__name_id__icontains=q) \
+                     | orders.filter(unit__county__name__icontains=q) \
+                     | orders.filter(unit__city__icontains=q) \
+                     | orders.filter(unit__address__icontains=q) \
+                     | orders.filter(contractor__name__icontains=q)
 
         if date_from:
             orders = orders.filter(date__gte=date_from)
@@ -214,7 +222,7 @@ def create_order_archive(request, year):
         ordersum = len(orders)
 
         return render(request, 'cpvdict/archive_order_list.html',
-                      {'orders': orders, 'year': year, 'ordersum': ordersum, 'query': query, 'q': q,
+                      {'orders': set(orders), 'year': year, 'ordersum': ordersum, 'query': query, 'q': q,
                        'date_from': date_from, 'date_to': date_to
                        })
     else:

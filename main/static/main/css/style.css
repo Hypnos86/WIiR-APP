@@ -305,3 +305,8 @@ hr {
 .list-group-radius{
     border-radius: 0px;
 }
+
+.style-row-protocol{
+    border-left: 10px solid #fff3cd!important;
+    border-right: 10px solid #fff3cd!important;
+}
