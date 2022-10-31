@@ -5,10 +5,48 @@
     <form class="m-2 p-4" method="get" action="{% url 'constructioninspections:show_information' typeInspection id %}">
         {%csrf_token%}
         <div class="container">
-            <div>{{protocol}}</div>
-
+            <div>
+                <h5>Protokół z kontroli: {{protocol.inspection_name}} z dnia {{protocol.date_protocol}}&nbsp;r.</h5>
+            </div>
+            <div>
+                <span class="mext-muted">Jednostka: </span>
+                <span>{{protocol.no_inventory.unit}}</span>
+            </div>
+            <div>
+                <span class="text-muted">Budynek: </span>
+                <span>{{protocol.no_inventory.building_name}}</span>
+            </div>
+            <div>
+                <span>Rodzaj obiektu: </span>
+                <span>{{protocol.no_inventory.kind}}</span>
+            </div>
+            <div>
+                <span>Powierzchnia użytkowa: </span>
+                <span>{{protocol.no_inventory.usable_area}}</span>
+            </div>
+            <div>
+                <span>Powierzchnia użytkowa: </span>
+                <span>{{protocol.no_inventory.usable_area}}</span>
+            </div>
+            <div>
+                <span>Kubatura: </span>
+                <span>{{protocol.no_inventory.volume}}</span>
+            </div>
+            <div>
+                <span class="text-muted">Wnioski</span>
+                <p>{{protocol.conclusions}}</p>
+            </div>
+            <div>
+                <span>Data nastepnego przegladu</span>
+                <span>{{protocol.date_next_inspection}}</span>
+            </div>
+            <hr>
+            <div>
+                <small class="text-muted">Ewidencja: </small>
+                <small>{{protocol.creation_date|date:"d.m.Y"}}&nbsp;r. ({{protocol.author}})</small>
+            </div>
         </div>
-        <div class="col-md-3 moj-button-right align-self-end">
+        <div class="col-md-12 moj-button-right align-self-end">
             <a href="{%url 'constructioninspections:add_protocol' overview%}">
                 <button type="button" class="btn btn-outline-primary my-btn">
                     <span class="bi bi-plus-circle"> Dodaj protokół</span>

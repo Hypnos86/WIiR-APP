@@ -66,7 +66,7 @@
                 {% if protocol.inspection_name.id == 1 %}
                 <li class="list-group-item list-group-item-action list-group-item-light style-row-protocol">
                     <a data-url="{%url 'constructioninspections:show_information' protocol.inspection_name.id protocol.id%}" class="btn btn-outline-success mx-2 tt" onclick="openModal(this)">
-                        <span class="">Protokuł przeglądu z dnia {{protocol.date_protocol|date:"d.m.Y"}}&nbsp;r.</span>
+                        <span class="">Protokół przeglądu z dnia {{protocol.date_protocol|date:"d.m.Y"}}&nbsp;r.</span>
                         | <small>Data następnego przeglądu
                         {{protocol.date_next_inspection|date:"d.m.Y"}}&nbsp;r.</small>
                         {%if forloop.first%}
@@ -85,7 +85,7 @@
 </div>
 <!--MODAL-->
 <div class="modal fade" id="protocolInfoModal">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
         </div>
     </div>
