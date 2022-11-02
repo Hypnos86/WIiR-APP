@@ -4,7 +4,10 @@ from constructioninspections.models import TechnicalCondition, TypeInspection, B
     AirConditionerInspection, ElectricalInspectionFiveYear
 
 # Register your models here.
-admin.site.register(TechnicalCondition)
+@admin.register(TechnicalCondition)
+class TypeInspectionAdmin(admin.ModelAdmin):
+    list_display = ["ordinal_number", "condition", "component_use"]
+    list_display_links = ["condition"]
 
 
 @admin.register(TypeInspection)

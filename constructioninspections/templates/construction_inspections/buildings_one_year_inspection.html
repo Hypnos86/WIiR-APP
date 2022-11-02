@@ -46,6 +46,7 @@
         <ul style="display: none;" class="list-group list-group-radius hide-on-start">
             {% for building in unit.building.all %}
             <li class="list-group-item  list-group-item-action list-group-item-warning">
+                {%if building.patterninspections.all%}
                 <button class="button-show btn btn-outline expand-collapse" onclick="show(this)">
                     <span class="bi bi-caret-down color-gold"> Rozwiń</span>
                 </button>
@@ -53,7 +54,7 @@
                         onclick="hide(this)">
                     <span class="bi bi-caret-up color-gold"> Zwiń</span>
                 </button>
-
+                {%endif%}
                 <span class="pl-2">{{building.kind.kind}} | Nazwa: {{building.building_name}} | Nr. inwentarzowy: {{building.no_inventory}} | Aktywny: {%if building.state%}
                         <span class="bi bi-circle-fill text-success"></span>
                         {%else%}
@@ -63,9 +64,9 @@
             </li>
             <ul style="display: none;" class="list-group list-group-flush hide-on-start mb-3">
                 {% for protocol in building.patterninspections.all|dictsort:"date_next_inspection" reversed %}
-                {% if protocol.inspection_name.id == 1 %}
+                {% if protocol and protocol.inspection_name.id == 1 %}
                 <li class="list-group-item list-group-item-action list-group-item-light style-row-protocol">
-                    <a data-url="{%url 'constructioninspections:show_information' protocol.inspection_name.id protocol.id%}" class="btn btn-outline-success mx-2 tt" onclick="openModal(this)">
+                    <a data-url="{%url 'constructioninspections:show_information' protocol.inspection_name.id protocol.id%}" class="btn btn-outline-secondary mx-2 tt" onclick="openModal(this)">
                         <span class="">Protokół przeglądu z dnia {{protocol.date_protocol|date:"d.m.Y"}}&nbsp;r.</span>
                         | <small>Data następnego przeglądu
                         {{protocol.date_next_inspection|date:"d.m.Y"}}&nbsp;r.</small>
@@ -74,10 +75,10 @@
                         {%endif%}
                     </a>
                 </li>
-                {% endif %}
+                {%endif%}
                 {%endfor%}
             </ul>
-            {% endfor%}
+            {%endfor%}
         </ul>
         {% endfor %}
     </div>

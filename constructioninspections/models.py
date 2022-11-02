@@ -22,10 +22,11 @@ class TechnicalCondition(models.Model):
         ordering = ["ordinal_number"]
 
     ordinal_number = models.SmallIntegerField("Liczba porządkowa", unique=True)
-    condition = models.CharField("Stan techniczny", max_length=30)
+    condition = models.CharField("Klasyfikacja stanu technicznego", max_length=30)
+    component_use = models.CharField("Procent zużycia elementu", max_length=9)
 
     def __str__(self):
-        return {self.condition}
+        return f"{self.condition}"
 
 
 class PatternInspections(PolymorphicModel):
@@ -39,6 +40,7 @@ class PatternInspections(PolymorphicModel):
     date_protocol = models.DateField("Data protokołu")
     conclusions = models.TextField("Wnioski")
     date_next_inspection = models.DateField("Data kolejnego przeglądu", null=True, blank=True)
+    technical_condition = models.ForeignKey(TechnicalCondition, on_delete=models.CASCADE, related_name="patterninspections", verbose_name="Stan techniczny")
     creation_date = models.DateTimeField("Data utworzenia", auto_now_add=True)
     change = models.DateTimeField("Data zmian", auto_now=True)
     author = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name="patterninspections",

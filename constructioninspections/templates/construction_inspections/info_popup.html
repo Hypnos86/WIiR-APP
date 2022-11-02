@@ -5,40 +5,44 @@
     <form class="m-2 p-4" method="get" action="{% url 'constructioninspections:show_information' typeInspection id %}">
         {%csrf_token%}
         <div class="container">
-            <div class="mx-2">
+            <div class="mb-4">
                 <h5>Protokół z kontroli: {{protocol.inspection_name}} z dnia {{protocol.date_protocol}}&nbsp;r.</h5>
             </div>
-            <div class="mx-2">
-                <span class="mext-muted">Jednostka: </span>
+            <div class="my-2">
+                <span class="text-muted">Jednostka: </span>
                 <span>{{protocol.no_inventory.unit}}</span>
             </div>
-            <div class="mx-2">
+            <div class="my-2">
                 <span class="text-muted">Budynek: </span>
                 <span>{{protocol.no_inventory.building_name}}</span>
             </div>
-            <div class="mx-2">
+            <div class="my-2">
                 <span class="text-muted">Rodzaj obiektu: </span>
                 <span>{{protocol.no_inventory.kind}}</span>
             </div>
             {% if protocol.no_inventory.usable_area%}
-            <div class="mx-2">
+            <div class="my-2">
                 <span class="text-muted">Powierzchnia użytkowa: </span>
                 <span>{{protocol.no_inventory.usable_area}} m<sup>2</sup></span>
             </div>
             {%endif%}
             {%if protocol.no_inventory.volume%}
-            <div class="mx-2">
+            <div class="my-2">
                 <span class="text-muted">Kubatura: </span>
                 <span>{{protocol.no_inventory.volume}} m<sup>3</sup></span>
             </div>
             {%endif%}
-            <div class="mx-2">
+            <div class="my-4">
                 <span class="text-muted">Wnioski</span>
                 <p>{{protocol.conclusions}}</p>
             </div>
-            <div class="mx-2">
+            <div class="my-2">
+                <span class="text-muted">Stan techniczny: </span>
+                <span>{{protocol.technical_condition.condition}} (zużycie elementów - {{protocol.technical_condition.component_use}})</span>
+            </div>
+            <div class="my-2">
                 <span class="text-muted">Data nastepnego przegladu</span>
-                <span>{{protocol.date_next_inspection}}&nbsp;r.</span>
+                <span class="color-cinamon">{{protocol.date_next_inspection}}&nbsp;r.</span>
             </div>
             <hr>
             <div>
@@ -46,12 +50,21 @@
                 <small>{{protocol.creation_date|date:"d.m.Y"}}&nbsp;r. ({{protocol.author}})</small>
             </div>
         </div>
-        <div class="col-md-12 moj-button-right align-self-end">
-            <a href="{%url 'constructioninspections:add_protocol' overview%}">
-                <button type="button" class="btn btn-outline-primary my-btn">
-                    <span class="bi bi-plus-circle"> Dodaj protokół</span>
-                </button>
-            </a>
+        <div class="row mt-5">
+            <div class="col-md-6 moj-button-left">
+                <a href="">
+                    <button type="button" class="btn btn-outline-primary my-btn">
+                        <span class="bi bi-pencil-square"> Edytuj</span>
+                    </button>
+                </a>
+            </div>
+            <div class="col-md-6 moj-button-right align-self-end">
+                <a href="{%url 'constructioninspections:add_protocol' overview%}">
+                    <button type="button" class="btn btn-outline-primary my-btn">
+                        <span class="bi bi-plus-circle"> Dodaj protokół</span>
+                    </button>
+                </a>
+            </div>
         </div>
     </form>
 </div>

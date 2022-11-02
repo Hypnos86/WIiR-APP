@@ -8,85 +8,92 @@ from constructioninspections.models import AirConditionerInspection, FireInspect
 class BuildingInspectionOneYearForm(ModelForm):
     class Meta:
         model = BuildingInspectionOneYear
-        fields = ("no_inventory", "inspection_name", "date_protocol", "conclusions")
+        fields = ("no_inventory", "inspection_name", "date_protocol", "conclusions", "technical_condition")
         exclude = ["creation_date", "change", "author"]
         labels = {"no_inventory": "Nr. inwentarzowy", "inspection_name": "Rodzaj przeglądu",
-                  "date_protocol": "Data protokołu", "conclusions": "Wnioski"}
+                  "date_protocol": "Data protokołu", "conclusions": "Wnioski", "technical_condition": "Stan techniczny"}
         widgets = {"date_protocol": DateField(), "date_next_inspection": DateField()}
 
 
 class BuildingInspectionFiveYearForm(ModelForm):
     class Meta:
         model = BuildingInspectionFiveYear
-        fields = ("no_inventory", "inspection_name", "date_protocol", "conclusions", "date_next_inspection")
+        fields = ("no_inventory", "inspection_name", "date_protocol", "conclusions", "date_next_inspection",
+                  "technical_condition")
         exclude = ["creation_date", "change", "author"]
         labels = {"no_inventory": "Nr. inwentarzowy", "inspection_name": "Rodzaj przeglądu",
                   "date_protocol": "Data protokołu", "conclusions": "Wnioski",
-                  "date_next_inspection": "Data następnego przeglądu"}
+                  "date_next_inspection": "Data następnego przeglądu", "technical_condition": "Stan techniczny"}
         widgets = {"date_protocol": DateField(), "date_next_inspection": DateField()}
 
 
 class ChimneyInspectionForm(ModelForm):
     class Meta:
         model = ChimneyInspection
-        fields = ("no_inventory", "inspection_name", "date_protocol", "conclusions", "date_next_inspection")
+        fields = ("no_inventory", "inspection_name", "date_protocol", "conclusions", "date_next_inspection",
+                  "technical_condition")
         exclude = ["creation_date", "change", "author"]
         labels = {"no_inventory": "Nr. inwentarzowy", "inspection_name": "Rodzaj przeglądu",
                   "date_protocol": "Data protokołu", "conclusions": "Wnioski",
-                  "date_next_inspection": "Data następnego przeglądu"}
+                  "date_next_inspection": "Data następnego przeglądu", "technical_condition": "Stan techniczny"}
         widgets = {"date_protocol": DateField(), "date_next_inspection": DateField()}
 
 
 class ElectricalInspectionOneYearForm(ModelForm):
     class Meta:
         model = ElectricalInspectionOneYear
-        fields = ("no_inventory", "inspection_name", "date_protocol", "conclusions", "date_next_inspection")
+        fields = ("no_inventory", "inspection_name", "date_protocol", "conclusions", "date_next_inspection",
+                  "technical_condition")
         exclude = ["creation_date", "change", "author"]
         labels = {"no_inventory": "Nr. inwentarzowy", "inspection_name": "Rodzaj przeglądu",
                   "date_protocol": "Data protokołu", "conclusions": "Wnioski",
-                  "date_next_inspection": "Data następnego przeglądu"}
+                  "date_next_inspection": "Data następnego przeglądu", "technical_condition": "Stan techniczny"}
         widgets = {"date_protocol": DateField(), "date_next_inspection": DateField()}
 
 
 class ElectricalInspectionFiveYearForm(ModelForm):
     class Meta:
         model = ElectricalInspectionFiveYear
-        fields = ("no_inventory", "inspection_name", "date_protocol", "conclusions", "date_next_inspection")
+        fields = ("no_inventory", "inspection_name", "date_protocol", "conclusions", "date_next_inspection",
+                  "technical_condition")
         exclude = ["creation_date", "change", "author"]
         labels = {"no_inventory": "Nr. inwentarzowy", "inspection_name": "Rodzaj przeglądu",
                   "date_protocol": "Data protokołu", "conclusions": "Wnioski",
-                  "date_next_inspection": "Data następnego przeglądu"}
+                  "date_next_inspection": "Data następnego przeglądu", "technical_condition": "Stan techniczny"}
         widgets = {"date_protocol": DateField(), "date_next_inspection": DateField()}
 
 
 class HeatingBoilerInspectionForm(ModelForm):
     class Meta:
         model = HeatingBoilerInspection
-        fields = ("no_inventory", "inspection_name", "date_protocol", "conclusions", "date_next_inspection")
+        fields = ("no_inventory", "inspection_name", "date_protocol", "conclusions", "date_next_inspection",
+                  "technical_condition")
         exclude = ["creation_date", "change", "author"]
         labels = {"no_inventory": "Nr. inwentarzowy", "inspection_name": "Rodzaj przeglądu",
                   "date_protocol": "Data protokołu", "conclusions": "Wnioski",
-                  "date_next_inspection": "Data następnego przeglądu"}
+                  "date_next_inspection": "Data następnego przeglądu", "technical_condition": "Stan techniczny"}
         widgets = {"date_protocol": DateField(), "date_next_inspection": DateField()}
 
 
 class FireInspectionForm(ModelForm):
     class Meta:
         model = FireInspection
-        fields = ("no_inventory", "inspection_name", "date_protocol", "conclusions", "date_next_inspection")
+        fields = ("no_inventory", "inspection_name", "date_protocol", "conclusions", "date_next_inspection",
+                  "technical_condition")
         exclude = ["creation_date", "change", "author"]
         labels = {"no_inventory": "Nr. inwentarzowy", "inspection_name": "Rodzaj przeglądu",
                   "date_protocol": "Data protokołu", "conclusions": "Wnioski",
-                  "date_next_inspection": "Data następnego przeglądu"}
+                  "date_next_inspection": "Data następnego przeglądu", "technical_condition": "Stan techniczny"}
         widgets = {"date_protocol": DateField(), "date_next_inspection": DateField()}
 
 
 class AirConditionerInspectionForm(ModelForm):
     class Meta:
         model = AirConditionerInspection
-        fields = ("no_inventory", "inspection_name", "date_protocol", "conclusions", "date_next_inspection")
+        fields = ("no_inventory", "inspection_name", "date_protocol", "conclusions", "date_next_inspection",
+                  "technical_condition")
         exclude = ["creation_date", "change", "author"]
         labels = {"no_inventory": "Nr. inwentarzowy", "inspection_name": "Rodzaj przeglądu",
                   "date_protocol": "Data protokołu", "conclusions": "Wnioski",
-                  "date_next_inspection": "Data następnego przeglądu"}
+                  "date_next_inspection": "Data następnego przeglądu", "technical_condition": "Stan techniczny"}
         widgets = {"date_protocol": DateField(), "date_next_inspection": DateField()}
