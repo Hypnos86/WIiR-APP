@@ -5,7 +5,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from constructioninspections.models import BuildingInspectionOneYear, BuildingInspectionFiveYear, ChimneyInspection, \
     ElectricalInspectionOneYear, HeatingBoilerInspection, AirConditionerInspection, FireInspection, TypeInspection, \
     ElectricalInspectionFiveYear
-from constructioninspections.forms import BuildingInspectionOneYearForm
+from constructioninspections.forms import BuildingInspectionOneYearForm, BuildingInspectionFiveYearForm, \
+    ElectricalInspectionOneYearForm, ElectricalInspectionFiveYearForm, FireInspectionForm, ChimneyInspectionForm, \
+    AirConditionerInspectionForm, HeatingBoilerInspectionForm
 from enum import Enum
 from fixedasset.models import Building
 from units.models import Unit
@@ -184,32 +186,52 @@ def create_fire_inspection_list(request):
 
 @login_required
 def add_protocol(request, typeInspection):
-    protocol_form = BuildingInspectionOneYearForm(request.POST or None)
     if typeInspection == ProtocolType.overview_buildings_one_year.name:
         typeProtocol = TypeInspection.objects.get(pk=ProtocolType.overview_buildings_one_year.value)
+        protocol_form = BuildingInspectionOneYearForm(request.POST or None)
+        redirectText = "constructioninspections:create_buildings_one_year_inspections_list"
+
     elif typeInspection == ProtocolType.overview_buildings_five_year.name:
         typeProtocol = TypeInspection.objects.get(pk=ProtocolType.overview_buildings_five_year.value)
+        protocol_form = BuildingInspectionFiveYearForm(request.POST or None)
+        redirectText = "constructioninspections:create_buildings_five_year_inspections_list"
+
     elif typeInspection == ProtocolType.overview_chimney.name:
         typeProtocol = TypeInspection.objects.get(pk=ProtocolType.overview_chimney.value)
+        protocol_form = ChimneyInspectionForm(request.POST or None)
+        redirectText = "constructioninspections:create_chimney_inspection_list"
+
     elif typeInspection == ProtocolType.overview_electrical_one_year.name:
         typeProtocol = TypeInspection.objects.get(pk=ProtocolType.overview_electrical_one_year.value)
+        protocol_form = ElectricalInspectionOneYearForm(request.POST or None)
+        redirectText = "constructioninspections:create_electrical_inspection_one_year_list"
+
     elif typeInspection == ProtocolType.overview_electrical_five_year.name:
         typeProtocol = TypeInspection.objects.get(pk=ProtocolType.overview_electrical_five_year.value)
+        protocol_form = ElectricalInspectionFiveYearForm(request.POST or None)
+        redirectText = "constructioninspections:create_electrical_inspection_five_year_list"
+
     elif typeInspection == ProtocolType.overview_heating_boilers.name:
         typeProtocol = TypeInspection.objects.get(pk=ProtocolType.overview_heating_boilers.value)
+        protocol_form = HeatingBoilerInspectionForm(request.POST or None)
+        redirectText = "constructioninspections:create_heating_boilers_inspection_list"
+
     elif typeInspection == ProtocolType.overview_air_conditioners.name:
         typeProtocol = TypeInspection.objects.get(pk=ProtocolType.overview_air_conditioners.value)
+        protocol_form = AirConditionerInspectionForm(request.POST or None)
+        redirectText = "constructioninspections:create_air_conditioners_inspection_list"
+
     elif typeInspection == ProtocolType.overview_fire_inspection:
         typeProtocol = TypeInspection.objects.get(pk=ProtocolType.overview_fire_inspection.value)
-
-    print(typeProtocol.id)
+        protocol_form = FireInspectionForm(request.POST or None)
+        redirectText = "constructioninspections:create_fire_inspection_list"
 
     if request.method == "POST":
         if protocol_form.is_valid():
             instance = protocol_form.save(commit=False)
             instance.author = request.user
             protocol_form.save()
-            return redirect("constructioninspections:create_buildings_one_year_inspections_list")
+            return redirect(redirectText)
     return render(request, "construction_inspections/protocol_inspection_form.html",
                   {"form": protocol_form, "new": True, "typeProtocol": typeProtocol})
 
@@ -220,24 +242,31 @@ def show_information(request, typeInspection, id):
     if typeInspection == ProtocolType.overview_buildings_one_year.value:
         protocol = BuildingInspectionOneYear.objects.get(pk=id)
         overview = ProtocolType.overview_buildings_one_year.name
+
     elif typeInspection == ProtocolType.overview_buildings_five_year.value:
         protocol = BuildingInspectionFiveYear.objects.get(pk=id)
         overview = ProtocolType.overview_buildings_five_year.name
+
     elif typeInspection == ProtocolType.overview_chimney.value:
         protocol = ChimneyInspection.objects.get(pk=id)
         overview = ProtocolType.overview_chimney.name
+
     elif typeInspection == ProtocolType.overview_electrical_one_year.value:
         protocol = ElectricalInspectionOneYear.objects.get(pk=id)
         overview = ProtocolType.overview_electrical_one_year.name
+
     elif typeInspection == ProtocolType.overview_electrical_five_year.value:
         protocol = ElectricalInspectionFiveYear.objects.get(pk=id)
         overview = ProtocolType.overview_electrical_five_year.name
+
     elif typeInspection == ProtocolType.overview_heating_boilers.value:
         protocol = HeatingBoilerInspection.objects.get(pk=id)
         overview = ProtocolType.overview_heating_boilers.name
+
     elif typeInspection == ProtocolType.overview_air_conditioners.value:
         protocol = AirConditionerInspection.objects.get(pk=id)
         overview = ProtocolType.overview_air_conditioners.name
+
     elif typeInspection == ProtocolType.overview_fire_inspection.value:
         protocol = FireInspection.objects.get(pk=id)
         overview = ProtocolType.overview_fire_inspection.name

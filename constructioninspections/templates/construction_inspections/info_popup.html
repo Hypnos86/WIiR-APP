@@ -5,40 +5,40 @@
     <form class="m-2 p-4" method="get" action="{% url 'constructioninspections:show_information' typeInspection id %}">
         {%csrf_token%}
         <div class="container">
-            <div>
+            <div class="mx-2">
                 <h5>Protokół z kontroli: {{protocol.inspection_name}} z dnia {{protocol.date_protocol}}&nbsp;r.</h5>
             </div>
-            <div>
+            <div class="mx-2">
                 <span class="mext-muted">Jednostka: </span>
                 <span>{{protocol.no_inventory.unit}}</span>
             </div>
-            <div>
+            <div class="mx-2">
                 <span class="text-muted">Budynek: </span>
                 <span>{{protocol.no_inventory.building_name}}</span>
             </div>
-            <div>
-                <span>Rodzaj obiektu: </span>
+            <div class="mx-2">
+                <span class="text-muted">Rodzaj obiektu: </span>
                 <span>{{protocol.no_inventory.kind}}</span>
             </div>
-            <div>
-                <span>Powierzchnia użytkowa: </span>
-                <span>{{protocol.no_inventory.usable_area}}</span>
+            {% if protocol.no_inventory.usable_area%}
+            <div class="mx-2">
+                <span class="text-muted">Powierzchnia użytkowa: </span>
+                <span>{{protocol.no_inventory.usable_area}} m<sup>2</sup></span>
             </div>
-            <div>
-                <span>Powierzchnia użytkowa: </span>
-                <span>{{protocol.no_inventory.usable_area}}</span>
+            {%endif%}
+            {%if protocol.no_inventory.volume%}
+            <div class="mx-2">
+                <span class="text-muted">Kubatura: </span>
+                <span>{{protocol.no_inventory.volume}} m<sup>3</sup></span>
             </div>
-            <div>
-                <span>Kubatura: </span>
-                <span>{{protocol.no_inventory.volume}}</span>
-            </div>
-            <div>
+            {%endif%}
+            <div class="mx-2">
                 <span class="text-muted">Wnioski</span>
                 <p>{{protocol.conclusions}}</p>
             </div>
-            <div>
-                <span>Data nastepnego przegladu</span>
-                <span>{{protocol.date_next_inspection}}</span>
+            <div class="mx-2">
+                <span class="text-muted">Data nastepnego przegladu</span>
+                <span>{{protocol.date_next_inspection}}&nbsp;r.</span>
             </div>
             <hr>
             <div>
@@ -54,7 +54,6 @@
             </a>
         </div>
     </form>
-
 </div>
 {%endblock%}
 
