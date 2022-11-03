@@ -27,15 +27,16 @@
                 <span class="text-muted">Informacje: </span>
                 <p>{%if invoice.information%} {{invoice.information}} {%else%} --brak-- {%endif%}</p></div>
             <hr>
-            <div class="my-1"><span class="text-muted">Powiaty: </span>
-                <ul class="list-group">
+            <div class="mt-1">
+                <span class="text-muted">Powiaty: </span>
+                <ul class="list-group mt-2">
                 {%for item in items%}
                 <li style="list-style-type: none;">{{item.county}} - {{item.sum}}&nbsp;zł.</li>
                 {%endfor%}
                     </ul>
             </div>
             <hr>
-            <div class="my-1"><span class="text-muted">Ewidencja: </span><span>{{invoice.creation_date|date:"d.m.Y"}}&nbsp;r. ({{invoice.author}})</span></div>
+            <div class="my-1"><small class="text-muted">Ewidencja: </small><small>{{invoice.creation_date|date:"d.m.Y"}}&nbsp;r. ({{invoice.author}})</small></div>
         </div>
     </form>
 </div>
