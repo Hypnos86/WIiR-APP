@@ -185,7 +185,7 @@ def create_fire_inspection_list(request):
 
 
 @login_required
-def add_protocol(request, typeInspection):
+def add_protocol(request, typeInspection, id=None):
     if typeInspection == ProtocolType.overview_buildings_one_year.name:
         typeProtocol = TypeInspection.objects.get(pk=ProtocolType.overview_buildings_one_year.value)
         protocol_form = BuildingInspectionOneYearForm(request.POST or None)
@@ -234,6 +234,66 @@ def add_protocol(request, typeInspection):
             return redirect(redirectText)
     return render(request, "construction_inspections/protocol_inspection_form.html",
                   {"form": protocol_form, "new": True, "typeProtocol": typeProtocol})
+
+
+@login_required
+def edit_protocol(request, typeInspection, id):
+    if typeInspection == ProtocolType.overview_buildings_one_year.name:
+        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.overview_buildings_one_year.value)
+        object = get_object_or_404(BuildingInspectionOneYear, pk=id)
+        protocol_form = BuildingInspectionOneYearForm(request.POST or None, instance=object)
+        redirectText = "constructioninspections:create_buildings_one_year_inspections_list"
+
+    elif typeInspection == ProtocolType.overview_buildings_five_year.name:
+        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.overview_buildings_five_year.value)
+        object = get_object_or_404(BuildingInspectionFiveYear, pk=id)
+        protocol_form = BuildingInspectionFiveYearForm(request.POST or None, instance=object)
+        redirectText = "constructioninspections:create_buildings_five_year_inspections_list"
+
+    elif typeInspection == ProtocolType.overview_chimney.name:
+        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.overview_chimney.value)
+        object = get_object_or_404(ChimneyInspection, pk=id)
+        protocol_form = ChimneyInspectionForm(request.POST or None, instance=object)
+        redirectText = "constructioninspections:create_chimney_inspection_list"
+
+    elif typeInspection == ProtocolType.overview_electrical_one_year.name:
+        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.overview_electrical_one_year.value)
+        object = get_object_or_404(ElectricalInspectionOneYear, pk=id)
+        protocol_form = ElectricalInspectionOneYearForm(request.POST or None, instance=object)
+        redirectText = "constructioninspections:create_electrical_inspection_one_year_list"
+
+    elif typeInspection == ProtocolType.overview_electrical_five_year.name:
+        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.overview_electrical_five_year.value)
+        object = get_object_or_404(ElectricalInspectionFiveYear, pk=id)
+        protocol_form = ElectricalInspectionFiveYearForm(request.POST or None, instance=object)
+        redirectText = "constructioninspections:create_electrical_inspection_five_year_list"
+
+    elif typeInspection == ProtocolType.overview_heating_boilers.name:
+        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.overview_heating_boilers.value)
+        object = get_object_or_404(HeatingBoilerInspection, pk=id)
+        protocol_form = HeatingBoilerInspectionForm(request.POST or None, instance=object)
+        redirectText = "constructioninspections:create_heating_boilers_inspection_list"
+
+    elif typeInspection == ProtocolType.overview_air_conditioners.name:
+        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.overview_air_conditioners.value)
+        object = get_object_or_404(AirConditionerInspection, pk=id)
+        protocol_form = AirConditionerInspectionForm(request.POST or None, instance=object)
+        redirectText = "constructioninspections:create_air_conditioners_inspection_list"
+
+    elif typeInspection == ProtocolType.overview_fire_inspection:
+        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.overview_fire_inspection.value)
+        object = get_object_or_404(FireInspection, pk=id)
+        protocol_form = FireInspectionForm(request.POST or None, instance=object)
+        redirectText = "constructioninspections:create_fire_inspection_list"
+
+    if request.method == "POST":
+        if protocol_form.is_valid():
+            instance = protocol_form.save(commit=False)
+            instance.author = request.user
+            protocol_form.save()
+            return redirect(redirectText)
+    return render(request, "construction_inspections/protocol_inspection_form.html",
+                  {"form": protocol_form, "new": False, "typeProtocol": typeProtocol})
 
 
 @login_required
