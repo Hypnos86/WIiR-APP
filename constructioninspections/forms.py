@@ -1,5 +1,6 @@
 from django.forms import ModelForm, Widget, Textarea, DateField
 from main.forms import DateField
+from tinymce.widgets import TinyMCE
 from constructioninspections.models import AirConditionerInspection, FireInspection, ElectricalInspectionOneYear, \
     ChimneyInspection, HeatingBoilerInspection, BuildingInspectionFiveYear, BuildingInspectionOneYear, \
     ElectricalInspectionFiveYear
@@ -12,7 +13,9 @@ class BuildingInspectionOneYearForm(ModelForm):
         exclude = ["creation_date", "change", "author"]
         labels = {"no_inventory": "Nr. inwentarzowy", "inspection_name": "Rodzaj przeglądu",
                   "date_protocol": "Data protokołu", "conclusions": "Wnioski", "technical_condition": "Stan techniczny"}
-        widgets = {"date_protocol": DateField(), "date_next_inspection": DateField()}
+        widgets = {"date_protocol": DateField(),
+                   "date_next_inspection": DateField(),
+                   "cpmclusion": TinyMCE(attrs={'cols': 5, 'rows': 3})}
 
 
 class BuildingInspectionFiveYearForm(ModelForm):
@@ -24,7 +27,9 @@ class BuildingInspectionFiveYearForm(ModelForm):
         labels = {"no_inventory": "Nr. inwentarzowy", "inspection_name": "Rodzaj przeglądu",
                   "date_protocol": "Data protokołu", "conclusions": "Wnioski",
                   "date_next_inspection": "Data następnego przeglądu", "technical_condition": "Stan techniczny"}
-        widgets = {"date_protocol": DateField(), "date_next_inspection": DateField()}
+        widgets = {"date_protocol": DateField(),
+                   "date_next_inspection": DateField(),
+                   "cpmclusion": TinyMCE()}
 
 
 class ChimneyInspectionForm(ModelForm):
@@ -36,7 +41,9 @@ class ChimneyInspectionForm(ModelForm):
         labels = {"no_inventory": "Nr. inwentarzowy", "inspection_name": "Rodzaj przeglądu",
                   "date_protocol": "Data protokołu", "conclusions": "Wnioski",
                   "date_next_inspection": "Data następnego przeglądu", "technical_condition": "Stan techniczny"}
-        widgets = {"date_protocol": DateField(), "date_next_inspection": DateField()}
+        widgets = {"date_protocol": DateField(),
+                   "date_next_inspection": DateField(),
+                   "cpmclusion": TinyMCE()}
 
 
 class ElectricalInspectionOneYearForm(ModelForm):
@@ -48,7 +55,9 @@ class ElectricalInspectionOneYearForm(ModelForm):
         labels = {"no_inventory": "Nr. inwentarzowy", "inspection_name": "Rodzaj przeglądu",
                   "date_protocol": "Data protokołu", "conclusions": "Wnioski",
                   "date_next_inspection": "Data następnego przeglądu", "technical_condition": "Stan techniczny"}
-        widgets = {"date_protocol": DateField(), "date_next_inspection": DateField()}
+        widgets = {"date_protocol": DateField(),
+                   "date_next_inspection": DateField(),
+                   "cpmclusion": TinyMCE()}
 
 
 class ElectricalInspectionFiveYearForm(ModelForm):
@@ -60,7 +69,9 @@ class ElectricalInspectionFiveYearForm(ModelForm):
         labels = {"no_inventory": "Nr. inwentarzowy", "inspection_name": "Rodzaj przeglądu",
                   "date_protocol": "Data protokołu", "conclusions": "Wnioski",
                   "date_next_inspection": "Data następnego przeglądu", "technical_condition": "Stan techniczny"}
-        widgets = {"date_protocol": DateField(), "date_next_inspection": DateField()}
+        widgets = {"date_protocol": DateField(),
+                   "date_next_inspection": DateField(),
+                   "cpmclusion": TinyMCE()}
 
 
 class HeatingBoilerInspectionForm(ModelForm):
@@ -72,7 +83,9 @@ class HeatingBoilerInspectionForm(ModelForm):
         labels = {"no_inventory": "Nr. inwentarzowy", "inspection_name": "Rodzaj przeglądu",
                   "date_protocol": "Data protokołu", "conclusions": "Wnioski",
                   "date_next_inspection": "Data następnego przeglądu", "technical_condition": "Stan techniczny"}
-        widgets = {"date_protocol": DateField(), "date_next_inspection": DateField()}
+        widgets = {"date_protocol": DateField(),
+                   "date_next_inspection": DateField(),
+                   "cpmclusion": TinyMCE()}
 
 
 class FireInspectionForm(ModelForm):
@@ -84,7 +97,9 @@ class FireInspectionForm(ModelForm):
         labels = {"no_inventory": "Nr. inwentarzowy", "inspection_name": "Rodzaj przeglądu",
                   "date_protocol": "Data protokołu", "conclusions": "Wnioski",
                   "date_next_inspection": "Data następnego przeglądu", "technical_condition": "Stan techniczny"}
-        widgets = {"date_protocol": DateField(), "date_next_inspection": DateField()}
+        widgets = {"date_protocol": DateField(),
+                   "date_next_inspection": DateField(),
+                   "cpmclusion": TinyMCE()}
 
 
 class AirConditionerInspectionForm(ModelForm):
@@ -96,4 +111,6 @@ class AirConditionerInspectionForm(ModelForm):
         labels = {"no_inventory": "Nr. inwentarzowy", "inspection_name": "Rodzaj przeglądu",
                   "date_protocol": "Data protokołu", "conclusions": "Wnioski",
                   "date_next_inspection": "Data następnego przeglądu", "technical_condition": "Stan techniczny"}
-        widgets = {"date_protocol": DateField(), "date_next_inspection": DateField()}
+        widgets = {"date_protocol": DateField(),
+                   "date_next_inspection": DateField(),
+                   "cpmclusion": TinyMCE()}

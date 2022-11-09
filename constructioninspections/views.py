@@ -221,7 +221,7 @@ def add_protocol(request, typeInspection, id=None):
         protocol_form = AirConditionerInspectionForm(request.POST or None)
         redirectText = "constructioninspections:create_air_conditioners_inspection_list"
 
-    elif typeInspection == ProtocolType.overview_fire_inspection:
+    elif typeInspection == ProtocolType.overview_fire_inspection.name:
         typeProtocol = TypeInspection.objects.get(pk=ProtocolType.overview_fire_inspection.value)
         protocol_form = FireInspectionForm(request.POST or None)
         redirectText = "constructioninspections:create_fire_inspection_list"

@@ -1,6 +1,7 @@
 from django.db import models
 from polymorphic.models import PolymorphicModel
 from fixedasset.models import Building
+from tinymce import models as tinymce_models
 
 
 # Create your models here.
@@ -38,7 +39,7 @@ class PatternInspections(PolymorphicModel):
     inspection_name = models.ForeignKey(TypeInspection, on_delete=models.CASCADE, verbose_name="Rodzaj przeglądu",
                                         related_name="patterninspections")
     date_protocol = models.DateField("Data protokołu")
-    conclusions = models.TextField("Wnioski")
+    conclusions = tinymce_models.HTMLField("Wnioski")
     date_next_inspection = models.DateField("Data kolejnego przeglądu", null=True, blank=True)
     technical_condition = models.ForeignKey(TechnicalCondition, on_delete=models.CASCADE, related_name="patterninspections", verbose_name="Stan techniczny")
     creation_date = models.DateTimeField("Data utworzenia", auto_now_add=True)

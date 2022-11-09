@@ -3,6 +3,7 @@ from constructioninspections.models import TechnicalCondition, TypeInspection, B
     BuildingInspectionFiveYear, ChimneyInspection, ElectricalInspectionOneYear, FireInspection, HeatingBoilerInspection, \
     AirConditionerInspection, ElectricalInspectionFiveYear
 
+
 # Register your models here.
 @admin.register(TechnicalCondition)
 class TypeInspectionAdmin(admin.ModelAdmin):
