@@ -40,7 +40,7 @@
                 <span class="text-muted">Liczba budynków: </span><span class="badge text-white info badge-pill">{{unit.building.all|length}}</span>
             </button>
             <button style="display: none;" class="hide-on-start button-hide btn btn-outline btn-block" onclick="hide(this)">
-                <span class="">{{unit}}</span>|
+                <span class="">{{unit}}</span> |
                 <span class="text-muted">Liczba budynków: </span><span class="badge text-white info badge-pill">{{unit.building.all|length}}</span>
             </button>
         </div>
@@ -70,7 +70,7 @@
                 {% if protocol and protocol.inspection_name.id == 1 %}
                 <li class="list-group-item list-group-item-action list-group-item-light style-row-protocol">
                     <a data-url="{%url 'constructioninspections:show_information' protocol.inspection_name.id protocol.id%}" class="btn btn-outline-secondary mx-2 tt" onclick="openModal(this)">
-                        <span class="">Protokół przeglądu z dnia {{protocol.date_protocol|date:"d.m.Y"}}&nbsp;r.</span>
+                        <span class="bi bi-arrow-return-right h4"></span><span> Protokół przeglądu z dnia {{protocol.date_protocol|date:"d.m.Y"}}&nbsp;r.</span>
                         | <small>Data następnego przeglądu
                         {{protocol.date_next_inspection|date:"d.m.Y"}}&nbsp;r.</small>
                         {%if forloop.first%}
@@ -83,9 +83,9 @@
             </ul>
             {%endfor%}
         </ul>
-        {% endfor %}
+        {%endfor%}
     </div>
-    {% endfor %}
+    {%endfor%}
 </div>
 <!--MODAL-->
 <div class="modal fade" id="protocolInfoModal">
