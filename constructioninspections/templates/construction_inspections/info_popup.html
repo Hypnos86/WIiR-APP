@@ -1,6 +1,8 @@
 {%load static%}
 {%load bootstrap%}
 {%block content%}
+{%block additional_scripts%}
+{{project_form.media}}
 <div class="container ">
     <form class="m-2 p-4" method="get" action="{% url 'constructioninspections:show_information' typeInspection id %}">
         {%csrf_token%}
@@ -34,7 +36,7 @@
             {%endif%}
             <div class="my-4">
                 <span class="text-muted">Wnioski</span>
-                <p>{{protocol.conclusions}}</p>
+                <p>{{protocol.conclusions|safe}}</p>
             </div>
             <div class="my-2">
                 <span class="text-muted">Stan techniczny: </span>
@@ -68,5 +70,6 @@
         </div>
     </form>
 </div>
+{%endblock%}
 {%endblock%}
 

@@ -2,7 +2,7 @@
 {%load static%}
 {%block content%}
 {%if user.accessmodule.inspections_module%}
-<div class="">
+<div class="container">
     <div class="row">
         <div class="col-md-3">
             <a href="{%url 'constructioninspections:important_inspections'%}">
@@ -43,11 +43,10 @@
                 <span class="text-muted">Liczba budynków: </span><span class="badge text-white info badge-pill">{{unit.building.all|length}}</span>
             </button>
         </div>
-        <!--                hide-on-start-->
         <ul style="display: none;" class="list-group list-group-radius hide-on-start">
             {% for building in unit.building.all %}
             <li class="list-group-item  list-group-item-action list-group-item-warning">
-                {%if building.patterninspections.all%}
+                {%if building.building_inspection_five_year.all%}
                 <button class="button-show btn btn-outline expand-collapse" onclick="show(this)">
                     <span class="bi bi-caret-down color-gold"> Rozwiń</span>
                 </button>
@@ -65,7 +64,7 @@
                 </span>
             </li>
             <ul style="display: none;" class="list-group list-group-flush hide-on-start mb-3">
-                {% for protocol in building.patterninspections.all|dictsort:"date_next_inspection" reversed %}
+                {% for protocol in building.building_inspection_five_year.all|dictsort:"date_next_inspection" reversed %}
                 {% if protocol and protocol.inspection_name.id == 2 %}
                 <li class="list-group-item list-group-item-action list-group-item-light style-row-protocol">
                     <a data-url="{%url 'constructioninspections:show_information' protocol.inspection_name.id protocol.id%}" class="btn btn-outline-secondary mx-2 tt" onclick="openModal(this)">

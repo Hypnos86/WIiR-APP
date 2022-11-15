@@ -45,28 +45,28 @@ def important_inspections(request):
 
     for building in buildings:
 
-        protocol_building_one = building.patterninspections.filter(inspection_name=1).order_by(
+        protocol_building_one = building.building_inspection_one_year.filter(inspection_name=1).order_by(
             "date_next_inspection").last()
 
-        protocol_building_five = building.patterninspections.filter(inspection_name=2).order_by(
+        protocol_building_five = building.building_inspection_five_year.filter(inspection_name=2).order_by(
             "date_next_inspection").last()
 
-        protocol_chimneys = building.patterninspections.filter(inspection_name=3).order_by(
+        protocol_chimneys = building.chimney_inspection.filter(inspection_name=3).order_by(
             "date_next_inspection").last()
 
-        protocol_electrical_one = building.patterninspections.filter(inspection_name=4).order_by(
+        protocol_electrical_one = building.electrical_inspection_one_year.filter(inspection_name=4).order_by(
             "date_next_inspection").last()
 
-        protocol_electrical_five = building.patterninspections.filter(inspection_name=5).order_by(
+        protocol_electrical_five = building.electrical_inspection_five_year.filter(inspection_name=5).order_by(
             "date_next_inspection").last()
 
-        protocol_heating_boiler = building.patterninspections.filter(inspection_name=6).order_by(
+        protocol_heating_boiler = building.heating_boiler_inspection.filter(inspection_name=6).order_by(
             "date_next_inspection").last()
 
-        protocol_air_conditioners = building.patterninspections.filter(inspection_name=7).order_by(
+        protocol_air_conditioners = building.air_conditioner_inspection.filter(inspection_name=7).order_by(
             "date_next_inspection").last()
 
-        protocol_fire = building.patterninspections.filter(inspection_name=8).order_by("date_next_inspection").last()
+        protocol_fire = building.fire_inspection.filter(inspection_name=8).order_by("date_next_inspection").last()
 
         if protocol_building_one != None and protocol_building_one.date_next_inspection < next_date:
             buildings_inspections_one_year.append(protocol_building_one)
@@ -145,43 +145,43 @@ def create_buildings_five_year_inspections_list(request):
 
 @login_required
 def create_chimney_inspection_list(request):
-    objects = ChimneyInspection.objects.all()
-    context = {"objects": objects, "overview": ProtocolType.overview_chimney}
+    units = Unit.objects.all().order_by("county__id_order")
+    context = {"units": units, "overview": ProtocolType.overview_chimney}
     return render(request, "construction_inspections/chimneys_inspection_list.html", context)
 
 
 @login_required
 def create_electrical_inspection_one_year_list(request):
-    objects = ElectricalInspectionOneYear.objects.all()
-    context = {"objects": objects, "overview": ProtocolType.overview_electrical_one_year}
+    units = Unit.objects.all().order_by("county__id_order")
+    context = {"units": units, "overview": ProtocolType.overview_electrical_one_year}
     return render(request, "construction_inspections/electrical_inspection_one_year_list.html", context)
 
 
 @login_required
 def create_electrical_inspection_five_year_list(request):
-    objects = ElectricalInspectionFiveYear.objects.all()
-    context = {"objects": objects, "overview": ProtocolType.overview_electrical_five_year}
+    units = Unit.objects.all().order_by("county__id_order")
+    context = {"units": units, "overview": ProtocolType.overview_electrical_five_year}
     return render(request, "construction_inspections/electrical_inspection_five_year_list.html", context)
 
 
 @login_required
 def create_heating_boilers_inspection_list(request):
-    objects = HeatingBoilerInspection.objects.all()
-    context = {"objects": objects, "overview": ProtocolType.overview_heating_boilers}
+    units = Unit.objects.all().order_by("county__id_order")
+    context = {"units": units, "overview": ProtocolType.overview_heating_boilers}
     return render(request, "construction_inspections/heating_boilers_inspection_list.html", context)
 
 
 @login_required
 def create_air_conditioners_inspection_list(request):
-    objects = AirConditionerInspection.objects.all()
-    context = {"objects": objects, "overview": ProtocolType.overview_air_conditioners}
+    units = Unit.objects.all().order_by("county__id_order")
+    context = {"units": units, "overview": ProtocolType.overview_air_conditioners}
     return render(request, "construction_inspections/air_conditioners_inspection_list.html", context)
 
 
 @login_required
 def create_fire_inspection_list(request):
-    objects = FireInspection.objects.all()
-    context = {"objects": objects, "overview": ProtocolType.overview_fire_inspection}
+    units = Unit.objects.all().order_by("county__id_order")
+    context = {"units": units, "overview": ProtocolType.overview_fire_inspection}
     return render(request, "construction_inspections/fire_inspection_list.html", context)
 
 

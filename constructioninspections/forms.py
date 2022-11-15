@@ -15,7 +15,7 @@ class BuildingInspectionOneYearForm(ModelForm):
                   "date_protocol": "Data protokołu", "conclusions": "Wnioski", "technical_condition": "Stan techniczny"}
         widgets = {"date_protocol": DateField(),
                    "date_next_inspection": DateField(),
-                   "cpmclusion": TinyMCE(attrs={'cols': 5, 'rows': 3})}
+                   "conclusions": TinyMCE()}
 
 
 class BuildingInspectionFiveYearForm(ModelForm):
@@ -29,7 +29,7 @@ class BuildingInspectionFiveYearForm(ModelForm):
                   "date_next_inspection": "Data następnego przeglądu", "technical_condition": "Stan techniczny"}
         widgets = {"date_protocol": DateField(),
                    "date_next_inspection": DateField(),
-                   "cpmclusion": TinyMCE()}
+                   "conclusions": TinyMCE()}
 
 
 class ChimneyInspectionForm(ModelForm):
@@ -43,7 +43,7 @@ class ChimneyInspectionForm(ModelForm):
                   "date_next_inspection": "Data następnego przeglądu", "technical_condition": "Stan techniczny"}
         widgets = {"date_protocol": DateField(),
                    "date_next_inspection": DateField(),
-                   "cpmclusion": TinyMCE()}
+                   "conclusions": TinyMCE()}
 
 
 class ElectricalInspectionOneYearForm(ModelForm):
@@ -57,7 +57,7 @@ class ElectricalInspectionOneYearForm(ModelForm):
                   "date_next_inspection": "Data następnego przeglądu", "technical_condition": "Stan techniczny"}
         widgets = {"date_protocol": DateField(),
                    "date_next_inspection": DateField(),
-                   "cpmclusion": TinyMCE()}
+                   "conclusions": TinyMCE()}
 
 
 class ElectricalInspectionFiveYearForm(ModelForm):
@@ -71,7 +71,7 @@ class ElectricalInspectionFiveYearForm(ModelForm):
                   "date_next_inspection": "Data następnego przeglądu", "technical_condition": "Stan techniczny"}
         widgets = {"date_protocol": DateField(),
                    "date_next_inspection": DateField(),
-                   "cpmclusion": TinyMCE()}
+                   "conclusions": TinyMCE()}
 
 
 class HeatingBoilerInspectionForm(ModelForm):
@@ -85,7 +85,7 @@ class HeatingBoilerInspectionForm(ModelForm):
                   "date_next_inspection": "Data następnego przeglądu", "technical_condition": "Stan techniczny"}
         widgets = {"date_protocol": DateField(),
                    "date_next_inspection": DateField(),
-                   "cpmclusion": TinyMCE()}
+                   "conclusions": TinyMCE()}
 
 
 class FireInspectionForm(ModelForm):
@@ -99,7 +99,7 @@ class FireInspectionForm(ModelForm):
                   "date_next_inspection": "Data następnego przeglądu", "technical_condition": "Stan techniczny"}
         widgets = {"date_protocol": DateField(),
                    "date_next_inspection": DateField(),
-                   "cpmclusion": TinyMCE()}
+                   "conclusions": TinyMCE()}
 
 
 class AirConditionerInspectionForm(ModelForm):
@@ -113,4 +113,4 @@ class AirConditionerInspectionForm(ModelForm):
                   "date_next_inspection": "Data następnego przeglądu", "technical_condition": "Stan techniczny"}
         widgets = {"date_protocol": DateField(),
                    "date_next_inspection": DateField(),
-                   "cpmclusion": TinyMCE()}
+                   "conclusions": TinyMCE()}
