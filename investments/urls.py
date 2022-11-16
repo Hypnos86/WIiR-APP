@@ -4,7 +4,7 @@ from investments.views import make_important_task_investments, investment_projec
 
 app_name = "investments"
 urlpatterns = [
-    path("zadania_inwestycyjne/", investment_projects_list, name="investment_projects_list"),
+    path("investments/", investment_projects_list, name="investment_projects_list"),
     path("new_investments/", add_new_project, name="add_new_project"),
     path("edit_investment/<int:id>", edit_project, name="edit_project"),
     path("show_investment/<int:id>", show_project, name="show_project"),
