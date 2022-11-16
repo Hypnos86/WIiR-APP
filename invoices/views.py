@@ -16,6 +16,7 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
+from io import BytesIO
 from django.contrib.staticfiles import finders
 
 
@@ -596,8 +597,8 @@ def make_pdf_from_invoices_sell(request):
     year = current_year()
     now = now_date()
     q = request.GET.get("q", "")
-    date_from = request.GET.get("from", None)
-    date_to = request.GET.get("to", None)
+    date_from = request.GET.get("date_from")
+    date_to = request.GET.get("date_to")
 
     if q or date_from or date_to:
         if q:
@@ -628,20 +629,20 @@ def make_pdf_from_invoices_sell(request):
 
     template_path = "invoices/invoices_sell_pdf.html"
 
-    context = {"invoices": invoicessell,
-               "invoices_sell_sum": invoices_sell_sum, "now": now, "year": year,
-               "invoices_sell_sum_dict": invoices_sell_sum_dict, "objects": objects, "date_from": date_from,
-               "date_to": date_to}
+    context = {"invoices": invoicessell,"date_from": date_from,
+               "date_to": date_to,"invoices_sell_sum": invoices_sell_sum, "now": now, "year": year,
+               "invoices_sell_sum_dict": invoices_sell_sum_dict, "objects": objects, }
 
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type="application/pdf")
-    response["Content-Disposition"] = "attachment; filename='Ewidencja wystawionych faktur.pdf'"
+    response["Content-Disposition"] = "attachment; filename=Ewidencja wystawionych faktur.pdf"
     # find the template and render it.
     template = get_template(template_path)
     html = template.render(context)
 
     # create a pdf
-    pisa_status = pisa.CreatePDF(html, dest=response, encoding="utf-8", path="'/main/static/fonts/arial.ttf'")
+    pisa_status = pisa.CreatePDF(html,  dest=response, encoding="UTF-8")
+    # pisa_status = pisa.CreatePDF(html,  dest=response, encoding="UTF-8", path="'/main/static/fonts/arial.ttf'")
 
     # if error then show some funny view
     if pisa_status.err:

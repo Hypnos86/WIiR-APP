@@ -1,16 +1,14 @@
 {%load humanize%}
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="pl-Pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        @font-face {font-family: Arial; src: url("arial.ttf"); }
+        font-face {font-family: Arial; src: url("arial.ttf");}
         @page {size: letter landscape;margin: 2cm;}
-        table, td, th {border: 1px solid}
-        body {
-        font-family: Arial;
-        }
+        table, td, th {border: 1px solid;}
+        body {font-family: STSong-Light;}
     </style>
     <title>Ewidencja wystawionych faktur - {{now|date:'d.m.Y'}}</title>
 </head>
@@ -23,7 +21,7 @@
         {%if user.is_authenticated%}
         <span>Wykonał: {{user.first_name}} {{user.last_name}}</span><br>
         {%endif%}
-        <span>Sporzadzono: {{now|date:'d.m.Y'}} r.</span>
+        <span>Sporządzono: {{now|date:'d.m.Y'}} r.</span>
     </div>
 </div>
 <hr>
