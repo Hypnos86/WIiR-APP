@@ -29,11 +29,13 @@ class UnitResource(resources.ModelResource):
     zip_code = Field(attribute='zip_code', column_name='Kod pocztowy')
     address = Field(attribute='address', column_name='Adres')
     city = Field(attribute='city', column_name='Miasto')
+    manager = Field(attribute='manager', column_name='Zarządca')
+    swop_id = Field(attribute='county__swop_id', column_name='SWOP ID')
 
     class Meta:
         model = Unit
-        fields = ('id',)
-        export_order = ('id', 'county', 'type', 'address', 'zip_code', 'city')
+        fields = ('swop_id', 'county', 'type', 'address', 'zip_code', 'city')
+        export_order = ('swop_id', 'county', 'type', 'address', 'zip_code', 'city')
 
 
 @admin.register(Unit)

@@ -16,7 +16,7 @@
         </div>
         <div class="col-md-8">
             <h4 class="text-center">Umowa {%if contract.no_contract%} nr {{contract.no_contract}} {%endif%}z dnia
-                {{contract.date|date:"d.m.Y"}}</h4>
+                {{contract.date|date:"d.m.Y"}}&nbsp;r.</h4>
         </div>
     </div>
 </div>
@@ -114,10 +114,10 @@
                 </li>
 
                 <li class="list-group-item">
-                    <small class="text-muted">Data dodania: {{contract.creation_date|date:'d.m.Y (H:i)'}}</small>
-                </li>
-                <li class="list-group-item">
-                    <small class="text-muted">Zmiany: {{contract.change|date:'d.m.Y (H:i)'}} - {{contract.author}}</small>
+                    <div>
+                        <small class="text-muted">Data dodania: {{contract.creation_date|date:'d.m.Y (H:i)'}}</small><br>
+                        <small class="text-muted">Zmiany: {{contract.change|date:'d.m.Y (H:i)'}} - {{contract.author}}</small>
+                    </div>
                 </li>
             </ul>
         </div>
