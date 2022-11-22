@@ -27,7 +27,7 @@
                 </form>
             </div>
         </div>
-            {%if user.accessmodule.official_flat%}
+            {%if user.accessmodule.official_flat_edit%}
             <div class="col-md-3 moj-button-right "><a href="{%url 'businessflats:add_new_flat'%}">
                 <button type="button" class="btn btn-outline-primary my-btn"><span class="bi bi-pin-map"> Dodaj nowy lokal</span></button>
             </a>
@@ -66,7 +66,7 @@
                         class="bi bi-info-lg"></i>
                 </button>
                 {%endif%}
-                {%if user.accessmodule.official_flat%}
+                {%if user.accessmodule.official_flat_edit%}
                 <a class="mx-2" href="{%url 'businessflats:edit_flat' flat.id %}">
                     <button type="submit" data-toggle="info" data-placement="right" title="Edytuj" class="btn btn-outline-primary icon-color"><i class="bi bi-pencil-square"></i>
                     </button>

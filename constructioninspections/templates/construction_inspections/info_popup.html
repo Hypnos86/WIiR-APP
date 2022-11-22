@@ -52,6 +52,7 @@
                 <small>{{protocol.creation_date|date:"d.m.Y"}}&nbsp;r. ({{protocol.author}})</small>
             </div>
         </div>
+        {%if user.accessmodule.inspections_module_edit%}
         <div class="row mt-5">
             <div class="col-md-6 moj-button-left">
                 <a href="{%url 'constructioninspections:edit_protocol' overview id%}">
@@ -68,6 +69,7 @@
                 </a>
             </div>
         </div>
+        {%endif%}
     </form>
 </div>
 {%endblock%}

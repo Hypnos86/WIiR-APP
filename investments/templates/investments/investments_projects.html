@@ -26,12 +26,14 @@
             </form>
         </div>
     </div>
+    {%if user.accessmodule.investments_module_edit%}
         <div class="col-md-3 moj-button-right align-self-end">
             <a href="{% url 'investments:add_new_project'%}">
                 <button type="button" class="btn btn-outline-primary my-btn ">
                     <span class="bi bi-plus-circle"> Dodaj zadanie</span>
                 </button></a>
         </div>
+    {%endif%}
 </div>
 <div class="col">
     <table class="table table-hover my-table mt-2">
@@ -75,10 +77,12 @@
                     <button data-toggle="info" title="Pokaż" type="button" class="btn btn-outline-primary icon-color my-1 m-2">
                         <i class="bi bi-eye"></i>
                     </button></a>
+                {%if user.accessmodule.investments_module_edit%}
                 <a href="{%url 'investments:edit_project' project.id%}">
                     <button data-toggle="info" title="Edytuj" type="submit" class="btn btn-outline-primary icon-color my-1 m-2">
                         <i class="bi bi-pencil-square"></i>
                     </button></a>
+                {%endif%}
             </td>
         </tr>
         {%endfor%}

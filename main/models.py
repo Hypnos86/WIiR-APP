@@ -82,12 +82,13 @@ class Employer(models.Model):
 
 
 class AccessModule(models.Model):
+    relatedName = "accessmodule"
     class Meta:
         verbose_name = "Dostęp do modułów"
         verbose_name_plural = "Dostęp do modułów"
 
     user = models.OneToOneField("auth.User", on_delete=models.CASCADE, verbose_name="Użytkownik",
-                                related_name="accessmodule")
+                                related_name=relatedName)
     zok_team = models.BooleanField("Ewidencja: Zespoł Obsługi Kancelarynej", default=False)
     teams = models.BooleanField("ZOK - Zespoły", default=False)
     commands = models.BooleanField("ZOK - Polecenia", default=False)
