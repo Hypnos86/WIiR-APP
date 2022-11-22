@@ -49,16 +49,30 @@
                 <span>{{building.information}}</span>
             </div>
             {%endif%}
+
             <hr>
-            <ul class="list-group">
-                <li class="list-group">
-                    <small class="text-muted">Data dodania: {{building.creation_date|date:'d.m.Y (H:i)'}}</small>
-                </li>
-                <li class="list-group">
-                    <small class="text-muted">Zmiany: {{building.change|date:'d.m.Y (H:i)'}} -
-                        {{building.author}}</small>
-                </li>
-            </ul>
+            <div class="row">
+                <div class="col-md-6">
+                    <ul class="list-group">
+                        <li class="list-group">
+                            <small class="text-muted">Data dodania: {{building.creation_date|date:'d.m.Y (H:i)'}}</small>
+                        </li>
+                        <li class="list-group">
+                            <small class="text-muted">Zmiany: {{building.change|date:'d.m.Y (H:i)'}} -
+                                {{building.author}}</small>
+                        </li>
+                    </ul>
+            </div>
+                {%if user.accessmodule.buildings_module_edit%}
+                 <div class="col-md-6 moj-button-right">
+                    <a href="{%url 'fixedasset:edit_building' building.id %}">
+                        <button type="button" class="btn btn-outline-primary my-btn">
+                            <span class="bi bi-pencil-square"> Edytuj</span>
+                        </button>
+                    </a>
+                </div>
+                {%endif%}
+            </div>
         </div>
     </form>
 </div>
