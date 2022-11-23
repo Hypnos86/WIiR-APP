@@ -78,9 +78,8 @@ def type_work_list(request):
         sum_rb[unit] = sum
 
     year = current_year()
-    item = round(float(limit_netto) * 1.23, 2)
 
-    context = {'units': units, 'limit': limit, 'item': item, 'year': year, 'sum_rb': sum_rb}
+    context = {'units': units, 'limit': limit, 'year': year, 'sum_rb': sum_rb}
     return render(request, 'cpvdict/genre_work_list.html', context)
 
 
