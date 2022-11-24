@@ -536,12 +536,12 @@ def make_verification(request):
     if date_from:
         date_from_obj = datetime.datetime.strptime(date_from, "%Y-%m-%d")
     else:
-        date_from_obj = ""
+        date_from_obj = None
 
     if date_to:
         date_to_obj = datetime.datetime.strptime(date_to, "%Y-%m-%d")
     else:
-        date_to_obj = ""
+        date_to_obj = None
 
     if date_from and date_to:
 

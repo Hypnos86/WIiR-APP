@@ -43,28 +43,33 @@
             </div>
         </div>
         <div class="col-md-2">
-            <button id="searchButton" style="{%if query%}display:none;{%endif%}" type="submit" class="btn btn-outline-primary my-btn mt-4">szukaj</button>
-            <button id="cleanButton" style="{%if not query%}display:none;{%endif%}" type="submit" class="btn btn-outline-primary my-btn mt-4" onclick="cleanSearch()">Wyczyść</button>
+            <button id="searchButton" style="{%if query%}display:none;{%endif%}" type="submit"
+                    class="btn btn-outline-primary my-btn mt-4">szukaj
+            </button>
+            <button id="cleanButton" style="{%if not query%}display:none;{%endif%}" type="submit"
+                    class="btn btn-outline-primary my-btn mt-4" onclick="cleanSearch()">Wyczyść
+            </button>
         </div>
     </form>
-{{suma}}
+    {{suma}}
     <div class="row my-5">
         {%if query%}
         <div class="container col-5">
             {%if date_from_obj and date_to_obj%}
-            <h4 class="mb-4 text-center">Zakres weryfikacji: {{date_from_obj|date:'d.m.Y'}} r. - {{date_to_obj|date:'d.m.Y'}} r.</h4>
+            <h4 class="mb-4 text-center">Zakres weryfikacji: {{date_from_obj|date:'d.m.Y'}} r. -
+                {{date_to_obj|date:'d.m.Y'}} r.</h4>
             {%endif%}
             <h5>Suma zapotrzebowania: <span>{{verification_all|intcomma}} zł.</span></h5>
 
             <div>
-
                 {% regroup invoices by date_of_payment as list_payment %}
 
                 {% for lista in list_payment %}
                 {% for key, value in day_sum.items %}
                 {% if key == lista.grouper and value > 0 %}
                 <div class="col-12 mt-4 mb-1 d-flex justify-content-between">
-                    <strong class="">Płatności na {{lista.grouper}} r.{%if lista.list.sum%} ({{lista.list.sum}} zł.) {%else%} ({{value|intcomma}}&nbsp;zł.){%endif%}</strong>
+                    <strong class="">Płatności na {{lista.grouper}}&nbsp;r.{%if lista.list.sum%} ({{lista.list.sum}}&nbsp;zł.)
+                        {%else%} ({{value|intcomma}}&nbsp;zł.){%endif%}</strong>
                     <div>
                         <span class="badge text-white info badge-pill my-badge-pill">{{lista.list|length}}</span>
                     </div>
@@ -78,18 +83,14 @@
                         zł.{%else%}{{invoice.sum|default_if_none:'0 zł.'}}{%endif%}) - {{invoice.contractor.name}}
 
                         {%for financing in invoice.invoice_items.all%}
-                        <div>{{financing.account}}</div>
+                        {{financing.account.source.source}}
                         {%endfor%}
 
-
                     </li>
-
                     {% endfor %}
-
                 </ul>
                 {% endfor %}
             </div>
-
             {%endif%}
         </div>
     </div>
@@ -106,6 +107,7 @@
         $("#date_to").val("");
         $("form").submit();
     }
+
 </script>
 {%endif%}
 {%endblock%}
