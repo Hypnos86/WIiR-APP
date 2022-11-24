@@ -233,6 +233,7 @@ def create_order_archive(request, year):
 @login_required
 def create_type_work_list_archive(request, year):
     units = Unit.objects.all()
+
     sum_rb = {}
     for unit in units:
         orders = Order.objects.all().filter(brakedown=False).filter(genre__name_id='RB').filter(unit=unit).filter(
@@ -241,6 +242,7 @@ def create_type_work_list_archive(request, year):
         for order in orders:
             sum += order.sum_netto
         sum_rb[unit] = sum
+
     try:
         limit = OrderLimit.objects.get(year=year)
     except ObjectDoesNotExist:

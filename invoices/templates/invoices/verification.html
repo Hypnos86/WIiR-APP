@@ -61,14 +61,16 @@
                 {% regroup invoices by date_of_payment as list_payment %}
 
                 {% for lista in list_payment %}
-
+                {% for key, value in day_sum.items %}
+                {% if key == lista.grouper and value > 0 %}
                 <div class="col-12 mt-4 mb-1 d-flex justify-content-between">
-                    <strong class="">Płatności na {{lista.grouper}} r.{%if lista.list.sum%} ({{lista.list.sum}} zł.) {%else%} ({{day_sum}} zł.){%endif%}</strong>
+                    <strong class="">Płatności na {{lista.grouper}} r.{%if lista.list.sum%} ({{lista.list.sum}} zł.) {%else%} ({{value|intcomma}}&nbsp;zł.){%endif%}</strong>
                     <div>
                         <span class="badge text-white info badge-pill my-badge-pill">{{lista.list|length}}</span>
                     </div>
                 </div>
-
+                {%endif%}
+                {%endfor%}
                 <ul class="list-group">
                     {% for invoice in lista.list %}
                     <li class="list-group-item list-group-item-action list-group-item-light">{{invoice.no_invoice}} z

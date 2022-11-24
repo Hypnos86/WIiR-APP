@@ -310,3 +310,14 @@ hr {
     border-left: 10px solid #fff3cd!important;
     border-right: 10px solid #fff3cd!important;
 }
+
+.alert {
+    padding: 0rem!important;
+    margin-top: -20px!important;
+}
+
+.alert-success{
+    background-color: white;
+    color: #6c757d;
+    border-color: white;
+}

@@ -551,14 +551,13 @@ def make_verification(request):
 
         days = set([days["date_of_payment"] for days in invoices_buy_list.values("date_of_payment", "sum")])
 
-        # for day in days:
-        # print(day.aggregate(Sum("sum")))
-        # TODO poprawić kod w dziennym sumowaniu weryfikacji
-        # for invoice in invoices_buy_list.values("date_of_payment"):
-        #     day_sum = invoices_buy_list.aggregate(Sum("sum"))
-        #     print(invoice)
-        # invoice_sum = invoice.aggregate(Sum("sum"))
-
+        day_sum = {}
+        for day in days:
+            sum = 0
+            for invoice in invoices_buy_list:
+                if day == invoice.date_of_payment:
+                    sum += invoice.sum
+            day_sum[day] = sum
         invoices_buy_sum = len(invoices_buy_list)
 
         try:
@@ -572,7 +571,7 @@ def make_verification(request):
                                                               "query": query, "year": year,
                                                               "date_from": date_from,
                                                               "date_to": date_to,
-                                                              # "day_sum": day_sum, TODO poprawić kod w dziennym sumoaniu weryfikacji
+                                                              "day_sum": day_sum,
                                                               "date_from_obj": date_from_obj,
                                                               "date_to_obj": date_to_obj,
                                                               "verification_all": verification_all})
