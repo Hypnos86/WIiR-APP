@@ -33,7 +33,7 @@
         <div class="col-md-9">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item"><span class="text-muted">Kontrahent: </span><span>{{contract.contractor}}</span></li>
-                <li class="list-group-item"><span class="text-muted">Podstawa prawna: </span><span title="{{contract.legal_basic.legal_basic_text}}">{{contract.legal_basic}}</span></li>
+                <li class="list-group-item"><span class="text-muted">Podstawa prawna: </span><span data-toggle="info" title="{{contract.legal_basic.legal_basic_text}}">{{contract.legal_basic}}</span></li>
                 <li class="list-group-item"><span class="text-muted">Rodzaj umowy: </span><span>{{contract.type_of_contract}}</span></li>
                 {%if contract.usable_area%}
                 <li class="list-group-item"><span class="text-muted">Powierzchnia użyczona: </span><span>{{contract.usable_area}} m<sup>2</sup></span></li>
@@ -84,6 +84,10 @@
     document.getElementById("button-record").classList.add("active");
     document.getElementById("button-cpv").classList.remove("active");
     document.getElementById("button-investments").classList.remove("active");
+
+    $(function () {
+        $('[data-toggle="info"]').tooltip()
+        })
 </script>
 {%endif%}
 {%endblock%}

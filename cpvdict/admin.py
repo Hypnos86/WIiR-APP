@@ -54,18 +54,18 @@ class OrderResource(resources.ModelResource):
     # TODO dodać signal i zmienic model - dodatkowe pole do nazwy jednostki
     unit = fields.Field(attribute='unit', column_name='Jednostka',
                         widget=ManyToManyWidget(Unit, ', ', field='full_name'))
-    brakedown = Field(attribute='brakedown', column_name='Awaria')
+    breakdown = Field(attribute='brakedown', column_name='Awaria')
     content = Field(attribute='content', column_name='Zakres')
     worker = Field(attribute='worker', column_name='Branżysta')
 
     class Meta:
         model = Order
-        fields = ['date', 'no_order', 'sum_netto', 'vat', 'sum_brutto', 'typeorder', 'genre', 'unit', 'brakedown',
+        fields = ['date', 'no_order', 'sum_netto', 'vat', 'sum_brutto', 'typeorder', 'genre', 'unit', 'breakdown',
                   'content',
                   'worker']
         export_order = (
-        'date', 'no_order', 'sum_netto', 'vat', 'sum_brutto', 'typeorder', 'genre', 'unit', 'brakedown', 'content',
-        'worker')
+            'date', 'no_order', 'sum_netto', 'vat', 'sum_brutto', 'typeorder', 'genre', 'unit', 'breakdown', 'content',
+            'worker')
 
 
 @admin.register(Order)

@@ -7,6 +7,10 @@
     {%csrf_token%}
     <h5 class="mb-3 text-center"><span class="text-muted">Zlecenie: </span>{{order.no_order}} z dnia {{order.date}} r.</h5>
     <div class="">
+        <div class="my-3">
+            <span class="text-muted">Wykonawca:</span>
+            <span>{{order.contractor}}</span>
+        </div>
         <div class=""><span class="text-muted">Jednostka: </span>
             <ul>
                 {%for unit in order.unit.all%}
@@ -16,7 +20,8 @@
         </div>
         <div class="my-2"><span class="text-muted">Rodzaj zamówienia: </span>{{order.typeorder}} {%if order.brakedown%}<span class="breakdown">Awaria</span>{%endif%}</div>
         <div class="my-2"><span class="text-muted">Rodzajowość: </span><span>{{order.genre}}</span></div>
-        <div class="my-2"><span class="text-muted">Kwota: </span><span>{{order.sum_netto|intcomma}} zł. netto -  {{order.sum_brutto|intcomma}} zł. brutto (vat: {{order.vat}})</span></div>
+        <div class="my-2"><span class="text-muted">Kwota netto: </span><span>{{order.sum_netto|intcomma}} zł.</span></div>
+        <div class="my-2"><span class="text-muted">Kwota brutto: </span><span>{{order.sum_brutto|intcomma}} zł. (vat: {{order.vat}})</span></div>
 
         <div class="my-2"><span class="text-muted">Branżysta: </span><span>{{order.worker}}</span></div>
         <div><span class="text-muted">Zakres prac: </span><p>{{order.content}}</p></div>
