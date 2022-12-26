@@ -5,9 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
+    @font-face {
+    font-family: 'Roboto';
+
+    src: url('/fonts/roboto/Roboto-Light.ttf') format('truetype')
+
+}
         @page {size: letter landscape;margin: 2cm;}
         table, td, th {border: 1px solid;}
-        body {font-family: "Times New Roman", Times, serif;}
+        body {
+        font-family: 'Roboto', sans-serif;
+  font-size: 48px;
+        }
     </style>
     <title>Ewidencja wystawionych faktur - {{now|date:'d.m.Y'}}</title>
 </head>
@@ -17,14 +26,17 @@
         <h4>Wydział Inwestycji i Remontów KWP w Poznaniu</h4>
     </div>
     <div>
-        {%if user.is_authenticated%}
         <span>Wykonał: {{user.first_name}} {{user.last_name}}</span><br>
-        {%endif%}
         <span>Sporządzono: {{now|date:'d.m.Y'}} r.</span>
     </div>
 </div>
 <hr>
-<h4 style="text-align: center;">Wystawione faktury w okresie od {{date_from}} do {{date_to}} </h4>
+{%if date_from and date_to%}
+<h4 style="text-align: center;">Lista wystawionych faktur w okresie od {{date_from}} do {{date_to}} </h4>
+{%else%}
+<h4 style="text-align: center;">Lista wystawionych faktur w roku {{year}}</h4>
+{%endif%}
+
 <div>
     <table style="border: 5px solid; width: 100%">
         <thead>
@@ -43,7 +55,7 @@
         </thead>
         <tbody>
         {% for lp, invoice in invoices %}
-        <tr style="border: 3px solid">
+        <tr style="border: 1px solid black">
             <td align="center" valign="middle" scope="row"><span class="text-center">{{lp}}</span></td>
             <td align="center" valign="middle"><span>{{invoice.date|date:"d.m.Y"}} r.</span></td>
             <td align="center" valign="middle"><span title="{{invoice.creator}}">{{invoice.no_invoice|default_if_none:''}}</span>

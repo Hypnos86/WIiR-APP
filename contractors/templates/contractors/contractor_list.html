@@ -76,21 +76,19 @@
             <td class="text-center" valign="middle"><span>{{contractor.zip_code}}</span></td>
             <td class="text-center" valign="middle"><span>{{contractor.city}}</span></td>
             <td align="right" valign="middle">
-                {%if contractor.information%}
-                <button data-toggle="info" title="Pokaż" type="button"
-                        data-url="{% url 'contractors:show_information' contractor.id %}"
-                        class="btn btn-outline-success mx-2" onclick="openModal(this)">
-                    <i class="bi bi-info-lg my-1"></i>
+            <button data-toggle="info" title="Pokaż" type="button"
+                    data-url="{% url 'contractors:show_information' contractor.id %}"
+                    class="btn btn-outline-success mx-2" onclick="openModal(this)">
+                <i class="bi bi-info-lg my-1"></i>
+            </button>
+            {%if user.accessmodule.contractors_module_edit%}
+            <a class="mx-2 moj-button-right" href="{%url 'contractors:edit_contractor' contractor.id%}">
+                <button data-toggle="info" title="Edytuj" type="submit"
+                        class="btn btn-outline-primary icon-color my-1">
+                    <i class="bi bi-pencil-square"></i>
                 </button>
-                {%endif%}
-                {%if user.accessmodule.contractors_module_edit%}
-                <a class="mx-2 moj-button-right" href="{%url 'contractors:edit_contractor' contractor.id%}">
-                    <button data-toggle="info" title="Edytuj" type="submit"
-                            class="btn btn-outline-primary icon-color my-1">
-                        <i class="bi bi-pencil-square"></i>
-                    </button>
-                </a>
-                {%endif%}
+            </a>
+            {%endif%}
             </td>
         </tr>
         {%endfor%}

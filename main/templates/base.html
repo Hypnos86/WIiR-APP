@@ -38,8 +38,18 @@
 </head>
 <body>
 <header class="d-flex flex-wrap justify-content-center mb-2 border-bottom body fixed-top bg-col">
-        <a class="mt-3 " href="{%url 'main:welcome'%}"><span class="bi bi-house my-home"></span></a>
-        {%if user.is_authenticated%}<a href="{%url 'main:give_access_to_modules'%}" class="d-flex align-items-center pb-1 mb-md-0 me-md-auto text-dark text-decoration-none margin-left-0 my-home my-1"><span class="fs-5 bi bi-person-circle my-home" title="Użytkownik zaloogowany ID: {{user.username}}"> {{user.first_name}} {{user.last_name}}</span></a>{%else%}<a href="{%url 'main:give_access_to_modules'%}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none margin-left-0"><span class="bi bi-people-fill my-home"> Użytkownik anonimowy</span></a>{%endif%}
+        <a class="mt-3 " href="{%url 'main:welcome'%}">
+            <span class="bi bi-house my-home"></span>
+        </a>
+        {%if user.is_authenticated%}
+    <a href="{%url 'main:give_access_to_modules'%}" class="d-flex align-items-center pb-1 mb-md-0 me-md-auto text-dark text-decoration-none margin-left-0 my-home my-1">
+        <span class="fs-5 bi bi-person-circle my-home" title="Użytkownik zaloogowany ID: {{user.username}}">
+            {{user.first_name}} {{user.last_name}}</span></a>
+    {%else%}
+    <a href="{%url 'main:give_access_to_modules'%}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none margin-left-0">
+        <span class="bi bi-people-fill my-home"> Użytkownik anonimowy</span>
+    </a>
+    {%endif%}
     <ul class="nav nav-pills">
     {%if user.is_authenticated%}{%if user.accessmodule.zok_team%}<li class="nav-item my-2 py-2"><a id="button-secretariat" href="{%url 'main:make_secretariat_site'%}" class="btn btn-sm btn-outline-success mx-2" ><span>Sekretariat</span></a></li>{%endif%}{%endif%}
         <li class="nav-item my-2 py-2"><a id="button-units" href="{%url 'units:units_list'%}" class="btn btn-sm btn-outline-dark mx-2" ><span>Jednostki Policji</span></a></li>

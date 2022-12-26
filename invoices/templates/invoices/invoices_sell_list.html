@@ -25,7 +25,7 @@
         </span>
         <span class="d-block mt-1">
             <span>Kwota faktur: </span>
-            <span class="badge text-white info badge-pill">{{invoices_sell_sum|intcomma}} zł.</span>
+            <span class="badge text-white info badge-pill">{{invoices_sell_sum|intcomma}}&nbsp;zł.</span>
         </span>
         </div>
     <div class="col-md-6">
@@ -61,7 +61,7 @@
     </div>
     <div class="col-md-3 align-self-end moj-button-right">
         <div>
-            <button onclick="generatePdf(this)" data-url="{%url 'invoices:make_pdf_from_invoices_sell'%}" data-toggle="info" type="button" title="Zapis do PDF" name="generate_pdf" id="generate_pdf" class="btn btn-outline-primary my-btn mb-1 bi bi-file-earmark-pdf h5"></button>
+            <button onclick="generatePdf(this)" data-url="{%url 'invoices:make_pdf_from_invoices_sell'%}" data-toggle="info" data-placement="top" type="button" title="Zapis do PDF" name="generate_pdf" id="generate_pdf" class="btn btn-outline-primary my-btn mb-1 bi bi-file-earmark-pdf h5"></button>
         </div>
         {%if user.accessmodule.invoices_module_edit%}
         <div>
@@ -196,7 +196,7 @@
 
     $(function () {
         $('[data-toggle="info"]').tooltip()
-        })
+    })
 
     function generatePdf(button){
         var url = $(button).data("url");

@@ -587,6 +587,7 @@ def make_verification(request):
 def make_pdf_from_invoices_sell(request):
     invoicessell = InvoiceSell.objects.all().order_by("-date").filter(date__year=current_year())
     invoices_sell_sum_dict = invoicessell.aggregate(Sum("sum"))
+    user = request.user
     # TODO dokończyć tworzenie pdfa
     try:
         invoices_sell_sum = round(invoices_sell_sum_dict["sum__sum"], 2)
@@ -630,11 +631,12 @@ def make_pdf_from_invoices_sell(request):
 
     context = {"invoices": invoicessell,"date_from": date_from,
                "date_to": date_to,"invoices_sell_sum": invoices_sell_sum, "now": now, "year": year,
-               "invoices_sell_sum_dict": invoices_sell_sum_dict, "objects": objects, }
+               "invoices_sell_sum_dict": invoices_sell_sum_dict, "objects": objects,"user":user }
 
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type="application/pdf")
-    response["Content-Disposition"] = "attachment; filename=Ewidencja wystawionych faktur.pdf"
+    now_time = now.strftime("%d-%m-%Y")
+    response["Content-Disposition"] = "attachment; filename=Lista wystawionych faktur - utworzono {now_time}.pdf".format(now_time=now_time)
     # find the template and render it.
     template = get_template(template_path)
     html = template.render(context)
