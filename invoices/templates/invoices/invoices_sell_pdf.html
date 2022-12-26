@@ -1,83 +1,95 @@
 {%load humanize%}
+{% load static %}
 <!DOCTYPE html>
 <html lang="pl-Pl">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta http-equiv="Content-Type" content="application/pdf; charset=utf-8" />
+
     <style>
-    @font-face {
-    font-family: 'Roboto';
-
-    src: url('/fonts/roboto/Roboto-Light.ttf') format('truetype')
-
-}
-        @page {size: letter landscape;margin: 2cm;}
-        table, td, th {border: 1px solid;}
+        @font-face {
+            font-family: Roboto;
+            src: url(fonts/Roboto-Light.ttf)
+        }
+        @page {
+            size: letter landscape;
+            margin: 2cm;
+        }
+        
+        table,
+        td,
+        th {
+            border: 1px solid;
+        }
+        
         body {
-        font-family: 'Roboto', sans-serif;
-  font-size: 48px;
+            font-family: Roboto;
+            font-size: 12px;
         }
     </style>
     <title>Ewidencja wystawionych faktur - {{now|date:'d.m.Y'}}</title>
 </head>
-<body>
-<div>
-    <div>
-        <h4>Wydział Inwestycji i Remontów KWP w Poznaniu</h4>
-    </div>
-    <div>
-        <span>Wykonał: {{user.first_name}} {{user.last_name}}</span><br>
-        <span>Sporządzono: {{now|date:'d.m.Y'}} r.</span>
-    </div>
-</div>
-<hr>
-{%if date_from and date_to%}
-<h4 style="text-align: center;">Lista wystawionych faktur w okresie od {{date_from}} do {{date_to}} </h4>
-{%else%}
-<h4 style="text-align: center;">Lista wystawionych faktur w roku {{year}}</h4>
-{%endif%}
 
-<div>
-    <table style="border: 5px solid; width: 100%">
-        <thead>
-        <tr style="border: 3px solid">
-            <th align="center" valign="middle" width="40" scope="col">L.p.</th>
-            <th align="center" valign="middle" width="70" scope="col">Data wystawienia</th>
-            <th align="center" valign="middle" width="120" scope="col">Nr. dokumentu</th>
-            <th align="center" valign="middle" width="50" scope="col">Typ dokumentu</th>
-            <th align="center" valign="middle" width="120" scope="col">Kwota</th>
-            <th align="center" valign="middle" width="70" scope="col">Data płatności</th>
-            <th align="center" valign="middle" width="180" scope="col">Okres</th>
-            <th align="center" valign="middle" width="150" scope="col">Kontrahent</th>
-            <th align="center" valign="middle" width="120" scope="col">Powiat</th>
-            <th align="center" valign="middle" width="100" scope="col">Wystaiający</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for lp, invoice in invoices %}
-        <tr style="border: 1px solid black">
-            <td align="center" valign="middle" scope="row"><span class="text-center">{{lp}}</span></td>
-            <td align="center" valign="middle"><span>{{invoice.date|date:"d.m.Y"}} r.</span></td>
-            <td align="center" valign="middle"><span title="{{invoice.creator}}">{{invoice.no_invoice|default_if_none:''}}</span>
-            </td>
-            <td align="center" valign="middle"><span>{{invoice.doc_types}}</span></td>
-            <td align="center" valign="middle"><span>{{invoice.sum|intcomma}} zł</span></td>
-            <td align="center" valign="middle"><span>{{invoice.date_of_payment|date:"d.m.Y"}} r.</span></td>
-            <td align="center" valign="middle"><span>{{invoice.period_from|date:"m.Y"}} - {{invoice.period_to|date:"m.Y"}}</span>
-            </td>
-            <td valign="middle"><span title="SWOP ID: {{invoice.contractor.no_contractor}}">{{invoice.contractor.name}}. <br><small>Adres: {{invoice.contractor.address}}, {{invoice.contractor.zip_code}} {{invoice.contractor.city}}</small></span>
-            </td>
-            <td align="center" valign="middle">{{invoice.county}}</td>
-            <td align="center" valign="middle"><span title="{{invoice.author.first_name}} {{invoice.author.last_name}}">{{invoice.creator}}</span>
-            </td>
-        </tr>
-        {%endfor%}
-        </tbody>
-    </table>
-    <div style="margin-top=30em">
-        <span>.............................</span><br>
-        <small>Podpis odbierającego</small>
+<body>
+    <div>
+        <div>
+            <h4>Wydział Inwestycji i Remontów KWP w Poznaniu</h4>
+        </div>
+        <div>
+            <span>Wykonał: {{user.first_name}} {{user.last_name}}</span><br>
+            <span>Sporządzono: {{now|date:'d.m.Y'}} r.</span>
+        </div>
     </div>
-</div>
+    <hr> {%if date_from and date_to%}
+    <h4 style="text-align: center;">Lista wystawionych faktur w okresie od {{date_from}} do {{date_to}} </h4>
+    {%else%}
+    <h4 style="text-align: center;">Lista wystawionych faktur w roku {{year}}</h4>
+    {%endif%}
+
+    <div>
+        <table style="border: 5px solid; width: 100%">
+            <thead>
+                <tr style="border: 3px solid">
+                    <th align="center" valign="middle" width="40" scope="col">L.p.</th>
+                    <th align="center" valign="middle" width="70" scope="col">Data wystawienia</th>
+                    <th align="center" valign="middle" width="120" scope="col">Nr. dokumentu</th>
+                    <th align="center" valign="middle" width="50" scope="col">Typ dokumentu</th>
+                    <th align="center" valign="middle" width="120" scope="col">Kwota</th>
+                    <th align="center" valign="middle" width="70" scope="col">Data płatności</th>
+                    <th align="center" valign="middle" width="180" scope="col">Okres</th>
+                    <th align="center" valign="middle" width="150" scope="col">Kontrahent</th>
+                    <th align="center" valign="middle" width="120" scope="col">Powiat</th>
+                    <th align="center" valign="middle" width="100" scope="col">Wystaiający</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for lp, invoice in invoices %}
+                <tr style="border: 1px solid black">
+                    <td align="center" valign="middle" scope="row"><span class="text-center">{{lp}}</span></td>
+                    <td align="center" valign="middle"><span>{{invoice.date|date:"d.m.Y"}} r.</span></td>
+                    <td align="center" valign="middle"><span title="{{invoice.creator}}">{{invoice.no_invoice|default_if_none:''}}</span>
+                    </td>
+                    <td align="center" valign="middle"><span>{{invoice.doc_types}}</span></td>
+                    <td align="center" valign="middle"><span>{{invoice.sum|intcomma}} zł</span></td>
+                    <td align="center" valign="middle"><span>{{invoice.date_of_payment|date:"d.m.Y"}} r.</span></td>
+                    <td align="center" valign="middle"><span>{{invoice.period_from|date:"m.Y"}} - {{invoice.period_to|date:"m.Y"}}</span>
+                    </td>
+                    <td valign="middle"><span title="SWOP ID: {{invoice.contractor.no_contractor}}">{{invoice.contractor.name}}. <br><small>Adres: {{invoice.contractor.address}}, {{invoice.contractor.zip_code}} {{invoice.contractor.city}}</small></span>
+                    </td>
+                    <td align="center" valign="middle">{{invoice.county}}</td>
+                    <td align="center" valign="middle"><span title="{{invoice.author.first_name}} {{invoice.author.last_name}}">{{invoice.creator}}</span>
+                    </td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+        <div style="margin-top=30em">
+            <span>.............................</span><br>
+            <small>Podpis odbierającego</small>
+        </div>
+    </div>
 </body>
+
 </html>

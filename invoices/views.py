@@ -1,8 +1,12 @@
 import datetime
+import pathlib
+
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Sum
 from django.shortcuts import render, redirect, get_object_or_404
+
+from WIiR_APP.settings import BASE_DIR
 from invoices.models import InvoiceSell, InvoiceBuy, InvoiceItems, DocumentTypes, CorrectiveNote
 from main.models import Employer
 from invoices.forms import InvoiceSellForm, InvoiceBuyForm, InvoiceItemsForm, CorrectiveNoteForm
@@ -629,9 +633,17 @@ def make_pdf_from_invoices_sell(request):
 
     template_path = "invoices/invoices_sell_pdf.html"
 
+    # get base dir for font directory
+    base_dir = BASE_DIR
+    print(BASE_DIR)
+    print(BASE_DIR.absolute())
+    relative_dir = pathlib.Path('/invoices/templates/invoices/fonts/roboto/Roboto-Light.ttf')
+    print(relative_dir)
+    font_dir = str(BASE_DIR.absolute()) + str(relative_dir)
+    print(font_dir)
     context = {"invoices": invoicessell,"date_from": date_from,
                "date_to": date_to,"invoices_sell_sum": invoices_sell_sum, "now": now, "year": year,
-               "invoices_sell_sum_dict": invoices_sell_sum_dict, "objects": objects,"user":user }
+               "invoices_sell_sum_dict": invoices_sell_sum_dict, "objects": objects, "user": user, "font_dir": font_dir}
 
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type="application/pdf")
@@ -641,11 +653,47 @@ def make_pdf_from_invoices_sell(request):
     template = get_template(template_path)
     html = template.render(context)
 
+
     # create a pdf
-    pisa_status = pisa.CreatePDF(html,  dest=response, encoding="UTF-8")
+    pisa_status = pisa.CreatePDF(html, dest=response, encoding="UTF-8"
+                                 , link_callback=link_callback
+                                 )
     # pisa_status = pisa.CreatePDF(html,  dest=response, encoding="UTF-8", path="'/main/static/fonts/arial.ttf'")
 
     # if error then show some funny view
     if pisa_status.err:
         return HttpResponse("Wystąpił jakiś problem :( Error:997 <pre>" + html + "</pre>")
     return response
+    #return  render(request, "invoices/invoices_sell_pdf.html", context)
+
+
+def link_callback(uri, rel):
+    """
+    Convert HTML URIs to absolute system paths so xhtml2pdf can access those
+    resources
+    """
+    result = finders.find(uri)
+    if result:
+        if not isinstance(result, (list, tuple)):
+            result = [result]
+        result = list(os.path.realpath(path) for path in result)
+        path = result[0]
+    else:
+        sUrl = settings.STATIC_URL  # Typically /static/
+        sRoot = settings.STATIC_ROOT  # Typically /home/userX/project_static/
+        mUrl = settings.MEDIA_URL  # Typically /media/
+        mRoot = settings.MEDIA_ROOT  # Typically /home/userX/project_static/media/
+
+        if uri.startswith(mUrl):
+            path = os.path.join(mRoot, uri.replace(mUrl, ""))
+        elif uri.startswith(sUrl):
+            path = os.path.join(sRoot, uri.replace(sUrl, ""))
+        else:
+            return uri
+
+    # make sure that file exists
+    if not os.path.isfile(path):
+        raise Exception(
+            'media URI must start with %s or %s' % (sUrl, mUrl)
+        )
+    return path
