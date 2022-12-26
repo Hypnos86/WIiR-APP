@@ -596,8 +596,8 @@ def make_pdf_from_invoices_sell(request):
     year = current_year()
     now = now_date()
     q = request.GET.get("q", "")
-    date_from = request.GET.get("date_from")
-    date_to = request.GET.get("date_to")
+    date_from = request.GET.get("from")
+    date_to = request.GET.get("to")
 
     if q or date_from or date_to:
         if q:
@@ -607,7 +607,7 @@ def make_pdf_from_invoices_sell(request):
                            | invoicessell.filter(contractor__name__icontains=q) \
                            | invoicessell.filter(contractor__no_contractor__startswith=q) \
                            | invoicessell.filter(county__name__icontains=q) \
-                           | invoicessell.filter(creator__creator__icontains=q) \
+                           | invoicessell.filter(creator__id_swop__icontains=q) \
                            | invoicessell.filter(information__icontains=q)
 
         if date_from:

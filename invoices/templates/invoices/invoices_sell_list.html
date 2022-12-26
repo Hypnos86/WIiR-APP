@@ -200,8 +200,8 @@
 
     function generatePdf(button){
         var url = $(button).data("url");
-        var date_from = $("#from").val();
-        var date_to = $("#to").val();
+        var date_from = $("#date_from").val();
+        var date_to = $("#date_to").val();
         var q = $("#q").val();
         var urlParams = "?q=" + q + "&from=" + date_from + "&to=" + date_to;
         console.log(url + urlParams);
