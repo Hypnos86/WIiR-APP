@@ -21,9 +21,9 @@
         </div>
         <div class="container">
             <div class="row my-3">
-                <div class="d-flex justify-content-between">
+                <div class="col-md-12 row">
                     <div class="container col-md-auto mx-1">
-                        <div class="card">
+                        <div class="card my-3">
                             <div class="card-body">
                                 <h6 class="card-title bi bi-building pb-2 ">{%if project_form.unit.type.type_full == 'Inne'%} {%else%} {{project_form.unit.type.type_full}} {%endif%}
                                     {{project_form.unit.city}}</h6>
@@ -36,7 +36,7 @@
                         </div>
                     </div>
                     <div class="container col-md-auto mx-1">
-                        <div class="card">
+                        <div class="card my-3">
                             <div class="card-body">
                                 <h6 class="card-title bi bi-journal-check pb-2">Program inwestycji</h6>
                                 <h6 class="card-subtitle mb-2 text-muted">Data akceptacji:
@@ -60,7 +60,7 @@
                     </div>
                     {%if project_form.realized%}
                     <div class="container col-md-auto mx-1">
-                        <div class="card">
+                        <div class="card my-3">
                             <div class="card-body">
                                 <h6 class="card-title bi bi-journal-bookmark pb-2">Rozliczenie</h6>
                                 {%if project_form.date_of_settlement%}
@@ -82,7 +82,7 @@
                     </div>
                     {%endif%}
                     <div class="container col-md-auto mx-1">
-                        <div class="card">
+                        <div class="card my-3">
                             <div class="card-body">
                                 <h6 class="card-title bi bi-person-lines-fill pb-2">Majster</h6>
                                 {%for worker in project_form.worker.all%}

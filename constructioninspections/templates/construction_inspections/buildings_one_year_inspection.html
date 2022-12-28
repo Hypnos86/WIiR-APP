@@ -50,11 +50,11 @@
             <li class="list-group-item  list-group-item-action list-group-item-warning">
                 {%if building.building_inspection_one_year.all%}
                 <button class="button-show btn btn-outline expand-collapse" onclick="show(this)">
-                    <span class="bi bi-caret-down color-gold"> Rozwiń</span>
+                    <span class="bi bi-caret-down color-gold">&nbsp;Rozwiń</span>
                 </button>
                 <button style="display: none;" class="hide-on-start button-hide btn btn-outline expand-collapse"
                         onclick="hide(this)">
-                    <span class="bi bi-caret-up color-gold"> Zwiń</span>
+                    <span class="bi bi-caret-up color-gold">&nbsp;Zwiń</span>
                 </button>
                 {%endif%}
                 <span class="pl-2">{{building.kind.kind}} | Nazwa: {{building.building_name}} | Nr. inwentarzowy: {{building.no_inventory}} | Aktywny: {%if building.state%}
@@ -70,7 +70,8 @@
                 {% if protocol and protocol.inspection_name.id == 1 %}
                 <li class="list-group-item list-group-item-action list-group-item-light style-row-protocol">
                     <a data-url="{%url 'constructioninspections:show_information' protocol.inspection_name.id protocol.id%}" class="btn btn-outline-secondary mx-2 tt" onclick="openModal(this)">
-                        <span class="bi bi-arrow-return-right h4"></span><span> Protokół przeglądu z dnia {{protocol.date_protocol|date:"d.m.Y"}}&nbsp;r.</span>
+                        <span class="bi bi-arrow-return-right h4"></span>
+                        <span> Protokół przeglądu z dnia {{protocol.date_protocol|date:"d.m.Y"}}&nbsp;r.</span>
                         | <small>Data następnego przeglądu
                         {{protocol.date_next_inspection|date:"d.m.Y"}}&nbsp;r.</small>
                         {%if forloop.first%}
