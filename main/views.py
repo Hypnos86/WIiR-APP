@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 import datetime
-from main.models import Team, OrganisationTelephone, AccessModule, Command, Employer, SecretariatTelephone
+from main.models import Team, OrganisationTelephone, AccessModule, Command, Employer, SecretariatTelephone, Car
 from main.forms import TeamForm, EmployerForm, CommandsForm, SecretariatTelephoneForm
 from businessflats.models import OfficialFlat
 from units.models import Unit
@@ -27,9 +27,11 @@ def now_date():
 @login_required
 def welcome(request):
     commands = Command.objects.all().order_by("create_date")[:6]
+    rent_cars = Car.objects.all()
     date = datetime.date.today().today()
     context = {"date": date,
-               "commands": commands}
+               "commands": commands,
+               "rent_cars": rent_cars}
     return render(request, "main/home.html", context)
 
 

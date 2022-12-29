@@ -2,7 +2,8 @@ from django.contrib import admin
 from import_export import resources
 from import_export.admin import ExportMixin
 from import_export.fields import Field
-from main.models import Team, OrganisationTelephone, Employer, IndustryType, AccessModule, Command, SecretariatTelephone
+from main.models import Team, OrganisationTelephone, Employer, IndustryType, AccessModule, Command, \
+    SecretariatTelephone, Car
 
 # Register your models here.
 # admin.site.site_header ="WIiR-APP"
@@ -72,3 +73,11 @@ class CommandResource(resources.ModelResource):
 class CommandAdmin(admin.ModelAdmin):
     list_display = ['id', 'title', 'change', 'create_date']
     list_display_links = ('title',)
+
+
+@admin.register(Car)
+class CarAdmin(admin.ModelAdmin):
+    list_display = ['date', 'target', 'creation_date', 'change', 'author']
+    list_display_links = ('target',)
+    filter_horizontal = ['borrower']
+    autocomplete_fields = ['borrower']

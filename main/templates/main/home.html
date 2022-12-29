@@ -24,8 +24,36 @@
             <h5 class="text-center mt-1">Dzień w roku: {{date|date:"z"}}</h5>
         </div>
     </div>
-    <div class="col-md-4"></div>
+    <div class="col-md-4 mt-5">
+        <table class="table caption-top table-striped">
+            <caption>Rezerwacja samochodu służbowego</caption>
+            <thead>
+            <tr class="text-center">
+                <th align="center" valign="middle" width="auto">Data</th>
+                <th align="center" valign="middle" width="auto">Delegat</th>
+                <th align="center" valign="middle" width="auto">Cel</th>
+            </tr>
+            </thead>
+            <tbody>
+            {%for car in  rent_cars|slice:"-4:"%}
+            <tr>
+                <td valign="middle">
+                    <span>{{car.date}}&nbsp;r.</span>
+                </td>
+                <td valign="middle">
+                    {%for worker in car.borrower.all%}
+                    <span>{{worker.name}} {{worker.last_name}}</span><br>
+                    {%endfor%}
+                </td>
+                <td valign="middle" width="300">
+                    <span>{{car.target}}</span></td>
+            </tr>
+            {%endfor%}
+            </tbody>
+        </table>
+    </div>
 </div>
+
 <script>
     $(function () {
         $('[data-toggle="info"]').tooltip()

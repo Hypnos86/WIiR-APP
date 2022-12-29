@@ -21,7 +21,7 @@ urlpatterns = [
     path('edit_commands/<int:id>', edit_command_popup, name='edit_command_popup'),
     path('delete_commands/<int:id>', delete_command_popup, name='delete_command_popup'),
     path('access/', give_access_to_modules, name='give_access_to_modules'),
-    path('rgister_list/', make_list_register, name='make_list_register'),
+    path('register_list/', make_list_register, name='make_list_register'),
     path('telephones/', telephone_list, name='telephone_list'),
     path('', welcome, name='welcome')
 ]

@@ -83,6 +83,7 @@ class Employer(models.Model):
 
 class AccessModule(models.Model):
     relatedName = "accessmodule"
+
     class Meta:
         verbose_name = "Dostęp do modułów"
         verbose_name_plural = "Dostęp do modułów"
@@ -148,3 +149,22 @@ class Command(models.Model):
 
     def __str__(self):
         return f"{self.title}"
+
+
+class Car(models.Model):
+    class Meta:
+        verbose_name = "Samochód sużbowy"
+        verbose_name_plural = "Samochód służbowy"
+        ordering = ["date"]
+
+    related_name = "car"
+
+    date = models.DateField("Data", unique=True)
+    borrower = models.ManyToManyField(Employer, verbose_name="Delegat", related_name=related_name)
+    target = models.TextField("Cel")
+    creation_date = models.DateTimeField("Data utworzenia", auto_now_add=True)
+    change = models.DateTimeField("Zmiana", auto_now=True)
+    author = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name=related_name, verbose_name="Autor")
+
+    def __str__(self):
+        return f"{self.id}"
