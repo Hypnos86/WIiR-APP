@@ -94,6 +94,7 @@ class AccessModule(models.Model):
     teams = models.BooleanField("ZOK - Zespoły", default=False)
     commands = models.BooleanField("ZOK - Polecenia", default=False)
     employers = models.BooleanField("ZOK - Pracownicy", default=False)
+    cars = models.BooleanField("ZOK - Rezerwacja samochodu służbowego", default=False)
     zriwt_team = models.BooleanField("Ewidencja: Zespół Rozliczeń i Wsparcia Technicznego", default=False)
     contractors_module = models.BooleanField("ZRiWT - Kontrahenci - Podgląd", default=False)
     contractors_module_edit = models.BooleanField("ZRiWT - Kontrahenci - Edycja", default=False)
@@ -155,16 +156,16 @@ class Car(models.Model):
     class Meta:
         verbose_name = "Samochód sużbowy"
         verbose_name_plural = "Samochód służbowy"
-        ordering = ["date"]
+        ordering = ["-date"]
 
     related_name = "car"
 
     date = models.DateField("Data", unique=True)
     borrower = models.ManyToManyField(Employer, verbose_name="Delegat", related_name=related_name)
     target = models.TextField("Cel")
-    creation_date = models.DateTimeField("Data utworzenia", auto_now_add=True)
+    create_date = models.DateTimeField("Data utworzenia", auto_now_add=True)
     change = models.DateTimeField("Zmiana", auto_now=True)
     author = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name=related_name, verbose_name="Autor")
 
     def __str__(self):
-        return f"{self.id}"
+        return f"{self.date} {self.target}"

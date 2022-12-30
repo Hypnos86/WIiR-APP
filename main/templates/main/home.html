@@ -25,7 +25,7 @@
         </div>
     </div>
     <div class="col-md-4 mt-5">
-        <table class="table caption-top table-striped">
+        <table class="table table-hover caption-top">
             <caption>Rezerwacja samochodu służbowego</caption>
             <thead>
             <tr class="text-center">
@@ -38,7 +38,19 @@
             {%for car in  rent_cars|slice:"-4:"%}
             <tr>
                 <td valign="middle">
-                    <span>{{car.date}}&nbsp;r.</span>
+                    {%if user.is_authenticated and user.accessmodule.cars%}
+                        {%if car.date == date%}
+                            <a data-url="{%url 'main:edit_rent_car' car.id%}" onclick="openModal(this)"><span><b>{{car.date}}&nbsp;r.</b></span></a>
+                        {%else%}
+                            <a data-url="{%url 'main:edit_rent_car' car.id%}" onclick="openModal(this)"><span>{{car.date}}&nbsp;r.</span></a>
+                        {%endif%}
+                    {%else%}
+                        {%if car.date == date%}
+                            <span><b>{{car.date}}&nbsp;r.</b></span>
+                        {%else%}
+                            <span>{{car.date}}&nbsp;r.</span>
+                        {%endif%}
+                    {%endif%}
                 </td>
                 <td valign="middle">
                     {%for worker in car.borrower.all%}
@@ -53,10 +65,27 @@
         </table>
     </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="rentCarModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
 
+        </div>
+    </div>
+</div>
 <script>
     $(function () {
         $('[data-toggle="info"]').tooltip()
     })
+
+    function openModal(button){
+        var url = $(button).data("url");
+        $("#rentCarModal .modal-content").load(url);
+        $("#rentCarModal").modal("show");
+    }
+
+    function submitForm(){
+        $("#submitButton").closest("form").submit();
+    }
 </script>
 {%endblock%}

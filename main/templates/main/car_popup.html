@@ -1,0 +1,28 @@
+{%load static%}
+{%load bootstrap%}
+{%block content%}
+<div class="container ">
+<form class="m-2 p-4" method="get" action="{% url 'main:edit_rent_car' id %}">
+    {%csrf_token%}
+    <div class="container">
+        <div>
+            <span>{{rent_car.date|bootstrap}}</span>
+        </div>
+        <div>
+            <span>{{rent_car.borrower|bootstrap}}</span>
+        </div>
+        <div>
+            <span>{{rent_car.target|bootstrap}}</span>
+        </div>
+
+    </div>
+</form>
+</div>
+<script>
+    $(document).ready(function(){
+        $("#id_borrower").select2({placeholder:'Dodaj pracownika', dropdownParent: $('#rentCarModal')
+        });
+    })
+</script>
+{%endblock%}
+

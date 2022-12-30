@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 import datetime
 from main.models import Team, OrganisationTelephone, AccessModule, Command, Employer, SecretariatTelephone, Car
-from main.forms import TeamForm, EmployerForm, CommandsForm, SecretariatTelephoneForm
+from main.forms import TeamForm, EmployerForm, CommandsForm, SecretariatTelephoneForm, CarForm
 from businessflats.models import OfficialFlat
 from units.models import Unit
 from contracts.models import ContractImmovables, ContractAuction, ContractMedia
@@ -27,12 +27,24 @@ def now_date():
 @login_required
 def welcome(request):
     commands = Command.objects.all().order_by("create_date")[:6]
-    rent_cars = Car.objects.all()
+    rent_cars = Car.objects.all()[:10]
     date = datetime.date.today().today()
     context = {"date": date,
                "commands": commands,
                "rent_cars": rent_cars}
     return render(request, "main/home.html", context)
+
+
+@login_required
+def edit_rent_car(request, id):
+    car = get_object_or_404(Car, pk=id)
+    rent_car = CarForm(request.POST or None, instance=car)
+
+    if request.method == "POST":
+        if rent_car.is_valid():
+            rent_car.save()
+            return redirect("main:welcome")
+    return render(request, 'main/car_popup.html', {'rent_car': rent_car, 'id': id})
 
 
 @login_required

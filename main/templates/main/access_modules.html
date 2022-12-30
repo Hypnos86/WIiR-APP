@@ -20,8 +20,8 @@
                 <tbody>
                 {%if user.accessmodule.zok_team%}
                 <tr>
-                    <td rowspan="3" valign="middle">Zespół Obsługi Kancelaryjnej</td>
-                    <td rowspan="3" align="center" valign="middle">{%if user.accessmodule.zok_team%}<i class="bi bi-check-circle-fill text-success"></i>
+                    <td rowspan="4" valign="middle">Zespół Obsługi Kancelaryjnej</td>
+                    <td rowspan="4" align="center" valign="middle">{%if user.accessmodule.zok_team%}<i class="bi bi-check-circle-fill text-success"></i>
                     {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
                     <td>Moduł Zespoły</td>
                     <td align="center" valign="middle">{%if user.accessmodule.teams%}<i class="bi bi-check-circle-fill text-success"></i>
@@ -41,6 +41,13 @@
                     <td align="center" valign="middle">{%if user.accessmodule.commands%}<i class="bi bi-check-circle-fill text-success"></i>
                     {%else%}<i class="bi bi-x-circle-fill text-danger"></i> </td>{%endif%}
                     <td align="center" valign="middle">{%if user.accessmodule.commands%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%}<i class="bi bi-x-circle-fill text-danger"></i> </td>{%endif%}
+                </tr>
+                <tr>
+                    <td>Moduł Rezerwacja auta</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.cars%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%}<i class="bi bi-x-circle-fill text-danger"></i> </td>{%endif%}
+                    <td align="center" valign="middle">{%if user.accessmodule.cars%}<i class="bi bi-check-circle-fill text-success"></i>
                     {%else%}<i class="bi bi-x-circle-fill text-danger"></i> </td>{%endif%}
                 </tr>
                 {%endif%}
