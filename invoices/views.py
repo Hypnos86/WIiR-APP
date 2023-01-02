@@ -697,3 +697,5 @@ def link_callback(uri, rel):
             'media URI must start with %s or %s' % (sUrl, mUrl)
         )
     return path
+
+# todo Zrobić dróga metode z PDF dla sell archiwe
