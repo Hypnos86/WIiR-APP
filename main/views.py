@@ -36,15 +36,37 @@ def welcome(request):
 
 
 @login_required
-def edit_rent_car(request, id):
-    car = get_object_or_404(Car, pk=id)
-    rent_car = CarForm(request.POST or None, instance=car)
-
+def add_rent_car(request):
+    rent_car = CarForm(request.POST or None)
+    context = {'rent_car': rent_car, 'new': True}
     if request.method == "POST":
         if rent_car.is_valid():
+            instance = rent_car.save(commit=False)
+            instance.author = request.user
             rent_car.save()
+            return redirect('main:welcome')
+    return render(request, 'main/car_popup.html', context)
+
+
+@login_required
+def edit_rent_car(request, id):
+    car = get_object_or_404(Car, pk=id)
+    rent_car_form = CarForm(request.POST or None, instance=car)
+
+    if request.method == "POST":
+        if rent_car_form.is_valid():
+            instance = rent_car_form.save(commit=False)
+            instance.author = request.user
+            rent_car_form.save()
             return redirect("main:welcome")
-    return render(request, 'main/car_popup.html', {'rent_car': rent_car, 'id': id})
+    return render(request, 'main/car_popup.html', {'rent_car': rent_car_form, 'id': id, 'new': False})
+
+
+@login_required
+def delete_rent_car(request, id):
+    rent_car = get_object_or_404(Car, pk=id)
+    rent_car.delete()
+    return redirect("main:welcome")
 
 
 @login_required

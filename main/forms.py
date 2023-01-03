@@ -70,9 +70,9 @@ class SecretariatTelephoneForm(ModelForm):
 class CarForm(ModelForm):
     class Meta:
         model = Car
-        fields = ('date', 'borrower', 'target', 'create_date', 'change', 'author')
-        labels = {'date': 'Data', 'borrower': 'Delegat', 'target': 'Cel'}
-        exclude = ['change', 'create_date']
+        fields = ('rent_date', 'borrower', 'target', 'create_date', 'change', 'author')
+        labels = {'rent_date': 'Data', 'borrower': 'Delegat', 'target': 'Cel'}
+        exclude = ['change', 'create_date','author']
         widgets = {'target': Textarea(attrs={'rows': 2}),
-                   'date': DateField()
+                   'rent_date': DateField()
                    }

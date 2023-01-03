@@ -26,7 +26,10 @@
     </div>
     <div class="col-md-4 mt-5">
         <table class="table table-hover caption-top">
-            <caption>Rezerwacja samochodu służbowego</caption>
+            <caption>
+                <a data-url="{%url 'main:add_rent_car'%}" onclick="openModal(this)">
+                    <span class="bi bi-plus-square-dotted"> Rezerwacja samochodu służbowego </span></a>
+            </caption>
             <thead>
             <tr class="text-center">
                 <th align="center" valign="middle" width="auto">Data</th>
@@ -39,16 +42,16 @@
             <tr>
                 <td valign="middle">
                     {%if user.is_authenticated and user.accessmodule.cars%}
-                        {%if car.date == date%}
-                            <a data-url="{%url 'main:edit_rent_car' car.id%}" onclick="openModal(this)"><span><b>{{car.date}}&nbsp;r.</b></span></a>
+                        {%if car.rent_date == date%}
+                            <a data-url="{%url 'main:edit_rent_car' car.id%}" onclick="openModal(this)"><span><b>{{car.rent_date}}&nbsp;r.</b></span></a>
                         {%else%}
-                            <a data-url="{%url 'main:edit_rent_car' car.id%}" onclick="openModal(this)"><span>{{car.date}}&nbsp;r.</span></a>
+                            <a data-url="{%url 'main:edit_rent_car' car.id%}" onclick="openModal(this)"><span>{{car.rent_date}}&nbsp;r.</span></a>
                         {%endif%}
                     {%else%}
-                        {%if car.date == date%}
-                            <span><b>{{car.date}}&nbsp;r.</b></span>
+                        {%if car.rent_date == date%}
+                            <span><b>{{car.rent_car}}&nbsp;r.</b></span>
                         {%else%}
-                            <span>{{car.date}}&nbsp;r.</span>
+                            <span>{{car.rent_date}}&nbsp;r.</span>
                         {%endif%}
                     {%endif%}
                 </td>

@@ -8,7 +8,7 @@
 {{project_form.media}}
 <div class="mx-5">
     <h3 class="text-center m-4">{%if new%}Nowe zadanie inwestycyjne{%else%}Edycja zadania inwestycyjnego{%endif%}</h3>
-    <form method="post" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data">
         {%csrf_token%}
         <div class="row">
             <div class="col-md-2 mb-3">{{project_form.date_of_acceptance|bootstrap}}</div>

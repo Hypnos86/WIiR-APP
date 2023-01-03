@@ -156,11 +156,11 @@ class Car(models.Model):
     class Meta:
         verbose_name = "Samochód sużbowy"
         verbose_name_plural = "Samochód służbowy"
-        ordering = ["-date"]
+        ordering = ["-rent_date"]
 
     related_name = "car"
 
-    date = models.DateField("Data", unique=True)
+    rent_date = models.DateField("Data", unique=True)
     borrower = models.ManyToManyField(Employer, verbose_name="Delegat", related_name=related_name)
     target = models.TextField("Cel")
     create_date = models.DateTimeField("Data utworzenia", auto_now_add=True)
@@ -168,4 +168,4 @@ class Car(models.Model):
     author = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name=related_name, verbose_name="Autor")
 
     def __str__(self):
-        return f"{self.date} {self.target}"
+        return f"{self.rent_date} {self.target}"

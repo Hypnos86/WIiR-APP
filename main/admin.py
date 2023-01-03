@@ -77,7 +77,7 @@ class CommandAdmin(admin.ModelAdmin):
 
 @admin.register(Car)
 class CarAdmin(admin.ModelAdmin):
-    list_display = ['date', 'target', 'create_date', 'change', 'author']
+    list_display = ['rent_date', 'target', 'create_date', 'change', 'author']
     list_display_links = ('target',)
     filter_horizontal = ['borrower']
     autocomplete_fields = ['borrower']
