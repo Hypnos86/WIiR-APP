@@ -5,6 +5,8 @@ from contracts.models import ContractImmovables, ContractAuction, AnnexContractA
     GuaranteeSettlement
 from contracts.forms import ContractImmovablesForm, ContractAuctionForm, AnnexImmovablesForm, AnnexContractAuctionForm, \
     ContractMediaForm, AnnexContractMediaForm, GuaranteeSettlementForm
+from main.models import AccessModule
+from django.contrib.auth.models import User
 from units.models import Unit
 from main.models import Employer
 from main.views import now_date
@@ -357,7 +359,7 @@ def edit_contract_media(request, id):
 
 
 @login_required
-def create_contract_media_list(request):
+def contract_media_list(request):
     contracts_media = ContractMedia.objects.all().filter(state=True).order_by('-date').distinct()
     contracts_media_len = len(contracts_media)
     now = now_date
