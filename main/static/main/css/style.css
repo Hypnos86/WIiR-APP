@@ -321,3 +321,7 @@ hr {
     color: #6c757d;
     border-color: white;
 }
+
+.select2-full-width .select2-container{
+    width: 100% !important;
+}
