@@ -150,8 +150,15 @@
                 {%endif%}
                 {%if user.accessmodule.ze_team%}
                 <tr>
-                    <td valign="middle">Zespół Eksploatacji</td>
-                    <td align="center" valign="middle"><i class="bi bi-check-circle-fill text-success"></i></td>
+                    <td rowspan="2" valign="middle">Zespół Eksploatacji</td>
+                    <td rowspan="2" align="center" valign="middle"><i class="bi bi-check-circle-fill text-success"></i></td>
+                    <td>Moduł Ewidencja Pism</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.records_letters%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
+                    <td align="center" valign="middle">{%if user.accessmodule.records_letters_edit%}<i class="bi bi-check-circle-fill text-success"></i>
+                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
+                </tr>
+                <tr>
                     <td align="left" valign="middle">Moduł Umowy Media</td>
                     <td align="center" valign="middle">{%if user.accessmodule.contract_media%}<i class="bi bi-check-circle-fill text-success"></i>
                     {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>

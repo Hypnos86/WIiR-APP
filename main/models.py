@@ -123,11 +123,13 @@ class AccessModule(models.Model):
     contract_immovables = models.BooleanField("ZN - Umowy nieruchomości - Podgląd", default=False)
     contract_immovables_edit = models.BooleanField("ZN - Umowy nieruchomości - Edycja", default=False)
     ze_team = models.BooleanField("Ewidencja: Zespół Eksploatacji", default=False)
+    records_letters = models.BooleanField("ZE - Ewidencja Pism - Podgląd", default=False)
+    records_letters_edit = models.BooleanField("ZE - Ewidencja Pism - Edycja", default=False)
     contract_media = models.BooleanField("ZE - Umowy Media - Podgląd", default=False)
     contract_media_edit = models.BooleanField("ZE - Umowy Media - Edycja", default=False)
 
     def __str__(self):
-        return f"{self.user}"
+        return f"{self.user} - {self.user.first_name} {self.user.last_name}"
 
 
 def upload_scan(instance, filename):

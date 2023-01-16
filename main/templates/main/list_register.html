@@ -11,6 +11,13 @@
             <div class="container col d-flex justify-content-center">
                 <div class="col-md-10">
                     <div class="list-group">
+                        {%if user.accessmodule.records_letters%}
+                         <a class="text-decoration-none" href="">
+                            <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
+                                Ewidencja pism<span class="badge text-white info badge-pill">0</span>
+                            </button>
+                        </a>
+                        {%endif%}
                         {%if user.accessmodule.contract_media%}
                         <a class="text-decoration-none" href="{%url 'contracts:create_contract_media_list'%}">
                             <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
@@ -20,6 +27,7 @@
                         {%endif%}
                     </div>
                 </div>
+
             </div>
         </div>
         {%endif%}
