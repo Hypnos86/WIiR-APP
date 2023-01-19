@@ -6,57 +6,81 @@
 {%block content%}
 {%if user.is_authenticated and user.accessmodule.donations_module%}
 <div class="kontrahenci-title justify-content-center align-items-center text-center">
-    <h4>Darowizny {{year}} r.</h4>
-    {% if last_date %}
-    <small>Ostatnia aktualizacja: {{last_date.change|date:"d.m.Y (H:i)"}}</small>
-    {%endif%}
+    <div class="row">
+        <div class="col-md-3 moj-button-left">
+            {%if archive%}
+            <a href="{%url 'donations:donations_list'%}">
+                <button type="button" class="btn btn-outline-primary my-btn">
+                    <span class="bi bi-chevron-compact-left">Cofnij</span>
+                </button>
+            </a>
+            {%endif%}
+        </div>
+        <div class="col-md-6 text-center">
+            <h4>Darowizny {{year}} r.</h4>
+            {% if last_date %}
+            <small>Ostatnia aktualizacja: {{last_date.change|date:"d.m.Y (H:i)"}}</small>
+            {%endif%}
+        </div>
+    </div>
 </div>
 <div>
     <div class="row my-3">
         <div class="col-md-3 align-self-end">
-            <span>Zarejestrowane wnioski: </span><span class="badge text-white info badge-pill">{{application_len}}</span>
+            <span>Zarejestrowane wnioski: </span><span
+                class="badge text-white info badge-pill">{{application_len}}</span>
         </div>
         <div class="col-md-6">
             <section class="w-100 d-flex justify-content-center align-items-center flex-column text_center">
                 <form id="form-search" method="get">
                     <div class="row">
-                    <div class="col-md-3">
-                        <div class="">
-                            <label class="control-label" for="date_from">Data umowy od</label>
-                            <div class=" ">
-                        <input type="date" name="from" class="form-control" id="date_from" value="{{date_from}}">
+                        <div class="col-md-3">
+                            <div class="">
+                                <label class="control-label" for="date_from">Data umowy od</label>
+                                <div class=" ">
+                                    <input type="date" name="from" class="form-control" id="date_from"
+                                           value="{{date_from}}">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="">
-                            <label class="control-label" for="date_to">Data umowy do</label>
-                            <div class=" ">
-                                <input type="date" name="to" class="form-control" id="date_to" value="{{date_to}}">
+                        <div class="col-md-3">
+                            <div class="">
+                                <label class="control-label" for="date_to">Data umowy do</label>
+                                <div class=" ">
+                                    <input type="date" name="to" class="form-control" id="date_to" value="{{date_to}}">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-5 d-flex align-items-end">
-                        <div class="input-group">
-                            <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj darowizny" aria-label="Search" aria-describedby="search-addon" value="{{q}}">
-                        <button id="searchButton" style="{%if query%}display:none;{%endif%}" type="submit" class="btn btn-outline-primary my-btn">Szukaj</button>
-                        <button id="cleanButton"  style="{%if not query%}display:none;{%endif%}" type="button" class="btn btn-outline-primary my-btn" onclick="cleanSearch()">Wyczyść</button>
+                        <div class="col-md-5 d-flex align-items-end">
+                            <div class="input-group">
+                                <input name="q" id="q" type="text" class="form-control rounded"
+                                       placeholder="szukaj darowizny" aria-label="Search"
+                                       aria-describedby="search-addon" value="{{q}}">
+                                <button id="searchButton" style="{%if query%}display:none;{%endif%}" type="submit"
+                                        class="btn btn-outline-primary my-btn">Szukaj
+                                </button>
+                                <button id="cleanButton" style="{%if not query%}display:none;{%endif%}" type="button"
+                                        class="btn btn-outline-primary my-btn" onclick="cleanSearch()">Wyczyść
+                                </button>
+                            </div>
                         </div>
-                    </div>
                     </div>
                 </form>
             </section>
         </div>
         <div class="col-md-3 moj-button-right align-self-end">
             <div class="mb-2">
-                <button class="btn btn-outline-danger" data-url="{%url 'donations:show_archive_year_list'%}" onclick="showYearListModal(this)">Archiwum</button>
+                <button class="btn btn-outline-danger" data-url="{%url 'donations:show_archive_year_list'%}"
+                        onclick="showYearListModal(this)">Archiwum
+                </button>
             </div>
             <div class="mt-2">
-                 {%if user.accessmodule.donations_module_edit%}
+                {%if user.accessmodule.donations_module_edit and archive == false%}
                 <a href="{%url 'donations:add_donation'%}">
                     <button type="button" class="btn btn-outline-primary my-btn">
                         <span class="bi bi-plus-circle"> Dodaj wniosek</span>
-                </button></a>
+                    </button>
+                </a>
                 {%endif%}
             </div>
         </div>
@@ -81,7 +105,8 @@
         <tbody>
         {%for application in applications %}
         <tr class="my-table-tr">
-            <td class="text-center" valign="middle" scope="row" data-toggle="donations_info" title="Ostatnie zmiany: ({{user.first_name}} {{user.last_name}})"></td>
+            <td class="text-center" valign="middle" scope="row" data-toggle="donations_info"
+                title="Ostatnie zmiany: ({{user.first_name}} {{user.last_name}})"></td>
             <td align="center" valign="middle" scope="row" data-toggle="donations_info" title="Data wpływu do WIiR">
                 {%if application.date_receipt%}
                 <span>{{application.date_receipt}}&nbsp;.r</span>
@@ -99,21 +124,24 @@
                 <span>---</span>
                 {%endif%}
             </td>
-            <td class="text-center" valign="middle" data-toggle="info" title="Rodzaj darowizny: {{application.donation_type}}">
+            <td class="text-center" valign="middle" data-toggle="info"
+                title="Rodzaj darowizny: {{application.donation_type}}">
                 {%if application.no_application%}
                 <span>{{application.no_application}}</span>
                 {%else%}
                 <span>---</span>
                 {%endif%}
             </td>
-            <td class="text-center" valign="middle" data-toggle="info" title="Rodzaj środków: {%if application.financial_type%} {{application.financial_type}} {%else%} nie wybrano {%endif%}">
+            <td class="text-center" valign="middle" data-toggle="info"
+                title="Rodzaj środków: {%if application.financial_type%} {{application.financial_type}} {%else%} nie wybrano {%endif%}">
                 {%if application.sum%}
                 <span>{{application.sum|intcomma}}&nbspzł.</span>
                 {%else%}
                 <span>---</span>
                 {%endif%}
             </td>
-            <td class="text-center" valign="middle" data-toggle="info" title="{%if application.no_agreement%}Nr:&nbsp;{{application.no_agreement}}{%endif%}">
+            <td class="text-center" valign="middle" data-toggle="info"
+                title="{%if application.no_agreement%}Nr:&nbsp;{{application.no_agreement}}{%endif%}">
                 {%if application.date_agreement%}
                 <span>{{application.date_agreement}}&nbsp;.r</span>
                 {%else%}
@@ -123,23 +151,28 @@
             <td align="left" valign="middle">
                 <span>{{application.presenter.name}}</span>
             </td>
-            <td class="text-center" valign="middle" data-toggle="info" title="{{application.unit.type.type_short}} {{application.unit.city}}">
+            <td class="text-center" valign="middle" data-toggle="info"
+                title="{{application.unit.type.type_short}} {{application.unit.city}}">
                 <span>{{application.unit.county.name}}</span>
             </td>
             <td align="right" valign="middle">
-                <button data-toggle="info" title="Informacje" type="button" class="btn btn-outline-success mx-2" onclick="openInfoModal(this)" data-url="{%url 'donations:show_information_popup' application.id %}">
+                <button data-toggle="info" title="Informacje" type="button" class="btn btn-outline-success mx-2"
+                        onclick="openInfoModal(this)"
+                        data-url="{%url 'donations:show_information_popup' application.id %}">
                     <i class="bi bi-info-lg my-1"></i>
                 </button>
                 {%if application.donation_scan%}
                 <a class="mx-2 moj-button-right" href="/media/{{application.donation_scan}}" target="_blank">
-                    <button data-toggle="info" title="Podgląd dokumentu" type="button" class="btn btn-outline-primary icon-color my-1">
+                    <button data-toggle="info" title="Podgląd dokumentu" type="button"
+                            class="btn btn-outline-primary icon-color my-1">
                         <i class="bi bi-file-text"></i>
                     </button>
                 </a>
                 {%endif%}
-                {%if user.accessmodule.donations_module_edit%}
+                {%if user.accessmodule.donations_module_edit and archive == false%}
                 <a class="mx-2 moj-button-right" href="{%url 'donations:edit_donation' application.id%}">
-                    <button data-toggle="info" title="Edytuj" type="button" class="btn btn-outline-primary icon-color my-1">
+                    <button data-toggle="info" title="Edytuj" type="button"
+                            class="btn btn-outline-primary icon-color my-1">
                         <i class="bi bi-pencil-square"></i>
                     </button>
                 </a>
@@ -239,6 +272,7 @@
         $("#date_to").val("");
         $("#form-search").submit();
     }
+
 </script>
 {%endif%}
 {%endblock%}

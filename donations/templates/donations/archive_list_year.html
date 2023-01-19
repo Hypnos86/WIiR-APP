@@ -6,7 +6,7 @@
     <div class="col m-2">
         {%if year_order_list%}
         {%for year in year_order_list%}
-        <a href="{%url 'cpvdict:create_order_archive' year%}"><button type="button" class="btn btn-outline-dark m-2">Rok: {{year}}</button></a>
+        <a href="{%url 'donations:donations_list_archive' year%}"><button type="button" class="btn btn-outline-dark m-2">Rok: {{year}}</button></a>
         {%endfor%}
         {%else%}
         <h6 class="text-center m-3">BRAK DAROWIZN Z UBIEGŁYCH LAT</h6>

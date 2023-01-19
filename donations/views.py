@@ -98,3 +98,48 @@ def show_archive_year_list(request):
     year_order_list = sorted(year_order_set, reverse=True)
 
     return render(request, 'donations/archive_list_year.html', {'year_order_list': year_order_list})
+
+@login_required
+def donations_list_archive(request, year):
+    applications = Application.objects.all().filter(date_receipt__year=year).order_by('-date_receipt')
+    query = "Wyczyść"
+    search = "Szukaj"
+    application_len = len(applications)
+    year = year
+    q = request.GET.get("q")
+
+    paginator = Paginator(applications, 40)
+    page_number = request.GET.get('page')
+    application_paginator = paginator.get_page(page_number)
+    date_from = request.GET.get('from', None)
+    date_to = request.GET.get('to', None)
+
+    try:
+        last_date = Application.objects.values('change').latest('change')
+    except Application.DoesNotExist:
+        last_date = None
+
+    if q or date_from or date_to:
+        if q:
+            applications = applications.filter(character__icontains=q) \
+                           | applications.filter(no_application__icontains=q) \
+                           | applications.filter(donation_type__type_name__icontains=q) \
+                           | applications.filter(financial_type__type_name__icontains=q) \
+                           | applications.filter(sum__startswith=q) \
+                           | applications.filter(unit__county__name__icontains=q) \
+                           | applications.filter(unit__city__icontains=q) \
+                           | applications.filter(presenter__name__icontains=q)
+
+        if date_from:
+            applications = applications.filter(date_receipt__gte=date_from)
+        if date_to:
+            applications = applications.filter(date_receipt__lte=date_to)
+
+        return render(request, 'donations/donations_list.html',
+                      {'application_len': application_len, 'query': query, 'year': year,
+                       'applications': applications, 'last_date': last_date, 'q': q, 'date_from': date_from,
+                       'date_to': date_to})
+    else:
+        return render(request, 'donations/donations_list.html',
+                      {'application_len': application_len, 'search': search, 'year': year,
+                       'applications': application_paginator, 'last_date': last_date, 'archive':True})
