@@ -2,9 +2,8 @@
 {%load static%}
 {%load bootstrap%}
 {%block title%}{%if new%}Nowa faktura{%else%}Edycja faktury{%endif%}{%endblock%}
-
 {%block content%}
-<div class="container col-md-6 mb-3">
+<div class="container col-md-7 mb-3">
     <div class="row ">
         <div class="col-md-3">
             <a href="{%url 'invoices:sell_invoices_list'%}">
@@ -18,7 +17,7 @@
         </div>
     </div>
 </div>
-<div class="container col-md-6">
+<div class="container col-md-7">
     <form method="post">
         {%csrf_token%}
         <div class="row">

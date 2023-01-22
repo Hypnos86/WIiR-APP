@@ -170,3 +170,6 @@ TINYMCE_DEFAULT_CONFIG = {
     "custom_undo_redo_levels": 5,
     "language": "pl_PL",  # To force a specific language instead of the Django current language.
 }
+# Breadcrumbs setting
+DYNAMIC_BREADCRUMBS_HOME_LABEL = "Start"
+DYNAMIC_BREADCRUMBS_SHOW_AT_BASE_PATH = True

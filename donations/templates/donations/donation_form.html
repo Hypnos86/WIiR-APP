@@ -5,7 +5,7 @@
 {%block title%}{%if new%}Nowy wniosek{%else%}Edycja wniosku{%endif%}{%endblock%}
 {%block content%}
 {%if user.is_authenticated and user.accessmodule.donations_module_edit%}
-<div class="container col-md-6 mb-3">
+<div class="container col-md-7 mb-3">
     <div class="row px-5">
         <div class="col-md-3">
             <a href="{%url 'donations:donations_list'%}">
@@ -18,36 +18,39 @@
         </div>
     </div>
 </div>
-<div class="container col-md-6">
+<div class="container col-md-7">
     <div class="px-5">
         <form method="post" enctype="multipart/form-data">
             {%csrf_token%}
             <div class="row">
                 <div class="col-md-3 my-2">{{donation_form.date_receipt|bootstrap}}</div>
                 <div class="col-md-6 my-2">{{donation_form.character|bootstrap}}</div>
-                <div class="col-md-3 my-2" data-toggle="info" title="Data zwrotu z Wydziału Finansów">{{donation_form.date_return|bootstrap}}</div>
+                <div class="col-md-3 my-2" data-toggle="info" title="Data zwrotu z Wydziału Finansów">
+                    {{donation_form.date_return|bootstrap}}
+                </div>
                 <div class="col-md-12 my-2">{{donation_form.presenter|bootstrap}}</div>
                 <div class="col-md-12 my-2">
                     <div class="form-group">
-                    <label class="control-label" for="id_unit">Jednostka</label>
-                    <div class="">
-                        <select name="unit" class="form-control" required id="id_unit">
-                            {% regroup units by county as county_list %}
-                            <option>---------</option>
-                            {% for county in county_list %}
-                            <optgroup label="{{county.grouper}}">
-                                {% for unit in county.list %}
-                                {% if donation_edit.id == unit.id %}
-                                <option value="{{unit.id}}" selected>{{unit}}</option>
-                                {% else %}
-                                <option value="{{unit.id}}">{{unit}}</option>
-                                {% endif %}
+                        <label class="control-label" for="id_unit">Jednostka</label>
+                        <div class="">
+                            <select name="unit" class="form-control" required id="id_unit">
+                                {% regroup units by county as county_list %}
+                                <option>---------</option>
+                                {% for county in county_list %}
+                                <optgroup label="{{county.grouper}}">
+                                    {% for unit in county.list %}
+                                    {% if donation_edit.id == unit.id %}
+                                    <option value="{{unit.id}}" selected>{{unit}}</option>
+                                    {% else %}
+                                    <option value="{{unit.id}}">{{unit}}</option>
+                                    {% endif %}
+                                    {% endfor %}
+                                </optgroup>
                                 {% endfor %}
-                            </optgroup>
-                            {% endfor %}
-                        </select>
+                            </select>
+                        </div>
                     </div>
-                </div></div>
+                </div>
                 <div class="col-md-3 my-2">{{donation_form.no_application|bootstrap}}</div>
                 <div class="col-md-3 my-2">{{donation_form.sum|bootstrap}}</div>
                 <div class="col-md-3 my-2">{{donation_form.donation_type|bootstrap}}</div>
@@ -55,8 +58,8 @@
                 <div class="col-md-4 my-2">{{donation_form.date_agreement|bootstrap}}</div>
                 <div class="col-md-4 my-2">{{donation_form.no_agreement|bootstrap}}</div>
                 <div class="col-md-4 my-2">{{donation_form.settlement_date|bootstrap}}</div>
-                <div class="col-md-6 my-2">{{donation_form.subject|bootstrap}}</div>
-                <div class="col-md-6 my-2">{{donation_form.information|bootstrap}}</div>
+                <div class="col-md-12 my-2">{{donation_form.subject|bootstrap}}</div>
+                <div class="col-md-12 my-2">{{donation_form.information|bootstrap}}</div>
                 <div class="col-md-12 my-2">{{donation_form.donation_scan|bootstrap}}</div>
                 <div class="col-md-12 moj-button-right mt-2">
                     <button type="submit" class="btn btn-outline-primary my-btn">

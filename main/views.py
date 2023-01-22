@@ -24,10 +24,10 @@ def now_date():
 
 
 # Create your views here.
-@login_required
+@login_required()
 def welcome(request):
     commands = Command.objects.all().order_by("create_date")[:6]
-    rent_cars = Car.objects.all()[:10]
+    rent_cars = Car.objects.all()[:8]
     date = datetime.date.today().today()
     context = {"date": date,
                "commands": commands,

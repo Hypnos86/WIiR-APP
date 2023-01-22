@@ -27,29 +27,40 @@
     <div class="col-md-4 mt-3">
         <table class="table table-hover caption-top">
             <caption>
+                {%if user.is_authenticated and user.accessmodule.cars%}
                 <a data-url="{%url 'main:add_rent_car'%}" onclick="openModal(this)">
-                    <span class="bi bi-plus-square-dotted"> Rezerwacja samochodu służbowego </span></a>
+                    <span class="bi bi-plus-square-dotted"> Rezerwacja samochodu służbowego</span>
+                </a>
+                {%else%}
+                    <span> Rezerwacja samochodu służbowego</span>
+                {%endif%}
             </caption>
             <thead>
-            <tr class="text-center">
-                <th align="center" valign="middle" width="auto">Data</th>
-                <th align="center" valign="middle" width="auto">Delegat</th>
+            <tr class="text-center calendar-text">
+                <th align="center" valign="middle" width="30%">Data</th>
+                <th align="center" valign="middle" width="20%">Delegat</th>
                 <th align="center" valign="middle" width="auto">Cel</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody class="calendar-text">
             {%for car in  rent_cars|slice:"-4:"%}
             <tr>
                 <td valign="middle">
                     {%if user.is_authenticated and user.accessmodule.cars%}
                         {%if car.rent_date == date%}
-                            <a data-url="{%url 'main:edit_rent_car' car.id%}" onclick="openModal(this)"><span><b>{{car.rent_date}}&nbsp;r.</b></span></a>
+                            <a class="bi bi-calendar4-week btn btn-outline-secondary" data-url="{%url 'main:edit_rent_car' car.id%}" onclick="openModal(this)">
+                                <span class="calendar-text">
+                                    <b>&nbsp;{{car.rent_date}}&nbsp;r.</b>
+                                </span>
+                            </a>
                         {%else%}
-                            <a data-url="{%url 'main:edit_rent_car' car.id%}" onclick="openModal(this)"><span>{{car.rent_date}}&nbsp;r.</span></a>
+                            <a class="bi bi-calendar4-week btn btn-outline-secondary" data-url="{%url 'main:edit_rent_car' car.id%}" onclick="openModal(this)">
+                                <span class="calendar-text">&nbsp;{{car.rent_date}}&nbsp;r.</span>
+                            </a>
                         {%endif%}
                     {%else%}
                         {%if car.rent_date == date%}
-                            <span><b>{{car.rent_car}}&nbsp;r.</b></span>
+                            <span><b>{{car.rent_date}}&nbsp;r.</b></span>
                         {%else%}
                             <span>{{car.rent_date}}&nbsp;r.</span>
                         {%endif%}
@@ -57,11 +68,12 @@
                 </td>
                 <td valign="middle">
                     {%for worker in car.borrower.all%}
-                    <span>{{worker.name}} {{worker.last_name}}</span><br>
+                    <span>{{worker.name}} {{worker.last_name.0}}.</span><br>
                     {%endfor%}
                 </td>
                 <td valign="middle" width="300">
-                    <span>{{car.target}}</span></td>
+                    <span>{{car.target}}</span>
+                </td>
             </tr>
             {%endfor%}
             </tbody>

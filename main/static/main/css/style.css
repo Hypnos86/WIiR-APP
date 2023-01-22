@@ -325,3 +325,7 @@ hr {
 .select2-full-width .select2-container{
     width: 100% !important;
 }
+
+.calendar-text{
+    font-size: 12px;
+}
