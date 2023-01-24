@@ -39,3 +39,7 @@ class NeedsLetter(models.Model):
     registration_type = models.ForeignKey(RegistrationType, on_delete=models.CASCADE, verbose_name="Rodzaj zgłoszenia",
                                           related_name=related_name)
     no_secretariats_diary = models.IntegerField("Nr. z dziennika")
+
+
+    def __str__(self):
+        return f'{self.case_sign} z dnia {self.receipt_date}'
