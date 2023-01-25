@@ -19,6 +19,7 @@ urlpatterns = [
                   path('donations/', include('donations.urls')),
                   path('construction_inspections/', include('constructioninspections.urls')),
                   path('fixed_asset/', include('fixedasset.urls')),
+                  path('operationalneedsrecords/', include('operationalneedsrecords.urls')),
                   path('gallery/', include('gallery.urls')),
                   path('businessflats/', include('businessflats.urls')),
                   path('login/', auth_views.LoginView.as_view(), name='login'),
