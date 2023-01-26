@@ -1,3 +1,5 @@
+from enum import Enum
+
 from django.db import models
 import os
 
@@ -59,15 +61,17 @@ class Employer(models.Model):
         verbose_name_plural = "Pracownicy"
         ordering = ["team", "last_name"]
 
+    related_name = "employer"
+
     id_swop = models.CharField("ID SWOP", max_length=6, unique=True)
     name = models.CharField("Imię", max_length=20)
     last_name = models.CharField("Nazwisko", max_length=25)
     position = models.CharField("Stanowisko", max_length=20, blank=True, default="")
-    team = models.ForeignKey(Team, on_delete=models.CASCADE, verbose_name="Zespół", related_name="employer")
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, verbose_name="Zespół", related_name=related_name)
     industry_specialist = models.BooleanField(default=False, verbose_name="Branżysta")
     invoices_issues = models.BooleanField(default=False, verbose_name="Wystawianie faktur")
     industry = models.ForeignKey(IndustryType, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Branża",
-                                 related_name="employer")
+                                 related_name=related_name)
     no_room = models.CharField("Nr. pokoju", max_length=2, blank=True, default="")
     no_tel_room = models.CharField("Nr. telefonu", max_length=6, blank=True, default="")
     no_tel_private = models.CharField("Nr. komórkowy", max_length=9, blank=True, default="")
@@ -171,3 +175,15 @@ class Car(models.Model):
 
     def __str__(self):
         return f"{self.rent_date} {self.target}"
+
+
+class TeamType(Enum):
+    NK = 1
+    ZOK = 2
+    ZRiWT = 3
+    ZI = 4
+    ZE = 5
+    ZM = 6
+    ZN = 7
+
+    pass

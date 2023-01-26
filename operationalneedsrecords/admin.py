@@ -2,7 +2,7 @@ from django.contrib import admin
 from import_export import resources
 from import_export.fields import Field
 from import_export.admin import ExportMixin
-from operationalneedsrecords.models import RegistrationType, MeritsType, NeedsLetter
+from operationalneedsrecords.models import RegistrationType, MetricsCaseType, NeedsLetter
 
 
 class NeedsLetterResource(resources.ModelResource):
@@ -10,6 +10,7 @@ class NeedsLetterResource(resources.ModelResource):
     case_sign = Field(attribute="case_sign", column_name="Znak pisma")
     unit = Field(attribute="unit", column_name="Jednostka")
     case_description = Field(attribute="case_description", column_name="Opis sprawy")
+    case_type = Field(attribute="case_type", column_name="Rodzaj sprawy")
     registration_type = Field(attribute="registration_type", column_name="Rodzaj zgłoszenia")
     no_secretariats_diary = Field(attribute="no_secretariats_diary", column_name="Nr. z dziennika")
     receipt_date_to_team = Field(attribute="receipt_date_to_team", column_name="Data wpływu do Zespołu")
@@ -20,17 +21,27 @@ class NeedsLetterResource(resources.ModelResource):
 
     class Meta:
         models = NeedsLetter
-        fields = ('receipt_date', 'case_sign', 'unit', 'case_description', 'registration_type', 'no_secretariats_diary',
-                  'receipt_date_to_team', 'case_sign_team', 'cost', 'isDone', 'information')
+        fields = ('receipt_date', 'case_sign', 'unit', 'case_description', 'case_type', 'registration_type',
+                  'no_secretariats_diary', 'receipt_date_to_team', 'case_sign_team', 'cost', 'isDone', 'information')
         export_order = (
-        'receipt_date', 'case_sign', 'unit', 'case_description', 'registration_type', 'no_secretariats_diary',
-        'receipt_date_to_team', 'case_sign_team', 'cost', 'isDone', 'information')
+            'receipt_date', 'case_sign', 'unit', 'case_description', 'case_type', 'registration_type',
+            'no_secretariats_diary', 'receipt_date_to_team', 'case_sign_team', 'cost', 'isDone', 'information')
 
 
 @admin.register(NeedsLetter)
 class NeedLetterAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['receipt_date', 'case_sign', 'unit', 'registration_type', 'receipt_date_to_team', 'case_sign_team',
-                    'isDone', 'author', 'creation_date', 'change']
+    list_display = ['receipt_date', 'case_sign', 'unit', 'case_type', 'registration_type', 'receipt_date_to_team',
+                    'employer', 'isDone', 'author', 'creation_date', 'change']
     search_fields = ['case_sign', 'unit', 'registration_type', 'receipt_date_to_team', 'case_sign_team']
     list_display_links = ['unit']
+    list_filter = ('isDone', 'unit__county__name')
 
+
+@admin.register(RegistrationType)
+class RegistrationTypeAdmin(admin.ModelAdmin):
+    list_display = ['registration_type']
+
+
+@admin.register(MetricsCaseType)
+class MetricsCaseTypeAdmin(admin.ModelAdmin):
+    list_display = ['metric_type']

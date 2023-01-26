@@ -1,0 +1,171 @@
+{%extends 'base.html'%}
+{%load static%}
+{%load bootstrap%}
+{%block title%} Zespół Eksploatacji {%endblock%}
+{%block content%}
+{%if user.is_authenticated and user.accessmodule.records_letters%}
+<div class="kontrahenci-title justify-content-center align-items-center text-center">
+    <h4>Ewidencja zdarzeń Zespołu Eksploatacji</h4>
+    {% if last_date %}
+    <small>Ostatnia aktualizacja: {{last_date.change|date:"d.m.Y (H:i)"}}</small>
+    {%endif%}
+</div>
+<div class="mx-2">
+    <div class="row my-3">
+        <div class="col-md-3 align-self-end">
+            <span>W trakcie realizacji: </span>
+            <span class="badge text-white info badge-pill">{{objectslen}}</span>
+        </div>
+        <div class="col-md-6">
+            <section class="w-100 d-flex justify-content-center align-items-center flex-column text_center">
+                <form id="form-search" method="get">
+                    <div class="input-group">
+                        <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj sprawy"
+                               aria-label="Search" aria-describedby="search-addon" value="{%if query%}{{q}}{%endif%}">
+                        <button id="searchButton" style="{%if query%}display:none;{%endif%}" type="submit"
+                                class="btn btn-outline-primary my-btn">Szukaj
+                        </button>
+                        <button id="cleanButton" style="{%if not query%}display:none;{%endif%}" type="button"
+                                class="btn btn-outline-primary my-btn" onclick="cleanSearch()">Wyczyść
+                        </button>
+                    </div>
+                </form>
+            </section>
+        </div>
+        {%if user.accessmodule.records_letters_edit%}
+        <div class="col-md-3 moj-button-right align-self-end">
+            <a href="{%url 'operationalneedsrecords:new_needs_latter'%}">
+                <button type="button" class="btn btn-outline-primary my-btn">
+                    <span class="bi bi-plus-circle"> Dodaj sprawę</span>
+                </button>
+            </a>
+        </div>
+        {%endif%}
+    </div>
+</div>
+<div class="mx-2">
+    <table class="table table-hover my-table">
+        <thead>
+        <tr class="my-table-tr text-center">
+            <th align="center" valign="middle" width="50" scope="col">L.p.</th>
+            <th align="center" valign="middle" width="60" scope="col">Data wpływu</th>
+            <th align="center" valign="middle" width="50" scope="col">Nr. z dziennika</th>
+            <th align="center" valign="middle" width="auto" scope="col">Znak pisama</th>
+            <th align="center" valign="middle" width="auto" scope="col">Jednostka</th>
+            <th align="center" valign="middle" width="auto" scope="col">Rodzaj sprawy</th>
+            <th align="center" valign="middle" width="auto" scope="col">Rodzaj zgłoszenia</th>
+            <th align="center" valign="middle" width="auto" scope="col">Branżysta</th>
+            <th align="center" valign="middle" width="auto" scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {%for object in objects %}
+        <tr class="my-table-tr">
+            <td class="text-center" valign="middle" scope="row"></td>
+            <td align="center" valign="middle" scope="row">{{object.receipt_date|date:"d.m.Y"}}</td>
+            <td align="center" valign="middle">{{object.no_secretariats_diary}}</td>
+            <td class="text-center" valign="middle">{{object.case_sign}}</td>
+            <td valign="middle"><span>{{object.unit}}</span></td>
+            <td class="text-center" valign="middle">{{object.case_type}}</td>
+            <td class="text-center" valign="middle">{{object.registration_type}}</td>
+            <td class="text-center" valign="middle">{{object.employer}}</td>
+            <td align="right" valign="middle">
+            <button data-toggle="info" title="Status" type="button"
+                    data-url=""
+                    class="btn btn-outline-success mx-2" onclick="openModal(this)">
+                <i class="bi bi-eye-fill my-1"></i>
+            </button>
+            {%if user.accessmodule.records_letters_edit%}
+            <a class="mx-2 moj-button-right" href="">
+                <button data-toggle="info" title="Zmień status" type="submit"
+                        class="btn btn-outline-primary icon-color my-1">
+                    <i class="bi bi-pencil-square"></i>
+                </button>
+            </a>
+            {%endif%}
+            </td>
+        </tr>
+        {%endfor%}
+        </tbody>
+        <tfoot>
+        <tr>
+            <th colspan="7">Wydział Inwestycji i Remontów KWP w Poznaniu</th>
+        </tr>
+        </tfoot>
+    </table>
+    {%if search%}
+    <nav aria-labelledby="Page navigation">
+        <ul class="pagination justify-content-center">
+            {%if objects.has_previous%}
+            <li class="page-item">
+                <a class="page-link" href="?page={{objects.previous_page_number}}">Poprzednia</a>
+            </li>
+            {%else%}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Poprzednia</a>
+            </li>
+            {%endif%}
+            {%for i in objects.paginator.page_range%}
+            {%if objects.number == i%}
+            <li class="page-item active" aria-current="page">
+            <span class="page-link">
+                {{i}}
+                <span class="sr-only"></span>
+            </span>
+            </li>
+            {%else%}
+            <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+            {%endif%}
+            {%endfor%}
+            {%if objects.has_next%}
+            <li class="page-item">
+                <a class="page-link" href="?page={{objects.next_page_number}}">Następna</a>
+            </li>
+            {%else%}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Następna</a>
+            </li>
+            {%endif%}
+        </ul>
+    </nav>
+    {%endif%}
+</div>
+<!-- Modal -->
+<div class="modal fade" id="informationModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById("button-units").classList.remove("active");
+    document.getElementById("button-record").classList.add("active");
+    document.getElementById("button-cpv").classList.remove("active");
+    document.getElementById("button-investments").classList.remove("active");
+
+    function openModal(button){
+        var url = $(button).data("url");
+        $("#informationModal .modal-content").load(url);
+        $("#informationModal").modal("show");
+    }
+
+    function submitForm(){
+        $("#submitButton").closest("form").submit();
+    }
+
+    $(function () {
+        $('[data-toggle="info"]').tooltip()
+    })
+
+    function cleanSearch(){
+        $("#q").val("");
+        //$("#cleanButton").hide();
+        //$("#searchButton").show();
+        $("#form-search").submit();
+    }
+
+</script>
+{%endif%}
+{%endblock%}
+

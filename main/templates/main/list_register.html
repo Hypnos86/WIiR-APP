@@ -12,9 +12,9 @@
                 <div class="col-md-10">
                     <div class="list-group">
                         {%if user.accessmodule.records_letters%}
-                         <a class="text-decoration-none" href="">
+                         <a class="text-decoration-none" href="{%url 'operationalneedsrecords:list_needs_letter'%}">
                             <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
-                                Ewidencja pism<span class="badge text-white info badge-pill">0</span>
+                                Ewidencja pism<span class="badge text-white info badge-pill">{{letters_len}}</span>
                             </button>
                         </a>
                         {%endif%}
