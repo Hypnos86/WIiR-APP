@@ -5,16 +5,27 @@
 {%block content%}
 {%if user.is_authenticated and user.accessmodule.records_letters%}
 <div class="kontrahenci-title justify-content-center align-items-center text-center">
-    <h4>Ewidencja zdarzeń Zespołu Eksploatacji</h4>
+    <h4>Ewidencja pism ZE <b>{{year}}</b></h4>
     {% if last_date %}
     <small>Ostatnia aktualizacja: {{last_date.change|date:"d.m.Y (H:i)"}}</small>
     {%endif%}
 </div>
 <div class="mx-2">
-    <div class="row my-3">
-        <div class="col-md-3 align-self-end">
-            <span>W trakcie realizacji: </span>
-            <span class="badge text-white info badge-pill">{{objectslen}}</span>
+    <div class="row mt-3">
+        <div class="col-md-3">
+            <div class="row">
+                <div class="col-md-12 mb-2">
+                    <span>W trakcie realizacji: </span>
+                    <span class="badge text-white info badge-pill">{{objectslen}}</span>
+                </div>
+                <div class="col-md-12 moj-button-left mt-2">
+                    <a href="">
+                        <button type="button" class="btn btn-outline-primary my-btn">
+                            <span class="bi bi-check2-all"> Zrealizowane</span>
+                        </button>
+                    </a>
+                </div>
+            </div>
         </div>
         <div class="col-md-6">
             <section class="w-100 d-flex justify-content-center align-items-center flex-column text_center">
@@ -43,7 +54,7 @@
         {%endif%}
     </div>
 </div>
-<div class="mx-2">
+<div class="mt-5">
     <table class="table table-hover my-table">
         <thead>
         <tr class="my-table-tr text-center">
@@ -64,25 +75,27 @@
             <td class="text-center" valign="middle" scope="row"></td>
             <td align="center" valign="middle" scope="row">{{object.receipt_date|date:"d.m.Y"}}</td>
             <td align="center" valign="middle">{{object.no_secretariats_diary}}</td>
-            <td class="text-center" valign="middle">{{object.case_sign}}</td>
-            <td valign="middle"><span>{{object.unit}}</span></td>
+            <td valign="middle">{{object.case_sign}}</td>
+            <td valign="middle"><span>{{object.unit.type}} {{object.unit.city}}</span>
+                <span>({{object.unit.county}})</span><br><small>{{object.unit.address}},
+                    {{object.unit.zip_code}}</small></td>
             <td class="text-center" valign="middle">{{object.case_type}}</td>
             <td class="text-center" valign="middle">{{object.registration_type}}</td>
             <td class="text-center" valign="middle">{{object.employer}}</td>
             <td align="right" valign="middle">
-            <button data-toggle="info" title="Status" type="button"
-                    data-url=""
-                    class="btn btn-outline-success mx-2" onclick="openModal(this)">
-                <i class="bi bi-eye-fill my-1"></i>
-            </button>
-            {%if user.accessmodule.records_letters_edit%}
-            <a class="mx-2 moj-button-right" href="">
-                <button data-toggle="info" title="Zmień status" type="submit"
-                        class="btn btn-outline-primary icon-color my-1">
-                    <i class="bi bi-pencil-square"></i>
+                <button data-toggle="info" title="Status" type="button"
+                        data-url=""
+                        class="btn btn-outline-success mx-2" onclick="openModal(this)">
+                    <i class="bi bi-eye-fill my-1"></i>
                 </button>
-            </a>
-            {%endif%}
+                {%if user.accessmodule.records_letters_edit%}
+                <a class="mx-2 moj-button-right" href="{%url 'operationalneedsrecords:edit_needs_letter' object.id%}">
+                    <button data-toggle="info" title="Zmień status" type="submit"
+                            class="btn btn-outline-primary icon-color my-1">
+                        <i class="bi bi-pencil-square"></i>
+                    </button>
+                </a>
+                {%endif%}
             </td>
         </tr>
         {%endfor%}
@@ -164,6 +177,9 @@
         //$("#searchButton").show();
         $("#form-search").submit();
     }
+
+
+
 
 </script>
 {%endif%}

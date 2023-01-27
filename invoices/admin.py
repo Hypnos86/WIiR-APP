@@ -57,14 +57,15 @@ class CorrectiveNoteAdmin(ExportMixin, admin.ModelAdmin):
 
 @admin.register(DocumentTypes)
 class DocumentTypesAdmin(admin.ModelAdmin):
-    list_display = ['type']
+    list_display = ['id','type']
 
 
 @admin.register(InvoiceItems)
 class InvoiceItemsAdmin(admin.ModelAdmin):
     ordering = ['invoice_id', 'account', 'county', 'sum']
     list_display = ['invoice_id', 'id', 'account', 'county', 'sum']
-    search_fields = ["invoice_id__no_invoice", "county__name", "account__section__section" ]
+    search_fields = ["invoice_id__no_invoice", "county__name", "account__section__section"]
+    list_filter = ['county']
 
 
 @admin.register(InvoiceBuy)

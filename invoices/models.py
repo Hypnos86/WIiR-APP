@@ -1,9 +1,16 @@
 from django.db import models
+from enum import Enum
 from contractors.models import Contractor
 from units.models import County
 from main.models import Employer
 from sourcefinancing.models import FinanceSource
 import datetime
+
+
+class DocumentsTypeEnum(Enum):
+    FAKTURA = "Faktura"
+    KOREKTA = "Korekta"
+    NOTA_KORYGUJACA = "Nota korygująca"
 
 
 class DocumentTypes(models.Model):
@@ -71,7 +78,6 @@ class InvoiceBuy(models.Model):
     author = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name=relatedName)
 
     def __str__(self):
-
         return f"{self.no_invoice} z dnia {self.date_issue.strftime('%d.%m.%Y')} r."
 
 

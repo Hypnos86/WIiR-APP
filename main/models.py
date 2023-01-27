@@ -1,5 +1,3 @@
-from enum import Enum
-
 from django.db import models
 import os
 
@@ -175,15 +173,3 @@ class Car(models.Model):
 
     def __str__(self):
         return f"{self.rent_date} {self.target}"
-
-
-class TeamType(Enum):
-    NK = 1
-    ZOK = 2
-    ZRiWT = 3
-    ZI = 4
-    ZE = 5
-    ZM = 6
-    ZN = 7
-
-    pass

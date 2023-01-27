@@ -21,27 +21,69 @@
     <form method="post">
         {%csrf_token%}
         <div class="row">
-            <div class="col-md-8 my-2">{{object_form.receipt_date|bootstrap}}</div>
-            <div class="col-md-8 my-2">{{object_form.no_secretariats_diary|bootstrap}}</div>
-            <div class="col-md-8 my-2">{{object_form.case_sign|bootstrap}}</div>
-            <div class="col-md-8 my-2">{{object_form.receipt_date_to_team|bootstrap}}</div>
-            <div class="col-md-8 my-2">{{object_form.unit|bootstrap}}</div>
-            <div class="col-md-8 my-2">{{object_form.case_description|bootstrap}}</div>
-            <div class="col-md-8 my-2">{{object_form.case_type|bootstrap}}</div>
-            <div class="col-md-8 my-2">{{object_form.registration_type|bootstrap}}</div>
-            <div class="col-md-8 my-2">{{object_form.case_sign_team|bootstrap}}</div>
-            <div class="col-md-8 my-2">{{object_form.case_sign_team|bootstrap}}</div>
-            <div class="col-md-8 my-2">{{object_form.cost|bootstrap}}</div>
-            <div class="col-md-8 my-2">{{object_form.employer|bootstrap}}</div>
-            <div class="col-md-8 my-2">{{object_form.employer|bootstrap}}</div>
-            <div class="col-md-8 my-2">{{object_form.execution_date|bootstrap}}</div>
-            <div class="col-md-8 my-2">{{object_form.information|bootstrap}}</div>
-
-            <div class="col-md-12 moj-button-right my-4">
-                <button type="submit" class="btn btn-outline-primary my-btn">{%if new%}<span class="bi bi-save2"> Dodaj kontrachenta</span>{%else%}<span
-                        class="bi bi-save2"> Zapisz zmiany</span>{%endif%}
+            <div class="col-md-3 my-2">{{object_form.receipt_date|bootstrap}}</div>
+            <div class="col-md-2 my-2">{{object_form.no_secretariats_diary|bootstrap}}</div>
+            <div class="col-md-4 my-2">{{object_form.case_sign|bootstrap}}</div>
+            <div class="col-md-3 my-2">{{object_form.receipt_date_to_team|bootstrap}}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 my-2">
+                <div class="form-group">
+                    <label class="control-label" for="id_unit">Jednostka</label>
+                    <div class="">
+                        <select name="unit" class="form-control" required id="id_unit">
+                            {% regroup units by county as county_list %}
+                            <option>---------</option>
+                            {% for county in county_list %}
+                            <optgroup label="{{county.grouper}}">
+                                {% for unit in county.list %}
+                                {% if object_edit.id == unit.id %}
+                                <option value="{{unit.id}}" selected>{{unit}}</option>
+                                {% else %}
+                                <option value="{{unit.id}}">{{unit}}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </optgroup>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 my-2">{{object_form.registration_type|bootstrap}}</div>
+            <div class="col-md-2 my-2">{{object_form.case_type|bootstrap}}</div>
+            <div class="col-md-3 my-2">{{object_form.employer|bootstrap}}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 my-2">{{object_form.case_description|bootstrap}}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 my-2">{{object_form.case_sign_team|bootstrap}}</div>
+            <div class="col-md-3 my-2">{{object_form.cost|bootstrap}}</div>
+            {%if new%}
+            <div class="col-md-6 moj-button-right my-4">
+                <button type="submit" class="btn btn-outline-primary my-btn">
+                    {%if new%}
+                    <span class="bi bi-save2"> Dodaj sprawę</span>
+                    {%else%}
+                    <span class="bi bi-save2"> Edytuj sprawę</span>
+                    {%endif%}
                 </button>
             </div>
+            {%else%}
+            <div class="col-md-3 my-2">{{object_form.execution_date|bootstrap}}</div>
+            <div class="col-md-3 moj-button-right my-4">
+                <button type="submit" class="btn btn-outline-primary my-btn">
+                    {%if new%}
+                    <span class="bi bi-save2"> Dodaj sprawę</span>
+                    {%else%}
+                    <span class="bi bi-save2"> Edytuj sprawę</span>
+                    {%endif%}
+                </button>
+            </div>
+            {%endif%}
+        </div>
+        <div class="row">
+            <div class="col-md-6 my-2">{{object_form.information|bootstrap}}</div>
         </div>
     </form>
 </div>

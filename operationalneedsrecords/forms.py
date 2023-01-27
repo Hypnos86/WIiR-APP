@@ -10,7 +10,7 @@ class NeedsLetterForm(ModelForm):
     class Meta:
         model = NeedsLetter
         fields = "__all__"
-        labels = {"receipt_date": "Data wpływu", "case_sign": "Znak pisma", "unit": "Jednostka",
+        labels = {"receipt_date": "Data wpływu pisma", "case_sign": "Znak pisma", "unit": "Jednostka",
                   "case_description": "Opis sprawy", "case_type": "Rodzaj sprawy",
                   "registration_type": "Rodzaj zgłoszenia", "receipt_date_to_team": "Data wpływu do zespołu",
                   "case_sign_team": "Znak sprawy ZE", "information": "informacje", "execution_date": "Data realizacji",

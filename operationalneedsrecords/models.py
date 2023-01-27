@@ -1,9 +1,18 @@
 from django.db import models
+from enum import Enum
 from units.models import Unit
 from main.models import Employer
 
 
 # Create your models here.
+class TeamType(Enum):
+    NK = 1
+    ZOK = 2
+    ZRiWT = 3
+    ZI = 4
+    ZE = 5
+    ZM = 6
+    ZN = 7
 class RegistrationType(models.Model):
     class Meta:
         verbose_name = "Rodzaj zgłoszenia"
@@ -32,11 +41,12 @@ class NeedsLetter(models.Model):
     class Meta:
         verbose_name = "Ewidencja pism"
         verbose_name_plural = "Ewidencje Pism"
+        ordering = ["-receipt_date"]
 
     related_name = "needsletter"
 
     receipt_date = models.DateField("Data wpływu", null=True)
-    case_sign = models.CharField("Znak pisma", max_length=30, null=True)
+    case_sign = models.CharField("Znak pisma", max_length=50, null=True)
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE, verbose_name="Jednostka", related_name=related_name)
     case_description = models.TextField("Opis sprawy")
     case_type = models.ForeignKey(MetricsCaseType, on_delete=models.CASCADE, related_name=related_name,

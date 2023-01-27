@@ -7,7 +7,7 @@ from django.db.models import Sum
 from django.shortcuts import render, redirect, get_object_or_404
 
 from WIiR_APP.settings import BASE_DIR
-from invoices.models import InvoiceSell, InvoiceBuy, InvoiceItems, DocumentTypes, CorrectiveNote
+from invoices.models import InvoiceSell, InvoiceBuy, InvoiceItems, DocumentTypes, CorrectiveNote, DocumentsTypeEnum
 from main.models import Employer
 from invoices.forms import InvoiceSellForm, InvoiceBuyForm, InvoiceItemsForm, CorrectiveNoteForm
 from main.views import current_year, now_date
@@ -145,7 +145,7 @@ def buy_invoices_list_archive(request, year):
 @login_required
 def new_invoice_buy(request):
     invoice_buy_form = InvoiceBuyForm(request.POST or None)
-    doc_types = invoice_buy_form.fields["doc_types"].queryset = DocumentTypes.objects.exclude(type="Nota korygująca")
+    doc_types = invoice_buy_form.fields["doc_types"].queryset = DocumentTypes.objects.exclude(type=DocumentsTypeEnum.NOTA_KORYGUJACA.value)
     invoice_buy_form.fields["doc_types"].queryset = DocumentTypes.objects.exclude(type="Nota korygująca")
     context = {"invoice": invoice_buy_form, "doc_types": doc_types, "new": True}
 
@@ -187,7 +187,7 @@ def delete_items_invoice_buy(request, id, invoice_id):
 def edit_invoice_buy(request, id):
     invoice_buy_edit = get_object_or_404(InvoiceBuy, pk=id)
     invoice_buy_form = InvoiceBuyForm(request.POST or None, instance=invoice_buy_edit)
-    invoice_buy_form.fields["doc_types"].queryset = DocumentTypes.objects.exclude(type="Nota korygująca")
+    invoice_buy_form.fields["doc_types"].queryset = DocumentTypes.objects.exclude(type=DocumentsTypeEnum.NOTA_KORYGUJACA)
     context = {"invoice": invoice_buy_form,
                "invoice_id": invoice_buy_edit,
                "new": False}
@@ -211,7 +211,7 @@ def delete_invoice_buy(request, id):
 def edit_invoice_buy_archive(request, id):
     invoice_buy_edit = get_object_or_404(InvoiceBuy, pk=id)
     invoice_buy_form = InvoiceBuyForm(request.POST or None, instance=invoice_buy_edit)
-    invoice_buy_form.fields["doc_types"].queryset = DocumentTypes.objects.exclude(type="Nota korygująca")
+    invoice_buy_form.fields["doc_types"].queryset = DocumentTypes.objects.exclude(type=DocumentsTypeEnum.NOTA_KORYGUJACA)
     year = invoice_buy_edit.date_receipt.year
 
     context = {"invoice": invoice_buy_form,
@@ -346,7 +346,7 @@ def sell_invoices_list_archive(request, year):
 @login_required
 def new_invoice_sell(request):
     invoice_sell_form = InvoiceSellForm(request.POST or None)
-    doc_types = invoice_sell_form.fields["doc_types"].queryset = DocumentTypes.objects.exclude(type="Nota korygująca")
+    doc_types = invoice_sell_form.fields["doc_types"].queryset = DocumentTypes.objects.exclude(type=DocumentsTypeEnum.NOTA_KORYGUJACA)
     invoice_sell_form.fields["creator"].queryset = Employer.objects.all().filter(invoices_issues=True)
 
     context = {"invoice": invoice_sell_form, "doc_types": doc_types, "new": True}
@@ -364,7 +364,7 @@ def new_invoice_sell(request):
 def edit_invoice_sell(request, id):
     invoice_sell_edit = get_object_or_404(InvoiceSell, pk=id)
     invoice_sell_form = InvoiceSellForm(request.POST or None, instance=invoice_sell_edit)
-    invoice_sell_form.fields["doc_types"].queryset = DocumentTypes.objects.exclude(type="Nota korygująca")
+    invoice_sell_form.fields["doc_types"].queryset = DocumentTypes.objects.exclude(type=DocumentsTypeEnum.NOTA_KORYGUJACA)
     invoice_sell_form.fields["creator"].queryset = Employer.objects.all().filter(invoices_issues=True)
 
     context = {"invoice": invoice_sell_form,
@@ -382,7 +382,7 @@ def edit_invoice_sell(request, id):
 def edit_invoice_sell_archive(request, id):
     invoice_sell_edit = get_object_or_404(InvoiceSell, pk=id)
     invoice_sell_form = InvoiceSellForm(request.POST or None, instance=invoice_sell_edit)
-    invoice_sell_form.fields["doc_types"].queryset = DocumentTypes.objects.exclude(type="Nota korygująca")
+    invoice_sell_form.fields["doc_types"].queryset = DocumentTypes.objects.exclude(type=DocumentsTypeEnum.NOTA_KORYGUJACA)
     year = invoice_sell_edit.date.year
 
     context = {"invoice": invoice_sell_form,
