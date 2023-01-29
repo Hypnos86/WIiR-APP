@@ -1,0 +1,105 @@
+{% extends 'base.html'%}
+{% load bootstrap %}
+{% load humanize %}
+{% load static %}
+{% load thumbnail%}
+{% block title %} Zespół Eksploatacji {% endblock %}
+{% block content %}
+{%if user.is_authenticated and user.accessmodule.records_letters%}
+{%block additional_scripts%}
+{{project_form.media}}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-3 moj-button-left">
+            <a href="{%url 'operationalneedsrecords:list_needs_letter' year%}">
+                <button class="btn btn-outline-primary my-btn">
+                    <span class="bi bi-chevron-compact-left">Cofnij</span>
+                </button>
+            </a>
+        </div>
+        <div class="col-md-6 text-center">
+            <span class="h5">Pismo l.dz. {{object}}</span><br>
+            <small class="text-muted">Data
+                utworzenia: </small><small>{{object.creation_date|date:"m.d.Y"}}&nbsp;r.</small>
+        </div>
+        <div class="col-md-3">
+            <span class="text-muted">Autor: </span><span>{{object.author.first_name}} {{object.author.last_name}}</span><br>
+            {%if object.change%}
+            <span class="text-muted">Zmiany: </span><span>{{object.change|date:"m.d.Y"}}&nbsp;r. - {{object.change|date:"H:m"}}</span>
+            {%endif%}
+        </div>
+    </div>
+</div>
+<div class="container mt-5 px-5">
+    <div class="row">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <span class="text-muted">Data wpływu: </span>
+                <span>{{object.receipt_date|date:"d.m.Y"}}&nbsp;r.</span><br>
+                <span class="text-muted">Nr z dziennika: </span>
+                <span>{{object.no_secretariats_diary}}</span>
+            </li>
+            <li class="list-group-item">
+                <span class="text-muted">Powiat: </span>
+                <span>{{object.unit.county}}</span>
+            </li>
+            <li class="list-group-item">
+                <span class="text-muted">Jednostka: </span>
+                <span>{{object.unit}}</span>
+            </li>
+            <li class="list-group-item">
+                <span class="text-muted">Data wpływu do Zespołu: </span>
+                <span>{{object.receipt_date_to_team|date:"d.m.Y"}}&nbsp;r.</span>
+            </li>
+            <li class="list-group-item">
+                <span class="text-muted">Kategoria: </span><span>{{object.case_type}}</span><br>
+                <span class="text-muted">Rodzaj: </span><span>{{object.registration_type}}</span>
+            </li>
+            <li class="list-group-item">
+                <span class="text-muted">Opis sprawy: </span><br>
+                <span>{{object.case_description}}</span>
+            </li>
+            <li class="list-group-item">
+                <span class="text-muted">Branżysta: </span>
+                <span>{{object.employer}}</span>
+            </li>
+            {%if object.case_sign_team%}
+            <li class="list-group-item">
+                <span class="text-muted">Liczba sprawy Zespołu: </span><span>{{object.case_sign_team}}</span>
+            </li>
+            {%endif%}
+            {%if object.cost%}
+            <li class="list-group-item">
+                <span class="text-muted">Koszt: </span><br>
+                <span>{{object.cost}}</span>
+            </li>
+            {%endif%}
+            {%if object.execution_date%}
+            <li class="list-group-item">
+                <span class="text-muted">Data realizacji: </span>
+                <span>{{object.execution_date}}</span>
+            </li>
+            {%endif%}
+            {%if object.information%}
+            <li class="list-group-item">
+                <span class="text-muted">Informacje: </span>
+                <span>{{object.information}}</span>
+            </li>
+            {%endif%}
+        </ul>
+    </div>
+</div>
+<script>
+    document.getElementById("button-units").classList.remove("active");
+    document.getElementById("button-record").classList.add("active");
+    document.getElementById("button-investments").classList.remove("active");
+    document.getElementById("button-cpv").classList.remove("active");
+
+    $(function () {
+        $('[data-toggle="info"]').tooltip()
+    })
+
+</script>
+{%endblock%}
+{%endif%}
+{%endblock%}

@@ -15,15 +15,28 @@
         <div class="col-md-3">
             <div class="row">
                 <div class="col-md-12 mb-2">
-                    <span>W trakcie realizacji: </span>
+                    {%if archive == False%}
+                    <span>W realizacji: </span>
                     <span class="badge text-white info badge-pill">{{objectslen}}</span>
+                    {%else%}
+                    <span>Zrealizowane: </span>
+                    <span class="badge text-white info badge-pill">{{objectslen}}</span>
+                    {%endif%}
                 </div>
                 <div class="col-md-12 moj-button-left mt-2">
-                    <a href="">
+                    {%if archive == False%}
+                    <a href="{% url 'operationalneedsrecords:list_needs_letter_archive' year %}">
                         <button type="button" class="btn btn-outline-primary my-btn">
-                            <span class="bi bi-check2-all"> Zrealizowane</span>
+                            <span class="bi bi-journal-check"> Zrealizowane</span>
                         </button>
                     </a>
+                    {%else%}
+                    <a href="{% url 'operationalneedsrecords:list_needs_letter' year %}">
+                        <button type="button" class="btn btn-outline-primary my-btn">
+                            <span class="bi bi-journal"> W realizacji</span>
+                        </button>
+                    </a>
+                    {%endif%}
                 </div>
             </div>
         </div>
@@ -45,9 +58,9 @@
         </div>
         {%if user.accessmodule.records_letters_edit%}
         <div class="col-md-3 moj-button-right align-self-end">
-            <a href="{%url 'operationalneedsrecords:new_needs_latter'%}">
+            <a href="{%url 'operationalneedsrecords:new_needs_latter' year%}">
                 <button type="button" class="btn btn-outline-primary my-btn">
-                    <span class="bi bi-plus-circle"> Dodaj sprawę</span>
+                    <span class="bi bi-journal-plus"> Dodaj sprawę</span>
                 </button>
             </a>
         </div>
@@ -83,18 +96,11 @@
             <td class="text-center" valign="middle">{{object.registration_type}}</td>
             <td class="text-center" valign="middle">{{object.employer}}</td>
             <td align="right" valign="middle">
-                <button data-toggle="info" title="Status" type="button"
-                        data-url=""
-                        class="btn btn-outline-success mx-2" onclick="openModal(this)">
-                    <i class="bi bi-eye-fill my-1"></i>
-                </button>
+                <a href="{%url 'operationalneedsrecords:needs_letter_show' year object.id%}">
+                    <button data-toggle="info" title="Status" type="button" class="btn btn-outline-success mx-2"><i class="bi bi-eye-fill my-1"></i></button></a>
                 {%if user.accessmodule.records_letters_edit%}
-                <a class="mx-2 moj-button-right" href="{%url 'operationalneedsrecords:edit_needs_letter' object.id%}">
-                    <button data-toggle="info" title="Zmień status" type="submit"
-                            class="btn btn-outline-primary icon-color my-1">
-                        <i class="bi bi-pencil-square"></i>
-                    </button>
-                </a>
+                <a class="mx-2 moj-button-right" href="{%url 'operationalneedsrecords:edit_needs_letter' year object.id%}">
+                    <button data-toggle="info" title="Zmień status" type="submit" class="btn btn-outline-primary icon-color my-1"><i class="bi bi-pencil-square"></i></button></a>
                 {%endif%}
             </td>
         </tr>
@@ -143,29 +149,11 @@
     </nav>
     {%endif%}
 </div>
-<!-- Modal -->
-<div class="modal fade" id="informationModal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-
-        </div>
-    </div>
-</div>
 <script>
     document.getElementById("button-units").classList.remove("active");
     document.getElementById("button-record").classList.add("active");
     document.getElementById("button-cpv").classList.remove("active");
     document.getElementById("button-investments").classList.remove("active");
-
-    function openModal(button){
-        var url = $(button).data("url");
-        $("#informationModal .modal-content").load(url);
-        $("#informationModal").modal("show");
-    }
-
-    function submitForm(){
-        $("#submitButton").closest("form").submit();
-    }
 
     $(function () {
         $('[data-toggle="info"]').tooltip()
@@ -177,10 +165,6 @@
         //$("#searchButton").show();
         $("#form-search").submit();
     }
-
-
-
-
 </script>
 {%endif%}
 {%endblock%}

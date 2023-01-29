@@ -12,7 +12,7 @@
                 <div class="col-md-10">
                     <div class="list-group">
                         {%if user.accessmodule.records_letters%}
-                         <a class="text-decoration-none" href="{%url 'operationalneedsrecords:list_needs_letter'%}">
+                         <a class="text-decoration-none" href="{%url 'operationalneedsrecords:list_needs_letter' now_year%}">
                             <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
                                 Ewidencja pism<span class="badge text-white info badge-pill">{{letters_len}}</span>
                             </button>
@@ -57,7 +57,7 @@
                         </a>
                         {%endif%}
                         {%if user.accessmodule.donations_module%}
-                        <a class="text-decoration-none" href="{%url 'donations:donations_list'%}">
+                        <a class="text-decoration-none" href="{%url 'donations:donations_list' now_year%}">
                             <button class="list-group-item list-group-item-action list-group-item-secondary d-flex justify-content-between align-items-center mb-1">
                                 Darowizny<span class="badge text-white info badge-pill">{{application_len}}</span>
                             </button>

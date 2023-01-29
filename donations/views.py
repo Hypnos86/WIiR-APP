@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from donations.models import Application
 from donations.forms import ApplicationForm
 from units.models import Unit
@@ -10,8 +10,8 @@ from django.core.paginator import Paginator
 # Create your views here.
 
 @login_required
-def donations_list(request):
-    applications = Application.objects.all().filter(date_receipt__year=current_year()).order_by('-date_receipt')
+def donations_list(request, year):
+    applications = Application.objects.all().filter(date_receipt__year=year).order_by('-date_receipt')
     query = "Wyczyść"
     search = "Szukaj"
     application_len = len(applications)
@@ -56,15 +56,17 @@ def donations_list(request):
 
 
 @login_required
-def add_donation(request):
+def add_donation(request, year):
     donation_form = ApplicationForm(request.POST or None, request.FILES or None)
+    units = Unit.objects.all()
     if request.method == 'POST':
         if donation_form.is_valid():
             instance = donation_form.save(commit=False)
             instance.author = request.user
             donation_form.save()
-            return redirect('donations:donations_list')
-    return render(request, 'donations/donation_form.html', {'new': True, 'donation_form': donation_form})
+            return redirect(reverse('donations:donations_list', kwargs={"year":year}))
+    return render(request, 'donations/donation_form.html', {'new': True, 'donation_form': donation_form, "units":units, "year":year})
+
 
 
 @login_required

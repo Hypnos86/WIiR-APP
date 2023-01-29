@@ -76,7 +76,7 @@
             </div>
             <div class="mt-2">
                 {%if user.accessmodule.donations_module_edit and archive == false%}
-                <a href="{%url 'donations:add_donation'%}">
+                <a href="{%url 'donations:add_donation' year%}">
                     <button type="button" class="btn btn-outline-primary my-btn">
                         <span class="bi bi-plus-circle"> Dodaj wniosek</span>
                     </button>
