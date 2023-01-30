@@ -45,28 +45,28 @@ def important_inspections(request):
 
     for building in buildings:
 
-        protocol_building_one = building.building_inspection_one_year.filter(inspection_name=1).order_by(
+        protocol_building_one = building.building_inspection_one_year.filter(inspection_name=ProtocolType.overview_buildings_one_year.value).order_by(
             "date_next_inspection").last()
 
-        protocol_building_five = building.building_inspection_five_year.filter(inspection_name=2).order_by(
+        protocol_building_five = building.building_inspection_five_year.filter(inspection_name=ProtocolType.overview_buildings_five_year.value).order_by(
             "date_next_inspection").last()
 
-        protocol_chimneys = building.chimney_inspection.filter(inspection_name=3).order_by(
+        protocol_chimneys = building.chimney_inspection.filter(inspection_name=ProtocolType.overview_chimney.value).order_by(
             "date_next_inspection").last()
 
-        protocol_electrical_one = building.electrical_inspection_one_year.filter(inspection_name=4).order_by(
+        protocol_electrical_one = building.electrical_inspection_one_year.filter(inspection_name=ProtocolType.overview_electrical_one_year.value).order_by(
             "date_next_inspection").last()
 
-        protocol_electrical_five = building.electrical_inspection_five_year.filter(inspection_name=5).order_by(
+        protocol_electrical_five = building.electrical_inspection_five_year.filter(inspection_name=ProtocolType.overview_electrical_five_year.value).order_by(
             "date_next_inspection").last()
 
-        protocol_heating_boiler = building.heating_boiler_inspection.filter(inspection_name=6).order_by(
+        protocol_heating_boiler = building.heating_boiler_inspection.filter(inspection_name=ProtocolType.overview_heating_boilers.value).order_by(
             "date_next_inspection").last()
 
-        protocol_air_conditioners = building.air_conditioner_inspection.filter(inspection_name=7).order_by(
+        protocol_air_conditioners = building.air_conditioner_inspection.filter(inspection_name=ProtocolType.overview_air_conditioners.value).order_by(
             "date_next_inspection").last()
 
-        protocol_fire = building.fire_inspection.filter(inspection_name=8).order_by("date_next_inspection").last()
+        protocol_fire = building.fire_inspection.filter(inspection_name=ProtocolType.overview_fire_inspection.value).order_by("date_next_inspection").last()
 
         if protocol_building_one != None and protocol_building_one.date_next_inspection < next_date:
             buildings_inspections_one_year.append(protocol_building_one)
@@ -299,7 +299,6 @@ def edit_protocol(request, typeInspection, id):
 
 @login_required
 def show_information(request, typeInspection, id):
-    print(typeInspection)
     if typeInspection == ProtocolType.overview_buildings_one_year.value:
         protocol = BuildingInspectionOneYear.objects.get(pk=id)
         overview = ProtocolType.overview_buildings_one_year.name
@@ -334,3 +333,97 @@ def show_information(request, typeInspection, id):
 
     context = {"typeInspection": typeInspection, "id": id, "protocol": protocol, "overview": overview}
     return render(request, "construction_inspections/info_popup.html", context)
+
+
+@login_required
+def priority_inspections_list(request):
+    next_date = date.today() + relativedelta(months=+3)
+
+    buildings_inspections_one_year = []
+    # buildings_inspections_one_year.sort()
+    buildings_inspections_five_year = []
+    # buildings_inspections_five_year.sort()
+    chimneys_inspections = []
+    electrical_inspections_one_year = []
+    electrical_inspections_five_year = []
+    heating_boiler_inspections = []
+    air_conditioners_inspection = []
+
+    fire_inspections = []
+
+    buildings = Building.objects.all()
+
+    for building in buildings:
+
+        protocol_building_one = building.building_inspection_one_year.filter(inspection_name=ProtocolType.overview_buildings_one_year.value).order_by(
+            "date_next_inspection").last()
+
+        protocol_building_five = building.building_inspection_five_year.filter(inspection_name=ProtocolType.overview_buildings_five_year.value).order_by(
+            "date_next_inspection").last()
+
+        protocol_chimneys = building.chimney_inspection.filter(inspection_name=ProtocolType.overview_chimney.value).order_by(
+            "date_next_inspection").last()
+
+        protocol_electrical_one = building.electrical_inspection_one_year.filter(inspection_name=ProtocolType.overview_electrical_one_year.value).order_by(
+            "date_next_inspection").last()
+
+        protocol_electrical_five = building.electrical_inspection_five_year.filter(inspection_name=ProtocolType.overview_electrical_five_year.value).order_by(
+            "date_next_inspection").last()
+
+        protocol_heating_boiler = building.heating_boiler_inspection.filter(inspection_name=ProtocolType.overview_heating_boilers.value).order_by(
+            "date_next_inspection").last()
+
+        protocol_air_conditioners = building.air_conditioner_inspection.filter(inspection_name=ProtocolType.overview_air_conditioners.value).order_by(
+            "date_next_inspection").last()
+
+        protocol_fire = building.fire_inspection.filter(inspection_name=8).order_by("date_next_inspection").last()
+
+        if protocol_building_one != None and protocol_building_one.date_next_inspection < next_date:
+            buildings_inspections_one_year.append(protocol_building_one)
+
+        if protocol_building_five != None and protocol_building_five.date_next_inspection < next_date:
+            buildings_inspections_five_year.append(protocol_building_five)
+
+        if protocol_chimneys != None and protocol_chimneys.date_next_inspection < next_date:
+            chimneys_inspections.append(protocol_chimneys)
+
+        if protocol_electrical_one != None and protocol_electrical_one.date_next_inspection < next_date:
+            electrical_inspections_one_year.append(protocol_electrical_one)
+
+        if protocol_electrical_five != None and protocol_electrical_five.date_next_inspection < next_date:
+            electrical_inspections_five_year.append(protocol_electrical_five)
+
+        if protocol_heating_boiler != None and protocol_heating_boiler.date_next_inspection < next_date:
+            heating_boiler_inspections.append(protocol_heating_boiler)
+
+        if protocol_air_conditioners != None and protocol_air_conditioners.date_next_inspection < next_date:
+            air_conditioners_inspection.append(protocol_air_conditioners)
+
+        if protocol_fire != None and protocol_fire.date_next_inspection < next_date:
+            fire_inspections.append(protocol_fire)
+
+    buildings_inspections_one_year_len = len(buildings_inspections_one_year)
+    buildings_inspections_five_year_len = len(buildings_inspections_five_year)
+    chimneys_inspections_len = len(chimneys_inspections)
+    electrical_inspections_one_len = len(electrical_inspections_one_year)
+    electrical_inspections_five_len = len(electrical_inspections_five_year)
+    heating_boiler_inspections_len = len(heating_boiler_inspections)
+    air_conditioners_inspection_len = len(air_conditioners_inspection)
+    fire_inspections_len = len(fire_inspections)
+
+    context = {"buildings_inspections_one_year": buildings_inspections_one_year,
+               "buildings_inspections_one_year_len": buildings_inspections_one_year_len,
+               "buildings_inspections_five_year": buildings_inspections_five_year,
+               "buildings_inspections_five_year_len": buildings_inspections_five_year_len,
+               "chimneys_inspections": chimneys_inspections,
+               "chimneys_inspections_len": chimneys_inspections_len,
+               "electrical_inspections_one_year": electrical_inspections_one_year,
+               "electrical_inspections_one_len": electrical_inspections_one_len,
+               "electrical_inspections_five_year": electrical_inspections_five_year,
+               "electrical_inspections_five_len": electrical_inspections_five_len,
+               "air_conditioners_inspection": air_conditioners_inspection,
+               "air_conditioners_inspection_len": air_conditioners_inspection_len,
+               "heating_boiler_inspections": heating_boiler_inspections,
+               "heating_boiler_inspections_len": heating_boiler_inspections_len,
+               "fire_inspections": fire_inspections, "fire_inspections_len": fire_inspections_len}
+    return render(request, "construction_inspections/priority_inspections_list.html", context)

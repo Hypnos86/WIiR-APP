@@ -12,20 +12,28 @@
             </a>
         </div>
         <div class="col-md-6 text-center">
-            <h4 class="">Przeglądy jednoroczne budynków</h4>
+            <h4 class="py-3">Przeglądy jednoroczne budynków</h4>
         </div>
-        {%if user.accessmodule.inspections_module_edit%}
-        <div class="col-md-3 moj-button-right align-self-end">
-            <a href="{%url 'constructioninspections:add_protocol' overview.name%}">
-                <button type="button" class="btn btn-outline-primary my-btn">
-                    <span class="bi bi-plus-circle"> Dodaj protokół</span>
-                </button>
-            </a>
+        <div class="col-md-3">
+            <div class="col moj-button-right mb-2">
+                <a href="{%url 'constructioninspections:priority_inspections_list'%}">
+                    <button type="button" class="btn btn-outline-danger">
+                        <span class="bi bi-journal-bookmark-fill"> Najbliższe przegądy</span>
+                    </button>
+                </a>
+            </div>
+            {%if user.accessmodule.inspections_module_edit%}
+            <div class="col moj-button-right mt-2">
+                <a href="{%url 'constructioninspections:add_protocol' overview.name%}">
+                    <button type="button" class="btn btn-outline-primary my-btn">
+                        <span class="bi bi-plus-circle"> Dodaj protokół</span>
+                    </button>
+                </a>
+            </div>
+            {%endif%}
         </div>
-        {%endif%}
     </div>
 </div>
-
 <div class="container col-md-12 p-2 mt-2">
     {% regroup units by county as county_list %}
     {% for county in county_list %}
@@ -34,6 +42,7 @@
             <h5 class="color-info d-inline-block">{{county.grouper}}</h5>
         </div>
         {% for unit in county.list %}
+        {%if unit.building.all|length > 0%}
         <div class="mt-1 list-group-item list-group-item-action list-group-item-light">
             <button type="button" class="button-show btn btn-outline btn-block" onclick="show(this)">
                 <span class="">{{unit}}</span> |
@@ -84,6 +93,7 @@
             </ul>
             {%endfor%}
         </ul>
+        {%endif%}
         {%endfor%}
     </div>
     {%endfor%}

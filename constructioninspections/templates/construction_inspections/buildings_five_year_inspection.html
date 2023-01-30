@@ -33,6 +33,7 @@
             <h5 class="color-info d-inline-block">{{county.grouper}}</h5>
         </div>
         {% for unit in county.list %}
+        {%if unit.building.all|length > 0%}
         <div class="mt-1 list-group-item list-group-item-action list-group-item-light">
             <button type="button" class="button-show btn btn-outline btn-block" onclick="show(this)">
                 <span class="">{{unit}}</span> |
@@ -81,6 +82,7 @@
             </ul>
             {%endfor%}
         </ul>
+        {%endif%}
         {% endfor %}
     </div>
     {% endfor %}

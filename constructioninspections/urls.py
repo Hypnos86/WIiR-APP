@@ -3,12 +3,14 @@ from constructioninspections.views import create_buildings_one_year_inspections_
     create_buildings_five_year_inspections_list, create_chimney_inspection_list, \
     create_electrical_inspection_one_year_list, create_heating_boilers_inspection_list, \
     create_air_conditioners_inspection_list, create_fire_inspection_list, important_inspections, \
-    create_electrical_inspection_five_year_list, electrical_inspections_choice, add_protocol, show_information, edit_protocol
+    create_electrical_inspection_five_year_list, electrical_inspections_choice, add_protocol, show_information, edit_protocol, priority_inspections_list
 
 app_name = "constructioninspections"
 urlpatterns = [
     # Menu
     path("", important_inspections, name="important_inspections"),
+    # Njapilniejsze przeglady
+    path("pilne_przeglady", priority_inspections_list, name="priority_inspections_list"),
     # Popapy do wybierania rocznych lub pięcioletnich protokołów
     path("buildings_inspections_choice_popup/", buildings_inspections_choice,
          name="buildings_inspections_choice"),
