@@ -58,8 +58,8 @@
                             <small class="text-muted">Data dodania: {{building.creation_date|date:'d.m.Y (H:i)'}}</small>
                         </li>
                         <li class="list-group">
-                            <small class="text-muted">Zmiany: {{building.change|date:'d.m.Y (H:i)'}} -
-                                {{building.author}}</small>
+                            <small class="text-muted">Zmiany: {{building.change|date:'d.m.Y (H:i)'}}</small>
+                            <small class="text-muted">{{building.author.first_name}} {{building.author.last_name}}</small>
                         </li>
                     </ul>
                 </div>

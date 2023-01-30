@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-md-3 moj-button-left">
             {%if archive%}
-            <a href="{%url 'donations:donations_list'%}">
+            <a href="{%url 'donations:donations_list' current_year%}">
                 <button type="button" class="btn btn-outline-primary my-btn">
                     <span class="bi bi-chevron-compact-left">Cofnij</span>
                 </button>
@@ -170,7 +170,7 @@
                 </a>
                 {%endif%}
                 {%if user.accessmodule.donations_module_edit and archive == false%}
-                <a class="mx-2 moj-button-right" href="{%url 'donations:edit_donation' application.id%}">
+                <a class="mx-2 moj-button-right" href="{%url 'donations:edit_donation' year application.id%}">
                     <button data-toggle="info" title="Edytuj" type="button"
                             class="btn btn-outline-primary icon-color my-1">
                         <i class="bi bi-pencil-square"></i>

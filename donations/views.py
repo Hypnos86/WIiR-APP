@@ -64,13 +64,13 @@ def add_donation(request, year):
             instance = donation_form.save(commit=False)
             instance.author = request.user
             donation_form.save()
-            return redirect(reverse('donations:donations_list', kwargs={"year":year}))
-    return render(request, 'donations/donation_form.html', {'new': True, 'donation_form': donation_form, "units":units, "year":year})
-
+            return redirect(reverse('donations:donations_list', kwargs={"year": year}))
+    return render(request, 'donations/donation_form.html',
+                  {'new': True, 'donation_form': donation_form, "units": units, "year": year})
 
 
 @login_required
-def edit_donation(request, id):
+def edit_donation(request, year, id):
     donation_edit = get_object_or_404(Application, pk=id)
     donation_form = ApplicationForm(request.POST or None, request.FILES or None, instance=donation_edit)
     units = Unit.objects.all()
@@ -80,9 +80,10 @@ def edit_donation(request, id):
             instance = donation_form.save(commit=False)
             instance.author = request.user
             donation_form.save()
-            return redirect('donations:donations_list')
+            return redirect(reverse('donations:donations_list', kwargs={"year": year}))
     return render(request, 'donations/donation_form.html',
-                  {'new': False, 'donation_form': donation_form, 'units': units, 'donation_edit': donation_edit})
+                  {'new': False, 'donation_form': donation_form, 'units': units, 'donation_edit': donation_edit,
+                   "year": year})
 
 
 @login_required
@@ -94,12 +95,14 @@ def show_information_popup(request, id):
 @login_required
 def show_archive_year_list(request):
     now_year = current_year()
+
     # Filtrowanie wniosków
     all_year_order = Application.objects.all().values('date_receipt__year').exclude(date_receipt__year=now_year)
     year_order_set = set([year['date_receipt__year'] for year in all_year_order])
     year_order_list = sorted(year_order_set, reverse=True)
 
     return render(request, 'donations/archive_list_year.html', {'year_order_list': year_order_list})
+
 
 @login_required
 def donations_list_archive(request, year):
@@ -140,8 +143,9 @@ def donations_list_archive(request, year):
         return render(request, 'donations/donations_list.html',
                       {'application_len': application_len, 'query': query, 'year': year,
                        'applications': applications, 'last_date': last_date, 'q': q, 'date_from': date_from,
-                       'date_to': date_to})
+                       'date_to': date_to, "current_year": current_year()})
     else:
         return render(request, 'donations/donations_list.html',
                       {'application_len': application_len, 'search': search, 'year': year,
-                       'applications': application_paginator, 'last_date': last_date, 'archive':True})
+                       'applications': application_paginator, 'last_date': last_date, 'archive': True,
+                       "current_year": current_year()})

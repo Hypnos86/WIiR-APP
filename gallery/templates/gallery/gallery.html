@@ -43,8 +43,9 @@
             <h4 class="text-center"> {{gallery.project.project_title}} - {{gallery.name}} r. ({{photocount}})</h4>
         </div>
         <div class="col-md-2">
-            <button type="button" class="btn btn-outline-danger" onclick="top.close()"><span class="bi bi-x-lg"></span>
-            </button>
+            <a href="{%url 'main:welcome'%}"><button type="button" class="btn btn-outline-success my-btn" data-toggle="info" title="Strona główna">
+                    <span class="bi bi-house"></span>
+                </button></a>
         </div>
     </div>
     <div class="row">
@@ -93,5 +94,10 @@
     </footer>
     <!-- Footer -->
 </section>
+<script>
+     $(function () {
+        $('[data-toggle="info"]').tooltip()
+    })
+</script>
 </body>
 </html>

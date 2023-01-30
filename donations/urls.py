@@ -6,8 +6,8 @@ app_name = 'donations'
 urlpatterns = [
     path('darowizny/<int:year>/', donations_list, name='donations_list'),
     path('nowa_darowizna/<int:year>/', add_donation, name='add_donation'),
-    path('edycja_darowizny/<int:id>/', edit_donation, name='edit_donation'),
+    path('edycja_darowizny/<int:year>/<int:id>/', edit_donation, name='edit_donation'),
     path('informacje/<int:id>/', show_information_popup, name='show_information_popup'),
-    path('archive_year_donation_list/', show_archive_year_list, name='show_archive_year_list'),
-    path('donations_archive/<int:year>/', donations_list_archive, name='donations_list_archive')
+    path('lata_darowizn/', show_archive_year_list, name='show_archive_year_list'),
+    path('archiwum_darowizn/<int:year>/', donations_list_archive, name='donations_list_archive')
 ]

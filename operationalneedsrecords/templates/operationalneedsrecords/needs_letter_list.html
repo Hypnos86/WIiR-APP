@@ -7,7 +7,7 @@
 <div class="kontrahenci-title justify-content-center align-items-center text-center">
     <h4>Ewidencja pism ZE <b>{{year}}</b></h4>
     {% if last_date %}
-    <small>Ostatnia aktualizacja: {{last_date.change|date:"d.m.Y (H:i)"}}</small>
+    <small>Ostatnia aktualizacja: {{last_date.change|date:"d.m.Y "}}&nbsp;r. ({{last_date.change|date:"H:i"}})</small>
     {%endif%}
 </div>
 <div class="mx-2">
@@ -32,7 +32,7 @@
                     </a>
                     {%else%}
                     <a href="{% url 'operationalneedsrecords:list_needs_letter' year %}">
-                        <button type="button" class="btn btn-outline-primary my-btn">
+                        <button type="button" class="btn btn-outline-danger">
                             <span class="bi bi-journal"> W realizacji</span>
                         </button>
                     </a>
@@ -56,18 +56,25 @@
                 </form>
             </section>
         </div>
-        {%if user.accessmodule.records_letters_edit%}
-        <div class="col-md-3 moj-button-right align-self-end">
-            <a href="{%url 'operationalneedsrecords:new_needs_latter' year%}">
-                <button type="button" class="btn btn-outline-primary my-btn">
-                    <span class="bi bi-journal-plus"> Dodaj sprawę</span>
+        <div class="row col-md-3">
+            <div class="col-md-12 moj-button-right mb-2 ">
+                <button class="btn btn-outline-danger" data-url="{% url 'operationalneedsrecords:show_archive_year_list'%}"
+                        onclick="showYearListModal(this)">Archiwum
                 </button>
-            </a>
+            </div>
+            {%if user.accessmodule.records_letters_edit%}
+            <div class="col-md-12 moj-button-right mt-2">
+                <a href="{%url 'operationalneedsrecords:new_needs_latter' year%}">
+                    <button type="button" class="btn btn-outline-primary my-btn">
+                        <span class="bi bi-journal-plus"> Dodaj sprawę</span>
+                    </button>
+                </a>
+            </div>
+            {%endif%}
         </div>
-        {%endif%}
     </div>
 </div>
-<div class="mt-5">
+<div class="mt-2">
     <table class="table table-hover my-table">
         <thead>
         <tr class="my-table-tr text-center">
@@ -86,7 +93,7 @@
         {%for object in objects %}
         <tr class="my-table-tr">
             <td class="text-center" valign="middle" scope="row"></td>
-            <td align="center" valign="middle" scope="row">{{object.receipt_date|date:"d.m.Y"}}</td>
+            <td align="center" valign="middle" scope="row">{{object.receipt_date|date:"d.m.Y"}}&nbsp;r.</td>
             <td align="center" valign="middle">{{object.no_secretariats_diary}}</td>
             <td valign="middle">{{object.case_sign}}</td>
             <td valign="middle"><span>{{object.unit.type}} {{object.unit.city}}</span>
@@ -97,10 +104,15 @@
             <td class="text-center" valign="middle">{{object.employer}}</td>
             <td align="right" valign="middle">
                 <a href="{%url 'operationalneedsrecords:needs_letter_show' year object.id%}">
-                    <button data-toggle="info" title="Status" type="button" class="btn btn-outline-success mx-2"><i class="bi bi-eye-fill my-1"></i></button></a>
+                    <button data-toggle="info" title="Status" type="button" class="btn btn-outline-success mx-2">
+                        <i class="bi bi-eye-fill my-1"></i>
+                    </button></a>
                 {%if user.accessmodule.records_letters_edit%}
-                <a class="mx-2 moj-button-right" href="{%url 'operationalneedsrecords:edit_needs_letter' year object.id%}">
-                    <button data-toggle="info" title="Zmień status" type="submit" class="btn btn-outline-primary icon-color my-1"><i class="bi bi-pencil-square"></i></button></a>
+                <a class="mx-2 moj-button-right"
+                   href="{%url 'operationalneedsrecords:edit_needs_letter' year object.id%}">
+                    <button data-toggle="info" title="Zmień status" type="submit"
+                            class="btn btn-outline-primary icon-color my-1"><i class="bi bi-pencil-square"></i>
+                    </button></a>
                 {%endif%}
             </td>
         </tr>
@@ -149,11 +161,36 @@
     </nav>
     {%endif%}
 </div>
+<!-- Modal -->
+<div class="modal fade" id="infoArchiveListModal">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
 <script>
     document.getElementById("button-units").classList.remove("active");
     document.getElementById("button-record").classList.add("active");
     document.getElementById("button-cpv").classList.remove("active");
     document.getElementById("button-investments").classList.remove("active");
+
+function showYearListModal(button){
+        var url = $(button).data("url");
+        $("#infoArchiveListModal .modal-content").load(url);
+        $("#infoArchiveListModal").modal("show");
+        }
+
+    function openInfoModal(button){
+        var url = $(button).data("url");
+        $("#informationModal .modal-content").load(url);
+        $("#informationModal").modal("show");
+        }
+
+    function submitForm(){
+        $("#submitButton").closest("form").submit();
+        }
+
 
     $(function () {
         $('[data-toggle="info"]').tooltip()
@@ -161,10 +198,9 @@
 
     function cleanSearch(){
         $("#q").val("");
-        //$("#cleanButton").hide();
-        //$("#searchButton").show();
         $("#form-search").submit();
     }
+
 </script>
 {%endif%}
 {%endblock%}

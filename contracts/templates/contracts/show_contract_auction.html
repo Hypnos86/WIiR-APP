@@ -14,9 +14,10 @@
                 </button>
             </a>
         </div>
-        <div class="col-md-8">
-            <h4 class="text-center">Umowa {%if contract.no_contract%} nr {{contract.no_contract}} {%endif%}z dnia
+        <div class="col-md-8 text-center">
+            <h4>Umowa {%if contract.no_contract%} nr {{contract.no_contract}} {%endif%}z dnia
                 {{contract.date|date:"d.m.Y"}}&nbsp;r.</h4>
+            <small class="text-muted">Data dodania: {{contract.creation_date|date:'d.m.Y'}} ({{contract.creation_date|date:'H:m'}})</small>
         </div>
     </div>
 </div>
@@ -26,7 +27,11 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
                     <span class="text-muted">Wykonawca: </span>
-                    <span>{{contract.contractor}}</span>
+                    <span>{{contract.contractor.name}},
+                        {{contract.contractor.address}},
+                        {{contract.contractor.zip_code}}
+                        {{contract.contractor.city}}
+                    </span>
                 </li>
                 <li class="list-group-item">
                     <span class="text-muted">Wartość umowy: </span>
@@ -115,8 +120,8 @@
 
                 <li class="list-group-item">
                     <div>
-                        <small class="text-muted">Data dodania: {{contract.creation_date|date:'d.m.Y (H:i)'}}</small><br>
-                        <small class="text-muted">Zmiany: {{contract.change|date:'d.m.Y (H:i)'}} - {{contract.author}}</small>
+                        <small class="text-muted">Zmiany: {{contract.change|date:'d.m.Y'}}&nbsp;r. ({{contract.change|date:'H:i'}})</small><br>
+                        <small class="text-muted">Autor: {{contract.author.first_name}} {{contract.author.last_name}}</small>
                     </div>
                 </li>
             </ul>
@@ -134,7 +139,7 @@
             <div class="my-3">
                 <a href="/media/{{annex.scan}}" target="_blank">
                     <button class="btn btn-outline-primary button-chose-invoices my-btn">
-                        <i class="bi bi-arrow-return-right"> Aneks z dnia {{annex.date|date:"d.m.Y"}} r.</i>
+                        <i class="bi bi-arrow-return-right"> Aneks z dnia {{annex.date|date:"d.m.Y"}}&nbsp;r.</i>
                     </button>
                 </a>
             </div>

@@ -189,7 +189,7 @@ class GuaranteeSettlement(models.Model):
                                  related_name="guarantee_settlement")
     deadline_settlement = models.DateField("Termin zwrotu")
     settlement_sum = models.DecimalField("Kwota zwrotu", max_digits=8, decimal_places=2, null=True, blank=True)
-    script = models.CharField(verbose_name="L.dz. Pisma", max_length=50, null=True, blank=True)
+    script = models.CharField(verbose_name="L.dz. Pisma", max_length=50, null=False)
     affirmation_settlement = models.BooleanField(verbose_name="Rozliczono", default=False)
 
     def __str__(self):

@@ -51,7 +51,8 @@
     </a>
     {%endif%}
     <ul class="nav nav-pills">
-    {%if user.is_authenticated%}{%if user.accessmodule.zok_team%}<li class="nav-item my-2 py-2"><a id="button-secretariat" href="{%url 'main:make_secretariat_site'%}" class="btn btn-sm btn-outline-success mx-2" ><span>Sekretariat</span></a></li>{%endif%}{%endif%}
+    {%if user.is_authenticated%}{%if user.accessmodule.zok_team%}
+        <li class="nav-item my-2 py-2"><a id="button-secretariat" href="{%url 'main:make_secretariat_site'%}" class="btn btn-sm btn-outline-success mx-2" ><span>Sekretariat</span></a></li>{%endif%}{%endif%}
         <li class="nav-item my-2 py-2"><a id="button-units" href="{%url 'units:units_list'%}" class="btn btn-sm btn-outline-dark mx-2" ><span>Jednostki Policji</span></a></li>
         {%if user.is_authenticated%}{%if user.accessmodule.investments_module%}<li class="nav-item my-2 py-2"><a id="button-investments" href="{%url 'investments:make_important_task_investments'%}" class="btn btn-sm btn-outline-dark mx-2" ><span>Inwestycje</span></a></li>{%endif%}{%endif%}
         {%if user.is_authenticated%}

@@ -59,7 +59,7 @@ class NeedsLetter(models.Model):
     cost = models.DecimalField(verbose_name="Koszt realizacji", max_digits=10, decimal_places=2, null=True, blank=True)
     employer = models.ForeignKey(Employer, on_delete=models.CASCADE, verbose_name="Branżysta", related_name=related_name)
     execution_date = models.DateField("Data realizacji", null=True, blank=True)
-    isDone = models.BooleanField("Zrealizowane")
+    isDone = models.BooleanField("Zrealizowane", default=False)
     information = models.TextField(verbose_name="Informacje", blank=True)
     creation_date = models.DateTimeField("Data utworzenia", auto_now_add=True)
     change = models.DateTimeField("Zmiana", auto_now=True)

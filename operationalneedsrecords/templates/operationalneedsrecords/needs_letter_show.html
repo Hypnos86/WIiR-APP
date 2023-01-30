@@ -23,10 +23,10 @@
                 utworzenia: </small><small>{{object.creation_date|date:"m.d.Y"}}&nbsp;r.</small>
         </div>
         <div class="col-md-3">
-            <span class="text-muted">Autor: </span><span>{{object.author.first_name}} {{object.author.last_name}}</span><br>
             {%if object.change%}
-            <span class="text-muted">Zmiany: </span><span>{{object.change|date:"m.d.Y"}}&nbsp;r. - {{object.change|date:"H:m"}}</span>
+            <span class="text-muted">Zmiany: </span><span>{{object.change|date:"m.d.Y"}}&nbsp;r. ({{object.change|date:"H:m"}})</span><br>
             {%endif%}
+            <span class="text-muted">Autor: </span><span>{{object.author.first_name}} {{object.author.last_name}}</span>
         </div>
     </div>
 </div>
@@ -57,7 +57,7 @@
             </li>
             <li class="list-group-item">
                 <span class="text-muted">Opis sprawy: </span><br>
-                <span>{{object.case_description}}</span>
+                <p>{{object.case_description}}</p>
             </li>
             <li class="list-group-item">
                 <span class="text-muted">Branżysta: </span>
@@ -83,7 +83,7 @@
             {%if object.information%}
             <li class="list-group-item">
                 <span class="text-muted">Informacje: </span>
-                <span>{{object.information}}</span>
+                <p>{{object.information}}</p>
             </li>
             {%endif%}
         </ul>
