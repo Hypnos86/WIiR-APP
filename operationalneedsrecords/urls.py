@@ -4,10 +4,10 @@ from .views import list_needs_letter, new_needs_latter, edit_needs_letter, list_
 
 app_name = "operationalneedsrecords"
 urlpatterns = [
-    path("lista_pism/<int:year>/", list_needs_letter, name="list_needs_letter"),
-    path('lata_archiwum/', show_archive_year_list, name='show_archive_year_list'),
-    path("archiwum_pism/<int:year>/", list_needs_letter_archive, name="list_needs_letter_archive"),
-    path("dodaj_sprawe/<int:year>/", new_needs_latter, name="new_needs_latter"),
-    path("edycja_sprawy/<int:year>/<int:id>", edit_needs_letter, name="edit_needs_letter"),
-    path("sprawa/<int:year>/<int:id>/", needs_letter_show, name="needs_letter_show")
+    path("needs_list/<int:year>/", list_needs_letter, name="list_needs_letter"),
+    path('archive_year_list/', show_archive_year_list, name='show_archive_year_list'),
+    path("archive_list/<int:year>/", list_needs_letter_archive, name="list_needs_letter_archive"),
+    path("add_case/<int:year>/", new_needs_latter, name="new_needs_latter"),
+    path("edit_case/<int:year>/<int:id>", edit_needs_letter, name="edit_needs_letter"),
+    path("case/<int:year>/<int:id>/", needs_letter_show, name="needs_letter_show")
 ]

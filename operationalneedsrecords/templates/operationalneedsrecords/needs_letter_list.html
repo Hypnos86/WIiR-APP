@@ -107,11 +107,12 @@
                     <button data-toggle="info" title="Status" type="button" class="btn btn-outline-success mx-2">
                         <i class="bi bi-eye-fill my-1"></i>
                     </button></a>
-                {%if user.accessmodule.records_letters_edit%}
+                {%if user.accessmodule.records_letters_edit and archive == False%}
                 <a class="mx-2 moj-button-right"
                    href="{%url 'operationalneedsrecords:edit_needs_letter' year object.id%}">
                     <button data-toggle="info" title="Zmień status" type="submit"
-                            class="btn btn-outline-primary icon-color my-1"><i class="bi bi-pencil-square"></i>
+                            class="btn btn-outline-primary icon-color my-1">
+                        <i class="bi bi-pencil-square"></i>
                     </button></a>
                 {%endif%}
             </td>
