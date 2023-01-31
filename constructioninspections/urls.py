@@ -10,7 +10,7 @@ urlpatterns = [
     # Menu
     path("", important_inspections, name="important_inspections"),
     # Njapilniejsze przeglady
-    path("pilne_przeglady", priority_inspections_list, name="priority_inspections_list"),
+    path("pilne_przeglady/<int:typeInspection>/", priority_inspections_list, name="priority_inspections_list"),
     # Popapy do wybierania rocznych lub pięcioletnich protokołów
     path("buildings_inspections_choice_popup/", buildings_inspections_choice,
          name="buildings_inspections_choice"),

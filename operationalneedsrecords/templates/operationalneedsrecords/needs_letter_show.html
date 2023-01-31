@@ -24,7 +24,7 @@
         </div>
         <div class="col-md-3">
             {%if object.change%}
-            <span class="text-muted">Zmiany: </span><span>{{object.change|date:"m.d.Y"}}&nbsp;r. ({{object.change|date:"H:m"}})</span><br>
+            <span class="text-muted">Zmiany: </span><span>{{object.change|date:"m.d.Y"}}&nbsp;r. ({{object.change|date:"H:i"}})</span><br>
             {%endif%}
             <span class="text-muted">Autor: </span><span>{{object.author.first_name}} {{object.author.last_name}}</span>
         </div>

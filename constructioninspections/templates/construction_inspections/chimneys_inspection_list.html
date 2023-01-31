@@ -14,15 +14,24 @@
         <div class="col-md-6 text-center">
             <h4 class="">Przeglądy kominów</h4>
         </div>
-        {%if user.accessmodule.inspections_module_edit%}
-        <div class="col-md-3 moj-button-right align-self-end">
-            <a href="{%url 'constructioninspections:add_protocol' overview.name%}">
-                <button type="button" class="btn btn-outline-primary my-btn">
-                    <span class="bi bi-plus-circle"> Dodaj protokół</span>
-                </button>
-            </a>
+        <div class="col-md-3">
+            <div class="col moj-button-right mb-2">
+                <a href="{%url 'constructioninspections:priority_inspections_list' typeInspection%}">
+                    <button type="button" class="btn btn-outline-danger">
+                        <span class="bi bi-journal-bookmark-fill"> Najbliższe przegądy</span>
+                    </button>
+                </a>
+            </div>
+            {%if user.accessmodule.inspections_module_edit%}
+            <div class="col moj-button-right mt-2">
+                <a href="{%url 'constructioninspections:add_protocol' overview.name%}">
+                    <button type="button" class="btn btn-outline-primary my-btn">
+                        <span class="bi bi-plus-circle"> Dodaj protokół</span>
+                    </button>
+                </a>
+            </div>
+            {%endif%}
         </div>
-        {%endif%}
     </div>
 </div>
 <div class="container col-md-12 p-2 mt-2">
@@ -39,7 +48,8 @@
                 <span class="">{{unit}}</span> |
                 <span class="text-muted">Liczba budynków: </span><span class="badge text-white info badge-pill">{{unit.building.all|length}}</span>
             </button>
-            <button style="display: none;" class="hide-on-start button-hide btn btn-outline btn-block" onclick="hide(this)">
+            <button style="display: none;" class="hide-on-start button-hide btn btn-outline btn-block"
+                    onclick="hide(this)">
                 <span class="">{{unit}}</span>|
                 <span class="text-muted">Liczba budynków: </span><span class="badge text-white info badge-pill">{{unit.building.all|length}}</span>
             </button>
@@ -68,7 +78,8 @@
                 {% for protocol in building.chimney_inspection.all|dictsort:"date_next_inspection" reversed %}
                 {% if protocol and protocol.inspection_name.id == 3 %}
                 <li class="list-group-item list-group-item-action list-group-item-light style-row-protocol">
-                    <a data-url="{%url 'constructioninspections:show_information' protocol.inspection_name.id protocol.id%}" class="btn btn-outline-secondary mx-2 tt" onclick="openModal(this)">
+                    <a data-url="{%url 'constructioninspections:show_information' protocol.inspection_name.id protocol.id%}"
+                       class="btn btn-outline-secondary mx-2 tt" onclick="openModal(this)">
                         <span class="bi bi-arrow-return-right h4"></span><span>Protokół przeglądu z dnia {{protocol.date_protocol|date:"d.m.Y"}}&nbsp;r.</span>
                         | <small>Data następnego przeglądu
                         {{protocol.date_next_inspection|date:"d.m.Y"}}&nbsp;r.</small>
@@ -126,6 +137,7 @@
     function submitForm(){
         $("#submitButton").closest("form").submit();
         }
+
 
 </script>
 {%endif%}

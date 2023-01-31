@@ -1,10 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{%extends 'base.html'%}
+{%load static%}
+{%block title%}Nadchodzące przeglądy{%endblock%}
+{%block content%}
+{%if user.accessmodule.inspections_module%}
 
-</body>
-</html>
+<div class="container text-center">
+    <div class="row">
+        <div class="col-md-3">
+
+        </div>
+        <div class="col-md-6">
+            <h4>{{title}}</h4>
+            <h5 class="text-center mb-3">Nadchodzące Przeglądy <span class="badge text-white info badge-pill">{{priority_inspection_len}}</span>
+            </h5>
+        </div>
+    </div>
+</div>
+    <div class="row">
+        {%for object in priority_inspection%}
+        <div class="list-group col-md-3 my-3">
+            <a class="list-group-item list-group-item-action flex-column align-items-start"
+               data-url="{%url 'constructioninspections:show_information' object.inspection_name.id object.id%}"
+               onclick="openModal(this)">
+
+                <div class="d-flex w-100 justify-content-between">
+                    <h6 class="mb-1"><b>Data protokołu: {{object.date_protocol|date:"d.m.Y"}}&nbsp;r.</b></h6>
+                </div>
+                <span class="mb-0 text-muted">Jednostka: </span>
+                <span data-toggle="info"
+                      title="{{object.no_inventory.unit.address}}, {{object.no_inventory.unit.zip_code}} {{object.no_inventory.unit.city}}">{{object.no_inventory.unit.type.type_short}} {{object.no_inventory.unit.city}} - {{object.no_inventory.unit.information}}</span><br>
+                <span class="mb-1 text-muted">Budynek: </span><span>{{object.no_inventory.kind}}</span><br>
+                <span class="text-muted mb-1">Nazwa: </span><span>{{object.no_inventory.building_name}}</span><br>
+                <span class="text-muted">Nr.inwentarzowy: </span><span>{{object.no_inventory.no_inventory}}</span><br>
+                <small>Kolejny przegląd: </small><small class="color-teal"> {{object.date_next_inspection|date:"d.m.Y"}}&nbsp;r.</small>
+            </a>
+        </div>
+        {%endfor%}
+    </div>
+
+    <!--MODAL-->
+    <div class="modal fade" id="protocolModal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
+    <script>
+    document.getElementById("button-units").classList.remove("active");
+    document.getElementById("button-record").classList.add("active");
+    document.getElementById("button-secretariat").classList.remove("active");
+    document.getElementById("button-cpv").classList.remove("active");
+    document.getElementById("button-investments").classList.remove("active");
+
+    function openModal(button){
+        var url = $(button).data("url");
+        $("#protocolModal .modal-content").load(url);
+        $("#protocolModal").modal("show");
+    }
+
+    function submitForm(){
+        $("#submitButton").closest("form").submit();
+        }
+
+    $(function () {
+        $('[data-toggle="info"]').tooltip()
+    })
+
+
+
+    </script>
+    {%endif%}
+    {%endblock%}

@@ -7,8 +7,9 @@
     <form class="m-2 p-4" method="get" action="{% url 'constructioninspections:show_information' typeInspection id %}">
         {%csrf_token%}
         <div class="container">
-            <div class="mb-4">
+            <div class="mb-4 text-center">
                 <h5>Protokół z kontroli: {{protocol.inspection_name}} z dnia {{protocol.date_protocol}}&nbsp;r.</h5>
+                <small class="text-muted">Data utworzenia: {{protocol.creation_date|date:"d.m.Y"}}&nbsp;r. ({{protocol.creation_date|date:"H:i"}}) </small>
             </div>
             <div class="my-2">
                 <span class="text-muted">Jednostka: </span>
@@ -48,8 +49,8 @@
             </div>
             <hr>
             <div>
-                <small class="text-muted">Ewidencja: </small>
-                <small>{{protocol.creation_date|date:"d.m.Y"}}&nbsp;r. ({{protocol.author}})</small>
+                <small class="text-muted">Autor: {{protocol.author.first_name}} {{protocol.author.last_name}}</small><br>
+                <small class="text-muted">Zmiany {{protocol.change|date:"d.m.Y"}}&nbsp;r. ({{protocol.change|date:"H:i"}})</small>
             </div>
         </div>
         {%if user.accessmodule.inspections_module_edit%}
