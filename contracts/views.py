@@ -13,6 +13,7 @@ from main.views import now_date
 from decimal import Decimal
 from datetime import timedelta
 from dateutil.relativedelta import relativedelta
+from main.models import TeamEnum
 
 
 # Create your views here.
@@ -341,9 +342,9 @@ def new_contract_media(request):
 def edit_contract_media(request, id):
     contract_edit = get_object_or_404(ContractMedia, pk=id)
     contract_form = ContractMediaForm(request.POST or None, request.FILES or None, instance=contract_edit)
-    contract_form.fields['employer'].queryset = Employer.objects.all().filter(industry_specialist=True).filter(
-        team__team='Zespół Eksploatacji')
+    contract_form.fields['employer'].queryset = Employer.objects.all().filter(team__id=TeamEnum.ZE.value[0])
     contract_form.fields['unit'].queryset = Unit.objects.all().order_by('county')
+
     units = Unit.objects.all()
     selected_units = contract_edit.unit.all()
 

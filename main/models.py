@@ -1,4 +1,5 @@
 from django.db import models
+from enum import Enum
 import os
 
 
@@ -15,6 +16,16 @@ class Team(models.Model):
 
     def __str__(self):
         return f"{self.team}"
+
+
+class TeamEnum(Enum):
+    NK = [1, "Naczelnicy"]
+    ZOK = [2, "Zespół Kancelaryjny"]
+    ZRIWT = [3, "Zespół Rozliczen i Wsparcia technicznego"]
+    ZI = [4, "Zespół Inwestychi"]
+    ZE = [5, "Zespół Eksploatacji"]
+    ZM = [6, "Zespół Mieszkaniowy"]
+    ZN = [7, "Zespół Nieruchomości"]
 
 
 class SecretariatTelephone(models.Model):

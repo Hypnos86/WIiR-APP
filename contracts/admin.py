@@ -2,18 +2,21 @@ from django.contrib import admin
 from import_export import resources
 from import_export.admin import ExportMixin
 from import_export.fields import Field
+from import_export.widgets import ManyToManyWidget
 from contracts.models import TypeOfContract, LegalBasic, Guarantee, ContractImmovables, \
     AnnexImmovables, ContractAuction, AnnexContractAuction, MediaType, ContractMedia, \
     GuaranteeSettlement, AnnexContractMedia
+from units.models import Unit
 
 # Register your models here.
 admin.site.register(TypeOfContract)
+
+
 @admin.register(GuaranteeSettlement)
 class GuaranteeSettlementAdmin(admin.ModelAdmin):
     list_display = ["contract", "deadline_settlement", "settlement_sum", "script", "affirmation_settlement"]
     list_display_links = ["contract"]
     search_fields = ["contract__no_contract", "script"]
-
 
 
 @admin.register(Guarantee)
@@ -113,8 +116,9 @@ class LegalBasicResource(resources.ModelResource):
 
 
 @admin.register(LegalBasic)
-class LegalBasicAdmin(admin.ModelAdmin):
+class LegalBasicAdmin(ExportMixin,admin.ModelAdmin):
     list_display = ["act", "legal_basic", "legal_basic_text"]
+    resource_class = LegalBasicResource
 
 
 @admin.register(MediaType)
@@ -123,12 +127,34 @@ class ContractMediaAdmin(admin.ModelAdmin):
     list_display_links = ("type",)
 
 
+class ContractMediaResource(resources.ModelResource):
+    date = Field(attribute="date", column_name="Data umowy")
+    no_contract = Field(attribute="no_contract", column_name="Nr. umowy")
+    contractor = Field(attribute="contractor", column_name="Kontrahent")
+    type = Field(attribute="type", column_name="Rodzaj umoww")
+    legal_basic = Field(attribute="legal_basic", column_name="Tryb UPZP")
+    content = Field(attribute="content", column_name="Treśc")
+    period_of_validity = Field(attribute="period_of_validity", column_name="Termin umowy")
+    unit = Field(attribute="unit", column_name="Jednostka", widget=ManyToManyWidget(Unit, f", \n", field="full_name"))
+    information = Field(attribute="information", column_name="Informacje")
+    employer = Field(attribute="employer", column_name="Branżysta")
+    state = Field(attribute="Stan", column_name="Aktualna")
+
+    class Meta:
+        model = ContractMedia
+        fields = ("__all__")
+        export_order = (
+        "date", "no_contract", "contractor", "type", "legal_basic", "content", "period_of_validity", "unit", "state",
+        "employer")
+
+
 @admin.register(ContractMedia)
-class ContractMediaAdmin(admin.ModelAdmin):
+class ContractMediaAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ["date", "no_contract", "contractor", "period_of_validity", "type", "state", "creation_date",
                     "change", "author"]
     list_display_links = ("no_contract",)
     filter_horizontal = ["unit"]
+    resource_class = ContractMediaResource
 
 
 @admin.register(AnnexContractMedia)
