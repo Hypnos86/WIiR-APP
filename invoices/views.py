@@ -49,7 +49,8 @@ def menu_invoices(request):
 
 @login_required
 def buy_invoices_list(request):
-    invoices_buy = InvoiceBuy.objects.all().order_by("-date_receipt").filter(date_receipt__year=current_year())
+    now_year = current_year()
+    invoices_buy = InvoiceBuy.objects.all().order_by("-date_receipt").filter(date_receipt__year=now_year)
     query = "Wyczyść"
     search = "Szukaj"
     invoices_buy_sum = len(invoices_buy)
@@ -228,7 +229,8 @@ def edit_invoice_buy_archive(request, id):
 
 @login_required
 def sell_invoices_list(request):
-    invoicessell = InvoiceSell.objects.all().order_by("-date").filter(date__year=current_year())
+    now_year = current_year()
+    invoicessell = InvoiceSell.objects.all().order_by("-date").filter(date__year=now_year)
     query = "Wyczyść"
     search = "Szukaj"
     invoices_sell_len = len(invoicessell)

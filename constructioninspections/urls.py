@@ -17,10 +17,10 @@ urlpatterns = [
     path("electrical_inspections_choice_popup/", electrical_inspections_choice,
          name="electrical_inspections_choice"),
     # Dodanie nowego protokołu
-    path("add_protocol/<str:typeInspection>", add_protocol,
+    path("add_protocol/<int:typeInspection>", add_protocol,
          name="add_protocol"),
     # Edytowanie protokołu
-    path("edit_protocol/<str:typeInspection>/<int:id>/", edit_protocol, name="edit_protocol"),
+    path("edit_protocol/<int:typeInspection>/<int:id>/", edit_protocol, name="edit_protocol"),
     # Przeglądy budynków - roczne
     path("buildings_inspections_one_year/", create_buildings_one_year_inspections_list,
          name="create_buildings_one_year_inspections_list"),

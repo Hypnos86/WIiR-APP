@@ -15,25 +15,14 @@ from units.models import Unit
 
 # Create your views here
 class ProtocolType(Enum):
-    OVERVIEW_BUILDINGS_ONE_YEAR = 1
-    OVERVIEW_BUILDINGS_FIVE_YEAR = 2
-    OVERVIEW_CHIMNEYS = 3
-    OVERVIEW_ELECTRICAL_ONE_YEAR = 4
-    OVERVIEW_ELECTRICAL_FIVE_YEAR = 5
-    OVERVIEW_HEATING_BOILERS = 6
-    OVERVIEW_AIR_CONDITIONERS = 7
-    OVERVIEW_FIRE_INSPECTION = 8
-
-
-class ProtocolName(Enum):
-    OVERVIEW_BUILDINGS_ONE_YEAR = "Przeglądy jednoroczne budynków"
-    OVERVIEW_BUILDINGS_FIVE_YEAR = "Przeglądy pięcioletnie budynków"
-    OVERVIEW_CHIMNEYS = "Przeglądy kominów"
-    OVERVIEW_ELECTRICAL_ONE_YEAR = "Przeglądy jednoroczne instalacji elektrycznej"
-    OVERVIEW_ELECTRICAL_FIVE_YEAR = "Przeglądy pięcioletnie instalacji elektrycznej"
-    OVERVIEW_HEATING_BOILERS = "Przeglądy kotłów grzewczych"
-    OVERVIEW_AIR_CONDITIONERS = "Przeglądy klimatyzatorów"
-    OVERVIEW_FIRE_INSPECTION = "Przeglądy przeciwpożarowe"
+    OVERVIEW_BUILDINGS_ONE_YEAR = [1, "Przeglądy jednoroczne budynków"]
+    OVERVIEW_BUILDINGS_FIVE_YEAR = [2, "Przeglądy pięcioletnie budynków"]
+    OVERVIEW_CHIMNEYS = [3, "Przeglądy kominów"]
+    OVERVIEW_ELECTRICAL_ONE_YEAR = [4, "Przeglądy jednoroczne instalacji elektrycznej"]
+    OVERVIEW_ELECTRICAL_FIVE_YEAR = [5, "Przeglądy pięcioletnie instalacji elektrycznej"]
+    OVERVIEW_HEATING_BOILERS = [6, "Przeglądy kotłów grzewczych"]
+    OVERVIEW_AIR_CONDITIONERS = [7, "Przeglądy klimatyzatorów"]
+    OVERVIEW_FIRE_INSPECTION = [8, "Przeglądy przeciwpożarowe"]
 
 
 @login_required
@@ -56,35 +45,35 @@ def important_inspections(request):
     for building in buildings:
 
         protocol_building_one = building.building_inspection_one_year.filter(
-            inspection_name=ProtocolType.OVERVIEW_BUILDINGS_ONE_YEAR.value).order_by(
+            inspection_name=ProtocolType.OVERVIEW_BUILDINGS_ONE_YEAR.value[0]).order_by(
             "date_next_inspection").last()
 
         protocol_building_five = building.building_inspection_five_year.filter(
-            inspection_name=ProtocolType.OVERVIEW_BUILDINGS_FIVE_YEAR.value).order_by(
+            inspection_name=ProtocolType.OVERVIEW_BUILDINGS_FIVE_YEAR.value[0]).order_by(
             "date_next_inspection").last()
 
         protocol_chimneys = building.chimney_inspection.filter(
-            inspection_name=ProtocolType.OVERVIEW_CHIMNEYS.value).order_by(
+            inspection_name=ProtocolType.OVERVIEW_CHIMNEYS.value[0]).order_by(
             "date_next_inspection").last()
 
         protocol_electrical_one = building.electrical_inspection_one_year.filter(
-            inspection_name=ProtocolType.OVERVIEW_ELECTRICAL_ONE_YEAR.value).order_by(
+            inspection_name=ProtocolType.OVERVIEW_ELECTRICAL_ONE_YEAR.value[0]).order_by(
             "date_next_inspection").last()
 
         protocol_electrical_five = building.electrical_inspection_five_year.filter(
-            inspection_name=ProtocolType.OVERVIEW_ELECTRICAL_FIVE_YEAR.value).order_by(
+            inspection_name=ProtocolType.OVERVIEW_ELECTRICAL_FIVE_YEAR.value[0]).order_by(
             "date_next_inspection").last()
 
         protocol_heating_boiler = building.heating_boiler_inspection.filter(
-            inspection_name=ProtocolType.OVERVIEW_HEATING_BOILERS.value).order_by(
+            inspection_name=ProtocolType.OVERVIEW_HEATING_BOILERS.value[0]).order_by(
             "date_next_inspection").last()
 
         protocol_air_conditioners = building.air_conditioner_inspection.filter(
-            inspection_name=ProtocolType.OVERVIEW_AIR_CONDITIONERS.value).order_by(
+            inspection_name=ProtocolType.OVERVIEW_AIR_CONDITIONERS.value[0]).order_by(
             "date_next_inspection").last()
 
         protocol_fire = building.fire_inspection.filter(
-            inspection_name=ProtocolType.OVERVIEW_FIRE_INSPECTION.value).order_by("date_next_inspection").last()
+            inspection_name=ProtocolType.OVERVIEW_FIRE_INSPECTION.value[0]).order_by("date_next_inspection").last()
 
         if protocol_building_one != None and protocol_building_one.date_next_inspection < next_date:
             buildings_inspections_one_year.append(protocol_building_one)
@@ -150,106 +139,106 @@ def electrical_inspections_choice(request):
 @login_required
 def create_buildings_one_year_inspections_list(request):
     units = Unit.objects.all().order_by("county__id_order")
-    typeInspection = ProtocolType.OVERVIEW_BUILDINGS_ONE_YEAR.value
-    context = {"units": units, "overview": ProtocolType.OVERVIEW_BUILDINGS_ONE_YEAR, "typeInspection": typeInspection}
+    typeInspection = ProtocolType.OVERVIEW_BUILDINGS_ONE_YEAR.value[0]
+    context = {"units": units, "overview": ProtocolType.OVERVIEW_BUILDINGS_ONE_YEAR.value[0], "typeInspection": typeInspection}
     return render(request, "construction_inspections/buildings_one_year_inspection.html", context)
 
 
 @login_required
 def create_buildings_five_year_inspections_list(request):
     units = Unit.objects.all().order_by("county__id_order")
-    typeInspection = ProtocolType.OVERVIEW_BUILDINGS_FIVE_YEAR.value
-    context = {"units": units, "overview": ProtocolType.OVERVIEW_BUILDINGS_FIVE_YEAR, "typeInspection": typeInspection}
+    typeInspection = ProtocolType.OVERVIEW_BUILDINGS_FIVE_YEAR.value[0]
+    context = {"units": units, "overview": ProtocolType.OVERVIEW_BUILDINGS_FIVE_YEAR.value[0], "typeInspection": typeInspection}
     return render(request, "construction_inspections/buildings_five_year_inspection.html", context)
 
 
 @login_required
 def create_chimney_inspection_list(request):
     units = Unit.objects.all().order_by("county__id_order")
-    typeInspection = ProtocolType.OVERVIEW_CHIMNEYS.value
-    context = {"units": units, "overview": ProtocolType.OVERVIEW_CHIMNEYS, "typeInspection": typeInspection}
+    typeInspection = ProtocolType.OVERVIEW_CHIMNEYS.value[0]
+    context = {"units": units, "overview": ProtocolType.OVERVIEW_CHIMNEYS.value[0], "typeInspection": typeInspection}
     return render(request, "construction_inspections/chimneys_inspection_list.html", context)
 
 
 @login_required
 def create_electrical_inspection_one_year_list(request):
     units = Unit.objects.all().order_by("county__id_order")
-    typeInspection = ProtocolType.OVERVIEW_ELECTRICAL_ONE_YEAR.value
-    context = {"units": units, "overview": ProtocolType.OVERVIEW_ELECTRICAL_ONE_YEAR, "typeInspection": typeInspection}
+    typeInspection = ProtocolType.OVERVIEW_ELECTRICAL_ONE_YEAR.value[0]
+    context = {"units": units, "overview": ProtocolType.OVERVIEW_ELECTRICAL_ONE_YEAR.value[0], "typeInspection": typeInspection}
     return render(request, "construction_inspections/electrical_inspection_one_year_list.html", context)
 
 
 @login_required
 def create_electrical_inspection_five_year_list(request):
     units = Unit.objects.all().order_by("county__id_order")
-    typeInspection = ProtocolType.OVERVIEW_ELECTRICAL_ONE_YEAR.value
-    context = {"units": units, "overview": ProtocolType.OVERVIEW_ELECTRICAL_FIVE_YEAR, "typeInspection": typeInspection}
+    typeInspection = ProtocolType.OVERVIEW_ELECTRICAL_ONE_YEAR.value[0]
+    context = {"units": units, "overview": ProtocolType.OVERVIEW_ELECTRICAL_FIVE_YEAR.value[0], "typeInspection": typeInspection}
     return render(request, "construction_inspections/electrical_inspection_five_year_list.html", context)
 
 
 @login_required
 def create_heating_boilers_inspection_list(request):
     units = Unit.objects.all().order_by("county__id_order")
-    typeInspection = ProtocolType.OVERVIEW_HEATING_BOILERS.value
-    context = {"units": units, "overview": ProtocolType.OVERVIEW_HEATING_BOILERS, "typeInspection": typeInspection}
+    typeInspection = ProtocolType.OVERVIEW_HEATING_BOILERS.value[0]
+    context = {"units": units, "overview": ProtocolType.OVERVIEW_HEATING_BOILERS.value[0], "typeInspection": typeInspection}
     return render(request, "construction_inspections/heating_boilers_inspection_list.html", context)
 
 
 @login_required
 def create_air_conditioners_inspection_list(request):
     units = Unit.objects.all().order_by("county__id_order")
-    typeInspection = ProtocolType.OVERVIEW_AIR_CONDITIONERS.value
-    context = {"units": units, "overview": ProtocolType.OVERVIEW_AIR_CONDITIONERS, "typeInspection": typeInspection}
+    typeInspection = ProtocolType.OVERVIEW_AIR_CONDITIONERS.value[0]
+    context = {"units": units, "overview": ProtocolType.OVERVIEW_AIR_CONDITIONERS.value[0], "typeInspection": typeInspection}
     return render(request, "construction_inspections/air_conditioners_inspection_list.html", context)
 
 
 @login_required
 def create_fire_inspection_list(request):
     units = Unit.objects.all().order_by("county__id_order")
-    typeInspection = ProtocolType.OVERVIEW_FIRE_INSPECTION.value
-    context = {"units": units, "overview": ProtocolType.OVERVIEW_FIRE_INSPECTION, "typeInspection": typeInspection}
+    typeInspection = ProtocolType.OVERVIEW_FIRE_INSPECTION.value[0]
+    context = {"units": units, "overview": ProtocolType.OVERVIEW_FIRE_INSPECTION.value[0], "typeInspection": typeInspection}
     return render(request, "construction_inspections/fire_inspection_list.html", context)
 
 
 @login_required
 def add_protocol(request, typeInspection, id=None):
-    if typeInspection == ProtocolType.OVERVIEW_BUILDINGS_ONE_YEAR.name:
-        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_BUILDINGS_ONE_YEAR.value)
+    if typeInspection == ProtocolType.OVERVIEW_BUILDINGS_ONE_YEAR.value[0]:
+        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_BUILDINGS_ONE_YEAR.value[0])
         protocol_form = BuildingInspectionOneYearForm(request.POST or None)
         redirectText = "constructioninspections:create_buildings_one_year_inspections_list"
 
-    elif typeInspection == ProtocolType.OVERVIEW_BUILDINGS_FIVE_YEAR.name:
-        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_BUILDINGS_FIVE_YEAR.value)
+    elif typeInspection == ProtocolType.OVERVIEW_BUILDINGS_FIVE_YEAR.value[0]:
+        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_BUILDINGS_FIVE_YEAR.value[0])
         protocol_form = BuildingInspectionFiveYearForm(request.POST or None)
         redirectText = "constructioninspections:create_buildings_five_year_inspections_list"
 
-    elif typeInspection == ProtocolType.OVERVIEW_CHIMNEYS.name:
-        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_CHIMNEYS.value)
+    elif typeInspection == ProtocolType.OVERVIEW_CHIMNEYS.value[0]:
+        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_CHIMNEYS.value[0])
         protocol_form = ChimneyInspectionForm(request.POST or None)
         redirectText = "constructioninspections:create_chimney_inspection_list"
 
-    elif typeInspection == ProtocolType.OVERVIEW_ELECTRICAL_ONE_YEAR.name:
-        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_ELECTRICAL_ONE_YEAR.value)
+    elif typeInspection == ProtocolType.OVERVIEW_ELECTRICAL_ONE_YEAR.value[0]:
+        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_ELECTRICAL_ONE_YEAR.value[0])
         protocol_form = ElectricalInspectionOneYearForm(request.POST or None)
         redirectText = "constructioninspections:create_electrical_inspection_one_year_list"
 
-    elif typeInspection == ProtocolType.OVERVIEW_ELECTRICAL_FIVE_YEAR.name:
-        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_ELECTRICAL_FIVE_YEAR.value)
+    elif typeInspection == ProtocolType.OVERVIEW_ELECTRICAL_FIVE_YEAR.value[0]:
+        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_ELECTRICAL_FIVE_YEAR.value[0])
         protocol_form = ElectricalInspectionFiveYearForm(request.POST or None)
         redirectText = "constructioninspections:create_electrical_inspection_five_year_list"
 
-    elif typeInspection == ProtocolType.OVERVIEW_HEATING_BOILERS.name:
-        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_HEATING_BOILERS.value)
+    elif typeInspection == ProtocolType.OVERVIEW_HEATING_BOILERS.value[0]:
+        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_HEATING_BOILERS.value[0])
         protocol_form = HeatingBoilerInspectionForm(request.POST or None)
         redirectText = "constructioninspections:create_heating_boilers_inspection_list"
 
-    elif typeInspection == ProtocolType.OVERVIEW_AIR_CONDITIONERS.name:
-        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_AIR_CONDITIONERS.value)
+    elif typeInspection == ProtocolType.OVERVIEW_AIR_CONDITIONERS.value[0]:
+        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_AIR_CONDITIONERS.value[0])
         protocol_form = AirConditionerInspectionForm(request.POST or None)
         redirectText = "constructioninspections:create_air_conditioners_inspection_list"
 
-    elif typeInspection == ProtocolType.OVERVIEW_FIRE_INSPECTION.name:
-        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_FIRE_INSPECTION.value)
+    elif typeInspection == ProtocolType.OVERVIEW_FIRE_INSPECTION.value[0]:
+        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_FIRE_INSPECTION.value[0])
         protocol_form = FireInspectionForm(request.POST or None)
         redirectText = "constructioninspections:create_fire_inspection_list"
 
@@ -265,50 +254,50 @@ def add_protocol(request, typeInspection, id=None):
 
 @login_required
 def edit_protocol(request, typeInspection, id):
-    if typeInspection == ProtocolType.OVERVIEW_BUILDINGS_ONE_YEAR.name:
-        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_BUILDINGS_ONE_YEAR.value)
+    if typeInspection == ProtocolType.OVERVIEW_BUILDINGS_ONE_YEAR.value[0]:
+        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_BUILDINGS_ONE_YEAR.value[0])
         object = get_object_or_404(BuildingInspectionOneYear, pk=id)
         protocol_form = BuildingInspectionOneYearForm(request.POST or None, instance=object)
         redirectText = "constructioninspections:create_buildings_one_year_inspections_list"
 
-    elif typeInspection == ProtocolType.OVERVIEW_BUILDINGS_FIVE_YEAR.name:
-        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_BUILDINGS_FIVE_YEAR.value)
+    elif typeInspection == ProtocolType.OVERVIEW_BUILDINGS_FIVE_YEAR.value[0]:
+        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_BUILDINGS_FIVE_YEAR.value[0])
         object = get_object_or_404(BuildingInspectionFiveYear, pk=id)
         protocol_form = BuildingInspectionFiveYearForm(request.POST or None, instance=object)
         redirectText = "constructioninspections:create_buildings_five_year_inspections_list"
 
-    elif typeInspection == ProtocolType.OVERVIEW_CHIMNEYS.name:
-        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_CHIMNEYS.value)
+    elif typeInspection == ProtocolType.OVERVIEW_CHIMNEYS.value[0]:
+        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_CHIMNEYS.value[0])
         object = get_object_or_404(ChimneyInspection, pk=id)
         protocol_form = ChimneyInspectionForm(request.POST or None, instance=object)
         redirectText = "constructioninspections:create_chimney_inspection_list"
 
-    elif typeInspection == ProtocolType.OVERVIEW_ELECTRICAL_ONE_YEAR.name:
-        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_ELECTRICAL_ONE_YEAR.value)
+    elif typeInspection == ProtocolType.OVERVIEW_ELECTRICAL_ONE_YEAR.value[0]:
+        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_ELECTRICAL_ONE_YEAR.value[0])
         object = get_object_or_404(ElectricalInspectionOneYear, pk=id)
         protocol_form = ElectricalInspectionOneYearForm(request.POST or None, instance=object)
         redirectText = "constructioninspections:create_electrical_inspection_one_year_list"
 
-    elif typeInspection == ProtocolType.OVERVIEW_ELECTRICAL_FIVE_YEAR.name:
-        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_ELECTRICAL_FIVE_YEAR.value)
+    elif typeInspection == ProtocolType.OVERVIEW_ELECTRICAL_FIVE_YEAR.value[0]:
+        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_ELECTRICAL_FIVE_YEAR.value[0])
         object = get_object_or_404(ElectricalInspectionFiveYear, pk=id)
         protocol_form = ElectricalInspectionFiveYearForm(request.POST or None, instance=object)
         redirectText = "constructioninspections:create_electrical_inspection_five_year_list"
 
-    elif typeInspection == ProtocolType.OVERVIEW_HEATING_BOILERS.name:
-        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_HEATING_BOILERS.value)
+    elif typeInspection == ProtocolType.OVERVIEW_HEATING_BOILERS.value[0]:
+        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_HEATING_BOILERS.value[0])
         object = get_object_or_404(HeatingBoilerInspection, pk=id)
         protocol_form = HeatingBoilerInspectionForm(request.POST or None, instance=object)
         redirectText = "constructioninspections:create_heating_boilers_inspection_list"
 
-    elif typeInspection == ProtocolType.OVERVIEW_AIR_CONDITIONERS.name:
-        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_AIR_CONDITIONERS.value)
+    elif typeInspection == ProtocolType.OVERVIEW_AIR_CONDITIONERS.value[0]:
+        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_AIR_CONDITIONERS.value[0])
         object = get_object_or_404(AirConditionerInspection, pk=id)
         protocol_form = AirConditionerInspectionForm(request.POST or None, instance=object)
         redirectText = "constructioninspections:create_air_conditioners_inspection_list"
 
     elif typeInspection == ProtocolType.OVERVIEW_FIRE_INSPECTION:
-        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_FIRE_INSPECTION.value)
+        typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_FIRE_INSPECTION.value[0])
         object = get_object_or_404(FireInspection, pk=id)
         protocol_form = FireInspectionForm(request.POST or None, instance=object)
         redirectText = "constructioninspections:create_fire_inspection_list"
@@ -325,37 +314,37 @@ def edit_protocol(request, typeInspection, id):
 
 @login_required
 def show_information(request, typeInspection, id):
-    if typeInspection == ProtocolType.OVERVIEW_BUILDINGS_ONE_YEAR.value:
+    if typeInspection == ProtocolType.OVERVIEW_BUILDINGS_ONE_YEAR.value[0]:
         protocol = BuildingInspectionOneYear.objects.get(pk=id)
-        overview = ProtocolType.OVERVIEW_BUILDINGS_ONE_YEAR.name
+        overview = ProtocolType.OVERVIEW_BUILDINGS_ONE_YEAR.value[0]
 
-    elif typeInspection == ProtocolType.OVERVIEW_BUILDINGS_FIVE_YEAR.value:
+    elif typeInspection == ProtocolType.OVERVIEW_BUILDINGS_FIVE_YEAR.value[0]:
         protocol = BuildingInspectionFiveYear.objects.get(pk=id)
-        overview = ProtocolType.OVERVIEW_BUILDINGS_FIVE_YEAR.name
+        overview = ProtocolType.OVERVIEW_BUILDINGS_FIVE_YEAR.value[0]
 
-    elif typeInspection == ProtocolType.OVERVIEW_CHIMNEYS.value:
+    elif typeInspection == ProtocolType.OVERVIEW_CHIMNEYS.value[0]:
         protocol = ChimneyInspection.objects.get(pk=id)
-        overview = ProtocolType.OVERVIEW_CHIMNEYS.name
+        overview = ProtocolType.OVERVIEW_CHIMNEYS.value[0]
 
-    elif typeInspection == ProtocolType.OVERVIEW_ELECTRICAL_ONE_YEAR.value:
+    elif typeInspection == ProtocolType.OVERVIEW_ELECTRICAL_ONE_YEAR.value[0]:
         protocol = ElectricalInspectionOneYear.objects.get(pk=id)
-        overview = ProtocolType.OVERVIEW_ELECTRICAL_ONE_YEAR.name
+        overview = ProtocolType.OVERVIEW_ELECTRICAL_ONE_YEAR.value[0]
 
-    elif typeInspection == ProtocolType.OVERVIEW_ELECTRICAL_FIVE_YEAR.value:
+    elif typeInspection == ProtocolType.OVERVIEW_ELECTRICAL_FIVE_YEAR.value[0]:
         protocol = ElectricalInspectionFiveYear.objects.get(pk=id)
-        overview = ProtocolType.OVERVIEW_ELECTRICAL_FIVE_YEAR.name
+        overview = ProtocolType.OVERVIEW_ELECTRICAL_FIVE_YEAR.value[0]
 
-    elif typeInspection == ProtocolType.OVERVIEW_HEATING_BOILERS.value:
+    elif typeInspection == ProtocolType.OVERVIEW_HEATING_BOILERS.value[0]:
         protocol = HeatingBoilerInspection.objects.get(pk=id)
-        overview = ProtocolType.OVERVIEW_HEATING_BOILERS.name
+        overview = ProtocolType.OVERVIEW_HEATING_BOILERS.value[0]
 
-    elif typeInspection == ProtocolType.OVERVIEW_AIR_CONDITIONERS.value:
+    elif typeInspection == ProtocolType.OVERVIEW_AIR_CONDITIONERS.value[0]:
         protocol = AirConditionerInspection.objects.get(pk=id)
-        overview = ProtocolType.OVERVIEW_AIR_CONDITIONERS.name
+        overview = ProtocolType.OVERVIEW_AIR_CONDITIONERS.value[0]
 
-    elif typeInspection == ProtocolType.OVERVIEW_FIRE_INSPECTION.value:
+    elif typeInspection == ProtocolType.OVERVIEW_FIRE_INSPECTION.value[0]:
         protocol = FireInspection.objects.get(pk=id)
-        overview = ProtocolType.OVERVIEW_FIRE_INSPECTION.name
+        overview = ProtocolType.OVERVIEW_FIRE_INSPECTION.value[0]
 
     context = {"typeInspection": typeInspection, "id": id, "protocol": protocol, "overview": overview}
     return render(request, "construction_inspections/info_popup.html", context)
@@ -370,64 +359,66 @@ def priority_inspections_list(request, typeInspection):
 
     for building in buildings:
 
-        if typeInspection == ProtocolType.OVERVIEW_BUILDINGS_ONE_YEAR.value:
-            title = ProtocolName.OVERVIEW_BUILDINGS_ONE_YEAR.value
+        if typeInspection == ProtocolType.OVERVIEW_BUILDINGS_ONE_YEAR.value[0]:
+            title = ProtocolType.OVERVIEW_BUILDINGS_ONE_YEAR.value[1]
+            print(title)
             protocol_building_one = building.building_inspection_one_year.filter(
-                inspection_name=ProtocolType.OVERVIEW_BUILDINGS_ONE_YEAR.value).order_by(
+                inspection_name=ProtocolType.OVERVIEW_BUILDINGS_ONE_YEAR.value[0]).order_by(
                 "date_next_inspection").last()
             if protocol_building_one != None and protocol_building_one.date_next_inspection < next_date:
                 priority_inspection.append(protocol_building_one)
 
-        elif typeInspection == ProtocolType.OVERVIEW_BUILDINGS_FIVE_YEAR.value:
-            title = ProtocolName.OVERVIEW_BUILDINGS_FIVE_YEAR.value
+        elif typeInspection == ProtocolType.OVERVIEW_BUILDINGS_FIVE_YEAR.value[0]:
+            title = ProtocolType.OVERVIEW_BUILDINGS_FIVE_YEAR.value[1]
             protocol_building_five = building.building_inspection_five_year.filter(
-                inspection_name=ProtocolType.OVERVIEW_BUILDINGS_FIVE_YEAR.value).order_by(
+                inspection_name=ProtocolType.OVERVIEW_BUILDINGS_FIVE_YEAR.value[0]).order_by(
                 "date_next_inspection").last()
             if protocol_building_five != None and protocol_building_five.date_next_inspection < next_date:
                 priority_inspection.append(protocol_building_five)
 
-        elif typeInspection == ProtocolType.OVERVIEW_CHIMNEYS.value:
-            title = ProtocolName.OVERVIEW_CHIMNEYS.value
+        elif typeInspection == ProtocolType.OVERVIEW_CHIMNEYS.value[0]:
+            title = ProtocolType.OVERVIEW_CHIMNEYS.value[1]
             protocol_chimneys = building.chimney_inspection.filter(
-                inspection_name=ProtocolType.OVERVIEW_CHIMNEYS.value).order_by(
+                inspection_name=ProtocolType.OVERVIEW_CHIMNEYS.value[0]).order_by(
                 "date_next_inspection").last()
             if protocol_chimneys != None and protocol_chimneys.date_next_inspection < next_date:
                 priority_inspection.append(protocol_chimneys)
 
-        elif typeInspection == ProtocolType.OVERVIEW_ELECTRICAL_ONE_YEAR.value:
-            title = ProtocolName.OVERVIEW_ELECTRICAL_ONE_YEAR.value
+        elif typeInspection == ProtocolType.OVERVIEW_ELECTRICAL_ONE_YEAR.value[0]:
+            title = ProtocolType.OVERVIEW_ELECTRICAL_ONE_YEAR.value[1]
             protocol_electrical_one = building.electrical_inspection_one_year.filter(
-                inspection_name=ProtocolType.OVERVIEW_ELECTRICAL_ONE_YEAR.value).order_by(
+                inspection_name=ProtocolType.OVERVIEW_ELECTRICAL_ONE_YEAR.value[0]).order_by(
                 "date_next_inspection").last()
             if protocol_electrical_one != None and protocol_electrical_one.date_next_inspection < next_date:
                 priority_inspection.append(protocol_electrical_one)
 
-        elif typeInspection == ProtocolType.OVERVIEW_ELECTRICAL_FIVE_YEAR.value:
-            title = ProtocolName.OVERVIEW_ELECTRICAL_FIVE_YEAR.value
+        elif typeInspection == ProtocolType.OVERVIEW_ELECTRICAL_FIVE_YEAR.value[0]:
+            title = ProtocolType.OVERVIEW_ELECTRICAL_FIVE_YEAR.value[1]
             protocol_electrical_five = building.electrical_inspection_five_year.filter(
-                inspection_name=ProtocolType.OVERVIEW_ELECTRICAL_FIVE_YEAR.value).order_by(
+                inspection_name=ProtocolType.OVERVIEW_ELECTRICAL_FIVE_YEAR.value[0]).order_by(
                 "date_next_inspection").last()
             if protocol_electrical_five != None and protocol_electrical_five.date_next_inspection < next_date:
                 priority_inspection.append(protocol_electrical_five)
 
-        elif typeInspection == ProtocolType.OVERVIEW_HEATING_BOILERS.value:
-            title = ProtocolName.OVERVIEW_HEATING_BOILERS.value
+        elif typeInspection == ProtocolType.OVERVIEW_HEATING_BOILERS.value[0]:
+            title = ProtocolType.OVERVIEW_HEATING_BOILERS.value[1]
             protocol_heating_boiler = building.heating_boiler_inspection.filter(
-                inspection_name=ProtocolType.OVERVIEW_HEATING_BOILERS.value).order_by("date_next_inspection").last()
+                inspection_name=ProtocolType.OVERVIEW_HEATING_BOILERS.value[0]).order_by("date_next_inspection").last()
             if protocol_heating_boiler != None and protocol_heating_boiler.date_next_inspection < next_date:
                 priority_inspection.append(protocol_heating_boiler)
 
-        elif typeInspection == ProtocolType.OVERVIEW_AIR_CONDITIONERS.value:
-            title = ProtocolName.OVERVIEW_AIR_CONDITIONERS.value
+        elif typeInspection == ProtocolType.OVERVIEW_AIR_CONDITIONERS.value[0]:
+            title = ProtocolType.OVERVIEW_AIR_CONDITIONERS.value[1]
             protocol_air_conditioners = building.air_conditioner_inspection.filter(
-                inspection_name=ProtocolType.OVERVIEW_AIR_CONDITIONERS.value).order_by(
+                inspection_name=ProtocolType.OVERVIEW_AIR_CONDITIONERS.value[0]).order_by(
                 "date_next_inspection").last()
             if protocol_air_conditioners != None and protocol_air_conditioners.date_next_inspection < next_date:
                 priority_inspection.append(protocol_air_conditioners)
 
-        elif typeInspection == ProtocolType.OVERVIEW_FIRE_INSPECTION.value:
-            title = ProtocolName.OVERVIEW_FIRE_INSPECTION.value
-            protocol_fire = building.fire_inspection.filter(inspection_name=8).order_by("date_next_inspection").last()
+        elif typeInspection == ProtocolType.OVERVIEW_FIRE_INSPECTION.value[0]:
+            title = ProtocolType.OVERVIEW_FIRE_INSPECTION.value[1]
+            protocol_fire = building.fire_inspection.filter(
+                inspection_name=ProtocolType.OVERVIEW_FIRE_INSPECTION.value[0]).order_by("date_next_inspection").last()
             if protocol_fire != None and protocol_fire.date_next_inspection < next_date:
                 priority_inspection.append(protocol_fire)
 
