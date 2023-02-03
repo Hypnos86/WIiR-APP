@@ -140,7 +140,8 @@ def electrical_inspections_choice(request):
 def create_buildings_one_year_inspections_list(request):
     units = Unit.objects.all().order_by("county__id_order")
     typeInspection = ProtocolType.OVERVIEW_BUILDINGS_ONE_YEAR.value[0]
-    context = {"units": units, "overview": ProtocolType.OVERVIEW_BUILDINGS_ONE_YEAR.value[0], "typeInspection": typeInspection}
+    context = {"units": units, "overview": ProtocolType.OVERVIEW_BUILDINGS_ONE_YEAR.value[0],
+               "typeInspection": typeInspection}
     return render(request, "construction_inspections/buildings_one_year_inspection.html", context)
 
 
@@ -148,7 +149,8 @@ def create_buildings_one_year_inspections_list(request):
 def create_buildings_five_year_inspections_list(request):
     units = Unit.objects.all().order_by("county__id_order")
     typeInspection = ProtocolType.OVERVIEW_BUILDINGS_FIVE_YEAR.value[0]
-    context = {"units": units, "overview": ProtocolType.OVERVIEW_BUILDINGS_FIVE_YEAR.value[0], "typeInspection": typeInspection}
+    context = {"units": units, "overview": ProtocolType.OVERVIEW_BUILDINGS_FIVE_YEAR.value[0],
+               "typeInspection": typeInspection}
     return render(request, "construction_inspections/buildings_five_year_inspection.html", context)
 
 
@@ -164,7 +166,8 @@ def create_chimney_inspection_list(request):
 def create_electrical_inspection_one_year_list(request):
     units = Unit.objects.all().order_by("county__id_order")
     typeInspection = ProtocolType.OVERVIEW_ELECTRICAL_ONE_YEAR.value[0]
-    context = {"units": units, "overview": ProtocolType.OVERVIEW_ELECTRICAL_ONE_YEAR.value[0], "typeInspection": typeInspection}
+    context = {"units": units, "overview": ProtocolType.OVERVIEW_ELECTRICAL_ONE_YEAR.value[0],
+               "typeInspection": typeInspection}
     return render(request, "construction_inspections/electrical_inspection_one_year_list.html", context)
 
 
@@ -172,7 +175,8 @@ def create_electrical_inspection_one_year_list(request):
 def create_electrical_inspection_five_year_list(request):
     units = Unit.objects.all().order_by("county__id_order")
     typeInspection = ProtocolType.OVERVIEW_ELECTRICAL_ONE_YEAR.value[0]
-    context = {"units": units, "overview": ProtocolType.OVERVIEW_ELECTRICAL_FIVE_YEAR.value[0], "typeInspection": typeInspection}
+    context = {"units": units, "overview": ProtocolType.OVERVIEW_ELECTRICAL_FIVE_YEAR.value[0],
+               "typeInspection": typeInspection}
     return render(request, "construction_inspections/electrical_inspection_five_year_list.html", context)
 
 
@@ -180,7 +184,8 @@ def create_electrical_inspection_five_year_list(request):
 def create_heating_boilers_inspection_list(request):
     units = Unit.objects.all().order_by("county__id_order")
     typeInspection = ProtocolType.OVERVIEW_HEATING_BOILERS.value[0]
-    context = {"units": units, "overview": ProtocolType.OVERVIEW_HEATING_BOILERS.value[0], "typeInspection": typeInspection}
+    context = {"units": units, "overview": ProtocolType.OVERVIEW_HEATING_BOILERS.value[0],
+               "typeInspection": typeInspection}
     return render(request, "construction_inspections/heating_boilers_inspection_list.html", context)
 
 
@@ -188,7 +193,8 @@ def create_heating_boilers_inspection_list(request):
 def create_air_conditioners_inspection_list(request):
     units = Unit.objects.all().order_by("county__id_order")
     typeInspection = ProtocolType.OVERVIEW_AIR_CONDITIONERS.value[0]
-    context = {"units": units, "overview": ProtocolType.OVERVIEW_AIR_CONDITIONERS.value[0], "typeInspection": typeInspection}
+    context = {"units": units, "overview": ProtocolType.OVERVIEW_AIR_CONDITIONERS.value[0],
+               "typeInspection": typeInspection}
     return render(request, "construction_inspections/air_conditioners_inspection_list.html", context)
 
 
@@ -196,7 +202,8 @@ def create_air_conditioners_inspection_list(request):
 def create_fire_inspection_list(request):
     units = Unit.objects.all().order_by("county__id_order")
     typeInspection = ProtocolType.OVERVIEW_FIRE_INSPECTION.value[0]
-    context = {"units": units, "overview": ProtocolType.OVERVIEW_FIRE_INSPECTION.value[0], "typeInspection": typeInspection}
+    context = {"units": units, "overview": ProtocolType.OVERVIEW_FIRE_INSPECTION.value[0],
+               "typeInspection": typeInspection}
     return render(request, "construction_inspections/fire_inspection_list.html", context)
 
 
@@ -352,7 +359,13 @@ def show_information(request, typeInspection, id):
 
 @login_required
 def priority_inspections_list(request, typeInspection):
-    next_date = date.today() + relativedelta(months=+3)
+    setMonths = request.GET.get("setMonth")
+    if setMonths == None:
+        setMonths = 3
+    else:
+        setMonths = int(setMonths)
+
+    next_date = date.today() + relativedelta(months=+setMonths)
     priority_inspection = []
     title = None
     buildings = Building.objects.all()
@@ -361,7 +374,6 @@ def priority_inspections_list(request, typeInspection):
 
         if typeInspection == ProtocolType.OVERVIEW_BUILDINGS_ONE_YEAR.value[0]:
             title = ProtocolType.OVERVIEW_BUILDINGS_ONE_YEAR.value[1]
-            print(title)
             protocol_building_one = building.building_inspection_one_year.filter(
                 inspection_name=ProtocolType.OVERVIEW_BUILDINGS_ONE_YEAR.value[0]).order_by(
                 "date_next_inspection").last()
@@ -424,6 +436,6 @@ def priority_inspections_list(request, typeInspection):
 
     priority_inspection_len = len(priority_inspection)
 
-    context = {"priority_inspection": priority_inspection,
-               "priority_inspection_len": priority_inspection_len, "title": title}
+    context = {"priority_inspection": priority_inspection, "priority_inspection_len": priority_inspection_len,
+               "title": title, "setMonths": setMonths, "typeInspection": typeInspection}
     return render(request, "construction_inspections/priority_inspections_list.html", context)
