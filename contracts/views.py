@@ -451,7 +451,7 @@ def contract_media_list_archive(request):
         contracts_media_len = len(contracts_media)
 
         return render(request, 'contracts/contracts_media_list.html',
-                      {'actual': True, 'contracts_media': contracts_media, 'contracts_media_len': contracts_media_len,
+                      {'actual': False, 'contracts_media': contracts_media, 'contracts_media_len': contracts_media_len,
                        'q': q, 'date_from': date_from, 'date_to': date_to, 'last_date': last_date, 'query': query,
                        'now': now})
     else:
@@ -466,7 +466,7 @@ def show_contract_media(request, id):
     units = contract_media.unit.all()
     annexes = contract_media.annex_contract_media.all()
     return render(request, 'contracts/show_contract_media.html',
-                  {'contract': contract_media, 'annexes': annexes, 'units': units, 'actual': True})
+                  {'contract': contract_media, 'annexes': annexes, 'units': units})
 
 
 @login_required
@@ -510,3 +510,9 @@ def edit_settlement(request, id):
 def show_information_settlement(request, id):
     settlement = get_object_or_404(GuaranteeSettlement, pk=id)
     return render(request, "contracts/settlement_popup.html", {"settlement": settlement, "id": id})
+
+@login_required
+def financial_document_list(request, contract_id):
+    contractId = contract_id
+    context = {"contractId":contractId}
+    return render(request, "contracts/financial_document_list.html", context)

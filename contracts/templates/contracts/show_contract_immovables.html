@@ -6,7 +6,7 @@
 {%if user.is_authenticated and user.accessmodule.contract_immovables%}
 <div class="container col-md-10 mb-3">
     <div class="row">
-        {%if actual%}
+        {%if contract.state%}
         <div class="col-md-2 moj-button-left">
             <a href="{%url 'contracts:menu_contractsimmovables'%}">
                 <button class="btn btn-outline-primary my-btn">

@@ -67,7 +67,7 @@
             </div>
         </a>
         {%endif%}
-        {%if user.accessmodule.contract_media_edit%}
+        {%if user.accessmodule.contract_media_edit and actual%}
         <div class="col-md-12 moj-button-right">
             <a href="{%url 'contracts:new_contract_media'%}">
                 <button class="btn btn-outline-primary my-btn">
@@ -134,7 +134,7 @@
                 <span>{{contract.employer}}</span>
             </td>
             <td align="right" valign="middle">
-                <a class="col m-2" href="{%url 'contracts:show_contract_media' contract.id%}">
+                <a class="col m-2" href="{%url 'contracts:show_contract_media' contract.id %}">
                     <button data-toggle="info" title="Pokaż" type="button"
                             class="btn btn-outline-primary icon-color my-1">
                         <i class="bi bi-eye"></i>
