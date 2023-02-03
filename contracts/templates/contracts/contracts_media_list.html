@@ -23,7 +23,8 @@
                         <div class="">
                             <label class="control-label" for="date_from">Data umowy od</label>
                             <div class=" ">
-                                <input type="date" name="from" class="form-control" id="date_from" value="{{date_from}}">
+                                <input type="date" name="from" class="form-control" id="date_from"
+                                       value="{{date_from}}">
                             </div>
                         </div>
                     </div>
@@ -35,102 +36,129 @@
                             </div>
                         </div>
                     </div>
-                <div class="col-md-5 d-flex align-items-end">
-                    <div class="input-group ">
-                        <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj umowy" aria-label="Search" aria-describedby="search-addon" value="{%if query%}{{q}}{%endif%}">
-                        <button id="searchButton" style="{%if query%}display:none;{%endif%}" type="submit" class="btn btn-outline-primary my-btn">Szukaj</button>
-                        <button id="cleanButton"  style="{%if not query%}display:none;{%endif%}" type="button" class="btn btn-outline-primary my-btn" onclick="cleanSearch()">Wyczyść</button>
+                    <div class="col-md-5 d-flex align-items-end">
+                        <div class="input-group ">
+                            <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj umowy"
+                                   aria-label="Search" aria-describedby="search-addon"
+                                   value="{%if query%}{{q}}{%endif%}">
+                            <button id="searchButton" style="{%if query%}display:none;{%endif%}" type="submit"
+                                    class="btn btn-outline-primary my-btn">Szukaj
+                            </button>
+                            <button id="cleanButton" style="{%if not query%}display:none;{%endif%}" type="button"
+                                    class="btn btn-outline-primary my-btn" onclick="cleanSearch()">Wyczyść
+                            </button>
+                        </div>
                     </div>
-                 </div>
                 </div>
             </form>
         </section>
     </div>
-    {%if user.accessmodule.contract_media_edit%}
-    <div class="col-md-3 moj-button-right">
-        <a href="{%url 'contracts:new_contract_media'%}">
-            <button class="btn btn-outline-primary my-btn">
-                <span class="bi bi-plus-circle"> Dodaj umowę</span>
-            </button>
+    <div class="col-md-3">
+        {%if actual%}
+        <a href="{%url 'contracts:contract_media_list_archive'%}">
+            <div class="col-md-12 moj-button-right mb-2 ">
+                <button class="btn btn-outline-danger" onclick="showYearListModal(this)">Archiwum</button>
+            </div>
         </a>
+        {%else%}
+        <a href="{%url 'contracts:create_contract_media_list'%}">
+            <div class="col-md-12 moj-button-right mb-2 ">
+                <button class="btn btn-outline-primary my-btn" onclick="showYearListModal(this)">Aktualne</button>
+            </div>
+        </a>
+        {%endif%}
+        {%if user.accessmodule.contract_media_edit%}
+        <div class="col-md-12 moj-button-right">
+            <a href="{%url 'contracts:new_contract_media'%}">
+                <button class="btn btn-outline-primary my-btn">
+                    <span class="bi bi-plus-circle"> Dodaj umowę</span>
+                </button>
+            </a>
+        </div>
+        {%endif%}
     </div>
-    {%endif%}
+
 </div>
 <div class="col">
-<table class="table table-hover my-table mt-2">
-    <thead>
-    <tr class="my-table-tr">
-        <th align="center" valign="middle" width="40" scope="col" class="text-center">L.p.</th>
-        <th align="center" valign="middle" width="120" scope="col" class="text-center">Data umowy</th>
-        <th align="center" valign="middle" width="300" scope="col" class="text-center">Nr. umowy</th>
-        <th align="center" valign="middle" width="350" scope="col" class="text-center">Wykonawca</th>
-        <th align="center" valign="middle" width="150" scope="col" class="text-center">Media</th>
-        <th align="center" valign="middle" width="150" scope="col" class="text-center">Okres obowiązywania</th>
-        <th align="center" valign="middle" width="380" scope="col" class="text-center">Treść</th>
-        <th align="center" valign="middle" width="auto" scope="col" class="text-center">Branżysta</th>
-        <th align="center" valign="middle" width="auto" scope="col" class="text-center"></th>
-    </tr>
-    </thead>
-    <tbody>
-    {%for contract in contracts_media %}
-    <tr class="my-table-tr">
-        <td align="center" valign="middle" class="text-center" scope="row"></td>
-        <td align="center" valign="middle" class="text-center">
-            <span>{{contract.date|date:"d.m.Y"}}&nbsp;r.</span>
-        </td>
-        <td align="center" valign="middle" class="text-center">
-            <span data-toggle="info">{{contract.no_contract|default_if_none:'---'}}</span>
-        </td>
-        <td valign="middle">
+    <table class="table table-hover my-table mt-2">
+        <thead>
+        <tr class="my-table-tr">
+            <th align="center" valign="middle" width="40" scope="col" class="text-center">L.p.</th>
+            <th align="center" valign="middle" width="120" scope="col" class="text-center">Data umowy</th>
+            <th align="center" valign="middle" width="300" scope="col" class="text-center">Nr. umowy</th>
+            <th align="center" valign="middle" width="350" scope="col" class="text-center">Wykonawca</th>
+            <th align="center" valign="middle" width="150" scope="col" class="text-center">Media</th>
+            <th align="center" valign="middle" width="150" scope="col" class="text-center">Okres obowiązywania</th>
+            <th align="center" valign="middle" width="380" scope="col" class="text-center">Treść</th>
+            <th align="center" valign="middle" width="auto" scope="col" class="text-center">Branżysta</th>
+            <th align="center" valign="middle" width="auto" scope="col" class="text-center"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {%for contract in contracts_media %}
+        <tr class="my-table-tr">
+            <td align="center" valign="middle" class="text-center" scope="row"></td>
+            <td align="center" valign="middle" class="text-center">
+                <span>{{contract.date|date:"d.m.Y"}}&nbsp;r.</span>
+            </td>
+            <td align="center" valign="middle" class="text-center">
+                <span data-toggle="info">{{contract.no_contract|default_if_none:'---'}}</span>
+            </td>
+            <td valign="middle">
             <span title="SWOP ID: {{contract.contractor.no_contractor}}">{{contract.contractor.name}}<br>
                 <small>{{contract.contractor.address}}, {{contract.contractor.zip_code}} {{contract.contractor.city}}</small>
             </span>
-        </td>
-        <td align="center" valign="middle">
-            <span>{{contract.type}}</span>
-        </td>
+            </td>
+            <td align="center" valign="middle">
+                <span>{{contract.type}}</span>
+            </td>
 
-        {%if contract.period_of_validity%}
-        {% now 'Y-m-d' as today_date%}
-        {%if contract.period_of_validity|date:'Y-m-d' <= today_date%}
-        <td align="center" valign="middle" class="text-center"><span class="color-info-warning">{{contract.period_of_validity|date:"d.m.Y"}}&nbsp;r.</span></td>
-        {%else%}
-        <td align="center" valign="middle" class="text-center">{{contract.period_of_validity|default_if_none:'---'|date:"d.m.Y"}}&nbsp;r.</td>
-        {%endif%}
-        {%else%}
-        <td align="center" valign="middle" class="text-center">bezterminowa</td>
-        {%endif%}
-
-        <td align="left" valign="middle">
-            <span>{{contract.content}}</span>
-        </td>
-        <td align="center" valign="middle" class="text-center">
-            <span>{{contract.employer}}</span>
-        </td>
-        <td align="right" valign="middle">
-            <a class="col m-2" href="{%url 'contracts:show_contract_media' contract.id%}">
-                <button data-toggle="info" title="Pokaż" type="button" class="btn btn-outline-primary icon-color my-1">
-                    <i class="bi bi-eye"></i>
-                </button></a>
-            {%if user.accessmodule.contract_media_edit%}
-            <a class="col m-2" href="{% url 'contracts:edit_contract_media' contract.id %}">
-                <button data-toggle="info" title="Edytuj" type="submit" class="btn btn-outline-primary icon-color my-1">
-                    <i class="bi bi-pencil-square"></i>
-                </button></a>
+            {%if contract.period_of_validity%}
+            {% now 'Y-m-d' as today_date%}
+            {%if contract.period_of_validity|date:'Y-m-d' <= today_date%}
+            <td align="center" valign="middle" class="text-center"><span class="color-info-warning">{{contract.period_of_validity|date:"d.m.Y"}}&nbsp;r.</span>
+            </td>
+            {%else%}
+            <td align="center" valign="middle" class="text-center">
+                {{contract.period_of_validity|default_if_none:'---'|date:"d.m.Y"}}&nbsp;r.
+            </td>
             {%endif%}
-        </td>
-    </tr>
-    {%endfor%}
-    </tbody>
-    <tfoot>
-    <tr>
-        <th colspan="4">Wydział Inwestycji i Remontów KWP w Poznaniu</th>
+            {%else%}
+            <td align="center" valign="middle" class="text-center">bezterminowa</td>
+            {%endif%}
 
-    </tr>
-    </tfoot>
-</table>
-<!--Pagination-->
-   {%if search%}
+            <td align="left" valign="middle">
+                <span>{{contract.content}}</span>
+            </td>
+            <td align="center" valign="middle" class="text-center">
+                <span>{{contract.employer}}</span>
+            </td>
+            <td align="right" valign="middle">
+                <a class="col m-2" href="{%url 'contracts:show_contract_media' contract.id%}">
+                    <button data-toggle="info" title="Pokaż" type="button"
+                            class="btn btn-outline-primary icon-color my-1">
+                        <i class="bi bi-eye"></i>
+                    </button></a>
+                {%if user.accessmodule.contract_media_edit and actual%}
+                <a class="col m-2" href="{% url 'contracts:edit_contract_media' contract.id %}">
+                    <button data-toggle="info" title="Edytuj" type="submit"
+                            class="btn btn-outline-primary icon-color my-1">
+                        <i class="bi bi-pencil-square"></i>
+                    </button></a>
+                {%endif%}
+            </td>
+        </tr>
+        {%endfor%}
+        </tbody>
+        <tfoot>
+        <tr>
+            <th colspan="4">Wydział Inwestycji i Remontów KWP w Poznaniu</th>
+
+        </tr>
+        </tfoot>
+    </table>
+    <!--Pagination-->
+    {%if search%}
     <nav aria-labelledby="Page navigation">
         <ul class="pagination justify-content-center">
             {%if contracts_media.has_previous%}
@@ -184,6 +212,7 @@
         $("#date_to").val("");
         $("form").submit();
         }
+
 </script>
 {%endif%}
 {%endblock%}

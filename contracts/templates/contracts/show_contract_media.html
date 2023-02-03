@@ -7,7 +7,7 @@
 <div class="container col-md-10 mb-3">
     <div class="row">
         {%if actual%}
-        <div class="col-md-2 moj-button-left">
+        <div class="col-md-3 moj-button-left">
             <a href="{%url 'contracts:create_contract_media_list'%}">
                 <button class="btn btn-outline-primary my-btn">
                     <span class="bi bi-chevron-compact-left">Cofnij</span>
@@ -16,15 +16,23 @@
         </div>
         {%else%}
         <div class="col-md-2 moj-button-left">
-            <a href="{%url 'contracts:menu_contractsimmovables_archive'%}">
+            <a href="{%url 'contracts:create_contract_media_list'%}">
                 <button class="btn btn-outline-primary my-btn">
                     <span class="bi bi-chevron-compact-left">Cofnij</span>
                 </button>
             </a>
         </div>
         {%endif%}
-        <div class=" col-md-8">
-            <h4 class="text-center" title="Ostatnie zmiany na umowie: {{contract.change|date:'d.m.Y - (H:i)'}}">Umowa {%if contract.no_contract%} nr {{contract.no_contract}} {%endif%} z dnia {{contract.date|date:"d.m.Y"}} r.</h4>
+        <div class="col-md-6 text-center">
+            <h4 title="Ostatnie zmiany na umowie: {{contract.change|date:'d.m.Y - (H:i)'}}">Umowa {%if contract.no_contract%} nr {{contract.no_contract}} {%endif%} z dnia {{contract.date|date:"d.m.Y"}} r.</h4>
+            <small class="text-muted">Data utworzenia: {{contract.creation_date|date:'d.m.Y'}} ({{contract.creation_date|date:'H:i'}})</small>
+        </div>
+                <div class="col-md-3 moj-button-right">
+            <a href="">
+                <button class="btn btn-outline-primary my-btn">
+                    <span class="bi bi-files"> Dokumenty księgowe</span>
+                </button>
+            </a>
         </div>
     </div>
 </div>
@@ -45,7 +53,7 @@
                     <span class="text-center">{{contract.period_of_validity|default_if_none:'---'|date:"d.m.Y"}}&nbsp;r.</span>
                     {%endif%}
                     {%else%}
-                    <span class="text-center">bezderminowa</span>
+                    <span class="text-center">bezterminowa</span>
                     {%endif%}
                 </li>
                 <li class="list-group-item"><span class="text-muted">Jednostka: </span>
@@ -65,11 +73,16 @@
                 <li class="list-group-item"><span class="text-muted">Stan umowy: </span>{%if contract.state %}<span class="text-success">Aktualna</span>{%else%}<span class="text-danger">Rozwiązana</span> {%endif%}
                 </li>
                 {%if contract.information%}
-                <li class="list-group-item"><span class="text-muted">Informacje: </span>{{contract.information}}</li>
+                <li class="list-group-item">
+                    <span class="text-muted">Informacje: </span>
+                    <p>{{contract.information}}</p>
+                </li>
                 {%endif%}
                 <li class="list-group-item"><span class="text-muted">Branżysta: </span>{{contract.employer}}</li>
-                <li class="list-group-item"><small class="text-muted">Data dodania: {{contract.creation_date|date:'d.m.Y (H:i)'}}</small></li>
-                <li class="list-group-item"><small class="text-muted">Zmiany: {{contract.change|date:'d.m.Y (H:i)'}} - {{contract.author}}</small></li>
+                <li class="list-group-item">
+                    <small class="text-muted">Autor: {{contract.author.first_name}} {{contract.author.last_name}}</small><br>
+                    <small class="text-muted">Zmiany: {{contract.change|date:'d.m.Y'}} ({{contract.change|date:'H:i'}})</small>
+                </li>
             </ul>
         </div>
         <div class="col-md-3">

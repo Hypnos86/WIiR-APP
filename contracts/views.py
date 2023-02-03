@@ -411,6 +411,56 @@ def contract_media_list(request):
 
 
 @login_required
+def contract_media_list_archive(request):
+    contracts_media = ContractMedia.objects.all().filter(state=False).order_by('-date').distinct()
+    contracts_media_len = len(contracts_media)
+    now = now_date
+    query = "Wyczyść"
+    search = "Szukaj"
+
+    paginator = Paginator(contracts_media, 50)
+    page_number = request.GET.get('page')
+    contracts_media_list = paginator.get_page(page_number)
+
+    q = request.GET.get("q")
+    date_from = request.GET.get('from')
+    date_to = request.GET.get('to')
+
+    try:
+        last_date = ContractMedia.objects.values('change').latest('change')
+    except ContractMedia.DoesNotExist:
+        last_date = None
+
+    if q or date_from or date_to:
+        if q:
+            contracts_media = contracts_media.filter(no_contract__icontains=q) \
+                              | contracts_media.filter(type__type__icontains=q) \
+                              | contracts_media.filter(contractor__name__icontains=q) \
+                              | contracts_media.filter(unit__city__icontains=q) \
+                              | contracts_media.filter(unit__type__type_short__icontains=q) \
+                              | contracts_media.filter(employer__name__icontains=q) \
+                              | contracts_media.filter(employer__last_name__icontains=q) \
+                              | contracts_media.filter(content__icontains=q)
+
+        if date_from:
+            contracts_media = contracts_media.filter(date__gte=date_from)
+
+        if date_to:
+            contracts_media = contracts_media.filter(date__lte=date_to)
+
+        contracts_media_len = len(contracts_media)
+
+        return render(request, 'contracts/contracts_media_list.html',
+                      {'actual': True, 'contracts_media': contracts_media, 'contracts_media_len': contracts_media_len,
+                       'q': q, 'date_from': date_from, 'date_to': date_to, 'last_date': last_date, 'query': query,
+                       'now': now})
+    else:
+        return render(request, 'contracts/contracts_media_list.html',
+                      {'contracts_media': contracts_media_list,
+                       'contracts_media_len': contracts_media_len, 'last_date': last_date, 'search': search,
+                       'actual': False, 'now': now})
+
+@login_required
 def show_contract_media(request, id):
     contract_media = ContractMedia.objects.get(pk=id)
     units = contract_media.unit.all()
