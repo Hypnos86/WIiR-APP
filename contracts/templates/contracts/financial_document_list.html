@@ -6,20 +6,30 @@
 {%if user.is_authenticated and user.accessmodule.contract_media%}
 <div class="container">
     <div class="row">
-         <div class="col-md-3 moj-button-right">
-            <a href="{%url 'contracts:show_contract_media' contractId%}">
+        <div class="col-md-3 moj-button-left">
+            <a href="{%url 'contracts:show_contract_media' contract.id%}">
                 <button class="btn btn-outline-primary my-btn">
                     <span class="bi bi-chevron-compact-left">Cofnij</span>
                 </button>
             </a>
         </div>
         <div class="col-md-6">
-            <h5></h5>
+            <h5>Dokumenty księgowe dla umowy {{contract.no_contract}} z dnia
+                {{contract.date|date:"d.m.Y"}}&nbsp;r. </h5>
         </div>
-        <div class="col-md-3">
-
+        <div class="col-md-3 moj-button-right">
+            <a href="">
+                <button class="btn btn-outline-primary my-btn">
+                    <span class="bi bi-plus-circle"> Dodaj dokument</span>
+                </button>
+            </a>
         </div>
 
+    </div>
+    <div class="container">
+        {%for doc in financialDoc%}
+        {{doc}}
+        {%endfor%}
     </div>
 
 </div>
@@ -32,6 +42,7 @@
     $(function () {
         $('[data-toggle="info"]').tooltip()
     })
+
 </script>
 {%endif%}
 {%endblock%}

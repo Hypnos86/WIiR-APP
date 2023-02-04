@@ -11,6 +11,7 @@ from constructioninspections.forms import BuildingInspectionOneYearForm, Buildin
 from enum import Enum
 from fixedasset.models import Building
 from units.models import Unit
+from main.views import now_date
 
 
 # Create your views here
@@ -27,7 +28,8 @@ class ProtocolType(Enum):
 
 @login_required
 def important_inspections(request):
-    next_date = date.today() + relativedelta(months=+3)
+    staticMonths = 3
+    next_date = date.today() + relativedelta(months=+staticMonths)
     buildings_inspections_one_year = []
     # buildings_inspections_one_year.sort()
     buildings_inspections_five_year = []
@@ -122,7 +124,8 @@ def important_inspections(request):
                "air_conditioners_inspection_len": air_conditioners_inspection_len,
                "heating_boiler_inspections": heating_boiler_inspections[:3],
                "heating_boiler_inspections_len": heating_boiler_inspections_len,
-               "fire_inspections": fire_inspections, "fire_inspections_len": fire_inspections_len}
+               "fire_inspections": fire_inspections, "fire_inspections_len": fire_inspections_len,
+               "staticMonths": staticMonths}
     return render(request, "construction_inspections/priority_inspections.html", context)
 
 
@@ -359,6 +362,7 @@ def show_information(request, typeInspection, id):
 
 @login_required
 def priority_inspections_list(request, typeInspection):
+    now = now_date
     setMonths = request.GET.get("setMonth")
     if setMonths == None:
         setMonths = 3
@@ -437,5 +441,5 @@ def priority_inspections_list(request, typeInspection):
     priority_inspection_len = len(priority_inspection)
 
     context = {"priority_inspection": priority_inspection, "priority_inspection_len": priority_inspection_len,
-               "title": title, "setMonths": setMonths, "typeInspection": typeInspection}
+               "title": title, "setMonths": setMonths, "typeInspection": typeInspection, "now": now}
     return render(request, "construction_inspections/priority_inspections_list.html", context)

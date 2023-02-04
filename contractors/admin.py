@@ -22,7 +22,10 @@ class ContractorResource(resources.ModelResource):
 
 @admin.register(Contractor)
 class ContractorAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['id', 'no_contractor', 'name', 'nip', 'address', 'zip_code', 'city', 'author', 'creation_date']
+    list_display = ['id', 'no_contractor', 'name', 'nip', 'address', 'zip_code', 'city', 'author']
     search_fields = ['no_contractor', 'name', 'nip', 'address', 'zip_code', 'city']
     list_display_links = ('name',)
+    list_filter = ['city']
     resource_class = ContractorResource
+
+

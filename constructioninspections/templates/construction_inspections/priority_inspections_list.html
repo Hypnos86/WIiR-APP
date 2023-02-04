@@ -61,7 +61,13 @@
             <span class="mb-1 text-muted">Budynek: </span><span>{{object.no_inventory.kind}}</span><br>
             <span class="text-muted mb-1">Nazwa: </span><span>{{object.no_inventory.building_name}}</span><br>
             <span class="text-muted">Nr.inwentarzowy: </span><span>{{object.no_inventory.no_inventory}}</span><br>
+            {%now 'Y-m-d' as today_date%}
+            {%if object.date_next_inspection|date:'Y-m-d' <= today_date%}
+            <small>Kolejny przegląd: </small><small class="color-info-warning"> {{object.date_next_inspection|date:"d.m.Y"}}&nbsp;r.</small>
+            {%else%}
             <small>Kolejny przegląd: </small><small class="color-teal"> {{object.date_next_inspection|date:"d.m.Y"}}&nbsp;r.</small>
+            {%endif%}
+
         </a>
     </div>
     {%endfor%}

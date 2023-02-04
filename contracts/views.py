@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
 from contracts.models import ContractImmovables, ContractAuction, AnnexContractAuction, ContractMedia, \
-    GuaranteeSettlement
+    GuaranteeSettlement, FinancialDocument
 from contracts.forms import ContractImmovablesForm, ContractAuctionForm, AnnexImmovablesForm, AnnexContractAuctionForm, \
     ContractMediaForm, AnnexContractMediaForm, GuaranteeSettlementForm
 from main.models import AccessModule
@@ -460,6 +460,7 @@ def contract_media_list_archive(request):
                        'contracts_media_len': contracts_media_len, 'last_date': last_date, 'search': search,
                        'actual': False, 'now': now})
 
+
 @login_required
 def show_contract_media(request, id):
     contract_media = ContractMedia.objects.get(pk=id)
@@ -511,8 +512,10 @@ def show_information_settlement(request, id):
     settlement = get_object_or_404(GuaranteeSettlement, pk=id)
     return render(request, "contracts/settlement_popup.html", {"settlement": settlement, "id": id})
 
+
 @login_required
 def financial_document_list(request, contract_id):
-    contractId = contract_id
-    context = {"contractId":contractId}
+    contract = get_object_or_404(ContractMedia, pk=contract_id)
+    financialDoc = FinancialDocument.objects.all().filter(id=contract.id)
+    context = {"contract": contract, "financialDoc": financialDoc}
     return render(request, "contracts/financial_document_list.html", context)

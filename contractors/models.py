@@ -17,7 +17,7 @@ class Contractor(models.Model):
     information = models.TextField("Informacje", null=True, blank=True, default="")
     creation_date = models.DateTimeField(auto_now_add=True)
     change = models.DateTimeField("Zmiany", auto_now=True)
-    author = models.ForeignKey("auth.User", on_delete=models.CASCADE)
+    author = models.ForeignKey("auth.User", on_delete=models.CASCADE, verbose_name="Autor")
 
     def __str__(self):
         return f"{self.name}, {self.address}, {self.zip_code} {self.city} ({self.no_contractor})"

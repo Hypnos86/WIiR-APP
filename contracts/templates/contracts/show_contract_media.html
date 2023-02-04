@@ -86,9 +86,12 @@
             </ul>
         </div>
         <div class="col-md-3">
-            <div class="text-center mt-2">
+            <div class="mt-2 moj-button-right ">
             {%if contract.scan%}
-                <a href="/media/{{contract.scan}}" role="button" target="_blank"><button class="btn btn-outline-primary button-chose-invoices my-btn" type="button"><span class="bi bi-file-text"> Podgląd umowy</span></button></a>
+                <a href="/media/{{contract.scan}}" role="button" target="_blank">
+                    <button class="btn btn-outline-primary button-chose-invoices my-btn" type="button">
+                        <span class="bi bi-file-text"> Podgląd umowy</span>
+                    </button></a>
             {%endif%}
             {%if annexes%}
             {%for annex in annexes%}

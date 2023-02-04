@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %} Przeglądy {% endblock %}
 {% block inspections %}
-<h5 class="text-center">Nadchodzące przeglądy</h5>
+<h5 class="text-center">Nadchodzące przeglądy w przeciągu {{staticMonths}} miesięcy</h5>
 {%if buildings_inspections_one_year%}
 <div class="row my-5">
     <div class="mb-3">

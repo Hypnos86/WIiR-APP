@@ -5,7 +5,7 @@ from import_export.fields import Field
 from import_export.widgets import ManyToManyWidget
 from contracts.models import TypeOfContract, LegalBasic, Guarantee, ContractImmovables, \
     AnnexImmovables, ContractAuction, AnnexContractAuction, MediaType, ContractMedia, \
-    GuaranteeSettlement, AnnexContractMedia
+    GuaranteeSettlement, AnnexContractMedia, UnitMeasure, FinancialDocument
 from units.models import Unit
 
 # Register your models here.
@@ -17,6 +17,12 @@ class GuaranteeSettlementAdmin(admin.ModelAdmin):
     list_display = ["contract", "deadline_settlement", "settlement_sum", "script", "affirmation_settlement"]
     list_display_links = ["contract"]
     search_fields = ["contract__no_contract", "script"]
+
+
+@admin.register(UnitMeasure)
+class UnitMeasureAdmin(admin.ModelAdmin):
+    list_display = ["id", "measureName"]
+    list_display_links = ["measureName"]
 
 
 @admin.register(Guarantee)
@@ -47,7 +53,7 @@ class ContractImmovablesResource(resources.ModelResource):
 @admin.register(ContractImmovables)
 class ContractAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ["date", "no_contract", "contractor", "period_of_validity", "type_of_contract", "unit", "state",
-                    "creation_date", "change", "author"]
+                    "author"]
     search_fields = ["contractor__name", "contractor__no_contractor", "no_contract", "unit__county__name",
                      "unit__city", "unit__type__type_short", "type_of_contract__type"]
     list_filter = ["state"]
@@ -57,7 +63,7 @@ class ContractAdmin(ExportMixin, admin.ModelAdmin):
 
 @admin.register(AnnexImmovables)
 class ContractAdmin(admin.ModelAdmin):
-    list_display = ["contract_immovables", "date_annex", "creation_date", "author"]
+    list_display = ["contract_immovables", "date_annex", "author"]
     search_fields = ["date_annex", "contract"]
 
 
@@ -89,8 +95,7 @@ class ContractAuctionResource(resources.ModelResource):
 
 @admin.register(ContractAuction)
 class ContractAuctionAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ["date", "no_contract", "contractor", "price", "work_scope", "unit", "creation_date", "change",
-                    "author"]
+    list_display = ["date", "no_contract", "contractor", "price", "work_scope", "unit", "author"]
     search_fields = ["contractor__name", "no_contract", "unit__county__name", "unit__type__type_short", "unit__city",
                      "worker__name", "worker__last_name"]
     filter_horizontal = ["worker"]
@@ -101,7 +106,7 @@ class ContractAuctionAdmin(ExportMixin, admin.ModelAdmin):
 
 @admin.register(AnnexContractAuction)
 class ContractAdmin(admin.ModelAdmin):
-    list_display = ["date", "price_change", "price_after_change", "creation_date", "author"]
+    list_display = ["date", "price_change", "price_after_change", "author"]
 
 
 class LegalBasicResource(resources.ModelResource):
@@ -116,7 +121,7 @@ class LegalBasicResource(resources.ModelResource):
 
 
 @admin.register(LegalBasic)
-class LegalBasicAdmin(ExportMixin,admin.ModelAdmin):
+class LegalBasicAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ["act", "legal_basic", "legal_basic_text"]
     resource_class = LegalBasicResource
 
@@ -144,14 +149,13 @@ class ContractMediaResource(resources.ModelResource):
         model = ContractMedia
         fields = ("__all__")
         export_order = (
-        "date", "no_contract", "contractor", "type", "legal_basic", "content", "period_of_validity", "unit", "state",
-        "employer")
+            "date", "no_contract", "contractor", "type", "legal_basic", "content", "period_of_validity", "unit",
+            "state", "employer")
 
 
 @admin.register(ContractMedia)
 class ContractMediaAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ["date", "no_contract", "contractor", "period_of_validity", "type", "state", "creation_date",
-                    "change", "author"]
+    list_display = ["date", "no_contract", "contractor", "period_of_validity", "type", "state", "author"]
     list_display_links = ("no_contract",)
     filter_horizontal = ["unit"]
     resource_class = ContractMediaResource
@@ -159,4 +163,10 @@ class ContractMediaAdmin(ExportMixin, admin.ModelAdmin):
 
 @admin.register(AnnexContractMedia)
 class AnnexContractMediaAdmin(admin.ModelAdmin):
-    list_display = ["contract_media", "date", "scope_changes", "creation_date", "author"]
+    list_display = ["contract_media", "date", "scope_changes", "author"]
+
+
+@admin.register(FinancialDocument)
+class FinancialDocumentAdmin(admin.ModelAdmin):
+    list_display = ["contract", "date", "no_document", "unit_measure", "value", "vat", "cost_brutto", "author"]
+    list_display_links = ["no_document"]
