@@ -7,7 +7,7 @@
 <div class="text-center mb-3">
     <h4>Ewidencja Umów - Media</h4>
     {%if last_date%}
-    <small>Ostatnia aktualizacja: {{last_date.change|date:'d.m.Y (H:i)'}}</small>
+    <small>Ostatnia aktualizacja: {{last_date.change|date:'d.m.Y'}}&nbsp;r. ({{last_date.change|date:'H:i'}})</small>
     {%endif%}
 </div>
 <div class="row">

@@ -1,6 +1,7 @@
 {%extends 'base.html'%}
 {%load bootstrap%}
 {%load static%}
+{%load humanize%}
 {% block title %} Dokumenty księgowe {%endblock%}
 {%block content%}
 {%if user.is_authenticated and user.accessmodule.contract_media%}
@@ -10,27 +11,75 @@
             <a href="{%url 'contracts:show_contract_media' contract.id%}">
                 <button class="btn btn-outline-primary my-btn">
                     <span class="bi bi-chevron-compact-left">Cofnij</span>
-                </button>
-            </a>
+                </button></a>
         </div>
         <div class="col-md-6">
             <h5>Dokumenty księgowe dla umowy {{contract.no_contract}} z dnia
                 {{contract.date|date:"d.m.Y"}}&nbsp;r. </h5>
         </div>
         <div class="col-md-3 moj-button-right">
-            <a href="">
+            <a href="{%url 'contracts:add_financial_document' contract.id%}">
                 <button class="btn btn-outline-primary my-btn">
                     <span class="bi bi-plus-circle"> Dodaj dokument</span>
-                </button>
-            </a>
+                </button></a>
         </div>
+    </div>
+    <div class="row">
+        <div class="col d-flex justify-content-around my-3">
+            <span>Wartość: <b>{{values|intcomma}}</b></span>
+            <span>Koszty: <b>{{costs|intcomma}} zł</b></span>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <table class="table table-hover my-table mt-2">
+        <thead>
+        <tr class="my-table-tr">
+            <th align="center" valign="middle" width="50" scope="col" class="text-center">L.p.</th>
+            <th align="center" valign="middle" width=5% scope="col" class="text-center">Data</th>
+            <th align="center" valign="middle" width="auto" scope="col" class="text-center">Nr. dokumentu</th>
+            <th align="center" valign="middle" width="auto" scope="col" class="text-center">Wartość</th>
+            <th align="center" valign="middle" width="auto" scope="col" class="text-center">Koszt</th>
+            <th align="center" valign="middle" width="auto" scope="col" class="text-center">Informacje</th>
+            <th align="center" valign="middle" width="20%" scope="col" class="text-center"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {%for docs in financialDocs%}
+        <tr class="my-table-tr">
+            <td align="center" valign="middle" class="text-center" scope="row"></td>
+            <td align="center" valign="middle" class="text-center">{{docs.date|date:"d.m.Y"}}&nbsp;r.</td>
+            <td align="center" valign="middle">{{docs.no_document}}</td>
+            <td align="right" valign="middle">{{docs.value|intcomma}} {{docs.unit_measure}}</td>
+            <td align="right" valign="middle">{{docs.cost_brutto|intcomma}}&nbsp;zł</td>
+            <td valign="middle"><small>{{docs.information}}</small></td>
 
-    </div>
-    <div class="container">
-        {%for doc in financialDoc%}
-        {{doc}}
+            </td>
+            <td align="right" valign="middle">
+                <a class="m-2" href="">
+                    <button data-toggle="info" title="Pokaż" type="button"
+                            class="btn btn-outline-primary icon-color my-1">
+                        <i class="bi bi-eye"></i>
+                    </button></a>
+                {%if user.accessmodule.contract_media_edit%}
+                <a class="m-2" href="{% url 'contracts:edit_financial_document' contract.id docs.id%}">
+                    <button data-toggle="info" title="Edytuj" type="submit"
+                            class="btn btn-outline-primary icon-color my-1">
+                        <i class="bi bi-pencil-square"></i>
+                    </button></a>
+                {%endif%}
+            </td>
+        </tr>
         {%endfor%}
-    </div>
+        </tbody>
+        <tfoot>
+        <tr>
+            <th colspan="5">Wydział Inwestycji i Remontów KWP w Poznaniu</th>
+        </tr>
+        </tfoot>
+    </table>
+
+</div>
 
 </div>
 <script>
@@ -42,6 +91,11 @@
     $(function () {
         $('[data-toggle="info"]').tooltip()
     })
+
+
+
+
+
 
 </script>
 {%endif%}

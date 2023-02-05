@@ -170,3 +170,4 @@ class AnnexContractMediaAdmin(admin.ModelAdmin):
 class FinancialDocumentAdmin(admin.ModelAdmin):
     list_display = ["contract", "date", "no_document", "unit_measure", "value", "vat", "cost_brutto", "author"]
     list_display_links = ["no_document"]
+    search_fields = ["contract__no_contract", "no_document"]

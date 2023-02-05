@@ -4,7 +4,7 @@
 {% block title %}Umowa z dnia {{contract.date|date:"d.m.Y"}} r. {%endblock%}
 {%block content%}
 {%if user.is_authenticated and user.accessmodule.contract_media%}
-<div class="container col-md-10 mb-3">
+<div class="container mb-3">
     <div class="row">
         {%if contract.state%}
         <div class="col-md-3 moj-button-left">
@@ -36,7 +36,7 @@
         </div>
     </div>
 </div>
-<div class="container col-md-10">
+<div class="container">
     <div class="row mt-2">
         <div class="col-md-9">
             <ul class="list-group list-group-flush">

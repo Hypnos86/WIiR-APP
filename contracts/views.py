@@ -1,10 +1,10 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.core.paginator import Paginator
 from contracts.models import ContractImmovables, ContractAuction, AnnexContractAuction, ContractMedia, \
     GuaranteeSettlement, FinancialDocument
 from contracts.forms import ContractImmovablesForm, ContractAuctionForm, AnnexImmovablesForm, AnnexContractAuctionForm, \
-    ContractMediaForm, AnnexContractMediaForm, GuaranteeSettlementForm
+    ContractMediaForm, AnnexContractMediaForm, GuaranteeSettlementForm, FinancialDocumentForm
 from main.models import AccessModule
 from django.contrib.auth.models import User
 from units.models import Unit
@@ -500,7 +500,6 @@ def edit_settlement(request, id):
             instance.settlement_sum = settlement_model.settlement_sum
             instance.deadline_settlement = settlement_model.deadline_settlement
             instance.save()
-
         return redirect("investments:make_important_task_investments")
 
     return render(request, "contracts/settlement_form.html",
@@ -516,6 +515,48 @@ def show_information_settlement(request, id):
 @login_required
 def financial_document_list(request, contract_id):
     contract = get_object_or_404(ContractMedia, pk=contract_id)
-    financialDoc = FinancialDocument.objects.all().filter(id=contract.id)
-    context = {"contract": contract, "financialDoc": financialDoc}
+    financialDocs = FinancialDocument.objects.all().filter(contract__id=contract.id)
+
+    values_sum = []
+    costs_sum = []
+
+    for docs in financialDocs:
+        values_sum.append(docs.value)
+        costs_sum.append(docs.cost_brutto)
+
+    values = sum(values_sum)
+    costs = sum(costs_sum)
+
+    context = {"contract": contract, "financialDocs": financialDocs, "values": values, "costs": costs}
     return render(request, "contracts/financial_document_list.html", context)
+
+
+@login_required
+def add_financial_document(request, contract_id):
+    add_document_form = FinancialDocumentForm(request.POST or None)
+
+    if request.method == 'POST':
+        if add_document_form.is_valid():
+            instance = add_document_form.save(commit=False)
+            instance.author = request.user
+            instance.contract = contract_id
+            add_document_form.save()
+            return redirect(reverse('contracts:financial_document_list', kwargs={"contract_id": contract_id}))
+    return render(request, 'contracts/financial_media_form.html',
+                  {'document': add_document_form, 'contract_id': contract_id, 'new': True})
+
+
+@login_required
+def edit_financial_document(request, contract_id, id):
+    edit_document = get_object_or_404(FinancialDocument, pk=id)
+    add_document_form = FinancialDocumentForm(request.POST or None, instance=edit_document)
+
+    if request.method == 'POST':
+        if add_document_form.is_valid():
+            instance = add_document_form.save(commit=False)
+            instance.author = request.user
+            instance.contract = contract_id
+            add_document_form.save()
+            return redirect(reverse('contracts:financial_document_list', kwargs={"contract_id": contract_id}))
+    return render(request, 'contracts/financial_media_form.html',
+                  {'document': add_document_form, 'contract_id': contract_id, 'new': False})

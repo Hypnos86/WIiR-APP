@@ -286,7 +286,7 @@ class FinancialDocument(models.Model):
     class Meta:
         verbose_name = "Dokument księgowy"
         verbose_name_plural = "Dokumenty księkowe"
-        ordering = ["date"]
+        ordering = ["-date"]
 
     related_name = "financialdocument"
 
@@ -296,10 +296,10 @@ class FinancialDocument(models.Model):
     no_document = models.CharField("Nr. dokumentu", max_length=30, null=False)
     unit_measure = models.ForeignKey(UnitMeasure, on_delete=models.CASCADE, verbose_name="Jednostka miary",
                                      related_name=related_name)
-    value = models.DecimalField("Zużycie", max_digits=10, decimal_places=2)
+    value = models.DecimalField("Zużycie", max_digits=10, decimal_places=0)
     vat = models.ForeignKey(Tax, on_delete=models.CASCADE, verbose_name="Vat", related_name=related_name)
     cost_netto = models.DecimalField("Kwota netto", max_digits=10, decimal_places=2)
-    cost_brutto = models.DecimalField("Kwota brutto", max_digits=10, decimal_places=2)
+    cost_brutto = models.DecimalField("Kwota brutto", max_digits=10, decimal_places=2, null=True, blank=True)
     information = models.TextField("Informacje", null=True, blank=True, default="")
     creation_date = models.DateTimeField("Data utworzenia", auto_now_add=True)
     change = models.DateTimeField("Zmiany", auto_now=True)
