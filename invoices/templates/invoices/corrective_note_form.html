@@ -19,8 +19,14 @@
             <div class="col-md-4 p-2">{{note_form.date|bootstrap}}</div>
             <div class="col-md-4 p-2">{{note_form.no_note|bootstrap}}</div>
             <div class="col-md-4 p-2">{{note_form.corrective_invoice|bootstrap}}</div>
+        </div>
+        <div class="row">
             <div class="col-md-12 p-2">{{note_form.contractor|bootstrap}}</div>
+        </div>
+        <div class="row">
             <div class="col-md-12 p-2">{{note_form.information|bootstrap}}</div>
+        </div>
+        <div class="row">
             <div class="col-md-12 p-2 mt-2 moj-button-right">
                 <button type="submit" class="btn btn-outline-primary my-btn"><span class="bi bi-save2"> {%if new%}Zapisz{%else%}Zapisz zmiany{%endif%}</span></button>
             </div>

@@ -40,12 +40,18 @@
                 {{invoice.doc_types|bootstrap}}
                 {%endif%}
             </div>
+        </div>
+        <div class="row">
             <div class="col-md-8 my-2">{{invoice.contractor|bootstrap}}</div>
             <div class="col-md-4 my-2">{{invoice.date_of_payment|bootstrap}}</div>
+        </div>
+        <div class="row">
             <div class=" col-md-6 my-2">
                 <div class="row">
                     <div class="col-md-6 my-2">{{invoice.period_from|bootstrap}}</div>
                     <div class="col-md-6 my-2">{{invoice.period_to|bootstrap}}</div>
+                </div>
+                <div class="row">
                     <div class="col-md-6 my-2">{{invoice.county|bootstrap}}</div>
                     <div class="col-md-6 my-2">{{invoice.creator|bootstrap}}</div>
                 </div>

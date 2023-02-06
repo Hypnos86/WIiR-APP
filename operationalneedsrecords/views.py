@@ -97,7 +97,8 @@ def edit_needs_letter(request, year, id):
             instance.save()
             return redirect(reverse('operationalneedsrecords:list_needs_letter', kwargs={"year": year}))
     return render(request, 'operationalneedsrecords/needs_letter_form.html',
-                  {"object_form": object_form, "units": units, "object_edit": object_edit, "new": False, "year": year})
+                  {"object_form": object_form, "units": units, "object_edit": object_edit, "new": False, "year": year,
+                   "back_to_show_info": True, "id": id})
 
 
 @login_required

@@ -7,7 +7,7 @@
 <div class="container mb-3">
     <div class="row">
         {%if contract.state%}
-        <div class="col-md-3 moj-button-left">
+        <div class="col-md-2 moj-button-left">
             <a href="{%url 'contracts:create_contract_media_list'%}">
                 <button class="btn btn-outline-primary my-btn">
                     <span class="bi bi-chevron-compact-left">Cofnij</span>
@@ -25,14 +25,23 @@
         {%endif%}
         <div class="col-md-6 text-center">
             <h4 title="Ostatnie zmiany na umowie: {{contract.change|date:'d.m.Y - (H:i)'}}">Umowa {%if contract.no_contract%} nr {{contract.no_contract}} {%endif%} z dnia {{contract.date|date:"d.m.Y"}} r.</h4>
-            <small class="text-muted">Data utworzenia: {{contract.creation_date|date:'d.m.Y'}} ({{contract.creation_date|date:'H:i'}})</small>
+            <small class="text-muted">Data utworzenia: {{contract.creation_date|date:'d.m.Y'}}&nbsp;r. ({{contract.creation_date|date:'H:i'}})</small>
         </div>
-                <div class="col-md-3 moj-button-right">
+        <div class="col-md-3 moj-button-left">
             <a href="{%url 'contracts:financial_document_list' contract.id%}">
                 <button class="btn btn-outline-primary my-btn">
                     <span class="bi bi-files"> Dokumenty księgowe</span>
                 </button>
             </a>
+        </div>
+        <div class="col-md-1 moj-button-right">
+            {%if user.accessmodule.contract_media_edit%}
+            <a href="{% url 'contracts:edit_contract_media' id %}">
+                <button data-toggle="info" title="Edytuj" type="submit" class="btn btn-outline-primary my-btn ">
+                    <i class="bi bi-pencil-square"></i>
+                </button>
+            </a>
+            {%endif%}
         </div>
     </div>
 </div>

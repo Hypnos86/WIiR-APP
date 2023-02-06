@@ -29,29 +29,36 @@
             <section class="w-100 d-flex justify-content-center align-items-center flex-column">
                 <form id="form-search" method="get">
                     <div class="row">
-                    <div class="col-md-3">
-                        <div class="">
-                            <label class="control-label" for="date_from">Data noty od</label>
-                            <div class=" ">
-                                <input type="date" name="from" class="form-control" id="date_from" value="{{date_from}}">
+                        <div class="col-md-3">
+                            <div class="">
+                                <label class="control-label" for="date_from">Data noty od</label>
+                                <div class=" ">
+                                    <input type="date" name="from" class="form-control" id="date_from"
+                                           value="{{date_from}}">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="">
-                            <label class="control-label" for="date_to">Data noty do</label>
-                            <div class=" ">
-                                <input type="date" name="to" class="form-control" id="date_to" value="{{date_to}}">
+                        <div class="col-md-3">
+                            <div class="">
+                                <label class="control-label" for="date_to">Data noty do</label>
+                                <div class=" ">
+                                    <input type="date" name="to" class="form-control" id="date_to" value="{{date_to}}">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-5 d-flex align-items-end">
-                        <div class="input-group">
-                            <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj dokumentu" aria-label="Search" aria-describedby="search-addon" value="{{q}}">
-                            <button id="searchButton" style="{%if query%}display:none;{%endif%}" type="submit" class="btn btn-outline-primary my-btn">Szukaj</button>
-                            <button id="cleanButton"  style="{%if not query%}display:none;{%endif%}" type="button" class="btn btn-outline-primary my-btn" onclick="cleanSearch()">Wyczyść</button>
+                        <div class="col-md-5 d-flex align-items-end">
+                            <div class="input-group">
+                                <input name="q" id="q" type="text" class="form-control rounded"
+                                       placeholder="szukaj dokumentu" aria-label="Search"
+                                       aria-describedby="search-addon" value="{{q}}">
+                                <button id="searchButton" style="{%if query%}display:none;{%endif%}" type="submit"
+                                        class="btn btn-outline-primary my-btn">Szukaj
+                                </button>
+                                <button id="cleanButton" style="{%if not query%}display:none;{%endif%}" type="button"
+                                        class="btn btn-outline-primary my-btn" onclick="cleanSearch()">Wyczyść
+                                </button>
+                            </div>
                         </div>
-                    </div>
                     </div>
                 </form>
             </section>
@@ -79,19 +86,24 @@
         <tbody>
         {% for note in notes %}
         <tr class="my-table-tr">
-            <td align="center" valign="middle" scope="row" data-toggle="info" title="Zapisujący: {{user.first_name}} {{user.last_name}}"><span class="text-center"></span></td>
+            <td align="center" valign="middle" scope="row" data-toggle="info"
+                title="Zapisujący: {{user.first_name}} {{user.last_name}}"><span class="text-center"></span></td>
             <td align="center" valign="middle"><span>{{note.date|date:"d.m.Y"}}&nbspr.</span></td>
-            <td align="center" valign="middle"><span title="{{invoice.creator}}">{{note.no_note|default_if_none:''}}</span></td>
-            <td align="left" valign="middle"><span title="SWOP ID: {{note.contractor.no_contractor}}">{{note.contractor.name}}.<br> <small>Adres: {{note.contractor.address}}, {{note.contractor.zip_code}} {{note.contractor.city}}</small></span></td>
+            <td align="center" valign="middle"><span
+                    title="{{invoice.creator}}">{{note.no_note|default_if_none:''}}</span></td>
+            <td align="left" valign="middle"><span title="SWOP ID: {{note.contractor.no_contractor}}">{{note.contractor.name}}.<br> <small>Adres: {{note.contractor.address}}, {{note.contractor.zip_code}} {{note.contractor.city}}</small></span>
+            </td>
             <td align="left" valign="middle"><span>{{note.corrective_invoice}}</span></td>
             <td align="right" width="120">
-                <button data-toggle="info" title="Korygowaną treść" type="button" data-url="{% url 'invoices:show_info_note' note.id %}"
+                <button data-toggle="info" title="Korygowaną treść" type="button"
+                        data-url="{% url 'invoices:show_info_note' note.id %}"
                         class="btn btn-outline-success mx-2 my-1" onclick="openModal(this)">
                     <i class="bi bi-file-earmark-text"></i>
                 </button>
                 {%if user.accessmodule.invoices_module_edit%}
                 <a class="mx-2" href="{%url 'invoices:edit_note' note.id%}">
-                    <button data-toggle="info" title="Edytuj" type="submit" class="btn btn-outline-primary icon-color mx-1 ">
+                    <button data-toggle="info" title="Edytuj" type="submit"
+                            class="btn btn-outline-primary icon-color mx-1 ">
                         <i class="bi bi-pencil-square my-1"></i>
                     </button>
                 </a>
@@ -177,6 +189,7 @@
         $("#date_to").val("");
         $("#form-search").submit();
     }
+
 </script>
 {%endif%}
 {%endblock%}

@@ -17,7 +17,7 @@
         </div>
     </div>
 </div>
-<div class="container col-md-7">
+<div class="container col-md-7 mt-4">
     <form class="" method="post">
         {%csrf_token%}
         <div class="row">
@@ -40,6 +40,8 @@
                 {{invoice.doc_types|bootstrap}}
                 {%endif%}
             </div>
+        </div>
+        <div class="row">
             <div class="col-md-6 my-2">{{invoice.contractor|bootstrap}}</div>
             <div class="col-md-3 my-2">{{invoice.date_of_payment|bootstrap}}</div>
             <div class="col-md-3 my-2">
@@ -50,8 +52,10 @@
                     </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-between">
-                <div class="col-md-12 ">{{invoice.information|bootstrap}}</div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div>{{invoice.information|bootstrap}}</div>
             </div>
         </div>
         <div class="row mt-4">

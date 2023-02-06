@@ -117,10 +117,11 @@ class AnnexContractMediaForm(ModelForm):
 class FinancialDocumentForm(ModelForm):
     class Meta:
         model = FinancialDocument
-        fields = ["contract", "date", "no_document", "unit_measure", "value", "vat", "cost_netto", "cost_brutto",
+        fields = ["date", "no_document", "unit_measure", "value", "vat", "cost_netto", "cost_brutto",
                   "information"]
         labels = {"contract": "Umowa", "date": "Data", "no_document": "Nr. dokumentu",
                   "unit_measure": "Jednostka miary", "value": "Zużycie", "vat": "Vat", "cost_netto": "Koszt netto",
                   "cost_brutto": "Koszt brutto", "information": "Informacje"}
-        exclude = ["creation_date", "change", "author"]
-        widgets = {"date": DateField()}
+        exclude = ["contract", "creation_date", "change", "author"]
+        widgets = {"date": DateField(),
+                   "information": Textarea(attrs={"rows": 3})}

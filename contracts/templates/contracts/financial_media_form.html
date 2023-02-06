@@ -1,2 +1,62 @@
-{%load bootstrap%}
-{{document|bootstrap}}
+{% extends 'base.html' %}
+{% load bootstrap %}
+{% load humanize %}
+{% load static %}
+{% block title %}Dodaj Umowę {%endblock%}
+{% block content %}
+{%if user.is_authenticated and user.accessmodule.contracts_auction_module_edit%}
+<div class="container col-md-8 mb-3">
+    <div class="row">
+        <div class="col-md-3">
+            <a href="{%url 'contracts:financial_document_list' contract_id%}">
+                <button class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span>
+                </button>
+            </a>
+        </div>
+        <div class="col-md-6">
+            <h4 class="text-center">{%if new%}Noway dokument{%else%}Edycja dokumentu
+                {{contract.no_contract}}{%endif%}</h4>
+        </div>
+    </div>
+</div>
+<div class="container col-md-6 mt-5">
+    <form method="POST" enctype="multipart/form-data">
+        {%csrf_token%}
+            <div class="row my-3">
+                <div class="col-md-3">{{document.date|bootstrap}}</div>
+                <div class="col-md-5">{{document.no_document|bootstrap}}</div>
+                <div class="col-md-4">{{document.unit_measure|bootstrap}}</div>
+            </div>
+            <div class="row my-3">
+                <div class="col-md-3">{{document.value|bootstrap}}</div>
+                <div class="col-md-5">{{document.cost_netto|bootstrap}}</div>
+                <div class="col-md-4">{{document.vat|bootstrap}}</div>
+            </div>
+            <div class="row my-3">
+                <div class="col-md-12">{{document.information|bootstrap}}</div>
+            </div>
+            {%if new == False%}
+            <div class="col-md-12 moj-button-right">
+                <button type="submit" class="btn btn-outline-primary my-btn">
+                    <span class="bi bi-save2"> Zapisz zmiany</span>
+                </button>
+            </div>
+
+            {%else%}
+            <div class="col-md-12 py-4 moj-button-right">
+                <button type="submit" class="btn btn-outline-primary my-btn">
+                    <span class="bi bi-save2"> Dodaj dokument</span>
+                </button>
+            </div>
+            {%endif%}
+    </form>
+</div>
+
+<script>
+    document.getElementById("button-units").classList.remove("active");
+    document.getElementById("button-record").classList.remove("active");
+    document.getElementById("button-investments").classList.add("active");
+    document.getElementById("button-cpv").classList.remove("active");
+</script>
+{%endif%}
+{% endblock %}

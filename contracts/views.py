@@ -356,7 +356,7 @@ def edit_contract_media(request, id):
             return redirect('contracts:create_contract_media_list')
     return render(request, 'contracts/contract_media_form.html',
                   {'contract_form': contract_form, 'new': False, 'units': units, 'contract_edit': contract_edit,
-                   'selected_units': selected_units})
+                   'selected_units': selected_units, "back_to_show_info": True, "id": id})
 
 
 @login_required
@@ -467,7 +467,7 @@ def show_contract_media(request, id):
     units = contract_media.unit.all()
     annexes = contract_media.annex_contract_media.all()
     return render(request, 'contracts/show_contract_media.html',
-                  {'contract': contract_media, 'annexes': annexes, 'units': units})
+                  {'contract': contract_media, 'annexes': annexes, 'units': units, "id":id})
 
 
 @login_required
@@ -533,13 +533,14 @@ def financial_document_list(request, contract_id):
 
 @login_required
 def add_financial_document(request, contract_id):
+    contract = get_object_or_404(ContractMedia, pk=contract_id)
     add_document_form = FinancialDocumentForm(request.POST or None)
 
     if request.method == 'POST':
         if add_document_form.is_valid():
             instance = add_document_form.save(commit=False)
+            instance.contract = contract
             instance.author = request.user
-            instance.contract = contract_id
             add_document_form.save()
             return redirect(reverse('contracts:financial_document_list', kwargs={"contract_id": contract_id}))
     return render(request, 'contracts/financial_media_form.html',
@@ -548,14 +549,15 @@ def add_financial_document(request, contract_id):
 
 @login_required
 def edit_financial_document(request, contract_id, id):
+    contract = get_object_or_404(ContractMedia, pk=contract_id)
     edit_document = get_object_or_404(FinancialDocument, pk=id)
     add_document_form = FinancialDocumentForm(request.POST or None, instance=edit_document)
 
     if request.method == 'POST':
         if add_document_form.is_valid():
             instance = add_document_form.save(commit=False)
+            instance.contract = contract
             instance.author = request.user
-            instance.contract = contract_id
             add_document_form.save()
             return redirect(reverse('contracts:financial_document_list', kwargs={"contract_id": contract_id}))
     return render(request, 'contracts/financial_media_form.html',
