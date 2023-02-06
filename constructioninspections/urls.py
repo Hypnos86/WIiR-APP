@@ -10,40 +10,40 @@ urlpatterns = [
     # Menu
     path("", important_inspections, name="important_inspections"),
     # Njapilniejsze przeglady
-    path("upcoming_reviews/<int:typeInspection>/", priority_inspections_list, name="priority_inspections_list"),
+    path("upcomingReviews/<int:typeInspection>/", priority_inspections_list, name="priority_inspections_list"),
     # Popapy do wybierania rocznych lub pięcioletnich protokołów
-    path("buildings_inspections_choice_popup/", buildings_inspections_choice,
+    path("buildingsInspectionsChoicePopup/", buildings_inspections_choice,
          name="buildings_inspections_choice"),
-    path("electrical_inspections_choice_popup/", electrical_inspections_choice,
+    path("electricalInspectionsChoicePopup/", electrical_inspections_choice,
          name="electrical_inspections_choice"),
     # Dodanie nowego protokołu
-    path("add_protocol/<int:typeInspection>", add_protocol,
+    path("addProtocol/<int:typeInspection>", add_protocol,
          name="add_protocol"),
     # Edytowanie protokołu
-    path("edit_protocol/<int:typeInspection>/<int:id>/", edit_protocol, name="edit_protocol"),
+    path("editProtocol/<int:typeInspection>/<int:id>/", edit_protocol, name="edit_protocol"),
     # Przeglądy budynków - roczne
-    path("buildings_inspections_one_year/", create_buildings_one_year_inspections_list,
+    path("buildingsInspectionsOneYear/", create_buildings_one_year_inspections_list,
          name="create_buildings_one_year_inspections_list"),
     # Przeglądy budynków - pięcioletnie
-    path("buildings_inspections_five_year/", create_buildings_five_year_inspections_list,
+    path("buildingsInspectionsFiveYear/", create_buildings_five_year_inspections_list,
          name="create_buildings_five_year_inspections_list"),
     # Przeglądy kominowe
-    path("chimneys_inspections/", create_chimney_inspection_list, name="create_chimney_inspection_list"),
+    path("chimneysInspections/", create_chimney_inspection_list, name="create_chimney_inspection_list"),
     # Przeglądy elektryczne - roczne
-    path("electrical_inspections_one_year/", create_electrical_inspection_one_year_list,
+    path("electricalInspectionsOneYear/", create_electrical_inspection_one_year_list,
          name="create_electrical_inspection_one_year_list"),
     # Przeglądy elektryczne - pięcioletnie
-    path("electrical_inspections_five_year/", create_electrical_inspection_five_year_list,
+    path("electricalInspectionsFiveYear/", create_electrical_inspection_five_year_list,
          name="create_electrical_inspection_five_year_list"),
     # Przeglądy kotłów
-    path("heating_boilers_inspections/", create_heating_boilers_inspection_list,
+    path("heatingBoilersInspections/", create_heating_boilers_inspection_list,
          name="create_heating_boilers_inspection_list"),
     # Przeglądy klimatyzacji
-    path("air_conditioners_inspections/", create_air_conditioners_inspection_list,
+    path("airConditionersInspections/", create_air_conditioners_inspection_list,
          name="create_air_conditioners_inspection_list"),
     # Przeglądy p.poż
-    path("create_fire_inspections/", create_fire_inspection_list, name="create_fire_inspection_list"),
+    path("createFireInspections/", create_fire_inspection_list, name="create_fire_inspection_list"),
     # Popup informacyjny
-    path("show_info/<int:typeInspection>/<int:id>", show_information, name="show_information")
+    path("info/<int:typeInspection>/<int:id>", show_information, name="show_information")
 
 ]

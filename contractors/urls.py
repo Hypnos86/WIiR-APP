@@ -3,8 +3,8 @@ from .views import contractor_list, new_contractor, edit_contractor, show_inform
 
 app_name = "contractors"
 urlpatterns = [
-    path("new_contractor/", new_contractor, name="new_contractor"),
-    path("edit_contractor/<int:id>", edit_contractor, name="edit_contractor"),
-    path("information/<int:id>", show_information, name="show_information"),
+    path("newContractor/", new_contractor, name="new_contractor"),
+    path("editContractor/<int:id>/", edit_contractor, name="edit_contractor"),
+    path("info/<int:id>/", show_information, name="show_information"),
     path("", contractor_list, name="contractor_list")
 ]

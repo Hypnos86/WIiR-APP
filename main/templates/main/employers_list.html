@@ -4,7 +4,7 @@
 {% block content %}
 {%if user.is_authenticated and user.accessmodule.zok_team%}
 <div class="container">
-    <div class="row pt-5">
+    <div class="row">
         <div class="col-md-2">
             <a href="{%url 'main:make_secretariat_site'%}">
                 <button class="btn btn-outline-primary my-btn">
@@ -34,14 +34,22 @@
         </div>
         {%if secretariat%}
          <div>
+             {%if secretariat.code%}
              <span class="text-muted">Nr. kierunkowy:</span>&nbsp;<span>{{secretariat.code}}</span><br>
+             {%endif%}
+             {%if secretariat.secretariat_number%}
              <span class="text-muted">Nr. do sekretariatu:</span>&nbsp;<span>{{secretariat.secretariat_number}}</span><br>
+             {%endif%}
+             {%if secretariat.fax_number%}
              <span class="text-muted">Nr. Fax do WIiR:</span>&nbsp;<span>{{secretariat.fax_number}}</span><br>
+             {%endif%}
+             {%if secretariat.information%}
              <span class="text-muted" data-toggle="info" title="Informacja ukazująca się w spisie telefonów">Informacja:</span>&nbsp;<span>{{secretariat.information}}</span><br>
+             {%endif%}
         </div>
         {%endif%}
     </div>
-    <div class="mt-4">
+    <div class="row mt-4">
         <table class="table table-sm">
             <thead class="table-dark">
             <tr class="my-table-tr">

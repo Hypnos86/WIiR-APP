@@ -4,10 +4,10 @@ from donations.views import donations_list, add_donation, edit_donation, show_in
 app_name = 'donations'
 
 urlpatterns = [
-    path('darowizny/<int:year>/', donations_list, name='donations_list'),
-    path('nowa_darowizna/<int:year>/', add_donation, name='add_donation'),
-    path('edycja_darowizny/<int:year>/<int:id>/', edit_donation, name='edit_donation'),
-    path('informacje/<int:id>/', show_information_popup, name='show_information_popup'),
-    path('lata_darowizn/', show_archive_year_list, name='show_archive_year_list'),
-    path('archiwum_darowizn/<int:year>/', donations_list_archive, name='donations_list_archive')
+    path('donations/<int:year>/', donations_list, name='donations_list'),
+    path('newDonation/<int:year>/', add_donation, name='add_donation'),
+    path('editDonation/<int:year>/<int:id>/', edit_donation, name='edit_donation'),
+    path('info<int:id>/', show_information_popup, name='show_information_popup'),
+    path('donationYear/', show_archive_year_list, name='show_archive_year_list'),
+    path('donationArchive/<int:year>/', donations_list_archive, name='donations_list_archive')
 ]
