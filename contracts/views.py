@@ -517,16 +517,18 @@ def financial_document_list(request, contract_id):
     contract = get_object_or_404(ContractMedia, pk=contract_id)
     financialDocs = FinancialDocument.objects.all().filter(contract__id=contract.id)
 
+    sum_count = 0
     values_sum = []
     costs_sum = []
 
     for docs in financialDocs:
+        sum_count += docs.value
         values_sum.append(docs.value)
         costs_sum.append(docs.cost_brutto)
 
     values = sum(values_sum)
     costs = sum(costs_sum)
-
+    print(sum_count)
     context = {"contract": contract, "financialDocs": financialDocs, "values": values, "costs": costs}
     return render(request, "contracts/financial_document_list.html", context)
 

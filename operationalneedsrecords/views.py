@@ -98,13 +98,12 @@ def edit_needs_letter(request, year, id):
             return redirect(reverse('operationalneedsrecords:list_needs_letter', kwargs={"year": year}))
     return render(request, 'operationalneedsrecords/needs_letter_form.html',
                   {"object_form": object_form, "units": units, "object_edit": object_edit, "new": False, "year": year,
-                   "back_to_show_info": True, "id": id})
+                   "id": id})
 
 
 @login_required
 def needs_letter_show(request, year, id):
     object = get_object_or_404(NeedsLetter, pk=id)
-
     return render(request, 'operationalneedsrecords/needs_letter_show.html', {"object": object, "year": year})
 
 
