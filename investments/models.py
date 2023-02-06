@@ -13,7 +13,7 @@ def upload_scan(instance, filename):
 class Project(models.Model):
     class Meta:
         verbose_name = "Zadanie inwestycyjne"
-        verbose_name_plural = "Zadania inwestycyjne"
+        verbose_name_plural = "I.01 - Zadania inwestycyjne"
         ordering = ["date_of_acceptance"]
 
     date_of_acceptance = models.DateField("Data programu", null=True, blank=True)

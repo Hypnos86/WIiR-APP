@@ -16,7 +16,7 @@ class DocumentsTypeEnum(Enum):
 class DocumentTypes(models.Model):
     class Meta:
         verbose_name = "Rodzaj dokumentu księgowego"
-        verbose_name_plural = "Rodzaje dokumentów księgowych"
+        verbose_name_plural = "F.05 - Rodzaje dokumentów księgowych"
 
     type = models.CharField("Typ dokumentu", max_length=20)
 
@@ -27,7 +27,7 @@ class DocumentTypes(models.Model):
 class InvoiceSell(models.Model):
     class Meta:
         verbose_name = "Faktura sprzedaży"
-        verbose_name_plural = "Faktury - sprzedaż"
+        verbose_name_plural = "F.01 - Faktury - sprzedaż"
         ordering = ["-date"]
 
     relatedName = "invoicesell"
@@ -57,7 +57,7 @@ class InvoiceSell(models.Model):
 class InvoiceBuy(models.Model):
     class Meta:
         verbose_name = "Faktura - kupno"
-        verbose_name_plural = "Faktury - kupno"
+        verbose_name_plural = "F.03 - Faktury - kupno"
         ordering = ["-date_receipt"]
 
     relatedName = "invoicebuy"
@@ -84,7 +84,7 @@ class InvoiceBuy(models.Model):
 class InvoiceItems(models.Model):
     class Meta:
         verbose_name = "Element faktury"
-        verbose_name_plural = "Elementy faktury"
+        verbose_name_plural = "F.04 - Elementy faktury"
         ordering = ["invoice_id"]
 
     relatedName = "invoice_items"
@@ -104,7 +104,7 @@ class InvoiceItems(models.Model):
 class CorrectiveNote(models.Model):
     class Meta:
         verbose_name = "Nota korygująca"
-        verbose_name_plural = "Noty korygujące"
+        verbose_name_plural = "F.02 - Noty korygujące"
         ordering = ["-date"]
 
     relatedName = "correctivenote"

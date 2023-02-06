@@ -7,7 +7,7 @@ import os
 class Team(models.Model):
     class Meta:
         verbose_name = "Komórka Wydziału"
-        verbose_name_plural = "Komórki Wydziału"
+        verbose_name_plural = "S.02 - Komórki Wydziału"
         ordering = ["priority"]
 
     priority = models.IntegerField("Priorytet", null=True, blank=True, default=0)
@@ -31,7 +31,7 @@ class TeamEnum(Enum):
 class SecretariatTelephone(models.Model):
     class Meta:
         verbose_name = "Telefon do sekretariatu"
-        verbose_name_plural = "Telefony do sekretariatu"
+        verbose_name_plural = "S.05 - Telefony do sekretariatu"
 
     code = models.IntegerField("Nr. kierunkowy", null=True, blank=True)
     fax_number = models.CharField("Nr. faxu", max_length=6, null=True, blank=True, default="")
@@ -46,7 +46,7 @@ class SecretariatTelephone(models.Model):
 class OrganisationTelephone(models.Model):
     class Meta:
         verbose_name = "Książka telefoniczna KWP w Poznaniu"
-        verbose_name_plural = "Książka telefoniczna KWP w Poznaniu"
+        verbose_name_plural = "S.06 - Książka telefoniczna KWP w Poznaniu"
 
     telephone_book = models.FileField(upload_to="KWP_telephone/%Y/", null=True,
                                       verbose_name="Spis telefonów KWP w Poznaniu")
@@ -56,7 +56,7 @@ class OrganisationTelephone(models.Model):
 class IndustryType(models.Model):
     class Meta:
         verbose_name = "Branża"
-        verbose_name_plural = "Branże"
+        verbose_name_plural = "S.03 - Branże"
 
     industry = models.CharField("Brażna", max_length=50)
 
@@ -67,7 +67,7 @@ class IndustryType(models.Model):
 class Employer(models.Model):
     class Meta:
         verbose_name = "Pracownik"
-        verbose_name_plural = "Pracownicy"
+        verbose_name_plural = "S.04 - Pracownicy"
         ordering = ["team", "last_name"]
 
     related_name = "employer"
@@ -99,7 +99,7 @@ class AccessModule(models.Model):
 
     class Meta:
         verbose_name = "Dostęp do modułów"
-        verbose_name_plural = "Dostęp do modułów"
+        verbose_name_plural = "S.01 - Dostęp do modułów"
 
     user = models.OneToOneField("auth.User", on_delete=models.CASCADE, verbose_name="Użytkownik",
                                 related_name=relatedName)
@@ -154,7 +154,7 @@ def upload_scan(instance, filename):
 class Command(models.Model):
     class Meta:
         verbose_name = "Polecenie"
-        verbose_name_plural = "Polecenia"
+        verbose_name_plural = "S.07 - Polecenia"
         ordering = ["create_date"]
 
     title = models.CharField("Nazwa", max_length=120)
@@ -170,7 +170,7 @@ class Command(models.Model):
 class Car(models.Model):
     class Meta:
         verbose_name = "Samochód sużbowy"
-        verbose_name_plural = "Samochód służbowy"
+        verbose_name_plural = "S.08 - Samochód służbowy"
         ordering = ["-rent_date"]
 
     related_name = "car"

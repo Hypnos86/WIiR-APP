@@ -9,7 +9,7 @@ from cpvdict.models import Tax
 class TypeOfContract(models.Model):
     class Meta:
         verbose_name = "Rodzaj umowy"
-        verbose_name_plural = "Umowy Nieruchomości - Rodzaje umów"
+        verbose_name_plural = "U.03 - Umowy Nieruchomości - Rodzaje umów"
 
     type = models.CharField(max_length=10)
 
@@ -20,7 +20,7 @@ class TypeOfContract(models.Model):
 class LegalBasic(models.Model):
     class Meta:
         verbose_name = "Podstawa prawna"
-        verbose_name_plural = "Podstawy prawne"
+        verbose_name_plural = "U.13 - Podstawy prawne"
 
     act = models.CharField(max_length=100, null=False, verbose_name="Ustawa")
     legal_basic = models.CharField(max_length=30, null=False, verbose_name="Paragraf w ustawie")
@@ -33,7 +33,7 @@ class LegalBasic(models.Model):
 class Guarantee(models.Model):
     class Meta:
         verbose_name = "Gwarancja"
-        verbose_name_plural = "Umowy ZZP - Rodzaje Gwarancji"
+        verbose_name_plural = "U.12 - Umowy ZZP - Rodzaje Gwarancji"
         ordering = ["guarantee"]
 
     guarantee = models.CharField("Gwarancja", max_length=50)
@@ -49,7 +49,7 @@ def upload_scan_contract_immovables(instance, filename):
 class ContractImmovables(models.Model):
     class Meta:
         verbose_name = "Umowa nieruchomosci"
-        verbose_name_plural = "Umowy Nieruchomości"
+        verbose_name_plural = "U.01 - Umowy Nieruchomości"
         ordering = ["date"]
 
     date = models.DateField("Data")
@@ -91,7 +91,7 @@ def upload_scan_annex_contract_immovables(instance, filename):
 class AnnexImmovables(models.Model):
     class Meta:
         verbose_name = "Aneks na umowę nieruchomości"
-        verbose_name_plural = "Umowy Nieruchomości - Aneksy"
+        verbose_name_plural = "U.02 - Umowy Nieruchomości - Aneksy"
         ordering = ["contract_immovables", "date_annex"]
 
     contract_immovables = models.ForeignKey(ContractImmovables, on_delete=models.CASCADE,
@@ -113,7 +113,7 @@ def up_load_contract_auction(instance, filename):
 class ContractAuction(models.Model):
     class Meta:
         verbose_name = "Umowa ZZP"
-        verbose_name_plural = "Umowy ZZP"
+        verbose_name_plural = "U.09 - Umowy ZZP"
         ordering = ["date"]
 
     investments_project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True,
@@ -161,7 +161,7 @@ def up_load_annex_contract_auction(instance, filename):
 class AnnexContractAuction(models.Model):
     class Meta:
         verbose_name = "Aneks na umowę ZZP"
-        verbose_name_plural = "Umowy ZZP - Aneksy"
+        verbose_name_plural = "U.10- Umowy ZZP - Aneksy"
         ordering = ["contract_auction", "date"]
 
     contract_auction = models.ForeignKey(ContractAuction, on_delete=models.CASCADE,
@@ -184,7 +184,7 @@ class AnnexContractAuction(models.Model):
 class GuaranteeSettlement(models.Model):
     class Meta:
         verbose_name = "Rozliczenie umowy"
-        verbose_name_plural = "Umowy ZZP - Rozliczenia umów: Gwarancje"
+        verbose_name_plural = "U.11 - Umowy ZZP - Rozliczenia umów: Gwarancje"
         ordering = ["deadline_settlement"]
 
     contract = models.ForeignKey(ContractAuction, on_delete=models.CASCADE, verbose_name="Umowa",
@@ -201,7 +201,7 @@ class GuaranteeSettlement(models.Model):
 class MediaType(models.Model):
     class Meta:
         verbose_name = "Media"
-        verbose_name_plural = "Umowy Media - Rodzaje Mediów"
+        verbose_name_plural = "U.06 - Umowy Media - Rodzaje Mediów"
         ordering = ["type"]
 
     type = models.CharField("Media", max_length=25)
@@ -218,7 +218,7 @@ def upload_contract_media(instance, filename):
 class ContractMedia(models.Model):
     class Meta:
         verbose_name = "Umowa na Media"
-        verbose_name_plural = "Umowy Media"
+        verbose_name_plural = "U.04 - Umowy Media"
         ordering = ["-date"]
 
     date = models.DateField("Data umowy")
@@ -253,7 +253,7 @@ def upload_annex_contract_media(instance, filename):
 class AnnexContractMedia(models.Model):
     class Meta:
         verbose_name = "Aneks Umowy na media"
-        verbose_name_plural = "Umowy Media - Aneksy"
+        verbose_name_plural = "U.05- Umowy Media - Aneksy"
         ordering = ["contract_media", "date"]
 
     contract_media = models.ForeignKey(ContractMedia, on_delete=models.CASCADE,
@@ -273,7 +273,7 @@ class AnnexContractMedia(models.Model):
 class UnitMeasure(models.Model):
     class Meta:
         verbose_name = "Jednostka miary"
-        verbose_name_plural = "jednostki miary"
+        verbose_name_plural = "U.08 - Jednostki miary"
         ordering = ["id"]
 
     measureName = models.CharField("Jednostka miary", max_length=30)
@@ -285,7 +285,7 @@ class UnitMeasure(models.Model):
 class FinancialDocument(models.Model):
     class Meta:
         verbose_name = "Dokument księgowy"
-        verbose_name_plural = "Dokumenty księkowe"
+        verbose_name_plural = "U.07 - Dokumenty księkowe"
         ordering = ["-date"]
 
     related_name = "financialdocument"

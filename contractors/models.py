@@ -4,7 +4,7 @@ from django.db import models
 class Contractor(models.Model):
     class Meta:
         verbose_name = "Kontrahenci"
-        verbose_name_plural = "Kontrahenci"
+        verbose_name_plural = "K.01 - Kontrahenci"
         ordering = ["name"]
         unique_together = ["no_contractor", "nip"]
 

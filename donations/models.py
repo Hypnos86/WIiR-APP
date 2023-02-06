@@ -9,7 +9,7 @@ from units.models import Unit
 class TypeDonation(models.Model):
     class Meta:
         verbose_name = "Rodzaj darowizny"
-        verbose_name_plural = "Rodzaje darowizn"
+        verbose_name_plural = "D.02 - Rodzaje darowizn"
 
     type_name = models.CharField("Rodzaj", max_length=40)
 
@@ -20,7 +20,7 @@ class TypeDonation(models.Model):
 class TypeFinancialResources(models.Model):
     class Meta:
         verbose_name = "Rodzaj środków"
-        verbose_name_plural = "Rodzaje środków"
+        verbose_name_plural = "D.03 - Rodzaje środków"
 
     type_name = models.CharField("Rodzaj środków", max_length=40)
 
@@ -39,7 +39,7 @@ def upload_donation_scan(instance, filename):
 class Application(models.Model):
     class Meta:
         verbose_name = "Wniosek"
-        verbose_name_plural = "Wnioski"
+        verbose_name_plural = "D.01 - Wnioski"
         ordering = ["date_receipt"]
 
     character = models.CharField("Nr. sprawy", max_length=25)

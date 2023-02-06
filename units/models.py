@@ -5,7 +5,7 @@ from django.db import models
 class County(models.Model):
     class Meta:
         verbose_name = "Powiat"
-        verbose_name_plural = "Powiaty"
+        verbose_name_plural = "J.01 - Powiaty"
         ordering = ["id_order"]
 
     swop_id = models.CharField(max_length=4, verbose_name="ID SWOP")
@@ -19,7 +19,7 @@ class County(models.Model):
 class TypeUnit(models.Model):
     class Meta:
         verbose_name = "Rodzaj jednostki"
-        verbose_name_plural = "Rodzaje jednostek"
+        verbose_name_plural = "J.02 - Rodzaje jednostek"
         ordering = ["id"]
 
     type_short = models.CharField(max_length=10, null=False, verbose_name="Skrócona nazwa")
@@ -32,7 +32,7 @@ class TypeUnit(models.Model):
 class Unit(models.Model):
     class Meta:
         verbose_name = "Jednostka"
-        verbose_name_plural = "Jednostki"
+        verbose_name_plural = "J.03 - Jednostki"
         ordering = ["county__name", "type"]
 
     county = models.ForeignKey(County, on_delete=models.CASCADE, related_name="unit", verbose_name="Powiat")

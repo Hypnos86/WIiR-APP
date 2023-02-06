@@ -25,7 +25,8 @@
         {%endif%}
         <div class="col-md-6 text-center">
             <h4 title="Ostatnie zmiany na umowie: {{contract.change|date:'d.m.Y - (H:i)'}}">Umowa {%if contract.no_contract%} nr {{contract.no_contract}} {%endif%} z dnia {{contract.date|date:"d.m.Y"}} r.</h4>
-            <small class="text-muted">Data utworzenia: {{contract.creation_date|date:'d.m.Y'}}&nbsp;r. ({{contract.creation_date|date:'H:i'}})</small>
+            <small class="text-muted">Data utworzenia: {{contract.creation_date|date:'d.m.Y'}}&nbsp;r.
+                ({{contract.creation_date|date:'H:i'}})</small>
         </div>
         <div class="col-md-3 moj-button-left">
             <a href="{%url 'contracts:financial_document_list' contract.id%}">
@@ -44,16 +45,25 @@
             {%endif%}
         </div>
     </div>
-</div>
-<div class="container">
     <div class="row mt-2">
         <div class="col-md-9">
             <ul class="list-group list-group-flush">
-                <li class="list-group-item"><span class="text-muted">Kontrahent: </span><span>{{contract.contractor}}</span></li>
-                <li class="list-group-item"><span class="text-muted">Zakres umowy: </span><span>{{contract.content}}</span></li>
-                <li class="list-group-item"><span class="text-muted">Tryb zamówienia: </span><span data-toggle="info" title="{{contract.legal_basic.legal_basic_text}}">{{contract.legal_basic}}</span></li>
-                <li class="list-group-item"><span class="text-muted">Rodzaj umowy: </span><span>{{contract.type}}</span></li>
-                <li class="list-group-item"><span class="text-muted">Okres obowiązywania: </span>
+                <li class="list-group-item">
+                    <span class="text-muted">Kontrahent: </span>
+                    <span>{{contract.contractor}}</span></li>
+                <li class="list-group-item">
+                    <span class="text-muted">Zakres umowy: </span>
+                    <span>{{contract.content}}</span></li>
+                <li class="list-group-item">
+                    <span class="text-muted">Tryb zamówienia: </span>
+                    <span data-toggle="info" title="{{contract.legal_basic.legal_basic_text}}">{{contract.legal_basic}}</span>
+                </li>
+                <li class="list-group-item">
+                    <span class="text-muted">Rodzaj umowy: </span>
+                    <span>{{contract.type}}</span>
+                </li>
+                <li class="list-group-item">
+                    <span class="text-muted">Okres obowiązywania: </span>
                     {%if contract.period_of_validity%}
                     {% now 'Y-m-d' as today_date%}
                     {%if contract.period_of_validity|date:'Y-m-d' <= today_date%}
@@ -65,13 +75,14 @@
                     <span class="text-center">bezterminowa</span>
                     {%endif%}
                 </li>
-                <li class="list-group-item"><span class="text-muted">Jednostka: </span>
+                <li class="list-group-item">
+                    <span class="text-muted">Jednostka: </span>
                     {% regroup units by county as unit_list %}
                     <ul class="mt-2">
                         {% for county in unit_list %}
                         <li>{{ county.grouper }}
                             <ul>
-                            {% for unit in county.list %}
+                                {% for unit in county.list %}
                                 <li>{{ unit }}</li>
                                 {% endfor %}
                             </ul>
@@ -79,7 +90,13 @@
                         {% endfor %}
                     </ul>
                 </li>
-                <li class="list-group-item"><span class="text-muted">Stan umowy: </span>{%if contract.state %}<span class="text-success">Aktualna</span>{%else%}<span class="text-danger">Rozwiązana</span> {%endif%}
+                <li class="list-group-item">
+                    <span class="text-muted">Stan umowy: </span>
+                    {%if contract.state %}
+                    <span class="text-success">Aktualna</span>
+                    {%else%}
+                    <span class="text-danger">Rozwiązana</span>
+                    {%endif%}
                 </li>
                 {%if contract.information%}
                 <li class="list-group-item">
@@ -87,34 +104,35 @@
                     <p>{{contract.information}}</p>
                 </li>
                 {%endif%}
-                <li class="list-group-item"><span class="text-muted">Branżysta: </span>{{contract.employer}}</li>
                 <li class="list-group-item">
-                    <small class="text-muted">Autor: {{contract.author.first_name}} {{contract.author.last_name}}</small><br>
-                    <small class="text-muted">Zmiany: {{contract.change|date:'d.m.Y'}} ({{contract.change|date:'H:i'}})</small>
+                    <span class="text-muted">Branżysta: {{contract.employer}}</span></li>
+                <li class="list-group-item">
+                    <small class="text-muted">Autor: {{contract.author.first_name}}
+                        {{contract.author.last_name}}</small><br>
+                    <small class="text-muted">Zmiany: {{contract.change|date:'d.m.Y'}}
+                        ({{contract.change|date:'H:i'}})</small>
                 </li>
             </ul>
         </div>
-        <div class="col-md-3">
-            <div class="mt-2 moj-button-right ">
+        <div class="col-md-3 ">
+            <div mt-2 moj-button-right>
             {%if contract.scan%}
-                <a href="/media/{{contract.scan}}" role="button" target="_blank">
-                    <button class="btn btn-outline-primary button-chose-invoices my-btn" type="button">
-                        <span class="bi bi-file-text"> Podgląd umowy</span>
-                    </button></a>
+            <a href="/media/{{contract.scan}}" role="button" target="_blank">
+                <button class="btn btn-outline-primary button-chose-invoices my-btn" type="button">
+                    <span class="bi bi-file-text"> Podgląd umowy</span>
+                </button></a>
             {%endif%}
             </div>
             {%if annexes%}
             {%for annex in annexes%}
-                <div class="my-3">
-                    <a href="/media/{{annex.scan}}" target="_blank">
-                        <button class="btn btn-outline-primary button-chose-invoices my-btn">
-                            <i class="bi bi-arrow-return-right"> Aneks z dnia {{annex.date|date:"d.m.Y"}}&nbsp;r.</i>
-                        </button>
-                    </a>
-                </div>
+            <div class="my-3">
+                <a href="/media/{{annex.scan}}" target="_blank">
+                    <button class="btn btn-outline-primary button-chose-invoices my-btn">
+                        <i class="bi bi-arrow-return-right"> Aneks z dnia {{annex.date|date:"d.m.Y"}}&nbsp;r.</i>
+                    </button></a>
+            </div>
             {%endfor%}
             {%endif%}
-
         </div>
     </div>
 </div>
