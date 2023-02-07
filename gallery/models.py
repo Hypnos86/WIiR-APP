@@ -18,7 +18,7 @@ def upload_gallery(instance, filename):
 class Gallery(models.Model):
     class Meta:
         verbose_name = "Galeria"
-        verbose_name_plural = "Galerie"
+        verbose_name_plural = "G.02 - Galerie"
         ordering = ["-name"]
 
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="gallery", verbose_name="Projekt INW")
@@ -33,7 +33,7 @@ class Gallery(models.Model):
 class Photo(models.Model):
     class Meta:
         verbose_name = "Zdjęcie"
-        verbose_name_plural = "Zdjęcia"
+        verbose_name_plural = "G.01 - Zdjęcia"
         ordering = ["add_date"]
 
     gallery = models.ForeignKey(Gallery, on_delete=models.CASCADE, related_name="photo", verbose_name="Galeria")

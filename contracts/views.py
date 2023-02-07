@@ -39,7 +39,6 @@ def menu_contractsimmovables(request):
     paginator = Paginator(contracts, 50)
     page_number = request.GET.get('page')
     contracts_list = paginator.get_page(page_number)
-    # print(contracts.period_of_validity)
     if q or date_from or date_to:
         if q:
             contracts = contracts.filter(contractor__name__icontains=q) | contracts.filter(
@@ -278,8 +277,6 @@ def edit_contract_auction(request, id):
                 settlement_sum = [sum_30_percent, sum_70_percent]
 
                 settlements = zip(settlement_period, settlement_sum)
-                print(contract.last_report_date != 0)
-                print(contract.guarantee.id == 2)
 
                 if contract.last_report_date != 0:
                     if contract.guarantee.id == 2:
@@ -528,7 +525,6 @@ def financial_document_list(request, contract_id):
 
     values = sum(values_sum)
     costs = sum(costs_sum)
-    print(sum_count)
     context = {"contract": contract, "financialDocs": financialDocs, "values": values, "costs": costs}
     return render(request, "contracts/financial_document_list.html", context)
 

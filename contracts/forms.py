@@ -63,8 +63,8 @@ class ContractAuctionForm(ModelForm):
         widgets = {'date': DateField(),
                    'end_date': DateField(),
                    'last_report_date': DateField(),
-                   'information': Textarea(attrs={'rows': 5}),
-                   'report': Textarea(attrs={'rows': 5})}
+                   'information': Textarea(attrs={'rows': 3}),
+                   'report': Textarea(attrs={'rows': 3})}
 
 
 class AnnexContractAuctionForm(ModelForm):

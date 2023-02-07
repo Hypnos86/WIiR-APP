@@ -8,7 +8,7 @@ from tinymce import models as tinymce_models
 class TypeInspection(models.Model):
     class Meta:
         verbose_name = "Rodzaj przeglądu"
-        verbose_name_plural = "Rodzaje przeglądu"
+        verbose_name_plural = "P.09 - Rodzaje przeglądu"
 
     inspection_name = models.CharField("Rodzaj przeglądu", max_length=50)
 
@@ -19,7 +19,7 @@ class TypeInspection(models.Model):
 class TechnicalCondition(models.Model):
     class Meta:
         verbose_name = "Stan techniczny"
-        verbose_name_plural = "Rodzaje stanów technicznych"
+        verbose_name_plural = "P.10 - Rodzaje stanów technicznych"
         ordering = ["ordinal_number"]
 
     ordinal_number = models.SmallIntegerField("Liczba porządkowa", unique=True)
@@ -46,7 +46,7 @@ class BuildingInspectionOneYear(PatternInspections):
 
     class Meta:
         verbose_name = "Przegląd budynku techniczny - roczny"
-        verbose_name_plural = "Przeglądy budynków - roczny"
+        verbose_name_plural = "P.01 - Przeglądy budynków - roczny"
         ordering = ["no_inventory__unit__county__swop_id"]
 
     no_inventory = models.ForeignKey(Building, on_delete=models.CASCADE, verbose_name="Obiekt",
@@ -67,7 +67,7 @@ class BuildingInspectionFiveYear(PatternInspections):
 
     class Meta:
         verbose_name = "Przegląd budynku techniczny - pięcioletni"
-        verbose_name_plural = "Przeglądy budynków - pięcioletni"
+        verbose_name_plural = "P.02 - Przeglądy budynków - pięcioletni"
 
     no_inventory = models.ForeignKey(Building, on_delete=models.CASCADE, verbose_name="Obiekt",
                                      related_name=relatedName)
@@ -87,7 +87,7 @@ class ChimneyInspection(PatternInspections):
 
     class Meta:
         verbose_name = "Przegląd komina"
-        verbose_name_plural = "Przeglądy kominów"
+        verbose_name_plural = "P.05 - Przeglądy kominów"
 
     no_inventory = models.ForeignKey(Building, on_delete=models.CASCADE, verbose_name="Obiekt",
                                      related_name=relatedName)
@@ -107,7 +107,7 @@ class ElectricalInspectionOneYear(PatternInspections):
 
     class Meta:
         verbose_name = "Przedląd elektryczny - roczny"
-        verbose_name_plural = "Przeglądy elektryczne - roczny"
+        verbose_name_plural = "P.03 - Przeglądy elektryczne - roczny"
 
     no_inventory = models.ForeignKey(Building, on_delete=models.CASCADE, verbose_name="Obiekt",
                                      related_name=relatedName)
@@ -127,7 +127,7 @@ class ElectricalInspectionFiveYear(PatternInspections):
 
     class Meta:
         verbose_name = "Przedląd elektryczny - pięcioletni"
-        verbose_name_plural = "Przeglądy elektryczne - pięcioletni"
+        verbose_name_plural = "P.04 - Przeglądy elektryczne - pięcioletni"
 
     no_inventory = models.ForeignKey(Building, on_delete=models.CASCADE, verbose_name="Obiekt",
                                      related_name=relatedName)
@@ -147,7 +147,7 @@ class HeatingBoilerInspection(PatternInspections):
 
     class Meta:
         verbose_name = "Przegląd kotła grzewczego"
-        verbose_name_plural = "Przeglądy kotłów grzewczych"
+        verbose_name_plural = "P.06 - Przeglądy kotłów grzewczych"
 
     no_inventory = models.ForeignKey(Building, on_delete=models.CASCADE, verbose_name="Obiekt",
                                      related_name=relatedName)
@@ -167,7 +167,7 @@ class AirConditionerInspection(PatternInspections):
 
     class Meta:
         verbose_name = "Przegląd klimatyzatora"
-        verbose_name_plural = "Przeglądy klimatyzatorów"
+        verbose_name_plural = "P.07 - Przeglądy klimatyzatorów"
 
     no_inventory = models.ForeignKey(Building, on_delete=models.CASCADE, verbose_name="Obiekt",
                                      related_name=relatedName)
@@ -183,11 +183,11 @@ class AirConditionerInspection(PatternInspections):
 
 
 class FireInspection(PatternInspections):
-    relatedName = "fire_inspection"
-
     class Meta:
         verbose_name = "Przegląd przeciwpożarowy"
-        verbose_name_plural = "Przeglądy przeciwpożarowe"
+        verbose_name_plural = "P.08 - Przeglądy przeciwpożarowe"
+
+    relatedName = "fire_inspection"
 
     no_inventory = models.ForeignKey(Building, on_delete=models.CASCADE, verbose_name="Obiekt",
                                      related_name=relatedName)

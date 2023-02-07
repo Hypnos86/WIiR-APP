@@ -5,7 +5,7 @@ from django.db import models
 class OfficialFlat(models.Model):
     class Meta:
         verbose_name = "Mieszkanie służbowe"
-        verbose_name_plural = "Mieszkania służbowe"
+        verbose_name_plural = "M.01 - Mieszkania służbowe"
 
     address = models.CharField("Adres", max_length=150)
     area = models.DecimalField("Powierzchnia", max_digits=5, decimal_places=2, null=True, blank=True)

@@ -8,7 +8,7 @@ from main.models import Employer
 class Typecpv(models.Model):
     class Meta:
         verbose_name = "CPV"
-        verbose_name_plural = "Słownik CPV"
+        verbose_name_plural = "R.06 - Słownik CPV"
 
     no_cpv = models.CharField(max_length=10)
     name = models.CharField(max_length=200)
@@ -20,7 +20,7 @@ class Typecpv(models.Model):
 class TypeOrder(models.Model):
     class Meta:
         verbose_name = "Rodzaj zamowienia"
-        verbose_name_plural = "Rodzaj zamówienia"
+        verbose_name_plural = "R.03 - Rodzaj zamówienia"
 
     type = models.CharField("Rodzaj zamówienia", max_length=20, null=True)
 
@@ -31,7 +31,7 @@ class TypeOrder(models.Model):
 class Genre(models.Model):
     class Meta:
         verbose_name = "Przedmiot zamówienia"
-        verbose_name_plural = "Klasyfikacja rodzajowa"
+        verbose_name_plural = "R.02 - Klasyfikacja rodzajowa"
         ordering = ["name_id"]
 
     name_id = models.CharField("ID", max_length=4, unique=True)
@@ -47,7 +47,7 @@ class Genre(models.Model):
 class Tax(models.Model):
     class Meta:
         verbose_name = "Podatek Vat"
-        verbose_name_plural = "Rodzaje podatków vat"
+        verbose_name_plural = "R.04 - Rodzaje podatków vat"
 
     vat = models.SmallIntegerField("Podatek [%]", default=0)
 
@@ -58,7 +58,7 @@ class Tax(models.Model):
 class OrderLimit(models.Model):
     class Meta:
         verbose_name = "Limit zamówień"
-        verbose_name_plural = "Limit zamówień"
+        verbose_name_plural = "R.01 - Limit zamówień"
         ordering = ["-year"]
 
     year = models.IntegerField("Rok", unique=True)
@@ -73,7 +73,7 @@ class OrderLimit(models.Model):
 class Order(models.Model):
     class Meta:
         verbose_name = "Zamówienie"
-        verbose_name_plural = "Zamówienia"
+        verbose_name_plural = "R.05 - Zamówienia"
         ordering = ["-date"]
 
     date = models.DateField("Data")

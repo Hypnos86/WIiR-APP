@@ -6,7 +6,10 @@
     <form class="m-2 p-4" method="get" action="{% url 'fixedasset:show_information' id %}">
         {%csrf_token%}
         <div class="container">
-            <h5 class="text-center mb-2">Nr. inwentarzowy: {{building.no_inventory}}</h5>
+            <div class="text-center">
+                <h5 class="mb-2">Nr. inwentarzowy: {{building.no_inventory}}</h5>
+                <small> Utworzono: {{building.creation_date|date:'d.m.Y'}}&nbsp;r. ({{building.creation_date|date:'H.i'}})</small>
+            </div>
             <div class="my-2">
                 <span class="text-muted">Obiekt: </span>
                 <span>{{building.unit.information}}</span>
@@ -49,17 +52,14 @@
                 <span>{{building.information}}</span>
             </div>
             {%endif%}
-
             <hr>
             <div class="row">
                 <div class="col-md-6">
                     <ul class="list-group">
                         <li class="list-group">
-                            <small class="text-muted">Data dodania: {{building.creation_date|date:'d.m.Y (H:i)'}}</small>
-                        </li>
-                        <li class="list-group">
-                            <small class="text-muted">Zmiany: {{building.change|date:'d.m.Y (H:i)'}}</small>
-                            <small class="text-muted">{{building.author.first_name}} {{building.author.last_name}}</small>
+                            <small class="text-muted">Autor: {{building.author.first_name}}
+                                {{building.author.last_name}}</small>
+                            <small class="text-muted">Zmiany: {{building.change|date:'d.m.Y'}} ({{building.change|date:'H:i'}})</small>
                         </li>
                     </ul>
                 </div>

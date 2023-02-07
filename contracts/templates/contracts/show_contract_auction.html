@@ -11,8 +11,7 @@
             <a href="{% url 'contracts:menu_contracts_auction' %}">
                 <button class="btn btn-outline-primary my-btn">
                     <span class="bi bi-chevron-compact-left">Cofnij</span>
-                </button>
-            </a>
+                </button></a>
         </div>
         <div class="col-md-8 text-center">
             <h4>Umowa {%if contract.no_contract%} nr {{contract.no_contract}} {%endif%}z dnia
@@ -108,7 +107,6 @@
                     <span>{{contract.information}}</span>
                 </li>
                 {%endif%}
-
                 <li class="list-group-item">
                     <span class="text-muted">Rozliczenie gwarancji:</span>
                     {%for settlement in contract.guarantee_settlement.all%}
@@ -117,7 +115,6 @@
                     {%endif%}
                     {%endfor%}
                 </li>
-
                 <li class="list-group-item">
                     <div>
                         <small class="text-muted">Zmiany: {{contract.change|date:'d.m.Y'}}&nbsp;r. ({{contract.change|date:'H:i'}})</small><br>
@@ -140,8 +137,7 @@
                 <a href="/media/{{annex.scan}}" target="_blank">
                     <button class="btn btn-outline-primary button-chose-invoices my-btn">
                         <i class="bi bi-arrow-return-right"> Aneks z dnia {{annex.date|date:"d.m.Y"}}&nbsp;r.</i>
-                    </button>
-                </a>
+                    </button></a>
             </div>
             {%endfor%}
             {%endif%}

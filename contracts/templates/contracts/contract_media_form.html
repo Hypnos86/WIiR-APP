@@ -11,66 +11,68 @@
             <a href="{%url 'contracts:create_contract_media_list'%}">
                 <button class="btn btn-outline-primary my-btn">
                     <span class="bi bi-chevron-compact-left">Cofnij</span>
-                </button></a>
+                </button>
+            </a>
         </div>
         <div class="col-md-6">
             <h4 class="text-center">{%if new%} Nowa umowa {%else%}Edycja umowy{%endif%}</h4>
         </div>
     </div>
-</div>
-<div class="row">
-    <form method="POST" enctype="multipart/form-data">
-        {%csrf_token%}
-        <div class="container col-md-8">
-            <div class="row">
-                <div class="col-md-4 mb-3">{{contract_form.date|bootstrap}}</div>
-                <div class="col-md-4 mb-3">{{contract_form.no_contract|bootstrap}}</div>
-                <div class="col-md-4 mb-3">{{contract_form.type|bootstrap}}</div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 mb-3">{{contract_form.content|bootstrap}}</div>
-                <div class="col-md-2 mb-3">{{contract_form.employer|bootstrap}}</div>
-                <div class="col-md-2 mb-3">{{contract_form.period_of_validity|bootstrap}}</div>
-                <div class="col-md-2 mb-3">{{contract_form.legal_basic|bootstrap}}</div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 mb-3">{{contract_form.contractor|bootstrap}}</div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 mb-3">{{contract_form.unit|bootstrap}}</div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 mb-3">{{contract_form.information|bootstrap}}</div>
-            </div>
-            <div class="row">
-                <div class="col-md-10 mb-3">{{contract_form.scan|bootstrap}}</div>
-                {%if contract_edit.scan%}
-                <div class="col-md-2 moj-button-left align-self-end">
-                    <button type="button" class="btn btn-outline-primary my-btn" onclick="openModal()"> Dodaj aneks
-                    </button>
+    <div class="row mt-4">
+        <form method="POST" enctype="multipart/form-data">
+            {%csrf_token%}
+            <div class="col">
+                <div class="row">
+                    <div class="col-md-4 mb-3">{{contract_form.date|bootstrap}}</div>
+                    <div class="col-md-4 mb-3">{{contract_form.no_contract|bootstrap}}</div>
+                    <div class="col-md-4 mb-3">{{contract_form.type|bootstrap}}</div>
                 </div>
-                {%endif%}
-                <div class="d-flex justify-content-between mt-2">
-                    <div class="col-md-3">
-                        <div class="moj_button_left">
-                            <label for="id_state">Stan umowy</label>
-                            <div class="form-control" id="id_state">{{contract_form.state|bootstrap}}</div>
-                        </div>
-                    </div>
-                    <div class="col-md-9 moj-button-right align-self-end">
-                        <button type="submit" class="btn btn-outline-primary my-btn">
-                            {%if new%}
-                            <span class="bi bi-save2"> Dodaj umowę</span>
-                            {%else%}
-                            <span class="bi bi-save2"> Zapisz zmiany</span>
-                            {%endif%}
+                <div class="row">
+                    <div class="col-md-9 mb-3">{{contract_form.content|bootstrap}}</div>
+                    <div class="col-md-3 mb-3">{{contract_form.employer|bootstrap}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">{{contract_form.contractor|bootstrap}}</div>
+                    <div class="col-md-3 mb-3">{{contract_form.period_of_validity|bootstrap}}</div>
+                    <div class="col-md-3 mb-3">{{contract_form.legal_basic|bootstrap}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-3">{{contract_form.unit|bootstrap}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-3">{{contract_form.information|bootstrap}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 mb-3">{{contract_form.scan|bootstrap}}</div>
+                    {%if contract_edit.scan%}
+                    <div class="col-md-2 moj-button-left align-self-end">
+                        <button type="button" class="btn btn-outline-primary my-btn" onclick="openModal()"> Dodaj aneks
                         </button>
                     </div>
+                    {%endif%}
+                    <div class="d-flex justify-content-between mt-2">
+                        <div class="col-md-3">
+                            <div class="moj_button_left">
+                                <label for="id_state">Stan umowy</label>
+                                <div class="form-control" id="id_state">{{contract_form.state|bootstrap}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-9 moj-button-right align-self-end">
+                            <button type="submit" class="btn btn-outline-primary my-btn">
+                                {%if new%}
+                                <span class="bi bi-save2"> Dodaj umowę</span>
+                                {%else%}
+                                <span class="bi bi-save2"> Zapisz zmiany</span>
+                                {%endif%}
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
+
 {%if new == False%}
 <!-- Modal -->
 <div class="modal fade" id="annexModal" data-url="{% url 'contracts:add_annex_contract_media' contract_edit.id %}">
@@ -107,6 +109,13 @@
     $(document).ready(function(){
         $("#id_unit").select2({placeholder:'Dodaj jednostkę'});
     })
+
+
+
+
+
+
+
 
 
 </script>

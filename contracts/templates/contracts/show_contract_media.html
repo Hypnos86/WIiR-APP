@@ -115,19 +115,19 @@
             </ul>
         </div>
         <div class="col-md-3 ">
-            <div mt-2 moj-button-right>
+            <div class="mt-2 moj-button-right">
             {%if contract.scan%}
             <a href="/media/{{contract.scan}}" role="button" target="_blank">
-                <button class="btn btn-outline-primary button-chose-invoices my-btn" type="button">
+                <button class="btn btn-outline-primary my-btn" type="button">
                     <span class="bi bi-file-text"> Podgląd umowy</span>
                 </button></a>
             {%endif%}
             </div>
             {%if annexes%}
             {%for annex in annexes%}
-            <div class="my-3">
+            <div class="my-3 moj-button-right">
                 <a href="/media/{{annex.scan}}" target="_blank">
-                    <button class="btn btn-outline-primary button-chose-invoices my-btn">
+                    <button class="btn btn-outline-primary my-btn">
                         <i class="bi bi-arrow-return-right"> Aneks z dnia {{annex.date|date:"d.m.Y"}}&nbsp;r.</i>
                     </button></a>
             </div>

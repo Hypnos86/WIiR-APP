@@ -22,14 +22,18 @@
     <div class="px-5">
         <form method="post" enctype="multipart/form-data">
             {%csrf_token%}
-            <div class="row">
-                <div class="col-md-3 my-2">{{donation_form.date_receipt|bootstrap}}</div>
-                <div class="col-md-6 my-2">{{donation_form.character|bootstrap}}</div>
-                <div class="col-md-3 my-2" data-toggle="info" title="Data zwrotu z Wydziału Finansów">
+            <div class="row my-2">
+                <div class="col-md-3">{{donation_form.date_receipt|bootstrap}}</div>
+                <div class="col-md-6">{{donation_form.character|bootstrap}}</div>
+                <div class="col-md-3" data-toggle="info" title="Data zwrotu z Wydziału Finansów">
                     {{donation_form.date_return|bootstrap}}
                 </div>
-                <div class="col-md-12 my-2">{{donation_form.presenter|bootstrap}}</div>
-                <div class="col-md-12 my-2">
+            </div>
+            <div class="row my-2">
+                <div class="col-md-12">{{donation_form.presenter|bootstrap}}</div>
+            </div>
+            <div class="row my-2">
+                <div class="col-md-12">
                     <div class="form-group">
                         <label class="control-label" for="id_unit">Jednostka</label>
                         <div class="">
@@ -51,18 +55,28 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 my-2">{{donation_form.no_application|bootstrap}}</div>
-                <div class="col-md-3 my-2">{{donation_form.sum|bootstrap}}</div>
-                <div class="col-md-3 my-2">{{donation_form.donation_type|bootstrap}}</div>
-                <div class="col-md-3 my-2">{{donation_form.financial_type|bootstrap}}</div>
-                <div class="col-md-4 my-2">{{donation_form.date_agreement|bootstrap}}</div>
-                <div class="col-md-4 my-2">{{donation_form.no_agreement|bootstrap}}</div>
-                <div class="col-md-4 my-2">{{donation_form.settlement_date|bootstrap}}</div>
-                <div class="col-md-12 my-2">{{donation_form.subject|bootstrap}}</div>
-                <div class="col-md-12 my-2">{{donation_form.information|bootstrap}}</div>
-                <div class="col-md-12 my-2">{{donation_form.donation_scan|bootstrap}}</div>
-                <div class="col-md-12 moj-button-right mt-2">
-                    <button type="submit" class="btn btn-outline-primary my-btn">
+            </div>
+            <div class="row my-2">
+                <div class="col-md-3">{{donation_form.no_application|bootstrap}}</div>
+                <div class="col-md-3">{{donation_form.sum|bootstrap}}</div>
+                <div class="col-md-3">{{donation_form.donation_type|bootstrap}}</div>
+                <div class="col-md-3">{{donation_form.financial_type|bootstrap}}</div>
+            </div>
+            <div class="row my-2">
+                <div class="col-md-4">{{donation_form.date_agreement|bootstrap}}</div>
+                <div class="col-md-4">{{donation_form.no_agreement|bootstrap}}</div>
+                <div class="col-md-4">{{donation_form.settlement_date|bootstrap}}</div>
+            </div>
+            <div class="row my-2">
+                <div class="col-md-12">{{donation_form.subject|bootstrap}}</div>
+            </div>
+            <div class="row my-2">
+                <div class="col-md-12">{{donation_form.information|bootstrap}}</div>
+            </div>
+            <div class="row my-2">
+                <div class="col-md-8 my-2">{{donation_form.donation_scan|bootstrap}}</div>
+                <div class="col-md-4 moj-button-right ">
+                    <button type="submit" class="mt-3 btn btn-outline-primary my-btn">
                         {%if new%}
                         <span class="bi bi-save2"> Dodaj wniosek</span>
                         {%else%}
@@ -84,6 +98,8 @@
     $(function() {
         $('[data-toggle="info"]').tooltip()
         })
+
+
 </script>
 {%endif%}
 {%endblock%}

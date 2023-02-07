@@ -4,41 +4,82 @@
 {%block content%}
 {%if user.is_authenticated and user.accessmodule.donations_module%}
 <div class="container ">
-<form class="m-2 p-4" method="get" action="{%url 'donations:show_information_popup' id%}">
-    {%csrf_token%}
-    {%if donation.no_application%}
-    <h5 class="text-center">{{donation.no_application}} {%if donation.no_agreement%} | {{donation.no_agreement}} {%endif%}</h5>
-    {%else%}
-    <h5 class="text-center">{{donation.no_application}}</h5>
-    {%endif%}
-    <div class="container">
-        <div class="my-2"><span class="text-muted">Data wpływu wniosku do Wydz. Inwestycji i Remontów: </span><span>{{donation.date_receipt|date:'d.m.Y'}}&nbsp;r.</span></div>
-        <div class="my-2"><span class="text-muted">Nr sprawy: </span><span>{{donation.character}}</span></div>
-        <div class="my-2"><span class="text-muted">Data zwrotu od Wydz. Finansów: </span><span>{{donation.date_return}}&nbsp;r.</span></div>
-        <div class="my-2"><span class="text-muted">Darczyńca: </span><span>{{donation.presenter}}</span></div>
-        <div class="my-2"><span class="text-muted">Jednostka: </span><span>{{donation.unit}} (<b>{{donation.unit.county.name}}</b>)</span></div>
-        {%if donation.no_agreement%}
-        <div class="my-2"><span class="text-muted">Nr. porozumienia: </span><span>{{donation.no_agreement}}</span></div>
+    <form class="m-2 p-4" method="get" action="{%url 'donations:show_information_popup' id%}">
+        {%csrf_token%}
+        {%if donation.no_application%}
+        <h5 class="text-center">{{donation.no_application}} {%if donation.no_agreement%} | {{donation.no_agreement}}
+            {%endif%}</h5>
+        {%else%}
+        <h5 class="text-center">{{donation.no_application}}</h5>
         {%endif%}
-        {%if donation.date_agreement%}
-        <div class="my-2"><span class="text-muted">Data porozumienia: </span><span>{{donation.date_agreement}}&nbsp;r.</span></div>
-        {%endif%}
-        <div class="my-2"><span class="text-muted">Rodzaj daroziwny: </span><span>{{donation.donation_type}}</span></div>
-        {%if donation.financial_type%}
-        <div class="my-2"><span class="text-muted">Rodzaj środków: </span><span>{{donation.financial_type}}</span></div>
-        {%endif%}
-        <div class="my-2"><span class="text-muted">Kwota darowizny: </span><span><b>{{donation.sum|intcomma}}&nbsp;zł.</b></span></div>
-        {%if donation.settlement_date%}
-        <div class="my-2"><span class="text-muted">Data rozliczenia: </span><span class="color-info-warning">{{donation.settlement_date|date:'d.m.Y'}}&nbsp;r.</span></div>
-        {%endif%}
-        {%if donation.subject%}
-        <div class="my-2"><span class="text-muted">Przedmiot porozumienia: </span><span>{{donation.subject}}</span></div>
-        {%endif%}
-        {%if donation.information%}
-        <div class="my-2"><span class="text-muted">Informacje: </span><span>{{donation.information}}</span></div>
-        {%endif%}
-    </div>
-</form>
+        <div class="container">
+            <div class="my-2">
+                <span class="text-muted">Data wpływu wniosku do Wydz. Inwestycji i Remontów: </span>
+                <span>{{donation.date_receipt|date:'d.m.Y'}}&nbsp;r.</span>
+            </div>
+            <div class="my-2">
+                <span class="text-muted">Nr sprawy: </span>
+                <span>{{donation.character}}</span>
+            </div>
+            <div class="my-2">
+                <span class="text-muted">Data zwrotu od Wydz. Finansów: </span>
+                <span>{{donation.date_return}}&nbsp;r.</span>
+            </div>
+            <div class="my-2">
+                <span class="text-muted">Darczyńca: </span>
+                <span>{{donation.presenter}}</span>
+            </div>
+            <div class="my-2">
+                <span class="text-muted">Jednostka: </span>
+                <span>{{donation.unit}} (<b>{{donation.unit.county.name}}</b>)
+                </span>
+            </div>
+            {%if donation.no_agreement%}
+            <div class="my-2">
+                <span class="text-muted">Nr. porozumienia: </span>
+                <span>{{donation.no_agreement}}</span>
+            </div>
+            {%endif%}
+            {%if donation.date_agreement%}
+            <div class="my-2">
+                <span class="text-muted">Data porozumienia: </span>
+                <span>{{donation.date_agreement}}&nbsp;r.</span>
+            </div>
+            {%endif%}
+            <div class="my-2">
+                <span class="text-muted">Rodzaj daroziwny: </span>
+                <span>{{donation.donation_type}}</span>
+            </div>
+            {%if donation.financial_type%}
+            <div class="my-2">
+                <span class="text-muted">Rodzaj środków: </span>
+                <span>{{donation.financial_type}}</span>
+            </div>
+            {%endif%}
+            <div class="my-2">
+                <span class="text-muted">Kwota darowizny: </span>
+                <span><b>{{donation.sum|intcomma}}&nbsp;zł.</b></span>
+            </div>
+            {%if donation.settlement_date%}
+            <div class="my-2">
+                <span class="text-muted">Data rozliczenia: </span>
+                <span class="color-info-warning">{{donation.settlement_date|date:'d.m.Y'}}&nbsp;r.</span>
+            </div>
+            {%endif%}
+            {%if donation.subject%}
+            <div class="my-2">
+                <span class="text-muted">Przedmiot porozumienia: </span>
+                <span>{{donation.subject}}</span>
+            </div>
+            {%endif%}
+            {%if donation.information%}
+            <div class="my-2">
+                <span class="text-muted">Informacje: </span>
+                <span>{{donation.information}}</span>
+            </div>
+            {%endif%}
+        </div>
+    </form>
 </div>
 {%endif%}
 {%endblock%}

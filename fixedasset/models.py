@@ -5,7 +5,7 @@ from units.models import Unit
 class KindBuilding(models.Model):
     class Meta:
         verbose_name = "Rodzaj budynku"
-        verbose_name_plural = "Rodzaje budynkuów"
+        verbose_name_plural = "ST.02 - Rodzaje budynkuów"
         ordering = ["kind"]
 
     kind = models.CharField("Rodzaj", max_length=50)
@@ -18,7 +18,7 @@ class KindBuilding(models.Model):
 class Building(models.Model):
     class Meta:
         verbose_name = "Budynek"
-        verbose_name_plural = "Budynki"
+        verbose_name_plural = "ST.01 - Budynki"
         ordering = ["unit"]
 
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE, verbose_name="Jednostka", related_name="building")

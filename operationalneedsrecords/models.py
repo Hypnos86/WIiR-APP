@@ -13,10 +13,12 @@ class TeamType(Enum):
     ZE = 5
     ZM = 6
     ZN = 7
+
+
 class RegistrationType(models.Model):
     class Meta:
         verbose_name = "Rodzaj zgłoszenia"
-        verbose_name_plural = "Rodzaje zgłoszeń"
+        verbose_name_plural = "E.02 - Rodzaje zgłoszeń"
         ordering = ["registration_type"]
 
     registration_type = models.CharField(max_length=25, unique=True)
@@ -28,7 +30,7 @@ class RegistrationType(models.Model):
 class MetricsCaseType(models.Model):
     class Meta:
         verbose_name = "Kategoria sprawy"
-        verbose_name_plural = "Kategorie spraw"
+        verbose_name_plural = "E.03 - Kategorie spraw"
         ordering = ["metric_type"]
 
     metric_type = models.CharField(max_length=25, unique=True)
@@ -40,7 +42,7 @@ class MetricsCaseType(models.Model):
 class NeedsLetter(models.Model):
     class Meta:
         verbose_name = "Ewidencja pism"
-        verbose_name_plural = "Ewidencje Pism"
+        verbose_name_plural = "E.01 - Ewidencje Pism"
         ordering = ["-receipt_date"]
 
     related_name = "needsletter"
@@ -57,7 +59,8 @@ class NeedsLetter(models.Model):
     receipt_date_to_team = models.DateField("Data wpływu do Zespołu", null=False, blank=True)
     case_sign_team = models.CharField("Znak sprawy WiiR", max_length=30, null=True, blank=True)
     cost = models.DecimalField(verbose_name="Koszt realizacji", max_digits=10, decimal_places=2, null=True, blank=True)
-    employer = models.ForeignKey(Employer, on_delete=models.CASCADE, verbose_name="Branżysta", related_name=related_name)
+    employer = models.ForeignKey(Employer, on_delete=models.CASCADE, verbose_name="Branżysta",
+                                 related_name=related_name)
     execution_date = models.DateField("Data realizacji", null=True, blank=True)
     isDone = models.BooleanField("Zrealizowane", default=False)
     information = models.TextField(verbose_name="Informacje", blank=True)
