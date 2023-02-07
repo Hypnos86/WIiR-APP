@@ -28,7 +28,7 @@ def now_date():
 @login_required()
 def welcome(request):
     commands = Command.objects.all().order_by("create_date")[:6]
-    rent_cars = Car.objects.all()[:8]
+    rent_cars = Car.objects.all()[:10]
     date = datetime.date.today().today()
     context = {"date": date,
                "commands": commands,

@@ -1,0 +1,43 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block title%}Statystyki - {{year}}{%endblock%}
+{%block content%}
+{%if user.is_authenticated and user.accessmodule.records_letters%}
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-3 moj-button-left">
+            <a href="{%url 'operationalneedsrecords:list_needs_letter' year%}">
+                <button class="btn btn-outline-primary my-btn">
+                    <span class="bi bi-chevron-compact-left">Cofnij</span>
+                </button>
+            </a>
+        </div>
+        <div class="col-md-6 text-center">
+            <h4>Statystyki roku {{year}}</h4>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Liczba zarejestrowanych pism: <span class="badge text-white info badge-pill">{{docs|length}}</span></li>
+                {%for type in registrationTypes%}
+                <li class="list-group-item">Liczba zrealizowanych pisma dla: {{type}} -
+                    <span class="badge text-white info badge-pill">{%for co in type.needsletter.all%} {{co.cost}} {%endfor%}</span>
+                </li>
+                {%endfor%}
+
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Całkowity koszt za cały rok: <span class="badge text-white info badge-pill">{{count_all}}&nbsp;zł</span></li>
+                <li class="list-group-item">Dapibus ac facilisis in</li>
+                <li class="list-group-item">Morbi leo risus</li>
+                <li class="list-group-item">Porta ac consectetur ac</li>
+                <li class="list-group-item">Vestibulum at eros</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{%endif%}
+{%endblock%}

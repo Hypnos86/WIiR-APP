@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404, reverse
-from .models import NeedsLetter, TeamType
+from .models import NeedsLetter, TeamType, RegistrationType
 from .forms import NeedsLetterForm
 from main.models import Employer
 from units.models import Unit
@@ -117,3 +117,23 @@ def show_archive_year_list(request):
     year_order_list = sorted(year_order_set, reverse=True)
 
     return render(request, 'operationalneedsrecords/archive_list_year.html', {'year_order_list': year_order_list})
+
+
+@login_required
+def show_statistic(request, year):
+    docs = NeedsLetter.objects.all().filter(receipt_date__year=year)
+    registrationTypes = RegistrationType.objects.all()
+
+    counts = []
+    for doc in docs:
+        if doc.cost != None:
+            counts.append(doc.cost)
+
+    for registrationType in registrationTypes:
+        object = docs.filter(registration_type__id=registrationType.id)
+        print(object.values("cost"))
+
+    count_all = sum(counts)
+
+    return render(request, 'operationalneedsrecords/statistics.html',
+                  {'year': year, 'docs': docs, "count_all": count_all, "registrationTypes": registrationTypes})

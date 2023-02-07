@@ -13,8 +13,8 @@
 <div class="mx-2">
     <div class="row mt-3">
         <div class="col-md-3">
-            <div class="row">
-                <div class="col-md-12 mb-2">
+            <div class="row mt-2">
+                <div class="col-md-12 mb-3">
                     {%if archive == False%}
                     <span>W realizacji: </span>
                     <span class="badge text-white info badge-pill">{{objectslen}}</span>
@@ -23,7 +23,7 @@
                     <span class="badge text-white info badge-pill">{{objectslen}}</span>
                     {%endif%}
                 </div>
-                <div class="col-md-12 moj-button-left mt-2">
+                <div class="col-md-6 moj-button-left">
                     {%if archive == False%}
                     <a href="{% url 'operationalneedsrecords:list_needs_letter_archive' year %}">
                         <button type="button" class="btn btn-outline-primary my-btn">
@@ -37,6 +37,13 @@
                         </button>
                     </a>
                     {%endif%}
+                </div>
+                <div class="col-md-6 moj-button-light">
+                    <a href="{%url 'operationalneedsrecords:show_statistic' year%}">
+                        <button type="button" class="btn btn-outline-primary my-btn">
+                            <span class="bi bi-bar-chart-line"> Statystyki</span>
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -56,7 +63,8 @@
                 </form>
             </section>
         </div>
-        <div class="row col-md-3">
+        <div class="col-md-3">
+            <div class="row">
             <div class="col-md-12 moj-button-right mb-2 ">
                 <button class="btn btn-outline-danger" data-url="{% url 'operationalneedsrecords:show_archive_year_list'%}"
                         onclick="showYearListModal(this)">Archiwum
@@ -71,6 +79,7 @@
                 </a>
             </div>
             {%endif%}
+                </div>
         </div>
     </div>
 </div>
