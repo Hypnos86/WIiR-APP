@@ -22,22 +22,19 @@
                     <a href="{% url 'operationalneedsrecords:list_needs_letter_archive' year %}">
                         <button type="button" class="btn btn-outline-primary my-btn">
                             <span class="bi bi-journal-check"> Zrealizowane</span>
-                        </button>
-                    </a>
+                        </button></a>
                     {%else%}
                     <a href="{% url 'operationalneedsrecords:list_needs_letter' year %}">
                         <button type="button" class="btn btn-outline-danger">
                             <span class="bi bi-journal"> W realizacji</span>
-                        </button>
-                    </a>
+                        </button></a>
                     {%endif%}
                 </div>
                 <div class="col-md-6 moj-button-light">
                     <a href="{%url 'operationalneedsrecords:show_statistic' year%}">
                         <button type="button" class="btn btn-outline-primary my-btn">
                             <span class="bi bi-bar-chart-line"> Statystyki</span>
-                        </button>
-                    </a>
+                        </button></a>
                 </div>
             </div>
         </div>
@@ -77,8 +74,7 @@
                     <a href="{%url 'operationalneedsrecords:new_needs_latter' year%}">
                         <button type="button" class="btn btn-outline-primary my-btn">
                             <span class="bi bi-journal-plus"> Dodaj sprawę</span>
-                        </button>
-                    </a>
+                        </button></a>
                 </div>
                 {%endif%}
             </div>
@@ -117,16 +113,14 @@
                 <a href="{%url 'operationalneedsrecords:needs_letter_show' year object.id%}">
                     <button data-toggle="info" title="Status" type="button" class="btn btn-outline-success mx-2">
                         <i class="bi bi-eye-fill my-1"></i>
-                    </button>
-                </a>
+                    </button></a>
                 {%if user.accessmodule.records_letters_edit and archive == False%}
                 <a class="mx-2 moj-button-right"
                    href="{%url 'operationalneedsrecords:edit_needs_letter' year object.id%}">
                     <button data-toggle="info" title="Zmień status" type="submit"
                             class="btn btn-outline-primary icon-color my-1">
                         <i class="bi bi-pencil-square"></i>
-                    </button>
-                </a>
+                    </button></a>
                 {%endif%}
             </td>
         </tr>

@@ -10,3 +10,5 @@ def save_is_done(sender, instance, **kwargs):
     if instance.execution_date:
         instance.isDone = True
 
+    if instance.cost == None:
+        instance.cost = 0

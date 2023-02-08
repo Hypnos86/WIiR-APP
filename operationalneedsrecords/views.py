@@ -35,7 +35,8 @@ def list_needs_letter(request, year):
                   | objects.filter(case_type__metric_type__icontains=q) \
                   | objects.filter(registration_type__registration_type__icontains=q) \
                   | objects.filter(employer__name__icontains=q) \
-                  | objects.filter(employer__last_name__icontains=q)
+                  | objects.filter(employer__last_name__icontains=q) \
+                  | objects.filter(no_secretariats_diary__icontains=q)
 
         return render(request, 'operationalneedsrecords/needs_letter_list.html',
                       {"objects": objects, "last_date": last_date, "objectslen": objectslen,
@@ -121,20 +122,30 @@ def show_archive_year_list(request):
 
 @login_required
 def show_statistic(request, year):
-    docs = NeedsLetter.objects.all().filter(receipt_date__year=year)
+    documents = NeedsLetter.objects.all().filter(receipt_date__year=year)
     registrationTypes = RegistrationType.objects.all()
 
     counts = []
-    for doc in docs:
-        if doc.cost != None:
-            counts.append(doc.cost)
-
-    for registrationType in registrationTypes:
-        object = docs.filter(registration_type__id=registrationType.id)
-        type_cost = object.values("cost")
-        print(type_cost)
+    employers_set = set()
+    for doc in documents:
+        counts.append(doc.cost)
+        doc.employer
+        employers_set.add(doc.employer)
 
     count_all = sum(counts)
+    print(employers_set)
+    registrationTypeList = []
+
+    for registrationType in registrationTypes:
+        docsObjects = documents.filter(registration_type__id=registrationType.id)
+        sum_type = 0
+        countType = []
+        for docsobject in docsObjects:
+            sum_type += docsobject.cost
+            countType.append(sum_type)
+        newObjectType = {"type": registrationType, "sumType": sum_type, 'countType': countType}
+        registrationTypeList.append(newObjectType)
 
     return render(request, 'operationalneedsrecords/statistics.html',
-                  {'year': year, 'docs': docs, "count_all": count_all, "registrationTypes": registrationTypes})
+                  {'year': year, 'docs': documents, "count_all": count_all, "registrationTypes": registrationTypes,
+                   "registrationTypeList": registrationTypeList})

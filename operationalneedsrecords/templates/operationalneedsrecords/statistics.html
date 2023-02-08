@@ -23,26 +23,47 @@
                 <li class="list-group-item">Liczba zarejestrowanych pism:
                     <span class="badge text-white info badge-pill">{{docs.all|length}}</span>
                 </li>
-                {%for type in registrationTypes%}
-                {%if type.needsletter.all|length > 0%}
-                <li class="list-group-item">Liczba realizacji dla: {{type}} -
-                    <span class="badge text-white info badge-pill">{{type.needsletter.all|length}}</span>
-                    na kwotę:
-                    <span class="badge text-white info badge-pill">{%for object in type.needsletter.all%} {{co.all|length}} {%endfor%}</span>
+                <li class="list-group-item">Całkowity koszt za cały rok:
+                    <span class="badge text-white info badge-pill">{{count_all|intcomma}}&nbsp;zł</span>
                 </li>
-                {%endif%}
-                {%endfor%}
-
             </ul>
+            <div class="mt-3">
+                <span><b>Realizacja:</b></span>
+                <ul class="list-group list-group-flush">
+                    {%for registrationType in registrationTypeList%}
+                    {%if registrationType.countType|length > 0%}
+                    <li class="list-group-item">
+                        {{registrationType.type}}:
+                        <span class="badge text-white info badge-pill">{{registrationType.countType|length}}</span>
+                        {%if registrationType.sumType > 0 %}
+                        na kwotę:
+                        <span class="badge text-white info badge-pill">
+                        {{registrationType.sumType|intcomma}} zł
+                    </span>
+                        {%endif%}
+                    </li>
+                    {%endif%}
+                    {%endfor%}
+                </ul>
+            </div>
+            <div class="mt-3">
+                <span><b>Branżyści:</b></span>
+                <ul class="list-group list-group-flush">
+                    {%for employer in docs%}
+                    <li class="list-group-item">
+                        {{employer.employer}} - realizowanych spraw:
+                        <span class="badge text-white info badge-pill">0</span>
+                    </li>
+                    {%endfor%}
+                </ul>
+            </div>
         </div>
         <div class="col-md-6">
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">Całkowity koszt za cały rok: <span class="badge text-white info badge-pill">{{count_all|intcomma}}&nbsp;zł</span></li>
-                <li class="list-group-item">Dapibus ac facilisis in</li>
-                <li class="list-group-item">Morbi leo risus</li>
-                <li class="list-group-item">Porta ac consectetur ac</li>
-                <li class="list-group-item">Vestibulum at eros</li>
-            </ul>
+            <div class="list-group">
+                <div class="list-group-item">
+                    sdsd
+                </div>
+            </div>
         </div>
     </div>
 </div>
