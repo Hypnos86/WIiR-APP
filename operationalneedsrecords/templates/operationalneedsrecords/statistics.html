@@ -1,5 +1,6 @@
 {%extends 'base.html'%}
 {%load static%}
+{%load humanize%}
 {%block title%}Statystyki - {{year}}{%endblock%}
 {%block content%}
 {%if user.is_authenticated and user.accessmodule.records_letters%}
@@ -17,20 +18,26 @@
         </div>
     </div>
     <div class="row mt-5">
-        <div class="col-md-6">
+        <div class="col-md-6 pr-5">
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">Liczba zarejestrowanych pism: <span class="badge text-white info badge-pill">{{docs|length}}</span></li>
-                {%for type in registrationTypes%}
-                <li class="list-group-item">Liczba zrealizowanych pisma dla: {{type}} -
-                    <span class="badge text-white info badge-pill">{%for co in type.needsletter.all%} {{co.cost}} {%endfor%}</span>
+                <li class="list-group-item">Liczba zarejestrowanych pism:
+                    <span class="badge text-white info badge-pill">{{docs.all|length}}</span>
                 </li>
+                {%for type in registrationTypes%}
+                {%if type.needsletter.all|length > 0%}
+                <li class="list-group-item">Liczba realizacji dla: {{type}} -
+                    <span class="badge text-white info badge-pill">{{type.needsletter.all|length}}</span>
+                    na kwotę:
+                    <span class="badge text-white info badge-pill">{%for object in type.needsletter.all%} {{co.all|length}} {%endfor%}</span>
+                </li>
+                {%endif%}
                 {%endfor%}
 
             </ul>
         </div>
         <div class="col-md-6">
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">Całkowity koszt za cały rok: <span class="badge text-white info badge-pill">{{count_all}}&nbsp;zł</span></li>
+                <li class="list-group-item">Całkowity koszt za cały rok: <span class="badge text-white info badge-pill">{{count_all|intcomma}}&nbsp;zł</span></li>
                 <li class="list-group-item">Dapibus ac facilisis in</li>
                 <li class="list-group-item">Morbi leo risus</li>
                 <li class="list-group-item">Porta ac consectetur ac</li>

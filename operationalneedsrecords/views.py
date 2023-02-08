@@ -131,7 +131,8 @@ def show_statistic(request, year):
 
     for registrationType in registrationTypes:
         object = docs.filter(registration_type__id=registrationType.id)
-        print(object.values("cost"))
+        type_cost = object.values("cost")
+        print(type_cost)
 
     count_all = sum(counts)
 
