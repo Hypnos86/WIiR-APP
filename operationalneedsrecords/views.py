@@ -126,16 +126,30 @@ def show_statistic(request, year):
     registrationTypes = RegistrationType.objects.all()
 
     counts = []
+
     employers_set = set()
+
+    # Zliczanie kosztów z całego roku i tworzenie zbiorów aktywnych branżystów
     for doc in documents:
         counts.append(doc.cost)
-        doc.employer
-        employers_set.add(doc.employer)
+        employer = doc.employer
+        employers_set.add(employer)
 
     count_all = sum(counts)
-    print(employers_set)
-    registrationTypeList = []
 
+    county_emplo_list = []
+
+    # Zliczanie zrealizowanych spraw przez branżystów
+    for emplo in employers_set:
+        docsObject = documents.filter(employer=emplo)
+        sumObject = 0
+        objectCouned = docsObject.count()
+        sumObject += objectCouned
+        newObjectEmplo = {'employer': emplo, 'caseCount': sumObject}
+        county_emplo_list.append(newObjectEmplo)
+
+    registrationTypeList = []
+    # Zliczanie kosztów i ilości spraw
     for registrationType in registrationTypes:
         docsObjects = documents.filter(registration_type__id=registrationType.id)
         sum_type = 0
@@ -148,4 +162,4 @@ def show_statistic(request, year):
 
     return render(request, 'operationalneedsrecords/statistics.html',
                   {'year': year, 'docs': documents, "count_all": count_all, "registrationTypes": registrationTypes,
-                   "registrationTypeList": registrationTypeList})
+                   "registrationTypeList": registrationTypeList, 'county_emplo_list': county_emplo_list})

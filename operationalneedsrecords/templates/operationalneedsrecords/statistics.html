@@ -49,10 +49,10 @@
             <div class="mt-3">
                 <span><b>Branżyści:</b></span>
                 <ul class="list-group list-group-flush">
-                    {%for employer in docs%}
+                    {%for emp in county_emplo_list%}
                     <li class="list-group-item">
-                        {{employer.employer}} - realizowanych spraw:
-                        <span class="badge text-white info badge-pill">0</span>
+                        {{emp.employer}} - realizowanych spraw:
+                        <span class="badge text-white info badge-pill">{{emp.caseCount}}</span>
                     </li>
                     {%endfor%}
                 </ul>
