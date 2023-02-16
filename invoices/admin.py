@@ -27,7 +27,7 @@ class InvoiceSellResource(resources.ModelResource):
 @admin.register(InvoiceSell)
 class InvoiceSellAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ['date', 'no_invoice', 'contractor', 'sum', 'period_from', 'period_to', 'county',
-                    'creator', 'information', 'author']
+                    'creator', 'author']
     search_fields = ['no_invoice', 'contractor', 'county']
     list_display_links = ['no_invoice']
     preserve_filters = True

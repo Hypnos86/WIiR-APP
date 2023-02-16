@@ -48,7 +48,7 @@ class InvoiceSell(models.Model):
     information = models.TextField("Informacje", blank=True, default="")
     creation_date = models.DateTimeField("Data utworzenia", auto_now_add=True)
     change_date = models.DateTimeField("Zmiana", auto_now=True)
-    author = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name=relatedName)
+    author = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name=relatedName, verbose_name="Autor")
 
     def __str__(self):
         return f"Faktura nr {self.no_invoice} z dnia {self.date} na kwotę {self.sum} zł."
