@@ -6,9 +6,10 @@
     <form class="m-2 p-4" method="get" action="{% url 'invoices:show_info_note' id %}">
         {%csrf_token%}
         <div class="container">
-            <div class="mb-4">
+            <div class="mb-4 text-center">
                 <span class="text-muted">Nota nr: </span>
-                <span>{{note.no_note}} z dnia {{note.date|date:'d.n.Y'}} r.</span>
+                <span>{{note.no_note}} z dnia {{note.date|date:'d.n.Y'}} r.</span><br>
+                <small class="text-muted">Data utworzenia: {{note.creation_date|date:"d.m.Y"}}&nbsp;r.</small>
             </div>
             <div class="my-1">
                 <span class="text-muted">Korygowana faktura </span>
@@ -21,6 +22,9 @@
             <div class="my-1">
                 <span class="text-muted">Korygowana treść: </span>
                 <p>{{note.information}}</p>
+            </div>
+            <div>
+                <small class="text-muted">Autor: </small><small>{{note.author.first_name}} {{note.author.last_name}}</small>
             </div>
         </div>
     </form>

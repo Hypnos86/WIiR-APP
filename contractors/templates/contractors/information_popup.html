@@ -5,15 +5,30 @@
 <form class="m-2 p-4" method="get" action="{% url 'contractors:show_information' id %}">
     {%csrf_token%}
     <div class="container">
-        <div><span class="text-muted">Kontrahent: </span><span>{{contractor.name}}</span></div>
-        <div><span class="text-muted">Adres: </span><span>{{contractor.address}}, {{contractor.zip_code}} {{contractor.city}}</span></div>
-        <div><span class="text-muted">SWOP ID: </span><span>{{contractor.no_contractor}}</span></div>
-        <div class="my-4"><span class="text-muted">NIP: </span>{{contractor.nip|default_if_none:'---'}}</div>
-        <div><span class="text-muted">Informacje: </span><p>{{contractor.information}}</p></div>
-        <div><small class="text-muted">Data dodania: </small><small>{{contractor.creation_date|date:'d.m.Y (H:i)'}}</small></div>
-        <div><small class="text-muted">Zmiany: </small><small>{{contractor.change|date:'d.m.Y (H:i)'}} - {{contractor.author}}</small></div>
-
-
+        <div>
+            <span class="text-muted">Kontrahent: </span>
+            <span>{{contractor.name}}</span>
+        </div>
+        <div>
+            <span class="text-muted">Adres: </span>
+            <span>{{contractor.address}}, {{contractor.zip_code}} {{contractor.city}}</span>
+        </div>
+        <div>
+            <span class="text-muted">SWOP ID: </span>
+            <span>{{contractor.no_contractor}}</span>
+        </div>
+        <div class="my-4"><span class="text-muted">NIP: </span>
+            {{contractor.nip|default_if_none:'---'}}
+        </div>
+        <div>
+            <span class="text-muted">Informacje: </span>
+            <p>{{contractor.information}}</p>
+        </div>
+        <div>
+            <small class="text-muted">Data utworzenia: {{contractor.creation_date|date:'d.m.Y'}}&nbsp;r. ({{contractor.creation_date|date:'H:i'}})</small><br>
+            <small class="text-muted">Autor: {{contractor.author.first_name}} {{contractor.author.last_name}}</small><br>
+            <small class="text-muted">Zmiany: {{contractor.change|date:'d.m.Y'}}</small>
+        </div>
     </div>
 </form>
 </div>

@@ -41,7 +41,7 @@ def menu_invoices(request):
     year_note_set = set([year["date__year"] for year in all_year_note])
     year_note_list = sorted(year_note_set, reverse=True)
 
-    return render(request, "invoices/invoices_menu.html",
+    return render(request, "invoices/menu_invoice.html",
                   {"now_year": now_year, "all_year_sell": year_sell_list,
                    "all_year_buy": year_buy_list,
                    "year_note_list": year_note_list})
@@ -81,14 +81,14 @@ def buy_invoices_list(request):
             invoicesbuy = invoices_buy.filter(date_receipt__lte=date_to)
 
         invoices_buy_filter_sum = len(invoicesbuy)
-        return render(request, "invoices/invoices_buy_list.html", {"invoices": set(invoicesbuy),
+        return render(request, "invoices/invoice_buy_list.html", {"invoices": set(invoicesbuy),
                                                                    "invoices_buy_sum": invoices_buy_filter_sum,
                                                                    "query": query, "year": year, "q": q,
                                                                    "date_from": date_from,
                                                                    "date_to": date_to
                                                                    })
     else:
-        return render(request, "invoices/invoices_buy_list.html", {"invoices": invoices_buy_list,
+        return render(request, "invoices/invoice_buy_list.html", {"invoices": invoices_buy_list,
                                                                    "invoices_buy_sum": invoices_buy_sum,
                                                                    "search": search, "year": year,
                                                                    })
@@ -130,14 +130,14 @@ def buy_invoices_list_archive(request, year):
             invoicesbuy = invoices_buy.filter(date_receipt__lte=date_to)
 
         invoices_buy_filter_sum = len(invoicesbuy)
-        return render(request, "invoices/invoices_buy_list_archive.html", {"invoices": invoicesbuy,
+        return render(request, "invoices/invoice_buy_list_archive.html", {"invoices": invoicesbuy,
                                                                            "invoices_buy_sum": invoices_buy_filter_sum,
                                                                            "query": query, "year": year, "q": q,
                                                                            "date_from": date_from,
                                                                            "date_to": date_to
                                                                            })
     else:
-        return render(request, "invoices/invoices_buy_list_archive.html", {"invoices": invoices_buy_list,
+        return render(request, "invoices/invoice_buy_list_archive.html", {"invoices": invoices_buy_list,
                                                                            "invoices_buy_sum": invoices_buy_sum,
                                                                            "search": search, "year": year,
                                                                            })
@@ -275,13 +275,13 @@ def sell_invoices_list(request):
         except TypeError:
             invoices_sell_sum = 0
 
-        return render(request, "invoices/invoices_sell_list.html", {"invoices": invoicessell,
+        return render(request, "invoices/invoice_sell_list.html", {"invoices": invoicessell,
                                                                     "invoices_sell_len": invoices_sell_filter_sum,
                                                                     "invoices_sell_sum": invoices_sell_sum,
                                                                     "query": query, "year": year, "q": q,
                                                                     "date_from": date_from, "date_to": date_to})
     else:
-        return render(request, "invoices/invoices_sell_list.html", {"invoices": invoicessell_list,
+        return render(request, "invoices/invoice_sell_list.html", {"invoices": invoicessell_list,
                                                                     "invoices_sell_len": invoices_sell_len,
                                                                     "invoices_sell_sum": invoices_sell_sum,
                                                                     "search": search, "year": year})
@@ -333,13 +333,13 @@ def sell_invoices_list_archive(request, year):
         except TypeError:
             invoices_sell_sum = 0
 
-        return render(request, "invoices/invoices_sell_list_archive.html", {"invoices": invoices_sell,
+        return render(request, "invoices/invoice_sell_list_archive.html", {"invoices": invoices_sell,
                                                                             "invoices_sell_len": invoices_sell_filter_sum,
                                                                             "invoices_sell_sum": invoices_sell_sum,
                                                                             "query": query, "year": year, "q": q,
                                                                             "date_from": date_from, "date_to": date_to})
     else:
-        return render(request, "invoices/invoices_sell_list_archive.html", {"invoices": invoicessell_list,
+        return render(request, "invoices/invoice_sell_list_archive.html", {"invoices": invoicessell_list,
                                                                             "invoices_sell_len": invoices_sell_len,
                                                                             "invoices_sell_sum": invoices_sell_sum,
                                                                             "search": search, "year": year})
@@ -348,7 +348,7 @@ def sell_invoices_list_archive(request, year):
 @login_required
 def new_invoice_sell(request):
     invoice_sell_form = InvoiceSellForm(request.POST or None)
-    doc_types = invoice_sell_form.fields["doc_types"].queryset = DocumentTypes.objects.exclude(type=DocumentsTypeEnum.NOTA_KORYGUJACA)
+    doc_types = invoice_sell_form.fields["doc_types"].queryset = DocumentTypes.objects.exclude(type=DocumentsTypeEnum.NOTA_KORYGUJACA.value)
     invoice_sell_form.fields["creator"].queryset = Employer.objects.all().filter(invoices_issues=True)
 
     context = {"invoice": invoice_sell_form, "doc_types": doc_types, "new": True}
@@ -633,7 +633,7 @@ def make_pdf_from_invoices_sell(request):
     objects = range(1, len(invoicessell) + 1)
     invoicessell = zip(objects, invoicessell)
 
-    template_path = "invoices/invoices_sell_pdf.html"
+    template_path = "invoices/invoice_sell_pdf.html"
 
     # get base dir for font directory
     base_dir = BASE_DIR

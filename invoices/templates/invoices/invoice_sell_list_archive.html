@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load humanize %}
-{% load bootstrap %}
 {% load static %}
 {% block title %}Ewidencja faktur - sprzedaż{%endblock%}
 {% block content %}
@@ -14,7 +13,7 @@
         </a>
     </div>
     <div class="col-md-6 text-center">
-        <h4>Ewidencja faktur sprzedażowych na <b>{{year}}</b> rok</h4>
+        <h4>Ewidencja faktur sprzedażowych za <b>{{year}}</b> rok</h4>
     </div>
 </div>
 <div class="row my-3">
@@ -25,15 +24,15 @@
         </span>
         <span class="d-block mt-1">
             <span>Kwota faktur: </span>
-            <span class="badge text-white info badge-pill">{{invoices_sell_sum|intcomma}}&nbsp;zł.</span>
+            <span class="badge text-white info badge-pill">{{invoices_sell_sum|intcomma}} zł.</span>
         </span>
         </div>
     <div class="col-md-6">
         <section class="w-100 d-flex justify-content-center align-items-center flex-column">
-            <form id="form-search" method="get">
-                <div class="row">
+            <form method="get">
+                 <div class="row">
                     <div class="col-md-3">
-                        <div>
+                        <div class="">
                             <label class="control-label" for="date_from">Data faktury od</label>
                             <div class=" ">
                                 <input type="date" name="from" class="form-control" id="date_from" value="{{date_from}}">
@@ -60,16 +59,13 @@
         </section>
     </div>
     <div class="col-md-3 align-self-end moj-button-right">
-        <div>
-            <button onclick="generatePdf(this)" data-url="{%url 'invoices:make_pdf_from_invoices_sell'%}" data-toggle="info" data-placement="top" type="button" title="Zapis do PDF" name="generate_pdf" id="generate_pdf" class="btn btn-outline-primary my-btn mb-1 bi bi-file-earmark-pdf h5"></button>
-        </div>
-        {%if user.accessmodule.invoices_module_edit%}
-        <div>
-            <a id="button-nowa-umowa" href="{%url 'invoices:new_invoice_sell'%}">
-                <button class="btn btn-outline-primary my-btn mt-2">Nowa faktura</button>
+        <span class="d-block">
+            <a id="" href="{%url 'invoices:make_pdf_from_invoices_sell'%}">
+                <button data-toggle="info" title="Zapis do PDF" name="q" id="t" class="btn btn-outline-primary my-btn mb-1">
+                    <span class="bi bi-file-earmark-pdf h5"></span>
+                </button>
             </a>
-        </div>
-        {%endif%}
+        </span>
     </div>
 </div>
 <div>
@@ -79,52 +75,31 @@
             <th align="center" valign="middle" width="40" scope="col">L.p.</th>
             <th align="center" valign="middle" width="40" scope="col">Data wystawienia</th>
             <th align="center" valign="middle" width="120" scope="col">Nr. dokumentu</th>
+            <th align="center" valign="middle" width="50" scope="col">Typ dokumentu</th>
             <th align="center" valign="middle" width="120" scope="col">Kwota</th>
             <th align="center" valign="middle" width="40" scope="col">Data płatności</th>
-            <th align="center" valign="middle" width="120" scope="col">Okres</th>
-            <th align="center" valign="middle" width="200" scope="col">Kontrahent</th>
-            <th align="center" valign="middle" width="120" scope="col">Powiat</th>
+            <th align="center" valign="middle" width="150" scope="col">Okres</th>
+            <th align="center" valign="middle" width="300" scope="col">Kontrahent</th>
+            <th align="center" valign="middle" width="150" scope="col">Powiat</th>
         </tr>
         </thead>
         <tbody>
         {% for invoice in invoices %}
         <tr class="my-table-tr">
-            <td align="center" valign="middle" scope="row" data-toggle="info" data-placement="auto" title="Zapisujący: {{invoice.author.first_name}} {{invoice.author.last_name}}">
-                <span class="text-center"></span>
+            <td align="center" valign="middle" scope="row" data-toggle="info" title="Zapisujący: {{invoice.author.first_name}} {{invoice.author.last_name}}"><span class="text-center"></span></td>
+            <td align="center" valign="middle"><span>{{invoice.date|date:"d.m.Y"}}&nbspr.</span></td>
+            <td align="center" valign="middle"><span title="{{invoice.creator}}">{{invoice.no_invoice|default_if_none:''}}</span></td>
+            <td align="center" valign="middle"><span>{{invoice.doc_types}}</span></td>
+            <td align="center" valign="middle"><span>{{invoice.sum|intcomma}}&nbspzł</span></td>
+            <td align="center" valign="middle"><span>{{invoice.date_of_payment|date:"d.m.Y"}}&nbspr.</span></td>
+            <td align="center" valign="middle"><span>{{invoice.period_from|date:"m.Y"}}&nbspr. - {{invoice.period_to|date:"m.Y"}}&nbspr.</span>
             </td>
-            <td align="center" valign="middle">
-                <span>{{invoice.date|date:"d.m.Y"}}&nbspr.</span>
-            </td>
-            <td align="center" valign="middle">
-                <span data-toggle="info" title="{{invoice.doc_types}}">{{invoice.no_invoice|default_if_none:''}}</span>
-            </td>
-            <td align="center" valign="middle">
-                <span>{{invoice.sum|intcomma}}&nbspzł.</span>
-            </td>
-            <td align="center" valign="middle">
-                <span>{{invoice.date_of_payment|date:"d.m.Y"}}&nbspr.</span>
-            </td>
-            <td align="center" valign="middle">
-                <span>{{invoice.period_from|date:"m.Y"}}&nbspr. - {{invoice.period_to|date:"m.Y"}}&nbspr.</span>
-            </td>
-            <td valign="middle">
-                <span>{{invoice.contractor.name}}. <br><small>Adres: {{invoice.contractor.address}}, {{invoice.contractor.zip_code}} {{invoice.contractor.city}}</small></span>
-            </td>
-            <td align="center" valign="middle">
-                <span>{{invoice.county}}</span>
-            </td>
+            <td valign="middle"><span title="SWOP ID: {{invoice.contractor.no_contractor}}">{{invoice.contractor.name}}. <br><small>Adres: {{invoice.contractor.address}}, {{invoice.contractor.zip_code}} {{invoice.contractor.city}}</small></span></td>
+            <td align="center" valign="middle">{{invoice.county}}</td>
             <td align="right" width="120">
-                <button data-toggle="info" title="Pokaż" type="button" data-url="{% url 'invoices:show_info_sell' invoice.id %}"
-                        class="btn btn-outline-success mx-2" onclick="openModal(this)">
+                <button type="button" data-url="{% url 'invoices:show_info_sell' invoice.id %}" class="btn btn-outline-success mx-2" onclick="openModal(this)">
                     <i class="bi bi-info-lg"></i>
                 </button>
-                {%if user.accessmodule.invoices_module_edit%}
-                <a class="mx-2" href="{%url 'invoices:edit_invoice_sell' invoice.id %}">
-                    <button data-toggle="info" title="Edytuj" type="submit" class="btn btn-outline-primary icon-color mx-1 ">
-                        <i class="bi bi-pencil-square"></i>
-                    </button>
-                </a>
-                {%endif%}
             </td>
         </tr>
         {%endfor%}
@@ -175,7 +150,7 @@
 {%endif%}
 <!-- Modal -->
 <div class="modal fade" id="info_sell_Modal">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
 
         </div>
@@ -183,6 +158,9 @@
 </div>
 <script>
     document.getElementById("button-units").classList.remove("active");
+    document.getElementById("button-invoices").classList.add("active");
+    document.getElementById("button-contracts").classList.remove("active");
+    document.getElementById("button-contractors").classList.remove("active");
 
     function openModal(button){
         var url = $(button).data("url");
@@ -196,23 +174,13 @@
 
     $(function () {
         $('[data-toggle="info"]').tooltip()
-    })
-
-    function generatePdf(button){
-        var url = $(button).data("url");
-        var date_from = $("#date_from").val();
-        var date_to = $("#date_to").val();
-        var q = $("#q").val();
-        var urlParams = "?q=" + q + "&from=" + date_from + "&to=" + date_to;
-        console.log(url + urlParams);
-        window.open(url + urlParams, '_blank').focus();
-        }
+        })
 
     function cleanSearch(){
         $("#q").val("");
         $("#date_from").val("");
         $("#date_to").val("");
-        $("#form-search").submit();
+        $("form").submit();
         }
 </script>
 {%endif%}

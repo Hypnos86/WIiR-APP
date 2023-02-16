@@ -161,7 +161,7 @@ def up_load_annex_contract_auction(instance, filename):
 class AnnexContractAuction(models.Model):
     class Meta:
         verbose_name = "Aneks na umowę ZZP"
-        verbose_name_plural = "U.10- Umowy ZZP - Aneksy"
+        verbose_name_plural = "U.10 - Umowy ZZP - Aneksy"
         ordering = ["contract_auction", "date"]
 
     contract_auction = models.ForeignKey(ContractAuction, on_delete=models.CASCADE,
@@ -253,7 +253,7 @@ def upload_annex_contract_media(instance, filename):
 class AnnexContractMedia(models.Model):
     class Meta:
         verbose_name = "Aneks Umowy na media"
-        verbose_name_plural = "U.05- Umowy Media - Aneksy"
+        verbose_name_plural = "U.05 - Umowy Media - Aneksy"
         ordering = ["contract_media", "date"]
 
     contract_media = models.ForeignKey(ContractMedia, on_delete=models.CASCADE,

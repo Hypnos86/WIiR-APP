@@ -6,6 +6,10 @@ class DateField(DateInput):
     input_type = "date"
 
 
+class MonthField(DateInput):
+    input_type = "month"
+
+
 class InvoiceSellForm(ModelForm):
     class Meta:
         model = InvoiceSell
@@ -18,8 +22,8 @@ class InvoiceSellForm(ModelForm):
         exclude = ['creation_date', 'change_date', 'author']
         widgets = {
             'date': DateField(),
-            'period_from': DateField(),
-            'period_to': DateField(),
+            'period_from': MonthField(),
+            'period_to': MonthField(),
             'date_of_payment': DateField(),
             'information': Textarea(attrs={'rows': 4})
         }

@@ -6,15 +6,43 @@
 <form class="m-2 p-4" method="get" action="{% url 'invoices:show_info_sell' id %}">
     {%csrf_token%}
     <div class="container">
-        <div class="mb-4"><span class="text-muted">{{invoice.doc_types}} nr: </span><span>{{invoice.no_invoice}} z dnia {{invoice.date|date:'d.m.Y'}}&nbsp;r.</span></div>
-        <div class="my-1"><span class="text-muted">Kontrahent: </span><span>{{invoice.contractor}}</span></div>
-        <div class="my-1"><span class="text-muted">Kwota: </span><span>{{invoice.sum}}&nbsp;zł.</span></div>
-        <div class="my-1"><span class="text-muted">Powiat: </span><span>{{invoice.county}}</span></div>
-        <div class="my-1"><span class="text-muted">Okres: </span><span>{{invoice.period_from|date:"m.Y"}}&nbsp;r. - {{invoice.period_to|date:"m.Y"}}&nbsp;r.</span></div>
-        <div class="my-1"><span class="text-muted">Termin płatności: </span><span>{{invoice.date_of_payment}}&nbsp;r.</span></div>
-        <div class="my-1"><span class="text-muted">Wystawca: </span><span>{{invoice.creator}}</span></div>
-        <div class="my-1"><span class="text-muted">Informacje: </span><p>{%if invoice.information%} {{invoice.information}} {%else%} brak {%endif%}</p></div>
-        <div class="my-1"><span class="text-muted">Ewidencja: </span><span>{{invoice.creation_date|date:"d.m.Y"}}&nbsp;r. ({{invoice.author}})</span></div>
+        <div class="mb-4 text-center">
+            <span class="text-muted">{{invoice.doc_types}} nr: </span>
+            <span>{{invoice.no_invoice}} z dnia {{invoice.date|date:'d.m.Y'}}&nbsp;r.</span><br>
+             <small class="text-muted">Data utworzenia: {{invoice.creation_date|date:"d.m.Y"}}&nbsp;r. ({{invoice.creation_date|date:"H:i"}})</small>
+        </div>
+        <div class="my-1">
+            <span class="text-muted">Kontrahent: </span>
+            <span>{{invoice.contractor}}</span>
+        </div>
+        <div class="my-1">
+            <span class="text-muted">Kwota: </span>
+            <span>{{invoice.sum}}&nbsp;zł.</span>
+        </div>
+        <div class="my-1">
+            <span class="text-muted">Powiat: </span>
+            <span>{{invoice.county}}</span>
+        </div>
+        <div class="my-1">
+            <span class="text-muted">Okres: </span>
+            <span>{{invoice.period_from|date:"m.Y"}}&nbsp;r. - {{invoice.period_to|date:"m.Y"}}&nbsp;r.</span>
+        </div>
+        <div class="my-1">
+            <span class="text-muted">Termin płatności: </span>
+            <span>{{invoice.date_of_payment}}&nbsp;r.</span>
+        </div>
+        <div class="my-1">
+            <span class="text-muted">Wystawca: </span>
+            <span>{{invoice.creator}}</span>
+        </div>
+        <div class="my-1">
+            <span class="text-muted">Informacje: </span>
+            <p>{%if invoice.information%} {{invoice.information}} {%else%} brak {%endif%}</p>
+        </div>
+        <div class="my-1">
+            <small class="text-muted">Autor: </small>
+            <small>{{invoice.author.first_name}} {{invoice.author.last_name}}</small>
+        </div>
     </div>
 </form>
 </div>

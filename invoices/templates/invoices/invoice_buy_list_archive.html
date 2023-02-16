@@ -14,7 +14,7 @@
     </div>
     <div class="col-md-8">
         <h4 class="text-center ">Ewidencja faktur gr.6</h4>
-        <h6 class="text-center">Zobowiązania na <b>{{year}}</b> rok.</h6>
+        <h6 class="text-center">Zobowiązania na {{year}} rok.</h6>
     </div>
 </div>
 <div class="row mb-3">
@@ -23,12 +23,12 @@
     </div>
     <div class="col-md-6">
         <section class="w-100 d-flex justify-content-center align-items-center flex-column">
-                <form id="form-search" method="get">
+                <form method="get">
                     <div class="row">
                     <div class="col-md-3">
-                        <div>
+                        <div class="">
                             <label class="control-label" for="date_from">Data faktury od</label>
-                            <div>
+                            <div class=" ">
                                 <input type="date" name="from" class="form-control" id="date_from" value="{{date_from}}">
                             </div>
                         </div>
@@ -36,7 +36,7 @@
                     <div class="col-md-3">
                         <div>
                             <label class="control-label" for="date_to">Data faktury do</label>
-                            <div>
+                            <div class=" ">
                                 <input type="date" name="to" class="form-control" id="date_to" value="{{date_to}}">
                             </div>
                         </div>
@@ -52,20 +52,6 @@
                 </form>
         </section>
     </div>
-    <div class="col-md-3 align-self-end moj-button-right">
-        <div class="mb-2">
-            <a href="{%url 'invoices:make_verification'%}">
-                <button class="btn btn-outline-primary my-btn">Weryfikacja</button>
-            </a>
-        </div>
-        {%if user.accessmodule.invoices_module_edit%}
-        <div class="mt-2">
-            <a id="button-nowa-umowa" href="{%url 'invoices:new_invoice_buy'%}">
-                <button class="btn btn-outline-primary my-btn">Nowa faktura</button>
-            </a>
-        </div>
-        {%endif%}
-    </div>
 </div>
 <div>
     <table class="table table-hover my-table">
@@ -74,7 +60,7 @@
             <th align="center" valign="middle" width="40" scope="col">L.p.</th>
             <th align="center" valign="middle" width="40" scope="col">Data wpływu</th>
             <th align="center" valign="middle" width="40" scope="col">Data wystawienia</th>
-            <th align="center" valign="middle" width="120" scope="col">Nr. dokumentu</th>
+            <th align="center" valign="middle" width="120" scope="col">Nr. faktury</th>
             <th align="center" valign="middle" width="250" scope="col">Kontrahent</th>
             <th align="center" valign="middle" width="100" scope="col">Kwota</th>
             <th align="center" valign="middle" width="40" scope="col">Data płatności</th>
@@ -86,20 +72,14 @@
             <td align="center" valign="middle" scope="row" data-toggle="info" title="Zapisujący: {{invoice.author.first_name}} {{invoice.author.last_name}}"><span class="text-center"></span></td>
             <td align="center" valign="middle"><span>{{invoice.date_receipt|date:"d.m.Y"}} r.</span></td>
             <td align="center" valign="middle"><span>{{invoice.date_issue|date:"d.m.Y"}} r.</span></td>
-            <td align="left" valign="middle"><span data-toggle="info" title="{{invoice.doc_types}}">{{invoice.no_invoice|default_if_none:''}}</span></td>
+            <td align="left" valign="middle"><span>{{invoice.no_invoice|default_if_none:''}}</span></td>
             <td valign="middle"><span title="SWOP ID: {{invoice.contractor.no_contractor}}">{{invoice.contractor.name}}. <br><small>Adres: {{invoice.contractor.address}}, {{invoice.contractor.zip_code}} {{invoice.contractor.city}}</small></span></td>
-            <td align="center" valign="middle"><span>{%if invoice.sum%} {{invoice.sum|intcomma}}&nbsp;zł. {%else%} {{invoice.sum|default_if_none:'---'}}&nbsp;zł. {%endif%}</span></td>
+            <td align="center" valign="middle"><span>{%if invoice.sum%}{{invoice.sum|intcomma}} zł. {%else%} {{invoice.sum|default_if_none:'---'}} {%endif%}</span></td>
             <td align="center" valign="middle"><span>{{invoice.date_of_payment|date:"d.m.Y"}} r.</span></td>
             <td align="right" width="100">
                 <button  data-toggle="info" title="Pokaż" type="button" data-url="{% url 'invoices:show_info_buy' invoice.id %}" class="btn btn-outline-success mx-2 my-1" onclick="openModal(this) ">
                     <i class="bi bi-info-lg"></i>
                 </button>
-                {%if user.accessmodule.invoices_module_edit%}
-                <a class="mx-1" href="{%url 'invoices:edit_invoice_buy' invoice.id %}">
-                    <button data-toggle="info" title="Edytuj" type="submit" class="btn btn-outline-primary icon-color mx-1 my-1"><i
-                            class="bi bi-pencil-square"></i></button>
-                </a>
-                {%endif%}
             </td>
         </tr>
         {%endfor%}
@@ -150,16 +130,16 @@
 {%endif%}
 <!-- Modal -->
 <div class="modal fade" id="info_buy_Modal">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
         </div>
     </div>
 </div>
 <script>
     document.getElementById("button-units").classList.remove("active");
-    document.getElementById("button-record").classList.add("active");
-    document.getElementById("button-cpv").classList.remove("active");
-    document.getElementById("button-investments").classList.remove("active");
+    document.getElementById("button-invoices").classList.add("active");
+    document.getElementById("button-contracts").classList.remove("active");
+    document.getElementById("button-contractors").classList.remove("active");
 
     function openModal(button){
         var url = $(button).data("url");
@@ -175,11 +155,11 @@
         $('[data-toggle="info"]').tooltip()
         })
 
-    function cleanSearch(){
+       function cleanSearch(){
         $("#q").val("");
         $("#date_from").val("");
         $("#date_to").val("");
-        $("#form-search").submit();
+        $("form").submit();
         }
 </script>
 {%endif%}

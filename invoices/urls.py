@@ -7,6 +7,7 @@ from .views import menu_invoices, buy_invoices_list, buy_invoices_list_archive, 
 app_name = "invoices"
 urlpatterns = [
     path("menu/", menu_invoices, name="menu_invoices"),
+    # Wydatki
     path("buyList/", buy_invoices_list, name="buy_invoices_list"),
     path("infoBuy/<int:id>/", show_info_buy, name="show_info_buy"),
     path("archiveBuy/<int:year>/", buy_invoices_list_archive, name="buy_invoices_list_archive"),
@@ -15,6 +16,7 @@ urlpatterns = [
     path("deleteInvoice_by/<int:id>/", delete_invoice_buy, name="delete_invoice_buy"),
     path("addInvoiceItem/<int:id>/", add_items_invoice_buy, name="add_items_invoice_buy"),
     path("deleteItem/<int:id>/<int:invoice_id>/", delete_items_invoice_buy, name="delete_items_invoice_buy"),
+    # Sprzedaż
     path("recordFvSell/", sell_invoices_list, name="sell_invoices_list"),
     path("infoSell/<int:id>/", show_info_sell, name="show_info_sell"),
     path("archiveSell/<int:year>/", sell_invoices_list_archive, name="sell_invoices_list_archive"),
@@ -22,6 +24,7 @@ urlpatterns = [
     path("editInvoiceSell/<int:id>/", edit_invoice_sell, name="edit_invoice_sell"),
     path("editInvoiceSellArchiwe/<int:id>/", edit_invoice_sell_archive, name="edit_invoice_sell_archive"),
     path("trezor/", make_verification, name="make_verification"),
+    # Noty księgowe
     path("recordAccountingNote/", corrective_note_list, name="corrective_note_list"),
     path("infoNote/<int:id>/", show_info_note, name="show_info_note"),
     path("recordAccountingNoteArchive/<int:year>/", corrective_note_list_archive, name="corrective_note_list_archive"),

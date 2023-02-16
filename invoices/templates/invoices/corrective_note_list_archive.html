@@ -79,19 +79,17 @@
             <td align="center" valign="middle"><span>{{note.date|date:"d.m.Y"}}&nbspr.</span></td>
             <td align="center" valign="middle"><span title="{{invoice.creator}}">{{note.no_note|default_if_none:''}}</span></td>
             <td align="left" valign="middle"><span title="SWOP ID: {{note.contractor.no_contractor}}">{{note.contractor.name}}.<br> <small>Adres: {{note.contractor.address}}, {{note.contractor.zip_code}} {{note.contractor.city}}</small></span></td>
-            <td align="center" valign="middle"><span>{{note.corrective_invoice}}</span></td>
+            <td align="left" valign="middle"><span>{{note.corrective_invoice}}</span></td>
             <td align="right" width="120">
-                {%if note.information%}
                 <button data-toggle="info" title="Korygowana treść" type="button" data-url="{% url 'invoices:show_info_note' note.id %}"
                         class="btn btn-outline-success mx-2 my-1" onclick="openModal(this)">
                     <i class="bi bi-file-earmark-text"></i>
                 </button>
-                {%endif%}
                 {%if user.accessmodule.invoices_module_edit%}
                 <a class="mx-2" href="{%url 'invoices:edit_note_archive' note.id%}">
                     <button data-toggle="info" title="Edytuj" type="submit" class="btn btn-outline-primary icon-color mx-1 "><i
-                            class="bi bi-pencil-square my-1"></i></button>
-                </a>
+                            class="bi bi-pencil-square my-1"></i>
+                    </button></a>
                 {%endif%}
             </td>
         </tr>
@@ -143,7 +141,7 @@
 {%endif%}
 <!-- Modal -->
 <div class="modal fade" id="info_note_Modal">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
         </div>
     </div>

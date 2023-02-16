@@ -6,9 +6,10 @@
     <form class="m-2 p-4" method="get" action="{% url 'invoices:show_info_buy' id %}">
         {%csrf_token%}
         <div class="container">
-            <div class="mb-4">
+            <div class="mb-4 text-center">
                 <span class="text-muted">{{invoice.doc_types}} nr: </span>
-                <span>{{invoice.no_invoice}} z dnia {{invoice.date_issue|date:'d.m.Y'}}&nbsp;r.</span>
+                <span>{{invoice.no_invoice}} z dnia {{invoice.date_issue|date:'d.m.Y'}}&nbsp;r.</span><br>
+                <small class="text-muted">Data utworzenia: {{invoice.creation_date|date:"d.m.Y"}}&nbsp;r. ({{invoice.creation_date|date:"H:i"}})</small>
             </div>
             <div class="my-1">
                 <span class="text-muted">Kontrahent: </span>
@@ -28,7 +29,7 @@
                 <p>{%if invoice.information%} {{invoice.information}} {%else%} --brak-- {%endif%}</p></div>
             <hr>
             <div class="mt-1">
-                <span class="text-muted">Powiaty: </span>
+                <span class="text-muted">Wydatkowanie: </span>
                 <ul class="list-group mt-2">
                 {%for item in items%}
                 <li style="list-style-type: none;">{{item.county}} - {{item.sum}}&nbsp;zł.</li>
@@ -36,7 +37,10 @@
                     </ul>
             </div>
             <hr>
-            <div class="my-1"><small class="text-muted">Ewidencja: </small><small>{{invoice.creation_date|date:"d.m.Y"}}&nbsp;r. ({{invoice.author}})</small></div>
+            <div class="my-1">
+                <small class="text-muted">Autor: </small><small>{{invoice.author.first_name}} {{invoice.author.last_name}}</small><br>
+                <small class="text-muted">Zmiany: </small><small>{{invoice.change_date|date:"d.m.Y"}}&nbsp;r. {{invoice.change_date|date:"H:i"}}</small>
+            </div>
         </div>
     </form>
 </div>
