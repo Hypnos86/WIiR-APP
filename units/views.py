@@ -158,6 +158,16 @@ def edit_unit(request, id):
 
 
 def archive_units_list(request):
+    """
+
+    Parameters
+    ----------
+    request
+
+    Returns
+    -------
+    Zwraca liste zarwchiwizowanych Unit
+    """
     units_archive = Unit.objects.filter(status=0).order_by("county")
     county = County.objects.all().order_by("swop_id")
     type_unit = TypeUnit.objects.all()
@@ -210,6 +220,17 @@ def archive_units_list(request):
 
 @login_required
 def show_all_info_unit(request, id):
+    """
+
+    Parameters
+    ----------
+    request
+    id - klucz obiektu Unit
+
+    Returns
+    -------
+    Zwraca wszystkie informacje dotyczace Unit
+    """
     unit_info = Unit.objects.get(pk=id)
     orders = unit_info.order.all()
     projects = unit_info.project.all()
