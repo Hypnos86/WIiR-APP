@@ -119,7 +119,8 @@ def show_archive_year_list(request):
 
     return render(request, 'operationalneedsrecords/archive_list_year.html', {'year_order_list': year_order_list})
 
-
+def myFunc(e):
+    return e["county"].name
 @login_required
 def show_statistic(request, year):
     documents = NeedsLetter.objects.all().filter(receipt_date__year=year).order_by("unit__county__name")
@@ -138,7 +139,7 @@ def show_statistic(request, year):
         county_set.add(county_list)
 
     count_all = sum(counts)
-
+    print(county_set)
     emplo_list = []
 
     # Zliczanie zrealizowanych spraw przez branżystów
@@ -156,11 +157,9 @@ def show_statistic(request, year):
     for registrationType in registrationTypes:
         docsObjects = documents.filter(registration_type__id=registrationType.id)
         sum_type = 0
-        countType = []
         for docsobject in docsObjects:
             sum_type += docsobject.cost
-            countType.append(sum_type)
-        newObjectType = {"type": registrationType, "sumType": sum_type, 'countType': countType}
+        newObjectType = {"type": registrationType, "sumType": sum_type, 'countType': len(docsObjects)}
         registrationTypeList.append(newObjectType)
 
     county_info_list = []
@@ -170,17 +169,17 @@ def show_statistic(request, year):
 
         for registrationType in registrationTypes:
             sum_type = 0
-            countType = []
+
             filterObjectTypes = docsObjects.filter(registration_type__id=registrationType.id)
 
             for docObject in filterObjectTypes:
                 sum_type += docObject.cost
-                countType.append(sum_type)
 
-            infoObject = {"county": county, "types": registrationType, "sum": sum_type, "countType": countType}
+            infoObject = {"county": county, "types": registrationType, "sum": sum_type, "countType": len(filterObjectTypes)}
             county_info_list.append(infoObject)
 
     return render(request, 'operationalneedsrecords/statistics.html',
                   {'year': year, 'docs': documents, "count_all": count_all, "registrationTypes": registrationTypes,
                    "registrationTypeList": registrationTypeList, 'emplo_list': emplo_list,
-                   'county_info_list': county_info_list})
+                   'county_info_list': sorted(county_info_list, key=myFunc)})
+

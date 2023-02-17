@@ -31,10 +31,10 @@
                 <span><b>Realizacja:</b></span>
                 <ul class="list-group list-group-flush">
                     {%for registrationType in registrationTypeList%}
-                    {%if registrationType.countType|length > 0%}
+                    {%if registrationType.countType > 0%}
                     <li class="list-group-item">
                         {{registrationType.type}}:
-                        <span class="badge text-white info badge-pill">{{registrationType.countType|length}}</span>
+                        <span class="badge text-white info badge-pill">{{registrationType.countType}}</span>
                         {%if registrationType.sumType > 0 %}
                         na kwotę:
                         <span class="badge text-white info badge-pill">
@@ -71,9 +71,9 @@
                             </div>
                             <div>
                                 {%for object in county.list%}
-                                {%if object.countType|length > 0%}
+                                {%if object.countType > 0%}
                                 <span>{{object.types}}: </span>
-                                <span class="badge text-white info badge-pill">{{object.countType|length}}</span>
+                                <span class="badge text-white info badge-pill">{{object.countType}}</span>
                                 <span>na kwotę:</span>
                                 <span class="badge text-white info badge-pill">{{object.sum}}&nbsp;zł</span><br>
                                 {%endif%}
