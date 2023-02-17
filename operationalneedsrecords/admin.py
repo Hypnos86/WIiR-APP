@@ -34,7 +34,7 @@ class NeedsLetterResource(resources.ModelResource):
 class NeedLetterAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ['receipt_date', 'case_sign', 'unit', 'case_type', 'registration_type', 'isDone', 'employer',
                     'author', 'creation_date']
-    search_fields = ['case_sign', 'unit', 'registration_type', 'receipt_date_to_team', 'case_sign_team']
+    search_fields = ['case_sign', 'unit__city', 'registration_type__registration_type', 'case_sign_team']
     list_display_links = ['unit']
     list_filter = ('isDone', 'unit__county__name')
     resource_class = NeedsLetterResource
