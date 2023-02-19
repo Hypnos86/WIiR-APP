@@ -119,25 +119,28 @@ def show_archive_year_list(request):
 
     return render(request, 'operationalneedsrecords/archive_list_year.html', {'year_order_list': year_order_list})
 
-
+def myFunc(e):
+    return e["county"].name
 @login_required
 def show_statistic(request, year):
-    documents = NeedsLetter.objects.all().filter(receipt_date__year=year)
+    documents = NeedsLetter.objects.all().filter(receipt_date__year=year).order_by("unit__county__name")
     registrationTypes = RegistrationType.objects.all()
 
     counts = []
-
     employers_set = set()
+    county_set = set()
 
     # Zliczanie kosztów z całego roku i tworzenie zbiorów aktywnych branżystów
     for doc in documents:
         counts.append(doc.cost)
         employer = doc.employer
         employers_set.add(employer)
+        county_list = doc.unit.county
+        county_set.add(county_list)
 
     count_all = sum(counts)
-
-    county_emplo_list = []
+    print(county_set)
+    emplo_list = []
 
     # Zliczanie zrealizowanych spraw przez branżystów
     for emplo in employers_set:
@@ -146,20 +149,37 @@ def show_statistic(request, year):
         objectCouned = docsObject.count()
         sumObject += objectCouned
         newObjectEmplo = {'employer': emplo, 'caseCount': sumObject}
-        county_emplo_list.append(newObjectEmplo)
+        emplo_list.append(newObjectEmplo)
 
     registrationTypeList = []
+
     # Zliczanie kosztów i ilości spraw
     for registrationType in registrationTypes:
         docsObjects = documents.filter(registration_type__id=registrationType.id)
         sum_type = 0
-        countType = []
         for docsobject in docsObjects:
             sum_type += docsobject.cost
-            countType.append(sum_type)
-        newObjectType = {"type": registrationType, "sumType": sum_type, 'countType': countType}
+        newObjectType = {"type": registrationType, "sumType": sum_type, 'countType': len(docsObjects)}
         registrationTypeList.append(newObjectType)
+
+    county_info_list = []
+    # Zliczanie ilości spraw, koszty i rodzaj sorawy na powiaty
+    for county in county_set:
+        docsObjects = documents.filter(unit__county__name=county)
+
+        for registrationType in registrationTypes:
+            sum_type = 0
+
+            filterObjectTypes = docsObjects.filter(registration_type__id=registrationType.id)
+
+            for docObject in filterObjectTypes:
+                sum_type += docObject.cost
+
+            infoObject = {"county": county, "types": registrationType, "sum": sum_type, "countType": len(filterObjectTypes)}
+            county_info_list.append(infoObject)
 
     return render(request, 'operationalneedsrecords/statistics.html',
                   {'year': year, 'docs': documents, "count_all": count_all, "registrationTypes": registrationTypes,
-                   "registrationTypeList": registrationTypeList, 'county_emplo_list': county_emplo_list})
+                   "registrationTypeList": registrationTypeList, 'emplo_list': emplo_list,
+                   'county_info_list': sorted(county_info_list, key=myFunc)})
+

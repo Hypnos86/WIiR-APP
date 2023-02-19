@@ -4,7 +4,7 @@
 {%block title%}{%endblock%}
 {%block content%}
 <div class="container">
-    {%if user.is_authenticated%}
+    {%if user.is_authenticated and user.accessmodule.zok_team or user.accessmodule.zriwt_team or user.accessmodule.zm_team or user.accessmodule.zn_team or user.accessmodule.ze_team%}
     <div class="row d-flex justify-content-between">
         <div class="col-md-7">
             <table class="table">
@@ -177,9 +177,13 @@
         </div>
         {%endif%}
     </div>
+    {%elif user.is_authenticated%}
+    <ul class="list-group">
+        <li class="list-group-item text-center"><span>BRAK UPRAWNIEŃ DO MODUŁÓW</span></li>
+    </ul>
     {%else%}
     <ul class="list-group">
-        <li class="list-group-item"><span>Użytkownik anonimowy</span></li>
+        <li class="list-group-item text-center"><span>UŻYTKOWNIK ANONIMOWY</span></li>
     </ul>
     {%endif%}
 </div>

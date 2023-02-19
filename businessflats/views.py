@@ -38,12 +38,33 @@ def make_flats_list(request):
 
 @login_required
 def show_information(request, id):
+    """
+
+    Parameters
+    ----------
+    request
+    id - klucz obiektu OfficjalFlat
+
+    Returns
+    -------
+    Zwraca informacje dla obiektu
+    """
     flat = get_object_or_404(OfficialFlat, pk=id)
     return render(request, 'businessflats/info_flat_popup.html', {'flat': flat, 'id': id})
 
 
 @login_required
 def add_new_flat(request):
+    """
+
+    Parameters
+    ----------
+    request
+
+    Returns
+    -------
+    Zapisuje nowy obiekt w bazie
+    """
     new_flat_form = OfficialFlatForm(request.POST or None)
 
     if request.method == 'POST':
@@ -57,6 +78,17 @@ def add_new_flat(request):
 
 @login_required
 def edit_flat(request, id):
+    """
+
+    Parameters
+    ----------
+    request
+    id - klucz obiektu OfficjalFlat
+
+    Returns
+    -------
+    Edytuje obiekt w bazie
+    """
     flats = get_object_or_404(OfficialFlat, pk=id)
     flat_form = OfficialFlatForm(request.POST or None, instance=flats)
     context = {'flat_form': flat_form, 'new': False}

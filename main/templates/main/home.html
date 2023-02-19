@@ -60,7 +60,9 @@
                         {%endif%}
                     {%else%}
                         {%if car.rent_date == date%}
-                            <span><b>{{car.rent_date}}&nbsp;r.</b></span>
+                            <span class="bi bi-calendar4-week color-sky">
+                                {{car.rent_date}}&nbsp;r.
+                            </span>
                         {%else%}
                             <span>{{car.rent_date}}&nbsp;r.</span>
                         {%endif%}
