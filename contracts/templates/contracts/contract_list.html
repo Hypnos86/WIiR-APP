@@ -277,18 +277,12 @@
     document.getElementById("button-cpv").classList.remove("active");
     document.getElementById("button-investments").classList.remove("active");
 
-    $(function () {
-        $('[data-toggle="info"]').tooltip()
-        })
-
     function cleanSearch(){
         $("#q").val("");
         $("#date_from").val("");
         $("#date_to").val("");
         $("form").submit();
         }
-
-
 </script>
 {%endif%}
 {%endblock%}

@@ -97,19 +97,11 @@
         $("#submitButton").closest("form").submit();
         }
 
-<!--    $(function () {-->
-<!--        $('[data-toggle="info"]').tooltip()-->
-<!--    })-->
-
     function refreshMonth(element){
         var numberMonth = $(element).val();
         var url = $(element).data("url");
-<!--        $(".footer.body").load(url.slice(0,-1)+"?setMonth="+numberMonth);-->
         window.location.href = url.slice(0,-1)+"?setMonth="+numberMonth;
     }
-
-
-
 </script>
 {%endif%}
 {%endblock%}

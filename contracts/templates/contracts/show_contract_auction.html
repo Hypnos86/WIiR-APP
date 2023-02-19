@@ -159,10 +159,6 @@
     document.getElementById("button-investments").classList.add("active");
     document.getElementById("button-cpv").classList.remove("active");
 
-    $(function () {
-        $('[data-toggle="info"]').tooltip()
-    })
-
     function openSettlementModal(button){
         var url = $(button).data("url");
         $("#informationModal .modal-content").load(url);
@@ -172,7 +168,6 @@
     function submitForm(){
         $("#submitButton").closest("form").submit();
     }
-
 </script>
 {%endif%}
 {%endblock%}
