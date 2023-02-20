@@ -45,7 +45,7 @@ def list_needs_letter(request, year):
     else:
         return render(request, 'operationalneedsrecords/needs_letter_list.html',
                       {"objects": objects_list, "last_date": last_date, "objectslen": objectslen, 'search': search,
-                       "year": year, "q": q, "archive": False})
+                       "year": year, "q": q, "archive": False, 'isFromShow':False})
 
 
 @login_required
@@ -84,13 +84,12 @@ def new_needs_latter(request, year):
 
 
 @login_required
-def edit_needs_letter(request, year, id):
+def edit_needs_letter(request, year, id, isFromShow = None):
     object_letter = get_object_or_404(NeedsLetter, pk=id)
     object_form = NeedsLetterForm(request.POST or None, instance=object_letter)
     object_form.fields['employer'].queryset = Employer.objects.all().filter(team=TeamType.ZE.value)
     units = Unit.objects.all()
     object_edit = object_letter.unit
-
     if request.method == "POST":
         if object_form.is_valid():
             instance = object_form.save(commit=False)
@@ -99,13 +98,13 @@ def edit_needs_letter(request, year, id):
             return redirect(reverse('operationalneedsrecords:list_needs_letter', kwargs={"year": year}))
     return render(request, 'operationalneedsrecords/needs_letter_form.html',
                   {"object_form": object_form, "units": units, "object_edit": object_edit, "new": False, "year": year,
-                   "id": id})
+                   "id": id, "isFromShow":isFromShow})
 
 
 @login_required
 def needs_letter_show(request, year, id):
     object = get_object_or_404(NeedsLetter, pk=id)
-    return render(request, 'operationalneedsrecords/needs_letter_show.html', {"object": object, "year": year})
+    return render(request, 'operationalneedsrecords/needs_letter_show.html', {"object": object, "year": year, "isFromShow":True})
 
 
 @login_required
@@ -139,7 +138,6 @@ def show_statistic(request, year):
         county_set.add(county_list)
 
     count_all = sum(counts)
-    print(county_set)
     emplo_list = []
 
     # Zliczanie zrealizowanych spraw przez branżystów

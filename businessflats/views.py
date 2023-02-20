@@ -8,7 +8,7 @@ from django.core.paginator import Paginator
 # Create your views here.
 @login_required
 def make_flats_list(request):
-    flats = OfficialFlat.objects.all()
+    flats = OfficialFlat.objects.all().order_by('address')
     count_flats = len(flats)
 
     paginator = Paginator(flats, 10)

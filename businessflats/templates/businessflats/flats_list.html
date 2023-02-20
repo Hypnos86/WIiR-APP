@@ -61,11 +61,9 @@
             <td class="text-center" valign="middle" ><i data-toggle="info" title="Zajęte" class="bi bi-geo-alt-fill text-danger"></i></td>
             {%endif%}
             <td align="right" valign="middle">
-                {%if flat.information%}
                 <button type="button" data-toggle="info" data-placement="left" title="Pokaż" data-url="{% url 'businessflats:show_information' flat.id %}" class="btn btn-outline-success mx-2 tt" onclick="openModal(this)"><i
                         class="bi bi-info-lg"></i>
                 </button>
-                {%endif%}
                 {%if user.accessmodule.official_flat_edit%}
                 <a class="mx-2" href="{%url 'businessflats:edit_flat' flat.id %}">
                     <button type="submit" data-toggle="info" data-placement="right" title="Edytuj" class="btn btn-outline-primary icon-color"><i class="bi bi-pencil-square"></i>

@@ -14,43 +14,41 @@
         <h4 class="text-center">{%if new%}Nowy lokal {%else%}Edycja lokalu{%endif%}</h4>
     </div>
 </div>
-<div class="container col-md-5">
+<div class="container col-md-7">
     <form method="post">
         {%csrf_token%}
-        <div class="mb-3">
+        <div class="row mb-3">
             {{flat_form.address|bootstrap}}
         </div>
         <div class="row mb-3">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 {{flat_form.area|bootstrap}}
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 {{flat_form.room_numbers|bootstrap}}
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 {{flat_form.flor|bootstrap}}
             </div>
-        </div>
-        <div class="">
-            {{flat_form.information|bootstrap}}
-        </div>
-        <div class="row mt-4">
             <div class="col-md-3">
-                <div class="list-group">
+                <div class="form-group">
                     <label class="" for="id_state">Stan lokalu</label>
-                    <div class="list-group-item" id="id_state">{{flat_form.state|bootstrap}}</div>
+                    <div class="form-control" id="id_state">{{flat_form.state|bootstrap}}</div>
                 </div>
             </div>
-            <div class="col-md-9 moj-button-right">
-                <button type="submit" class="btn btn-outline-primary my-btn">
-                    {%if new%}
-                    <span class="bi bi-save2"> Dodaj lokal</span>
-                    {%else%}
-                    <span class="bi bi-save2"> Zapisz zmiany</span>
-                    {%endif%}
-                </button>
+        </div>
+        <div class="row">
+            {{flat_form.information|bootstrap}}
+        </div>
+        <div class="col-md-12 moj-button-right mt-3">
+            <button type="submit" class="btn btn-outline-primary my-btn">
+                {%if new%}
+                <span class="bi bi-save2"> Dodaj lokal</span>
+                {%else%}
+                <span class="bi bi-save2"> Zapisz zmiany</span>
+                {%endif%}
+            </button>
 
-            </div>
         </div>
     </form>
 </div>

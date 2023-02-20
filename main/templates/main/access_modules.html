@@ -151,19 +151,41 @@
                 {%if user.accessmodule.ze_team%}
                 <tr>
                     <td rowspan="2" valign="middle">Zespół Eksploatacji</td>
-                    <td rowspan="2" align="center" valign="middle"><i class="bi bi-check-circle-fill text-success"></i></td>
+                    <td rowspan="2" align="center" valign="middle">
+                        <i class="bi bi-check-circle-fill text-success"></i>
+                    </td>
                     <td>Moduł Ewidencja Pism</td>
-                    <td align="center" valign="middle">{%if user.accessmodule.records_letters%}<i class="bi bi-check-circle-fill text-success"></i>
-                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
-                    <td align="center" valign="middle">{%if user.accessmodule.records_letters_edit%}<i class="bi bi-check-circle-fill text-success"></i>
-                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
+                    <td align="center" valign="middle">
+                        {%if user.accessmodule.records_letters%}
+                        <i class="bi bi-check-circle-fill text-success"></i>
+                        {%else%}
+                        <i class="bi bi-x-circle-fill text-danger"></i>
+                        {%endif%}
+                    </td>
+                    <td align="center" valign="middle">
+                        {%if user.accessmodule.records_letters_edit%}
+                        <i class="bi bi-check-circle-fill text-success"></i>
+                        {%else%}
+                        <i class="bi bi-x-circle-fill text-danger"></i>
+                        {%endif%}
+                    </td>
                 </tr>
                 <tr>
                     <td align="left" valign="middle">Moduł Umowy Media</td>
-                    <td align="center" valign="middle">{%if user.accessmodule.contract_media%}<i class="bi bi-check-circle-fill text-success"></i>
-                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
-                    <td align="center" valign="middle">{%if user.accessmodule.contract_media_edit%}<i class="bi bi-check-circle-fill text-success"></i>
-                    {%else%} <i class="bi bi-x-circle-fill text-danger"></i> {%endif%}</td>
+                    <td align="center" valign="middle">
+                        {%if user.accessmodule.contract_media%}
+                        <i class="bi bi-check-circle-fill text-success"></i>
+                        {%else%}
+                        <i class="bi bi-x-circle-fill text-danger"></i>
+                        {%endif%}
+                    </td>
+                    <td align="center" valign="middle">
+                        {%if user.accessmodule.contract_media_edit%}
+                        <i class="bi bi-check-circle-fill text-success"></i>
+                        {%else%}
+                        <i class="bi bi-x-circle-fill text-danger"></i>
+                        {%endif%}
+                    </td>
                 </tr>
                 {%endif%}
                 </tbody>
@@ -172,7 +194,11 @@
         {%if commands%}
         <div class="col-md-4">
             <ul class="list-group list-group-flush">
-                <li class="list-group-item"><a href="{%url 'main:show_command_list'%}"><input type="button" class="btn btn-outline-primary my-btn" value="Polecenia Naczelnika"></a></li>
+                <li class="list-group-item">
+                    <a href="{%url 'main:show_command_list'%}">
+                        <input type="button" class="btn btn-outline-primary my-btn" value="Polecenia Naczelnika">
+                    </a>
+                </li>
             </ul>
         </div>
         {%endif%}

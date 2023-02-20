@@ -8,5 +8,5 @@ class OfficialFlatForm(ModelForm):
 
         fields = ('address', 'area', 'room_numbers', 'flor', 'state', 'information')
         labels = {'address': 'Adres', 'area': 'Powierzchnia', 'room_numbers': 'Ilość pomieszczeń', 'flor': 'Piętro',
-                 'state': 'Stan', 'information': 'Informacje'}
+                 'state': 'Wolne', 'information': 'Informacje'}
         exclude = ['creation_date', 'change', 'author']

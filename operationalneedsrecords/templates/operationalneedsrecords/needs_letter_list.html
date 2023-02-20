@@ -116,7 +116,7 @@
                     </button></a>
                 {%if user.accessmodule.records_letters_edit and archive == False%}
                 <a class="mx-2 moj-button-right"
-                   href="{%url 'operationalneedsrecords:edit_needs_letter' year object.id%}">
+                   href="{%url 'operationalneedsrecords:edit_needs_letter' year object.id isFromShow%}">
                     <button data-toggle="info" title="Zmień status" type="submit"
                             class="btn btn-outline-primary icon-color my-1">
                         <i class="bi bi-pencil-square"></i>

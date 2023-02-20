@@ -55,7 +55,7 @@ class NeedsLetter(models.Model):
                                   verbose_name="Rodzaj sprawy")
     registration_type = models.ForeignKey(RegistrationType, on_delete=models.CASCADE, verbose_name="Rodzaj zgłoszenia",
                                           related_name=related_name)
-    no_secretariats_diary = models.IntegerField("Nr. z dziennika", unique=True)
+    no_secretariats_diary = models.PositiveIntegerField("Nr. z dziennika")
     receipt_date_to_team = models.DateField("Data wpływu do Zespołu", null=False, blank=True)
     case_sign_team = models.CharField("Znak sprawy WiiR", max_length=30, null=True, blank=True)
     cost = models.DecimalField(verbose_name="Koszt realizacji", max_digits=10, decimal_places=2, null=True, blank=True)

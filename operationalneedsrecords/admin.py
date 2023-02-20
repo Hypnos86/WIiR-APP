@@ -33,11 +33,12 @@ class NeedsLetterResource(resources.ModelResource):
 
 @admin.register(NeedsLetter)
 class NeedLetterAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['receipt_date', 'case_sign', 'unit', 'case_type', 'registration_type', 'isDone', 'employer',
-                    'author', 'creation_date']
-    search_fields = ['case_sign', 'unit__city', 'registration_type__registration_type', 'case_sign_team']
+    list_display = ['receipt_date','no_secretariats_diary', 'case_sign', 'unit', 'case_type', 'registration_type', 'isDone', 'employer',
+                    'author']
+    search_fields = ['case_sign', 'no_secretariats_diary', 'unit__city', 'case_type__metric_type','registration_type__registration_type', 'case_sign_team']
     list_display_links = ['unit']
     list_filter = ('isDone', 'unit__county__name')
+    search_help_text = ("Możliwość szukania: Znak pisma - wpływ, Nr.dziennika, Miasto, Rodzaj sprawy, ROdzaj Zgłoszenia, Znak pisma ZE")
     resource_class = NeedsLetterResource
 
 
