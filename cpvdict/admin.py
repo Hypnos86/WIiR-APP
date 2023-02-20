@@ -70,10 +70,11 @@ class OrderResource(resources.ModelResource):
 
 @admin.register(Order)
 class OrderAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['date', 'no_order', 'sum_netto', 'sum_brutto', 'typeorder', 'genre', 'brakedown']
-    search_fields = ['no_order', 'no_cpv', 'name', 'typeorder__type']
+    list_display = ['date', 'no_order', 'sum_netto', 'sum_brutto', 'typeorder', 'genre', 'brakedown', 'author']
+    search_fields = ['no_order', 'sum_netto', 'sum_brutto', 'genre__name_id', 'typeorder__type']
     list_display_links = ('no_order',)
     filter_horizontal = ('unit',)
+    search_help_text = "Możliwość szukania: nr zlecenia, kwota netto, kwota brutto, ID rodzajowości, rodzaj zamówienia"
     resource_class = OrderResource
 
 

@@ -8,12 +8,12 @@ from units.models import County, TypeUnit, Unit
 # admin.site.register(Post, PostAdmin)
 class CountyResource(resources.ModelResource):
     swop_id = Field(attribute='swop_id', column_name='ID SWOP')
-    county = Field(attribute='county', column_name='Powiat')
+    county = Field(attribute='name', column_name='Powiat')
 
     class Meta:
         model = County
-        fields = ( 'swop_id', 'name')
-        export_order = ('swop_id', 'name')
+        fields = ( 'swop_id', 'county')
+        export_order = ('swop_id', 'county')
 
 
 @admin.register(County)

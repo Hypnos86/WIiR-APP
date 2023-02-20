@@ -22,8 +22,13 @@
         </div>
         <div>
             <span class="text-muted">Informacje: </span>
+            {%if contractor.informaction%}
             <p>{{contractor.information}}</p>
+            {%else%}
+            <p>---brak---</p>
+            {%endif%}
         </div>
+        <hr>
         <div>
             <small class="text-muted">Data utworzenia: {{contractor.creation_date|date:'d.m.Y'}}&nbsp;r. ({{contractor.creation_date|date:'H:i'}})</small><br>
             <small class="text-muted">Autor: {{contractor.author.first_name}} {{contractor.author.last_name}}</small><br>

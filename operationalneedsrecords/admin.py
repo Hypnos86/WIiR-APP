@@ -17,6 +17,7 @@ class NeedsLetterResource(resources.ModelResource):
     no_secretariats_diary = Field(attribute="no_secretariats_diary", column_name="Nr. z dziennika")
     receipt_date_to_team = Field(attribute="receipt_date_to_team", column_name="Data wpływu do Zespołu")
     case_sign_team = Field(attribute="case_sign_team", column_name="Znak sprawy WiiR")
+    employer = Field(attribute="employer", column_name="Branżysta")
     cost = Field(attribute="cost", column_name="Koszt realizacji")
     isDone = Field(attribute="isDone", column_name="Zrealizowane")
     information = Field(attribute="information", column_name="Informacje")
@@ -25,8 +26,8 @@ class NeedsLetterResource(resources.ModelResource):
         models = NeedsLetter
         fields = ('id',)
         export_order = (
-            'receipt_date', 'case_sign', 'county', 'typeOfUnit', 'unit', 'case_description', 'case_type',
-            'registration_type', 'no_secretariats_diary', 'receipt_date_to_team', 'case_sign_team', 'cost', 'isDone',
+            'receipt_date', 'no_secretariats_diary', 'receipt_date_to_team', 'case_sign', 'county', 'typeOfUnit',
+            'unit', 'case_description', 'case_type', 'registration_type', 'case_sign_team', 'cost', 'isDone',
             'information')
 
 
