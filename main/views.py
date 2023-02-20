@@ -46,7 +46,7 @@ def add_rent_car(request):
             instance.author = request.user
             rent_car.save()
             return redirect('main:welcome')
-    return render(request, 'main/car_popup.html', context)
+    return render(request, 'main/car_form.html', context)
 
 
 @login_required
@@ -60,7 +60,7 @@ def edit_rent_car(request, id):
             instance.author = request.user
             rent_car_form.save()
             return redirect("main:welcome")
-    return render(request, 'main/car_popup.html', {'rent_car': rent_car_form, 'id': id, 'new': False})
+    return render(request, 'main/car_form.html', {'rent_car': rent_car_form, 'id': id, 'new': False})
 
 
 @login_required
