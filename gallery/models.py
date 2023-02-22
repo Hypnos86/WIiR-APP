@@ -27,7 +27,7 @@ class Gallery(models.Model):
     author = models.ForeignKey("auth.user", on_delete=models.CASCADE, related_name="gallery", verbose_name="Autor")
 
     def __str__(self):
-        return f"{self.project} ({self.name})"
+        return f"{self.project} ({self.name.strftime('%d.%m.%Y')})"
 
 
 class Photo(models.Model):
@@ -41,7 +41,7 @@ class Photo(models.Model):
     add_date = models.DateField("Data dodania", auto_now_add=True)
 
     def __str__(self):
-        return f"Zdjecie dodane {self.add_date}"
+        return f"Zdjecie dodane: {self.add_date.strftime('%d.%m.%Y')} - Galeria: {self.gallery} - Jednostka: {self.gallery.project.unit}"
 
 def now_date():
     return datetime.datetime.now()
@@ -50,10 +50,7 @@ def create_name_photo(instance, filename):
     extension = filename.split(".")[-1]
     datetime = now_date()
     date = datetime.strftime("%Y-%m-%d_(%H:%M:%S:%f)")
-    file = os.path.splitext(filename)
-    print(file)
-    print(filename)
+    # file = os.path.splitext(filename)
     new_filename = f"{instance.gallery.project.unit.city}_{date}.{extension}"
-    print(f'new_file: {new_filename}')
 
     return new_filename
