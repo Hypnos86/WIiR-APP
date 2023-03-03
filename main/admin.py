@@ -54,9 +54,17 @@ class EmployerAdmin(ExportMixin, admin.ModelAdmin):
 
 @admin.register(AccessModule)
 class AccessModuleAdmin(admin.ModelAdmin):
-    list_display = ['user']
+    list_display = ['user_name']
     ordering = ['user']
     search_fields = ['user']
+
+    def user_name(self, obj):
+        user_first_name = obj.user.first_name
+        user_last_name = obj.user.last_name
+        user = obj.user
+        return f'{user} - {user_first_name} {user_last_name}'
+
+    user_name.short_description = 'Użytkownicy'
 
 
 class CommandResource(resources.ModelResource):

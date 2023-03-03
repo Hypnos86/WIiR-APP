@@ -3,19 +3,25 @@
 {%load bootstrap%}
 {%block title%}{%endblock%}
 {%block content%}
-{%if user.is_authenticated and user.accessmodule.zok_team%}
-<div class="container" xmlns="http://www.w3.org/1999/html">
+{%if user.is_authenticated%}
+<div class="container">
     <div class="d-flex justify-content-center">
         <div class="row col-md-6 mb-2">
             <div class="col-md-2">
-                {%if user.accessmodule.commands %}
-                <a href="{%url 'main:make_secretariat_site'%}"><button class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span></button></a>
+                {%if user.accessmodule.zok_team and user.accessmodule.commands %}
+                <a href="{%url 'main:make_secretariat_site'%}">
+                    <button class="btn btn-outline-primary my-btn"><span
+                            class="bi bi-chevron-compact-left">Cofnij</span>
+                    </button></a>
                 {%else%}
-                <a href="{%url 'main:give_access_to_modules'%}"><button class="btn btn-outline-primary my-btn"><span class="bi bi-chevron-compact-left">Cofnij</span></button></a>
+                <a href="{%url 'main:give_access_to_modules'%}">
+                    <button class="btn btn-outline-primary my-btn"><span
+                            class="bi bi-chevron-compact-left">Cofnij</span>
+                    </button></a>
                 {%endif%}
             </div>
             <div class="col-md-8 text-center mb-3">
-                <h5 >Polecenia Naczelnika</h5>
+                <h5>Polecenia Naczelnika</h5>
                 {%if last_date%}
                 <small>Ostatnia aktualizacja: {{last_date.change|date:"d.m.Y - (H:i)"}}</small>
                 {%endif%}
@@ -33,42 +39,46 @@
         <div class="d-flex justify-content-center">
             <div class="col-md-6">
                 <p>
-                    <span>Liczba dokumentów: </span><span class="badge text-white info badge-pill">{{commands_len}}</span>
+                    <span>Liczba dokumentów: </span><span
+                        class="badge text-white info badge-pill">{{commands_len}}</span>
                 </p>
             </div>
         </div>
     </div>
     <div class="container list-group col-md-6">
-            {%for command in commands%}
-                <div class="list-group-item list-group-item-action d-flex justify-content-between">
-                    <span class="bi bi-calendar-plus pt-2" data-toggle="info" title="Data dodania: {{command.create_date}} r."></span>
-                    <span class="pt-2" data-toggle="info" title="{{command.content}}">{{command}}</span>
-                    <div>
-                        <a href="/media/{{command.scan}}" target="_blank"><button class="btn btn-outline-primary my-btn mx-1">
-                            <span class="bi bi-link-45deg"></span>
-                        </button></a>
-                        {%if user.accessmodule.commands %}
-                        <button class="btn btn-outline-primary my-btn mx-1" data-url="{%url 'main:edit_command_popup' command.id%}" onclick="openModalEditCommand(this)">
-                            <i class="bi bi-pencil-square"></i>
-                        </button>
-                        <a href="{%url 'main:delete_command_popup' command.id%}"><button class="btn btn-outline-danger mx-1">
-                            <i class="bi bi-trash"></i>
-                        </button></a>
-                        {%endif%}
-                    </div>
-                </div>
-            {%endfor%}
+        {%for command in commands%}
+        <div class="list-group-item list-group-item-action d-flex justify-content-between">
+            <div class="pt-2 d-flex justify-content-around col">
+                <span class="bi bi-calendar-plus h5" data-toggle="info" title="Data dodania: {{command.create_date}} r."></span>
+                <span class="" data-toggle="info" title="{{command.content}}">{{command}}</span>
+            </div>
+            <div>
+                <a href="/media/{{command.scan}}" target="_blank"><button class="btn btn-outline-primary my-btn mx-1">
+                        <span class="bi bi-link-45deg"></span>
+                    </button></a>
+                {%if user.accessmodule.commands %}
+                <button class="btn btn-outline-primary my-btn mx-1" data-url="{%url 'main:edit_command_popup' command.id%}" onclick="openModalEditCommand(this)">
+                    <i class="bi bi-pencil-square"></i>
+                </button>
+                <a href="{%url 'main:delete_command_popup' command.id%}">
+                    <button class="btn btn-outline-danger mx-1">
+                        <i class="bi bi-trash"></i>
+                    </button></a>
+                {%endif%}
+            </div>
+        </div>
+        {%endfor%}
     </div>
 </div>
 <!-- Modal -->
-<div class="modal fade modal-style" id="openModalAddCommand"  data-url="{%url 'main:add_command_popup'%}">
+<div class="modal fade modal-style" id="openModalAddCommand" data-url="{%url 'main:add_command_popup'%}">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
 
         </div>
     </div>
 </div>
-<div class="modal fade modal-style" id="openModalEditCommand" >
+<div class="modal fade modal-style" id="openModalEditCommand">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
 
@@ -91,6 +101,7 @@
     function submitForm(){
         $("#submitButton").closest("form").submit();
     }
+
 </script>
 {%endif%}
 {%endblock%}
