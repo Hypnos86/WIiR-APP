@@ -64,12 +64,18 @@
         <div class="col-md-3">
             <div class="row">
                 <div class="col-md-12 moj-button-right mb-2 ">
+                    {%if archive%}
+                    <a href="{% url 'operationalneedsrecords:list_needs_letter' now_year%}">
+                        <button type="button" class="btn btn-outline-primary my-btn">
+                            <span>Cofnij</span>
+                        </button></a>
+                    {%endif%}
                     <button class="btn btn-outline-danger"
                             data-url="{% url 'operationalneedsrecords:show_archive_year_list'%}"
                             onclick="showYearListModal(this)">Archiwum
                     </button>
                 </div>
-                {%if user.accessmodule.records_letters_edit%}
+                {%if user.accessmodule.records_letters_edit and archive == False%}
                 <div class="col-md-12 moj-button-right mt-2">
                     <a href="{%url 'operationalneedsrecords:new_needs_latter' year%}">
                         <button type="button" class="btn btn-outline-primary my-btn">

@@ -52,19 +52,39 @@ def list_needs_letter(request, year):
 def list_needs_letter_archive(request, year):
     objects = NeedsLetter.objects.all().filter(receipt_date__year=year, isDone=True).order_by("-receipt_date")
     objectslen = len(objects)
+    now_year = current_year()
+
+    query = "Wyczyść"
+    search = "Szukaj"
+    q = request.GET.get("q")
+
+    paginator = Paginator(objects, 50)
+    page_number = request.GET.get('page')
+    objects_list = paginator.get_page(page_number)
 
     try:
         last_date = NeedsLetter.objects.values('change').latest('change')
     except NeedsLetter.DoesNotExist:
         last_date = None
 
-    paginator = Paginator(objects, 50)
-    page_number = request.GET.get('page')
-    objects_list = paginator.get_page(page_number)
 
-    return render(request, 'operationalneedsrecords/needs_letter_list.html',
-                  {"objects": objects_list, "last_date": last_date, "objectslen": objectslen, "search": True,
-                   "year": year, "archive": True})
+    if q:
+        objects = objects.filter(case_sign__icontains=q) \
+                  | objects.filter(unit__county__name__icontains=q) \
+                  | objects.filter(unit__city__icontains=q) \
+                  | objects.filter(case_type__metric_type__icontains=q) \
+                  | objects.filter(registration_type__registration_type__icontains=q) \
+                  | objects.filter(employer__name__icontains=q) \
+                  | objects.filter(employer__last_name__icontains=q) \
+                  | objects.filter(no_secretariats_diary__icontains=q)
+
+        return render(request, 'operationalneedsrecords/needs_letter_list.html',
+                  {"objects": objects, "last_date": last_date, "objectslen": objectslen, "query":query,
+                   "year": year, "archive": True, "now_year":now_year})
+    else:
+        return render(request, 'operationalneedsrecords/needs_letter_list.html',
+                      {"objects": objects_list, "last_date": last_date, "objectslen": objectslen, "search": search,
+                       "year": year, "archive": True, "now_year": now_year})
 
 
 @login_required

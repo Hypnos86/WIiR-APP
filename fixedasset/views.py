@@ -24,6 +24,7 @@ def fixed_asset_list(request):
 
     if q:
         buildings = buildings_all.filter(no_inventory__icontains=q) \
+                    | buildings_all.filter(kind__kind__icontains=q) \
                     | buildings_all.filter(building_name__icontains=q) \
                     | buildings_all.filter(unit__county__name__icontains=q) \
                     | buildings_all.filter(unit__city__icontains=q) \
