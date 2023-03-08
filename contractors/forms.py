@@ -2,7 +2,7 @@ from django.forms import ModelForm, Textarea, widgets
 from contractors.models import Contractor
 
 
-class ContractorsellForm(ModelForm):
+class ContractorsForm(ModelForm):
     class Meta:
         model = Contractor
         fields = ('no_contractor', 'name', 'nip', 'address', 'zip_code', 'city', 'information', 'creation_date',

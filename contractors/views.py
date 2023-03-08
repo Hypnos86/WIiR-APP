@@ -1,73 +1,95 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import View
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
 from .models import Contractor
-from .forms import ContractorsellForm
+from .forms import ContractorsForm
 
 
-@login_required
-def contractor_list(request):
-    contractor = Contractor.objects.all().order_by("name")
+class MakeContractorsListView(LoginRequiredMixin, View):
+    template_name = 'contractors/contractor_list.html'
+    paginate_by = 30
 
-    try:
-        last_date = Contractor.objects.values('change').latest('change')
-    except Contractor.DoesNotExist:
-        last_date = None
+    def get(self, request, *args, **kwargs):
+        contractors = Contractor.objects.all().order_by('name')
+        contractor_len = len(contractors)
 
-    query = "Wyczyść"
-    search = "Szukaj"
-    contractor_len = len(contractor)
-    q = request.GET.get("q")
+        paginator = Paginator(contractors, self.paginate_by)
+        page_number = request.GET.get('page')
+        contractors_list = paginator.get_page(page_number)
 
-    paginator = Paginator(contractor, 30)
-    page_number = request.GET.get('page')
-    contractor_list = paginator.get_page(page_number)
+        try:
+            last_date = Contractor.objects.values('change').latest('change')
+        except Contractor.DoesNotExist:
+            last_date = None
 
-    if q:
-        contractor = contractor.filter(name__icontains=q) \
-                     | contractor.filter(city__icontains=q) \
-                     | contractor.filter(no_contractor__startswith=q) \
-                     | contractor.filter(nip__startswith=q)
+        query = "Wyczyść"
+        search = "Szukaj"
+        q = request.GET.get("q")
 
-        contractor_len = len(contractor)
-        return render(request, 'contractors/contractor_list.html',
-                      {'contractors': contractor, "consellsum": contractor_len, "query": query, 'last_date': last_date,
-                       'q': q})
-    else:
-        return render(request, 'contractors/contractor_list.html',
-                      {'contractors': contractor_list, "consellsum": contractor_len, "search": search,
-                       'last_date': last_date})
+        if q:
+            contractor = contractors.filter(name__icontains=q) \
+                         | contractors.filter(city__icontains=q) \
+                         | contractors.filter(no_contractor__startswith=q) \
+                         | contractors.filter(nip__startswith=q)
 
-
-@login_required
-def show_information(request, id):
-    contractor = get_object_or_404(Contractor, pk=id)
-    return render(request, 'contractors/information_popup.html', {'contractor': contractor, 'id': id})
+            contractor_len = len(contractor)
+            context = {'contractors': contractor, "consellsum": contractor_len, "query": query,
+                       'last_date': last_date,
+                       'q': q}
+            return render(request, self.template_name, context)
+        else:
+            context = {'contractors': contractors_list, "consellsum": contractor_len, "search": search,
+                       'last_date': last_date}
+        return render(request, self.template_name, context)
 
 
-@login_required
-def new_contractor(request):
-    contractor_form = ContractorsellForm(request.POST or None)
+class ShowInformationView(LoginRequiredMixin, View):
+    template_name = 'contractors/information_popup.html'
 
-    if request.method == 'POST':
-        if contractor_form.is_valid():
-            instance = contractor_form.save(commit=False)
+    def get(self, request, id, *args, **kwargs):
+        contractor = get_object_or_404(Contractor, pk=id)
+        context = {'contractor': contractor, 'id': id}
+        return render(request, self.template_name, context)
+
+
+class AddNewContractorView(LoginRequiredMixin, View):
+    template_name = 'contractors/contractor_form.html'
+    form_class = ContractorsForm
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        context = {'contractor_form': form, "new": True}
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST or None)
+        if form.is_valid():
+            instance = form.save(commit=False)
             instance.author = request.user
-            contractor_form.save()
+            form.save()
             return redirect('contractors:contractor_list')
-    return render(request, 'contractors/contractor_form.html',
-                  {'contractor_form': contractor_form, "new": True})
+        context = {'contractor_form': form, "new": True}
+        return render(request, self.template_name, context)
 
 
-@login_required
-def edit_contractor(request, id):
-    contractor_edit = get_object_or_404(Contractor, pk=id)
-    contractor_form = ContractorsellForm(request.POST or None, instance=contractor_edit)
+class EditContractorView(LoginRequiredMixin, View):
+    template_name = 'contractors/contractor_form.html'
+    form_class = ContractorsForm
 
-    context = {'contractor_form': contractor_form, 'new': False}
+    def get(self, request, id, *args, **kwargs):
+        contractor = get_object_or_404(Contractor, pk=id)
+        form = self.form_class(instance=contractor)
+        context = {'contractor_form': form, 'new': False}
+        return render(request, self.template_name, context)
 
-    if contractor_form.is_valid():
-        contractor_form.save()
-        return redirect('contractors:contractor_list')
-
-    return render(request, 'contractors/contractor_form.html', context)
+    def post(self, request, id, *args, **kwargs):
+        contractor = get_object_or_404(Contractor, pk=id)
+        form = self.form_class(request.POST or None, instance=contractor)
+        if form.is_valid():
+            contractor = form.save(commit=False)
+            contractor.author = request.user
+            form.save()
+            return redirect('contractors:contractor_list')
+        context = {'contractor_form': form, 'new': False}
+        return render(request, self.template_name, context)

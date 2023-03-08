@@ -1,6 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 import datetime
+from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
 from main.models import Team, OrganisationTelephone, AccessModule, Command, Employer, SecretariatTelephone, Car
 from main.forms import TeamForm, EmployerForm, CommandsForm, SecretariatTelephoneForm, CarForm
 from businessflats.models import OfficialFlat
@@ -24,43 +26,59 @@ def now_date():
     return datetime.datetime.now()
 
 
-# Create your views here.
-@login_required()
-def welcome(request):
-    commands = Command.objects.all().order_by("create_date")[:6]
-    rent_cars = Car.objects.all()[:10]
-    date = datetime.date.today().today()
-    context = {"date": date,
-               "commands": commands,
-               "rent_cars": rent_cars}
-    return render(request, "main/home.html", context)
+class WelcomeView(LoginRequiredMixin, View):
+    template_name = 'main/home.html'
+
+    def get(self, request, *args, **kwargs):
+        commands = Command.objects.all().order_by("create_date")[:6]
+        rent_cars = Car.objects.all()[:10]
+        date = datetime.date.today().today()
+        context = {"date": date,
+                   "commands": commands,
+                   "rent_cars": rent_cars}
+        return render(request, self.template_name, context)
 
 
-@login_required
-def add_rent_car(request):
-    rent_car = CarForm(request.POST or None)
-    context = {'rent_car': rent_car, 'new': True}
-    if request.method == "POST":
-        if rent_car.is_valid():
-            instance = rent_car.save(commit=False)
+class NewRentCatView(LoginRequiredMixin, View):
+    template_name = 'main/car_form.html'
+    form_class = CarForm
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        context = {'rent_car': form, 'new': True}
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST or None)
+        if form.is_valid():
+            instance = form.save(commit=False)
             instance.author = request.user
-            rent_car.save()
+            form.save()
             return redirect('main:welcome')
-    return render(request, 'main/car_form.html', context)
+        context = {'rent_car': form, 'new': True}
+        return render(request, self.template_name, context)
 
 
-@login_required
-def edit_rent_car(request, id):
-    car = get_object_or_404(Car, pk=id)
-    rent_car_form = CarForm(request.POST or None, instance=car)
+class EditRentCarView(LoginRequiredMixin, View):
+    template_name = 'main/car_form.html'
+    form_class = CarForm
 
-    if request.method == "POST":
-        if rent_car_form.is_valid():
-            instance = rent_car_form.save(commit=False)
+    def get(self, request, id, *args, **kwargs):
+        car = get_object_or_404(Car, pk=id)
+        form = self.form_class(instance=car)
+        context = {'rent_car': form, 'id': id, 'new': False}
+        return render(request, self.template_name, context)
+
+    def post(self, request, id, *args, **kwargs):
+        car = get_object_or_404(Car, pk=id)
+        form = self.form_class(request.POST or None, instance=car)
+        if form.is_valid():
+            instance = form.save(commit=False)
             instance.author = request.user
-            rent_car_form.save()
+            form.save()
             return redirect("main:welcome")
-    return render(request, 'main/car_form.html', {'rent_car': rent_car_form, 'id': id, 'new': False})
+        context = {'rent_car': form, 'id': id, 'new': False}
+        return render(request, self.template_name, context)
 
 
 @login_required
@@ -70,28 +88,40 @@ def delete_rent_car(request, id):
     return redirect("main:welcome")
 
 
-@login_required
-def make_secretariat_site(request):
-    return render(request, "main/secretariat_menu.html")
+class SecretariatSiteView(LoginRequiredMixin, View):
+    template_name = 'main/secretariat_menu.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
 
 
-@login_required
-def show_teams_list(request):
-    teams = Team.objects.all().filter(active=True).order_by("priority")
-    return render(request, "main/teams_list.html", {"teams": teams})
+class ShowTeamsListView(LoginRequiredMixin, View):
+    template_name = 'main/teams_list.html'
+
+    def get(self, request, *args, **kwargs):
+        teams = Team.objects.all().filter(active=True).order_by("priority")
+        context = {'teams': teams}
+        return render(request, self.template_name, context)
 
 
-def add_team_popup(request):
-    team_form = TeamForm(request.POST or None)
-    team_form.fields["team"].label = "Nowa komórka Wydziału"
+class NewTeamView(LoginRequiredMixin, View):
+    template_name = 'main/team_form_popup.html'
+    form_class = TeamForm
 
-    if request.method == "POST":
-        if team_form.is_valid():
-            instance = team_form.save(commit=False)
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        context = {'team_form': form, 'new': True}
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST or None)
+        if form.is_valid():
+            instance = form.save(commit=False)
             instance.active = True
-            team_form.save()
-            return redirect("main:show_teams_list")
-    return render(request, "main/team_form_popup.html", {"team_form": team_form, "new": True})
+            form.save()
+            return redirect('main:show_teams_list')
+        context = {'team_form': form, 'new': True}
+        return render(request, self.template_name, context)
 
 
 def edit_team_popup(request, id):
@@ -104,31 +134,59 @@ def edit_team_popup(request, id):
             return redirect("main:show_teams_list")
     return render(request, "main/team_form_popup.html", {"team_form": team_form, "new": False, "id": id})
 
+class EditTeam(LoginRequiredMixin, View):
+    template_name = 'main/team_form_popup.html'
+    form_class = TeamForm
 
-@login_required
-def show_employers_list(request):
-    employers = Employer.objects.all().filter(deleted=False).order_by("team__priority")
-    try:
-        last_date = Employer.objects.values("change").latest("change")
-    except Employer.DoesNotExist:
-        last_date = None
+    def get(self, request, id, *args, **kwargs):
+        team = get_object_or_404(Team, pk=id)
+        form = self.form_class(instance=team)
+        context = {'form': form, 'new': False, 'id': id}
+        return render(request, self.template_name, context)
 
-    secretariat = SecretariatTelephone.objects.last()
-    context = {"employers": employers, "last_date": last_date, "secretariat": secretariat}
-    return render(request, "main/employers_list.html", context)
+    def post(self, request, id, *args, **kwargs):
+        team = get_object_or_404(Team, pk=id)
+        form = self.form_class(request.POST or None, instance=team)
+        if form.is_valid():
+            form.save()
+            return redirect('main:show_teams_list')
+        context = {'form': form, 'new': False, 'id': id}
+        return render(request, self.template_name, context)
 
 
-@login_required
-def add_employer_popup(request):
-    employer_form = EmployerForm(request.POST or None)
+class EmployersListView(LoginRequiredMixin, View):
+    template_name = 'main/employers_list.html'
 
-    if request.method == "POST":
-        if employer_form.is_valid():
-            instance = employer_form.save(commit=False)
+    def get(self, request, *args, **kwargs):
+        employers = Employer.objects.all().filter(deleted=False).order_by("team__priority")
+        try:
+            last_date = Employer.objects.values("change").latest("change")
+        except Employer.DoesNotExist:
+            last_date = None
+
+        secretariat = SecretariatTelephone.objects.last()
+        context = {"employers": employers, "last_date": last_date, "secretariat": secretariat}
+        return render(request, self.template_name, context)
+
+
+class NewEmployerView(LoginRequiredMixin, View):
+    teamplate_name = 'main/employer_form_popup.html'
+    form_class = EmployerForm
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        context = {'employer_form': form, 'new': True}
+        return render(request, self.teamplate_name, context)
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST or None)
+        if form.is_valid():
+            instance = form.save(commit=False)
             instance.author = request.user
-            employer_form.save()
-            return redirect("main:show_employers_list")
-    return render(request, "main/employer_form_popup.html", {"employer_form": employer_form, "new": True})
+            form.save()
+            return redirect('main:show_employers_list')
+        context = {'employer_form': form, 'new': True}
+        return render(request, self.teamplate_name, context)
 
 
 @login_required
@@ -186,23 +244,33 @@ def delete_command_popup(request, id):
     return redirect("main:show_command_list")
 
 
-@login_required
-def telephone_list(request):
-    teams = Team.objects.all().filter(active=True).order_by("priority")
-    telephone_book = OrganisationTelephone.objects.all()
-    secretariat = SecretariatTelephone.objects.last()
-    context = {"teams": teams, "telephone_book": telephone_book, "secretariat": secretariat}
-    return render(request, "main/telephones.html", context)
+class TelephoneListView(LoginRequiredMixin, View):
+    template_name = 'main/telephones.html'
+
+    def get(self, request, *args, **kwargs):
+        teams = Team.objects.all().filter(active=True).order_by("priority")
+        telephone_book = OrganisationTelephone.objects.all()
+        secretariat = SecretariatTelephone.objects.last()
+        context = {"teams": teams, "telephone_book": telephone_book, "secretariat": secretariat}
+        return render(request, self.template_name, context)
 
 
-@login_required
-def add_secretariat_number(request):
-    secretariat_form = SecretariatTelephoneForm(request.POST or None)
-    if request.method == "POST":
-        if secretariat_form.is_valid():
-            secretariat_form.save()
-            return redirect("main:show_employers_list")
-    return render(request, "main/secretariat_form_popup.html", {"secretariat_form": secretariat_form, "new": True})
+class NewSecretariatNumberView(LoginRequiredMixin, View):
+    template_name = 'main/secretariat_form_popup.html'
+    form_class = SecretariatTelephoneForm
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        context = {'secretariat_form': form, 'new': True}
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST or None)
+        if form.is_valid():
+            form.save()
+            return redirect('main:show_employers_list')
+        context = {'secretariat_form': form, 'new': True}
+        return render(request, self.template_name, context)
 
 
 @login_required
@@ -224,71 +292,76 @@ def delete_secretariat_number(request, id):
     return redirect("main:show_employers_list")
 
 
-@login_required
-def give_access_to_modules(request):
-    access = AccessModule.objects.all()
-    commands = Command.objects.all()
-    context = {"access": access, "commands": commands}
-    return render(request, "main/access_modules.html", context)
+class AccessToModulesView(LoginRequiredMixin, View):
+    template_name = 'main/access_modules.html'
+
+    def get(self, request, *args, **kwargs):
+        access = AccessModule.objects.all()
+        commands = Command.objects.all()
+        context = {"access": access, "commands": commands}
+        return render(request, self.template_name, context)
 
 
-@login_required
-def make_list_register(request):
+class ListRegisterView(LoginRequiredMixin, View):
+    template_name = 'main/list_register.html'
     now_year = current_year()
-    # Zespół Nieruchomości
-    contracts = ContractImmovables.objects.all().filter(state=True)
-    contract_len = len(contracts)
 
-    units_len = len(Unit.objects.all().filter(status=True))
+    def get(self, request, *args, **kwargs):
+        # Zespół Nieruchomości
+        contracts = ContractImmovables.objects.all().filter(state=True)
+        contract_len = len(contracts)
 
-    # Zespół Mieszkaniowy
-    flats = OfficialFlat.objects.all()
-    count_flats = len(flats)
+        units_len = len(Unit.objects.all().filter(status=True))
 
-    # Zespół Rozliczeń i Wsparcia technicznego
-    contractors = Contractor.objects.all()
-    contractors_len = len(contractors)
+        # Zespół Mieszkaniowy
+        flats = OfficialFlat.objects.all()
+        count_flats = len(flats)
 
-    application = Application.objects.all().filter(date_receipt__year=current_year())
-    application_len = len(application)
+        # Zespół Rozliczeń i Wsparcia technicznego
+        contractors = Contractor.objects.all()
+        contractors_len = len(contractors)
 
-    contracts_auction = ContractAuction.objects.all()
-    contracts_auction_len = len(contracts_auction)
+        application = Application.objects.all().filter(date_receipt__year=current_year())
+        application_len = len(application)
 
-    galleries = Gallery.objects.all()
-    galleries_len = len(galleries)
+        contracts_auction = ContractAuction.objects.all()
+        contracts_auction_len = len(contracts_auction)
 
-    projects = Project.objects.all()
-    projects_len = len(projects)
+        galleries = Gallery.objects.all()
+        galleries_len = len(galleries)
 
-    genres = Genre.objects.all().exclude(name_id="RB")
-    genres_len = len(genres)
+        projects = Project.objects.all()
+        projects_len = len(projects)
 
-    invoices_sell = InvoiceSell.objects.all().filter(date__year=current_year())
-    invoices_sell_len = len(invoices_sell)
+        genres = Genre.objects.all().exclude(name_id="RB")
+        genres_len = len(genres)
 
-    invoices_buy = InvoiceBuy.objects.all().filter(date_receipt__year=current_year())
-    invoices_buy_len = len(invoices_buy)
+        invoices_sell = InvoiceSell.objects.all().filter(date__year=current_year())
+        invoices_sell_len = len(invoices_sell)
 
-    corrective_note = CorrectiveNote.objects.all().filter(date__year=current_year())
-    corrective_note_len = len(corrective_note)
+        invoices_buy = InvoiceBuy.objects.all().filter(date_receipt__year=current_year())
+        invoices_buy_len = len(invoices_buy)
 
-    contracts_media = ContractMedia.objects.all().filter(state=True)
-    contracts_media_len = len(contracts_media)
+        corrective_note = CorrectiveNote.objects.all().filter(date__year=current_year())
+        corrective_note_len = len(corrective_note)
 
-    buildings = Building.objects.all().filter(state=True)
-    buildings_len = len(buildings)
+        contracts_media = ContractMedia.objects.all().filter(state=True)
+        contracts_media_len = len(contracts_media)
 
-    # Zespoł Eksploatacji
+        buildings = Building.objects.all().filter(state=True)
+        buildings_len = len(buildings)
 
-    letters = NeedsLetter.objects.all().filter(receipt_date__year=current_year())
-    letters_len = len(letters)
+        # Zespoł Eksploatacji
 
-    context = {"units_len": units_len, "count_flats": count_flats, "con_len": contract_len,
-               "contractors_len": contractors_len, "application_len": application_len,
-               "contracts_auction_len": contracts_auction_len, "galleries_len": galleries_len,
-               "projects_len": projects_len, "genres_len": genres_len, "invoices_sell_len": invoices_sell_len,
-               "invoices_buy_len": invoices_buy_len, "corrective_note_len": corrective_note_len,
-               "contracts_media_len": contracts_media_len, "buildings_len": buildings_len, "letters_len": letters_len,
-               "now_year": now_year}
-    return render(request, "main/list_register.html", context)
+        letters = NeedsLetter.objects.all().filter(receipt_date__year=current_year())
+        letters_len = len(letters)
+
+        context = {"units_len": units_len, "count_flats": count_flats, "con_len": contract_len,
+                   "contractors_len": contractors_len, "application_len": application_len,
+                   "contracts_auction_len": contracts_auction_len, "galleries_len": galleries_len,
+                   "projects_len": projects_len, "genres_len": genres_len, "invoices_sell_len": invoices_sell_len,
+                   "invoices_buy_len": invoices_buy_len, "corrective_note_len": corrective_note_len,
+                   "contracts_media_len": contracts_media_len, "buildings_len": buildings_len,
+                   "letters_len": letters_len,
+                   "now_year": self.now_year}
+        return render(request, self.template_name, context)
