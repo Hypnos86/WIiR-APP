@@ -124,17 +124,7 @@ class NewTeamView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
 
-def edit_team_popup(request, id):
-    team = get_object_or_404(Team, pk=id)
-    team_form = TeamForm(request.POST or None, instance=team)
-
-    if request.method == "POST":
-        if team_form.is_valid():
-            team_form.save()
-            return redirect("main:show_teams_list")
-    return render(request, "main/team_form_popup.html", {"team_form": team_form, "new": False, "id": id})
-
-class EditTeam(LoginRequiredMixin, View):
+class EditTeamView(LoginRequiredMixin, View):
     template_name = 'main/team_form_popup.html'
     form_class = TeamForm
 
@@ -189,59 +179,80 @@ class NewEmployerView(LoginRequiredMixin, View):
         return render(request, self.teamplate_name, context)
 
 
-@login_required
-def edit_employer_popup(request, id):
-    employer = get_object_or_404(Employer, pk=id)
-    employer_form = EmployerForm(request.POST or None, instance=employer)
-    employer_form.fields["deleted"].label = "Usuń pracownika"
+class EditEmployerView(LoginRequiredMixin, View):
+    template_name = 'main/employer_form_popup.html'
+    form_class = EmployerForm
 
-    if request.method == "POST":
-        if employer_form.is_valid():
-            instance = employer_form.save(commit=False)
+    def get(self, request, id, *args, **kwargs):
+        employer = get_object_or_404(Employer, pk=id)
+        form = self.form_class(instance=employer)
+        context = {'employer_form': form, 'id': id, 'new': False}
+        return render(request, self.template_name, context)
+
+    def post(self, request, id, *args, **kwargs):
+        employer = get_object_or_404(Employer, pk=id)
+        form = self.form_class(request.POST or None, instance=employer)
+        if form.is_valid():
+            instance = form.save(commit=False)
             instance.author = request.user
-            employer_form.save()
-            return redirect("main:show_employers_list")
-    return render(request, "main/employer_form_popup.html", {"employer_form": employer_form, "id": id, "new": False})
+            form.save()
+            return redirect('main:show_employers_list')
+        context = {'employer_form': form, 'id': id, 'new': False}
+        return render(request, self.template_name, context)
 
 
-@login_required
-def show_command_list(request):
-    commands = Command.objects.all().order_by("-create_date")
-    commands_len = len(commands)
-    try:
-        last_date = Command.objects.values("change").latest("change")
-    except Command.DoesNotExist:
-        last_date = None
-    return render(request, "main/command.html",
-                  {"commands": commands, "last_date": last_date, "commands_len": commands_len, "secretariat": True})
+class CommandListView(LoginRequiredMixin, View):
+    template_name = 'main/command.html'
+
+    def get(self, request, *args, **kwargs):
+        commands = Command.objects.all().order_by("-create_date")
+        commands_len = len(commands)
+        try:
+            last_date = Command.objects.values("change").latest("change")
+        except Command.DoesNotExist:
+            last_date = None
+        context = {'commands': commands, 'last_date': last_date, 'commands_len': commands_len, 'secretariat': True}
+        return render(request, self.template_name, context)
 
 
-@login_required
-def add_command_popup(request):
-    command_form = CommandsForm(request.POST or None, request.FILES or None)
-    if request.method == "POST":
-        if command_form.is_valid():
-            command_form.save()
-            return redirect("main:show_command_list")
-    return render(request, "main/command_form_popup.html", {"command_form": command_form, "new": True})
+class AddCommandView(LoginRequiredMixin, View):
+    template_name = 'main/command_form_popup.html'
+    form_class = CommandsForm
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class(request.POST or None)
+        if form.is_valid():
+            form.save()
+            return redirect('main:show_command_list')
+        context = {'command_form': form, 'new': True}
+        return render(request, self.template_name, context)
 
 
-@login_required
-def edit_command_popup(request, id):
-    command_edit = get_object_or_404(Command, pk=id)
-    command_form = CommandsForm(request.POST or None, request.FILES or None, instance=command_edit)
-    if request.method == "POST":
-        if command_form.is_valid():
-            command_form.save()
-            return redirect("main:show_command_list")
-    return render(request, "main/command_form_popup.html", {"command_form": command_form, "id": id, "new": False})
+class EditCommandView(LoginRequiredMixin, View):
+    template_name = 'main/command_form_popup.html'
+    form_class = CommandsForm
+
+    def get(self, request, id, *args, **kwargs):
+        command = get_object_or_404(Command, pk=id)
+        form = self.form_class(instance=command)
+        context = {'command_form': form, 'id': id, 'new': False}
+        return render(request, self.template_name, context)
+
+    def post(self, request, id, *args, **kwargs):
+        command = get_object_or_404(Command, pk=id)
+        form = self.form_class(request.POST or None, instance=command)
+        if form.is_valid():
+            form.save()
+            return redirect('main:show_command_list')
+        context = {'command_form': form, 'id': id, 'new': False}
+        return render(request, self.template_name, context)
 
 
-@login_required
-def delete_command_popup(request, id):
-    command = get_object_or_404(Command, pk=id)
-    command.delete()
-    return redirect("main:show_command_list")
+class DeleteCommandView(LoginRequiredMixin, View):
+    def get(self, request, id):
+        command = get_object_or_404(Command, pk=id)
+        command.delete()
+        return redirect("main:show_command_list")
 
 
 class TelephoneListView(LoginRequiredMixin, View):
@@ -273,23 +284,32 @@ class NewSecretariatNumberView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
 
-@login_required
-def edit_secretariat_number(request, id):
-    secretariat_edit = get_object_or_404(SecretariatTelephone, pk=id)
-    secretariat_form = SecretariatTelephoneForm(request.POST or None, instance=secretariat_edit)
-    if request.method == "POST":
-        if secretariat_form.is_valid():
-            secretariat_form.save()
-            return redirect("main:show_employers_list")
-    return render(request, "main/secretariat_form_popup.html",
-                  {"secretariat_form": secretariat_form, "new": False, "id": id})
+class EditSecretariatNumberView(LoginRequiredMixin, View):
+    template_name = 'main/secretariat_form_popup.html'
+    form_class = SecretariatTelephoneForm
+
+    def get(self, request, id, *args, **kwargs):
+        instance = get_object_or_404(SecretariatTelephone, pk=id)
+        form = self.form_class(instance=instance)
+        context = {'secretariat_form': form, 'new': False, 'id': id}
+        return render(request, self.template_name, context)
+
+    def post(self, request, id, *args, **kwargs):
+        instance = get_object_or_404(SecretariatTelephone, pk=id)
+        form = self.form_class(request.POST or None, instance=instance)
+        if form.is_valid():
+            form.save()
+            return redirect('main:show_employers_list')
+        context = {'secretariat_form': form, 'new': False, 'id': id}
+        return render(request, self.template_name, context)
 
 
-@login_required
-def delete_secretariat_number(request, id):
-    instance = get_object_or_404(SecretariatTelephone, pk=id)
-    instance.delete()
-    return redirect("main:show_employers_list")
+class DeleteSecretariatNumberView(LoginRequiredMixin, View):
+
+    def get(self, request, id):
+        instance = get_object_or_404(SecretariatTelephone, pk=id)
+        instance.delete()
+        return redirect('main:show_employers_list')
 
 
 class AccessToModulesView(LoginRequiredMixin, View):

@@ -5,8 +5,7 @@ from import_export.fields import Field
 from main.models import Team, OrganisationTelephone, Employer, IndustryType, AccessModule, Command, \
     SecretariatTelephone, Car
 
-# Register your models here.
-# admin.site.site_header ="WIiR-APP"
+
 admin.site.site_title = "Admin WIiR-APP"
 admin.site.index_title = "Witaj w aplikacji WIiR-APP"
 
