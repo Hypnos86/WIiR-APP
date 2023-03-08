@@ -8,7 +8,6 @@ from units.models import Unit
 from contracts.models import ContractAuction
 from contracts.models import GuaranteeSettlement
 from main.models import Employer
-from gallery.models import Gallery
 from main.views import now_date
 
 

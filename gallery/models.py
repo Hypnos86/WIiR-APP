@@ -8,8 +8,9 @@ import os
 
 def upload_gallery(instance, filename):
     new_filename = create_name_photo(instance, filename)
-    print(new_filename)
-    return f"investments/{instance.gallery.project.project_title}/gallery/{instance.gallery.name}/{new_filename}"
+    title = instance.gallery.project.project_title
+    new_title = title.replace(" ", "_")
+    return f"investments/{new_title}/gallery/{instance.gallery.name}/{new_filename}"
 
 
 
@@ -46,6 +47,7 @@ class Photo(models.Model):
 def now_date():
     return datetime.datetime.now()
 # @receiver(pre_save, sender=Photo)
+
 def create_name_photo(instance, filename):
     extension = filename.split(".")[-1]
     datetime = now_date()

@@ -43,7 +43,8 @@ class Guarantee(models.Model):
 
 
 def upload_scan_contract_immovables(instance, filename):
-    return f"contracts_immovables/Umowa z dnia {instance.date.strftime('%d.%m.%Y')}/{filename}"
+    extension = filename.split(".")[-1]
+    return f"contracts_immovables/{instance.unit.city}/{instance.id}.Umowa_z_dnia_{instance.date.strftime('%d.%m.%Y')}.{extension}"
 
 
 class ContractImmovables(models.Model):
@@ -85,8 +86,8 @@ class ContractImmovables(models.Model):
 
 
 def upload_scan_annex_contract_immovables(instance, filename):
-    return f"contracts_immovables/{instance.contract_immovables.no_contract}/{filename}"
-
+    extension = filename.split(".")[-1]
+    return f"contracts_immovables/{instance.contract_immovables.unit.city}/{instance.contract_immovables.id}.Aneks_z_dnia_{instance.date_annex.strftime('%d.%m.%Y')}.{extension}"
 
 class AnnexImmovables(models.Model):
     class Meta:
@@ -107,7 +108,8 @@ class AnnexImmovables(models.Model):
 
 
 def up_load_contract_auction(instance, filename):
-    return f"contracts_zzp/{instance.no_contract}/{filename}"
+    extension = filename.split(".")[-1]
+    return f"contracts_zzp/{instance.no_contract}/Umowa_z_dnia_{instance.date.strftime('%d.%m.%Y')}.{extension}"
 
 
 class ContractAuction(models.Model):
@@ -155,7 +157,8 @@ class ContractAuction(models.Model):
 
 
 def up_load_annex_contract_auction(instance, filename):
-    return f"contracts_zzp/{instance.contract_auction.no_contract}/{filename}"
+    extension = filename.split(".")[-1]
+    return f"contracts_zzp/{instance.contract_auction.no_contract}/Aneks_z_dnia_{instance.date.strftime('%d.%m.%Y')}.{extension}"
 
 
 class AnnexContractAuction(models.Model):

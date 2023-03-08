@@ -6,7 +6,9 @@ from main.models import Employer
 
 
 def upload_scan(instance, filename):
-    return f"investments/{instance.project_title}/{filename}"
+    title = instance.project_title
+    new_title = title.replace(" ", "_")
+    return f"investments/{new_title}/{filename}"
 
 
 # Create your models here.

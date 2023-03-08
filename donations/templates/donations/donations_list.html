@@ -12,8 +12,7 @@
             <a href="{%url 'donations:donations_list' current_year%}">
                 <button type="button" class="btn btn-outline-primary my-btn">
                     <span class="bi bi-chevron-compact-left">Cofnij</span>
-                </button>
-            </a>
+                </button></a>
             {%endif%}
         </div>
         <div class="col-md-6 text-center">
@@ -27,8 +26,8 @@
 <div>
     <div class="row my-3">
         <div class="col-md-3 align-self-end">
-            <span>Zarejestrowane wnioski: </span><span
-                class="badge text-white info badge-pill">{{application_len}}</span>
+            <span>Zarejestrowane wnioski: </span>
+            <span class="badge text-white info badge-pill">{{application_len}}</span>
         </div>
         <div class="col-md-6">
             <section class="w-100 d-flex justify-content-center align-items-center flex-column text_center">
@@ -79,12 +78,10 @@
                 <a href="{%url 'donations:add_donation' year%}">
                     <button type="button" class="btn btn-outline-primary my-btn">
                         <span class="bi bi-plus-circle"> Dodaj wniosek</span>
-                    </button>
-                </a>
+                    </button></a>
                 {%endif%}
             </div>
         </div>
-
     </div>
 </div>
 <div class="mx-2">
@@ -163,19 +160,15 @@
                 </button>
                 {%if application.donation_scan%}
                 <a class="mx-2 moj-button-right" href="/media/{{application.donation_scan}}" target="_blank">
-                    <button data-toggle="info" title="Podgląd dokumentu" type="button"
-                            class="btn btn-outline-primary icon-color my-1">
+                    <button data-toggle="info" title="Podgląd dokumentu" type="button" class="btn btn-outline-primary icon-color my-1">
                         <i class="bi bi-file-text"></i>
-                    </button>
-                </a>
+                    </button></a>
                 {%endif%}
                 {%if user.accessmodule.donations_module_edit and archive == false%}
                 <a class="mx-2 moj-button-right" href="{%url 'donations:edit_donation' year application.id%}">
-                    <button data-toggle="info" title="Edytuj" type="button"
-                            class="btn btn-outline-primary icon-color my-1">
+                    <button data-toggle="info" title="Edytuj" type="button" class="btn btn-outline-primary icon-color my-1">
                         <i class="bi bi-pencil-square"></i>
-                    </button>
-                </a>
+                    </button></a>
                 {%endif%}
             </td>
         </tr>

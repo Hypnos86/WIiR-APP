@@ -1,5 +1,4 @@
 import os
-
 from django.db import models
 from contractors.models import Contractor
 from units.models import Unit
@@ -29,11 +28,11 @@ class TypeFinancialResources(models.Model):
 
 
 def upload_donation_scan(instance, filename):
+    extension = filename.split(".")[-1]
     date = instance.date_receipt
     date_agreement = instance.date_agreement
     character = instance.character
-    extension = os.path.splitext(filename)
-    return f"donations/{date.strftime('%Y')}/{character}/Porozumienie z dnia {date_agreement.strftime('%d.%m.%Y')}{extension}"
+    return f"donations/{date.strftime('%Y')}/{character}/Porozumienie_z_dnia_{date_agreement.strftime('%d.%m.%Y')}.{extension}"
 
 
 class Application(models.Model):
