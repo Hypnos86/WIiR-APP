@@ -279,19 +279,46 @@ def edit_contract_auction(request, id):
                 settlements = zip(settlement_period, settlement_sum)
 
                 if contract.last_report_date != 0:
-                    if contract.guarantee.id == 2:
-                        for date, sum in settlements:
+                    print('pierwszy if')
+                    print(f'{contract.id}')
+                    print(f"{list(GuaranteeSettlement.objects.all().values_list('contract', flat=True))}")
+                    if contract.id in list(GuaranteeSettlement.objects.all().values_list('contract', flat=True)):
+                        print('drugi if')
+                        if contract.guarantee.id == 2:
+                            print('trzeci if')
+                            settlement_guarantee = GuaranteeSettlement.objects.filter(contract=contract_auction_edit)
+                            settlement_guarantee.delete()
+                            for date, sum in settlements:
+                                print("for 3 if1")
+                                settlement_guarantee = GuaranteeSettlement.objects.create(contract=contract_auction_edit, deadline_settlement=date, settlement_sum=sum)
+
+                        else:
+                            print(f'3 if bez fora1 - {contract.security_sum}')
+                            settlement_guarantee = GuaranteeSettlement.objects.filter(contract=contract_auction_edit)
+                            settlement_guarantee.delete()
                             settlement_guarantee = GuaranteeSettlement.objects.create(contract=contract_auction_edit,
-                                                                                      deadline_settlement=date,
-                                                                                      settlement_sum=sum)
+                                                                                      deadline_settlement=settlement_30_day,
+                                                                                      settlement_sum=contract.security_sum)
 
+                        return redirect('contracts:menu_contracts_auction')
                     else:
+                        if contract.guarantee.id == 2:
+                            print('trzeci if2')
+                            for date, sum in settlements:
+                                settlement_guarantee = GuaranteeSettlement.objects.create(
+                                    contract=contract_auction_edit,
+                                    deadline_settlement=date,
+                                    settlement_sum=sum)
+                                print("for 4 if")
 
-                        settlement_guarantee = GuaranteeSettlement.objects.create(contract=contract_auction_edit.id,
-                                                                                  deadline_settlement=settlement_30_day,
-                                                                                  settlement_sum=contract.security_sum)
+                        else:
 
-                    return redirect('contracts:menu_contracts_auction')
+                            settlement_guarantee = GuaranteeSettlement.objects.create(contract=contract_auction_edit,
+                                                                                      deadline_settlement=settlement_30_day,
+                                                                                      settlement_sum=contract.security_sum)
+                            print('4 if bez fora2')
+
+                        return redirect('contracts:menu_contracts_auction')
 
             except TypeError:
                 return redirect('contracts:menu_contracts_auction')
@@ -464,7 +491,7 @@ def show_contract_media(request, id):
     units = contract_media.unit.all()
     annexes = contract_media.annex_contract_media.all()
     return render(request, 'contracts/show_contract_media.html',
-                  {'contract': contract_media, 'annexes': annexes, 'units': units, "id":id})
+                  {'contract': contract_media, 'annexes': annexes, 'units': units, "id": id})
 
 
 @login_required
