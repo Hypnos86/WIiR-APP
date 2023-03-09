@@ -81,11 +81,11 @@ class EditRentCarView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
 
-@login_required
-def delete_rent_car(request, id):
-    rent_car = get_object_or_404(Car, pk=id)
-    rent_car.delete()
-    return redirect("main:welcome")
+class DeleteRentCar(LoginRequiredMixin, View):
+    def get(self, request, id):
+        rent_car = get_object_or_404(Car, pk=id)
+        rent_car.delete()
+        return redirect('main:welcome')
 
 
 class SecretariatSiteView(LoginRequiredMixin, View):

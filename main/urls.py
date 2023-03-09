@@ -2,7 +2,7 @@ from django.urls import path, re_path
 from main.views import ListRegisterView, WelcomeView, SecretariatSiteView, EmployersListView, CommandListView, \
     AccessToModulesView, TelephoneListView, ShowTeamsListView, NewTeamView, EditTeamView, \
     NewEmployerView, EditEmployerView, AddCommandView, EditCommandView, DeleteCommandView, \
-    NewSecretariatNumberView, EditSecretariatNumberView, DeleteSecretariatNumberView, EditRentCarView, delete_rent_car, \
+    NewSecretariatNumberView, EditSecretariatNumberView, DeleteSecretariatNumberView, EditRentCarView, DeleteRentCar, \
     NewRentCatView
 
 app_name = 'main'
@@ -10,7 +10,7 @@ urlpatterns = [
     path('secretariat/', SecretariatSiteView.as_view(), name='make_secretariat_site'),
     path('addRentCar/', NewRentCatView.as_view(), name='add_rent_car'),
     re_path('rentCar/(?P<id>\d+)/$', EditRentCarView.as_view(), name='edit_rent_car'),
-    re_path('deleteRentCar/(?P<id>\d+)/$', delete_rent_car, name='delete_rent_car'),
+    re_path('deleteRentCar/(?P<id>\d+)/$', DeleteRentCar.as_view(), name='delete_rent_car'),
     path('addSecretariatInfo/', NewSecretariatNumberView.as_view(), name='add_secretariat_number'),
     re_path('editSecretariatInfo/(?P<id>\d+)/$', EditSecretariatNumberView.as_view(), name='edit_secretariat_number'),
     re_path('delete_secretariat/(?P<id>\d+)/$', DeleteSecretariatNumberView.as_view(), name='delete_secretariat_number'),
