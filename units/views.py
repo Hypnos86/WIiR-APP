@@ -1,75 +1,59 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import View
 from fixedasset.models import Building
 from units.forms import UnitForm
 from units.models import Unit, County, TypeUnit
 
 
-def units_list(request):
-    units_active = Unit.objects.filter(status=1).order_by("county")
+class UnitList(View):
+    template = "units/unit_list.html"
 
-    county = County.objects.all().order_by("id_order")
-    type_unit = TypeUnit.objects.all()
+    def get(self, request):
+        units_active = Unit.objects.filter(status=1).order_by("county")
 
-    try:
-        last_date = Unit.objects.values("change").latest("change")
-    except Unit.DoesNotExist:
-        last_date = None
+        county = County.objects.all().order_by("id_order")
+        type_unit = TypeUnit.objects.all()
 
-    query = "Wyczyść"
-    search = "Szukaj"
-    unit_sum = len(units_active)
+        try:
+            last_date = Unit.objects.values("change").latest("change")
+        except Unit.DoesNotExist:
+            last_date = None
 
-    r = request.GET.get("r")
-    p = request.GET.get("p")
+        query = "Wyczyść"
+        search = "Szukaj"
+        unit_sum = len(units_active)
 
-    if p and r:
-        units_active = units_active.filter(county__exact=p, type__exact=r)
-        unit_sum_search = len(units_active)
-        return render(request, "units/unit_list.html", {"units": units_active,
-                                                        "county": county,
-                                                        "type_unit": type_unit,
-                                                        "unit_sum": unit_sum,
-                                                        "query": query,
-                                                        "unit_sum_search": unit_sum_search,
-                                                        "last_date": last_date,
-                                                        "p": p,
-                                                        "r": r,
-                                                        "actual_units": True})
-    elif p and not r:
-        units_active = units_active.filter(county__exact=p)
-        unit_sum_search = len(units_active)
-        return render(request, "units/unit_list.html", {"units": units_active,
-                                                        "county": county,
-                                                        "type_unit": type_unit,
-                                                        "unit_sum": unit_sum,
-                                                        "query": query,
-                                                        "unit_sum_search": unit_sum_search,
-                                                        "last_date": last_date,
-                                                        "p": p,
-                                                        "actual_units": True})
-    elif r and not p:
-        units_active = units_active.filter(type__exact=r)
-        unit_sum_search = len(units_active)
-        return render(request, "units/unit_list.html", {"units": units_active,
-                                                        "county": county,
-                                                        "type_unit": type_unit,
-                                                        "unit_sum": unit_sum,
-                                                        "query": query,
-                                                        "unit_sum_search": unit_sum_search,
-                                                        "last_date": last_date,
-                                                        "r": r,
-                                                        "actual_units": True})
+        r = request.GET.get("r")
+        p = request.GET.get("p")
 
-    else:
-        return render(request, "units/unit_list.html", {"units": units_active,
-                                                        "county": county,
-                                                        "type_unit": type_unit,
-                                                        "unit_sum": unit_sum,
-                                                        "search": search,
-                                                        "last_date": last_date,
-                                                        "actual_units": True})
+        if p and r:
+            units_active = units_active.filter(county__exact=p, type__exact=r)
+            unit_sum_search = len(units_active)
+            context = {"units": units_active, "county": county, "type_unit": type_unit, "unit_sum": unit_sum,
+                       "query": query, "unit_sum_search": unit_sum_search, "last_date": last_date, "p": p, "r": r,
+                       "actual_units": True}
+            return render(request, self.template, context)
+        elif p and not r:
+            units_active = units_active.filter(county__exact=p)
+            unit_sum_search = len(units_active)
+            context = {"units": units_active, "county": county, "type_unit": type_unit, "unit_sum": unit_sum,
+                       "query": query, "unit_sum_search": unit_sum_search, "last_date": last_date, "p": p,
+                       "actual_units": True}
+            return render(request, self.template, context)
+        elif r and not p:
+            units_active = units_active.filter(type__exact=r)
+            unit_sum_search = len(units_active)
+            context = {"units": units_active, "county": county, "type_unit": type_unit, "unit_sum": unit_sum,
+                       "query": query, "unit_sum_search": unit_sum_search, "last_date": last_date, "r": r,
+                       "actual_units": True}
+            return render(request, self.template, context)
+
+        else:
+            context = {"units": units_active, "county": county, "type_unit": type_unit, "unit_sum": unit_sum,
+                       "search": search, "last_date": last_date, "actual_units": True}
+            return render(request, self.template, context)
 
 
 @login_required
@@ -157,89 +141,79 @@ def edit_unit(request, id):
     return render(request, "units/unit_form.html", {"unit_form": unit_form, "new": False})
 
 
-def archive_units_list(request):
-    """
+class ArchiveUnitsList(LoginRequiredMixin, View):
+    template = "units/unit_list.html"
 
-    Parameters
-    ----------
-    request
+    def get(self, request):
+        """
 
-    Returns
-    -------
-    Zwraca liste zarwchiwizowanych Unit
-    """
-    units_archive = Unit.objects.filter(status=0).order_by("county")
-    county = County.objects.all().order_by("swop_id")
-    type_unit = TypeUnit.objects.all()
-    query = "Wyczyść"
-    search = "Szukaj"
-    unit_sum = len(units_archive)
+        Parameters
+        ----------
+        request
 
-    r = request.GET.get("r")
-    p = request.GET.get("p")
+        Returns
+        -------
+        Zwraca liste zarwchiwizowanych Unit
+        """
+        units_archive = Unit.objects.filter(status=0).order_by("county")
+        county = County.objects.all().order_by("swop_id")
+        type_unit = TypeUnit.objects.all()
+        query = "Wyczyść"
+        search = "Szukaj"
+        unit_sum = len(units_archive)
 
-    if p and r:
-        units_archive = units_archive.filter(county__exact=p, type__exact=r)
-        unit_sum_search = len(units_archive)
-        return render(request, "units/unit_list.html", {"units_archive": units_archive,
-                                                        "county": county,
-                                                        "type_unit": type_unit,
-                                                        "unit_sum": unit_sum,
-                                                        "query": query,
-                                                        "unit_sum_search": unit_sum_search,
-                                                        "actual_units": False})
-    elif p and not r:
-        units_archive = units_archive.filter(county__exact=p)
-        unit_sum_search = len(units_archive)
-        return render(request, "units/unit_list.html", {"units_archive": units_archive,
-                                                        "county": county,
-                                                        "type_unit": type_unit,
-                                                        "unit_sum": unit_sum,
-                                                        "query": query,
-                                                        "unit_sum_search": unit_sum_search,
-                                                        "actual_units": False})
-    elif r and not p:
-        units_archive = units_archive.filter(type__exact=r)
-        unit_sum_search = len(units_archive)
-        return render(request, "units/unit_list.html", {"units_archive": units_archive,
-                                                        "county": county,
-                                                        "type_unit": type_unit,
-                                                        "unit_sum": unit_sum,
-                                                        "query": query,
-                                                        "unit_sum_search": unit_sum_search,
-                                                        "actual_units": False})
+        r = request.GET.get("r")
+        p = request.GET.get("p")
 
-    else:
-        return render(request, "units/unit_list.html", {"units_archive": units_archive,
-                                                        "county": county,
-                                                        "type_unit": type_unit,
-                                                        "unit_sum": unit_sum,
-                                                        "search": search,
-                                                        "actual_units": False})
+        if p and r:
+            units_archive = units_archive.filter(county__exact=p, type__exact=r)
+            unit_sum_search = len(units_archive)
+            context = {"units_archive": units_archive, "county": county, "type_unit": type_unit, "unit_sum": unit_sum,
+                       "query": query, "unit_sum_search": unit_sum_search, "actual_units": False}
+            return render(request, self.template, context)
+        elif p and not r:
+            units_archive = units_archive.filter(county__exact=p)
+            unit_sum_search = len(units_archive)
+            context = {"units_archive": units_archive, "county": county, "type_unit": type_unit, "unit_sum": unit_sum,
+                       "query": query, "unit_sum_search": unit_sum_search, "actual_units": False}
+            return render(request, self.template, context)
+        elif r and not p:
+            units_archive = units_archive.filter(type__exact=r)
+            unit_sum_search = len(units_archive)
+            context = {"units_archive": units_archive, "county": county, "type_unit": type_unit, "unit_sum": unit_sum,
+                       "query": query, "unit_sum_search": unit_sum_search, "actual_units": False}
+            return render(request, self.template, context)
+
+        else:
+            context = {"units_archive": units_archive, "county": county, "type_unit": type_unit, "unit_sum": unit_sum,
+                       "search": search, "actual_units": False}
+            return render(request, self.template, context)
 
 
-@login_required
-def show_all_info_unit(request, id):
-    """
+class ShowAllInfoUnit(LoginRequiredMixin, View):
+    template = "units/unit_info.html"
 
-    Parameters
-    ----------
-    request
-    id - klucz obiektu Unit
+    def get(self, request, id, *args, **kwargs):
+        """
 
-    Returns
-    -------
-    Zwraca wszystkie informacje dotyczace Unit
-    """
-    unit_info = Unit.objects.get(pk=id)
-    orders = unit_info.order.all()
-    projects = unit_info.project.all()
-    donations = unit_info.application.all()
-    contract_media = unit_info.contract_media.all().order_by("-state")
-    contract_immovables = unit_info.contractimmovables.all()
-    contract_auction = unit_info.contract_auction.all()
-    buildings = unit_info.building.all()
-    return render(request, "units/unit_info.html",
-                  {"unit": unit_info, "orders": orders, "projects": projects, "donations": donations,
+        Parameters
+        ----------
+        request
+        id - klucz obiektu Unit
+
+        Returns
+        -------
+        Zwraca wszystkie informacje dotyczace Unit
+        """
+        unit_info = Unit.objects.get(pk=id)
+        orders = unit_info.order.all()
+        projects = unit_info.project.all()
+        donations = unit_info.application.all()
+        contract_media = unit_info.contract_media.all().order_by("-state")
+        contract_immovables = unit_info.contractimmovables.all()
+        contract_auction = unit_info.contract_auction.all()
+        buildings = unit_info.building.all()
+        context = {"unit": unit_info, "orders": orders, "projects": projects, "donations": donations,
                    "contract_media": contract_media, "contract_immovables": contract_immovables,
-                   "contract_auction": contract_auction, "buildings": buildings})
+                   "contract_auction": contract_auction, "buildings": buildings}
+        return render(request, self.template, context)
