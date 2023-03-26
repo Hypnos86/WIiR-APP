@@ -18,7 +18,15 @@
     <form method="post">
         {%csrf_token%}
         <div class="row mb-3">
-            {{flat_form.address|bootstrap}}
+            <div class="col-md">{{flat_form.address|bootstrap}}</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                {{flat_form.zip_code|bootstrap}}
+            </div>
+            <div class="col-md-6">
+                {{flat_form.city|bootstrap}}
+            </div>
         </div>
         <div class="row mb-3">
             <div class="col-md-3">

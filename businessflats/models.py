@@ -8,6 +8,8 @@ class OfficialFlat(models.Model):
         verbose_name_plural = "M.01 - Mieszkania służbowe"
 
     address = models.CharField("Adres", max_length=150)
+    zip_code = models.CharField(max_length=6, verbose_name="Kod pocztowy")
+    city = models.CharField(max_length=40, verbose_name="Miasto")
     area = models.DecimalField("Powierzchnia", max_digits=5, decimal_places=2, null=True, blank=True)
     room_numbers = models.IntegerField("Ilość pomieszczeń", null=True, blank=True)
     flor = models.IntegerField("Piętro", null=True, blank=True)

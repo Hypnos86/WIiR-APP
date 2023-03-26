@@ -28,8 +28,10 @@ class FlatsListView(LoginRequiredMixin, View):
         q = request.GET.get("q")
 
         if q:
-            flats = flats.filter(address__icontains=q) | flats.filter(area__startswith=q) | flats.filter(
-                information__icontains=q)
+            flats = flats.filter(address__icontains=q) \
+                    | flats.filter(area__startswith=q) \
+                    | flats.filter(information__icontains=q) \
+                    | flats.filter(city__icontains=q)
             count_flats_query = len(flats)
             context = {'flats': flats, "query": query, 'last_date': last_date, 'count_flats': count_flats_query}
         else:

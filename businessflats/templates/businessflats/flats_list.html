@@ -40,11 +40,13 @@
         <thead>
         <tr class="my-table-tr text-center">
             <th align="center" valign="middle" width="50" scope="col">L.p.</th>
-            <th align="center" valign="middle" width="450" scope="col">Adres</th>
+            <th align="center" valign="middle" width="auto" scope="col">Adres</th>
+            <th align="center" valign="middle" width="auto" scope="col">Miasto</th>
             <th align="center" valign="middle" width="150" scope="col">Powierzchnia</th>
             <th align="center" valign="middle" width="150" scope="col">Liczba pomieszczeń</th>
             <th align="center" valign="middle" width="150" scope="col">Piętro</th>
             <th align="center" valign="middle" width="100" scope="col">Stan</th>
+            <th align="center" valign="middle" width="auto" scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -52,6 +54,7 @@
         <tr class="my-table-tr">
             <td class="text-center" valign="middle" scope="row" data-toggle="info" title="Ostatnie zmiany: {{flat.change|date:'d.m.Y' }}&nbsp;r. ({{flat.author.first_name}} {{flat.author.last_name}})"></td>
             <td align="left" valign="middle" scope="row"><span>{{flat.address}}</span></td>
+            <td align="left" valign="middle" scope="row"><span>{{flat.city}}</span></td>
             <td align="center" valign="middle"><span>{%if flat.area%}{{flat.area|intcomma}} m<sup>2</sup>{%else%}{{flat.area|default_if_none:'---'}}{%endif%}</span></td>
             <td align="center" class="text-center" valign="middle"><span>{{flat.room_numbers|default_if_none:'---'}}</span></td>
             <td align="center" valign="middle"><span>{{flat.flor|default_if_none:'---'}}</span></td>
