@@ -74,14 +74,14 @@ class EditFlatView(LoginRequiredMixin, View):
     template_name = 'businessflats/flat_form.html'
     form_class = OfficialFlatForm
 
-    def get(self, request, id, *args, **kwargs):
-        flat = get_object_or_404(OfficialFlat, pk=id)
+    def get(self, request, slug, *args, **kwargs):
+        flat = get_object_or_404(OfficialFlat, slug=slug)
         form = self.form_class(instance=flat)
         context = {'flat_form': form, 'new': False}
         return render(request, self.template_name, context)
 
-    def post(self, request, id, *args, **kwargs):
-        flat = get_object_or_404(OfficialFlat, pk=id)
+    def post(self, request, slug, *args, **kwargs):
+        flat = get_object_or_404(OfficialFlat, slug=slug)
         form = self.form_class(request.POST or None, instance=flat)
         if form.is_valid():
             flat = form.save(commit=False)

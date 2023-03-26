@@ -77,14 +77,14 @@ class EditContractorView(LoginRequiredMixin, View):
     template_name = 'contractors/contractor_form.html'
     form_class = ContractorsForm
 
-    def get(self, request, id, *args, **kwargs):
-        contractor = get_object_or_404(Contractor, pk=id)
+    def get(self, request, slug, *args, **kwargs):
+        contractor = get_object_or_404(Contractor, slug=slug)
         form = self.form_class(instance=contractor)
         context = {'contractor_form': form, 'new': False}
         return render(request, self.template_name, context)
 
-    def post(self, request, id, *args, **kwargs):
-        contractor = get_object_or_404(Contractor, pk=id)
+    def post(self, request, slug, *args, **kwargs):
+        contractor = get_object_or_404(Contractor, slug=slug)
         form = self.form_class(request.POST or None, instance=contractor)
         if form.is_valid():
             contractor = form.save(commit=False)

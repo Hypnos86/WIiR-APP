@@ -4,8 +4,8 @@ from businessflats.views import FlatsListView, AddNewFlatView, EditFlatView, Sho
 app_name = "businessflats"
 urlpatterns = [
 
-    path("add_flat/", AddNewFlatView.as_view(), name="add_new_flat"),
-    re_path("edit_flat/(?P<id>\d+)/$", EditFlatView.as_view(), name="edit_flat"),
+    path("new/", AddNewFlatView.as_view(), name="add_new_flat"),
+    path("edit/<slug:slug>/", EditFlatView.as_view(), name="edit_flat"),
     re_path("info/(?P<id>\d+)/$", ShowInformationView.as_view(), name="show_information"),
     path("", FlatsListView.as_view(), name="make_flats_list")
 ]

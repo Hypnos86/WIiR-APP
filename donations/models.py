@@ -41,12 +41,12 @@ class Application(models.Model):
         verbose_name_plural = "D.01 - Wnioski"
         ordering = ["date_receipt"]
 
-    character = models.CharField("Nr. sprawy", max_length=25)
+    character = models.CharField("Nr. sprawy", max_length=25, unique_for_year='date_receipt')
     date_receipt = models.DateField("Data wpływu")
-    date_return = models.DateField("Data zwrotu")
-    no_application = models.CharField("Nr. wniosku", max_length=10)
+    date_return = models.DateField("Data zwrotu", null=True, blank=True)
+    no_application = models.CharField("Nr. wniosku", max_length=10, null=True, blank=True)
     no_agreement = models.CharField("Nr. porozumienia", max_length=25, null=True, blank=True)
-    date_agreement = models.DateField("Data porozumienia")
+    date_agreement = models.DateField("Data porozumienia", null=True, blank=True)
     donation_type = models.ForeignKey(TypeDonation, on_delete=models.CASCADE, verbose_name="Rodzaj darowizny",
                                       related_name="application")
     financial_type = models.ForeignKey(TypeFinancialResources, on_delete=models.CASCADE, verbose_name="Rodzaj środków",
@@ -60,6 +60,7 @@ class Application(models.Model):
     information = models.TextField("Informacje", null=True, blank=True, default="")
     donation_scan = models.FileField(upload_to=upload_donation_scan, null=True, blank=True,
                                      verbose_name="Skan porozumienia")
+    slug = models.SlugField(max_length=50, null=True, default='')
     creation_date = models.DateTimeField(auto_now_add=True)
     change = models.DateTimeField("Data zmian", auto_now=True)
     author = models.ForeignKey("auth.User", on_delete=models.CASCADE, verbose_name="Autor", related_name="application")

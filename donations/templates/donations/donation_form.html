@@ -20,7 +20,7 @@
 </div>
 <div class="container col-md-7">
     <div class="px-5">
-        <form method="post" enctype="multipart/form-data">
+        <form method="POST" enctype="multipart/form-data">
             {%csrf_token%}
             <div class="row my-2">
                 <div class="col-md-3">{{donation_form.date_receipt|bootstrap}}</div>

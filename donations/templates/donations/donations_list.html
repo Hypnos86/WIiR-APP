@@ -97,6 +97,7 @@
             <th align="center" valign="middle" width="180" scope="col">Data porozumienia</th>
             <th align="center" valign="middle" width="280" scope="col">Darczyńca</th>
             <th align="center" valign="middle" width="auto" scope="col">Powiat</th>
+            <th align="center" valign="middle" width="auto" scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -165,7 +166,7 @@
                     </button></a>
                 {%endif%}
                 {%if user.accessmodule.donations_module_edit and archive == false%}
-                <a class="mx-2 moj-button-right" href="{%url 'donations:edit_donation' year application.id%}">
+                <a class="mx-2 moj-button-right" href="{%url 'donations:edit_donation' year application.slug%}">
                     <button data-toggle="info" title="Edytuj" type="button" class="btn btn-outline-primary icon-color my-1">
                         <i class="bi bi-pencil-square"></i>
                     </button></a>

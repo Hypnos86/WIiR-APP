@@ -15,6 +15,7 @@ class Contractor(models.Model):
     zip_code = models.CharField("Kod pocztowy", max_length=6, null=True)
     city = models.CharField("Miasto", max_length=20, null=True)
     information = models.TextField("Informacje", null=True, blank=True, default="")
+    slug = models.SlugField(max_length=50, unique=True)
     creation_date = models.DateTimeField(auto_now_add=True)
     change = models.DateTimeField("Zmiany", auto_now=True)
     author = models.ForeignKey("auth.User", on_delete=models.CASCADE, verbose_name="Autor")

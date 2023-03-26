@@ -3,8 +3,8 @@ from .views import MakeContractorsListView, AddNewContractorView, EditContractor
 
 app_name = "contractors"
 urlpatterns = [
-    path("newContractor/", AddNewContractorView.as_view(), name="new_contractor"),
-    re_path("editContractor/(?P<id>\d+)/$", EditContractorView.as_view(), name="edit_contractor"),
+    path("new/", AddNewContractorView.as_view(), name="new_contractor"),
+    path("edit/<slug:slug>/", EditContractorView.as_view(), name="edit_contractor"),
     re_path("info/(?P<id>\d+)/$", ShowInformationView.as_view(), name="show_information"),
     path("", MakeContractorsListView.as_view(), name="contractor_list")
 ]

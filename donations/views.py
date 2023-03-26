@@ -70,8 +70,8 @@ def add_donation(request, year):
 
 
 @login_required
-def edit_donation(request, year, id):
-    donation_edit = get_object_or_404(Application, pk=id)
+def edit_donation(request, year, slug):
+    donation_edit = get_object_or_404(Application, slug=slug)
     donation_form = ApplicationForm(request.POST or None, request.FILES or None, instance=donation_edit)
     units = Unit.objects.all()
     donation_edit = donation_edit.unit
@@ -83,7 +83,7 @@ def edit_donation(request, year, id):
             return redirect(reverse('donations:donations_list', kwargs={"year": year}))
     return render(request, 'donations/donation_form.html',
                   {'new': False, 'donation_form': donation_form, 'units': units, 'donation_edit': donation_edit,
-                   "year": year})
+                   "year": year, "id": donation_edit.id})
 
 
 @login_required
@@ -142,8 +142,8 @@ def donations_list_archive(request, year):
 
         return render(request, 'donations/donations_list.html',
                       {'application_len': application_len, 'query': query, 'year': year,
-                       'applications': applications, 'last_date': last_date, 'q': q, 'date_from': date_from,
-                       'date_to': date_to, "current_year": current_year()})
+                       'applications': applications, 'last_date': last_date, 'archive': True, 'q': q,
+                       'date_from': date_from, 'date_to': date_to, "current_year": current_year()})
     else:
         return render(request, 'donations/donations_list.html',
                       {'application_len': application_len, 'search': search, 'year': year,

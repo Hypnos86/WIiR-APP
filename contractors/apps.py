@@ -5,3 +5,6 @@ class ContractorsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'contractors'
     verbose_name = "M.03 - Kontrahenci"
+
+    def ready(self):
+        import contractors.signals

@@ -68,7 +68,7 @@
                         class="bi bi-info-lg"></i>
                 </button>
                 {%if user.accessmodule.official_flat_edit%}
-                <a class="mx-2" href="{%url 'businessflats:edit_flat' flat.id %}">
+                <a class="mx-2" href="{%url 'businessflats:edit_flat' flat.slug %}">
                     <button type="submit" data-toggle="info" data-placement="right" title="Edytuj" class="btn btn-outline-primary icon-color"><i class="bi bi-pencil-square"></i>
                     </button>
                 </a>
