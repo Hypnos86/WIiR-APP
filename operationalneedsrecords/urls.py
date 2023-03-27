@@ -9,6 +9,6 @@ urlpatterns = [
     re_path("archive/(?P<year>[0-9]{4})/$", list_needs_letter_archive, name="list_needs_letter_archive"),
     re_path("add/(?P<year>[0-9]{4})/$", new_needs_latter, name="new_needs_latter"),
     re_path("edit/(?P<year>[0-9]{4})/(?P<id>\d+)/(?P<isFromShow>[\w-]+)?/$", edit_needs_letter, name="edit_needs_letter"),
-    re_path("Info/(?P<year>[0-9]{4})/(?P<id>\d+)/$", needs_letter_show, name="needs_letter_show"),
+    re_path("(?P<year>[0-9]{4})/info/(?P<id>\d+)/$", needs_letter_show, name="needs_letter_show"),
     re_path("(?P<year>[0-9]{4})/statistics/$", show_statistic, name="show_statistic")
 ]

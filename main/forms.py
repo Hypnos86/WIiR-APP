@@ -10,7 +10,7 @@ class TeamForm(ModelForm):
     class Meta:
         model = Team
         fields = ('team', 'priority', 'active')
-        labels = {'team': 'Komrówka Wydziału', 'priority': 'Kolejność', 'active': 'Aktywny'}
+        labels = {'team': 'Komórka Wydziału', 'priority': 'Kolejność', 'active': 'Aktywny'}
 
 
 class EmployerForm(ModelForm):

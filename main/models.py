@@ -12,7 +12,7 @@ class Team(models.Model):
 
     priority = models.IntegerField("Priorytet", null=True, blank=True, default=0)
     team = models.CharField(max_length=50, verbose_name="Komórka Wydziału")
-    active = models.BooleanField("Aktywny")
+    active = models.BooleanField("Aktywny", default=True)
 
     def __str__(self):
         return f"{self.team}"

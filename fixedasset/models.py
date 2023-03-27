@@ -30,6 +30,7 @@ class Building(models.Model):
     volume = models.DecimalField("Kubatura", max_digits=8, decimal_places=2, null=True, blank=True)
     information = models.TextField("Informacje", null=True, blank=True, default="")
     state = models.BooleanField("Aktywny", default=True)
+    slug = models.SlugField(unique=True, max_length=40)
     creation_date = models.DateTimeField("Data utworzenia", auto_now_add=True)
     change = models.DateTimeField("Data zmian", auto_now=True)
     author = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name="building",

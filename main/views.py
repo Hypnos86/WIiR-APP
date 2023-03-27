@@ -131,7 +131,7 @@ class EditTeamView(LoginRequiredMixin, View):
     def get(self, request, id, *args, **kwargs):
         team = get_object_or_404(Team, pk=id)
         form = self.form_class(instance=team)
-        context = {'form': form, 'new': False, 'id': id}
+        context = {'team_form': form, 'new': False, 'id': id}
         return render(request, self.template_name, context)
 
     def post(self, request, id, *args, **kwargs):
@@ -140,7 +140,7 @@ class EditTeamView(LoginRequiredMixin, View):
         if form.is_valid():
             form.save()
             return redirect('main:show_teams_list')
-        context = {'form': form, 'new': False, 'id': id}
+        context = {'team_form': form, 'new': False, 'id': id}
         return render(request, self.template_name, context)
 
 

@@ -5,14 +5,14 @@
     <form class=" col m-2 p-4" method="POST"  action="{%if new%} {%url 'main:add_team_popup'%} {%else%} {%url 'main:edit_team_popup' id%} {%endif%}">
         {%csrf_token%}
         <div class="row">
-        <div class="col-md-12">{{form.team|bootstrap}}</div>
+        <div class="col-md-12">{{team_form.team|bootstrap}}</div>
         </div>
         <div class="row mt-3">
-        <div class="col-md-3">{{form.priority|bootstrap}}</div>
+        <div class="col-md-3">{{team_form.priority|bootstrap}}</div>
 
         {%if new == False%}
         <div class="col-md-9 mt-3 pt-3 moj-button-right">
-            {{form.active|bootstrap}}
+            {{team_form.active|bootstrap}}
         </div>
         {%endif%}
         </div>
