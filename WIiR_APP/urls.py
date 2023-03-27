@@ -16,7 +16,7 @@ urlpatterns = [
                   path('permanentManagement/', include('permanentmanagement.urls')),
                   path('genre/', include('cpvdict.urls')),
                   path('donations/', include('donations.urls')),
-                  path('constructionInspections/', include('constructioninspections.urls')),
+                  path('inspections/', include('constructioninspections.urls')),
                   path('fixedAsset/', include('fixedasset.urls')),
                   path('operationalNeeds/', include('operationalneedsrecords.urls')),
                   path('gallery/', include('gallery.urls')),

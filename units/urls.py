@@ -3,7 +3,7 @@ from .views import UnitList, add_unit, ArchiveUnitsList, create_units_list_edita
 
 app_name = "units"
 urlpatterns = [
-    path("units/", create_units_list_editable, name="create_units_list_editable"),
+    path("list/", create_units_list_editable, name="create_units_list_editable"),
     path("new/", add_unit, name="add_unit"),
     re_path("edit/(?P<id>\d+)/$", edit_unit, name="edit_unit"),
     path("archive/", ArchiveUnitsList.as_view(), name="archive_units_list"),
