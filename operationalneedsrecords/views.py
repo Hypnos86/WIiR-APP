@@ -14,7 +14,7 @@ from main.views import current_year
 def list_needs_letter(request, year):
     objects = NeedsLetter.objects.all().filter(receipt_date__year=year, isDone=False).order_by("-receipt_date")
     objectslen = len(objects)
-
+    now_year = current_year()
     query = "Wyczyść"
     search = "Szukaj"
     q = request.GET.get("q")
@@ -28,6 +28,12 @@ def list_needs_letter(request, year):
     except NeedsLetter.DoesNotExist:
         last_date = None
 
+    now_year_str = now_year
+    if year == str(now_year_str):
+        oldYear = False
+    else:
+        oldYear = True
+
     if q:
         objects = objects.filter(case_sign__icontains=q) \
                   | objects.filter(unit__county__name__icontains=q) \
@@ -40,12 +46,14 @@ def list_needs_letter(request, year):
 
         return render(request, 'operationalneedsrecords/needs_letter_list.html',
                       {"objects": objects, "last_date": last_date, "objectslen": objectslen,
-                       "year": year, "q": q, 'query': query, "archive": False})
+                       "year": year, "q": q, 'query': query, "archive": False, 'old_year': oldYear,
+                       'now_year': now_year})
 
     else:
         return render(request, 'operationalneedsrecords/needs_letter_list.html',
                       {"objects": objects_list, "last_date": last_date, "objectslen": objectslen, 'search': search,
-                       "year": year, "q": q, "archive": False, 'isFromShow': False})
+                       "year": year, "q": q, "archive": False, 'isFromShow': False,
+                       'old_year': oldYear, 'now_year': now_year})
 
 
 @login_required
@@ -67,6 +75,12 @@ def list_needs_letter_archive(request, year):
     except NeedsLetter.DoesNotExist:
         last_date = None
 
+    now_year_str = now_year
+    if year == str(now_year_str):
+        oldYear = False
+    else:
+        oldYear = True
+
     if q:
         objects = objects.filter(case_sign__icontains=q) \
                   | objects.filter(unit__county__name__icontains=q) \
@@ -79,11 +93,11 @@ def list_needs_letter_archive(request, year):
 
         return render(request, 'operationalneedsrecords/needs_letter_list.html',
                       {"objects": objects, "last_date": last_date, "objectslen": objectslen, "query": query,
-                       "year": year, "archive": True, "now_year": now_year})
+                       "year": year, "archive": True, "now_year": now_year, 'old_year': oldYear})
     else:
         return render(request, 'operationalneedsrecords/needs_letter_list.html',
                       {"objects": objects_list, "last_date": last_date, "objectslen": objectslen, "search": search,
-                       "year": year, "archive": True, "now_year": now_year})
+                       "year": year, "archive": True, "now_year": now_year, 'old_year': oldYear})
 
 
 @login_required

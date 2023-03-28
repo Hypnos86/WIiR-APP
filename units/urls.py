@@ -4,9 +4,9 @@ from .views import UnitList, add_unit, ArchiveUnitsList, create_units_list_edita
 app_name = "units"
 urlpatterns = [
     path("list/", create_units_list_editable, name="create_units_list_editable"),
-    path("new/", add_unit, name="add_unit"),
-    re_path("edit/(?P<id>\d+)/$", edit_unit, name="edit_unit"),
-    path("archive/", ArchiveUnitsList.as_view(), name="archive_units_list"),
-    re_path("info/(?P<id>\d+)/$", ShowAllInfoUnit.as_view(), name="show_all_info_unit"),
+    path("list/new/", add_unit, name="add_unit"),
+    re_path("list/edit/(?P<slug>[\w-]+)/$", edit_unit, name="edit_unit"),
+    path("list/archive/", ArchiveUnitsList.as_view(), name="archive_units_list"),
+    re_path("info/(?P<slug>[\w-]+)/$", ShowAllInfoUnit.as_view(), name="show_all_info_unit"),
     path("", UnitList.as_view(), name="units_list")
 ]

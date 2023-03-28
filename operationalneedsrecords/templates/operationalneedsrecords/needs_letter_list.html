@@ -64,7 +64,7 @@
         <div class="col-md-3">
             <div class="row">
                 <div class="col-md-12 moj-button-right mb-2 ">
-                    {%if archive%}
+                    {%if old_year%}
                     <a href="{% url 'operationalneedsrecords:list_needs_letter' now_year%}">
                         <button type="button" class="btn btn-outline-primary my-btn">
                             <span>Cofnij</span>
@@ -75,7 +75,7 @@
                             onclick="showYearListModal(this)">Archiwum
                     </button>
                 </div>
-                {%if user.accessmodule.records_letters_edit and archive == False%}
+                {%if user.accessmodule.records_letters_edit%}
                 <div class="col-md-12 moj-button-right mt-2">
                     <a href="{%url 'operationalneedsrecords:new_needs_latter' year%}">
                         <button type="button" class="btn btn-outline-primary my-btn">

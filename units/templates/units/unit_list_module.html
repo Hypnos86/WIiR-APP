@@ -104,7 +104,7 @@
         {%endif%}
         {%if user.accessmodule.units_edit%}
         <td>
-            <a class="m-2" href="{% url 'units:edit_unit' unit.id %}">
+            <a class="m-2" href="{% url 'units:edit_unit' unit.slug %}">
                 <button data-toggle="info" title="Edytuj" type="submit" class="btn btn-outline">
                     <i class="h4 bi bi-pencil-square"></i>
                 </button>

@@ -54,12 +54,12 @@
     {{suma}}
     <div class="row my-5">
         {%if query%}
-        <div class="container col-5">
+        <div class="container col-md-8">
             {%if date_from_obj and date_to_obj%}
             <h4 class="mb-4 text-center">Zakres weryfikacji: {{date_from_obj|date:'d.m.Y'}} r. -
                 {{date_to_obj|date:'d.m.Y'}} r.</h4>
             {%endif%}
-            <h5>Suma zapotrzebowania: <span>{{verification_all|intcomma}} zł.</span></h5>
+            <h5>Suma wydatków wymagalnych: <span>{{verification_all|intcomma}} zł.</span></h5>
 
             <div>
                 {% regroup invoices by date_of_payment as list_payment %}
@@ -81,10 +81,10 @@
                     <li class="list-group-item list-group-item-action list-group-item-light">{{invoice.no_invoice}} z
                         dnia {{invoice.date_issue}} - (Kwota: {%if invoice.sum%}{{invoice.sum|intcomma}}
                         zł.{%else%}{{invoice.sum|default_if_none:'0 zł.'}}{%endif%}) - {{invoice.contractor.name}}
-
-                        {%for financing in invoice.invoice_items.all%}
-                        {{financing.account.source.source}}
-                        {%endfor%}
+<!--                        TODO dodac opcje źródła finansowania -->
+<!--                        {%for financing in invoice.invoice_items.all%}-->
+<!--                        {{financing.account.source.source}}-->
+<!--                        {%endfor%}-->
 
                     </li>
                     {% endfor %}

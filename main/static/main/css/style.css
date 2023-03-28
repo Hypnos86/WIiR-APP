@@ -329,3 +329,19 @@ hr {
 .calendar-text{
     font-size: 12px;
 }
+
+.arrow{
+    color: white;
+    background-color: #0a4275;
+    padding: 3px;
+    margin: 3px;
+    border-radius: 15px;
+}
+
+.arrow:hover{
+    color: white;
+    background-color: #0f5ea6;
+    padding: 3px;
+    margin: 3px;
+    border-radius: 15px;
+}

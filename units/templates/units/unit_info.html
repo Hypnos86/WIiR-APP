@@ -23,12 +23,12 @@
 </div>
 <div class="m-3 mb-4">
     {%if unit.comments%}
-    <div>
+    <div class="mb-2">
         <h5 class="d-inline">Informacje</h5>
-        <button class="button-show btn btn-outline" onclick="show(this)">
+        <button class="button-show btn btn-outline arrow" onclick="show(this)">
             <span class="bi bi-caret-down h5"></span>
         </button>
-        <button class="hide-on-start button-hide btn btn-outline" onclick="hide(this)">
+        <button class="hide-on-start button-hide btn btn-outline arrow" onclick="hide(this)">
             <span class="bi bi-caret-up h5"></span>
         </button>
     </div>
@@ -37,12 +37,12 @@
 </div>
 <div class="mx-3 mb-2">
     {%if buildings%}
-        <div>
+        <div class="mb-2">
             <h5 class="d-inline">Budynki</h5>
-            <button class="button-show btn btn-outline" onclick="show(this)">
+            <button class="button-show btn btn-outline arrow" onclick="show(this)">
                 <span class="bi bi-caret-down h5"></span>
             </button>
-            <button class="hide-on-start button-hide btn btn-outline" onclick="hide(this)">
+            <button class="hide-on-start button-hide btn btn-outline arrow" onclick="hide(this)">
                 <span class="bi bi-caret-up h5"></span>
             </button>
         </div>
@@ -77,19 +77,19 @@
 <div class="mx-3">
 {%if contract_immovables%}
     <div class="mt-5">
-        <div>
+        <div class="mb-2">
             <h5 class="d-inline">Umowy czynszowe</h5>
-            <button class="button-show btn btn-outline" onclick="show(this)">
+            <button class="button-show btn btn-outline arrow" onclick="show(this)">
                 <span class="bi bi-caret-down h5"></span>
             </button>
-            <button class="hide-on-start button-hide btn btn-outline" onclick="hide(this)">
+            <button class="hide-on-start button-hide btn btn-outline arrow" onclick="hide(this)">
                 <span class="bi bi-caret-up h5"></span>
             </button>
         </div>
         <ul class="list-group hide-on-start">
             {% for contract in contract_immovables %}
             <li class="list-group-item list-group-item-action">
-                <a class="link-dark" href="{%url 'contracts:show_contractsimmovables' contract.id%}">
+                <a class="link-dark" {%if user.is_authenticated and user.accessmodule.contract_immovables%} href="{%url 'contracts:show_contractsimmovables' contract.id%}" {%endif%}>
                 {%if contract.no_contract%}
                     <span>Nr. umowy: {{contract.no_contract}} z dnia {{contract.date|date:'d.m.Y'}} r.</span>
                     {%else%}
@@ -117,18 +117,18 @@
         {% regroup contract_media by type as type_list %}
         <ul class="">
             {% for type in type_list %}
-            <li class=""> {{type.grouper}}
-                <button class="button-show btn btn-outline" onclick="show(this)">
+            <li class="mb-2"> {{type.grouper}}
+                <button class="button-show btn btn-outline arrow" onclick="show(this)">
                     <span class="bi bi-caret-down h5"></span>
                 </button>
-                <button class="hide-on-start button-hide btn btn-outline" onclick="hide(this)">
+                <button class="hide-on-start button-hide btn btn-outline arrow" onclick="hide(this)">
                     <span class="bi bi-caret-up h5"></span>
                 </button>
             </li>
             <ul class="list-group hide-on-start">
                 {%for media in type.list%}
                 <li class="list-group-item list-group-item-action">
-                    <a class="link-dark" href="{%url 'contracts:show_contract_media' media.id%}">
+                    <a class="link-dark" {%if user.is_authenticated and user.accessmodule.contract_media%} href="{%url 'contracts:show_contract_media' media.id%}" {%endif%}>
                         {% if media.no_contract %}
                         <span class="text-muted">Nr: umowy: </span>
                         <span>{{media.no_contract}} z dnia {{media.date|date:'m.d.Y'}} r.</span>
@@ -156,19 +156,19 @@
     <div class="mt-5">
         <h5>Darowizny</h5>
         {% regroup donations by date_receipt|date:'Y' as date_list %}
-        <ul class="">
+        <ul>
             {% for date_receipt in date_list %}
-            <li class="">{{date_receipt.grouper}} rok.
-                <button class="button-show btn btn-outline" onclick="show(this)">
+            <li class="mb-2">{{date_receipt.grouper}} rok.
+                <button class="button-show btn btn-outline arrow" onclick="show(this)">
                     <span class="bi bi-caret-down h5"></span>
                 </button>
-                <button class="hide-on-start button-hide btn btn-outline" onclick="hide(this)">
+                <button class="hide-on-start button-hide btn btn-outline arrow" onclick="hide(this)">
                     <span class="bi bi-caret-up h5"></span>
                 </button>
             </li>
             <ul class="list-group hide-on-start">
                     {% for donation in date_receipt.list %}
-                <li class="list-group-item list-group-item-action col-md-10">
+                <li class="list-group-item list-group-item-action col">
                     <div class="d-inline-block">
                          <button data-toggle="info" title="Pokaż" type="button" class="btn btn-outline-success me-2" onclick="openInfoModal(this)" data-url="{%url 'donations:show_information_popup' donation.id %}">
                             <i class="bi bi-info-lg my-1"></i>
@@ -195,16 +195,16 @@
     </div>
     {% endif %}
     {% if contract_auction %}
-    <div class="mt-5">
+    <div class="mt-5 mb-2">
         <h5>Umowy przetargowe</h5>
         {% regroup contract_auction by date|date:'Y' as date_list %}
-        <ul >
+        <ul>
             {% for date in date_list%}
-            <li>{{date.grouper}} rok.
-                <button class="button-show btn btn-outline" onclick="show(this)">
+            <li class="mb-2">{{date.grouper}} rok.
+                <button class="button-show btn btn-outline arrow" onclick="show(this)">
                     <span class="bi bi-caret-down h5"></span>
                 </button>
-                <button class="hide-on-start button-hide btn btn-outline" onclick="hide(this)">
+                <button class="hide-on-start button-hide btn btn-outline arrow" onclick="hide(this)">
                     <span class="bi bi-caret-up h5"></span>
                 </button>
             </li>
@@ -212,7 +212,7 @@
                 {% for contract in date.list %}
                 <li class="list-group-item list-group-item-action">
                     <span class="text-muted">Nr. umowy: </span>
-                    <a class="link-dark" href="{% url 'contracts:show_contract_auction' contract.id %}">
+                    <a class="link-dark" {%if user.is_authenticated and user.accessmodule.contracts_auction_module%} href="{% url 'contracts:show_contract_auction' contract.id %}" {%endif%}>
                         <span>{{contract.no_contract}} z dnia {{contract.date|date:'m.d.Y'}} r.</span>
                         <span class="text-muted">| Wykonawca: </span>
                         <span>{{contract.contractor.name}}</span>
@@ -233,22 +233,21 @@
     {%if projects%}
     <div class="mt-5">
         <h5>Inwestycje</h5>
-
         {% regroup projects by date_of_acceptance|date:'Y' as date_list %}
         <ul>
             {% for date_of_acceptance in date_list %}
-            <li>{{date_of_acceptance.grouper}} rok.
-                <button class="button-show btn btn-outline" onclick="show(this)">
+            <li class="mb-2">{{date_of_acceptance.grouper}} rok.
+                <button class="button-show btn btn-outline arrow" onclick="show(this)">
                     <span class="bi bi-caret-down h5"></span>
                 </button>
-                <button class="hide-on-start button-hide btn btn-outline" onclick="hide(this)">
+                <button class="hide-on-start button-hide btn btn-outline arrow" onclick="hide(this)">
                     <span class="bi bi-caret-up h5"></span>
                 </button>
             </li>
             <ul class="list-group hide-on-start">
                 {% for project in date_of_acceptance.list %}
                 <li class="list-group-item list-group-item-action"><span>Nazwa programu inwestycji:</span>
-                    <a class="link-dark" href="{% url 'investments:show_project' project.id %}">{{project}}</a>
+                    <a class="link-dark" {%if user.is_authenticated and user.accessmodule.investments_module%} href="{% url 'investments:show_project' project.id %}" {%endif%}>{{project}}</a>
                 </li>
                 {% endfor %}
             </ul>
@@ -262,11 +261,11 @@
         {% regroup orders by date|date:'Y' as date_list %}
         <ul>
             {% for date in date_list %}
-            <li>{{date.grouper}} rok.
-                <button class="button-show btn btn-outline" onclick="show(this)">
+            <li class="mb-2">{{date.grouper}} rok.
+                <button class="button-show btn btn-outline arrow" onclick="show(this)">
                     <span class="bi bi-caret-down h5"></span>
                 </button>
-                <button class="hide-on-start button-hide btn btn-outline" onclick="hide(this)">
+                <button class="hide-on-start button-hide btn btn-outline arrow" onclick="hide(this)">
                     <span class="bi bi-caret-up h5"></span>
                 </button>
             </li>

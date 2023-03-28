@@ -45,6 +45,7 @@ class Unit(models.Model):
     comments = models.TextField(blank=True, verbose_name="Uwagi")
     status = models.BooleanField(default=True, verbose_name="Aktualna")
     full_name = models.CharField(max_length=250, verbose_name="Pełna nazwa jednostki", null=True, blank=True)
+    slug = models.SlugField(max_length=80, default='', null=True)
     change = models.DateTimeField(auto_now=True, verbose_name="Zmiany")
     author = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name="unit", verbose_name="Autor")
 

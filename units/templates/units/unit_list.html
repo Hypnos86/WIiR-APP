@@ -115,7 +115,7 @@
         {%endif%}
         {%if user.is_authenticated%}
         <td data-toggle="info" align="center" valign="middle" >
-            <a class="m-2" href="{%url 'units:show_all_info_unit' unit.id%}">
+            <a class="m-2" href="{%url 'units:show_all_info_unit' unit.slug%}">
                 <button data-toggle="info" title="Pokaż" type="submit" class="btn btn-outline-primary my-btn">
                     <i class="bi bi-info-lg"></i>
                 </button>

@@ -128,8 +128,8 @@ def add_unit(request):
 
 
 @login_required
-def edit_unit(request, id):
-    unit_edit = get_object_or_404(Unit, pk=id)
+def edit_unit(request, slug):
+    unit_edit = get_object_or_404(Unit, slug=slug)
     unit_form = UnitForm(request.POST or None, instance=unit_edit)
 
     if request.method == "POST":
@@ -193,7 +193,7 @@ class ArchiveUnitsList(LoginRequiredMixin, View):
 class ShowAllInfoUnit(LoginRequiredMixin, View):
     template = "units/unit_info.html"
 
-    def get(self, request, id, *args, **kwargs):
+    def get(self, request, slug, *args, **kwargs):
         """
 
         Parameters
@@ -205,7 +205,7 @@ class ShowAllInfoUnit(LoginRequiredMixin, View):
         -------
         Zwraca wszystkie informacje dotyczace Unit
         """
-        unit_info = Unit.objects.get(pk=id)
+        unit_info = Unit.objects.get(slug=slug)
         orders = unit_info.order.all()
         projects = unit_info.project.all()
         donations = unit_info.application.all()

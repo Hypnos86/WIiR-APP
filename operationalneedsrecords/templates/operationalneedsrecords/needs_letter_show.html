@@ -29,7 +29,7 @@
             {%endif%}
         </div>
         <div class="col-md-1 moj-button-right">
-            {%if user.accessmodule.records_letters_edit%}
+            {%if user.accessmodule.records_letters_edit and not object.execution_date%}
             <a  href="{%url 'operationalneedsrecords:edit_needs_letter' year object.id isFromShow%}">
                 <button data-toggle="info" title="Edytuj" type="submit" class="btn btn-outline-primary my-btn ">
                     <i class="bi bi-pencil-square"></i>
