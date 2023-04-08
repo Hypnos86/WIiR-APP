@@ -3,7 +3,7 @@
 {%block content%}
 {%if user.is_authenticated and user.accessmodule.zok_team%}
 <div class="container">
-    <form class="col m-2 p-4" method="POST" enctype="multipart/form-data" action="{%if new%} {%url 'main:add_command_popup'%} {%else%}{%url 'main:edit_command_popup' id%} {%endif%}">
+    <form class="col m-2 p-4" method="POST" enctype="multipart/form-data" action="{%if new%} {%url 'main:add_command_popup'%} {%else%} {%url 'main:edit_command_popup' id%} {%endif%}">
         {%csrf_token%}
         <div class="row">
             <div class="col-md-12" data-toggle="info" title="np: Polecenie nr 5 z dnia 01.01.2022 r.">
@@ -11,7 +11,6 @@
             </div>
             <div class="col-md-12 mt-3">{{command_form.content|bootstrap}}</div>
             <div class="col-md-6 mt-3">{{command_form.scan|bootstrap}}</div>
-
         </div>
         <div class="mt-4 moj-button-right">
             <button type="submit" class="btn btn-outline-primary my-btn">

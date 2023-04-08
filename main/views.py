@@ -1,10 +1,10 @@
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 import datetime
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from main.models import Team, OrganisationTelephone, AccessModule, Command, Employer, SecretariatTelephone, Car
-from main.forms import TeamForm, EmployerForm, CommandsForm, SecretariatTelephoneForm, CarForm
+from main.models import Team, OrganisationTelephone, AccessModule, Command, Employer, SecretariatTelephone, Car, \
+    NecesseryFile
+from main.forms import TeamForm, EmployerForm, CommandForm, SecretariatTelephoneForm, CarForm
 from businessflats.models import OfficialFlat
 from units.models import Unit
 from contracts.models import ContractImmovables, ContractAuction, ContractMedia
@@ -217,20 +217,26 @@ class CommandListView(LoginRequiredMixin, View):
 
 class AddCommandView(LoginRequiredMixin, View):
     template_name = 'main/command_form_popup.html'
-    form_class = CommandsForm
+    form_class = CommandForm
 
     def get(self, request, *args, **kwargs):
-        form = self.form_class(request.POST or None)
-        if form.is_valid():
-            form.save()
-            return redirect('main:show_command_list')
+        form = self.form_class()
+        context = {'command_form': form, 'new': True}
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST or None, request.FILES or None)
+        if request.method == "POST":
+            if form.is_valid():
+                form.save()
+                return redirect('main:show_command_list')
         context = {'command_form': form, 'new': True}
         return render(request, self.template_name, context)
 
 
 class EditCommandView(LoginRequiredMixin, View):
     template_name = 'main/command_form_popup.html'
-    form_class = CommandsForm
+    form_class = CommandForm
 
     def get(self, request, id, *args, **kwargs):
         command = get_object_or_404(Command, pk=id)
@@ -384,4 +390,14 @@ class ListRegisterView(LoginRequiredMixin, View):
                    "contracts_media_len": contracts_media_len, "buildings_len": buildings_len,
                    "letters_len": letters_len,
                    "now_year": self.now_year}
+        return render(request, self.template_name, context)
+
+
+class NecesseryFileView(LoginRequiredMixin, View):
+    template_name = 'main/necessery_files.html'
+
+    def get(self, request):
+        commands = Command.objects.all().order_by("-create_date")
+        files = NecesseryFile.objects.all().order_by("-create_date")
+        context = {'files': files, 'commands': commands}
         return render(request, self.template_name, context)

@@ -146,22 +146,23 @@ class AccessModule(models.Model):
 
 
 def upload_scan(instance, filename):
-    extension = os.path.splitext(filename)[1]
-    name_file = f"{instance.title}{extension}"
-    return f"commands/{name_file}"
+    extension = filename.split(".")[-1]
+    title = instance.title
+    new_title = title.replace(" ", "_")
+    return f"commands/{new_title}.{extension}"
 
 
 class Command(models.Model):
     class Meta:
         verbose_name = "Polecenie"
         verbose_name_plural = "S.07 - Polecenia"
-        ordering = ["create_date"]
+        ordering = ["-create_date"]
 
     title = models.CharField("Nazwa", max_length=120)
     content = models.TextField("Treść")
     scan = models.FileField(upload_to=upload_scan, verbose_name="Skan polecenia")
     change = models.DateTimeField("Data zmian", auto_now=True)
-    create_date = models.DateField("Data dodania", auto_now_add=True)
+    create_date = models.DateTimeField("Data dodania", auto_now_add=True)
 
     def __str__(self):
         return f"{self.title}"
@@ -184,3 +185,26 @@ class Car(models.Model):
 
     def __str__(self):
         return f"{self.rent_date} {self.target}"
+
+
+def upload_file(instance, filename):
+    extension = filename.split(".")[-1]
+    title = instance.title
+    new_title = title.replace(" ", "_")
+    return f'shared_file/{new_title}.{extension}'
+
+
+class NecesseryFile(models.Model):
+    class Meta:
+        verbose_name = 'Plik'
+        verbose_name_plural = 'S.09 - Niezbędne pliki'
+        ordering = ['-create_date']
+
+    related_name = 'necessery_files'
+
+    title = models.CharField(verbose_name='Nazwa pliku', max_length=300)
+    file = models.FileField(upload_to=upload_file, null=False, verbose_name="Plik")
+    create_date = models.DateTimeField("Data utworzenia", auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.title}'

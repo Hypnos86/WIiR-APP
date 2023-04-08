@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+{% load static %}
+{% block title %}Niezbędne pliki{%endblock%}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 px-5">
+            <h5 class="text-center mb-4">Polecenie Naczelnika</h5>
+            <div>
+                {%for command in commands%}
+                <a href=/media/{{command.scan}} target="_blank" class="btn btn-outline-secondary my-btn btn-sm d-flex justify-content-around my-3">
+                    <span class="bi bi-calendar-plus" data-toggle="info" title="Dodano: {{command.create_date|date:'d.m.Y'}}"></span>
+                    <span class="text-uppercase" data-toggle="info" title="Treść: {{command.content}}">{{command.title}}</span>
+                </a>
+                {%endfor%}
+            </div>
+        </div>
+        <div class="col-md-6 px-5">
+            <h5 class="text-center mb-4">Pliki do pobrania</h5>
+            <div class="">
+                {%for file in files%}
+                <a href=/media/{{file.file}} target="_blank" class="btn btn-outline-secondary my-btn btn-sm d-flex justify-content-around my-3 ">
+                    <span class="bi bi-calendar-plus" data-toggle="info" title="Dodano: {{file.create_date|date:'d.m.Y'}}"></span>
+                    <span class="text-uppercase">{{file.title}}</span></a>
+                {%endfor%}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

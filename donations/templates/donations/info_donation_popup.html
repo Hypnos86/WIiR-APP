@@ -4,7 +4,7 @@
 {%block content%}
 {%if user.is_authenticated and user.accessmodule.donations_module%}
 <div class="container ">
-    <form class="m-2 p-4" method="get" action="{%url 'donations:show_information_popup' id%}">
+    <form class="m-2 p-4" method="GET" action="{%url 'donations:show_information_popup' id%}">
         {%csrf_token%}
         {%if donation.no_application%}
         <h5 class="text-center">{{donation.no_application}} {%if donation.no_agreement%} | {{donation.no_agreement}}

@@ -3,8 +3,7 @@ from import_export import resources
 from import_export.admin import ExportMixin
 from import_export.fields import Field
 from main.models import Team, OrganisationTelephone, Employer, IndustryType, AccessModule, Command, \
-    SecretariatTelephone, Car
-
+    SecretariatTelephone, Car, NecesseryFile
 
 admin.site.site_title = "Admin WIiR-APP"
 admin.site.index_title = "Witaj w aplikacji WIiR-APP"
@@ -12,7 +11,12 @@ admin.site.index_title = "Witaj w aplikacji WIiR-APP"
 
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
-    list_display = ['id','team', 'priority', 'active']
+    list_display = ['id', 'team', 'priority', 'active']
+
+
+@admin.register(NecesseryFile)
+class TeamAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'create_date']
 
 
 @admin.register(SecretariatTelephone)

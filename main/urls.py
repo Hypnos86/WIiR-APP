@@ -3,7 +3,7 @@ from main.views import ListRegisterView, WelcomeView, SecretariatSiteView, Emplo
     AccessToModulesView, TelephoneListView, ShowTeamsListView, NewTeamView, EditTeamView, \
     NewEmployerView, EditEmployerView, AddCommandView, EditCommandView, DeleteCommandView, \
     NewSecretariatNumberView, EditSecretariatNumberView, DeleteSecretariatNumberView, EditRentCarView, DeleteRentCar, \
-    NewRentCatView
+    NewRentCatView, NecesseryFileView
 
 app_name = 'main'
 urlpatterns = [
@@ -13,7 +13,8 @@ urlpatterns = [
     re_path('deleteRentCar/(?P<id>\d+)/$', DeleteRentCar.as_view(), name='delete_rent_car'),
     path('addSecretariatInfo/', NewSecretariatNumberView.as_view(), name='add_secretariat_number'),
     re_path('editSecretariatInfo/(?P<id>\d+)/$', EditSecretariatNumberView.as_view(), name='edit_secretariat_number'),
-    re_path('delete_secretariat/(?P<id>\d+)/$', DeleteSecretariatNumberView.as_view(), name='delete_secretariat_number'),
+    re_path('delete_secretariat/(?P<id>\d+)/$', DeleteSecretariatNumberView.as_view(),
+            name='delete_secretariat_number'),
     path('secretariat/teams/', ShowTeamsListView.as_view(), name='show_teams_list'),
     path('secretariat/teams/add/', NewTeamView.as_view(), name='add_team_popup'),
     re_path('secretariat/teams/edit/(?P<id>\d+)/$', EditTeamView.as_view(), name='edit_team_popup'),
@@ -27,5 +28,7 @@ urlpatterns = [
     path('access/', AccessToModulesView.as_view(), name='give_access_to_modules'),
     path('registerList/', ListRegisterView.as_view(), name='make_list_register'),
     path('telephones/', TelephoneListView.as_view(), name='telephone_list'),
+    path('files/', NecesseryFileView.as_view(), name='files'),
     path('', WelcomeView.as_view(), name='welcome')
+
 ]

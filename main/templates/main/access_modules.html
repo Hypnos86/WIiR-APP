@@ -6,7 +6,7 @@
 <div class="container">
     {%if user.is_authenticated and user.accessmodule.zok_team or user.accessmodule.zriwt_team or user.accessmodule.zm_team or user.accessmodule.zn_team or user.accessmodule.ze_team%}
     <div class="row d-flex justify-content-between">
-        <div class="col-md-7">
+        <div class="col-md-12">
             <table class="table">
                 <thead data-toggle="info" title="Dostep do modułów" class="table-dark">
                 <tr class="my-table-tr text-center">
@@ -259,13 +259,6 @@
                 </tbody>
             </table>
         </div>
-        {%if commands%}
-        <div class="col-md-4 text-center">
-            <a href="{%url 'main:show_command_list'%}">
-                <input type="button" class="btn btn-outline-primary my-btn" value="Polecenia Naczelnika">
-            </a>
-        </div>
-        {%endif%}
     </div>
     {%elif user.is_authenticated%}
     <ul class="list-group">

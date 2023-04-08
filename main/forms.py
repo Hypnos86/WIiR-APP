@@ -1,5 +1,6 @@
 from django.forms import ModelForm, DateInput, Textarea, widgets
-from main.models import Team, OrganisationTelephone, AccessModule, Command, Employer, SecretariatTelephone, Car
+from main.models import Team, OrganisationTelephone, AccessModule, Command, Employer, SecretariatTelephone, Car, \
+    NecesseryFile
 
 
 class DateField(DateInput):
@@ -46,13 +47,14 @@ class AccessModuleForm(ModelForm):
                   'listregister_exploatation_team_module': 'Moduł Ewidencja - Eksploatacja'}
 
 
-class CommandsForm(ModelForm):
+class CommandForm(ModelForm):
     class Meta:
         model = Command
         fields = ('title', 'content', 'scan', 'change', 'create_date')
-        labels = {'title': 'Tytuł', 'content': 'Treść'}
+        labels = {'title': 'Tytuł', 'content': 'Treść', 'scan': 'Skan'}
         exclude = ['change', 'create_date']
-        widgets = {'content': Textarea(attrs={'rows': 3})}
+        widgets = {'content': Textarea(attrs={'rows': 3}),
+                   'title': widgets.TextInput(attrs={'placeholder': 'np: Polecenie nr 1 z dnia 01.01.2001'})}
 
 
 class SecretariatTelephoneForm(ModelForm):
@@ -72,7 +74,15 @@ class CarForm(ModelForm):
         model = Car
         fields = ('rent_date', 'borrower', 'target', 'create_date', 'change', 'author')
         labels = {'rent_date': 'Data', 'borrower': 'Delegat', 'target': 'Cel'}
-        exclude = ['change', 'create_date','author']
+        exclude = ['change', 'create_date', 'author']
         widgets = {'target': Textarea(attrs={'rows': 2}),
                    'rent_date': DateField()
                    }
+
+
+class NecesseryFileForm(ModelForm):
+    class Model:
+        model = NecesseryFile
+        fields = ('title', 'file', 'create_date')
+        labels = {'title': 'Nazwa', 'file': 'Plik', 'create_date': 'Data dodania'}
+        widgets = {'create_date': DateField()}
