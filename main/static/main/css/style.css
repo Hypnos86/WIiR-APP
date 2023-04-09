@@ -1,4 +1,10 @@
 /* MAIN */
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 .body{
     /*color: #2F4F4F;*/
     /*rgb(33, 36, 53);*/
