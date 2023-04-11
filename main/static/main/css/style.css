@@ -18,8 +18,20 @@
     background-color: #F5F5F5;
 }
 
+@media (max-width: 1100px) {
+    .header-top {
+        margin-top: 120px!important;
+    }
+}
+
+@media (max-width: 888px) {
+    .header-top {
+        margin-top: 160px!important;
+    }
+}
+
 .header-top {
-    margin-top: 100px;
+    margin-top: 80px;
 }
 
 .footer {

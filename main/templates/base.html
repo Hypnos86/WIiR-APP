@@ -37,80 +37,80 @@
     <title>{%block title%} {%endblock%}</title>
 </head>
 <body>
-<header class="d-flex flex-wrap justify-content-center mb-2 border-bottom body fixed-top bg-col">
-    <a class="mt-3 " href="{%url 'main:welcome'%}">
+<header class="d-flex flex-wrap justify-content-center p-2 mb-2 border-bottom body fixed-top bg-col">
+    <a class="m-2 " href="{%url 'main:welcome'%}">
         <span class="bi bi-house my-home"></span>
     </a>
     {%if user.is_authenticated%}
     <a href="{%url 'main:give_access_to_modules'%}"
-       class="d-flex align-items-center pb-1 mb-md-0 me-md-auto text-dark text-decoration-none margin-left-0 my-home my-1">
+       class="d-flex align-items-center mb-md-0 me-md-auto text-dark text-decoration-none margin-left-0 my-home">
         <span class="fs-5 bi bi-person-circle my-home" data-toggle="info" title="Użytkownik ID: {{user.username}}">
             {{user.first_name}} {{user.last_name}}</span></a>
     {%else%}
     <a href="{%url 'main:give_access_to_modules'%}"
-       class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none margin-left-0">
+       class="d-flex align-items-center mb-md-0 me-md-auto text-dark text-decoration-none margin-left-0">
         <span class="bi bi-people-fill my-home"> Użytkownik anonimowy</span>
     </a>
     {%endif%}
-    <ul class="nav nav-pills">
+    <ul class="nav nav-pills mx-4">
         {%if user.is_authenticated and user.accessmodule.zok_team%}
-        <li class="nav-item my-2 py-2">
+        <li class="nav-item m-2">
             <a id="button-secretariat" href="{%url 'main:make_secretariat_site'%}"
-               class="btn btn-sm btn-outline-success mx-2">
+               class="btn btn-sm btn-outline-success">
                 <span>Sekretariat</span>
             </a>
         </li>
         {%endif%}
         {%if user.is_authenticated%}
-        <li class="nav-item my-2 py-2">
-            <a id="button-folder" href="{%url 'main:files'%}" class="btn btn-sm btn-outline-secondary my-btn mx-2">
+        <li class="nav-item m-2">
+            <a id="button-folder" href="{%url 'main:files'%}" class="btn btn-sm btn-outline-secondary my-btn">
                 <span>Pliki do pobrania</span>
             </a>
         </li>
         {%endif%}
-        <li class="nav-item my-2 py-2">
-            <a id="button-units" href="{%url 'units:units_list'%}" class="btn btn-sm btn-outline-dark mx-2">
+        <li class="nav-item m-2">
+            <a id="button-units" href="{%url 'units:units_list'%}" class="btn btn-sm btn-outline-dark">
                 <span>Jednostki Policji</span>
             </a>
         </li>
         {%if user.is_authenticated and user.accessmodule.investments_module%}
-        <li class="nav-item my-2 py-2">
+        <li class="nav-item m-2">
             <a id="button-investments" href="{%url 'investments:make_important_task_investments'%}"
-               class="btn btn-sm btn-outline-dark mx-2">
+               class="btn btn-sm btn-outline-dark ">
                 <span>Inwestycje</span>
             </a>
         </li>
         {%endif%}
         {%if user.is_authenticated and user.accessmodule.zriwt_team or user.accessmodule.zm_team or user.accessmodule.zn_team or user.accessmodule.ze_team%}
-        <li class="nav-item my-2 py-2">
-            <a id="button-record" href=" {%url 'main:make_list_register'%}" class="btn btn-sm btn-outline-dark mx-2">
+        <li class="nav-item m-2">
+            <a id="button-record" href=" {%url 'main:make_list_register'%}" class="btn btn-sm btn-outline-dark ">
                 <span>Ewidencje</span>
             </a>
         </li>
         {%endif%}
         {%if user.is_authenticated and user.accessmodule.cpvdict_module%}
-        <li class="nav-item my-2 py-2">
-            <a id="button-cpv" href="{%url 'cpvdict:type_expense_list'%}" class="btn btn-sm btn-outline-dark mx-2">
+        <li class="nav-item m-2">
+            <a id="button-cpv" href="{%url 'cpvdict:type_expense_list'%}" class="btn btn-sm btn-outline-dark ">
                 <span>Rodzajowość WIiR</span>
             </a>
         </li>
         {%else%}
-        <li class="nav-item my-2 py-2">
-            <a id="button-cpvnotaut" href="{%url 'cpvdict:cpvlist'%}" class="btn btn-sm btn-outline-secondary mx-2">
+        <li class="nav-item m-2">
+            <a id="button-cpvnotaut" href="{%url 'cpvdict:cpvlist'%}" class="btn btn-sm btn-outline-secondary ">
                 <span>Słownik CPV</span>
             </a>
         </li>
         {%endif%}
         {%if user.is_authenticated%}
-        <li class="nav-item my-2 py-2">
-            <a href="{%url 'logout'%}" class="btn btn-sm btn-outline-danger mx-4">
-                <span class="bi bi-box-arrow-right icon-size"> Wyloguj</span>
+        <li class="nav-item m-2">
+            <a href="{%url 'logout'%}" class="btn btn-sm btn-outline-danger ">
+                <span class="bi bi-box-arrow-right"> Wyloguj</span>
             </a>
         </li>
         {%else%}
-        <li class="nav-item my-2 py-2">
-            <a href="{%url 'login'%}" class="btn btn-sm btn-success mx-4">
-                <span class="bi bi-box-arrow-in-left icon-size"> Zaloguj</span>
+        <li class="nav-item m-2">
+            <a href="{%url 'login'%}" class="btn btn-sm btn-success">
+                <span class="bi bi-box-arrow-in-left"> Zaloguj</span>
             </a>
         </li>
         {%endif%}
@@ -132,18 +132,18 @@
             <!-- Section: CTA -->
             {%if user.is_authenticated%}
             <section class="">
-                <p class="d-flex justify-content-center align-items-center"><a class="text-decoration-none link-light"
-                                                                               href="{%url 'main:telephone_list'%}"
-                                                                               target="_blank"><span>Spis telefonów</span></a>
+                <p class="d-flex justify-content-center align-items-center">
+                    <a class="text-decoration-none link-light"href="{%url 'main:telephone_list'%}"target="_blank">
+                        <span>Spis telefonów</span>
+                    </a>
                 </p>
             </section>
             {%endif%}
             <!-- Section: CTA -->
         </div>
         <!-- Grid container -->
-
         <!-- Copyright -->
-        <div class="text-center p-1" style="background-color: rgba(0, 0, 0, 0.2);">
+        <div class="text-center p-1" style="background-color: rgba(0, 0, 0, 0.3);">
             <span>© 2021 Wydział inwestycji i Remontów KWP w Poznaniu</span>
         </div>
         <!-- Copyright -->
@@ -154,7 +154,6 @@
     $(function () {
         $('[data-toggle="info"]').tooltip()
     })
-
 </script>
 </body>
 </html>
