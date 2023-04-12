@@ -5,8 +5,8 @@
 {%block content%}
 <div class="container">
     {%if user.is_authenticated and user.accessmodule.zok_team or user.accessmodule.zriwt_team or user.accessmodule.zm_team or user.accessmodule.zn_team or user.accessmodule.ze_team%}
-    <div class="row d-flex justify-content-between">
-        <div class="col-md-12">
+    <div class="row">
+        <div class="col-md-12 size-class-table">
             <table class="table">
                 <thead data-toggle="info" title="Dostep do modułów" class="table-dark">
                 <tr class="my-table-tr text-center">

@@ -20,7 +20,10 @@
 
 @media (max-width: 1100px) {
     .header-top {
-        margin-top: 120px!important;
+        margin-top: 135px!important;
+    }
+    .size-class-table{
+        margin-top: 5rem;
     }
 }
 
