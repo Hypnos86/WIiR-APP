@@ -11,12 +11,12 @@
     {%endif%}
 </div>
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-3 d-flex align-items-end">
         <span>Umowy ZZP: </span>
         <span class="badge text-white info badge-pill">{{contracts_auctions_sum}}</span>
     </div>
     <div class="col-md-6">
-        <section class="w-100 pb-4 d-flex justify-content-center align-items-center flex-column">
+        <section class="w-100 d-flex justify-content-center align-items-center flex-column">
                 <form method="get">
                     <div class="row">
                         <div class="col-md-3">
@@ -47,7 +47,7 @@
         </section>
     </div>
     {%if user.accessmodule.contracts_auction_module_edit%}
-    <div class="col-md-3 moj-button-right">
+    <div class="col-md-3 d-flex justify-content-end align-items-end">
         <a href="{%url 'contracts:new_contract_auction'%}">
             <button class="btn btn-outline-primary my-btn">
                 <span class="bi bi-plus-circle"> Dodaj umowę</span>

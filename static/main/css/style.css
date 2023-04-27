@@ -1,0 +1,373 @@
+/* MAIN */
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.body{
+    /*color: #2F4F4F;*/
+    /*rgb(33, 36, 53);*/
+    /*background-color: hsl(85,67%,96%);*/
+    font-family: arial !important;
+    margin: auto 0;
+    padding: 0 30px;
+    color: #2F4F4F !important;
+    }
+.bg-col{
+    background-color: #F5F5F5;
+}
+
+@media (max-width: 1200px) {
+    .header-top {
+        margin-top: 135px!important;
+    }
+    .size-class-table{
+        margin-top: 5rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .header-top {
+        margin-top: 160px!important;
+    }
+}
+
+@media (max-width: 768px) {
+   .login div{ width: 80%; }
+}
+
+
+.header-top {
+    margin-top: 80px;
+}
+
+.footer {
+        margin-bottom: 120px;
+		}
+
+.margin-left-0{
+    margin-left: 0!important;
+}
+
+.my-btn{
+    color: #0a4275;
+    border-color: #0a4275
+}
+
+.my-btn:hover{
+    background-color: #0a4275;
+    border-color:white;
+}
+.my-btn.active{
+    background-color: #0a4275;
+    border-color:white;
+}
+
+.my-div-style{
+    border: 1px solid #0a4275;
+    border-radius: 3px;
+}
+
+.my-home{
+    color:#2F4F4F;
+    font-size: 22px;
+    margin-right: 1rem;
+}
+/*telephone*/
+.tel-h{
+    margin-bottom:20px;
+}
+
+.tel-table{
+    caption-side:top;
+    margin-bottom:50px;
+}
+.tel-table-caption{
+    text-align:center;
+    color: #0a4275;
+    font-size:20px;
+}
+
+.info-book-tele{
+    font-size: 12px;
+    margin: 0;
+    padding 0;
+}
+
+/* CONTRACTORS */
+.moj-button-left{
+    text-align:left;
+}
+
+.moj-button-right{
+    text-align: right;
+}
+
+.kontrahenci-title h4{
+    margin: 5px 0 0;
+    text-align: center;
+}
+/* CONTRACTS */
+.moj-button-left{
+    text-align:left;
+}
+
+.moj-button-right{
+    text-align:right;
+}
+
+.chose-contracts {
+    text-align: center;
+}
+
+.umowy-title h4{
+    margin: 5px 0 ;
+    text-align: center;
+}
+
+.color-maroon{
+    color: white;
+    background-color: #800000;
+    padding: 4px;
+    margin: 0 3px;
+    border-radius: 3px;
+}
+
+.color-indygo{
+    color: white;
+    background-color: #4B0082;
+    padding: 4px;
+    margin: 0 3px;
+    border-radius: 3px;
+}
+
+.color-gold{
+    color: white;
+    background-color: #DAA520;
+    padding: 4px;
+    margin: 0 3px;
+    border-radius: 3px;
+}
+
+.color-sky{
+    color: white;
+    background-color: #4169E1;
+    padding: 4px;
+    margin: 0 3px;
+    border-radius: 3px;
+}
+
+.color-cinamon{
+    color: white;
+    background-color: #DC143C;
+    padding: 4px;
+    margin: 0 3px;
+    border-radius: 3px;
+}
+
+.color-dirty{
+    color: white;
+    background-color: #556B2F;
+    padding: 4px;
+    margin: 0 3px;
+    border-radius: 3px;
+}
+
+.color-slategrey{
+    color: white;
+    background-color: #778899;
+    padding: 4px;
+    margin: 0 3px;
+    border-radius: 3px;
+}
+
+.color-teal{
+    color: white;
+    background-color: #008080;
+    padding: 4px;
+    margin: 0 3px;
+    border-radius: 3px;
+}
+
+.color-info{
+    color: white;
+    background-color: #0a4275;
+    border-color:white;
+    padding: 4px;
+    margin: 0 3px;
+    border-radius: 3px;
+}
+
+.color-info-warning{
+    color: white;
+    background-color: #e87979;
+    border-color:white;
+    padding: 4px;
+    margin: 0 3px;
+    border-radius: 3px;
+}
+
+.breakdown{
+    color: white;
+    background-color: #df3545;
+    padding: 4px;
+    margin: 0 3px;
+    border-radius: 3px;
+}
+
+.icon-color{
+    color: #0a4275;
+    border-color:#0a4275;
+    font-size: 120%
+}
+
+.icon-color:hover{
+    background-color: #0a4275;
+    border-color:#0a4275;
+
+}
+
+.icon-size{
+    font-size: 120%;
+}
+
+.my-cost{
+border: solid 2px;
+    border-radius: 3px;
+    border-color: #0a4275;;
+}
+
+/* INVOICES */
+.chose-invoices {
+    text-align: center;
+}
+
+.button-chose-invoices {
+    margin: 0 15px;
+}
+
+/* SOURCEFINANCING */
+
+/* UNITS */
+.units-title{
+    margin: 10px 0;
+}
+
+.my-table {
+  counter-reset: rowNumber -1;
+}
+
+.my-table-tr {
+  counter-increment: rowNumber;
+}
+
+.my-table-tr td:first-child::before {
+  content: counter(rowNumber);
+  min-width: 1em;
+  margin-right: 0.5em;
+}
+
+/* CPVDICT */
+.icon-check{
+    font-size: 150%;
+}
+
+.tag-cpv{
+    color: white;
+    background-color: #0a4275;
+    padding: 2px;
+    border-radius: 3px;
+}
+/* RECORDS*/
+
+.info{
+    background-color: #0a4275;
+    border-color:white;
+}
+
+.card-body .bi::before{
+    margin-right:10px;
+}
+
+hr {
+    color: #0a4275;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.modal_style{
+   position: absolute;
+   right: 100px;
+   margin-top: 10rem;
+   z-index: 10040;
+   overflow: auto;
+   overflow-y: auto;
+}
+
+.tooltip-inner{
+    min-width: auto !important;
+    /* If max-width does not work, try using width instead */
+    width: auto !important;
+}
+
+.page-item.active .page-link{
+    background-color: #0a4275!important;
+    border-color: white!important;
+}
+.select2-container .select2-selection--single{
+    height: 38px!important
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered{
+    line-height:38px!important
+}
+
+.expand-collapse{
+    width: 10%;
+}
+
+.list-group-radius{
+    border-radius: 0px;
+}
+
+.style-row-protocol{
+    border-left: 10px solid #fff3cd!important;
+    border-right: 10px solid #fff3cd!important;
+}
+
+.alert {
+    padding: 0rem!important;
+    margin-top: -20px!important;
+}
+
+.alert-success{
+    background-color: white;
+    color: #6c757d;
+    border-color: white;
+}
+
+.select2-full-width .select2-container{
+    width: 100% !important;
+}
+
+.calendar-text{
+    font-size: 12px;
+}
+
+.arrow{
+    color: white;
+    background-color: #0a4275;
+    padding: 3px;
+    margin: 3px;
+    border-radius: 15px;
+}
+
+.arrow:hover{
+    color: white;
+    background-color: #0f5ea6;
+    padding: 3px;
+    margin: 3px;
+    border-radius: 15px;
+}

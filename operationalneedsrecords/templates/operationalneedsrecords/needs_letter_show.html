@@ -67,6 +67,12 @@
                 <span class="text-muted">Opis sprawy: </span><br>
                 <p>{{object.case_description}}</p>
             </li>
+            {%if object.cost%}
+            <li class="list-group-item">
+                <span class="text-muted">Koszt: </span>
+                <span>{{object.cost|intcomma}}&nbsp;zł</span>
+            </li>
+            {%endif%}
             <li class="list-group-item">
                 <span class="text-muted">Branżysta: </span>
                 <span>{{object.employer}}</span>
@@ -76,12 +82,7 @@
                 <span class="text-muted">Liczba sprawy Zespołu: </span><span>{{object.case_sign_team}}</span>
             </li>
             {%endif%}
-            {%if object.cost%}
-            <li class="list-group-item">
-                <span class="text-muted">Koszt: </span>
-                <span>{{object.cost|intcomma}}&nbsp;zł</span>
-            </li>
-            {%endif%}
+
             {%if object.execution_date%}
             <li class="list-group-item">
                 <span class="text-muted">Data realizacji: </span>
@@ -106,9 +107,6 @@
     $(function () {
         $('[data-toggle="info"]').tooltip()
     })
-
-
-
 
 </script>
 {%endblock%}
