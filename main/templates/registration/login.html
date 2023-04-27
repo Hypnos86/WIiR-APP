@@ -2,6 +2,7 @@
 {%load bootstrap%}
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
     <meta charset="UTF-8">
     <!-- Bootstrap CSS -->
@@ -29,11 +30,11 @@
     <link rel="stylesheet" href="{%static 'main/bootstrap-icons/bootstrap-icons.css'%}">
     <title>Logowanie do WIiR-APP v.2.0</title>
 </head>
+
 <body>
 <div class="container">
-
     <div class="row justify-content-center align-items-center" style="height:100vh">
-        <div class="col-4">
+        <div class="col-10 col-sm-10 col-md-8 col-lg-6 col-xl-4 login">
             <div class="card">
                 <div class="card-body">
                     <h6 class="text-center my-4"> Wydział Inwestycji i Remontów KWP w Poznaniu</h6>
@@ -48,19 +49,28 @@
                             {{form.password.label}}
                             <input type="password" class="form-control" name="password">
                         </div>
-                        <button type="submit" class="btn btn-outline-primary mt-4 col-md-12 my-btn">
+                        <button type="submit" class="btn btn-outline-primary mt-4 col-md-12 col-12 my-btn">
                             <span class="bi bi-box-arrow-in-left icon-size h6">Zaloguj</span>
                         </button>
                     </form>
                 </div>
                 <ul class="nav nav-pills">
-        <li class="nav-item col-md-6 mb-3 moj-button-left"><a id="button-units" href="{%url 'units:units_list'%}" class="btn btn-sm btn-outline-dark mx-3" ><span>Jednostki Policji</span></a></li>
-        <li class="nav-item col-md-6 mb-3 moj-button-right"><a id="button-cpv" href="{%url 'cpvdict:cpvlist'%}" class="btn btn-sm btn-outline-dark mx-3"><span>Słownik CPV</span></a></li>
-</ul>
+                    <li class="nav-item col-md-6 mb-3 moj-button-left">
+                        <a id="button-units" href="{%url 'units:units_list'%}" class="btn btn-sm btn-outline-dark mx-3">
+                        <span>Jednostki Policji</span>
+                        </a>
+                    </li>
+                    <li class="nav-item col-md-6 mb-3 moj-button-right">
+                        <a id="button-cpv" href="{%url 'cpvdict:cpvlist'%}" class="btn btn-sm btn-outline-dark mx-3">
+                            <span>Słownik CPV</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
 
 </div>
 </body>
+
 </html>
