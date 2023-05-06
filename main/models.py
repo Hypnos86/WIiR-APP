@@ -197,7 +197,7 @@ def upload_file(instance, filename):
 class NecesseryFile(models.Model):
     class Meta:
         verbose_name = 'Plik'
-        verbose_name_plural = 'S.09 - Niezbędne pliki'
+        verbose_name_plural = 'S.09 - Pliki do pobrania'
         ordering = ['-create_date']
 
     related_name = 'necessery_files'

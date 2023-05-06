@@ -8,22 +8,28 @@
         <div class="col-md-6 px-5">
             <h5 class="text-center mb-4">Polecenie Naczelnika</h5>
             <div>
-                {%for command in commands%}
-                <a href=/media/{{command.scan}} target="_blank" class="btn btn-outline-secondary my-btn btn-sm d-flex justify-content-around my-3">
-                    <span class="bi bi-calendar-plus" data-toggle="info" title="Dodano: {{command.create_date|date:'d.m.Y'}}"></span>
-                    <span class="text-uppercase" data-toggle="info" title="Treść: {{command.content}}">{{command.title}}</span>
-                </a>
-                {%endfor%}
+                <ul class="list-group">
+                    {%for command in commands%}
+                    <li class="list-group my-2">
+                        <a href=/media/{{command.scan}} target="_blank" class="btn btn-outline-secondary my-btn btn-sm">
+                            <span class="bi bi-calendar-plus text-uppercase d-block" data-toggle="info" title="Treść: {{command.content}}">&nbsp;{{command.title}}</span>
+                        </a>
+                    </li>
+                    {%endfor%}
+                </ul>
             </div>
         </div>
         <div class="col-md-6 px-5">
             <h5 class="text-center mb-4">Pliki do pobrania</h5>
             <div class="">
-                {%for file in files%}
-                <a href=/media/{{file.file}} target="_blank" class="btn btn-outline-secondary my-btn btn-sm d-flex justify-content-around my-3 ">
-                    <span class="bi bi-calendar-plus" data-toggle="info" title="Dodano: {{file.create_date|date:'d.m.Y'}}"></span>
-                    <span class="text-uppercase">{{file.title}}</span></a>
-                {%endfor%}
+                <ul class="list-group">
+                    {%for file in files%}
+                    <li class="list-group my-2">
+                        <a href=/media/{{file.file}} target="_blank" class="btn btn-outline-secondary my-btn btn-sm">
+                            <span class="bi bi-calendar-plus text-uppercase d-block" data-toggle="info" title="Dodano: {{file.create_date|date:'d.m.Y'}}">&nbsp;{{file.title}}</span></a>
+                    </li>
+                    {%endfor%}
+                </ul>
             </div>
         </div>
     </div>

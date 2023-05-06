@@ -1,7 +1,7 @@
 {%extends 'base.html'%}
 {%load static%}
 {%load bootstrap%}
-{%block title%}{%endblock%}
+{%block title%}Polecenia Naczelnika{%endblock%}
 {%block content%}
 {%if user.is_authenticated%}
 <div class="container">
@@ -39,8 +39,8 @@
         <div class="d-flex justify-content-center">
             <div class="col-md-6">
                 <p>
-                    <span>Liczba dokumentów: </span><span
-                        class="badge text-white info badge-pill">{{commands_len}}</span>
+                    <span>Liczba dokumentów: </span>
+                    <span class="badge text-white info badge-pill">{{commands_len}}</span>
                 </p>
             </div>
         </div>
@@ -48,11 +48,11 @@
     <div class="container list-group col-md-6">
         {%for command in commands%}
         <div class="list-group-item list-group-item-action d-flex justify-content-between">
-            <div class="pt-2 d-flex justify-content-around col">
-                <span class="bi bi-calendar-plus h5" data-toggle="info" title="Dodano: {{command.create_date}} r."></span>
-                <span class="" data-toggle="info" title="{{command.content}}">{{command}}</span>
+            <div class="pt-2">
+                <span class="bi bi-calendar-plus h5" data-toggle="info" title="Dodano: {{command.create_date|date:'d.m.Y'}}&nbsp;r."></span>
+                <span class="" title="{{command.content}}">&nbsp;{{command}}</span>
             </div>
-            <div>
+            <div class="">
                 <a href="/media/{{command.scan}}" target="_blank"><button class="btn btn-outline-primary my-btn mx-1">
                         <span class="bi bi-link-45deg"></span>
                     </button></a>
