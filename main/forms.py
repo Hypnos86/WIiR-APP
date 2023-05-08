@@ -81,8 +81,9 @@ class CarForm(ModelForm):
 
 
 class NecesseryFileForm(ModelForm):
-    class Model:
+    class Meta:
         model = NecesseryFile
         fields = ('title', 'file', 'create_date')
         labels = {'title': 'Nazwa', 'file': 'Plik', 'create_date': 'Data dodania'}
+        exclude = ['create_date']
         widgets = {'create_date': DateField()}

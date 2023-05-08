@@ -1,0 +1,22 @@
+{%load static%}
+{%load bootstrap%}
+{%block content%}
+{%if user.is_authenticated and user.accessmodule.zok_team%}
+<div class="container">
+    <form class="col m-2 p-4" method="POST" enctype="multipart/form-data" action="{%url 'main:add_download_files_popup'%}">
+        {%csrf_token%}
+        <div class="row">
+            <div class="col-md-12 mt-3">{{download_file_form.title|bootstrap}}</div>
+            <div class="col-md-6 mt-3">{{download_file_form.file|bootstrap}}</div>
+        </div>
+        <div class="mt-4 moj-button-right">
+            <button type="submit" class="btn btn-outline-primary my-btn">
+                <span class="bi bi-save2"> Dodaj</span>
+            </button>
+        </div>
+    </form>
+</div>
+{%endif%}
+{%endblock%}
+
+

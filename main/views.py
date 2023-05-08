@@ -4,7 +4,7 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from main.models import Team, OrganisationTelephone, AccessModule, Command, Employer, SecretariatTelephone, Car, \
     NecesseryFile
-from main.forms import TeamForm, EmployerForm, CommandForm, SecretariatTelephoneForm, CarForm
+from main.forms import TeamForm, EmployerForm, CommandForm, SecretariatTelephoneForm, CarForm, NecesseryFileForm
 from businessflats.models import OfficialFlat
 from units.models import Unit
 from contracts.models import ContractImmovables, ContractAuction, ContractMedia
@@ -401,3 +401,36 @@ class NecesseryFileView(LoginRequiredMixin, View):
         files = NecesseryFile.objects.all().order_by("-create_date")
         context = {'files': files, 'commands': commands}
         return render(request, self.template_name, context)
+
+class DownloadFilesView(LoginRequiredMixin, View):
+    template_name = 'main/download_file.html'
+
+    def get(self, request, *args, **kwargs):
+        files = NecesseryFile.objects.all().order_by('create_date')
+        files_len = len(files)
+        context = {'files': files, 'files_len':files_len}
+        return render(request, self.template_name, context)
+
+class AddUploadFilesView(LoginRequiredMixin, View):
+    template_name = 'main/download_file_form_popup.html'
+    form_class = NecesseryFileForm
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        context = {'download_file_form': form}
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST or None, request.FILES or None)
+        if request.method == "POST":
+            if form.is_valid():
+                form.save()
+                return redirect('main:download_files')
+        context = {'download_file_form': form}
+        return render(request, self.template_name, context)
+
+class DeleteUploadFile(LoginRequiredMixin, View):
+    def get(self, request, id):
+        file = get_object_or_404(NecesseryFile, pk=id)
+        file.delete()
+        return redirect('main:download_files')
