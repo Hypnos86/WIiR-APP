@@ -3,10 +3,10 @@
 {% block title %} Ewidencje WIiR {% endblock %}
 {% block content %}
 <div class="container">
-    <h3 class="text-center m-5">Ewidencje WIiR</h3>
-    <div class="col d-flex justify-content-around">
+    <h3 class="text-center my-4">Ewidencje WIiR</h3>
+    <div class="row">
        {%if user.accessmodule.ze_team%}
-        <div class="col-md-3 text-center">
+        <div class="col-md-6 col-lg-6 col-xl-4 col-xxl-3 my-3 text-center">
             <h5 class="mb-5"><span>Zespół Eksploatacji</span></h5>
             <div class="container col d-flex justify-content-center">
                 <div class="col-md-10">
@@ -32,7 +32,7 @@
         </div>
         {%endif%}
         {%if user.accessmodule.zriwt_team%}
-        <div class="col-md-3 text-center">
+        <div class="col-md-6 col-lg-6 col-xl-4 col-xxl-3 my-3 text-center">
             <h5 class="mb-4"><span>Zespół Rozliczeń i Wspatcia Technicznego</span></h5>
             <div class="col-md-12 d-flex justify-content-center">
                 <div class="col-md-10">
@@ -111,7 +111,7 @@
         </div>
         {%endif%}
         {%if user.accessmodule.zn_team%}
-        <div class="col-md-3 text-center">
+        <div class="col-md-6 col-lg-6 col-xl-4 col-xxl-3 my-3 text-center">
             <h5 class="mb-5"><span>Zespół Nieruchomości</span></h5>
             <div class="col-md-12 d-flex justify-content-center">
                 <div class="col-md-10">
@@ -136,7 +136,7 @@
         </div>
         {%endif%}
         {%if user.accessmodule.zm_team%}
-        <div class="col-md-3 text-center">
+        <div class="col-md-6 col-lg-6 col-xl-4 col-xxl-3 my-3 text-center">
             <h5 class="mb-5"><span>Zespół Mieszkaniowy</span></h5>
             <div class="col-md-12 d-flex justify-content-center">
                 <div class="col-md-10">
