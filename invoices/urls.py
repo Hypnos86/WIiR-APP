@@ -31,5 +31,5 @@ urlpatterns = [
     path("newAccountingNote/", new_note, name="new_note"),
     re_path("editAccountingNote/(?P<id>\d+)/$", edit_note, name="edit_note"),
     re_path("editAccountingNoteArchive(?P<id>\d+)/$", edit_note_archive, name="edit_note_archive"),
-    path("create_pdf", make_pdf_from_invoices_sell, name="make_pdf_from_invoices_sell")
+    path("create_pdf/<int:year>/ ", make_pdf_from_invoices_sell, name="make_pdf_from_invoices_sell")
 ]

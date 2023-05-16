@@ -229,8 +229,8 @@ def edit_invoice_buy_archive(request, id):
 
 @login_required
 def sell_invoices_list(request):
-    now_year = current_year()
-    invoicessell = InvoiceSell.objects.all().order_by("-date").filter(date__year=now_year)
+    year = current_year()
+    invoicessell = InvoiceSell.objects.all().order_by("-date").filter(date__year=year)
     query = "Wyczyść"
     search = "Szukaj"
     invoices_sell_len = len(invoicessell)
@@ -241,7 +241,6 @@ def sell_invoices_list(request):
     except TypeError:
         invoices_sell_sum = 0
 
-    year = current_year()
     q = request.GET.get("q")
     date_from = request.GET.get("from")
     date_to = request.GET.get("to")
@@ -590,8 +589,12 @@ def make_verification(request):
 
 
 @login_required
-def make_pdf_from_invoices_sell(request):
-    invoicessell = InvoiceSell.objects.all().order_by("-date").filter(date__year=current_year())
+def make_pdf_from_invoices_sell(request, year):
+    q = request.GET.get("q", "")
+    date_from = request.GET.get("from")
+    date_to = request.GET.get("to")
+
+    invoicessell = InvoiceSell.objects.all().order_by("-date").filter(date__year=year)
     invoices_sell_sum_dict = invoicessell.aggregate(Sum("sum"))
     user = request.user
     # TODO dokończyć tworzenie pdfa
@@ -600,11 +603,7 @@ def make_pdf_from_invoices_sell(request):
     except TypeError:
         invoices_sell_sum = 0
 
-    year = current_year()
     now = now_date()
-    q = request.GET.get("q", "")
-    date_from = request.GET.get("from")
-    date_to = request.GET.get("to")
 
     if q or date_from or date_to:
         if q:
@@ -630,19 +629,20 @@ def make_pdf_from_invoices_sell(request):
         except TypeError:
             invoices_sell_sum = 0
 
+    print(invoicessell)
+
     objects = range(1, len(invoicessell) + 1)
     invoicessell = zip(objects, invoicessell)
 
-    template_path = "invoices/invoice_sell_pdf.html"
+
 
     # get base dir for font directory
     base_dir = BASE_DIR
-    print(BASE_DIR)
-    print(BASE_DIR.absolute())
+
     relative_dir = pathlib.Path('/invoices/templates/invoices/fonts/roboto/Roboto-Light.ttf')
-    print(relative_dir)
+
     font_dir = str(BASE_DIR.absolute()) + str(relative_dir)
-    print(font_dir)
+
     context = {"invoices": invoicessell,"date_from": date_from,
                "date_to": date_to,"invoices_sell_sum": invoices_sell_sum, "now": now, "year": year,
                "invoices_sell_sum_dict": invoices_sell_sum_dict, "objects": objects, "user": user, "font_dir": font_dir}
@@ -652,14 +652,13 @@ def make_pdf_from_invoices_sell(request):
     now_time = now.strftime("%d-%m-%Y")
     response["Content-Disposition"] = "attachment; filename=Lista wystawionych faktur - utworzono {now_time}.pdf".format(now_time=now_time)
     # find the template and render it.
+    template_path = "invoices/invoice_sell_pdf.html"
     template = get_template(template_path)
     html = template.render(context)
 
 
     # create a pdf
-    pisa_status = pisa.CreatePDF(html, dest=response, encoding="UTF-8"
-                                 , link_callback=link_callback
-                                 )
+    pisa_status = pisa.CreatePDF(html, dest=response, encoding="UTF-8", link_callback=link_callback)
     # pisa_status = pisa.CreatePDF(html,  dest=response, encoding="UTF-8", path="'/main/static/fonts/arial.ttf'")
 
     # if error then show some funny view
@@ -695,9 +694,5 @@ def link_callback(uri, rel):
 
     # make sure that file exists
     if not os.path.isfile(path):
-        raise Exception(
-            'media URI must start with %s or %s' % (sUrl, mUrl)
-        )
+        raise Exception('media URI must start with %s or %s' % (sUrl, mUrl))
     return path
-
-# todo Zrobić dróga metode z PDF dla sell archiwe

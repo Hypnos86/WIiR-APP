@@ -2,12 +2,9 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="pl-Pl">
-
 <head>
     <meta charset="UTF-8">
-
     <meta http-equiv="Content-Type" content="application/pdf; charset=utf-8" />
-
     <style>
         @font-face {
             font-family: Roboto;
@@ -55,13 +52,13 @@
                     <th align="center" valign="middle" width="40" scope="col">L.p.</th>
                     <th align="center" valign="middle" width="70" scope="col">Data wystawienia</th>
                     <th align="center" valign="middle" width="120" scope="col">Nr. dokumentu</th>
-                    <th align="center" valign="middle" width="50" scope="col">Typ dokumentu</th>
+                    <th align="center" valign="middle" width="60" scope="col">Typ dokumentu</th>
                     <th align="center" valign="middle" width="120" scope="col">Kwota</th>
                     <th align="center" valign="middle" width="70" scope="col">Data płatności</th>
-                    <th align="center" valign="middle" width="180" scope="col">Okres</th>
-                    <th align="center" valign="middle" width="150" scope="col">Kontrahent</th>
+                    <th align="center" valign="middle" width="100" scope="col">Okres</th>
+                    <th align="center" valign="middle" width="200" scope="col">Kontrahent</th>
                     <th align="center" valign="middle" width="120" scope="col">Powiat</th>
-                    <th align="center" valign="middle" width="100" scope="col">Wystaiający</th>
+                    <th align="center" valign="middle" width="120" scope="col">Wystaiający</th>
                 </tr>
             </thead>
             <tbody>
@@ -71,15 +68,25 @@
                     <td align="center" valign="middle"><span>{{invoice.date|date:"d.m.Y"}} r.</span></td>
                     <td align="center" valign="middle"><span title="{{invoice.creator}}">{{invoice.no_invoice|default_if_none:''}}</span>
                     </td>
-                    <td align="center" valign="middle"><span>{{invoice.doc_types}}</span></td>
-                    <td align="center" valign="middle"><span>{{invoice.sum|intcomma}} zł</span></td>
-                    <td align="center" valign="middle"><span>{{invoice.date_of_payment|date:"d.m.Y"}} r.</span></td>
-                    <td align="center" valign="middle"><span>{{invoice.period_from|date:"m.Y"}} - {{invoice.period_to|date:"m.Y"}}</span>
+                    <td align="center" valign="middle">
+                        <span>{{invoice.doc_types}}</span>
                     </td>
-                    <td valign="middle"><span title="SWOP ID: {{invoice.contractor.no_contractor}}">{{invoice.contractor.name}}. <br><small>Adres: {{invoice.contractor.address}}, {{invoice.contractor.zip_code}} {{invoice.contractor.city}}</small></span>
+                    <td align="center" valign="middle">
+                        <span>{{invoice.sum|intcomma}} zł</span>
+                    </td>
+                    <td align="center" valign="middle">
+                        <span>{{invoice.date_of_payment|date:"d.m.Y"}} r.</span>
+                    </td>
+                    <td align="center" valign="middle">
+                        <span>{{invoice.period_from|date:"m.Y"}} - {{invoice.period_to|date:"m.Y"}}</span>
+                    </td>
+                    <td valign="middle" style="padding: 3px">
+                        <span style="margin: 0px" title="SWOP ID: {{invoice.contractor.no_contractor}}">{{invoice.contractor.name}}</span><br>
+                        <small style="margin: 0px" >Adres: {{invoice.contractor.address}}, {{invoice.contractor.zip_code}} {{invoice.contractor.city}}</small>
                     </td>
                     <td align="center" valign="middle">{{invoice.county}}</td>
-                    <td align="center" valign="middle"><span title="{{invoice.author.first_name}} {{invoice.author.last_name}}">{{invoice.creator}}</span>
+                    <td align="center" valign="middle">
+                        <span title="{{invoice.author.first_name}} {{invoice.author.last_name}}">{{invoice.creator}}</span>
                     </td>
                 </tr>
                 {%endfor%}

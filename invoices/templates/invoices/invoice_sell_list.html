@@ -61,7 +61,7 @@
     </div>
     <div class="col-md-3 align-self-end moj-button-right">
         <div>
-            <button onclick="generatePdf(this)" data-url="{%url 'invoices:make_pdf_from_invoices_sell'%}" data-toggle="info" data-placement="top" type="button" title="Zapis do PDF" name="generate_pdf" id="generate_pdf" class="btn btn-outline-primary my-btn mb-1 bi bi-file-earmark-pdf h5"></button>
+            <button onclick="generatePdf(this)" data-url="{%url 'invoices:make_pdf_from_invoices_sell' year %}" data-toggle="info" data-placement="top" type="button" title="Zapis do PDF" name="generate_pdf" id="generate_pdf" class="btn btn-outline-primary my-btn mb-1 bi bi-file-earmark-pdf h5"></button>
         </div>
         {%if user.accessmodule.invoices_module_edit%}
         <div>

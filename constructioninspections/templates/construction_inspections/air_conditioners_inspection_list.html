@@ -46,11 +46,13 @@
         <div class="mt-1 list-group-item list-group-item-action list-group-item-light">
             <button type="button" class="button-show btn btn-outline btn-block" onclick="show(this)">
                 <span class="">{{unit}}</span> |
-                <span class="text-muted">Liczba budynków: </span><span class="badge text-white info badge-pill">{{unit.building.all|length}}</span>
+                <span class="text-muted">Liczba budynków: </span>
+                <span class="badge text-white info badge-pill">{{unit.building.all|length}}</span>
             </button>
             <button style="display: none;" class="hide-on-start button-hide btn btn-outline btn-block" onclick="hide(this)">
                 <span class="">{{unit}}</span> |
-                <span class="text-muted">Liczba budynków: </span><span class="badge text-white info badge-pill">{{unit.building.all|length}}</span>
+                <span class="text-muted">Liczba budynków: </span>
+                <span class="badge text-white info badge-pill">{{unit.building.all|length}}</span>
             </button>
         </div>
         <!--                hide-on-start-->
