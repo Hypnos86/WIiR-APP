@@ -36,8 +36,8 @@
             <h4>Wydz. Inwestycji i Remontów KWP w Poznaniu</h4>
         </div>
         <div>
-            <span>Wykonał: {{user.first_name}} {{user.last_name}}</span><br>
-            <span>Sporządzono: {{now|date:'d.m.Y'}} r.</span>
+            <span>Autor: {{user.first_name}} {{user.last_name}}</span><br>
+            <span>Wykonano: {{now|date:'d.m.Y'}} r.</span>
         </div>
     </div>
     <hr> {%if date_from and date_to%}
@@ -55,7 +55,7 @@
                     <th align="center" valign="middle" width="110" scope="col">Nr. dokumentu</th>
                     <th align="center" valign="middle" width="60" scope="col">Dokument</th>
                     <th align="center" valign="middle" width="120" scope="col">Kwota</th>
-                    <th align="center" valign="middle" width="80" scope="col">Termin zapłaty</th>
+                    <th align="center" valign="middle" width="80" scope="col">Termin rozliczenia</th>
                     <th align="center" valign="middle" width="100" scope="col">Okres</th>
                     <th align="center" valign="middle" width="200" scope="col">Kontrahent</th>
                     <th align="center" valign="middle" width="120" scope="col">Powiat</th>

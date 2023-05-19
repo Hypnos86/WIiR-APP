@@ -50,7 +50,7 @@
                     </div>
                     <div class="col-md-5 d-flex align-items-end">
                         <div class="input-group">
-                            <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj dokumentu" aria-label="Search" aria-describedby="search-addon" value="{{q}}">
+                            <input name="q" id="q" type="text" class="form-control rounded" placeholder="szukaj dokumentu" aria-label="Search" aria-describedby="search-addon" value={{q}}>
                             <button id="searchButton" style="{%if query%}display:none;{%endif%}" type="submit" class="btn btn-outline-primary my-btn">Szukaj</button>
                             <button id="cleanButton"  style="{%if not query%}display:none;{%endif%}" type="button" class="btn btn-outline-primary my-btn" onclick="cleanSearch()">Wyczyść</button>
                         </div>
@@ -198,6 +198,7 @@
         var date_from = $("#date_from").val();
         var date_to = $("#date_to").val();
         var q = $("#q").val();
+        console.log("q="+q);
         var urlParams = "?q=" + q + "&from=" + date_from + "&to=" + date_to;
         console.log(url + urlParams);
         window.open(url + urlParams, '_blank').focus();

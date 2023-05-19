@@ -60,11 +60,9 @@
     </div>
     <div class="col-md-3 align-self-end moj-button-right">
         <span class="d-block">
-            <a id="" href="{%url 'invoices:make_pdf_from_invoices_sell' year%}">
-                <button data-toggle="info" title="Zapis do PDF" name="q" id="t" class="btn btn-outline-primary my-btn mb-1">
-                    <span class="bi bi-file-earmark-pdf h5"></span>
-                </button>
-            </a>
+            <button onclick="generatePdf(this)" data-url="{%url 'invoices:make_pdf_from_invoices_sell' year%}" data-toggle="info" title="Zapis do PDF" name="q" id="t" class="btn btn-outline-primary my-btn mb-1">
+                <span class="bi bi-file-earmark-pdf h5"></span>
+            </button>
         </span>
     </div>
 </div>
@@ -181,6 +179,15 @@
         $("#date_from").val("");
         $("#date_to").val("");
         $("form").submit();
+        }
+
+     function generatePdf(button){
+        var url = $(button).data("url");
+        var date_from = $("#date_from").val();
+        var date_to = $("#date_to").val();
+        var q = $("#q").val();
+        var urlParams = "?q=" + q + "&from=" + date_from + "&to=" + date_to;
+        window.open(url + urlParams, '_blank').focus();
         }
 </script>
 {%endif%}
