@@ -49,6 +49,10 @@
     margin-left: 0!important;
 }
 
+.padding-right-3{
+    padding-right: 8px !important
+}
+
 .my-btn{
     color: #0a4275;
     border-color: #0a4275

@@ -2,7 +2,7 @@ from django.urls import path, re_path
 from .views import menu_invoices, buy_invoices_list, buy_invoices_list_archive, new_invoice_buy, sell_invoices_list,\
     sell_invoices_list_archive, new_invoice_sell, edit_invoice_sell, edit_invoice_sell_archive,edit_invoice_buy, make_verification, show_info_buy, \
     show_info_sell, corrective_note_list, corrective_note_list_archive, show_info_note, new_note, \
-    edit_note, edit_note_archive, make_pdf_from_invoices_sell, add_items_invoice_buy, delete_items_invoice_buy, delete_invoice_buy
+    edit_note, EditNoteArchiveView, make_pdf_from_invoices_sell, add_items_invoice_buy, delete_items_invoice_buy, delete_invoice_buy
 
 app_name = "invoices"
 urlpatterns = [
@@ -30,6 +30,6 @@ urlpatterns = [
     re_path("recordAccountingNoteArchive/(?P<year>[0-9]{4})/$", corrective_note_list_archive, name="corrective_note_list_archive"),
     path("newAccountingNote/", new_note, name="new_note"),
     re_path("editAccountingNote/(?P<id>\d+)/$", edit_note, name="edit_note"),
-    re_path("editAccountingNoteArchive(?P<id>\d+)/$", edit_note_archive, name="edit_note_archive"),
+    re_path("editAccountingNoteArchive(?P<id>\d+)/$", EditNoteArchiveView.as_view(), name="edit_note_archive"),
     path("create_pdf/<int:year>/ ", make_pdf_from_invoices_sell, name="make_pdf_from_invoices_sell")
 ]

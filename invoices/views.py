@@ -2,25 +2,22 @@ import datetime
 import pathlib
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.db.models import Sum
 from django.shortcuts import render, redirect, get_object_or_404
-
+from django.views import View
 from WIiR_APP.settings import BASE_DIR
 from invoices.models import InvoiceSell, InvoiceBuy, InvoiceItems, DocumentTypes, CorrectiveNote, DocumentsTypeEnum
 from main.models import Employer
 from invoices.forms import InvoiceSellForm, InvoiceBuyForm, InvoiceItemsForm, CorrectiveNoteForm
 from main.views import current_year, now_date
 from django.urls import reverse
-from decimal import Decimal
-from django.core.exceptions import ValidationError
-# xhtml2pdf
 import os
 from django.conf import settings
 from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
-from io import BytesIO
 from django.contrib.staticfiles import finders
 
 
@@ -513,20 +510,41 @@ def edit_note(request, id):
     return render(request, "invoices/corrective_note_form.html", context)
 
 
-@login_required
-def edit_note_archive(request, id):
-    note = get_object_or_404(CorrectiveNote, pk=id)
-    note_form = CorrectiveNoteForm(request.POST or None, instance=note)
-    year = note.date.year
-    context = {"note_form": note_form,
-               "year": year}
+class EditNoteArchiveView(LoginRequiredMixin, View):
+    template_name = "invoices/corrective_note_archive_form.html"
+    class_form = CorrectiveNoteForm
 
-    if note_form.is_valid():
-        instance = note_form.save(commit=False)
-        instance.author = request.user
-        note_form.save()
-        return redirect(reverse("invoices:corrective_note_list_archive", kwargs={"year": year}))
-    return render(request, "invoices/corrective_note_archive_form.html", context)
+    def get(self, request, id):
+        note = get_object_or_404(CorrectiveNote, pk=id)
+        form = self.class_form(instance=note)
+        year = note.date.year
+        context = {"note_form":form, "year":year}
+        return render(request, self.template_name, context)
+
+    def post(self, request, id):
+        note = get_object_or_404(CorrectiveNote, pk=id)
+        form = self.class_form(request.POST or None, instance=note)
+        year = note.date.year
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.author = request.user
+            form.save()
+            return redirect(reverse("invoices:corrective_note_list_archive", kwargs={"year": year}))
+        context = {"note_form": form, "year": year}
+        return render(request, self.template_name, context)
+    # def edit_note_archive(request, id):
+    #     note = get_object_or_404(CorrectiveNote, pk=id)
+    #     note_form = CorrectiveNoteForm(request.POST or None, instance=note)
+    #     year = note.date.year
+    #     context = {"note_form": note_form,
+    #                "year": year}
+    #
+    #     if note_form.is_valid():
+    #         instance = note_form.save(commit=False)
+    #         instance.author = request.user
+    #         note_form.save()
+    #         return redirect(reverse("invoices:corrective_note_list_archive", kwargs={"year": year}))
+    #     return render(request, "invoices/corrective_note_archive_form.html", context)
 
 
 @login_required

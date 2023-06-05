@@ -43,8 +43,8 @@
     </a>
     {%if user.is_authenticated%}
     <a href="{%url 'main:give_access_to_modules'%}"
-       class="d-flex align-items-center mb-md-0 me-md-auto text-dark text-decoration-none margin-left-0 my-home">
-        <span class="fs-5 bi bi-person-circle my-home" data-toggle="info" title="Użytkownik ID: {{user.username}}">
+       class="d-flex align-items-center mb-md-0 me-md-auto text-dark text-decoration-none my-home margin-left-0">
+        <span class="fs-5 bi bi-person-circle my-home padding-right-3" data-toggle="info" title="Użytkownik ID: {{user.username}}">
             {{user.first_name}} {{user.last_name}}</span></a>
     {%else%}
     <a href="{%url 'main:give_access_to_modules'%}"
