@@ -338,7 +338,7 @@ class AddProtocolView(LoginRequiredMixin, View):
 
 
         context = {"form": self.protocol_form, "new": True, "typeProtocol": typeProtocol}
-        return render(request, self.template, context)
+        return render(request, self.template, context), typeProtocol
 
     def post(self, request, form):
         if request.method == "POST":
@@ -347,7 +347,7 @@ class AddProtocolView(LoginRequiredMixin, View):
                 instance.author = request.user
                 self.protocol_form.save()
                 return redirect(self.redirectText)
-        context = {"form": self.protocol_form, "new": True, "typeProtocol": typeProtocol}
+        context = {"form": self.protocol_form, "new": True, "typeProtocol": self.typeProtocol}
         return render(request, self.template, context)
 
 

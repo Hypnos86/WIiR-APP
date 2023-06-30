@@ -11,12 +11,14 @@
             <a href="{% url 'contracts:menu_contracts_auction' %}">
                 <button class="btn btn-outline-primary my-btn">
                     <span class="bi bi-chevron-compact-left">Cofnij</span>
-                </button></a>
+                </button>
+            </a>
         </div>
         <div class="col-md-8 text-center">
             <h4>Umowa {%if contract.no_contract%} nr {{contract.no_contract}} {%endif%}z dnia
                 {{contract.date|date:"d.m.Y"}}&nbsp;r.</h4>
-            <small class="text-muted">Data dodania: {{contract.creation_date|date:'d.m.Y'}} ({{contract.creation_date|date:'H:m'}})</small>
+            <small class="text-muted">Data dodania: {{contract.creation_date|date:'d.m.Y'}}
+                ({{contract.creation_date|date:'H:m'}})</small>
         </div>
     </div>
 </div>
@@ -42,7 +44,8 @@
                 </li>
                 <li class="list-group-item">
                     <span class="text-muted">Tryb zamówienia: </span>
-                    <span data-toggle="info" title="{{contract.legal_basic.act}} - {{contract.legal_basic.legal_basic_text}}">{{contract.legal_basic}}</span>
+                    <span data-toggle="info"
+                          title="{{contract.legal_basic.act}} - {{contract.legal_basic.legal_basic_text}}">{{contract.legal_basic}}</span>
                 </li>
                 <li class="list-group-item">
                     <span class="text-muted">Termin realizacji: </span>
@@ -92,7 +95,8 @@
                         {%for worker in contract.worker.all%}
                         <li>
                             <span>{{worker}} - {{worker.industry}}</span>
-                        </li>{%endfor%}
+                        </li>
+                        {%endfor%}
                     </ul>
                 </li>
                 {%if contract.report%}
@@ -111,38 +115,43 @@
                     <span class="text-muted">Rozliczenie gwarancji:</span>
                     {%for settlement in contract.guarantee_settlement.all%}
                     {%if settlement.affirmation_settlement%}
-                    <button class="btn btn-outline-primary my-btn mx-3" onclick="openSettlementModal(this)" data-url="{% url 'contracts:show_information_settlement' settlement.id%}">{{settlement.script}}</button>
+                    <button class="btn btn-outline-primary my-btn mx-3" onclick="openSettlementModal(this)"
+                            data-url="{% url 'contracts:show_information_settlement' settlement.id%}">
+                        {{settlement.script}}
+                    </button>
                     {%endif%}
                     {%endfor%}
                 </li>
                 <li class="list-group-item">
                     <div>
-                        <small class="text-muted">Zmiany: {{contract.change|date:'d.m.Y'}}&nbsp;r. ({{contract.change|date:'H:i'}})</small><br>
-                        <small class="text-muted">Autor: {{contract.author.first_name}} {{contract.author.last_name}}</small>
+                        <small class="text-muted">Zmiany: {{contract.change|date:'d.m.Y'}}&nbsp;r.
+                            ({{contract.change|date:'H:i'}})</small><br>
+                        <small class="text-muted">Autor: {{contract.author.first_name}}
+                            {{contract.author.last_name}}</small>
                     </div>
                 </li>
             </ul>
         </div>
-        <div class="col-md-5">
-            {%if contract.scan%}
-            <div class="text-center mt-2">
-                <a href="/media/{{contract.scan}}" target="_blank">
-                    <button class="btn btn-outline-primary button-chose-invoices my-btn">
+        <div class="col-md-5 text-center">
+            <ul class="list-group">
+                {%if contract.scan%}
+                <li class="list-group my-1 mx-5">
+                    <a class="list-group-item list-group-item-action w-100" href="/media/{{contract.scan}}"
+                       target="_blank">
                         <span class="bi bi-file-text"> Podgląd umowy</span>
-                    </button>
-                </a>
-            {%if annexes%}
-            {%for annex in annexes%}
-            <div class="my-3">
-                <a href="/media/{{annex.scan}}" target="_blank">
-                    <button class="btn btn-outline-primary button-chose-invoices my-btn">
+                    </a>
+                </li>
+                {%if annexes%}
+                {%for annex in annexes%}
+                <li class="list-group my-1 mx-5">
+                    <a class="list-group-item list-group-item-action w-100" href="/media/{{annex.scan}}" target="_blank">
                         <i class="bi bi-arrow-return-right"> Aneks z dnia {{annex.date|date:"d.m.Y"}}&nbsp;r.</i>
-                    </button></a>
-            </div>
-            {%endfor%}
-            {%endif%}
-            {%endif%}
-            </div>
+                    </a>
+                </li>
+                {%endfor%}
+                {%endif%}
+                {%endif%}
+            </ul>
         </div>
     </div>
 </div>
@@ -168,6 +177,12 @@
     function submitForm(){
         $("#submitButton").closest("form").submit();
     }
+
+
+
+
+
+
 </script>
 {%endif%}
 {%endblock%}

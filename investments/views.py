@@ -109,7 +109,8 @@ def edit_project(request, id):
 def show_project(request, id):
     project = Project.objects.get(pk=id)
     galleries = project.gallery.all()
-    contracts = project.contract_auction.all()
+    # contracts = project.contract_auction.all()
+    contracts = ContractAuction.objects.filter(investments_project=id)
     context = {"project_form": project,
                "contracts": contracts,
                "galleries": galleries
