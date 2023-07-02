@@ -3,8 +3,8 @@ from constructioninspections.views import BuildingsOneYearInspectionsList, Build
     BuildingsFiveYearInspectionsList, ChimneyInspectionList, \
     ElectricalInspectionOneYearList, HeatingBoilersInspectionList, \
     AirConditionersInspectionList, FireInspectionList, ImportantInspections, \
-    ElectricalInspectionFiveYearList, ElectricalInspectionsChoice, add_protocol, ShowInformationProtocolView, \
-    edit_protocol, PriorityInspectionsList
+    ElectricalInspectionFiveYearList, ElectricalInspectionsChoice, AddProtocolView, ShowInformationProtocolView, \
+    EditProtocolView, PriorityInspectionsList
 
 app_name = "constructioninspections"
 urlpatterns = [
@@ -18,10 +18,9 @@ urlpatterns = [
     path("electricalInspectionsChoicePopup/", ElectricalInspectionsChoice.as_view(),
          name="electrical_inspections_choice"),
     # Dodanie nowego protokołu
-    path("add/<int:typeInspection>", add_protocol,
-         name="add_protocol"),
+    path("add/<int:typeInspection>", AddProtocolView.as_view(), name="add_protocol"),
     # Edytowanie protokołu
-    path("edit/<int:typeInspection>/<int:id>/", edit_protocol, name="edit_protocol"),
+    path("edit/<int:typeInspection>/<int:id>/", EditProtocolView.as_view(), name="edit_protocol"),
     # Przeglądy budynków - roczne
     path("buildingsOneYear/", BuildingsOneYearInspectionsList.as_view(),
          name="create_buildings_one_year_inspections_list"),

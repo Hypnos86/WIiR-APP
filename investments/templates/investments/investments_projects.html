@@ -55,9 +55,15 @@
                 <span>{{project.date_of_acceptance|date:'m.Y'}}&nbsp;r. {%if project.date_of_settlement%} - {{project.date_of_settlement|date:'m.Y'}}&nbsp;r.{%endif%}</span>
             </td>
             {%else%}
+            {%if project.date_of_acceptance%}
             <td align="center" valign="middle" scope="row" data-toggle="info" title="W trakcie realizacji">
                 <span>{{project.date_of_acceptance|date:'m.Y'}}&nbsp;r.</span>
             </td>
+            {%else%}
+            <td align="center" valign="middle" scope="row" data-toggle="info" title="Brak akceptacji">
+                <span>BRAK</span>
+            </td>
+            {%endif%}
             {%endif%}
             <td valign="middle">
                 <span>{{project.project_title}}</span>

@@ -50,7 +50,7 @@ class ShowInformationView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
 
-class AddNewFlatView(LoginRequiredMixin, View):
+class AddFlatView(LoginRequiredMixin, View):
     template_name = 'businessflats/flat_form.html'
     form_class = OfficialFlatForm
 
@@ -73,6 +73,7 @@ class AddNewFlatView(LoginRequiredMixin, View):
 class EditFlatView(LoginRequiredMixin, View):
     template_name = 'businessflats/flat_form.html'
     form_class = OfficialFlatForm
+    redirect = "businessflats:make_flats_list"
 
     def get(self, request, slug, *args, **kwargs):
         flat = get_object_or_404(OfficialFlat, slug=slug)
@@ -87,6 +88,6 @@ class EditFlatView(LoginRequiredMixin, View):
             flat = form.save(commit=False)
             flat.author = request.user
             form.save()
-            return redirect('businessflats:make_flats_list')
+            return redirect(self.redirect)
         context = {'flat_form': form, 'new': False}
         return render(request, self.template_name, context)
