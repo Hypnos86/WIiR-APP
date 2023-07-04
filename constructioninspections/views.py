@@ -405,12 +405,11 @@ class EditProtocolView(View):
 
     def get(self, request, typeInspection, id):
         typeProtocol, object, protocol_form, redirectText = self.get_object_form(request, typeInspection, id)
-        return render(request, "construction_inspections/protocol_inspection_form.html", {
-            "form": protocol_form,
-            "new": False,
-            "typeProtocol": typeProtocol,
-            "redirectText": redirectText
-        })
+        context = {"form": protocol_form,
+                   "new": False,
+                   "typeProtocol": typeProtocol,
+                   "redirectText": redirectText}
+        return render(request, "construction_inspections/protocol_inspection_form.html", context)
 
     def post(self, request, typeInspection, id):
         typeProtocol, object, protocol_form, redirectText = self.get_object_form(request, typeInspection, id)
@@ -419,12 +418,11 @@ class EditProtocolView(View):
             instance.author = request.user
             protocol_form.save()
             return redirect(redirectText)
-        return render(request, "construction_inspections/protocol_inspection_form.html", {
-            "form": protocol_form,
-            "new": False,
-            "typeProtocol": typeProtocol,
-            "redirectText": redirectText
-        })
+        context = {"form": protocol_form,
+                   "new": False,
+                   "typeProtocol": typeProtocol,
+                   "redirectText": redirectText}
+        return render(request, "construction_inspections/protocol_inspection_form.html", context)
 
 
 @login_required

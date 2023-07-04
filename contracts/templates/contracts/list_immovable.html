@@ -138,16 +138,14 @@
             </span>
         </td>
         <td align="right" valign="middle">
-            <a class="m-2" href="{% url 'contracts:show_contractsimmovables' contract.id %}">
-                <button data-toggle="info" title="Pokaż" type="button" class="btn btn-outline-primary icon-color my-1">
-                    <i class="bi bi-eye"></i>
-                </button>
+            <a class="btn btn-outline-primary icon-color my-1" data-toggle="info" title="Pokaż"
+               href="{% url 'contracts:show_contractsimmovables' contract.id %}">
+                <i class="bi bi-eye"></i>
             </a>
             {%if user.accessmodule.contract_immovables_edit%}
-            <a class="m-2" href="{% url 'contracts:edit_contractsimmovables' contract.id %}">
-                <button data-toggle="info" title="Edytuj" type="submit" class="btn btn-outline-primary icon-color my-1">
-                    <i class="bi bi-pencil-square"></i>
-                </button>
+            <a class="btn btn-outline-primary icon-color my-1" data-toggle="info" title="Edytuj"
+               href="{% url 'contracts:edit_contractsimmovables' contract.id %}">
+                <i class="bi bi-pencil-square"></i>
             </a>
             {%endif%}
         </td>
@@ -189,11 +187,9 @@
             </span>
         </td>
         <td align="right" valign="middle">
-            <a class="m-2" href="{% url 'contracts:show_contractsimmovables' contract.id %}">
-                <button data-toggle="info" title="Pokaż" type="button"
-                        class="btn btn-outline-primary icon-color mx-2 my-1">
-                    <i class="bi bi-eye"></i>
-                </button>
+            <a class="btn btn-outline-primary icon-color m-2 my-1"
+               href="{% url 'contracts:show_contractsimmovables' contract.id %}">
+                <i class="bi bi-eye"></i>
             </a>
         </td>
     </tr>
@@ -294,6 +290,9 @@
         $("#date_to").val("");
         $("form").submit();
         }
+
+
+
 
 </script>
 {%endif%}

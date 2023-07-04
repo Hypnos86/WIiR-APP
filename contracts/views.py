@@ -1,6 +1,9 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.core.paginator import Paginator
+from django.views import View
+
 from contracts.models import ContractImmovables, ContractAuction, AnnexContractAuction, ContractMedia, \
     GuaranteeSettlement, FinancialDocument
 from contracts.forms import ContractImmovablesForm, ContractAuctionForm, AnnexImmovablesForm, AnnexContractAuctionForm, \
@@ -17,84 +20,87 @@ from main.models import TeamEnum
 
 
 # Create your views here.
-@login_required
-def menu_contractsimmovables(request):
-    contracts = ContractImmovables.objects.all().order_by("-date").filter(state=True)
-    contracts_archive = ContractImmovables.objects.all().order_by("-date").filter(state=False)
-    now = now_date
+class ContractsImmovableListView(LoginRequiredMixin, View):
+    template = "contracts/list_immovable.html"
 
-    try:
-        last_date = ContractImmovables.objects.values('change').latest('change')
-    except ContractImmovables.DoesNotExist:
-        last_date = None
+    def get(self, request):
+        contracts = ContractImmovables.objects.all().order_by("-date").filter(state=True)
+        contracts_archive = ContractImmovables.objects.all().order_by("-date").filter(state=False)
+        now = now_date
 
-    query = "Wyczyść"
-    search = "Szukaj"
-    con_len = len(contracts)
-    con_archive_sum = len(contracts_archive)
-    q = request.GET.get("q")
-    date_from = request.GET.get('from')
-    date_to = request.GET.get('to')
+        try:
+            last_date = ContractImmovables.objects.values('change').latest('change')
+        except ContractImmovables.DoesNotExist:
+            last_date = None
 
-    paginator = Paginator(contracts, 50)
-    page_number = request.GET.get('page')
-    contracts_list = paginator.get_page(page_number)
-    if q or date_from or date_to:
-        if q:
-            contracts = contracts.filter(contractor__name__icontains=q) | contracts.filter(
-                type_of_contract__type__icontains=q) | contracts.filter(
-                unit__county__name__icontains=q) | contracts.filter(
-                unit__city__icontains=q)
+        query = "Wyczyść"
+        search = "Szukaj"
+        con_len = len(contracts)
+        con_archive_sum = len(contracts_archive)
+        q = request.GET.get("q")
+        date_from = request.GET.get('from')
+        date_to = request.GET.get('to')
 
-        if date_from:
-            contracts = contracts.filter(date__gte=date_from)
+        paginator = Paginator(contracts, 50)
+        page_number = request.GET.get('page')
+        contracts_list = paginator.get_page(page_number)
+        if q or date_from or date_to:
+            if q:
+                contracts = contracts.filter(contractor__name__icontains=q) | contracts.filter(
+                    type_of_contract__type__icontains=q) | contracts.filter(
+                    unit__county__name__icontains=q) | contracts.filter(
+                    unit__city__icontains=q)
 
-        if date_to:
-            contracts = contracts.filter(date__lte=date_to)
+            if date_from:
+                contracts = contracts.filter(date__gte=date_from)
 
-        return render(request, 'contracts/contract_list.html',
-                      {'contracts': contracts, 'con_archive_sum': con_archive_sum, 'con_len': con_len,
+            if date_to:
+                contracts = contracts.filter(date__lte=date_to)
+            context = {'contracts': contracts, 'con_archive_sum': con_archive_sum, 'con_len': con_len,
                        'query': query, 'last_date': last_date, 'now': now, 'q': q, 'date_from': date_from,
-                       'date_to': date_to, 'actual': True})
-    else:
-        return render(request, 'contracts/contract_list.html',
-                      {'contracts': contracts_list, 'con_len': con_len, 'con_archive_sum': con_archive_sum,
-                       'search': search, 'last_date': last_date, 'now': now, 'actual': True})
+                       'date_to': date_to, 'actual': True}
+            return render(request, self.template, context)
+        else:
+            context = {'contracts': contracts_list, 'con_len': con_len, 'con_archive_sum': con_archive_sum,
+                       'search': search, 'last_date': last_date, 'now': now, 'actual': True}
+            return render(request, 'contracts/list_immovable.html', context)
 
 
-@login_required
-def menu_contractsimmovables_archive(request):
-    contracts = ContractImmovables.objects.all().order_by("-date").filter(state=True)
-    contracts_archive = ContractImmovables.objects.all().order_by("-date").filter(state=False)
+class ContractsArchiveImmovableListView(LoginRequiredMixin, View):
+    template = "contracts/list_immovable.html"
 
-    query = "Wyczyść"
-    search = "Szukaj"
-    con_len = len(contracts)
-    con_archive_sum = len(contracts_archive)
-    q = request.GET.get("q")
-    date_from = request.GET.get('from')
-    date_to = request.GET.get('to')
+    def get(self, request):
+        contracts = ContractImmovables.objects.all().order_by("-date").filter(state=True)
+        contracts_archive = ContractImmovables.objects.all().order_by("-date").filter(state=False)
 
-    paginator = Paginator(contracts_archive, 50)
-    page_number = request.GET.get('page')
-    contracts_list = paginator.get_page(page_number)
-    if q or date_from or date_to:
-        if q:
-            contracts = contracts_archive.filter(contractor__name__icontains=q)
+        query = "Wyczyść"
+        search = "Szukaj"
+        con_len = len(contracts)
+        con_archive_sum = len(contracts_archive)
+        q = request.GET.get("q")
+        date_from = request.GET.get('from')
+        date_to = request.GET.get('to')
 
-        if date_from:
-            contracts = contracts_archive.filter(date__gte=date_from)
+        paginator = Paginator(contracts_archive, 50)
+        page_number = request.GET.get('page')
+        contracts_list = paginator.get_page(page_number)
+        if q or date_from or date_to:
+            if q:
+                contracts = contracts_archive.filter(contractor__name__icontains=q)
 
-        if date_to:
-            contracts = contracts_archive.filter(date__lte=date_to)
+            if date_from:
+                contracts = contracts_archive.filter(date__gte=date_from)
 
-        return render(request, 'contracts/contract_list.html',
-                      {'contracts_archive': contracts, 'con_archive_sum': con_archive_sum, 'con_len': con_len,
-                       'query': query, 'q': q, 'date_from': date_from, 'date_to': date_to, 'actual': False})
-    else:
-        return render(request, 'contracts/contract_list.html',
-                      {'contracts_archive': contracts_list, 'con_len': con_len, 'con_archive_sum': con_archive_sum,
-                       'search': search, 'actual': False})
+            if date_to:
+                contracts = contracts_archive.filter(date__lte=date_to)
+
+            context = {'contracts_archive': contracts, 'con_archive_sum': con_archive_sum, 'con_len': con_len,
+                       'query': query, 'q': q, 'date_from': date_from, 'date_to': date_to, 'actual': False}
+            return render(request, self.template, context)
+        else:
+            context = {'contracts_archive': contracts_list, 'con_len': con_len, 'con_archive_sum': con_archive_sum,
+                       'search': search, 'actual': False}
+            return render(request, 'contracts/list_immovable.html', context)
 
 
 @login_required
@@ -158,63 +164,65 @@ def add_annex_immovables(request, id):
         return render(request, 'contracts/new_annex_immovables_form.html', context)
 
 
-@login_required
-def show_contractsimmovables(request, id):
-    contract = ContractImmovables.objects.get(pk=id)
-    annexes = contract.annex.all()
+class ShowContractImmovableView(LoginRequiredMixin, View):
+    template = "contracts/show_contract_immovable.html"
 
-    return render(request, 'contracts/show_contract_immovables.html',
-                  {'contract': contract, 'annexes': annexes, 'actual': True})
+    def get(self, request, id):
+        contract = ContractImmovables.objects.get(pk=id)
+        annexes = contract.annex.all()
+        context = {'contract': contract, 'annexes': annexes, 'actual': True}
+        return render(request, self.template, context)
 
 
-@login_required
-def menu_contracts_auction(request):
-    contracts_auctions = ContractAuction.objects.all().order_by('-date')
-    contracts_auctions_sum = len(contracts_auctions)
-    query = "Wyczyść"
-    search = "Szukaj"
+class ContractsAuctionListView(LoginRequiredMixin, View):
+    template = "contracts/list_contract_auction.html"
 
-    paginator = Paginator(contracts_auctions, 20)
-    page_number = request.GET.get('page')
-    contracts_auctions_list = paginator.get_page(page_number)
-
-    q = request.GET.get("q")
-    date_from = request.GET.get('from')
-    date_to = request.GET.get('to')
-
-    try:
-        last_date = ContractAuction.objects.values('change').latest('change')
-    except ContractAuction.DoesNotExist:
-        last_date = None
-
-    if q or date_from or date_to:
-        if q:
-            contracts_auctions = contracts_auctions.filter(no_contract__icontains=q) \
-                                 | contracts_auctions.filter(contractor__name__icontains=q) \
-                                 | contracts_auctions.filter(unit__county__name__icontains=q) \
-                                 | contracts_auctions.filter(unit__city__icontains=q) \
-                                 | contracts_auctions.filter(unit__address__icontains=q) \
-                                 | contracts_auctions.filter(work_scope__icontains=q) \
-                                 | contracts_auctions.filter(worker__name__icontains=q) \
-                                 | contracts_auctions.filter(worker__last_name__icontains=q)
-
-        if date_from:
-            contracts_auctions = contracts_auctions.filter(date__gte=date_from)
-
-        if date_to:
-            contracts_auctions = contracts_auctions.filter(date__lte=date_to)
-
+    def get(self, request):
+        contracts_auctions = ContractAuction.objects.all().order_by('-date')
         contracts_auctions_sum = len(contracts_auctions)
+        query = "Wyczyść"
+        search = "Szukaj"
 
-        return render(request, 'contracts/contract_auction_list.html',
-                      {'contracts_auctions_list': contracts_auctions,
+        paginator = Paginator(contracts_auctions, 20)
+        page_number = request.GET.get('page')
+        contracts_auctions_list = paginator.get_page(page_number)
+
+        q = request.GET.get("q")
+        date_from = request.GET.get('from')
+        date_to = request.GET.get('to')
+
+        try:
+            last_date = ContractAuction.objects.values('change').latest('change')
+        except ContractAuction.DoesNotExist:
+            last_date = None
+
+        if q or date_from or date_to:
+            if q:
+                contracts_auctions = contracts_auctions.filter(no_contract__icontains=q) \
+                                     | contracts_auctions.filter(contractor__name__icontains=q) \
+                                     | contracts_auctions.filter(unit__county__name__icontains=q) \
+                                     | contracts_auctions.filter(unit__city__icontains=q) \
+                                     | contracts_auctions.filter(unit__address__icontains=q) \
+                                     | contracts_auctions.filter(work_scope__icontains=q) \
+                                     | contracts_auctions.filter(worker__name__icontains=q) \
+                                     | contracts_auctions.filter(worker__last_name__icontains=q)
+
+            if date_from:
+                contracts_auctions = contracts_auctions.filter(date__gte=date_from)
+
+            if date_to:
+                contracts_auctions = contracts_auctions.filter(date__lte=date_to)
+
+            contracts_auctions_sum = len(contracts_auctions)
+            context = {'contracts_auctions_list': contracts_auctions,
                        'contracts_auctions_sum': contracts_auctions_sum, 'last_date': last_date, 'query': query,
-                       'q': q, 'date_from': date_from, 'date_to': date_to})
+                       'q': q, 'date_from': date_from, 'date_to': date_to}
+            return render(request, self.template, context)
 
-    else:
-        return render(request, 'contracts/contract_auction_list.html',
-                      {'contracts_auctions_list': contracts_auctions_list,
-                       'contracts_auctions_sum': contracts_auctions_sum, 'last_date': last_date, 'search': search})
+        else:
+            context = {'contracts_auctions_list': contracts_auctions_list,
+                       'contracts_auctions_sum': contracts_auctions_sum, 'last_date': last_date, 'search': search}
+            return render(request, self.template, context)
 
 
 @login_required
@@ -235,13 +243,15 @@ def new_contract_auction(request):
     return render(request, 'contracts/contract_auction_form.html', context)
 
 
-@login_required
-def show_contract_auction(request, id):
-    contract = ContractAuction.objects.get(pk=id)
-    annexes = contract.aneks_contract_auction.all()
-    context = {'contract': contract,
-               'annexes': annexes}
-    return render(request, 'contracts/show_contract_auction.html', context)
+class ShowContractAuctionView(LoginRequiredMixin, View):
+    template = "contracts/show_contract_auction.html"
+
+    def get(self, request, id):
+        contract = ContractAuction.objects.get(pk=id)
+        annexes = contract.aneks_contract_auction.all()
+        context = {'contract': contract,
+                   'annexes': annexes}
+        return render(request, self.template, context)
 
 
 @login_required
@@ -290,7 +300,8 @@ def edit_contract_auction(request, id):
                             settlement_guarantee.delete()
                             for date, sum in settlements:
                                 print("for 3 if1")
-                                settlement_guarantee = GuaranteeSettlement.objects.create(contract=contract_auction_edit, deadline_settlement=date, settlement_sum=sum)
+                                settlement_guarantee = GuaranteeSettlement.objects.create(
+                                    contract=contract_auction_edit, deadline_settlement=date, settlement_sum=sum)
 
                         else:
                             print(f'3 if bez fora1 - {contract.security_sum}')
@@ -383,106 +394,111 @@ def edit_contract_media(request, id):
                    'selected_units': selected_units, "back_to_show_info": True, "id": id})
 
 
-@login_required
-def contract_media_list(request):
-    contracts_media = ContractMedia.objects.all().filter(state=True).order_by('-date').distinct()
-    contracts_media_len = len(contracts_media)
-    now = now_date
-    query = "Wyczyść"
-    search = "Szukaj"
+class ContractMediaListView(LoginRequiredMixin, View):
+    template = "contracts/list_contracts_media.html"
 
-    paginator = Paginator(contracts_media, 50)
-    page_number = request.GET.get('page')
-    contracts_media_list = paginator.get_page(page_number)
-
-    q = request.GET.get("q")
-    date_from = request.GET.get('from')
-    date_to = request.GET.get('to')
-
-    try:
-        last_date = ContractMedia.objects.values('change').latest('change')
-    except ContractMedia.DoesNotExist:
-        last_date = None
-
-    if q or date_from or date_to:
-        if q:
-            contracts_media = contracts_media.filter(no_contract__icontains=q) \
-                              | contracts_media.filter(type__type__icontains=q) \
-                              | contracts_media.filter(contractor__name__icontains=q) \
-                              | contracts_media.filter(unit__city__icontains=q) \
-                              | contracts_media.filter(unit__type__type_short__icontains=q) \
-                              | contracts_media.filter(employer__name__icontains=q) \
-                              | contracts_media.filter(employer__last_name__icontains=q) \
-                              | contracts_media.filter(content__icontains=q)
-
-        if date_from:
-            contracts_media = contracts_media.filter(date__gte=date_from)
-
-        if date_to:
-            contracts_media = contracts_media.filter(date__lte=date_to)
-
+    def get(self, request):
+        contracts_media = ContractMedia.objects.all().filter(state=True).order_by('-date').distinct()
         contracts_media_len = len(contracts_media)
+        now = now_date
+        query = "Wyczyść"
+        search = "Szukaj"
 
-        return render(request, 'contracts/contracts_media_list.html',
-                      {'actual': True, 'contracts_media': contracts_media, 'contracts_media_len': contracts_media_len,
+        paginator = Paginator(contracts_media, 50)
+        page_number = request.GET.get('page')
+        contracts_media_list = paginator.get_page(page_number)
+
+        q = request.GET.get("q")
+        date_from = request.GET.get('from')
+        date_to = request.GET.get('to')
+
+        try:
+            last_date = ContractMedia.objects.values('change').latest('change')
+        except ContractMedia.DoesNotExist:
+            last_date = None
+
+        if q or date_from or date_to:
+            if q:
+                contracts_media = contracts_media.filter(no_contract__icontains=q) \
+                                  | contracts_media.filter(type__type__icontains=q) \
+                                  | contracts_media.filter(contractor__name__icontains=q) \
+                                  | contracts_media.filter(unit__city__icontains=q) \
+                                  | contracts_media.filter(unit__type__type_short__icontains=q) \
+                                  | contracts_media.filter(employer__name__icontains=q) \
+                                  | contracts_media.filter(employer__last_name__icontains=q) \
+                                  | contracts_media.filter(content__icontains=q)
+
+            if date_from:
+                contracts_media = contracts_media.filter(date__gte=date_from)
+
+            if date_to:
+                contracts_media = contracts_media.filter(date__lte=date_to)
+
+            contracts_media_len = len(contracts_media)
+            context = {'actual': True, 'contracts_media': contracts_media,
+                       'contracts_media_len': contracts_media_len,
                        'q': q, 'date_from': date_from, 'date_to': date_to, 'last_date': last_date, 'query': query,
-                       'now': now})
-    else:
-        return render(request, 'contracts/contracts_media_list.html',
-                      {'contracts_media': contracts_media_list,
+                       'now': now}
+            return render(request, self.template, context
+                          )
+        else:
+            context = {'contracts_media': contracts_media_list,
                        'contracts_media_len': contracts_media_len, 'last_date': last_date, 'search': search,
-                       'actual': True, 'now': now})
+                       'actual': True, 'now': now}
+            return render(request, self.template, context)
 
 
-@login_required
-def contract_media_list_archive(request):
-    contracts_media = ContractMedia.objects.all().filter(state=False).order_by('-date').distinct()
-    contracts_media_len = len(contracts_media)
-    now = now_date
-    query = "Wyczyść"
-    search = "Szukaj"
+class ContractsArchiveMediaListView(LoginRequiredMixin, View):
+    template = "contracts/list_contracts_media.html"
 
-    paginator = Paginator(contracts_media, 50)
-    page_number = request.GET.get('page')
-    contracts_media_list = paginator.get_page(page_number)
-
-    q = request.GET.get("q")
-    date_from = request.GET.get('from')
-    date_to = request.GET.get('to')
-
-    try:
-        last_date = ContractMedia.objects.values('change').latest('change')
-    except ContractMedia.DoesNotExist:
-        last_date = None
-
-    if q or date_from or date_to:
-        if q:
-            contracts_media = contracts_media.filter(no_contract__icontains=q) \
-                              | contracts_media.filter(type__type__icontains=q) \
-                              | contracts_media.filter(contractor__name__icontains=q) \
-                              | contracts_media.filter(unit__city__icontains=q) \
-                              | contracts_media.filter(unit__type__type_short__icontains=q) \
-                              | contracts_media.filter(employer__name__icontains=q) \
-                              | contracts_media.filter(employer__last_name__icontains=q) \
-                              | contracts_media.filter(content__icontains=q)
-
-        if date_from:
-            contracts_media = contracts_media.filter(date__gte=date_from)
-
-        if date_to:
-            contracts_media = contracts_media.filter(date__lte=date_to)
-
+    def get(self, request):
+        contracts_media = ContractMedia.objects.all().filter(state=False).order_by('-date').distinct()
         contracts_media_len = len(contracts_media)
+        now = now_date
+        query = "Wyczyść"
+        search = "Szukaj"
 
-        return render(request, 'contracts/contracts_media_list.html',
-                      {'actual': False, 'contracts_media': contracts_media, 'contracts_media_len': contracts_media_len,
+        paginator = Paginator(contracts_media, 50)
+        page_number = request.GET.get('page')
+        contracts_media_list = paginator.get_page(page_number)
+
+        q = request.GET.get("q")
+        date_from = request.GET.get('from')
+        date_to = request.GET.get('to')
+
+        try:
+            last_date = ContractMedia.objects.values('change').latest('change')
+        except ContractMedia.DoesNotExist:
+            last_date = None
+
+        if q or date_from or date_to:
+            if q:
+                contracts_media = contracts_media.filter(no_contract__icontains=q) \
+                                  | contracts_media.filter(type__type__icontains=q) \
+                                  | contracts_media.filter(contractor__name__icontains=q) \
+                                  | contracts_media.filter(unit__city__icontains=q) \
+                                  | contracts_media.filter(unit__type__type_short__icontains=q) \
+                                  | contracts_media.filter(employer__name__icontains=q) \
+                                  | contracts_media.filter(employer__last_name__icontains=q) \
+                                  | contracts_media.filter(content__icontains=q)
+
+            if date_from:
+                contracts_media = contracts_media.filter(date__gte=date_from)
+
+            if date_to:
+                contracts_media = contracts_media.filter(date__lte=date_to)
+
+            contracts_media_len = len(contracts_media)
+            context = {'actual': False, 'contracts_media': contracts_media,
+                       'contracts_media_len': contracts_media_len,
                        'q': q, 'date_from': date_from, 'date_to': date_to, 'last_date': last_date, 'query': query,
-                       'now': now})
-    else:
-        return render(request, 'contracts/contracts_media_list.html',
-                      {'contracts_media': contracts_media_list,
+                       'now': now}
+            return render(request, self.template, context)
+        else:
+            context = {'contracts_media': contracts_media_list,
                        'contracts_media_len': contracts_media_len, 'last_date': last_date, 'search': search,
-                       'actual': False, 'now': now})
+                       'actual': False, 'now': now}
+            return render(request, self.template, context)
 
 
 @login_required
