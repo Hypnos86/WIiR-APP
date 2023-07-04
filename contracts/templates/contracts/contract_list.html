@@ -20,11 +20,11 @@
 <div class="row my-3">
     <div class="col-md-3 align-self-end">
         <p class="m-0">
-            <span>Aktualne umowy: </span>
+            <span><b>Aktualne umowy:</b>&nbsp;</span>
             <span class="badge text-white info badge-pill">{{con_len}}</span>
         </p>
         <p class="m-0">
-            <span>Zarchiwizowane umówy: </span>
+            <span><b>Zarchiwizowane umówy:</b></span>
             <span class="badge text-white info badge-pill">{{con_archive_sum}}</span>
         </p>
     </div>
@@ -141,12 +141,14 @@
             <a class="m-2" href="{% url 'contracts:show_contractsimmovables' contract.id %}">
                 <button data-toggle="info" title="Pokaż" type="button" class="btn btn-outline-primary icon-color my-1">
                     <i class="bi bi-eye"></i>
-                </button></a>
+                </button>
+            </a>
             {%if user.accessmodule.contract_immovables_edit%}
             <a class="m-2" href="{% url 'contracts:edit_contractsimmovables' contract.id %}">
                 <button data-toggle="info" title="Edytuj" type="submit" class="btn btn-outline-primary icon-color my-1">
                     <i class="bi bi-pencil-square"></i>
-                </button></a>
+                </button>
+            </a>
             {%endif%}
         </td>
     </tr>
@@ -162,17 +164,25 @@
                 <small>{{contract.contractor.address}}, {{contract.contractor.zip_code}} {{contract.contractor.city}}</small>
             </span>
         </td>
+        {%if contract.period_of_validity%}
+        {% now 'Y-m-d' as today_date%}
+        {%if contract.period_of_validity|date:'Y-m-d' <= today_date%}
         <td align="center" valign="middle" class="text-center">
-            {{contract.period_of_validity|default_if_none:'---'|date:"d.m.Y"}}
+            <span class="color-info-warning">{{contract.period_of_validity|date:"d.m.Y"}}&nbsp;r.</span>
         </td>
+        {%else%}
         <td align="center" valign="middle" class="text-center">
-            {%if contract.usable_area%}
-            <span>{{contract.usable_area|intcomma}} m<sup>2</sup></span>
-            {%else%}
+            <span>{{contract.period_of_validity|default_if_none:'---'|date:"d.m.Y"}}&nbsp;r.</span>
+        </td>
+        {%endif%}
+        {%else%}
+        <td align="center" valign="middle" class="text-center">
             <span>---</span>
-            {%endif%}
         </td>
-        <td align="center" valign="middle" class="text-center">{{contract.type_of_contract}}</td>
+        {%endif%}
+        <td align="center" valign="middle" class="text-center">
+            <span>{{contract.type_of_contract}}</span>
+        </td>
         <td valign="middle">
             <span>{{contract.unit.type.type_full}} - {{contract.unit.city}}<br>
                 <small>{{contract.unit.address}}, {{contract.unit.zip_code}} {{contract.unit.city}}</small>
@@ -183,7 +193,8 @@
                 <button data-toggle="info" title="Pokaż" type="button"
                         class="btn btn-outline-primary icon-color mx-2 my-1">
                     <i class="bi bi-eye"></i>
-                </button></a>
+                </button>
+            </a>
         </td>
     </tr>
     {%endfor%}
@@ -283,6 +294,7 @@
         $("#date_to").val("");
         $("form").submit();
         }
+
 </script>
 {%endif%}
 {%endblock%}

@@ -69,7 +69,7 @@ def menu_contractsimmovables_archive(request):
 
     query = "Wyczyść"
     search = "Szukaj"
-    contrsum = len(contracts)
+    con_len = len(contracts)
     con_archive_sum = len(contracts_archive)
     q = request.GET.get("q")
     date_from = request.GET.get('from')
@@ -89,11 +89,11 @@ def menu_contractsimmovables_archive(request):
             contracts = contracts_archive.filter(date__lte=date_to)
 
         return render(request, 'contracts/contract_list.html',
-                      {'contracts_archive': contracts, 'con_archive_sum': con_archive_sum, 'contrsum': contrsum,
+                      {'contracts_archive': contracts, 'con_archive_sum': con_archive_sum, 'con_len': con_len,
                        'query': query, 'q': q, 'date_from': date_from, 'date_to': date_to, 'actual': False})
     else:
         return render(request, 'contracts/contract_list.html',
-                      {'contracts_archive': contracts_list, 'contrsum': contrsum, 'con_archive_sum': con_archive_sum,
+                      {'contracts_archive': contracts_list, 'con_len': con_len, 'con_archive_sum': con_archive_sum,
                        'search': search, 'actual': False})
 
 

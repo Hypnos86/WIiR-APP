@@ -179,7 +179,7 @@
                     {% if donation.no_agreement %}
                     <span class="text-muted">| Nr. porozumienia: </span>
                     <span>{{donation.no_agreement}} z dnia {{donation.date_agreement|date:'m.d.Y'}}</span>
-                    {% else %}<span>Porozumienia z dnia {{donation.date_agreement|date:'m.d.Y'}}</span>
+                    {% else %}<span>| Porozumienie z dnia {{donation.date_agreement|date:'m.d.Y'}}</span>
                     {% endif %}
                     <span class="text-muted">| Rodzaj darowizny: </span>
                     <span>{{donation.donation_type}}</span>
