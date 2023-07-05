@@ -7,7 +7,7 @@ from units.forms import UnitForm
 from units.models import Unit, County, TypeUnit
 
 
-class UnitList(View):
+class UnitListView(View):
     template = "units/unit_list.html"
 
     def get(self, request):
@@ -114,6 +114,27 @@ def create_units_list_editable(request):
                                                                "actual_units": True})
 
 
+class AddUnitView(LoginRequiredMixin, View):
+    template = "units/unit_form.html"
+    form_class = UnitForm
+
+    def get(self, request):
+        form = self.form_class()
+        context = {"unit_form": form, "new": True}
+        return render(request, self.template, context)
+
+    def post(self, request):
+        form = self.form_class(request.POST or None)
+
+        if request.method == "POST":
+            if form.is_valid():
+                instance = form.save(commit=False)
+                instance.author = request.user
+                form.save()
+                return redirect("units:create_units_list_editable")
+        return render(request, "units/unit_form.html", {"unit_form": form, "new": True})
+
+
 @login_required
 def add_unit(request):
     unit_form = UnitForm(request.POST or None)
@@ -129,7 +150,6 @@ def add_unit(request):
 
 @login_required
 def edit_unit(request, slug):
-
     unit_edit = get_object_or_404(Unit, slug=slug)
     unit_form = UnitForm(request.POST or None, instance=unit_edit)
 

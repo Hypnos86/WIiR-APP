@@ -10,7 +10,7 @@
                class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
                     <p class="mb-1"><span>{{head_command.title}}</span></p>
-                    <small>Dodano: {{head_command.create_date}}&nbspr.</small>
+                    <small>Dodano: {{head_command.create_date|date:"d.m.Y"}}&nbspr. ({{head_command.create_date|date:'H:i'}})</small>
                 </div>
                 <small class="text-muted">{{head_command.content}}</small>
             </a>
