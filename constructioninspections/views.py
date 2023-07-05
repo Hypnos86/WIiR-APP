@@ -1,11 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from dateutil.relativedelta import relativedelta
 from datetime import date
-
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
-
 from constructioninspections.models import BuildingInspectionOneYear, BuildingInspectionFiveYear, ChimneyInspection, \
     ElectricalInspectionOneYear, HeatingBoilerInspection, AirConditionerInspection, FireInspection, TypeInspection, \
     ElectricalInspectionFiveYear

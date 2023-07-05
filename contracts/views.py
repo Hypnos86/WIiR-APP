@@ -8,8 +8,6 @@ from contracts.models import ContractImmovables, ContractAuction, AnnexContractA
     GuaranteeSettlement, FinancialDocument
 from contracts.forms import ContractImmovablesForm, ContractAuctionForm, AnnexImmovablesForm, AnnexContractAuctionForm, \
     ContractMediaForm, AnnexContractMediaForm, GuaranteeSettlementForm, FinancialDocumentForm
-from main.models import AccessModule
-from django.contrib.auth.models import User
 from units.models import Unit
 from main.models import Employer
 from main.views import now_date
@@ -501,13 +499,15 @@ class ContractsArchiveMediaListView(LoginRequiredMixin, View):
             return render(request, self.template, context)
 
 
-@login_required
-def show_contract_media(request, id):
-    contract_media = ContractMedia.objects.get(pk=id)
-    units = contract_media.unit.all()
-    annexes = contract_media.annex_contract_media.all()
-    return render(request, 'contracts/show_contract_media.html',
-                  {'contract': contract_media, 'annexes': annexes, 'units': units, "id": id})
+class ShowContractMediaView(LoginRequiredMixin, View):
+    template = "contracts/show_contract_media.html"
+
+    def get(self, request, id):
+        contract_media = ContractMedia.objects.get(pk=id)
+        units = contract_media.unit.all()
+        annexes = contract_media.annex_contract_media.all()
+        context = {'contract': contract_media, 'annexes': annexes, 'units': units, "id": id}
+        return render(request, self.template, context)
 
 
 @login_required
@@ -546,30 +546,33 @@ def edit_settlement(request, id):
                   {"settlement_form": settlement_form, "settlement_model": settlement_model, "id": id})
 
 
-@login_required
-def show_information_settlement(request, id):
-    settlement = get_object_or_404(GuaranteeSettlement, pk=id)
-    return render(request, "contracts/settlement_popup.html", {"settlement": settlement, "id": id})
+class ShowSettlementView(LoginRequiredMixin, View):
+    template = "contracts/show_settlement.html"
 
+    def get(self, request, id):
+        settlement = get_object_or_404(GuaranteeSettlement, pk=id)
+        context = {"settlement": settlement, "id": id}
+        return render(request, self.template, context)
 
-@login_required
-def financial_document_list(request, contract_id):
-    contract = get_object_or_404(ContractMedia, pk=contract_id)
-    financialDocs = FinancialDocument.objects.all().filter(contract__id=contract.id)
+class FinancialDocumentListView(LoginRequiredMixin, View):
+    template = "contracts/list_financial_document.html"
+    def get(self, request, contract_id):
+        contract = get_object_or_404(ContractMedia, pk=contract_id)
+        financialDocs = FinancialDocument.objects.all().filter(contract__id=contract.id)
 
-    sum_count = 0
-    values_sum = []
-    costs_sum = []
+        sum_count = 0
+        values_sum = []
+        costs_sum = []
 
-    for docs in financialDocs:
-        sum_count += docs.value
-        values_sum.append(docs.value)
-        costs_sum.append(docs.cost_brutto)
+        for docs in financialDocs:
+            sum_count += docs.value
+            values_sum.append(docs.value)
+            costs_sum.append(docs.cost_brutto)
 
-    values = sum(values_sum)
-    costs = sum(costs_sum)
-    context = {"contract": contract, "financialDocs": financialDocs, "values": values, "costs": costs}
-    return render(request, "contracts/financial_document_list.html", context)
+        values = sum(values_sum)
+        costs = sum(costs_sum)
+        context = {"contract": contract, "financialDocs": financialDocs, "values": values, "costs": costs}
+        return render(request, self.template , context)
 
 
 @login_required

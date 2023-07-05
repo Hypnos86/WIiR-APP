@@ -1,18 +1,22 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
+from django.views import View
+
 from gallery.models import Gallery, Photo
 from gallery.forms import GalleryForm, PhotoForm
 
 
 # Create your views here.
-@login_required
-def gallery_list(request):
-    galleries = Gallery.objects.all()
-    gallery_count = len(galleries)
-    context = {'galleries': galleries,
-               'gallery_count': gallery_count}
-    return render(request, 'gallery/galleries.html', context)
+class GalleryListView(LoginRequiredMixin, View):
+    template = "gallery/galleries.html"
+
+    def get(self, request):
+        galleries = Gallery.objects.all()
+        gallery_count = len(galleries)
+        context = {'galleries': galleries,
+                   'gallery_count': gallery_count}
+        return render(request, self.template, context)
 
 
 @login_required
@@ -29,23 +33,29 @@ def add_gallery(request):
     return render(request, 'gallery/gallery_form.html', context)
 
 
-@login_required
-def gallery_details(request, gallery_id):
-    gallery = Gallery.objects.get(pk=gallery_id)
-    photos = gallery.photo.all()
-    photocount = len(photos)
-    photo_form = PhotoForm()
+class GalleryDetailsView(LoginRequiredMixin, View):
+    template = "gallery/gallery.html"
+    redirect = "gallery:gallery_details"
 
-    if request.method == 'POST':
-        photo_list_post = request.FILES.getlist('images')
-        for img in photo_list_post:
-            instance = Photo.objects.create(src=img, gallery=gallery)
-            instance.save()
-        return redirect('gallery:gallery_details', gallery.id)
+    def get(self, request, gallery_id):
+        gallery = Gallery.objects.get(pk=gallery_id)
+        photos = gallery.photo.all()
+        photocount = len(photos)
+        photo_form = PhotoForm()
 
-    return render(request, 'gallery/gallery.html',
-                  {'gallery': gallery, 'photocount': photocount, 'photo_form': photo_form})
+        if request.method == 'POST':
+            photo_list_post = request.FILES.getlist('images')
+            for img in photo_list_post:
+                instance = Photo.objects.create(src=img, gallery=gallery)
+                instance.save()
+            return redirect(self.redirect, gallery.id)
+        context = {'gallery': gallery, 'photocount': photocount, 'photo_form': photo_form}
+        return render(request, self.template, context)
 
+
+# class NewGalleryDetails(LoginRequiredMixin, View):
+#     template = "gallery/new_gallery.html"
+#     redirect = "gallery:new_gallery_details"
 
 @login_required
 def new_gallery_details(request, gallery_id):
@@ -60,6 +70,5 @@ def new_gallery_details(request, gallery_id):
             instance = Photo.objects.create(src=img, gallery=gallery)
             instance.save()
         return redirect('gallery:new_gallery_details', gallery.id)
-
-    return render(request, 'gallery/new_gallery.html',
-                  {'gallery': gallery, 'photocount': photocount, 'photo_form': photo_form})
+    context = {'gallery': gallery, 'photocount': photocount, 'photo_form': photo_form}
+    return render(request, 'gallery/new_gallery.html', context)

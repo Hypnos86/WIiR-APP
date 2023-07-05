@@ -2,8 +2,8 @@ from django.urls import path, re_path
 from contracts.views import ContractsImmovableListView, ContractsArchiveImmovableListView, new_contractsimmovables, \
     edit_contractsimmovables, ShowContractImmovableView, ContractsAuctionListView, new_contract_auction, \
     ShowContractAuctionView, edit_contract_auction, add_annex_immovables, add_annex_contract_auction, \
-    ContractMediaListView, ContractsArchiveMediaListView, new_contract_media, edit_contract_media, show_contract_media, \
-    add_annex_contract_media, edit_settlement, show_information_settlement, financial_document_list, \
+    ContractMediaListView, ContractsArchiveMediaListView, new_contract_media, edit_contract_media, ShowContractMediaView, \
+    add_annex_contract_media, edit_settlement, ShowSettlementView, FinancialDocumentListView, \
     add_financial_document,edit_financial_document
 
 app_name = "contracts"
@@ -21,13 +21,13 @@ urlpatterns = [
     re_path("contractZzp/new/annex/(?P<id>\d+)/$", add_annex_contract_auction, name="add_annex_contract_auction"),
     path("contractMedia/", ContractMediaListView.as_view(), name="create_contract_media_list"),
     path("contractMedia/archive/", ContractsArchiveMediaListView.as_view(), name="contract_media_list_archive"),
-    re_path("contractMedia/financialDoc/(?P<contract_id>\d+)/$", financial_document_list, name="financial_document_list"),
+    re_path("contractMedia/financialDoc/(?P<contract_id>\d+)/$", FinancialDocumentListView.as_view(), name="financial_document_list"),
     re_path("contractMedia/financialDoc/new/(?P<contract_id>\d+)/$", add_financial_document, name="add_financial_document"),
     re_path("contractMedia/financialDoc/edit/(?P<contract_id>\d+)/(?P<info_id>\d+)/$", edit_financial_document, name="edit_financial_document"),
     path("contractMedia/new/", new_contract_media, name="new_contract_media"),
     re_path("contractMedia/edit/(?P<id>\d+)/$", edit_contract_media, name="edit_contract_media"),
-    re_path("contractMedia/info/(?P<id>\d+)/$", show_contract_media, name="show_contract_media"),
+    re_path("contractMedia/info/(?P<id>\d+)/$", ShowContractMediaView.as_view(), name="show_contract_media"),
     re_path("addAnnexMedia/(?P<id>\d+)/$", add_annex_contract_media, name="add_annex_contract_media"),
     re_path("settlementForm/(?P<id>\d+)/$", edit_settlement, name="edit_settlement"),
-    re_path("settlementPopup/(?P<id>\d+)/$", show_information_settlement, name="show_information_settlement")
+    re_path("settlementPopup/(?P<id>\d+)/$", ShowSettlementView.as_view(), name="show_information_settlement")
 ]

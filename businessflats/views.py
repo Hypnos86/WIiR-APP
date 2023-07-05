@@ -61,11 +61,12 @@ class AddFlatView(LoginRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST or None)
-        if form.is_valid():
-            instance = form.save(commit=False)
-            instance.author = request.user
-            form.save()
-            return redirect('businessflats:make_flats_list')
+        if request.method == "POST":
+            if form.is_valid():
+                instance = form.save(commit=False)
+                instance.author = request.user
+                form.save()
+                return redirect('businessflats:make_flats_list')
         context = {'flat_form': form, 'new': True}
         return render(request, self.template_name, context)
 

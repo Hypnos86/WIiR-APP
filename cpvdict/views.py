@@ -1,8 +1,12 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from decimal import Decimal
+
+from django.views import View
+
 from cpvdict.models import Typecpv, Genre, OrderLimit, Order
 from cpvdict.forms import OrderForm
 from main.views import current_year
@@ -10,52 +14,54 @@ from units.models import Unit
 from main.models import Employer
 
 
-def cpvlist(request):
-    cpvs = Typecpv.objects.all()
-    query = "Wyczyść"
-    search = "Szukaj"
-    sumcpv = len(cpvs)
-    q = request.GET.get("q")
+class CpvDictionary(View):
+    template = "cpvdict/dictionary.html"
 
-    if q:
-        cpvs = cpvs.filter(no_cpv__startswith=q) | cpvs.filter(name__icontains=q)
-        qsum = len(cpvs)
-        return render(request, 'cpvdict/cpv_list.html', {'cpvs': cpvs,
-                                                         'sumcpv': sumcpv, 'query': query,
-                                                         'qsum': qsum, "q": q})
-    else:
-        return render(request, 'cpvdict/cpv_list.html', {'cpvs': cpvs,
-                                                         'sumcpv': sumcpv, 'search': search})
+    def get(self, request):
+        cpvs = Typecpv.objects.all()
+        query = "Wyczyść"
+        search = "Szukaj"
+        sumcpv = len(cpvs)
+        q = request.GET.get("q")
+
+        if q:
+            cpvs = cpvs.filter(no_cpv__startswith=q) | cpvs.filter(name__icontains=q)
+            qsum = len(cpvs)
+            context = {'cpvs': cpvs, 'sumcpv': sumcpv, 'query': query, 'qsum': qsum, "q": q}
+            return render(request, self.template, context)
+        else:
+            context = {'cpvs': cpvs, 'sumcpv': sumcpv, 'search': search}
+            return render(request, self.template, context)
 
 
-@login_required
-def type_expense_list(request):
-    year = current_year()
-    genres = Genre.objects.all().exclude(name_id="RB")
+class GenericMenu(LoginRequiredMixin, View):
+    template = "cpvdict/generic_menu.html"
 
-    try:
-        limit = OrderLimit.objects.get(year=year)
-        limit_netto = limit.limit_netto
-        limit_item = round(limit_netto, 2)
-    except ObjectDoesNotExist:
-        limit = year
-        limit_netto = 0
-        limit_item = round(limit_netto, 2)
+    def get(self, request):
+        year = current_year()
+        genres = Genre.objects.all().exclude(name_id="RB")
 
-    for object in genres:
-        order_genre = Order.objects.all().filter(genre=object).filter(date__year=current_year()).filter(brakedown=False)
-        sum = 0
-        for order in order_genre:
-            sum += order.sum_netto
+        try:
+            limit = OrderLimit.objects.get(year=year)
+            limit_netto = limit.limit_netto
+            limit_item = round(limit_netto, 2)
+        except ObjectDoesNotExist:
+            limit = year
+            limit_netto = 0
+            limit_item = round(limit_netto, 2)
 
-        object.sum_netto = Decimal(sum)
-        object.remain = round(limit_item - object.sum_netto, 2)
+        for object in genres:
+            order_genre = Order.objects.all().filter(genre=object).filter(date__year=current_year()).filter(
+                brakedown=False)
+            sum = 0
+            for order in order_genre:
+                sum += order.sum_netto
 
-    context = {'objects': genres,
-               'limit': limit_netto,
-               'limit_item': limit_item,
-               'year': year}
-    return render(request, 'cpvdict/genre_tree.html', context)
+            object.sum_netto = Decimal(sum)
+            object.remain = round(limit_item - object.sum_netto, 2)
+
+        context = {'objects': genres, 'limit': limit_netto, 'limit_item': limit_item, 'year': year}
+        return render(request, self.template, context)
 
 
 @login_required
