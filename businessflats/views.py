@@ -7,7 +7,7 @@ from django.core.paginator import Paginator
 
 
 class FlatsListView(LoginRequiredMixin, View):
-    template_name = 'businessflats/flats_list.html'
+    template_name = 'businessflats/list_flats.html'
     paginate_by = 10
 
     def get(self, request, *args, **kwargs):

@@ -7,7 +7,7 @@ from .forms import ContractorsForm
 
 
 class MakeContractorsListView(LoginRequiredMixin, View):
-    template_name = 'contractors/contractor_list.html'
+    template_name = 'contractors/list_contractor.html'
     paginate_by = 30
 
     def get(self, request, *args, **kwargs):
