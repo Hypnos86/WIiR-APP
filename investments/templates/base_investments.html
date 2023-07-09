@@ -3,7 +3,7 @@
 {% block title %} Zadania Inwestycyjne Wielkopolskiej Policji{% endblock %}
 {% block content %}
 <nav class="justify-content-center mb-4 row text-center">
-    <ul class="nav nav-pills col-md-4 justify-content-around" >
+    <ul class="nav nav-pills col-md-6 col col-sm-8 justify-content-around" >
         {%if user.accessmodule.contracts_auction_module%}
         <li class="nav-item">
             <a id="button-contractzzp" href="{%url 'contracts:menu_contracts_auction'%}" class="btn btn-sm btn-outline-primary mx-2 my-btn" >

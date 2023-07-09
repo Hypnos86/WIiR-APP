@@ -1,16 +1,16 @@
 from django.urls import path, re_path
-from contracts.views import ContractsImmovableListView, ContractsArchiveImmovableListView, new_contractsimmovables, \
+from contracts.views import ContractsImmovableListView, ContractsArchiveImmovableListView, NewContractsImmovableView, \
     edit_contractsimmovables, ShowContractImmovableView, ContractsAuctionListView, new_contract_auction, \
     ShowContractAuctionView, edit_contract_auction, add_annex_immovables, add_annex_contract_auction, \
     ContractMediaListView, ContractsArchiveMediaListView, new_contract_media, edit_contract_media, ShowContractMediaView, \
-    add_annex_contract_media, edit_settlement, ShowSettlementView, FinancialDocumentListView, \
+    add_annex_contract_media, EditSettlementView, ShowSettlementView, FinancialDocumentListView, \
     add_financial_document,edit_financial_document
 
 app_name = "contracts"
 urlpatterns = [
     path("contractImmovable/", ContractsImmovableListView.as_view(), name="menu_contractsimmovables"),
     path("contractImmovable/archive/", ContractsArchiveImmovableListView.as_view(), name="menu_contractsimmovables_archive"),
-    path("contractImmovable/new/", new_contractsimmovables, name="new_contractsimmovables"),
+    path("contractImmovable/new/", NewContractsImmovableView.as_view(), name="new_contractsimmovables"),
     re_path("contractImmovable/edit/(?P<id>\d+)/$", edit_contractsimmovables, name="edit_contractsimmovables"),
     re_path("contractImmovable/info/(?P<id>\d+)/$", ShowContractImmovableView.as_view(), name="show_contractsimmovables"),
     re_path("contractImmovable/new/annex/(?P<id>\d+)/$", add_annex_immovables, name="add_annex_immovables"),
@@ -28,6 +28,6 @@ urlpatterns = [
     re_path("contractMedia/edit/(?P<id>\d+)/$", edit_contract_media, name="edit_contract_media"),
     re_path("contractMedia/info/(?P<id>\d+)/$", ShowContractMediaView.as_view(), name="show_contract_media"),
     re_path("addAnnexMedia/(?P<id>\d+)/$", add_annex_contract_media, name="add_annex_contract_media"),
-    re_path("settlementForm/(?P<id>\d+)/$", edit_settlement, name="edit_settlement"),
+    re_path("settlementForm/(?P<id>\d+)/$", EditSettlementView.as_view(), name="edit_settlement"),
     re_path("settlementPopup/(?P<id>\d+)/$", ShowSettlementView.as_view(), name="show_information_settlement")
 ]

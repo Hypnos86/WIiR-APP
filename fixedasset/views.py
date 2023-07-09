@@ -76,18 +76,27 @@ class AddBuildingView(LoginRequiredMixin, View):
         return render(request, self.template, context)
 
 
-@login_required
-def edit_building(request, id):
-    building = get_object_or_404(Building, pk=id)
-    building_form = BuildingForm(request.POST or None, instance=building)
-    units = Unit.objects.all()
-    unit_edit = building
+class EditBuildingView(LoginRequiredMixin, View):
+    template = "fixedasset/fixed_asset_form.html"
 
-    if request.method == "POST":
+    def get(self, request, id):
+        building = get_object_or_404(Building, pk=id)
+        building_form = BuildingForm(instance=building)
+        units = Unit.objects.all()
+        unit_edit = building
+        context = {"building_form": building_form, "units": units, "unit_edit": unit_edit, "new": False}
+        return render(request, self.template, context)
+
+    def post(self, request, id):
+        building = get_object_or_404(Building, pk=id)
+        building_form = BuildingForm(request.POST, instance=building)
+        units = Unit.objects.all()
+        unit_edit = building
+
         if building_form.is_valid():
             instance = building_form.save(commit=False)
             instance.author = request.user
             building_form.save()
             return redirect("fixedasset:fixed_asset_list")
-    return render(request, "fixedasset/fixed_asset_form.html",
-                  {"building_form": building_form, "units": units, "unit_edit": unit_edit, "new": False})
+        context = {"building_form": building_form, "units": units, "unit_edit": unit_edit, "new": False}
+        return render(request, self.template, context)

@@ -101,22 +101,26 @@ class ContractsArchiveImmovableListView(LoginRequiredMixin, View):
             return render(request, 'contracts/list_immovable.html', context)
 
 
-@login_required
-def new_contractsimmovables(request):
-    contract_form = ContractImmovablesForm(request.POST or None, request.FILES or None)
-    units = Unit.objects.all().order_by("county__id_order")
-    context = {'contract_form': contract_form,
-               'units': units,
-               'new': True}
+class NewContractsImmovableView(View):
+    template = "contracts/contract_form.html"
+    def get(self, request):
+        contract_form = ContractImmovablesForm()
+        units = Unit.objects.all().order_by("county__id_order")
+        context = {'contract_form': contract_form, 'units': units, 'new': True}
+        return render(request, self.template, context)
 
-    if request.method == 'POST':
+    def post(self, request):
+        contract_form = ContractImmovablesForm(request.POST, request.FILES)
+        units = Unit.objects.all().order_by("county__id_order")
+        context = {'contract_form': contract_form, 'units': units, 'new': True}
+
         if contract_form.is_valid():
             instance = contract_form.save(commit=False)
             instance.author = request.user
             contract_form.save()
             return redirect('contracts:menu_contractsimmovables')
 
-    return render(request, 'contracts/contract_form.html', context)
+        return render(request, self.template, context)
 
 
 @login_required
@@ -529,21 +533,27 @@ def add_annex_contract_media(request, id):
         return render(request, 'contracts/new_annex_media_form.html', context)
 
 
-@login_required
-def edit_settlement(request, id):
-    settlement_model = get_object_or_404(GuaranteeSettlement, pk=id)
-    settlement_form = GuaranteeSettlementForm(request.POST or None, instance=settlement_model)
+class EditSettlementView(View):
+    template = "contracts/settlement_form.html"
 
-    if request.method == "POST":
+    def get(self, request, id):
+        settlement_model = get_object_or_404(GuaranteeSettlement, pk=id)
+        settlement_form = GuaranteeSettlementForm(instance=settlement_model)
+        context = {"settlement_form": settlement_form, "settlement_model": settlement_model, "id": id}
+        return render(request, self.template, context)
+
+    def post(self, request, id):
+        settlement_model = get_object_or_404(GuaranteeSettlement, pk=id)
+        settlement_form = GuaranteeSettlementForm(request.POST, instance=settlement_model)
+
         if settlement_form.is_valid():
             instance = settlement_form.save(commit=False)
             instance.settlement_sum = settlement_model.settlement_sum
             instance.deadline_settlement = settlement_model.deadline_settlement
             instance.save()
-        return redirect("investments:make_important_task_investments")
-
-    return render(request, "contracts/settlement_form.html",
-                  {"settlement_form": settlement_form, "settlement_model": settlement_model, "id": id})
+            return redirect("investments:make_important_task_investments")
+        context = {"settlement_form": settlement_form, "settlement_model": settlement_model, "id": id}
+        return render(request, self.template, context)
 
 
 class ShowSettlementView(LoginRequiredMixin, View):
@@ -554,8 +564,10 @@ class ShowSettlementView(LoginRequiredMixin, View):
         context = {"settlement": settlement, "id": id}
         return render(request, self.template, context)
 
+
 class FinancialDocumentListView(LoginRequiredMixin, View):
     template = "contracts/list_financial_document.html"
+
     def get(self, request, contract_id):
         contract = get_object_or_404(ContractMedia, pk=contract_id)
         financialDocs = FinancialDocument.objects.all().filter(contract__id=contract.id)
@@ -572,7 +584,7 @@ class FinancialDocumentListView(LoginRequiredMixin, View):
         values = sum(values_sum)
         costs = sum(costs_sum)
         context = {"contract": contract, "financialDocs": financialDocs, "values": values, "costs": costs}
-        return render(request, self.template , context)
+        return render(request, self.template, context)
 
 
 @login_required

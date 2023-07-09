@@ -153,13 +153,20 @@ class ShowOrderInfo(LoginRequiredMixin, View):
         return render(request, self.template, context)
 
 
-@login_required
-def new_order(request):
-    order_form = OrderForm(request.POST or None)
-    order_form.fields['worker'].queryset = Employer.objects.all().filter(industry_specialist=True)
-    units = Unit.objects.all()
+class NewOrderView(LoginRequiredMixin, View):
+    template = "cpvdict/order_form.html"
 
-    if request.method == 'POST':
+    def get(self, request):
+        order_form = OrderForm()
+        order_form.fields['worker'].queryset = Employer.objects.filter(industry_specialist=True)
+        units = Unit.objects.all()
+        context = {'order_form': order_form, 'new': True, 'units': units}
+        return render(request, self.template, context)
+
+    def post(self, request):
+        order_form = OrderForm(request.POST)
+        order_form.fields['worker'].queryset = Employer.objects.filter(industry_specialist=True)
+        units = Unit.objects.all()
 
         if order_form.is_valid():
             instance = order_form.save(commit=False)
@@ -167,26 +174,38 @@ def new_order(request):
             instance.save()
             order_form.save()
             return redirect('cpvdict:order_list')
-    return render(request, 'cpvdict/order_form.html', {'order_form': order_form, 'new': True, 'units': units})
+        context = {'order_form': order_form, 'new': True, 'units': units}
+        return render(request, self.template, context)
 
 
-@login_required
-def edit_order(request, id):
-    order_edit = get_object_or_404(Order, pk=id)
-    order_form = OrderForm(request.POST or None, request.FILES or None, instance=order_edit)
-    order_form.fields['worker'].queryset = Employer.objects.all().filter(industry_specialist=True)
-    units = Unit.objects.all()
-    unit_edit = order_edit.unit
+class EditOrderView(View):
+    template = "cpvdict/order_form.htm"
 
-    if request.method == "POST":
+    def get(self, request, id):
+        order_edit = get_object_or_404(Order, pk=id)
+        order_form = OrderForm(instance=order_edit)
+        order_form.fields['worker'].queryset = Employer.objects.filter(industry_specialist=True)
+        units = Unit.objects.all()
+        unit_edit = order_edit.unit
+        context = {'order_form': order_form, 'unit_edit': unit_edit, 'order_edit': order_edit, 'new': False,
+                   'units': units}
+        return render(request, self.template, context)
+
+    def post(self, request, id):
+        order_edit = get_object_or_404(Order, pk=id)
+        order_form = OrderForm(request.POST, request.FILES, instance=order_edit)
+        order_form.fields['worker'].queryset = Employer.objects.filter(industry_specialist=True)
+        units = Unit.objects.all()
+        unit_edit = order_edit.unit
+
         if order_form.is_valid():
             order = order_form.save(commit=False)
             order.author = request.user
             order_form.save()
             return redirect('cpvdict:order_list')
-    return render(request, 'cpvdict/order_form.html',
-                  {'order_form': order_form, 'unit_edit': unit_edit, 'order_edit': order_edit, 'new': False,
-                   'units': units})
+        context = {'order_form': order_form, 'unit_edit': unit_edit, 'order_edit': order_edit, 'new': False,
+                   'units': units}
+        return render(request, self.template, context)
 
 
 class ArchiveYearListView(LoginRequiredMixin, View):

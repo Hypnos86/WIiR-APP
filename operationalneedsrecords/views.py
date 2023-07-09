@@ -172,80 +172,83 @@ class ShowNeedsLetterView(LoginRequiredMixin, View):
         return render(request, self.template, context)
 
 
-@login_required
-def show_archive_year_list(request):
-    now_year = current_year()
-    # Filtrowanie pism
+class ArchiveYearListView(LoginRequiredMixin, View):
+    template = "operationalneedsrecords/archive_list_year.html"
 
-    all_year_order = NeedsLetter.objects.all().values('receipt_date__year').exclude(receipt_date__year=now_year)
-    year_order_set = set([year['receipt_date__year'] for year in all_year_order])
-    year_order_list = sorted(year_order_set, reverse=True)
-    context = {'year_order_list': year_order_list}
-    return render(request, 'operationalneedsrecords/archive_list_year.html', context)
+    def get(self, request):
+        now_year = current_year()
+        # Filtrowanie pism
+
+        all_year_order = NeedsLetter.objects.all().values('receipt_date__year').exclude(receipt_date__year=now_year)
+        year_order_set = set([year['receipt_date__year'] for year in all_year_order])
+        year_order_list = sorted(year_order_set, reverse=True)
+        context = {'year_order_list': year_order_list}
+        return render(request, self.template, context)
 
 
 def myFunc(e):
     return e["county"].name
 
 
-@login_required
-def show_statistic(request, year):
-    documents = NeedsLetter.objects.all().filter(receipt_date__year=year).order_by("unit__county__name")
-    registrationTypes = RegistrationType.objects.all()
+class StatisticView(LoginRequiredMixin, View):
+    template = "operationalneedsrecords/statistics.html"
 
-    counts = []
-    employers_set = set()
-    county_set = set()
+    def get(self, request, year):
+        documents = NeedsLetter.objects.all().filter(receipt_date__year=year).order_by("unit__county__name")
+        registrationTypes = RegistrationType.objects.all()
 
-    # Zliczanie kosztów z całego roku i tworzenie zbiorów aktywnych branżystów
-    for doc in documents:
-        counts.append(doc.cost)
-        employer = doc.employer
-        employers_set.add(employer)
-        county_list = doc.unit.county
-        county_set.add(county_list)
+        counts = []
+        employers_set = set()
+        county_set = set()
 
-    count_all = sum(counts)
-    emplo_list = []
+        # Zliczanie kosztów z całego roku i tworzenie zbiorów aktywnych branżystów
+        for doc in documents:
+            counts.append(doc.cost)
+            employer = doc.employer
+            employers_set.add(employer)
+            county_list = doc.unit.county
+            county_set.add(county_list)
 
-    # Zliczanie zrealizowanych spraw przez branżystów
-    for emplo in employers_set:
-        docsObject = documents.filter(employer=emplo)
-        sumObject = 0
-        objectCouned = docsObject.count()
-        sumObject += objectCouned
-        newObjectEmplo = {'employer': emplo, 'caseCount': sumObject}
-        emplo_list.append(newObjectEmplo)
+        count_all = sum(counts)
+        emplo_list = []
 
-    registrationTypeList = []
+        # Zliczanie zrealizowanych spraw przez branżystów
+        for emplo in employers_set:
+            docsObject = documents.filter(employer=emplo)
+            sumObject = 0
+            objectCouned = docsObject.count()
+            sumObject += objectCouned
+            newObjectEmplo = {'employer': emplo, 'caseCount': sumObject}
+            emplo_list.append(newObjectEmplo)
 
-    # Zliczanie kosztów i ilości spraw
-    for registrationType in registrationTypes:
-        docsObjects = documents.filter(registration_type__id=registrationType.id)
-        sum_type = 0
-        for docsobject in docsObjects:
-            sum_type += docsobject.cost
-        newObjectType = {"type": registrationType, "sumType": sum_type, 'countType': len(docsObjects)}
-        registrationTypeList.append(newObjectType)
+        registrationTypeList = []
 
-    county_info_list = []
-    # Zliczanie ilości spraw, koszty i rodzaj sorawy na powiaty
-    for county in county_set:
-        docsObjects = documents.filter(unit__county__name=county)
-
+        # Zliczanie kosztów i ilości spraw
         for registrationType in registrationTypes:
+            docsObjects = documents.filter(registration_type__id=registrationType.id)
             sum_type = 0
+            for docsobject in docsObjects:
+                sum_type += docsobject.cost
+            newObjectType = {"type": registrationType, "sumType": sum_type, 'countType': len(docsObjects)}
+            registrationTypeList.append(newObjectType)
 
-            filterObjectTypes = docsObjects.filter(registration_type__id=registrationType.id)
+        county_info_list = []
+        # Zliczanie ilości spraw, koszty i rodzaj sorawy na powiaty
+        for county in county_set:
+            docsObjects = documents.filter(unit__county__name=county)
 
-            for docObject in filterObjectTypes:
-                sum_type += docObject.cost
+            for registrationType in registrationTypes:
+                sum_type = 0
 
-            infoObject = {"county": county, "types": registrationType, "sum": sum_type,
-                          "countType": len(filterObjectTypes)}
-            county_info_list.append(infoObject)
+                filterObjectTypes = docsObjects.filter(registration_type__id=registrationType.id)
 
-    return render(request, 'operationalneedsrecords/statistics.html',
-                  {'year': year, 'docs': documents, "count_all": count_all, "registrationTypes": registrationTypes,
+                for docObject in filterObjectTypes:
+                    sum_type += docObject.cost
+
+                infoObject = {"county": county, "types": registrationType, "sum": sum_type,
+                              "countType": len(filterObjectTypes)}
+                county_info_list.append(infoObject)
+        context = {'year': year, 'docs': documents, "count_all": count_all, "registrationTypes": registrationTypes,
                    "registrationTypeList": registrationTypeList, 'emplo_list': emplo_list,
-                   'county_info_list': sorted(county_info_list, key=myFunc)})
+                   'county_info_list': sorted(county_info_list, key=myFunc)}
+        return render(request, self.template, context)

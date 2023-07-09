@@ -83,21 +83,32 @@ class AddDonationView(LoginRequiredMixin, View):
         return render(request, self.template, context)
 
 
-@login_required
-def edit_donation(request, year, slug):
-    donation_edit = get_object_or_404(Application, slug=slug)
-    donation_form = ApplicationForm(request.POST or None, request.FILES or None, instance=donation_edit)
-    units = Unit.objects.all()
-    donation_edit = donation_edit.unit
-    if request.method == 'POST':
-        if donation_form:
+class EditDonationView(LoginRequiredMixin, View):
+    template = "donations/donation_form.html"
+
+    def get(self, request, year, slug):
+        donation_edit = get_object_or_404(Application, slug=slug)
+        donation_form = ApplicationForm(instance=donation_edit)
+        units = Unit.objects.all()
+        donation_unit = donation_edit.unit
+        context = {'new': False, 'donation_form': donation_form, 'units': units, 'donation_unit': donation_unit,
+                   "year": year, "id": donation_edit.id}
+        return render(request, self.template, context)
+
+    def post(self, request, year, slug):
+        donation_edit = get_object_or_404(Application, slug=slug)
+        donation_form = ApplicationForm(request.POST, request.FILES, instance=donation_edit)
+        units = Unit.objects.all()
+        donation_unit = donation_edit.unit
+
+        if donation_form.is_valid():
             instance = donation_form.save(commit=False)
             instance.author = request.user
             donation_form.save()
             return redirect(reverse('donations:donations_list', kwargs={"year": year}))
-    return render(request, 'donations/donation_form.html',
-                  {'new': False, 'donation_form': donation_form, 'units': units, 'donation_edit': donation_edit,
-                   "year": year, "id": donation_edit.id})
+        context = {'new': False, 'donation_form': donation_form, 'units': units, 'donation_unit': donation_unit,
+                   "year": year, "id": donation_edit.id}
+        return render(request, self.template, context)
 
 
 class ShowInformationView(LoginRequiredMixin, View):
