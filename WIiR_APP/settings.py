@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django.contrib.admindocs',
     'django_extensions',
-    'dynamic_breadcrumbs',
+    # 'dynamic_breadcrumbs',
     'import_export',
     'django_filters',
     'bootstrapform',
@@ -87,7 +87,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'dynamic_breadcrumbs.context_processors.breadcrumbs',
+                # 'dynamic_breadcrumbs.context_processors.breadcrumbs',
             ],
         },
     },
@@ -177,5 +177,5 @@ TINYMCE_DEFAULT_CONFIG = {
     "language": "pl_PL",  # To force a specific language instead of the Django current language.
 }
 # Breadcrumbs setting
-DYNAMIC_BREADCRUMBS_HOME_LABEL = "Start"
-DYNAMIC_BREADCRUMBS_SHOW_AT_BASE_PATH = False
+# DYNAMIC_BREADCRUMBS_HOME_LABEL = "Start"
+# DYNAMIC_BREADCRUMBS_SHOW_AT_BASE_PATH = False
