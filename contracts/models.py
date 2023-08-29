@@ -235,6 +235,7 @@ class ContractMedia(models.Model):
     content = models.CharField("Treść", max_length=100)
     period_of_validity = models.DateField("Data obowiązywania", null=True, blank=True)
     unit = models.ManyToManyField(Unit, verbose_name="Jednostka", related_name="contract_media")
+    contract_value = models.DecimalField(verbose_name="Wartośc umowy", decimal_places=2, max_digits=10, blank=True, null=True)
     information = models.TextField("Informacje", blank=True, default="")
     scan = models.FileField(upload_to=upload_contract_media, verbose_name="Skan", null=True, blank=True)
     employer = models.ForeignKey(Employer, on_delete=models.CASCADE, verbose_name="Branżysta",

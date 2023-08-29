@@ -91,13 +91,13 @@ class ContractMediaForm(ModelForm):
     class Meta:
         model = ContractMedia
         fields = ['date', 'no_contract', 'contractor', 'type', 'legal_basic', 'content', 'period_of_validity', 'unit',
-                  'information',
-                  'scan', 'employer', 'state', 'creation_date', 'change_date', 'author']
+                  'information', 'contract_value', 'scan', 'employer', 'state', 'creation_date', 'change_date',
+                  'author']
         labels = {'date': 'Data umowy', 'no_contract': 'Nr.umowy', 'contractor': 'Wykonawca', 'type': 'Rodzaj umowy',
                   'legal_basic': 'Podstawa prawna',
                   'content': 'Zakres', 'period_of_validity': 'Okres obowiązywania', 'unit': 'Jednostka',
-                  'information': 'Informacje',
-                  'scan': 'Skan', 'employer': 'Branżysta', 'state': 'Aktualna', 'creation_date': 'Data utworzenia',
+                  'information': 'Informacje', 'contract_value': 'Wartośc umowy', 'scan': 'Skan',
+                  'employer': 'Branżysta', 'state': 'Aktualna', 'creation_date': 'Data utworzenia',
                   'change_date': 'Zmiany', 'author': 'Autor'}
         exclude = ['creation_date', 'change_date', 'author']
         widgets = {'date': DateField(),

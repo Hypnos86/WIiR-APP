@@ -1,6 +1,7 @@
 {%extends 'base.html'%}
 {%load bootstrap%}
 {%load static%}
+{%load humanize%}
 {% block title %}Umowa z dnia {{contract.date|date:"d.m.Y"}} r. {%endblock%}
 {%block content%}
 {%if user.is_authenticated and user.accessmodule.contract_media%}
@@ -77,6 +78,12 @@
                     <span class="text-center">bezterminowa</span>
                     {%endif%}
                 </li>
+                {%if contract.contract_value%}
+                <li class="list-group-item">
+                    <span class="text-muted">Wartość umowy: </span>
+                    <span>{{contract.contract_value|intcomma}} zł.</span>
+                </li>
+                {%endif%}
                 <li class="list-group-item">
                     <span class="text-muted">Jednostka: </span>
                     {% regroup units by county as unit_list %}
