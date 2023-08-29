@@ -5,9 +5,9 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link href="{%static 'main/bootstrap/css/bootstrap.css'%}" rel="stylesheet">
-    <link href="{%static 'main/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
     <link href="{%static 'main/bootstrap/css/bootstrap.rtl.css'%}" rel="stylesheet">
     <link href="{%static 'main/bootstrap/css/bootstrap.rtl.min.css'%}" rel="stylesheet">
     <link href="{%static 'main/bootstrap/css/bootstrap-grid.css'%}" rel="stylesheet">
@@ -22,6 +22,7 @@
     <link href="{%static 'main/bootstrap/css/bootstrap-utilities.min.css'%}" rel="stylesheet">
     <link href="{%static 'main/bootstrap/css/bootstrap-utilities.rtl.css'%}" rel="stylesheet">
     <link href="{%static 'main/bootstrap/css/bootstrap-utilities.rtl.min.css'%}" rel="stylesheet">
+
     <link href="{%static 'main/css/style.css'%}" rel="stylesheet">
     <!-- Bootstrap JS -->
     <script src="{%static 'main/bootstrap//js/bootstrap.bundle.js'%}"></script>
@@ -33,7 +34,7 @@
 
 <body>
 <div class="container">
-    <div class="row justify-content-center align-items-center" style="height:100vh">
+    <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
         <div class="col-10 col-sm-10 col-md-8 col-lg-6 col-xl-4 login">
             <div class="card">
                 <div class="card-body">
@@ -42,26 +43,26 @@
                     <form method="post" autocomplete="off">
                         {%csrf_token%}
                         <div class="form-group">
-                            {{form.username.label}} <span>(ID)</span>
+                            <span>{{form.username.label}}</span><span>(ID)</span>
                             <input type="text" class="form-control" name="username">
                         </div>
                         <div class="form-group mt-2">
-                            {{form.password.label}}
+                            <span>{{form.password.label}}</span>
                             <input type="password" class="form-control" name="password">
                         </div>
-                        <button type="submit" class="btn btn-outline-primary mt-4 col-md-12 col-12 my-btn">
+                        <button type="submit" class="btn btn-outline-primary mt-4 col-12 my-btn">
                             <span class="bi bi-box-arrow-in-left icon-size h6">Zaloguj</span>
                         </button>
                     </form>
                 </div>
-                <ul class="nav nav-pills">
-                    <li class="nav-item col-md-6 mb-3 moj-button-left">
-                        <a id="button-units" href="{%url 'units:units_list'%}" class="btn btn-sm btn-outline-dark mx-3">
+                <ul class="nav nav-pills justify-content-between">
+                    <li class="nav-item m-3">
+                        <a id="button-units" href="{%url 'units:units_list'%}" class="btn btn-sm btn-outline-dark">
                         <span>Jednostki Policji</span>
                         </a>
                     </li>
-                    <li class="nav-item col-md-6 mb-3 moj-button-right">
-                        <a id="button-cpv" href="{%url 'cpvdict:cpvlist'%}" class="btn btn-sm btn-outline-dark mx-3">
+                    <li class="nav-item m-3 ">
+                        <a id="button-cpv" href="{%url 'cpvdict:cpvlist'%}" class="btn btn-sm btn-outline-dark">
                             <span>Słownik CPV</span>
                         </a>
                     </li>
@@ -71,6 +72,6 @@
     </div>
 
 </div>
+<script src="/static/main/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

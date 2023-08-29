@@ -32,10 +32,11 @@
         margin-top: 160px!important;
     }
 }
-
+/*
 @media (max-width: 768px) {
    .login div{ width: 80%; }
 }
+*/
 
 .header-top {
     margin-top: 80px;
