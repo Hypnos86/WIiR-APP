@@ -11,6 +11,9 @@ class FlatsListView(LoginRequiredMixin, View):
     paginate_by = 10
 
     def get(self, request, *args, **kwargs):
+        """
+        Zwraca listę wszystkich mieszkań
+        """
         flats = OfficialFlat.objects.all().order_by('address')
         count_flats = len(flats)
 
@@ -45,6 +48,7 @@ class ShowInformationView(LoginRequiredMixin, View):
     template_name = 'businessflats/info_flat_popup.html'
 
     def get(self, request, id, *args, **kwargs):
+        """ Zwraca pojedyńcze mieszkanie z listy"""
         flat = get_object_or_404(OfficialFlat, pk=id)
         context = {'flat': flat, 'id': id}
         return render(request, self.template_name, context)
@@ -55,11 +59,13 @@ class AddFlatView(LoginRequiredMixin, View):
     form_class = OfficialFlatForm
 
     def get(self, request, *args, **kwargs):
+        """ Zwraca pusty formularz """
         form = self.form_class()
         context = {'flat_form': form, 'new': True}
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
+        """ Zapisuje formularz """
         form = self.form_class(request.POST or None)
         if request.method == "POST":
             if form.is_valid():
