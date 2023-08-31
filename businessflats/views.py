@@ -12,6 +12,7 @@ from django.core.paginator import Paginator
 # # Utworzenie instancji loggera
 logger = logging.getLogger(__name__)
 
+
 #
 # # Ustawienia formattera logów
 # formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
@@ -55,13 +56,13 @@ class FlatsListView(LoginRequiredMixin, View):
             else:
                 context = {'flats': flats_list, "search": search,
                            'last_date': last_date, 'count_flats': count_flats}
+            return render(request, self.template_name, context)
 
         except Exception as e:
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-
-        return render(request, self.template_name, context)
+            return render(request, self.template_name, context)
 
 
 class ShowInformationView(LoginRequiredMixin, View):
@@ -71,10 +72,10 @@ class ShowInformationView(LoginRequiredMixin, View):
         try:
             flat = get_object_or_404(OfficialFlat, pk=id)
             context = {'flat': flat, 'id': id}
+
         except Exception as e:
             logger.error("Wystąpił błąd: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-
         return render(request, self.template_name, context)
 
 
@@ -86,11 +87,11 @@ class AddFlatView(LoginRequiredMixin, View):
         try:
             form = self.form_class()
             context = {'flat_form': form, 'new': True}
+            return render(request, self.template_name, context)
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-
-        return render(request, self.template_name, context)
+            return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
         try:
@@ -102,11 +103,11 @@ class AddFlatView(LoginRequiredMixin, View):
                     form.save()
                     return redirect('businessflats:make_flats_list')
             context = {'flat_form': form, 'new': True}
+            return render(request, self.template_name, context)
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-
-        return render(request, self.template_name, context)
+            return render(request, self.template_name, context)
 
 
 class EditFlatView(LoginRequiredMixin, View):
@@ -119,11 +120,11 @@ class EditFlatView(LoginRequiredMixin, View):
             flat = get_object_or_404(OfficialFlat, slug=slug)
             form = self.form_class(instance=flat)
             context = {'flat_form': form, 'new': False}
+            return render(request, self.template_name, context)
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-
-        return render(request, self.template_name, context)
+            return render(request, self.template_name, context)
 
     def post(self, request, slug, *args, **kwargs):
         try:
@@ -135,8 +136,8 @@ class EditFlatView(LoginRequiredMixin, View):
                 form.save()
                 return redirect(self.redirect)
             context = {'flat_form': form, 'new': False}
+            return render(request, self.template_name, context)
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-
-        return render(request, self.template_name, context)
+            return render(request, self.template_name, context)

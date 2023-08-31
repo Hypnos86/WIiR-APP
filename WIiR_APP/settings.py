@@ -67,12 +67,12 @@ LOGGING = {
     'disable_existing_loggers': False,
     'handlers': {
         'file': {
-            'level': 'ERROR',
+            'level': 'CRITICAL',
             'class': 'logging.handlers.TimedRotatingFileHandler',
-            'filename': datetime.datetime.now().strftime("logError_%Y-%m-%d_%H-%M.log"),
+            'filename': datetime.datetime.now().strftime("logError_%Y-%m-%d_%H.log"),
             'when': 'H',
-            'interval': 1,
-            'backupCount': 24,
+            'interval': 5,
+            'backupCount': 50,
             'formatter': 'verbose',
         },
     },

@@ -93,7 +93,6 @@ class AddNewContractorView(LoginRequiredMixin, View):
                 return redirect('contractors:contractor_list')
             context = {'contractor_form': form, "new": True}
             return render(request, self.template_name, context)
-
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
