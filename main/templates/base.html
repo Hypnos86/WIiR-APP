@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap CSS -->
-    <link href="{%static 'main/bootstrap/css/bootstrap.css'%}" rel="stylesheet">
     <link href="{%static 'main/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+    <link href="{%static 'main/bootstrap/css/bootstrap.css'%}" rel="stylesheet">
     <link href="{%static 'main/bootstrap/css/bootstrap.rtl.css'%}" rel="stylesheet">
     <link href="{%static 'main/bootstrap/css/bootstrap.rtl.min.css'%}" rel="stylesheet">
     <link href="{%static 'main/bootstrap/css/bootstrap-grid.css'%}" rel="stylesheet">
@@ -116,6 +116,13 @@
         {%endif%}
     </ul>
 </header>
+
+<!-- Ikona dla menu mobilnego -->
+<div class="d-lg-none fixed-top p-2 bg-light">
+    <a class="navbar-toggler-icon" data-bs-toggle="collapse" href="#navbarNav" role="button" aria-expanded="false"
+       aria-controls="navbarNav"></a>
+</div>
+
 <div class="footer body header-top">
     <!--    {% if breadcrumbs %}-->
     <!--    <span>{% include "dynamic_breadcrumbs/breadcrumbs.html" with breadcrumbs=breadcrumbs%}</span>-->

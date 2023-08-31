@@ -6,8 +6,21 @@ from businessflats.models import OfficialFlat
 from businessflats.forms import OfficialFlatForm
 from django.core.paginator import Paginator
 
+# # Konfiguracja podstawowego logowania do pliku error.log
+# logging.basicConfig(filename='error.log', filemode='a', level=logging.ERROR)
+#
+# # Utworzenie instancji loggera
 logger = logging.getLogger(__name__)
-logging.basicConfig(filename='error.log', filemode='a', level=logging.ERROR)
+
+#
+# # Ustawienia formattera logów
+# formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+#
+# # Utworzenie handlera TimedRotatingFileHandler
+# log_filename = datetime.datetime.now().strftime("error_%Y-%m-%d_%H-%M.log")
+# handler = TimedRotatingFileHandler(log_filename, when='H', interval=1, backupCount=24)
+# handler.setFormatter(formatter)
+# logger.addHandler(handler)
 
 
 class FlatsListView(LoginRequiredMixin, View):
@@ -45,8 +58,8 @@ class FlatsListView(LoginRequiredMixin, View):
 
         except Exception as e:
             # Zapisanie informacji o błędzie do loga
-            logger.error("Wystąpił błąd: %s", e)
-            context = {'error_message': "Wystąpił błąd"}
+            logger.error("Error: %s", e)
+            context = {'error_message': f"Wystąpił błąd {e}"}
 
         return render(request, self.template_name, context)
 
@@ -60,7 +73,7 @@ class ShowInformationView(LoginRequiredMixin, View):
             context = {'flat': flat, 'id': id}
         except Exception as e:
             logger.error("Wystąpił błąd: %s", e)
-            context = {'error_message': "Wystąpił błąd"}
+            context = {'error_message': f"Wystąpił błąd {e}"}
 
         return render(request, self.template_name, context)
 
@@ -74,8 +87,8 @@ class AddFlatView(LoginRequiredMixin, View):
             form = self.form_class()
             context = {'flat_form': form, 'new': True}
         except Exception as e:
-            logger.error("Wystąpił błąd: %s", e)
-            context = {'error_message': "Wystąpił błąd"}
+            logger.error("Error: %s", e)
+            context = {'error_message': f"Wystąpił błąd {e}"}
 
         return render(request, self.template_name, context)
 
@@ -90,8 +103,8 @@ class AddFlatView(LoginRequiredMixin, View):
                     return redirect('businessflats:make_flats_list')
             context = {'flat_form': form, 'new': True}
         except Exception as e:
-            logger.error("Wystąpił błąd: %s", e)
-            context = {'error_message': "Wystąpił błąd"}
+            logger.error("Error: %s", e)
+            context = {'error_message': f"Wystąpił błąd {e}"}
 
         return render(request, self.template_name, context)
 
@@ -107,8 +120,8 @@ class EditFlatView(LoginRequiredMixin, View):
             form = self.form_class(instance=flat)
             context = {'flat_form': form, 'new': False}
         except Exception as e:
-            logger.error("Wystąpił błąd: %s", e)
-            context = {'error_message': "Wystąpił błąd"}
+            logger.error("Error: %s", e)
+            context = {'error_message': f"Wystąpił błąd {e}"}
 
         return render(request, self.template_name, context)
 
@@ -123,7 +136,7 @@ class EditFlatView(LoginRequiredMixin, View):
                 return redirect(self.redirect)
             context = {'flat_form': form, 'new': False}
         except Exception as e:
-            logger.error("Wystąpił błąd: %s", e)
-            context = {'error_message': "Wystąpił błąd"}
+            logger.error("Error: %s", e)
+            context = {'error_message': f"Wystąpił błąd {e}"}
 
         return render(request, self.template_name, context)

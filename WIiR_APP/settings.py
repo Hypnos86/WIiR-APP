@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
+import datetime
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -60,6 +61,35 @@ INSTALLED_APPS = [
     'constructioninspections.apps.ConstructioninspectionsConfig',
     'gallery.apps.GalleryConfig'
 ]
+# Konfiguracja loggera
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': datetime.datetime.now().strftime("logError_%Y-%m-%d_%H-%M.log"),
+            'when': 'H',
+            'interval': 1,
+            'backupCount': 24,
+            'formatter': 'verbose',
+        },
+    },
+    'formatters': {
+        'verbose': {
+            'format': '%(asctime)s - %(levelname)s - %(message)s',
+            'datefmt': '%Y-%m-%d %H:%M',  # Dodaj datefmt tutaj
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}
 
 # aby dzialaly PDFy i przegladanie
 X_FRAME_OPTIONS = 'SAMEORIGIN'
