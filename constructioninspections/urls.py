@@ -1,8 +1,7 @@
 from django.urls import path
 from constructioninspections.views import BuildingsOneYearInspectionsList, BuildingsInspectionsChoice, \
-    BuildingsFiveYearInspectionsList, ChimneyInspectionList, \
-    ElectricalInspectionOneYearList, HeatingBoilersInspectionList, \
-    AirConditionersInspectionList, FireInspectionList, ImportantInspections, \
+    BuildingsFiveYearInspectionsList, ChimneyInspectionList, ElectricalInspectionOneYearList, \
+    HeatingBoilersInspectionList, AirConditionersInspectionList, FireInspectionList, ImportantInspections, \
     ElectricalInspectionFiveYearList, ElectricalInspectionsChoice, AddProtocolView, ShowInformationProtocolView, \
     EditProtocolView, PriorityInspectionsList
 

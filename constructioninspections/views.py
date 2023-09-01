@@ -255,9 +255,8 @@ class ElectricalInspectionFiveYearList(LoginRequiredMixin, View):
 
 
 class HeatingBoilersInspectionList(LoginRequiredMixin, View):
-    template = ""
+    template = "construction_inspections/heating_boilers_inspection_list.html"
 
-    # TODO dodać nazwe template
     def get(self, request):
         try:
             units = Unit.objects.all().order_by("county__id_order")
@@ -497,7 +496,7 @@ class EditProtocolView(View):
                        "new": False,
                        "typeProtocol": typeProtocol,
                        "redirectText": redirectText}
-            return render(request, "construction_inspections/protocol_inspection_form.html", context)
+            return render(request, self.template, context)
         except Exception as e:
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
@@ -522,73 +521,6 @@ class EditProtocolView(View):
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
             return render(request, self.template, context)
-
-
-# TODO zrobić metode klasową
-@login_required
-def edit_protocol(request, typeInspection, id):
-    try:
-        if typeInspection == ProtocolType.OVERVIEW_BUILDINGS_ONE_YEAR.value[0]:
-            typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_BUILDINGS_ONE_YEAR.value[0])
-            object = get_object_or_404(BuildingInspectionOneYear, pk=id)
-            protocol_form = BuildingInspectionOneYearForm(request.POST or None, instance=object)
-            redirectText = "constructioninspections:create_buildings_one_year_inspections_list"
-
-        elif typeInspection == ProtocolType.OVERVIEW_BUILDINGS_FIVE_YEAR.value[0]:
-            typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_BUILDINGS_FIVE_YEAR.value[0])
-            object = get_object_or_404(BuildingInspectionFiveYear, pk=id)
-            protocol_form = BuildingInspectionFiveYearForm(request.POST or None, instance=object)
-            redirectText = "constructioninspections:create_buildings_five_year_inspections_list"
-
-        elif typeInspection == ProtocolType.OVERVIEW_CHIMNEYS.value[0]:
-            typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_CHIMNEYS.value[0])
-            object = get_object_or_404(ChimneyInspection, pk=id)
-            protocol_form = ChimneyInspectionForm(request.POST or None, instance=object)
-            redirectText = "constructioninspections:create_chimney_inspection_list"
-
-        elif typeInspection == ProtocolType.OVERVIEW_ELECTRICAL_ONE_YEAR.value[0]:
-            typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_ELECTRICAL_ONE_YEAR.value[0])
-            object = get_object_or_404(ElectricalInspectionOneYear, pk=id)
-            protocol_form = ElectricalInspectionOneYearForm(request.POST or None, instance=object)
-            redirectText = "constructioninspections:create_electrical_inspection_one_year_list"
-
-        elif typeInspection == ProtocolType.OVERVIEW_ELECTRICAL_FIVE_YEAR.value[0]:
-            typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_ELECTRICAL_FIVE_YEAR.value[0])
-            object = get_object_or_404(ElectricalInspectionFiveYear, pk=id)
-            protocol_form = ElectricalInspectionFiveYearForm(request.POST or None, instance=object)
-            redirectText = "constructioninspections:create_electrical_inspection_five_year_list"
-
-        elif typeInspection == ProtocolType.OVERVIEW_HEATING_BOILERS.value[0]:
-            typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_HEATING_BOILERS.value[0])
-            object = get_object_or_404(HeatingBoilerInspection, pk=id)
-            protocol_form = HeatingBoilerInspectionForm(request.POST or None, instance=object)
-            redirectText = "constructioninspections:create_heating_boilers_inspection_list"
-
-        elif typeInspection == ProtocolType.OVERVIEW_AIR_CONDITIONERS.value[0]:
-            typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_AIR_CONDITIONERS.value[0])
-            object = get_object_or_404(AirConditionerInspection, pk=id)
-            protocol_form = AirConditionerInspectionForm(request.POST or None, instance=object)
-            redirectText = "constructioninspections:create_air_conditioners_inspection_list"
-
-        elif typeInspection == ProtocolType.OVERVIEW_FIRE_INSPECTION:
-            typeProtocol = TypeInspection.objects.get(pk=ProtocolType.OVERVIEW_FIRE_INSPECTION.value[0])
-            object = get_object_or_404(FireInspection, pk=id)
-            protocol_form = FireInspectionForm(request.POST or None, instance=object)
-            redirectText = "constructioninspections:create_fire_inspection_list"
-
-        if request.method == "POST":
-            if protocol_form.is_valid():
-                instance = protocol_form.save(commit=False)
-                instance.author = request.user
-                protocol_form.save()
-                return redirect(redirectText)
-        return render(request, "construction_inspections/protocol_inspection_form.html",
-                      {"form": protocol_form, "new": False, "typeProtocol": typeProtocol, "redirectText": redirectText})
-    except Exception as e:
-        # Zapisanie informacji o błędzie do loga
-        logger.error("Error: %s", e)
-        context = {'error_message': f"Wystąpił błąd {e}"}
-        # return render(request, self.template, context)
 
 
 class ShowInformationProtocolView(LoginRequiredMixin, View):

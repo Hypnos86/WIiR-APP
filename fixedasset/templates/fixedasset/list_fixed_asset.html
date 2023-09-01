@@ -6,7 +6,7 @@
     <h4 class="text-center mb-3">Środki trwałe</h4>
     <h5 class="text-center mb-3">Budynki</h5>
     <div class="row my-3">
-        <div class="col-md-3 align-self-center">
+        <div class="col-md-3 col-sm-6 align-self-center">
              <div class="my-2">
                 <span>Wszystkie budynki: </span>
                 <span class="badge text-white info badge-pill">{{buildings_sum_all}}</span>
@@ -22,7 +22,7 @@
                 {%endif%}
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 col-sm-6">
             <div class="w-100 py-4 d-flex justify-content-center align-items-center flex-column text_center">
                 <form id="form-search" method="get">
                     <div class="input-group">
@@ -34,7 +34,7 @@
             </div>
         </div>
         {%if user.accessmodule.buildings_module_edit%}
-            <div class="col-md-3 py-4 moj-button-right align-self-end">
+            <div class="col-md-3 col-sm-12 py-4 moj-button-right align-self-end">
                 <a href="{%url 'fixedasset:add_new_building'%}">
                     <button type="button" class="btn btn-outline-primary my-btn ">
                         <span class="bi bi-plus-circle"> Dodaj budynek</span>
