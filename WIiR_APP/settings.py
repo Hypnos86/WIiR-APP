@@ -67,7 +67,7 @@ LOGGING = {
     'disable_existing_loggers': False,
     'handlers': {
         'file': {
-            'level': 'CRITICAL',
+            'level': 'ERROR',
             'class': 'logging.handlers.TimedRotatingFileHandler',
             'filename': datetime.datetime.now().strftime("logError_%Y-%m-%d_%H.log"),
             'when': 'H',

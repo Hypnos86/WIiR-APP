@@ -13,11 +13,10 @@ from django.core.paginator import Paginator
 logger = logging.getLogger(__name__)
 
 
-#
 # # Ustawienia formattera logów
 # formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 #
-# # Utworzenie handlera TimedRotatingFileHandler
+# Utworzenie handlera TimedRotatingFileHandler
 # log_filename = datetime.datetime.now().strftime("error_%Y-%m-%d_%H-%M.log")
 # handler = TimedRotatingFileHandler(log_filename, when='H', interval=1, backupCount=24)
 # handler.setFormatter(formatter)
