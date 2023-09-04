@@ -116,7 +116,7 @@ class ContractsArchiveImmovableListView(LoginRequiredMixin, View):
             return render(request, self.template, context)
 
 
-class NewContractsImmovableView(View):
+class NewContractsImmovableView(LoginRequiredMixin, View):
     template = "contracts/contract_form.html"
 
     def get(self, request):
@@ -151,54 +151,81 @@ class NewContractsImmovableView(View):
             return render(request, self.template, context)
 
 
-@login_required
-def edit_contractsimmovables(request, id):
-    try:
-        contractsimmovables_edit = get_object_or_404(ContractImmovables, pk=id)
-        contractsimmovables_form = ContractImmovablesForm(request.POST or None, request.FILES or None,
-                                                          instance=contractsimmovables_edit)
+class EditContractImmovablesView(LoginRequiredMixin, View):
+    template_name = 'contracts/contract_form.html'
+    error_template_name = 'contracts/contract_form.html'
 
-        units = Unit.objects.all().order_by("county__id_order")
-        unit_edit = contractsimmovables_edit
+    def get(self, request, id):
+        try:
+            contractsimmovables_edit = get_object_or_404(ContractImmovables, pk=id)
+            contractsimmovables_form = ContractImmovablesForm(instance=contractsimmovables_edit)
+            units = Unit.objects.all().order_by("county__id_order")
+            unit_edit = contractsimmovables_edit
 
-        context = {'contract_form': contractsimmovables_form,
-                   'units': units,
-                   'contract': contractsimmovables_edit,
-                   'unit_edit': unit_edit,
-                   'new': False}
-        if request.method == 'POST':
+            context = {'contract_form': contractsimmovables_form, 'units': units,
+                       'contract': contractsimmovables_edit, 'unit_edit': unit_edit, 'new': False}
+            return render(request, self.template_name, context)
+        except Exception as e:
+            logger.error("Error: %s", e)
+            context = {'error_message': f"Wystąpił błąd {e}"}
+            return render(request, self.error_template_name, context)
+
+    def post(self, request, id):
+        try:
+            contractsimmovables_edit = get_object_or_404(ContractImmovables, pk=id)
+            contractsimmovables_form = ContractImmovablesForm(request.POST, request.FILES,
+                                                              instance=contractsimmovables_edit)
+            units = Unit.objects.all().order_by("county__id_order")
+            unit_edit = contractsimmovables_edit
+
+            context = {'contract_form': contractsimmovables_form, 'units': units,
+                       'contract': contractsimmovables_edit, 'unit_edit': unit_edit, 'new': False}
+
             if contractsimmovables_form.is_valid():
                 contract = contractsimmovables_form.save(commit=False)
                 contract.author = request.user
                 contractsimmovables_form.save()
                 return redirect('contracts:menu_contractsimmovables')
-        return render(request, 'contracts/contract_form.html', context)
-    except Exception as e:
-        # Zapisanie informacji o błędzie do loga
-        logger.error("Error: %s", e)
-        context = {'error_message': f"Wystąpił błąd {e}"}
-        return render(request, 'contracts/contract_form.html', context)
+
+            return render(request, self.template_name, context)
+        except Exception as e:
+            logger.error("Error: %s", e)
+            context = {'error_message': f"Wystąpił błąd {e}"}
+            return render(request, self.error_template_name, context)
 
 
-# TODO stworzyc metode klasowa
-@login_required
-def add_annex_immovables(request, id):
-    contractsimmovables_edit = get_object_or_404(ContractImmovables, pk=id)
-    add_annex_form = AnnexImmovablesForm(request.POST or None, request.FILES or None)
-    context = {'annex_form': add_annex_form,
-               'contract_id': id}
+class AddAnnexImmovablesView(LoginRequiredMixin, View):
+    template_name = 'contracts/new_annex_immovables_form.html'
 
-    if request.method == 'POST':
-        if add_annex_form.is_valid():
-            instance = add_annex_form.save(commit=False)
-            instance.author = request.user
-            instance.contract_immovables = contractsimmovables_edit
-            add_annex_form.save()
+    def get(self, request, id):
+        try:
+            contractsimmovables_edit = get_object_or_404(ContractImmovables, pk=id)
+            add_annex_form = AnnexImmovablesForm()
+            context = {'annex_form': add_annex_form, 'contract_id': id}
+            return render(request, self.template_name, context)
+        except Exception as e:
+            logger.error("Error: %s", e)
+            context = {'error_message': f"Wystąpił błąd {e}"}
+            return render(request, self.error_template_name, context)
 
-        return redirect('contracts:menu_contractsimmovables')
+    def post(self, request, id):
+        try:
+            contractsimmovables_edit = get_object_or_404(ContractImmovables, pk=id)
+            add_annex_form = AnnexImmovablesForm(request.POST, request.FILES)
+            context = {'annex_form': add_annex_form, 'contract_id': id}
 
-    if request.method == 'GET':
-        return render(request, 'contracts/new_annex_immovables_form.html', context)
+            if add_annex_form.is_valid():
+                instance = add_annex_form.save(commit=False)
+                instance.author = request.user
+                instance.contract_immovables = contractsimmovables_edit
+                instance.save()
+                return redirect('contracts:menu_contractsimmovables')
+
+            return render(request, self.template_name, context)
+        except Exception as e:
+            logger.error("Error: %s", e)
+            context = {'error_message': f"Wystąpił błąd {e}"}
+            return render(request, self.template_name, context)
 
 
 class ShowContractImmovableView(LoginRequiredMixin, View):
@@ -274,28 +301,40 @@ class ContractsAuctionListView(LoginRequiredMixin, View):
             return render(request, self.template, context)
 
 
-@login_required
-def new_contract_auction(request):
-    try:
-        contract_auction_form = ContractAuctionForm(request.POST or None, request.FILES or None)
-        contract_auction_form.fields['worker'].queryset = Employer.objects.all().filter(industry_specialist=True)
-        units = Unit.objects.all().order_by("county__id_order")
-        context = {'contract_auction_form': contract_auction_form,
-                   'units': units,
-                   'new': True}
+class NewContractAuctionView(LoginRequiredMixin, View):
+    template_name = 'contracts/contract_auction_form.html'
+    error_template_name = 'contracts/contract_auction_form.html'
 
-        if request.method == 'POST':
+    def get(self, request):
+        try:
+            contract_auction_form = ContractAuctionForm()
+            contract_auction_form.fields['worker'].queryset = Employer.objects.all().filter(industry_specialist=True)
+            units = Unit.objects.all().order_by("county__id_order")
+            context = {'contract_auction_form': contract_auction_form, 'units': units, 'new': True}
+            return render(request, self.template_name, context)
+        except Exception as e:
+            logger.error("Error: %s", e)
+            context = {'error_message': f"Wystąpił błąd {e}"}
+            return render(request, self.error_template_name, context)
+
+    def post(self, request):
+        try:
+            contract_auction_form = ContractAuctionForm(request.POST, request.FILES)
+            contract_auction_form.fields['worker'].queryset = Employer.objects.all().filter(industry_specialist=True)
+            units = Unit.objects.all().order_by("county__id_order")
+            context = {'contract_auction_form': contract_auction_form, 'units': units, 'new': True}
+
             if contract_auction_form.is_valid():
                 instance = contract_auction_form.save(commit=False)
                 instance.author = request.user
-                contract_auction_form.save()
+                instance.save()
                 return redirect('contracts:menu_contracts_auction')
-        return render(request, 'contracts/contract_auction_form.html', context)
-    except Exception as e:
-        # Zapisanie informacji o błędzie do loga
-        logger.error("Error: %s", e)
-        context = {'error_message': f"Wystąpił błąd {e}"}
-        return render(request, 'contracts/contract_auction_form.html', context)
+
+            return render(request, self.template_name, context)
+        except Exception as e:
+            logger.error("Error: %s", e)
+            context = {'error_message': f"Wystąpił błąd {e}"}
+            return render(request, self.error_template_name, context)
 
 
 class ShowContractAuctionView(LoginRequiredMixin, View):
@@ -315,23 +354,37 @@ class ShowContractAuctionView(LoginRequiredMixin, View):
             return render(request, self.template, context)
 
 
-@login_required
-def edit_contract_auction(request, id):
-    try:
-        contract_auction_edit = get_object_or_404(ContractAuction, pk=id)
-        contract_auction_form = ContractAuctionForm(request.POST or None, request.FILES or None,
-                                                    instance=contract_auction_edit)
-        contract_auction_form.fields['worker'].queryset = Employer.objects.all().filter(industry_specialist=True)
-        units = Unit.objects.all().order_by("county__id_order")
-        unit_edit = contract_auction_edit
+class EditContractAuctionView(LoginRequiredMixin, View):
+    template_name = 'contracts/contract_auction_form.html'
 
-        context = {'contract_auction_form': contract_auction_form,
-                   'units': units,
-                   'contract': contract_auction_edit,
-                   'unit_edit': unit_edit,
-                   'new': False}
+    def get(self, request, id):
+        try:
+            contract_auction_edit = get_object_or_404(ContractAuction, pk=id)
+            contract_auction_form = ContractAuctionForm(instance=contract_auction_edit)
+            contract_auction_form.fields['worker'].queryset = Employer.objects.all().filter(industry_specialist=True)
+            units = Unit.objects.all().order_by("county__id_order")
+            unit_edit = contract_auction_edit
 
-        if request.method == 'POST':
+            context = {'contract_auction_form': contract_auction_form, 'units': units,
+                       'contract': contract_auction_edit, 'unit_edit': unit_edit, 'new': False}
+            return render(request, self.template_name, context)
+        except Exception as e:
+            logger.error("Error: %s", e)
+            context = {'error_message': f"Wystąpił błąd {e}"}
+            return render(request, self.template_name, context)
+
+    def post(self, request, id):
+        try:
+            contract_auction_edit = get_object_or_404(ContractAuction, pk=id)
+            contract_auction_form = ContractAuctionForm(request.POST, request.FILES,
+                                                        instance=contract_auction_edit)
+            contract_auction_form.fields['worker'].queryset = Employer.objects.all().filter(industry_specialist=True)
+            units = Unit.objects.all().order_by("county__id_order")
+            unit_edit = contract_auction_edit
+
+            context = {'contract_auction_form': contract_auction_form, 'units': units,
+                       'contract': contract_auction_edit, 'unit_edit': unit_edit, 'new': False}
+
             if contract_auction_form.is_valid():
                 contract = contract_auction_form.save(commit=False)
                 contract.author = request.user
@@ -351,23 +404,15 @@ def edit_contract_auction(request, id):
                     settlements = zip(settlement_period, settlement_sum)
 
                     if contract.last_report_date != 0:
-                        print('pierwszy if')
-                        print(f'{contract.id}')
-                        print(f"{list(GuaranteeSettlement.objects.all().values_list('contract', flat=True))}")
                         if contract.id in list(GuaranteeSettlement.objects.all().values_list('contract', flat=True)):
-                            print('drugi if')
                             if contract.guarantee.id == 2:
-                                print('trzeci if')
                                 settlement_guarantee = GuaranteeSettlement.objects.filter(
                                     contract=contract_auction_edit)
                                 settlement_guarantee.delete()
                                 for date, sum in settlements:
-                                    print("for 3 if1")
                                     settlement_guarantee = GuaranteeSettlement.objects.create(
                                         contract=contract_auction_edit, deadline_settlement=date, settlement_sum=sum)
-
                             else:
-                                print(f'3 if bez fora1 - {contract.security_sum}')
                                 settlement_guarantee = GuaranteeSettlement.objects.filter(
                                     contract=contract_auction_edit)
                                 settlement_guarantee.delete()
@@ -379,108 +424,148 @@ def edit_contract_auction(request, id):
                             return redirect('contracts:menu_contracts_auction')
                         else:
                             if contract.guarantee.id == 2:
-                                print('trzeci if2')
                                 for date, sum in settlements:
                                     settlement_guarantee = GuaranteeSettlement.objects.create(
                                         contract=contract_auction_edit,
                                         deadline_settlement=date,
                                         settlement_sum=sum)
-                                    print("for 4 if")
-
                             else:
-
                                 settlement_guarantee = GuaranteeSettlement.objects.create(
                                     contract=contract_auction_edit,
                                     deadline_settlement=settlement_30_day,
                                     settlement_sum=contract.security_sum)
-                                print('4 if bez fora2')
 
                             return redirect('contracts:menu_contracts_auction')
 
                 except TypeError:
                     return redirect('contracts:menu_contracts_auction')
 
-        return render(request, 'contracts/contract_auction_form.html', context)
-    except Exception as e:
-        # Zapisanie informacji o błędzie do loga
-        logger.error("Error: %s", e)
-        context = {'error_message': f"Wystąpił błąd {e}"}
-        return render(request, 'contracts/contract_auction_form.html', context)
+            return render(request, self.template_name, context)
+        except Exception as e:
+            logger.error("Error: %s", e)
+            context = {'error_message': f"Wystąpił błąd {e}"}
+            return render(request, self.template_name, context)
 
 
-@login_required
-def add_annex_contract_auction(request, id):
-    try:
-        contract_edit = get_object_or_404(ContractAuction, pk=id)
-        add_annex_form = AnnexContractAuctionForm(request.POST or None, request.FILES or None)
-        context = {'annex_form': add_annex_form,
-                   'contract_id': id}
+class AddAnnexContractAuctionView(LoginRequiredMixin, View):
+    template_name = 'contracts/new_annex_auction_form.html'
 
-        if request.method == 'POST':
+    def get(self, request, id):
+        try:
+            contract_edit = get_object_or_404(ContractAuction, pk=id)
+            add_annex_form = AnnexContractAuctionForm()
+            context = {'annex_form': add_annex_form, 'contract_id': id}
+            return render(request, self.template_name, context)
+        except Exception as e:
+            logger.error("Error: %s", e)
+            context = {'error_message': f"Wystąpił błąd {e}"}
+            return render(request, self.template_name, context)
+
+    def post(self, request, id):
+        try:
+            contract_edit = get_object_or_404(ContractAuction, pk=id)
+            add_annex_form = AnnexContractAuctionForm(request.POST, request.FILES)
+            context = {'annex_form': add_annex_form, 'contract_id': id}
+
             if add_annex_form.is_valid():
                 instance = add_annex_form.save(commit=False)
                 instance.author = request.user
                 instance.contract_auction = contract_edit
-                add_annex_form.save()
+                instance.save()
                 return redirect('contracts:menu_contracts_auction')
-        if request.method == 'GET':
-            return render(request, 'contracts/new_annex_auction_form.html', context)
-    except Exception as e:
-        # Zapisanie informacji o błędzie do loga
-        logger.error("Error: %s", e)
-        context = {'error_message': f"Wystąpił błąd {e}"}
-        return render(request, 'contracts/new_annex_auction_form.html', context)
+
+            return render(request, self.template_name, context)
+        except Exception as e:
+            logger.error("Error: %s", e)
+            context = {'error_message': f"Wystąpił błąd {e}"}
+            return render(request, self.template_name, context)
 
 
-@login_required
-def new_contract_media(request):
-    try:
-        contract_form = ContractMediaForm(request.POST or None, request.FILES or None)
-        contract_form.fields['employer'].queryset = Employer.objects.all().filter(industry_specialist=True).filter(
-            team__team='Zespół Eksploatacji')
-        contract_form.fields['unit'].queryset = Unit.objects.all().order_by("county__id_order")
-        units = Unit.objects.all()
+class NewContractMediaView(LoginRequiredMixin, View):
+    template_name = 'contracts/contract_media_form.html'
+    error_template_name = 'contracts/contract_media_form.html'
 
-        if request.method == 'POST':
+    def get(self, request):
+        try:
+            contract_form = ContractMediaForm()
+            contract_form.fields['employer'].queryset = Employer.objects.all().filter(industry_specialist=True).filter(
+                team__team='Zespół Eksploatacji')
+            contract_form.fields['unit'].queryset = Unit.objects.all().order_by("county__id_order")
+            units = Unit.objects.all()
+
+            context = {'contract_form': contract_form, 'new': True, 'units': units}
+            return render(request, self.template_name, context)
+        except Exception as e:
+            logger.error("Error: %s", e)
+            context = {'error_message': f"Wystąpił błąd {e}"}
+            return render(request, self.error_template_name, context)
+
+    def post(self, request):
+        try:
+            contract_form = ContractMediaForm(request.POST, request.FILES)
+            contract_form.fields['employer'].queryset = Employer.objects.all().filter(industry_specialist=True).filter(
+                team__team='Zespół Eksploatacji')
+            contract_form.fields['unit'].queryset = Unit.objects.all().order_by("county__id_order")
+            units = Unit.objects.all()
+
             if contract_form.is_valid():
                 instance = contract_form.save(commit=False)
                 instance.author = request.user
                 contract_form.save()
                 return redirect('contracts:create_contract_media_list')
-        return render(request, 'contracts/contract_media_form.html',
-                      {'contract_form': contract_form, 'new': True, 'units': units})
-    except Exception as e:
-        # Zapisanie informacji o błędzie do loga
-        logger.error("Error: %s", e)
-        context = {'error_message': f"Wystąpił błąd {e}"}
-        return render(request, 'contracts/contract_media_form.html', context)
+
+            return render(request, self.template_name, {'contract_form': contract_form, 'new': True, 'units': units})
+        except Exception as e:
+            logger.error("Error: %s", e)
+            context = {'error_message': f"Wystąpił błąd {e}"}
+            return render(request, self.error_template_name, context)
 
 
-@login_required
-def edit_contract_media(request, id):
-    try:
-        contract_edit = get_object_or_404(ContractMedia, pk=id)
-        contract_form = ContractMediaForm(request.POST or None, request.FILES or None, instance=contract_edit)
-        contract_form.fields['employer'].queryset = Employer.objects.all().filter(team__id=TeamEnum.ZE.value[0])
-        contract_form.fields['unit'].queryset = Unit.objects.all().order_by('county')
+class EditContractMediaView(LoginRequiredMixin, View):
+    template_name = 'contracts/contract_media_form.html'
 
-        units = Unit.objects.all()
-        selected_units = contract_edit.unit.all()
+    def get(self, request, id):
+        try:
+            contract_edit = get_object_or_404(ContractMedia, pk=id)
+            contract_form = ContractMediaForm(instance=contract_edit)
+            contract_form.fields['employer'].queryset = Employer.objects.all().filter(team__id=TeamEnum.ZE.value[0])
+            contract_form.fields['unit'].queryset = Unit.objects.all().order_by('county')
 
-        if request.method == 'POST':
+            units = Unit.objects.all()
+            selected_units = contract_edit.unit.all()
+
+            context = {'contract_form': contract_form, 'new': False, 'units': units, 'contract_edit': contract_edit,
+                       'selected_units': selected_units, "back_to_show_info": True, "id": id}
+            return render(request, self.template_name, context)
+        except Exception as e:
+            logger.error("Error: %s", e)
+            context = {'error_message': f"Wystąpił błąd {e}"}
+            return render(request, self.template_name, context)
+
+    def post(self, request, id):
+        try:
+            contract_edit = get_object_or_404(ContractMedia, pk=id)
+            contract_form = ContractMediaForm(request.POST, request.FILES, instance=contract_edit)
+            contract_form.fields['employer'].queryset = Employer.objects.all().filter(team__id=TeamEnum.ZE.value[0])
+            contract_form.fields['unit'].queryset = Unit.objects.all().order_by('county')
+
+            units = Unit.objects.all()
+            selected_units = contract_edit.unit.all()
+
+            context = {'contract_form': contract_form, 'new': False, 'units': units, 'contract_edit': contract_edit,
+                       'selected_units': selected_units, "back_to_show_info": True, "id": id}
+
             if contract_form.is_valid():
                 instance = contract_form.save(commit=False)
                 instance.author = request.user
                 contract_form.save()
                 return redirect('contracts:create_contract_media_list')
-        return render(request, 'contracts/contract_media_form.html',
-                      {'contract_form': contract_form, 'new': False, 'units': units, 'contract_edit': contract_edit,
-                       'selected_units': selected_units, "back_to_show_info": True, "id": id})
-    except Exception as e:
-        # Zapisanie informacji o błędzie do loga
-        logger.error("Error: %s", e)
-        context = {'error_message': f"Wystąpił błąd {e}"}
-        return render(request, 'contracts/contract_media_form.html', context)
+
+            return render(request, self.template_name, context)
+        except Exception as e:
+            logger.error("Error: %s", e)
+            context = {'error_message': f"Wystąpił błąd {e}"}
+            return render(request, self.template_name, context)
 
 
 class ContractMediaListView(LoginRequiredMixin, View):
@@ -619,32 +704,41 @@ class ShowContractMediaView(LoginRequiredMixin, View):
             return render(request, self.template, context)
 
 
-@login_required
-def add_annex_contract_media(request, id):
-    try:
-        contract_edit = get_object_or_404(ContractMedia, pk=id)
-        add_annex_form = AnnexContractMediaForm(request.POST or None, request.FILES or None)
+class AddAnnexContractMediaView(LoginRequiredMixin, View):
+    template_name = 'contracts/new_annex_media_form.html'
 
-        context = {'annex_form': add_annex_form,
-                   'contract_id': id}
+    def get(self, request, id):
+        try:
+            contract_edit = get_object_or_404(ContractMedia, pk=id)
+            add_annex_form = AnnexContractMediaForm()
+            context = {'annex_form': add_annex_form, 'contract_id': id}
+            return render(request, self.template_name, context)
+        except Exception as e:
+            logger.error("Error: %s", e)
+            context = {'error_message': f"Wystąpił błąd {e}"}
+            return render(request, self.template_name, context)
 
-        if request.method == 'POST':
+    def post(self, request, id):
+        try:
+            contract_edit = get_object_or_404(ContractMedia, pk=id)
+            add_annex_form = AnnexContractMediaForm(request.POST, request.FILES)
+            context = {'annex_form': add_annex_form, 'contract_id': id}
+
             if add_annex_form.is_valid():
                 instance = add_annex_form.save(commit=False)
                 instance.author = request.user
                 instance.contract_media = contract_edit
-                add_annex_form.save()
+                instance.save()
                 return redirect('contracts:create_contract_media_list')
-        if request.method == 'GET':
-            return render(request, 'contracts/new_annex_media_form.html', context)
-    except Exception as e:
-        # Zapisanie informacji o błędzie do loga
-        logger.error("Error: %s", e)
-        context = {'error_message': f"Wystąpił błąd {e}"}
-        return render(request, 'contracts/new_annex_media_form.html', context)
+
+            return render(request, self.template_name, context)
+        except Exception as e:
+            logger.error("Error: %s", e)
+            context = {'error_message': f"Wystąpił błąd {e}"}
+            return render(request, self.template_name, context)
 
 
-class EditSettlementView(View):
+class EditSettlementView(LoginRequiredMixin, View):
     template = "contracts/settlement_form.html"
 
     def get(self, request, id):
@@ -722,46 +816,71 @@ class FinancialDocumentListView(LoginRequiredMixin, View):
             return render(request, self.template, context)
 
 
-@login_required
-def add_financial_document(request, contract_id):
-    try:
-        contract = get_object_or_404(ContractMedia, pk=contract_id)
-        add_document_form = FinancialDocumentForm(request.POST or None)
+class AddFinancialDocumentView(LoginRequiredMixin, View):
+    template_name = 'contracts/financial_media_form.html'
 
-        if request.method == 'POST':
+    def get(self, request, contract_id):
+        try:
+            contract = get_object_or_404(ContractMedia, pk=contract_id)
+            add_document_form = FinancialDocumentForm()
+            context = {'document': add_document_form, 'contract_id': contract_id, 'new': True}
+            return render(request, self.template_name, context)
+        except Exception as e:
+            logger.error("Error: %s", e)
+            context = {'error_message': f"Wystąpił błąd {e}"}
+            return render(request, self.template_name, context)
+
+    def post(self, request, contract_id):
+        try:
+            contract = get_object_or_404(ContractMedia, pk=contract_id)
+            add_document_form = FinancialDocumentForm(request.POST)
+            context = {'document': add_document_form, 'contract_id': contract_id, 'new': True}
+
             if add_document_form.is_valid():
                 instance = add_document_form.save(commit=False)
                 instance.contract = contract
                 instance.author = request.user
                 add_document_form.save()
                 return redirect(reverse('contracts:financial_document_list', kwargs={"contract_id": contract_id}))
-        return render(request, 'contracts/financial_media_form.html',
-                      {'document': add_document_form, 'contract_id': contract_id, 'new': True})
-    except Exception as e:
-        # Zapisanie informacji o błędzie do loga
-        logger.error("Error: %s", e)
-        context = {'error_message': f"Wystąpił błąd {e}"}
-        return render(request, 'contracts/financial_media_form.html', context)
+
+            return render(request, self.template_name, context)
+        except Exception as e:
+            logger.error("Error: %s", e)
+            context = {'error_message': f"Wystąpił błąd {e}"}
+            return render(request, self.template_name, context)
 
 
-@login_required
-def edit_financial_document(request, contract_id, id):
-    try:
-        contract = get_object_or_404(ContractMedia, pk=contract_id)
-        edit_document = get_object_or_404(FinancialDocument, pk=id)
-        add_document_form = FinancialDocumentForm(request.POST or None, instance=edit_document)
+class EditFinancialDocumentView(LoginRequiredMixin, View):
+    template_name = 'contracts/financial_media_form.html'
 
-        if request.method == 'POST':
+    def get(self, request, contract_id, id):
+        try:
+            contract = get_object_or_404(ContractMedia, pk=contract_id)
+            edit_document = get_object_or_404(FinancialDocument, pk=id)
+            add_document_form = FinancialDocumentForm(instance=edit_document)
+            context = {'document': add_document_form, 'contract_id': contract_id, 'new': False}
+            return render(request, self.template_name, context)
+        except Exception as e:
+            logger.error("Error: %s", e)
+            context = {'error_message': f"Wystąpił błąd {e}"}
+            return render(request, self.template_name, context)
+
+    def post(self, request, contract_id, id):
+        try:
+            contract = get_object_or_404(ContractMedia, pk=contract_id)
+            edit_document = get_object_or_404(FinancialDocument, pk=id)
+            add_document_form = FinancialDocumentForm(request.POST, instance=edit_document)
+            context = {'document': add_document_form, 'contract_id': contract_id, 'new': False}
+
             if add_document_form.is_valid():
                 instance = add_document_form.save(commit=False)
                 instance.contract = contract
                 instance.author = request.user
                 add_document_form.save()
                 return redirect(reverse('contracts:financial_document_list', kwargs={"contract_id": contract_id}))
-        return render(request, 'contracts/financial_media_form.html',
-                      {'document': add_document_form, 'contract_id': contract_id, 'new': False})
-    except Exception as e:
-        # Zapisanie informacji o błędzie do loga
-        logger.error("Error: %s", e)
-        context = {'error_message': f"Wystąpił błąd {e}"}
-        return render(request, 'contracts/financial_media_form.html', context)
+
+            return render(request, self.template_name, context)
+        except Exception as e:
+            logger.error("Error: %s", e)
+            context = {'error_message': f"Wystąpił błąd {e}"}
+            return render(request, self.template_name, context)
