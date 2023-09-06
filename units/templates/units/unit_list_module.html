@@ -25,6 +25,9 @@
             <div class="d-inline-block mx-2 md-2 text-center">
                 <label for="county" class="county">Powiat</label>
                 <select id="county" name="p" class="form-control" aria-label="Default select example">
+                    {%if p%}
+                    <option value="">{{countyUnit}}</option>
+                    {%endif%}
                     <option value="">--wybierz--</option>
                     {%for district in county%}
                     <option value={{district.id}}>{{district}}</option>
@@ -34,6 +37,9 @@
             <div class="d-inline-block mx-2 md-2 text-center">
                 <label for="city" class="county">Miasto</label>
                 <select id="city" name="c" class="form-control" aria-label="Default select example">
+                    {%if c%}
+                    <option value="">{{c}}</option>
+                    {%endif%}
                     <option value="">--wybierz--</option>
                     {%for city in cities%}
                     <option value={{city}}>{{city}}</option>
@@ -43,10 +49,16 @@
             <div class="d-inline-block mx-2 text-center">
                 <label for="type" class="type">Rodzaj jednostki</label>
                 <select id="type" name="r" class="form-control" aria-label="Default select example">
+                    {%if r%}
+                    <option value="">{{unitType}}</option>
+                    {%endif%}
+                    {%if not r%}
                     <option value="">--wybierz--</option>
                     {%for type in type_unit%}
                     <option value={{type.id}}>{{type}}</option>
                     {%endfor%}
+                    {%endif%}
+
                 </select>
             </div>
             <div class="d-inline-block mx-2">
