@@ -15,33 +15,27 @@
         <form>
             <div class="d-inline-block mx-1 md-2 text-center">
                 <label for="county" class="county">Powiat</label>
-                <select id="county" name="p" class="form-control" aria-label="Default select example">
-                    {%if p%}
-                    <option value="">{{searchCounty}}</option>
-                    {%endif%}
+                <select id="county" name="p" class="form-control" aria-label="Wybierz powiat">
                     <option value="">--wybierz--</option>
-                    {%if not query%}
                     {%for district in county%}
-                    <option value={{district.id}}>{{district}}</option>
+                        {%if p == district.id%}
+                            <option selected value="{{district.id}}">{{district}}</option>
+                        {%else%}
+                            <option value={{district.id}}>{{district}}</option>
+                        {%endif%}
                     {%endfor%}
-
-                    {%else%}
-
-                    {%for district in county%}
-                    <option value={{p}}>{{district}}</option>
-                    {%endfor%}
-                    {%endif%}
                 </select>
             </div>
             <div class="d-inline-block mx-1 text-center">
                 <label for="type" class="type">Rodzaj jednostki</label>
-                <select id="type" name="r" class="form-control" aria-label="Default select example">
-                    {%if r%}
-                    <option value="">{{searchType}}</option>
-                    {%endif%}
+                <select id="type" name="r" class="form-control" aria-label="Wybierz typ jednostki">
                     <option value="">--wybierz--</option>
                     {%for type in type_unit%}
-                    <option value={{type.id}}>{{type}}</option>
+                        {%if r == type.id%}
+                            <option selected value="{{type.id}}">{{type}}</option>
+                        {%else%}
+                            <option value={{type.id}}>{{type}}</option>
+                        {%endif%}
                     {%endfor%}
                 </select>
             </div>
@@ -180,8 +174,10 @@
     })
 
     function cleanSearch(){
-        $("#p").val("").change();
-        $("#r").val("").change();
+        $("#county").val("").change();
+        $("#county option").removeAttr("selected");
+        $("#type").val("").change();
+        $("#type option").removeAttr("selected");
         $("form").submit();
     }
 </script>

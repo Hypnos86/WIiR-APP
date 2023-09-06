@@ -31,35 +31,39 @@ class UnitListView(View):
 
             r = request.GET.get("r")
             p = request.GET.get("p")
-            searchCounty = None
-            searchType = None
+            intP = None
+            intR = None
 
             if p and r:
                 units_active = units_active.filter(county__exact=p, type__exact=r)
-                searchCounty = county.get(id=p)
-                searchType = type_unit.get(id=r)
+                intR = int(r)
+                intP = int(p)
 
                 # print(units_active.type)
                 unit_sum_search = len(units_active)
                 context = {"units": units_active, "county": county, "type_unit": type_unit, "unit_sum": unit_sum,
-                           "query": query, "unit_sum_search": unit_sum_search, "last_date": last_date, "p": p, "r": r,
-                           "actual_units": True, "searchCounty": searchCounty, "searchType": searchType}
+                           "query": query, "unit_sum_search": unit_sum_search, "last_date": last_date, "p": intP,
+                           "r": intR,
+                           "actual_units": True}
                 return render(request, self.template, context)
             elif p and not r:
                 units_active = units_active.filter(county__exact=p)
-                searchCounty = county.get(id=p)
+                intP = int(p)
+
+
                 unit_sum_search = len(units_active)
                 context = {"units": units_active, "county": county, "type_unit": type_unit, "unit_sum": unit_sum,
-                           "query": query, "unit_sum_search": unit_sum_search, "last_date": last_date, "p": p,
-                           "actual_units": True, "searchCounty": searchCounty, "searchType": searchType}
+                           "query": query, "unit_sum_search": unit_sum_search, "last_date": last_date, "p": intP,
+                           "actual_units": True}
                 return render(request, self.template, context)
             elif r and not p:
                 units_active = units_active.filter(type__exact=r)
-                searchType = type_unit.get(id=r)
+                intR = int(r)
+
                 unit_sum_search = len(units_active)
                 context = {"units": units_active, "county": county, "type_unit": type_unit, "unit_sum": unit_sum,
-                           "query": query, "unit_sum_search": unit_sum_search, "last_date": last_date, "r": r,
-                           "actual_units": True, "searchCounty": searchCounty, "searchType": searchType}
+                           "query": query, "unit_sum_search": unit_sum_search, "last_date": last_date, "r": intR,
+                           "actual_units": True}
                 return render(request, self.template, context)
 
             else:
@@ -101,28 +105,27 @@ class UnitsEditableListView(LoginRequiredMixin, View):
             c = request.GET.get("c")
             r = request.GET.get("r")
 
-            unitType = None
-            countyUnit = None
+            intP = None
+            intR = None
 
             if p or c or r:
 
                 if p:
                     units_active = units_active.filter(county__exact=p)
-                    countyUnit = county.get(id=p)
+                    intP = int(p)
 
                 if c:
                     units_active = units_active.filter(city__icontains=c)
 
                 if r:
                     units_active = units_active.filter(type__exact=r)
-                    unitType = type_unit.get(id=r)
+                    intR = int(r)
 
                 unit_sum_search = len(units_active)
 
                 context = {"units": units_active, "county": county, "cities": cities, "type_unit": type_unit,
                            "unit_sum": unit_sum, "query": query, "unit_sum_search": unit_sum_search,
-                           "last_date": last_date, "actual_units": True, "r": r, "c": c, "p": p, "unitType": unitType,
-                           "countyUnit": countyUnit}
+                           "last_date": last_date, "actual_units": True, "r": intR, "c": c, "p": intP}
                 return render(request, self.template, context)
 
             else:

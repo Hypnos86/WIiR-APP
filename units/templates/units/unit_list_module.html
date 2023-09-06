@@ -24,40 +24,40 @@
         <form>
             <div class="d-inline-block mx-2 md-2 text-center">
                 <label for="county" class="county">Powiat</label>
-                <select id="county" name="p" class="form-control" aria-label="Default select example">
-                    {%if p%}
-                    <option value="">{{countyUnit}}</option>
-                    {%endif%}
+                <select id="county" name="p" class="form-control" aria-label="Wybierz powiat">
                     <option value="">--wybierz--</option>
                     {%for district in county%}
-                    <option value={{district.id}}>{{district}}</option>
+                        {%if p == district.id%}
+                            <option selected value="{{district.id}}">{{district}}</option>
+                        {%else%}
+                            <option value={{district.id}}>{{district}}</option>
+                        {%endif%}
                     {%endfor%}
                 </select>
             </div>
             <div class="d-inline-block mx-2 md-2 text-center">
                 <label for="city" class="county">Miasto</label>
-                <select id="city" name="c" class="form-control" aria-label="Default select example">
-                    {%if c%}
-                    <option value="">{{c}}</option>
-                    {%endif%}
+                <select id="city" name="c" class="form-control" aria-label="Wybierz miasto">
                     <option value="">--wybierz--</option>
                     {%for city in cities%}
+                        {%if c == city%}
+                            <option selected value="{{city.id}}">{{city}}</option>
+                        {%endif%}
                     <option value={{city}}>{{city}}</option>
                     {%endfor%}
                 </select>
             </div>
             <div class="d-inline-block mx-2 text-center">
                 <label for="type" class="type">Rodzaj jednostki</label>
-                <select id="type" name="r" class="form-control" aria-label="Default select example">
-                    {%if r%}
-                    <option value="">{{unitType}}</option>
-                    {%endif%}
-                    {%if not r%}
+                <select id="type" name="r" class="form-control" aria-label="Wybierz rodzaj jednostki">
                     <option value="">--wybierz--</option>
                     {%for type in type_unit%}
-                    <option value={{type.id}}>{{type}}</option>
+                        {%if r == type.id%}
+                            <option selected value="{{type.id}}">{{type}}</option>
+                        {%else%}
+                            <option value={{type.id}}>{{type}}</option>
+                        {%endif%}
                     {%endfor%}
-                    {%endif%}
 
                 </select>
             </div>
@@ -172,8 +172,12 @@
     })
 
     function cleanSearch(){
-        $("#p").val("");
-        $("#r").val("");
+        $("#county").val("").change();
+        $("#county option").removeAttr("selected");
+        $("#type").val("").change();
+        $("#type option").removeAttr("selected");
+        $("#city").val("").change();
+        $("#city option").removeAttr("selected");
         $("form").submit();
     }
 </script>
