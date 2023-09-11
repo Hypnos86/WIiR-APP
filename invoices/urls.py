@@ -2,7 +2,7 @@ from django.urls import path, re_path
 from .views import menu_invoices, buy_invoices_list, buy_invoices_list_archive, new_invoice_buy, sell_invoices_list,\
     sell_invoices_list_archive, new_invoice_sell, edit_invoice_sell, edit_invoice_sell_archive,edit_invoice_buy, make_verification, show_info_buy, \
     show_info_sell, corrective_note_list, corrective_note_list_archive, show_info_note, new_note, \
-    edit_note, EditNoteArchiveView, make_pdf_from_invoices_sell, add_items_invoice_buy, delete_items_invoice_buy, delete_invoice_buy
+    edit_note, EditNoteArchiveView, make_pdf_from_invoices_sell, AddItemsInvoiceBuyView, delete_items_invoice_buy, delete_invoice_buy
 
 app_name = "invoices"
 urlpatterns = [
@@ -14,7 +14,7 @@ urlpatterns = [
     path("newInvoice_buy/", new_invoice_buy, name="new_invoice_buy"),
     re_path("editInvoice_buy/(?P<id>\d+)/$", edit_invoice_buy, name="edit_invoice_buy"),
     re_path("deleteInvoice_by/(?P<id>\d+)/$", delete_invoice_buy, name="delete_invoice_buy"),
-    re_path("addInvoiceItem/(?P<id>\d+)/$", add_items_invoice_buy, name="add_items_invoice_buy"),
+    re_path("addInvoiceItem/(?P<id>\d+)/$", AddItemsInvoiceBuyView.as_view(), name="add_items_invoice_buy"),
     re_path("deleteItem/(?P<id>\d+)/(?P<invoice_id>\d+)/$", delete_items_invoice_buy, name="delete_items_invoice_buy"),
     # Sprzedaż
     path("recordFvSell/", sell_invoices_list, name="sell_invoices_list"),

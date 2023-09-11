@@ -1,6 +1,6 @@
 import datetime
 import pathlib
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
@@ -140,38 +140,58 @@ def buy_invoices_list_archive(request, year):
                                                                           })
 
 
-@login_required
-def new_invoice_buy(request):
-    invoice_buy_form = InvoiceBuyForm(request.POST or None)
-    doc_types = invoice_buy_form.fields["doc_types"].queryset = DocumentTypes.objects.exclude(
-        type=DocumentsTypeEnum.NOTA_KORYGUJACA.value)
-    invoice_buy_form.fields["doc_types"].queryset = DocumentTypes.objects.exclude(type="Nota korygująca")
-    context = {"invoice": invoice_buy_form, "doc_types": doc_types, "new": True}
+class NewInvoiceBuyView(LoginRequiredMixin,View):
+    template_name = 'invoices/invoice_buy_form.html'
+    form_class = InvoiceBuyForm
 
-    if request.method == "POST":
+    def get(self, request):
+        doc_types = DocumentTypes.objects.exclude(type=DocumentsTypeEnum.NOTA_KORYGUJACA.value)
+        invoice_buy_form = self.form_class()
+        context = {"invoice": invoice_buy_form, "doc_types": doc_types, "new": True}
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        invoice_buy_form = self.form_class(request.POST or None)
         if invoice_buy_form.is_valid():
             instance = invoice_buy_form.save(commit=False)
             instance.author = request.user
             invoice_buy_form.save()
             return redirect(reverse("invoices:add_items_invoice_buy", kwargs={"id": instance.id}))
-    return render(request, "invoices/invoice_buy_form.html", context)
+
+        doc_types = DocumentTypes.objects.exclude(type=DocumentsTypeEnum.NOTA_KORYGUJACA.value)
+        context = {"invoice": invoice_buy_form, "doc_types": doc_types, "new": True}
+        return render(request, self.template_name, context)
 
 
-@login_required
-def add_items_invoice_buy(request, id):
-    invoice_edit = get_object_or_404(InvoiceBuy, pk=id)
-    invoice_item_form = InvoiceItemsForm(request.POST or None)
-    invoice_items = InvoiceItems.objects.filter(invoice_id=invoice_edit)
+class AddItemsInvoiceBuyView(LoginRequiredMixin, View):
+    template_name = "invoices/invoice_items.html"
+    form_class = InvoiceItemsForm
 
-    context = {"invoice_item": invoice_item_form, "invoice": invoice_edit, "invoice_items": invoice_items, "new": True}
-    if request.method == "POST":
+    def get(self, request, id):
+        invoice_edit = get_object_or_404(InvoiceBuy, pk=id)
+        invoice_item_form = self.form_class()
+        invoice_items = InvoiceItems.objects.filter(invoice_id=invoice_edit)
+
+        context = {"invoice_item": invoice_item_form, "invoice": invoice_edit, "invoice_items": invoice_items,
+                   "new": True}
+        return render(request, self.template_name, context)
+
+    def post(self, request, id):
+        invoice_edit = get_object_or_404(InvoiceBuy, pk=id)
+        invoice_item_form = self.form_class(request.POST)
+        invoice_items = InvoiceItems.objects.filter(invoice_id=invoice_edit)
+
+        context = {"invoice_item": invoice_item_form, "invoice": invoice_edit, "invoice_items": invoice_items,
+                   "new": True}
+
         if invoice_item_form.is_valid():
             instance = invoice_item_form.save(commit=False)
             instance.invoice_id = invoice_edit
             invoice_item_form.save()
 
             return redirect(reverse("invoices:add_items_invoice_buy", kwargs={"id": invoice_edit.id}))
-    return render(request, "invoices/invoice_items.html", context)
+
+        return render(request, self.template_name, context)
 
 
 @login_required
@@ -524,7 +544,7 @@ class EditNoteArchiveView(LoginRequiredMixin, View):
         note = get_object_or_404(CorrectiveNote, pk=id)
         form = self.class_form(instance=note)
         year = note.date.year
-        context = {"note_form":form, "year":year}
+        context = {"note_form": form, "year": year}
         return render(request, self.template_name, context)
 
     def post(self, request, id):
@@ -669,7 +689,9 @@ def make_pdf_from_invoices_sell(request, year):
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type="application/pdf")
     now_time = now.strftime("%d-%m-%Y")
-    response["Content-Disposition"] = "attachment; filename=Lista wystawionych faktur - utworzono {now_time}.pdf".format(now_time=now_time)
+    response[
+        "Content-Disposition"] = "attachment; filename=Lista wystawionych faktur - utworzono {now_time}.pdf".format(
+        now_time=now_time)
     # find the template and render it.
     template_path = "invoices/invoice_sell_pdf.html"
     template = get_template(template_path)
