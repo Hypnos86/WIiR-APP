@@ -381,7 +381,6 @@ class NewInvoiceSellView(View):
             type=DocumentsTypeEnum.NOTA_KORYGUJACA.value)
         invoice_sell_form.fields["creator"].queryset = Employer.objects.all().filter(invoices_issues=True)
         context = {"form": invoice_sell_form, "doc_types": doc_types, "new": True}
-
         if invoice_sell_form.is_valid():
             instance = invoice_sell_form.save(commit=False)
             instance.author = request.user
