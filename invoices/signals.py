@@ -12,7 +12,6 @@ def calculate_invoice_items_sum(sender, instance, **kwargs):
     for item in items:
         if instance.invoice_id == item.invoice_id:
             cost.append(item.sum)
-            print(instance)
 
     invoice = InvoiceBuy.objects.get(pk=instance.invoice_id.id)
     invoice.sum = sum(cost)
@@ -28,7 +27,6 @@ def delete_invoice_item(sender, instance, **kwargs):
     for item in items:
         if instance.invoice_id == item.invoice_id:
             cost.append(item.sum)
-            print(instance)
 
     invoice = InvoiceBuy.objects.get(pk=instance.invoice_id.id)
     invoice.sum = sum(cost)
