@@ -140,7 +140,7 @@ def buy_invoices_list_archive(request, year):
                                                                           })
 
 
-class NewInvoiceBuyView(LoginRequiredMixin,View):
+class NewInvoiceBuyView(LoginRequiredMixin, View):
     template_name = 'invoices/invoice_buy_form.html'
     form_class = InvoiceBuyForm
 
@@ -364,41 +364,60 @@ def sell_invoices_list_archive(request, year):
                                                                            "search": search, "year": year})
 
 
-@login_required
-def new_invoice_sell(request):
-    invoice_sell_form = InvoiceSellForm(request.POST or None)
-    doc_types = invoice_sell_form.fields["doc_types"].queryset = DocumentTypes.objects.exclude(
-        type=DocumentsTypeEnum.NOTA_KORYGUJACA.value)
-    invoice_sell_form.fields["creator"].queryset = Employer.objects.all().filter(invoices_issues=True)
+class NewInvoiceSellView(View):
+    template_name = "invoices/invoice_sell_form.html"
 
-    context = {"invoice": invoice_sell_form, "doc_types": doc_types, "new": True}
+    def get(self, request):
+        invoice_sell_form = InvoiceSellForm()
+        doc_types = invoice_sell_form.fields["doc_types"].queryset = DocumentTypes.objects.exclude(
+            type=DocumentsTypeEnum.NOTA_KORYGUJACA.value)
+        invoice_sell_form.fields["creator"].queryset = Employer.objects.all().filter(invoices_issues=True)
+        context = {"form": invoice_sell_form, "doc_types": doc_types, "new": True}
+        return render(request, self.template_name, context)
 
-    if request.method == "POST":
+    def post(self, request):
+        invoice_sell_form = InvoiceSellForm(request.POST)
+        doc_types = invoice_sell_form.fields["doc_types"].queryset = DocumentTypes.objects.exclude(
+            type=DocumentsTypeEnum.NOTA_KORYGUJACA.value)
+        invoice_sell_form.fields["creator"].queryset = Employer.objects.all().filter(invoices_issues=True)
+        context = {"form": invoice_sell_form, "doc_types": doc_types, "new": True}
+
         if invoice_sell_form.is_valid():
             instance = invoice_sell_form.save(commit=False)
             instance.author = request.user
             invoice_sell_form.save()
             return redirect("invoices:sell_invoices_list")
-    return render(request, "invoices/invoice_sell_form.html", context)
+
+        return render(request, self.template_name, context)
 
 
-@login_required
-def edit_invoice_sell(request, id):
-    invoice_sell_edit = get_object_or_404(InvoiceSell, pk=id)
-    invoice_sell_form = InvoiceSellForm(request.POST or None, instance=invoice_sell_edit)
-    invoice_sell_form.fields["doc_types"].queryset = DocumentTypes.objects.exclude(
-        type=DocumentsTypeEnum.NOTA_KORYGUJACA)
-    invoice_sell_form.fields["creator"].queryset = Employer.objects.all().filter(invoices_issues=True)
+class EditInvoiceSellView(View):
+    template_name = "invoices/invoice_sell_form.html"
 
-    context = {"invoice": invoice_sell_form,
-               "new": False}
+    def get(self, request, id):
+        invoice_sell_edit = get_object_or_404(InvoiceSell, pk=id)
+        invoice_sell_form = InvoiceSellForm(instance=invoice_sell_edit)
+        invoice_sell_form.fields["doc_types"].queryset = DocumentTypes.objects.exclude(
+            type=DocumentsTypeEnum.NOTA_KORYGUJACA)
+        invoice_sell_form.fields["creator"].queryset = Employer.objects.all().filter(invoices_issues=True)
+        context = {"form": invoice_sell_form, "new": False}
+        return render(request, self.template_name, context)
 
-    if invoice_sell_form.is_valid():
-        instance = invoice_sell_form.save(commit=False)
-        instance.author = request.user
-        invoice_sell_form.save()
-        return redirect("invoices:sell_invoices_list")
-    return render(request, "invoices/invoice_sell_form.html", context)
+    def post(self, request, id):
+        invoice_sell_edit = get_object_or_404(InvoiceSell, pk=id)
+        invoice_sell_form = InvoiceSellForm(request.POST, instance=invoice_sell_edit)
+        invoice_sell_form.fields["doc_types"].queryset = DocumentTypes.objects.exclude(
+            type=DocumentsTypeEnum.NOTA_KORYGUJACA)
+        invoice_sell_form.fields["creator"].queryset = Employer.objects.all().filter(invoices_issues=True)
+        context = {"form": invoice_sell_form, "new": False}
+
+        if invoice_sell_form.is_valid():
+            instance = invoice_sell_form.save(commit=False)
+            instance.author = request.user
+            invoice_sell_form.save()
+            return redirect("invoices:sell_invoices_list")
+
+        return render(request, self.template_name, context)
 
 
 @login_required
