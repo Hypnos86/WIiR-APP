@@ -315,6 +315,10 @@ def sell_invoices_list(request):
 @login_required
 def show_info_sell(request, id):
     invoice = get_object_or_404(InvoiceSell, pk=id)
+    invoice.period_from = datetime.date(year=int(invoice.period_from[0:4]),
+                                            month=int(invoice.period_from[5:7]), day=1)
+    invoice.period_to = datetime.date(year=int(invoice.period_to[0:4]),
+                                          month=int(invoice.period_to[5:7]), day=1)
     return render(request, "invoices/info_sell_popup.html", {"invoice": invoice, "id": id})
 
 
