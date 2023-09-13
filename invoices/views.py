@@ -250,11 +250,17 @@ def edit_invoice_buy_archive(request, id):
 @login_required
 def sell_invoices_list(request):
     year = current_year()
-    invoicessell = InvoiceSell.objects.all().order_by("-date").filter(date__year=year)
+    invoicesSell = InvoiceSell.objects.all().order_by("-date").filter(date__year=year)
+    for invoice in invoicesSell:
+        invoice.period_from = datetime.date(year=int(invoice.period_from[0:4]),
+                                            month=int(invoice.period_from[5:7]), day=1)
+        invoice.period_to = datetime.date(year=int(invoice.period_to[0:4]),
+                                          month=int(invoice.period_to[5:7]), day=1)
+
     query = "Wyczyść"
     search = "Szukaj"
-    invoices_sell_len = len(invoicessell)
-    invoices_sell_sum_dict = invoicessell.aggregate(Sum("sum"))
+    invoices_sell_len = len(invoicesSell)
+    invoices_sell_sum_dict = invoicesSell.aggregate(Sum("sum"))
 
     try:
         invoices_sell_sum = round(invoices_sell_sum_dict["sum__sum"], 2)
@@ -265,42 +271,42 @@ def sell_invoices_list(request):
     date_from = request.GET.get("from")
     date_to = request.GET.get("to")
 
-    paginator = Paginator(invoicessell, 40)
+    paginator = Paginator(invoicesSell, 40)
     page_number = request.GET.get("page")
-    invoicessell_list = paginator.get_page(page_number)
+    invoicesSellList = paginator.get_page(page_number)
 
     if q or date_from or date_to:
         if q:
-            invoicessell = invoicessell.filter(no_invoice__icontains=q) \
-                           | invoicessell.filter(sum__startswith=q) \
-                           | invoicessell.filter(date__startswith=q) \
-                           | invoicessell.filter(contractor__name__icontains=q) \
-                           | invoicessell.filter(contractor__no_contractor__startswith=q) \
-                           | invoicessell.filter(county__name__icontains=q) \
-                           | invoicessell.filter(information__icontains=q) \
-                           | invoicessell.filter(doc_types__type__icontains=q)
+            invoicesSell = invoicesSell.filter(no_invoice__icontains=q) \
+                           | invoicesSell.filter(sum__startswith=q) \
+                           | invoicesSell.filter(date__startswith=q) \
+                           | invoicesSell.filter(contractor__name__icontains=q) \
+                           | invoicesSell.filter(contractor__no_contractor__startswith=q) \
+                           | invoicesSell.filter(county__name__icontains=q) \
+                           | invoicesSell.filter(information__icontains=q) \
+                           | invoicesSell.filter(doc_types__type__icontains=q)
 
         if date_from:
-            invoicessell = invoicessell.filter(date__gte=date_from)
+            invoicesSell = invoicesSell.filter(date__gte=date_from)
 
         if date_to:
-            invoicessell = invoicessell.filter(date__lte=date_to)
+            invoicesSell = invoicesSell.filter(date__lte=date_to)
 
-        invoices_sell_filter_sum = len(invoicessell)
-        invoices_sell_sum_dict = invoicessell.aggregate(Sum("sum"))
+        invoices_sell_filter_sum = len(invoicesSell)
+        invoices_sell_sum_dict = invoicesSell.aggregate(Sum("sum"))
 
         try:
             invoices_sell_sum = round(invoices_sell_sum_dict["sum__sum"], 2)
         except TypeError:
             invoices_sell_sum = 0
 
-        return render(request, "invoices/invoice_sell_list.html", {"invoices": invoicessell,
+        return render(request, "invoices/invoice_sell_list.html", {"invoices": invoicesSell,
                                                                    "invoices_sell_len": invoices_sell_filter_sum,
                                                                    "invoices_sell_sum": invoices_sell_sum,
                                                                    "query": query, "year": year, "q": q,
                                                                    "date_from": date_from, "date_to": date_to})
     else:
-        return render(request, "invoices/invoice_sell_list.html", {"invoices": invoicessell_list,
+        return render(request, "invoices/invoice_sell_list.html", {"invoices": invoicesSellList,
                                                                    "invoices_sell_len": invoices_sell_len,
                                                                    "invoices_sell_sum": invoices_sell_sum,
                                                                    "search": search, "year": year})
@@ -314,9 +320,14 @@ def show_info_sell(request, id):
 
 @login_required
 def sell_invoices_list_archive(request, year):
-    invoices_sell = InvoiceSell.objects.all().filter(date__year=year).order_by("-date")
-    invoices_sell_len = len(invoices_sell)
-    invoices_sell_sum_dict = invoices_sell.aggregate(Sum("sum"))
+    invoicesSell = InvoiceSell.objects.all().filter(date__year=year).order_by("-date")
+    for invoice in invoicesSell:
+        invoice.period_from = datetime.date(year=int(invoice.period_from[0:4]),
+                                            month=int(invoice.period_from[5:7]), day=1)
+        invoice.period_to = datetime.date(year=int(invoice.period_to[0:4]),
+                                          month=int(invoice.period_to[5:7]), day=1)
+    invoices_sell_len = len(invoicesSell)
+    invoices_sell_sum_dict = invoicesSell.aggregate(Sum("sum"))
     invoices_sell_sum = round(invoices_sell_sum_dict["sum__sum"], 2)
     query = "Wyczyść"
     search = "Szukaj"
@@ -324,41 +335,41 @@ def sell_invoices_list_archive(request, year):
     date_from = request.GET.get("from")
     date_to = request.GET.get("to")
 
-    paginator = Paginator(invoices_sell, 40)
+    paginator = Paginator(invoicesSell, 40)
     page_number = request.GET.get("page")
-    invoicessell_list = paginator.get_page(page_number)
+    invoicesSellList = paginator.get_page(page_number)
 
     if q or date_from or date_to:
         if q:
-            invoices_sell = invoices_sell.filter(no_invoice__icontains=q) \
-                            | invoices_sell.filter(sum__startswith=q) \
-                            | invoices_sell.filter(date__startswith=q) \
-                            | invoices_sell.filter(contractor__name__icontains=q) \
-                            | invoices_sell.filter(contractor__no_contractor__startswith=q) \
-                            | invoices_sell.filter(county__name__icontains=q) \
-                            | invoices_sell.filter(information__icontains=q) \
-                            | invoices_sell.filter(doc_types__type__icontains=q)
+            invoicesSell = invoicesSell.filter(no_invoice__icontains=q) \
+                           | invoicesSell.filter(sum__startswith=q) \
+                           | invoicesSell.filter(date__startswith=q) \
+                           | invoicesSell.filter(contractor__name__icontains=q) \
+                           | invoicesSell.filter(contractor__no_contractor__startswith=q) \
+                           | invoicesSell.filter(county__name__icontains=q) \
+                           | invoicesSell.filter(information__icontains=q) \
+                           | invoicesSell.filter(doc_types__type__icontains=q)
 
         if date_from:
-            invoices_sell = invoices_sell.filter(date__gte=date_from)
+            invoicesSell = invoicesSell.filter(date__gte=date_from)
 
         if date_to:
-            invoices_sell = invoices_sell.filter(date__lte=date_to)
+            invoicesSell = invoicesSell.filter(date__lte=date_to)
 
-        invoices_sell_filter_sum = len(invoices_sell)
-        invoices_sell_sum_dict = invoices_sell.aggregate(Sum("sum"))
+        invoices_sell_filter_sum = len(invoicesSell)
+        invoices_sell_sum_dict = invoicesSell.aggregate(Sum("sum"))
         try:
             invoices_sell_sum = round(invoices_sell_sum_dict["sum__sum"], 2)
         except TypeError:
             invoices_sell_sum = 0
 
-        return render(request, "invoices/invoice_sell_list_archive.html", {"invoices": invoices_sell,
+        return render(request, "invoices/invoice_sell_list_archive.html", {"invoices": invoicesSell,
                                                                            "invoices_sell_len": invoices_sell_filter_sum,
                                                                            "invoices_sell_sum": invoices_sell_sum,
                                                                            "query": query, "year": year, "q": q,
                                                                            "date_from": date_from, "date_to": date_to})
     else:
-        return render(request, "invoices/invoice_sell_list_archive.html", {"invoices": invoicessell_list,
+        return render(request, "invoices/invoice_sell_list_archive.html", {"invoices": invoicesSellList,
                                                                            "invoices_sell_len": invoices_sell_len,
                                                                            "invoices_sell_sum": invoices_sell_sum,
                                                                            "search": search, "year": year})
@@ -412,6 +423,12 @@ class EditInvoiceSellView(View):
 
         if invoice_sell_form.is_valid():
             instance = invoice_sell_form.save(commit=False)
+            # period_from = datetime.date(year=int(instance.period_from[0:4]), month=int(instance.period_from[5:7]),
+            #                             day=1).__str__()
+            # period_to = datetime.date(year=int(instance.period_to[0:4]), month=int(instance.period_to[5:7]),
+            #                           day=1).__str__()
+            # instance.period_from = period_from
+            # instance.period_to = period_to
             instance.author = request.user
             invoice_sell_form.save()
             return redirect("invoices:sell_invoices_list")

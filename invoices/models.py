@@ -50,8 +50,8 @@ class InvoiceSell(models.Model):
     sum = models.DecimalField("Kwota [zł]", max_digits=10, decimal_places=2, null=True, blank=True)
     county = models.ForeignKey(County, on_delete=models.CASCADE, verbose_name="Powiat", related_name=relatedName)
     date_of_payment = models.DateField("Termin płatności")
-    period_from = models.DateField("Okres od", validators=[validate_period])
-    period_to = models.DateField("Okres do", validators=[validate_period])
+    period_from = models.CharField(verbose_name="Okres od", max_length=10)
+    period_to = models.CharField(verbose_name="Okres do", max_length=10)
     creator = models.ForeignKey(Employer, on_delete=models.CASCADE, verbose_name="Osoba wystawiająca",
                                 related_name=relatedName)
     information = models.TextField("Informacje", blank=True, default="")

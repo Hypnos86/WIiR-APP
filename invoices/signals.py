@@ -34,10 +34,14 @@ def delete_invoice_item(sender, instance, **kwargs):
     invoice.save()
 
 
-@receiver(pre_save, sender=InvoiceSell)
-def addDayToDateField(sender, instance, **kwargs):
-    if instance.period_from:
-        instance.period_from = instance.period_from.replace(day=1)
-    if instance.period_to:
-        instance.period_to = instance.period_to.replace(day=1)
-    instance.save()
+# @receiver(pre_save, sender=InvoiceSell)
+# def addDayToDateField(sender, instance, **kwargs):
+#     print(instance.period_from[0:4])
+#     print(instance.period_from[5:7])
+#     # print(datetime.datetime(year=int(instance.period_from[0:4]), month=int(instance.period_from[5:7]), day=1))
+#     x = datetime.date(year=int(instance.period_from[0:4]), month=int(instance.period_from[5:7]), day=1).__str__()
+#
+#     instance.period_from = x
+#     # instance.period_from = datetime.date(year=int(instance.period_from[0:4]), month=int(instance.period_from[5:7]), day=1)
+#     # print(instance.period_from)
+#     instance.save()
