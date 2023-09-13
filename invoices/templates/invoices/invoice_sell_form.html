@@ -21,59 +21,57 @@
     <form method="post">
         {%csrf_token%}
         <div class="row">
-            <div class="col-md-3 my-2">{{invoice.date|bootstrap}}</div>
-            <div class="col-md-3 my-2">{{invoice.no_invoice|bootstrap}}</div>
-             <div class="col-md-3 my-2">{{invoice.sum|bootstrap}}</div>
+            <div class="col-md-3 my-2">{{form.date|bootstrap}}</div>
+            <div class="col-md-3 my-2">{{form.no_invoice|bootstrap}}</div>
+            <div class="col-md-3 my-2">{{form.sum|bootstrap}}</div>
             <div class="col-md-3 my-2">
                 {%if new%}
                 <div class="form-group">
                     <label class="control-label  " for="id_doc_types">Rodzaj dokumentu</label>
                     <div class=" ">
                         <select name="doc_types" class=" form-control" required="" id="id_doc_types">
-                           {%for doc in doc_types%}
+                            {%for doc in doc_types%}
                             <option value="{{doc.id}}">{{doc}}</option>
                             {%endfor%}
                         </select>
                     </div>
                 </div>
                 {%else%}
-                {{invoice.doc_types|bootstrap}}
+                {{form.doc_types|bootstrap}}
                 {%endif%}
             </div>
         </div>
         <div class="row">
-            <div class="col-md-8 my-2">{{invoice.contractor|bootstrap}}</div>
-            <div class="col-md-4 my-2">{{invoice.date_of_payment|bootstrap}}</div>
+            <div class="col-md-8 my-2">{{form.contractor|bootstrap}}</div>
+            <div class="col-md-4 my-2">{{form.date_of_payment|bootstrap}}</div>
         </div>
         <div class="row my-2">
             <div class=" col-md-6">
                 <div class="row">
-                    <div class="col-md-6">{{invoice.period_from|bootstrap}}</div>
-                    <div class="col-md-6">{{invoice.period_to|bootstrap}}</div>
+                    <div class="col-md-6">{{form.period_from|bootstrap}}</div>
+                    <div class="col-md-6">{{form.period_to|bootstrap}}</div>
                 </div>
                 <div class="row my-2">
-                    <div class="col-md-6">{{invoice.county|bootstrap}}</div>
-                    <div class="col-md-6">{{invoice.creator|bootstrap}}</div>
+                    <div class="col-md-6">{{form.county|bootstrap}}</div>
+                    <div class="col-md-6">{{form.creator|bootstrap}}</div>
                 </div>
             </div>
-            <div class="col-md-6">{{invoice.information|bootstrap}}</div>
+            <div class="col-md-6">{{form.information|bootstrap}}</div>
         </div>
         <div class="row mt-2">
             {%if new%}
             <div class="col-md-12 moj-button-right">
-                <button type="submit" class="btn btn-outline-primary my-btn"><span class="bi bi-save2"> Zapisz</span></button>
+                <button type="submit" class="btn btn-outline-primary my-btn"><span class="bi bi-save2"> Zapisz</span>
+                </button>
             </div>
             {%else%}
             <div class="col-md-12 moj-button-right">
-                <button type="submit" class="btn btn-outline-primary my-btn"><span class="bi bi-save2"> Zapisz zmiany </span></button>
+                <button type="submit" class="btn btn-outline-primary my-btn">
+                    <span class="bi bi-save2"> Zapisz zmiany</span>
+                </button>
             </div>
             {%endif%}
         </div>
     </form>
 </div>
-<script>
-    $(function () {
-        $('[data-toggle="info"]').tooltip()
-    })
-</script>
 {%endblock%}

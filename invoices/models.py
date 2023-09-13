@@ -4,6 +4,9 @@ from contractors.models import Contractor
 from units.models import County
 from main.models import Employer
 from sourcefinancing.models import FinanceSource
+from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator
+import re
 import datetime
 
 
@@ -24,6 +27,12 @@ class DocumentTypes(models.Model):
         return f"{self.type}"
 
 
+def validate_period(value):
+    pattern = r'^\d{4}-\d{2}$'  # Wzorzec daty "YYYY-MM"
+    if not re.match(pattern, value):
+        raise ValidationError('Nieprawidłowy format daty. Oczekiwany format: YYYY-MM.')
+
+
 class InvoiceSell(models.Model):
     class Meta:
         verbose_name = "Faktura sprzedaży"
@@ -41,8 +50,8 @@ class InvoiceSell(models.Model):
     sum = models.DecimalField("Kwota [zł]", max_digits=10, decimal_places=2, null=True, blank=True)
     county = models.ForeignKey(County, on_delete=models.CASCADE, verbose_name="Powiat", related_name=relatedName)
     date_of_payment = models.DateField("Termin płatności")
-    period_from = models.DateField("Okres od")
-    period_to = models.DateField("Okres do")
+    period_from = models.DateField("Okres od", validators=[validate_period])
+    period_to = models.DateField("Okres do", validators=[validate_period])
     creator = models.ForeignKey(Employer, on_delete=models.CASCADE, verbose_name="Osoba wystawiająca",
                                 related_name=relatedName)
     information = models.TextField("Informacje", blank=True, default="")
