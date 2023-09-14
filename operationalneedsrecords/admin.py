@@ -39,6 +39,7 @@ class NeedLetterAdmin(ExportMixin, admin.ModelAdmin):
     list_display_links = ['unit']
     list_filter = ('isDone', 'unit__county__name')
     search_help_text = ("Możliwość szukania: Znak pisma - wpływ, Nr.dziennika, Miasto, Rodzaj sprawy, ROdzaj Zgłoszenia, Znak pisma ZE")
+    autocomplete_fields = ['unit']
     resource_class = NeedsLetterResource
 
 

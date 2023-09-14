@@ -56,6 +56,7 @@ class ContractAdmin(ExportMixin, admin.ModelAdmin):
                     "author"]
     search_fields = ["contractor__name", "contractor__no_contractor", "no_contract", "unit__county__name",
                      "unit__city", "unit__type__type_short", "type_of_contract__type"]
+    autocomplete_fields = ['contractor']
     list_filter = ["state"]
     preserve_filters = True
     resource_class = ContractImmovablesResource
@@ -97,9 +98,9 @@ class ContractAuctionResource(resources.ModelResource):
 class ContractAuctionAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ["date", "no_contract", "contractor", "price", "work_scope", "unit", "author"]
     search_fields = ["contractor__name", "no_contract", "unit__county__name", "unit__type__type_short", "unit__city",
-                     "worker__name", "worker__last_name"]
+                     "worker__name", "worker__last_name", 'investments_project__project_title']
     filter_horizontal = ["worker"]
-    autocomplete_fields = ["worker"]
+    autocomplete_fields = ['worker', 'contractor', 'unit']
     list_display_links = ("no_contract",)
     resources_class = ContractAuctionResource
 
@@ -158,12 +159,14 @@ class ContractMediaAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ["date", "no_contract", "contractor", "period_of_validity", "type", "state", "author"]
     list_display_links = ("no_contract",)
     filter_horizontal = ["unit"]
+    autocomplete_fields = ['contractor']
     resource_class = ContractMediaResource
 
 
 @admin.register(AnnexContractMedia)
 class AnnexContractMediaAdmin(admin.ModelAdmin):
     list_display = ["contract_media", "date", "scope_changes", "author"]
+    search_fields = ['contract_media__no_contract']
 
 
 @admin.register(FinancialDocument)

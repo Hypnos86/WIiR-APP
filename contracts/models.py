@@ -89,6 +89,7 @@ def upload_scan_annex_contract_immovables(instance, filename):
     extension = filename.split(".")[-1]
     return f"contracts_immovables/{instance.contract_immovables.unit.city}/{instance.contract_immovables.id}.Aneks_z_dnia_{instance.date_annex.strftime('%d.%m.%Y')}.{extension}"
 
+
 class AnnexImmovables(models.Model):
     class Meta:
         verbose_name = "Aneks na umowę nieruchomości"
@@ -235,7 +236,8 @@ class ContractMedia(models.Model):
     content = models.CharField("Treść", max_length=100)
     period_of_validity = models.DateField("Data obowiązywania", null=True, blank=True)
     unit = models.ManyToManyField(Unit, verbose_name="Jednostka", related_name="contract_media")
-    contract_value = models.DecimalField(verbose_name="Wartośc umowy", decimal_places=2, max_digits=10, blank=True, null=True)
+    contract_value = models.DecimalField(verbose_name="Wartośc umowy", decimal_places=2, max_digits=10, blank=True,
+                                         null=True)
     information = models.TextField("Informacje", blank=True, default="")
     scan = models.FileField(upload_to=upload_contract_media, verbose_name="Skan", null=True, blank=True)
     employer = models.ForeignKey(Employer, on_delete=models.CASCADE, verbose_name="Branżysta",
@@ -260,15 +262,16 @@ class AnnexContractMedia(models.Model):
         verbose_name_plural = "U.05 - Umowy Media - Aneksy"
         ordering = ["contract_media", "date"]
 
-    contract_media = models.ForeignKey(ContractMedia, on_delete=models.CASCADE,
-                                       verbose_name="Umowa",
-                                       related_name="annex_contract_media")
+    related_name = 'annex_contract_media'
+
+    contract_media = models.ForeignKey(ContractMedia, on_delete=models.CASCADE, verbose_name="Umowa",
+                                       related_name=related_name)
     date = models.DateField("Data aneksu")
     scope_changes = models.TextField("Zakres zmian", blank=True, default="")
     scan = models.FileField(upload_to=upload_annex_contract_media, null=True, blank=True, verbose_name="Skan aneksu")
     creation_date = models.DateTimeField("Data utworzenia", auto_now_add=True)
     author = models.ForeignKey("auth.User", on_delete=models.CASCADE, verbose_name="Autor",
-                               related_name="annex_contract_media")
+                               related_name=related_name)
 
     def __str__(self):
         return f"Aneks z dnia {self.date.strftime('%d.%m.%Y')}"
