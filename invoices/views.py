@@ -38,7 +38,7 @@ def menu_invoices(request):
     year_note_set = set([year["date__year"] for year in all_year_note])
     year_note_list = sorted(year_note_set, reverse=True)
 
-    return render(request, "invoices/menu_invoice.html",
+    return render(request, "invoices/main_invoice.html",
                   {"now_year": now_year, "all_year_sell": year_sell_list,
                    "all_year_buy": year_buy_list,
                    "year_note_list": year_note_list})
@@ -78,14 +78,14 @@ def buy_invoices_list(request):
             invoicesbuy = invoices_buy.filter(date_receipt__lte=date_to)
 
         invoices_buy_filter_sum = len(invoicesbuy)
-        return render(request, "invoices/invoice_buy_list.html", {"invoices": set(invoicesbuy),
+        return render(request, "invoices/list_invoice_buy.html", {"invoices": set(invoicesbuy),
                                                                   "invoices_buy_sum": invoices_buy_filter_sum,
                                                                   "query": query, "year": year, "q": q,
                                                                   "date_from": date_from,
                                                                   "date_to": date_to
                                                                   })
     else:
-        return render(request, "invoices/invoice_buy_list.html", {"invoices": invoices_buy_list,
+        return render(request, "invoices/list_invoice_buy.html", {"invoices": invoices_buy_list,
                                                                   "invoices_buy_sum": invoices_buy_sum,
                                                                   "search": search, "year": year,
                                                                   })
@@ -95,7 +95,7 @@ def buy_invoices_list(request):
 def show_info_buy(request, id):
     invoice = get_object_or_404(InvoiceBuy, pk=id)
     items = InvoiceItems.objects.filter(invoice_id=invoice)
-    return render(request, "invoices/info_buy_popup.html", {"invoice": invoice, "items": items, "id": id})
+    return render(request, "invoices/modal_info_invoice_buy.html", {"invoice": invoice, "items": items, "id": id})
 
 
 @login_required
@@ -127,21 +127,21 @@ def buy_invoices_list_archive(request, year):
             invoicesbuy = invoices_buy.filter(date_receipt__lte=date_to)
 
         invoices_buy_filter_sum = len(invoicesbuy)
-        return render(request, "invoices/invoice_buy_list_archive.html", {"invoices": invoicesbuy,
+        return render(request, "invoices/list_archive_invoice_buy.html", {"invoices": invoicesbuy,
                                                                           "invoices_buy_sum": invoices_buy_filter_sum,
                                                                           "query": query, "year": year, "q": q,
                                                                           "date_from": date_from,
                                                                           "date_to": date_to
                                                                           })
     else:
-        return render(request, "invoices/invoice_buy_list_archive.html", {"invoices": invoices_buy_list,
+        return render(request, "invoices/list_archive_invoice_buy.html", {"invoices": invoices_buy_list,
                                                                           "invoices_buy_sum": invoices_buy_sum,
                                                                           "search": search, "year": year,
                                                                           })
 
 
 class NewInvoiceBuyView(LoginRequiredMixin, View):
-    template_name = 'invoices/invoice_buy_form.html'
+    template_name = 'invoices/form_invoice_buy.html'
     form_class = InvoiceBuyForm
 
     def get(self, request):
@@ -164,7 +164,7 @@ class NewInvoiceBuyView(LoginRequiredMixin, View):
 
 
 class AddItemsInvoiceBuyView(LoginRequiredMixin, View):
-    template_name = "invoices/invoice_items.html"
+    template_name = "invoices/form_invoice_items.html"
     form_class = InvoiceItemsForm
 
     def get(self, request, id):
@@ -217,7 +217,7 @@ def edit_invoice_buy(request, id):
         instance.author = request.user
         invoice_buy_form.save()
         return redirect(reverse("invoices:add_items_invoice_buy", kwargs={"id": instance.id}))
-    return render(request, "invoices/invoice_buy_form.html", context)
+    return render(request, "invoices/form_invoice_buy.html", context)
 
 
 @login_required
@@ -244,7 +244,7 @@ def edit_invoice_buy_archive(request, id):
         instance.author = request.user
         invoice_buy_form.save()
         return redirect(reverse("invoices:buy_invoices_list", kwargs={"year": year}))
-    return render(request, "invoices/invoice_buy_form.html", context)
+    return render(request, "invoices/form_invoice_buy.html", context)
 
 
 @login_required
@@ -300,13 +300,13 @@ def sell_invoices_list(request):
         except TypeError:
             invoices_sell_sum = 0
 
-        return render(request, "invoices/invoice_sell_list.html", {"invoices": invoicesSell,
+        return render(request, "invoices/list_invoice_sell.html", {"invoices": invoicesSell,
                                                                    "invoices_sell_len": invoices_sell_filter_sum,
                                                                    "invoices_sell_sum": invoices_sell_sum,
                                                                    "query": query, "year": year, "q": q,
                                                                    "date_from": date_from, "date_to": date_to})
     else:
-        return render(request, "invoices/invoice_sell_list.html", {"invoices": invoicesSellList,
+        return render(request, "invoices/list_invoice_sell.html", {"invoices": invoicesSellList,
                                                                    "invoices_sell_len": invoices_sell_len,
                                                                    "invoices_sell_sum": invoices_sell_sum,
                                                                    "search": search, "year": year})
@@ -319,7 +319,7 @@ def show_info_sell(request, id):
                                         month=int(invoice.period_from[5:7]), day=1)
     invoice.period_to = datetime.date(year=int(invoice.period_to[0:4]),
                                       month=int(invoice.period_to[5:7]), day=1)
-    return render(request, "invoices/info_sell_popup.html", {"invoice": invoice, "id": id})
+    return render(request, "invoices/modal_info_invoice_sell.html", {"invoice": invoice, "id": id})
 
 
 @login_required
@@ -367,20 +367,20 @@ def sell_invoices_list_archive(request, year):
         except TypeError:
             invoices_sell_sum = 0
 
-        return render(request, "invoices/invoice_sell_list_archive.html", {"invoices": invoicesSell,
+        return render(request, "invoices/list_archive_invoice_sell.html", {"invoices": invoicesSell,
                                                                            "invoices_sell_len": invoices_sell_filter_sum,
                                                                            "invoices_sell_sum": invoices_sell_sum,
                                                                            "query": query, "year": year, "q": q,
                                                                            "date_from": date_from, "date_to": date_to})
     else:
-        return render(request, "invoices/invoice_sell_list_archive.html", {"invoices": invoicesSellList,
+        return render(request, "invoices/list_archive_invoice_sell.html", {"invoices": invoicesSellList,
                                                                            "invoices_sell_len": invoices_sell_len,
                                                                            "invoices_sell_sum": invoices_sell_sum,
                                                                            "search": search, "year": year})
 
 
 class NewInvoiceSellView(View):
-    template_name = "invoices/invoice_sell_form.html"
+    template_name = "invoices/form_invoice_sell.html"
 
     def get(self, request):
         invoice_sell_form = InvoiceSellForm()
@@ -406,7 +406,7 @@ class NewInvoiceSellView(View):
 
 
 class EditInvoiceSellView(View):
-    template_name = "invoices/invoice_sell_form.html"
+    template_name = "invoices/form_invoice_sell.html"
 
     def get(self, request, id):
         invoice_sell_edit = get_object_or_404(InvoiceSell, pk=id)
@@ -427,12 +427,6 @@ class EditInvoiceSellView(View):
 
         if invoice_sell_form.is_valid():
             instance = invoice_sell_form.save(commit=False)
-            # period_from = datetime.date(year=int(instance.period_from[0:4]), month=int(instance.period_from[5:7]),
-            #                             day=1).__str__()
-            # period_to = datetime.date(year=int(instance.period_to[0:4]), month=int(instance.period_to[5:7]),
-            #                           day=1).__str__()
-            # instance.period_from = period_from
-            # instance.period_to = period_to
             instance.author = request.user
             invoice_sell_form.save()
             return redirect("invoices:sell_invoices_list")
@@ -458,7 +452,7 @@ def edit_invoice_sell_archive(request, id):
         invoice_sell_form.save()
         return redirect(reverse("invoices:sell_invoices_list_archive", kwargs={"year": year}))
 
-    return render(request, "invoices/invoice_sell_archive_form.html", context)
+    return render(request, "invoices/form_invoice_sell_archive.html", context)
 
 
 @login_required
@@ -491,12 +485,12 @@ def corrective_note_list(request):
 
         notes_len = len(notes)
 
-        return render(request, "invoices/corrective_note_list.html", {"notes": notes,
+        return render(request, "invoices/list_corrective_note.html", {"notes": notes,
                                                                       "notes_len": notes_len,
                                                                       "query": query, "year": year, "q": q,
                                                                       "date_from": date_from, "date_to": date_to})
     else:
-        return render(request, "invoices/corrective_note_list.html", {"notes": note_list,
+        return render(request, "invoices/list_corrective_note.html", {"notes": note_list,
                                                                       "notes_len": notes_len,
                                                                       "year": year,
                                                                       "search": search})
@@ -505,7 +499,7 @@ def corrective_note_list(request):
 @login_required
 def show_info_note(request, id):
     note = get_object_or_404(CorrectiveNote, pk=id)
-    return render(request, "invoices/info_note_popup.html", {"note": note, "id": id})
+    return render(request, "invoices/modal_info_note.html", {"note": note, "id": id})
 
 
 @login_required
@@ -536,13 +530,13 @@ def corrective_note_list_archive(request, year):
 
         notes_len = len(notes)
 
-        return render(request, "invoices/corrective_note_list_archive.html", {"notes": notes,
+        return render(request, "invoices/list_archive_corrective_note.html", {"notes": notes,
                                                                               "note_len": notes_len,
                                                                               "query": query, "year": year, "q": q,
                                                                               "date_from": date_from,
                                                                               "date_to": date_to})
     else:
-        return render(request, "invoices/corrective_note_list_archive.html",
+        return render(request, "invoices/list_archive_corrective_note.html",
                       {"notes": note_list, "notes_len": notes_len, "year": year, "search": search})
 
 
@@ -557,7 +551,7 @@ def new_note(request):
             instance.author = request.user
             instance.save()
             return redirect("invoices:corrective_note_list")
-    return render(request, "invoices/corrective_note_form.html", context)
+    return render(request, "invoices/form_corrective_note.html", context)
 
 
 @login_required
@@ -572,11 +566,11 @@ def edit_note(request, id):
         instance.author = request.user
         note_form.save()
         return redirect("invoices:corrective_note_list")
-    return render(request, "invoices/corrective_note_form.html", context)
+    return render(request, "invoices/form_corrective_note.html", context)
 
 
 class EditNoteArchiveView(LoginRequiredMixin, View):
-    template_name = "invoices/corrective_note_archive_form.html"
+    template_name = "invoices/form_corrective_note_archive.html"
     class_form = CorrectiveNoteForm
 
     def get(self, request, id):
@@ -597,19 +591,6 @@ class EditNoteArchiveView(LoginRequiredMixin, View):
             return redirect(reverse("invoices:corrective_note_list_archive", kwargs={"year": year}))
         context = {"note_form": form, "year": year}
         return render(request, self.template_name, context)
-    # def edit_note_archive(request, id):
-    #     note = get_object_or_404(CorrectiveNote, pk=id)
-    #     note_form = CorrectiveNoteForm(request.POST or None, instance=note)
-    #     year = note.date.year
-    #     context = {"note_form": note_form,
-    #                "year": year}
-    #
-    #     if note_form.is_valid():
-    #         instance = note_form.save(commit=False)
-    #         instance.author = request.user
-    #         note_form.save()
-    #         return redirect(reverse("invoices:corrective_note_list_archive", kwargs={"year": year}))
-    #     return render(request, "invoices/corrective_note_archive_form.html", context)
 
 
 @login_required
@@ -732,7 +713,7 @@ def make_pdf_from_invoices_sell(request, year):
         "Content-Disposition"] = "attachment; filename=Lista wystawionych faktur - utworzono {now_time}.pdf".format(
         now_time=now_time)
     # find the template and render it.
-    template_path = "invoices/invoice_sell_pdf.html"
+    template_path = "invoices/pdf_invoice_sell.html"
     template = get_template(template_path)
     html = template.render(context)
 
@@ -744,7 +725,6 @@ def make_pdf_from_invoices_sell(request, year):
     if pisa_status.err:
         return HttpResponse("Wystąpił jakiś problem :( Error:997 <pre>" + html + "</pre>")
     return response
-    # return  render(request, "invoices/invoices_sell_pdf.html", context)
 
 
 def link_callback(uri, rel):
