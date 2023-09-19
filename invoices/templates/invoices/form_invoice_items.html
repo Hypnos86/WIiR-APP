@@ -27,9 +27,12 @@
     <div class="container mt-5">
         <div class="row">
             <div class="p-1">
-                <span class="text-muted">Kontahent: </span><span>{{invoice.contractor}}</span><br>
-                <span class="text-muted">Data płanotści: </span><span><b>{{invoice.date_of_payment|date:"d.m.Y"}}&nbsp;r.</b></span><br>
-                <span class="text-muted">Kwota faktury: </span><span><b>{% if invoice.sum != None%}{{invoice.sum}} {%else%}0{%endif%}&nbsp;zł.</b></span><br>
+                <span class="text-muted">Kontahent: </span>
+                <span>{{invoice.contractor}}</span><br>
+                <span class="text-muted">Data płanotści: </span>
+                <span><b>{{invoice.date_of_payment|date:"d.m.Y"}}&nbsp;r.</b></span><br>
+                <span class="text-muted">Kwota faktury: </span>
+                <span><b>{% if invoice.sum != None%}{{invoice.sum}} {%else%}0{%endif%}&nbsp;zł.</b></span><br>
                 {%if invoice.information%}
                 <p class="my-3">{{invoice.information}}</p>
                 {%endif%}
@@ -73,18 +76,30 @@
                 <tbody>
                 {%for item in invoice_items%}
                 <tr>
-                    <td align="center" valign="middle"><span>{{item.account.section.section}}</span></td>
-                    <td align="center" valign="middle"><span>{{item.account.group}}</span></td>
-                    <td align="center" valign="middle"><span>{{item.account.paragraph}}</span></td>
-                    <td align="center" valign="middle"><span>{{item.account.source}}</span></td>
-                    <td align="center" valign="middle"><span>{{item.county}}</span></td>
-                    <td align="center" valign="middle"><span>{{item.sum}}</span></td>
-                    <td align="center" valign="middle"><a
-                            href="{%url 'invoices:delete_items_invoice_buy' item.id invoice.id%}">
-                        <button class="btn btn-outline-danger mx-1" data-toggle="info" title="Usuń element">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </a>
+                    <td align="center" valign="middle">
+                        <span>{{item.account.section.section}}</span>
+                    </td>
+                    <td align="center" valign="middle">
+                        <span>{{item.account.group}}</span>
+                    </td>
+                    <td align="center" valign="middle">
+                        <span>{{item.account.paragraph}}</span>
+                    </td>
+                    <td align="center" valign="middle">
+                        <span>{{item.account.source}}</span>
+                    </td>
+                    <td align="center" valign="middle">
+                        <span>{{item.county}}</span>
+                    </td>
+                    <td align="center" valign="middle">
+                        <span>{{item.sum}}</span>
+                    </td>
+                    <td align="center" valign="middle">
+                        <a href="{%url 'invoices:delete_items_invoice_buy' item.id invoice.id%}">
+                            <button class="btn btn-outline-danger mx-1" data-toggle="info" title="Usuń element">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </a>
                     </td>
                 </tr>
                 {%endfor%}
