@@ -25,6 +25,7 @@ logger = logging.getLogger(__name__)
 
 class FlatsListView(LoginRequiredMixin, View):
     template_name = 'businessflats/list_flats.html'
+    template_error = 'main/error_site.html'
     paginate_by = 10
 
     def get(self, request, *args, **kwargs):
@@ -61,11 +62,12 @@ class FlatsListView(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template_name, context)
+            return render(request, self.template_error, context)
 
 
 class ShowInformationView(LoginRequiredMixin, View):
     template_name = 'businessflats/info_flat_popup.html'
+    template_error = 'main/error_site.html'
 
     def get(self, request, id, *args, **kwargs):
         try:
@@ -75,11 +77,12 @@ class ShowInformationView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Wystąpił błąd: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-        return render(request, self.template_name, context)
+        return render(request, self.template_error, context)
 
 
 class AddFlatView(LoginRequiredMixin, View):
     template_name = 'businessflats/flat_form.html'
+    template_error = 'main/error_site.html'
     form_class = OfficialFlatForm
 
     def get(self, request, *args, **kwargs):
@@ -106,11 +109,12 @@ class AddFlatView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template_name, context)
+            return render(request, self.template_error, context)
 
 
 class EditFlatView(LoginRequiredMixin, View):
     template_name = 'businessflats/flat_form.html'
+    template_error = 'main/error_site.html'
     form_class = OfficialFlatForm
     redirect = "businessflats:make_flats_list"
 
@@ -123,7 +127,7 @@ class EditFlatView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template_name, context)
+            return render(request, self.template_error, context)
 
     def post(self, request, slug, *args, **kwargs):
         try:
@@ -139,4 +143,4 @@ class EditFlatView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template_name, context)
+            return render(request, self.template_error, context)
