@@ -31,6 +31,7 @@ def now_date():
 
 class WelcomeView(LoginRequiredMixin, View):
     template = 'main/home.html'
+    template_error = 'main/error_site.html'
 
     def get(self, request):
         try:
@@ -44,11 +45,12 @@ class WelcomeView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class NewRentCatView(LoginRequiredMixin, View):
     template = 'main/car_form.html'
+    template_error = 'main/error_site.html'
     form_class = CarForm
 
     def get(self, request):
@@ -59,7 +61,7 @@ class NewRentCatView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
     def post(self, request):
         try:
@@ -74,11 +76,12 @@ class NewRentCatView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class EditRentCarView(LoginRequiredMixin, View):
     template = 'main/car_form.html'
+    template_error = 'main/error_site.html'
     form_class = CarForm
 
     def get(self, request, id):
@@ -90,7 +93,7 @@ class EditRentCarView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
     def post(self, request, id):
         try:
@@ -106,7 +109,7 @@ class EditRentCarView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class DeleteRentCar(LoginRequiredMixin, View):
@@ -121,6 +124,7 @@ class DeleteRentCar(LoginRequiredMixin, View):
 
 class SecretariatSiteView(LoginRequiredMixin, View):
     template = 'main/secretariat_menu.html'
+    template_error = 'main/error_site.html'
 
     def get(self, request):
         try:
@@ -128,11 +132,12 @@ class SecretariatSiteView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class ShowTeamsListView(LoginRequiredMixin, View):
     template = 'main/teams_list.html'
+    template_error = 'main/error_site.html'
 
     def get(self, request):
         try:
@@ -142,11 +147,12 @@ class ShowTeamsListView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class NewTeamView(LoginRequiredMixin, View):
     template = 'main/team_form_popup.html'
+    template_error = 'main/error_site.html'
     form_class = TeamForm
 
     def get(self, request):
@@ -157,7 +163,7 @@ class NewTeamView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
     def post(self, request):
         try:
@@ -172,11 +178,12 @@ class NewTeamView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class EditTeamView(LoginRequiredMixin, View):
     template = 'main/team_form_popup.html'
+    template_error = 'main/error_site.html'
     form_class = TeamForm
 
     def get(self, request, id):
@@ -188,7 +195,7 @@ class EditTeamView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
     def post(self, request, id):
         try:
@@ -202,11 +209,12 @@ class EditTeamView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class EmployersListView(LoginRequiredMixin, View):
     template = 'main/employers_list.html'
+    template_error = 'main/error_site.html'
 
     def get(self, request):
         try:
@@ -222,11 +230,12 @@ class EmployersListView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class NewEmployerView(LoginRequiredMixin, View):
     template = 'main/employer_form_popup.html'
+    template_error = 'main/error_site.html'
     form_class = EmployerForm
 
     def get(self, request):
@@ -237,7 +246,7 @@ class NewEmployerView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
     def post(self, request):
         try:
@@ -248,15 +257,16 @@ class NewEmployerView(LoginRequiredMixin, View):
                 form.save()
                 return redirect('main:show_employers_list')
             context = {'employer_form': form, 'new': True}
-            return render(request, self.teamplate_name, context)
+            return render(request, self.template, context)
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class EditEmployerView(LoginRequiredMixin, View):
     template = 'main/employer_form_popup.html'
+    template_error = 'main/error_site.html'
     form_class = EmployerForm
 
     def get(self, request, id):
@@ -268,7 +278,7 @@ class EditEmployerView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
     def post(self, request, id):
         try:
@@ -284,11 +294,12 @@ class EditEmployerView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class CommandListView(LoginRequiredMixin, View):
     template = 'main/command.html'
+    template_error = 'main/error_site.html'
 
     def get(self, request):
         try:
@@ -303,11 +314,12 @@ class CommandListView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class AddCommandView(LoginRequiredMixin, View):
     template = 'main/command_form_popup.html'
+    template_error = 'main/error_site.html'
     form_class = CommandForm
 
     def get(self, request):
@@ -318,7 +330,7 @@ class AddCommandView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
     def post(self, request):
         try:
@@ -332,11 +344,12 @@ class AddCommandView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class EditCommandView(LoginRequiredMixin, View):
     template = 'main/command_form_popup.html'
+    template_error = 'main/error_site.html'
     form_class = CommandForm
 
     def get(self, request, id):
@@ -348,7 +361,7 @@ class EditCommandView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
     def post(self, request, id):
         try:
@@ -362,7 +375,7 @@ class EditCommandView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class DeleteCommandView(LoginRequiredMixin, View):
@@ -377,6 +390,7 @@ class DeleteCommandView(LoginRequiredMixin, View):
 
 class TelephoneListView(LoginRequiredMixin, View):
     template = 'main/telephones.html'
+    template_error = 'main/error_site.html'
 
     def get(self, request):
         try:
@@ -388,11 +402,12 @@ class TelephoneListView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class NewSecretariatNumberView(LoginRequiredMixin, View):
     template = 'main/secretariat_form_popup.html'
+    template_error = 'main/error_site.html'
     form_class = SecretariatTelephoneForm
 
     def get(self, request):
@@ -403,7 +418,7 @@ class NewSecretariatNumberView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
     def post(self, request):
         try:
@@ -416,11 +431,12 @@ class NewSecretariatNumberView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class EditSecretariatNumberView(LoginRequiredMixin, View):
     template = 'main/secretariat_form_popup.html'
+    template_error = 'main/error_site.html'
     form_class = SecretariatTelephoneForm
 
     def get(self, request, id):
@@ -432,7 +448,7 @@ class EditSecretariatNumberView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
     def post(self, request, id):
         try:
@@ -446,7 +462,7 @@ class EditSecretariatNumberView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class DeleteSecretariatNumberView(LoginRequiredMixin, View):
@@ -462,6 +478,7 @@ class DeleteSecretariatNumberView(LoginRequiredMixin, View):
 
 class AccessToModulesView(LoginRequiredMixin, View):
     template = 'main/access_modules.html'
+    template_error = 'main/error_site.html'
 
     def get(self, request):
         try:
@@ -472,11 +489,12 @@ class AccessToModulesView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class ListRegisterView(LoginRequiredMixin, View):
     template = 'main/list_register.html'
+    template_error = 'main/error_site.html'
     now_year = current_year()
 
     def get(self, request):
@@ -542,11 +560,12 @@ class ListRegisterView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class NecesseryFileView(LoginRequiredMixin, View):
     template = 'main/necessery_files.html'
+    template_error = 'main/error_site.html'
 
     def get(self, request):
         try:
@@ -557,11 +576,12 @@ class NecesseryFileView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class DownloadFilesView(LoginRequiredMixin, View):
     template = 'main/download_file.html'
+    template_error = 'main/error_site.html'
 
     def get(self, request):
         try:
@@ -572,11 +592,12 @@ class DownloadFilesView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class AddUploadFilesView(LoginRequiredMixin, View):
     template = 'main/download_file_form_popup.html'
+    template_error = 'main/error_site.html'
     form_class = NecesseryFileForm
 
     def get(self, request):
@@ -587,7 +608,7 @@ class AddUploadFilesView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
     def post(self, request):
         try:
@@ -601,7 +622,7 @@ class AddUploadFilesView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class DeleteUploadFile(LoginRequiredMixin, View):

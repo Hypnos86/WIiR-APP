@@ -12,6 +12,7 @@ logger = logging.getLogger(__name__)
 
 class UnitListView(View):
     template = "units/unit_list.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request):
         try:
@@ -74,11 +75,12 @@ class UnitListView(View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class UnitsEditableListView(LoginRequiredMixin, View):
     template = "units/unit_list_module.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request):
         try:
@@ -136,11 +138,12 @@ class UnitsEditableListView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class AddUnitView(LoginRequiredMixin, View):
     template = "units/unit_form.html"
+    template_error = 'main/error_site.html'
     form_class = UnitForm
 
     def get(self, request):
@@ -151,7 +154,7 @@ class AddUnitView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
     def post(self, request):
         try:
@@ -167,11 +170,12 @@ class AddUnitView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class EditUnitView(LoginRequiredMixin, View):
     template = "units/unit_form.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request, slug):
         try:
@@ -181,7 +185,7 @@ class EditUnitView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
     def post(self, request, slug):
         try:
@@ -196,23 +200,14 @@ class EditUnitView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class UnitsArchiveListView(LoginRequiredMixin, View):
     template = "units/unit_list.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request):
-        """
-
-        Parameters
-        ----------
-        request
-
-        Returns
-        -------
-        Zwraca liste zarwchiwizowanych Unit
-        """
         try:
             units_archive = Unit.objects.filter(status=0).order_by("county")
             county = County.objects.all().order_by("swop_id")
@@ -253,24 +248,14 @@ class UnitsArchiveListView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class ShowAllInfoUnit(LoginRequiredMixin, View):
     template = "units/unit_info.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request, slug, *args, **kwargs):
-        """
-
-        Parameters
-        ----------
-        request
-        id - klucz obiektu Unit
-
-        Returns
-        -------
-        Zwraca wszystkie informacje dotyczace Unit
-        """
         try:
             unit_info = Unit.objects.get(slug=slug)
             orders = unit_info.order.all()
@@ -287,4 +272,4 @@ class ShowAllInfoUnit(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)

@@ -33,6 +33,7 @@ class ProtocolType(Enum):
 
 class ImportantInspections(LoginRequiredMixin, View):
     template = "construction_inspections/priority_inspections.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request):
         try:
@@ -140,11 +141,12 @@ class ImportantInspections(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class BuildingsInspectionsChoice(LoginRequiredMixin, View):
     template = "construction_inspections/buildings_choice_popup.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request):
         try:
@@ -153,11 +155,12 @@ class BuildingsInspectionsChoice(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class ElectricalInspectionsChoice(LoginRequiredMixin, View):
     template = "construction_inspections/electrical_choice_popup.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request):
         try:
@@ -166,11 +169,12 @@ class ElectricalInspectionsChoice(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class BuildingsOneYearInspectionsList(LoginRequiredMixin, View):
     template = "construction_inspections/buildings_one_year_inspection.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request):
         try:
@@ -183,11 +187,12 @@ class BuildingsOneYearInspectionsList(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class BuildingsFiveYearInspectionsList(LoginRequiredMixin, View):
     template = "construction_inspections/buildings_five_year_inspection.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request):
         try:
@@ -200,11 +205,12 @@ class BuildingsFiveYearInspectionsList(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class ChimneyInspectionList(LoginRequiredMixin, View):
     template = "construction_inspections/chimneys_inspection_list.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request):
         try:
@@ -217,11 +223,12 @@ class ChimneyInspectionList(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class ElectricalInspectionOneYearList(LoginRequiredMixin, View):
     template = "construction_inspections/electrical_inspection_one_year_list.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request):
         try:
@@ -234,11 +241,12 @@ class ElectricalInspectionOneYearList(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class ElectricalInspectionFiveYearList(LoginRequiredMixin, View):
     template = "construction_inspections/electrical_inspection_five_year_list.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request):
         try:
@@ -251,11 +259,12 @@ class ElectricalInspectionFiveYearList(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class HeatingBoilersInspectionList(LoginRequiredMixin, View):
     template = "construction_inspections/heating_boilers_inspection_list.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request):
         try:
@@ -268,11 +277,12 @@ class HeatingBoilersInspectionList(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class AirConditionersInspectionList(LoginRequiredMixin, View):
     template = "construction_inspections/air_conditioners_inspection_list.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request):
         try:
@@ -285,11 +295,12 @@ class AirConditionersInspectionList(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class FireInspectionList(LoginRequiredMixin, View):
     template = "construction_inspections/fire_inspection_list.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request):
         try:
@@ -302,11 +313,12 @@ class FireInspectionList(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class AddProtocolView(View):
     template = "construction_inspections/protocol_inspection_form.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request, typeInspection, id=None):
         try:
@@ -362,7 +374,7 @@ class AddProtocolView(View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
     def post(self, request, typeInspection, id=None):
         try:
@@ -426,11 +438,12 @@ class AddProtocolView(View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class EditProtocolView(View):
     template = "construction_inspections/protocol_inspection_form.html"
+    template_error = 'main/error_site.html'
 
     def get_object_form(self, request, typeInspection, id):
         try:
@@ -487,7 +500,7 @@ class EditProtocolView(View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
     def get(self, request, typeInspection, id):
         try:
@@ -501,7 +514,7 @@ class EditProtocolView(View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
     def post(self, request, typeInspection, id):
         try:
@@ -515,16 +528,17 @@ class EditProtocolView(View):
                        "new": False,
                        "typeProtocol": typeProtocol,
                        "redirectText": redirectText}
-            return render(request, "construction_inspections/protocol_inspection_form.html", context)
+            return render(request, self.template, context)
         except Exception as e:
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class ShowInformationProtocolView(LoginRequiredMixin, View):
     template = "construction_inspections/info_popup.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request, typeInspection, id):
         try:
@@ -566,11 +580,12 @@ class ShowInformationProtocolView(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class PriorityInspectionsList(LoginRequiredMixin, View):
     template = "construction_inspections/priority_inspections_list.html"
+    template_error = 'main/error_site.html'
     now = now_date
 
     def get(self, request, typeInspection):
@@ -661,4 +676,4 @@ class PriorityInspectionsList(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)

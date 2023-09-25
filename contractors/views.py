@@ -11,6 +11,7 @@ logger = logging.getLogger(__name__)
 
 class ContractorsListView(LoginRequiredMixin, View):
     template_name = 'contractors/list_contractor.html'
+    template_error = 'main/error_site.html'
     paginate_by = 30
 
     def get(self, request, *args, **kwargs):
@@ -50,13 +51,14 @@ class ContractorsListView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template_name, context)
+            return render(request, self.template_error, context)
 
 
 class ShowInformationView(LoginRequiredMixin, View):
     template_name = 'contractors/information_popup.html'
+    template_error = 'main/error_site.html'
 
-    def get(self, request, id, *args, **kwargs):
+    def get(self, request, id):
         try:
             contractor = get_object_or_404(Contractor, pk=id)
             context = {'contractor': contractor, 'id': id}
@@ -65,14 +67,15 @@ class ShowInformationView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template_name, context)
+            return render(request, self.template_error, context)
 
 
 class AddNewContractorView(LoginRequiredMixin, View):
     template_name = 'contractors/contractor_form.html'
+    template_error = 'main/error_site.html'
     form_class = ContractorsForm
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
         try:
             form = self.form_class()
             context = {'contractor_form': form, "new": True}
@@ -81,9 +84,9 @@ class AddNewContractorView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template_name, context)
+            return render(request, self.template_error, context)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         try:
             form = self.form_class(request.POST or None)
             if form.is_valid():
@@ -96,14 +99,15 @@ class AddNewContractorView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template_name, context)
+            return render(request, self.template_error, context)
 
 
 class EditContractorView(LoginRequiredMixin, View):
     template_name = 'contractors/contractor_form.html'
+    template_error = 'main/error_site.html'
     form_class = ContractorsForm
 
-    def get(self, request, slug, *args, **kwargs):
+    def get(self, request, slug):
         try:
             contractor = get_object_or_404(Contractor, slug=slug)
             form = self.form_class(instance=contractor)
@@ -115,7 +119,7 @@ class EditContractorView(LoginRequiredMixin, View):
             context = {'error_message': f"Wystąpił błąd {e}"}
             return render(request, self.template_name, context)
 
-    def post(self, request, slug, *args, **kwargs):
+    def post(self, request, slug):
         try:
             contractor = get_object_or_404(Contractor, slug=slug)
             form = self.form_class(request.POST or None, instance=contractor)
@@ -129,4 +133,4 @@ class EditContractorView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template_name, context)
+            return render(request, self.template_error, context)
