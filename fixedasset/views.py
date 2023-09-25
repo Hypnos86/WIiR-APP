@@ -13,6 +13,7 @@ logger = logging.getLogger(__name__)
 # Create your views here.
 class FixedAssetListView(LoginRequiredMixin, View):
     template = "fixedasset/list_fixed_asset.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request):
         try:
@@ -50,11 +51,12 @@ class FixedAssetListView(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class ShowInformationView(LoginRequiredMixin, View):
     template = "fixedasset/info_popup.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request, id):
         try:
@@ -65,11 +67,12 @@ class ShowInformationView(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class AddBuildingView(LoginRequiredMixin, View):
     template = "fixedasset/fixed_asset_form.html"
+    template_error = 'main/error_site.html'
     units = Unit.objects.all().order_by("county__id_order")
     form_class = BuildingForm
 
@@ -82,7 +85,7 @@ class AddBuildingView(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
     def post(self, request):
         try:
@@ -99,11 +102,12 @@ class AddBuildingView(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class EditBuildingView(LoginRequiredMixin, View):
     template = "fixedasset/fixed_asset_form.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request, id):
         try:
@@ -117,7 +121,7 @@ class EditBuildingView(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
     def post(self, request, id):
         try:
@@ -137,4 +141,4 @@ class EditBuildingView(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)

@@ -4,7 +4,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.core.paginator import Paginator
 from django.views import View
-
 from contracts.models import ContractImmovables, ContractAuction, AnnexContractAuction, ContractMedia, \
     GuaranteeSettlement, FinancialDocument
 from contracts.forms import ContractImmovablesForm, ContractAuctionForm, AnnexImmovablesForm, AnnexContractAuctionForm, \
@@ -23,6 +22,7 @@ logger = logging.getLogger(__name__)
 # Create your views here.
 class ContractsImmovableListView(LoginRequiredMixin, View):
     template = "contracts/list_immovable.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request):
         try:
@@ -70,11 +70,12 @@ class ContractsImmovableListView(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class ContractsArchiveImmovableListView(LoginRequiredMixin, View):
     template = "contracts/list_immovable.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request):
         try:
@@ -113,11 +114,12 @@ class ContractsArchiveImmovableListView(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class NewContractsImmovableView(LoginRequiredMixin, View):
     template = "contracts/contract_form.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request):
         try:
@@ -129,7 +131,7 @@ class NewContractsImmovableView(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
     def post(self, request):
         try:
@@ -148,12 +150,12 @@ class NewContractsImmovableView(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class EditContractImmovablesView(LoginRequiredMixin, View):
     template_name = 'contracts/contract_form.html'
-    error_template_name = 'contracts/contract_form.html'
+    template_error = 'main/error_site.html'
 
     def get(self, request, id):
         try:
@@ -168,7 +170,7 @@ class EditContractImmovablesView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.error_template_name, context)
+            return render(request, self.template_error, context)
 
     def post(self, request, id):
         try:
@@ -191,11 +193,12 @@ class EditContractImmovablesView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.error_template_name, context)
+            return render(request, self.template_error, context)
 
 
 class AddAnnexImmovablesView(LoginRequiredMixin, View):
     template_name = 'contracts/new_annex_immovables_form.html'
+    template_error = 'main/error_site.html'
 
     def get(self, request, id):
         try:
@@ -206,7 +209,7 @@ class AddAnnexImmovablesView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.error_template_name, context)
+            return render(request, self.template_error, context)
 
     def post(self, request, id):
         try:
@@ -225,11 +228,12 @@ class AddAnnexImmovablesView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template_name, context)
+            return render(request, self.template_error, context)
 
 
 class ShowContractImmovableView(LoginRequiredMixin, View):
     template = "contracts/show_contract_immovable.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request, id):
         try:
@@ -241,11 +245,12 @@ class ShowContractImmovableView(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class ContractsAuctionListView(LoginRequiredMixin, View):
     template = "contracts/list_contract_auction.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request):
         try:
@@ -298,12 +303,12 @@ class ContractsAuctionListView(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class NewContractAuctionView(LoginRequiredMixin, View):
     template_name = 'contracts/contract_auction_form.html'
-    error_template_name = 'contracts/contract_auction_form.html'
+    template_error = 'main/error_site.html'
 
     def get(self, request):
         try:
@@ -315,7 +320,7 @@ class NewContractAuctionView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.error_template_name, context)
+            return render(request, self.template_error, context)
 
     def post(self, request):
         try:
@@ -334,11 +339,12 @@ class NewContractAuctionView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.error_template_name, context)
+            return render(request, self.template_error, context)
 
 
 class ShowContractAuctionView(LoginRequiredMixin, View):
     template = "contracts/show_contract_auction.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request, id):
         try:
@@ -351,11 +357,12 @@ class ShowContractAuctionView(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class EditContractAuctionView(LoginRequiredMixin, View):
     template_name = 'contracts/contract_auction_form.html'
+    template_error = 'main/error_site.html'
 
     def get(self, request, id):
         try:
@@ -371,7 +378,7 @@ class EditContractAuctionView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template_name, context)
+            return render(request, self.template_error, context)
 
     def post(self, request, id):
         try:
@@ -444,11 +451,12 @@ class EditContractAuctionView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template_name, context)
+            return render(request, self.template_error, context)
 
 
 class AddAnnexContractAuctionView(LoginRequiredMixin, View):
     template_name = 'contracts/new_annex_auction_form.html'
+    template_error = 'main/error_site.html'
 
     def get(self, request, id):
         try:
@@ -459,7 +467,7 @@ class AddAnnexContractAuctionView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template_name, context)
+            return render(request, self.template_error, context)
 
     def post(self, request, id):
         try:
@@ -478,12 +486,12 @@ class AddAnnexContractAuctionView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template_name, context)
+            return render(request, self.template_error, context)
 
 
 class NewContractMediaView(LoginRequiredMixin, View):
     template_name = 'contracts/contract_media_form.html'
-    error_template_name = 'contracts/contract_media_form.html'
+    template_error = 'main/error_site.html'
 
     def get(self, request):
         try:
@@ -498,7 +506,7 @@ class NewContractMediaView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.error_template_name, context)
+            return render(request, self.template_error, context)
 
     def post(self, request):
         try:
@@ -518,11 +526,12 @@ class NewContractMediaView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.error_template_name, context)
+            return render(request, self.template_error, context)
 
 
 class EditContractMediaView(LoginRequiredMixin, View):
     template_name = 'contracts/contract_media_form.html'
+    template_error = 'main/error_site.html'
 
     def get(self, request, id):
         try:
@@ -540,7 +549,7 @@ class EditContractMediaView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template_name, context)
+            return render(request, self.template_error, context)
 
     def post(self, request, id):
         try:
@@ -565,11 +574,12 @@ class EditContractMediaView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template_name, context)
+            return render(request, self.template_error, context)
 
 
 class ContractMediaListView(LoginRequiredMixin, View):
     template = "contracts/list_contracts_media.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request):
         try:
@@ -614,8 +624,7 @@ class ContractMediaListView(LoginRequiredMixin, View):
                            'contracts_media_len': contracts_media_len,
                            'q': q, 'date_from': date_from, 'date_to': date_to, 'last_date': last_date, 'query': query,
                            'now': now}
-                return render(request, self.template, context
-                              )
+                return render(request, self.template, context)
             else:
                 context = {'contracts_media': contracts_media_list,
                            'contracts_media_len': contracts_media_len, 'last_date': last_date, 'search': search,
@@ -625,11 +634,12 @@ class ContractMediaListView(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class ContractsArchiveMediaListView(LoginRequiredMixin, View):
     template = "contracts/list_contracts_media.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request):
         try:
@@ -684,11 +694,12 @@ class ContractsArchiveMediaListView(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class ShowContractMediaView(LoginRequiredMixin, View):
     template = "contracts/show_contract_media.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request, id):
         try:
@@ -701,11 +712,12 @@ class ShowContractMediaView(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class AddAnnexContractMediaView(LoginRequiredMixin, View):
     template_name = 'contracts/new_annex_media_form.html'
+    template_error = 'main/error_site.html'
 
     def get(self, request, id):
         try:
@@ -716,7 +728,7 @@ class AddAnnexContractMediaView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template_name, context)
+            return render(request, self.template_error, context)
 
     def post(self, request, id):
         try:
@@ -735,11 +747,12 @@ class AddAnnexContractMediaView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template_name, context)
+            return render(request, self.template_error, context)
 
 
 class EditSettlementView(LoginRequiredMixin, View):
     template = "contracts/settlement_form.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request, id):
         try:
@@ -751,7 +764,7 @@ class EditSettlementView(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
     def post(self, request, id):
         try:
@@ -770,11 +783,12 @@ class EditSettlementView(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class ShowSettlementView(LoginRequiredMixin, View):
     template = "contracts/show_settlement.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request, id):
         try:
@@ -785,11 +799,12 @@ class ShowSettlementView(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class FinancialDocumentListView(LoginRequiredMixin, View):
     template = "contracts/list_financial_document.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request, contract_id):
         try:
@@ -813,11 +828,12 @@ class FinancialDocumentListView(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class AddFinancialDocumentView(LoginRequiredMixin, View):
     template_name = 'contracts/financial_media_form.html'
+    template_error = 'main/error_site.html'
 
     def get(self, request, contract_id):
         try:
@@ -828,7 +844,7 @@ class AddFinancialDocumentView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template_name, context)
+            return render(request, self.template_error, context)
 
     def post(self, request, contract_id):
         try:
@@ -847,11 +863,12 @@ class AddFinancialDocumentView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template_name, context)
+            return render(request, self.template_error, context)
 
 
 class EditFinancialDocumentView(LoginRequiredMixin, View):
     template_name = 'contracts/financial_media_form.html'
+    template_error = 'main/error_site.html'
 
     def get(self, request, contract_id, id):
         try:
@@ -863,7 +880,7 @@ class EditFinancialDocumentView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template_name, context)
+            return render(request, self.template_error, context)
 
     def post(self, request, contract_id, id):
         try:
@@ -883,4 +900,4 @@ class EditFinancialDocumentView(LoginRequiredMixin, View):
         except Exception as e:
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template_name, context)
+            return render(request, self.template_error, context)

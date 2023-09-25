@@ -43,7 +43,7 @@
                                 {% for county in county_list %}
                                 <optgroup label="{{county.grouper}}">
                                     {% for unit in county.list %}
-                                    {% if donation_edit.id == unit.id %}
+                                    {% if unit_edit.id == unit.id %}
                                     <option value="{{unit.id}}" selected>{{unit}}</option>
                                     {% else %}
                                     <option value="{{unit.id}}">{{unit}}</option>
@@ -99,7 +99,9 @@
         $('[data-toggle="info"]').tooltip()
         })
 
-
+    $(document).ready(function(){
+        $("#id_presenter").select2({placeholder:'Wybierz kontrachenta'});
+    })
 </script>
 {%endif%}
 {%endblock%}

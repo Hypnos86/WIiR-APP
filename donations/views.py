@@ -14,6 +14,7 @@ logger = logging.getLogger(__name__)
 # Create your views here.
 class DonationsListView(LoginRequiredMixin, View):
     template = "donations/list_donations.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request, year):
         try:
@@ -62,11 +63,12 @@ class DonationsListView(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class AddDonationView(LoginRequiredMixin, View):
     template = "donations/donation_form.html"
+    template_error = 'main/error_site.html'
 
     form_class = ApplicationForm
     units = Unit.objects.all()
@@ -81,7 +83,7 @@ class AddDonationView(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
     def post(self, request, year):
         try:
@@ -99,51 +101,53 @@ class AddDonationView(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class EditDonationView(LoginRequiredMixin, View):
     template = "donations/donation_form.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request, year, slug):
         try:
             donation_edit = get_object_or_404(Application, slug=slug)
             donation_form = ApplicationForm(instance=donation_edit)
             units = Unit.objects.all()
-            donation_unit = donation_edit.unit
-            context = {'new': False, 'donation_form': donation_form, 'units': units, 'donation_unit': donation_unit,
+            unit_edit = donation_edit.unit
+            context = {'new': False, 'donation_form': donation_form, 'units': units, 'unit_edit': unit_edit,
                        "year": year, "id": donation_edit.id}
             return render(request, self.template, context)
         except Exception as e:
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
     def post(self, request, year, slug):
         try:
             donation_edit = get_object_or_404(Application, slug=slug)
             donation_form = ApplicationForm(request.POST, request.FILES, instance=donation_edit)
             units = Unit.objects.all()
-            donation_unit = donation_edit.unit
+            unit_edit = donation_edit.unit
 
             if donation_form.is_valid():
                 instance = donation_form.save(commit=False)
                 instance.author = request.user
                 donation_form.save()
                 return redirect(reverse('donations:donations_list', kwargs={"year": year}))
-            context = {'new': False, 'donation_form': donation_form, 'units': units, 'donation_unit': donation_unit,
+            context = {'new': False, 'donation_form': donation_form, 'units': units, 'unit_edit': unit_edit,
                        "year": year, "id": donation_edit.id}
             return render(request, self.template, context)
         except Exception as e:
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class ShowInformationView(LoginRequiredMixin, View):
     template = "donations/donation_info_popup.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request, id):
         try:
@@ -154,11 +158,12 @@ class ShowInformationView(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class DonationsArchiveYearListView(LoginRequiredMixin, View):
     template = "donations/archive_list_year.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request):
         try:
@@ -174,11 +179,12 @@ class DonationsArchiveYearListView(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
 
 
 class DonationsArchiveListView(LoginRequiredMixin, View):
     template = "donations/list_donations.html"
+    template_error = 'main/error_site.html'
 
     def get(self, request, year):
         try:
@@ -229,4 +235,4 @@ class DonationsArchiveListView(LoginRequiredMixin, View):
             # Zapisanie informacji o błędzie do loga
             logger.error("Error: %s", e)
             context = {'error_message': f"Wystąpił błąd {e}"}
-            return render(request, self.template, context)
+            return render(request, self.template_error, context)
