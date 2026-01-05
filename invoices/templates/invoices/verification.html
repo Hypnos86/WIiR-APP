@@ -43,10 +43,10 @@
             </div>
         </div>
         <div class="col-md-2">
-            <button id="searchButton" style="{%if query%}display:none;{%endif%}" type="submit"
+            <button id="searchButton" style="{% if query %}display:none;{% endif %}" type="submit"
                     class="btn btn-outline-primary my-btn mt-4">szukaj
             </button>
-            <button id="cleanButton" style="{%if not query%}display:none;{%endif%}" type="submit"
+            <button id="cleanButton" style="{% if not query%}display:none;{% endif %}" type="submit"
                     class="btn btn-outline-primary my-btn mt-4" onclick="cleanSearch()">Wyczyść
             </button>
         </div>

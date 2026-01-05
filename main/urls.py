@@ -31,7 +31,7 @@ urlpatterns = [
     path('files/', NecesseryFileView.as_view(), name='files'),
     path('secretariat/upload_files/', DownloadFilesView.as_view(), name='download_files'),
     path('secretariat/upload_files/add/', AddUploadFilesView.as_view(), name='add_download_files_popup'),
-    re_path('secretariat/upload_file/delete/(?P<id>\d+)/$', DeleteUploadFile.as_view(), name='delete_download_file' ),
+    re_path('secretariat/upload_file/delete/(?P<id>\d+)/$', DeleteUploadFile.as_view(), name='delete_download_file'),
     path('', WelcomeView.as_view(), name='welcome')
 
 ]
