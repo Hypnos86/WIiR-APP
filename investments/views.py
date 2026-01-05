@@ -109,7 +109,7 @@ class AddProjectView(LoginRequiredMixin, View):
 
     def post(self, request):
         try:
-            form = self.form_class(request.POST or None)
+            form = self.form_class(request.POST or None, request.FILES or None)
             form.fields["worker"].queryset = Employer.objects.filter(industry_specialist=True)
             if request.method == "POST":
                 if form.is_valid():
@@ -152,7 +152,7 @@ class EditProjectView(LoginRequiredMixin, View):
     def post(self, request, id):
         try:
             project = get_object_or_404(Project, pk=id)
-            form = self.form_class(request.POST or None, instance=project)
+            form = self.form_class(request.POST or None, request.FILES or None, instance=project)
             form.fields["worker"].queryset = Employer.objects.all().filter(industry_specialist=True)
             unit_edit = project.unit
             if request.method == "POST":

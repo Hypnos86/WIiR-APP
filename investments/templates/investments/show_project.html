@@ -23,103 +23,80 @@
             <small class="text-muted">Dta utworzenia: {{project_form.creation_date|date:'d.m.Y'}}&nbsp;r.
                 ({{project_form.creation_date|date:'H:i'}})</small>
         </div>
-        <div class="container mt-2">
-            <div class="row">
-                <div class="col-md-6 col-sm-12 col-lg-auto my-2">
-                    <div class="card">
-                        <div class="card-body">
-                            <h6 class="card-title bi bi-building pb-2">
-                                {%if project_form.unit.type.type_full == 'Inne'%}
-                                {%else%} {{project_form.unit.type.type_full}} {%endif%}
-                                {{project_form.unit.city}}</h6>
-                            <h6 class="card-subtitle mb-2 text-muted">Powiat: {{project_form.unit.county}}
-                                ({{project_form.unit.county.swop_id}})</h6>
-                            <h6 class="card-subtitle mb-2 text-muted bi bi-geo-alt"> {{project_form.unit.address}},
-                                {{project_form.unit.zip_code}}, {{project_form.unit.city}}</h6>
-                            <small class="card-text">Trwały zarząd: {{project_form.unit.manager}} </small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-sm-12 col-lg-auto my-2">
-                    <div class="card">
-                        <div class="card-body">
-                            <h6 class="card-title bi bi-journal-check pb-2">Program inwestycji</h6>
-                            <h6 class="card-subtitle mb-2 text-muted">Data akceptacji:
-                                {{project_form.date_of_acceptance}} r.</h6>
-                            <h6 class="card-subtitle mb-2 text-muted">L.dz.:
-                                {{project_form.no_acceptance_document}}</h6>
-                            <h6 class="card-subtitle mb-1 text-muted" title="Wartość kosztorysowa Inwestycji">WKI:
-                                {{project_form.investment_cost_estimate_value|intcomma}}&nbsp;zł.</h6>
-                            {%if project_form.investment_program%}
-                            <div class="float-right">
-                                <a href="/media/{{project_form.investment_program}}" role="button" target="_blank">
-                                    <button class="card-text btn btn-secondary btn-sm bi bi-file-text" type="button">
-                                        Skan
-                                    </button>
-                                </a>
-                            </div>
-                            {%endif%}
-                        </div>
-                    </div>
-                </div>
-                {%if project_form.realized%}
-                <div class="col-md-6 col-sm-12 col-lg-auto my-2">
-                    <div class="card">
-                        <div class="card-body">
-                            <h6 class="card-title bi bi-journal-bookmark pb-2">Rozliczenie</h6>
-                            {%if project_form.date_of_settlement%}
-                            <h6 class="card-subtitle mb-2 mt-1 text-muted">Data rozliczenia:
-                                {{project_form.date_of_settlement}}&nbsp;r.</h6>
-                            {%endif%}
-                            {%if project_form.settlement_scan%}
-                            <div class="float-right">
-                                <a href="/media/{{project_form.settlement_scan}}" role="button"
-                                   target="_blank">
-                                    <button class="card-text btn btn-secondary btn-sm bi bi-check-square-fill"
-                                            type="button">Rozliczenie
-                                    </button>
-                                </a>
-                            </div>
-                            {%endif%}
-                        </div>
-                    </div>
+        <div class="row mt-3">
+            <div class="col-md-3">
+                <h6 class="bi bi-building pb-2">
+                    {%if project_form.unit.type.type_full == 'Inne'%}
+                    {%else%} {{project_form.unit.type.type_full}} {%endif%}
+                    {{project_form.unit.city}}</h6>
+                <h6 class="mb-2 text-muted bi bi-geo-alt"> {{project_form.unit.address}},
+                    {{project_form.unit.zip_code}}, {{project_form.unit.city}}</h6>
+                <h6 class="mb-2 text-muted">Powiat: {{project_form.unit.county}}
+                    ({{project_form.unit.county.swop_id}})</h6>
+
+            </div>
+            <div class="col-md-3">
+                <h6 class="bi bi-journal-check pb-2"> Program inwestycji</h6>
+                <h6 class="mb-2 text-muted">Data akceptacji:
+                    {{project_form.date_of_acceptance}} r.
+                    {% if project_form.no_acceptance_document %}
+                    {{project_form.no_acceptance_document}}
+                    {% endif %}
+                </h6>
+                <h6 class="mb-1 text-muted" title="Wartość kosztorysowa Inwestycji">
+                    WKI: {{project_form.investment_cost_estimate_value|intcomma}}&nbsp;zł.</h6>
+                {%if project_form.investment_program%}
+                <div class="float-right">
+                    <a class="btn btn-secondary btn-sm bi bi-file-text"
+                       href="/media/{{project_form.investment_program}}" role="button" target="_blank">
+                        Skan
+                    </a>
                 </div>
                 {%endif%}
-                <div class="col-md-6 col-sm-12 col-lg-auto my-2">
-                    <div class="card">
-                        <div class="card-body">
-                            <h6 class="card-title bi bi-person-lines-fill pb-2">Majster</h6>
-                            {%for worker in project_form.worker.all%}
-                            <h6 class="card-subtitle mb-2 text-muted">
-                                <span data-toggle="info" title="{{worker.industry}}">{{worker.name}} {{worker.last_name}}</span>
-                            </h6>
-                            {%endfor%}
-                        </div>
+            </div>
+            <div class="col-md-3">
+                <h6 class="bi bi-person-lines-fill pb-2"> Branżysta</h6>
+                {%for worker in project_form.worker.all%}
+                <h6 class="mb-2 text-muted">
+                    <span data-toggle="info" title="{{worker.industry}}">{{worker.name}} {{worker.last_name}}</span>
+                </h6>
+                {%endfor%}
+            </div>
+            <div class="col-md-3">
+                <h6 class="bi bi-journal-bookmark pb-2"> Rozliczenie</h6>
+                {%if project_form.date_of_settlement%}
+                <h6 class="text-muted">Data rozliczenia:
+                    {{project_form.date_of_settlement}}&nbsp;r.</h6>
+                {%endif%}
+                {%if project_form.settlement_scan%}
+                <div>
+                    <a class="btn btn-secondary btn-sm bi bi-file-text"
+                       href="/media/{{project_form.settlement_scan}}" role="button" target="_blank">
+                        Skan
+                    </a>
+                </div>
+                {%endif%}
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="bi bi-bank pb-2">Źródło finansowania</h6>
+                        <small class="card-subtitle text-muted">Rozdział: <b>{{project_form.section}}</b></small>
+                        <small class="card-subtitle text-muted">Paragraf: <b>{{project_form.group}}
+                            {{project_form.paragraph}}</b></small><br>
+                        <p class="card-subtitle text-muted">{{project_form.source_financing|safe}}</p>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 col-xxl-6 my-2">
-                    <div class="card">
-                        <div class="card-body">
-                            <h6 class="card-title bi bi-bank pb-2">Źródło finansowania</h6>
-                            <small class="card-subtitle text-muted">Rozdział: <b>{{project_form.section}}</b></small>
-                            <small class="card-subtitle text-muted">Paragraf: <b>{{project_form.group}}
-                                {{project_form.paragraph}}</b></small><br>
-                            <small class="card-subtitle text-muted">{{project_form.source_financing|safe}}</small>
-                        </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class=" bi bi-info-square">Informacje</h6>
+                        <p class=" text-muted">{{project_form.information|safe}}</p>
                     </div>
                 </div>
-                {%if project_form.information%}
-                <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 col-xxl-6 my-2">
-                    <div class="card">
-                        <div class="card-body mx-1">
-                            <h6 class="card-title bi bi-info-square">Informacje</h6>
-                            <small class="card-subtitle text-muted">{{project_form.information|safe}}</small>
-                        </div>
-                    </div>
-                </div>
-                {%endif%}
             </div>
         </div>
         <hr class="my-3">
@@ -173,7 +150,6 @@
 <div class="modal fade" id="galleryModal" data-url="{%url 'investments:show_galleries_popup' project_form.id%}">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-
         </div>
     </div>
 </div>
@@ -192,20 +168,6 @@
     function submitForm(){
         $("#submitButton").closest("form").submit();
         }
-
-    $(function () {
-        $('[data-toggle="info"]').tooltip()
-    })
-
-
-
-
-
-
-
-
-
-
 </script>
 {%endblock%}
 {%endif%}
